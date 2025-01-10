@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE owl [
+	<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
+	<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+	<!ENTITY owl "http://www.w3.org/2002/07/owl#">
+	<!ENTITY cc "http://web.resource.org/cc/#">
+	<!ENTITY project "http://ebiquity.umbc.edu/ontology/project.owl#">
+	<!ENTITY person "http://ebiquity.umbc.edu/ontology/person.owl#">
+	<!ENTITY pub "http://ebiquity.umbc.edu/ontology/publication.owl#">
+	<!ENTITY assert "http://ebiquity.umbc.edu/ontology/assertion.owl#">
+]>
+
+<!--
+
+This ontology document is licensed under the Creative Commons
+Attribution License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by/2.0/ or send a letter to
+Creative Commons, 559 Nathan Abbott Way, Stanford, California
+94305, USA.
+
+-->
+
+<rdf:RDF 
+		xmlns:rdf = "&rdf;"
+		xmlns:rdfs = "&rdfs;"
+		xmlns:xsd = "&xsd;"
+		xmlns:owl = "&owl;"
+		xmlns:cc = "&cc;"
+		xmlns:project = "&project;"
+		xmlns:person = "&person;"
+		xmlns:pub = "&pub;"
+		xmlns:assert = "&assert;">
+	<pub:Resource rdf:about="http://ebiquity.umbc.edu/resource/html/id/82/foafPub-dataset">
+		<rdfs:label><![CDATA[foafPub dataset]]></rdfs:label>
+		<pub:type><![CDATA[Dataset]]></pub:type>
+		<pub:title><![CDATA[foafPub dataset]]></pub:title>
+		<pub:publishedOn rdf:datatype="&xsd;dateTime">2005-02-23T00:00:00-05:00</pub:publishedOn>
+		<pub:description><![CDATA[<p>The FOAF (Friend of a Friend) vocabulary has become one of the most used semantic web ontologies and can be found in millions of RDF documents on the web. FOAF is used to describe basic attributes of people and relationships among them.</p>
+
+<p>foafPub is a dataset of information extracted from FOAF files
+collected during the Fall of 2004.  The data represents 7118 foaf
+documents collected from 2044 sites (identified by their symbolic IP
+address). A total of 201,612 RDF triples with provenance information
+are included.  The foaf files were selected from larger datasets
+described in [1] and [2] to represents a interesting and balanced
+selection of foaf documents.
+This dataset is distributed under the <a
+href="http://creativecommons.org/licenses/by/2.0/"> Creative Commons
+Attribution (v2.0)</a> license.</p>
+
+<p>The dataset is distributed as a zip file containing SQL commands to
+create three tables: dict_host, dict_url and triple_person.  The sql
+commands were generated from the original mySQL database using the
+export command.</p>
+
+<p>The dict_host table has the addresses of the 2044 distinct sites from
+which the data was collected along with a timestamp of when each site
+was visited.  The dict_url table has some metadata about each of the
+7118 foaf files, including the URL, time collected, time last
+modified, number of people described in the file, and the number of
+foaf related triples in the file and the total number of triples in
+the file.  The triple_person database contains all of the triples
+harvested from the files along with their source URLs.</p>
+
+
+
+<p>[1] Li Ding, Lina Zhou, Tim Finin, and Anupam Joshi, <a
+href="https://ebiquity.umbc.edu/paper/html/id/184/">How the
+Semantic Web is Being Used:An Analysis of FOAF</a>, Proceedings of the
+38th International Conference on System Sciences, January 2005.</p>
+
+<p>[2] Li Ding, Tim Finin, and Anupam Joshi, <a
+href="https://ebiquity.umbc.edu/paper/html/id/202/">Analyzing
+Social Networks on the Semantic Web</a>, IEEE Intelligent Systems,
+volume 9, number 1, January 2005.</p>
+
+]]></pub:description>
+		<pub:counter><![CDATA[6698]]></pub:counter>
+		<pub:tag><![CDATA[dataset]]></pub:tag>
+		<pub:tag><![CDATA[foaf]]></pub:tag>
+		<pub:tag><![CDATA[semantic web]]></pub:tag>
+		<pub:author>
+			<rdf:List>
+				<rdf:first>
+					<person:Person rdf:about="http://ebiquity.umbc.edu/person/html/Anupam/Joshi"><person:name><![CDATA[Anupam Joshi]]></person:name><rdfs:label><![CDATA[Anupam Joshi]]></rdfs:label></person:Person>
+				</rdf:first>
+				<rdf:rest>					<rdf:List>
+						<rdf:first>
+							<person:Person rdf:about="http://ebiquity.umbc.edu/person/html/Li/Ding"><person:name><![CDATA[Li Ding]]></person:name><rdfs:label><![CDATA[Li Ding]]></rdfs:label></person:Person>
+						</rdf:first>
+						<rdf:rest>							<rdf:List>
+								<rdf:first>
+									<person:Person rdf:about="http://ebiquity.umbc.edu/person/html/Lina/Zhou"><person:name><![CDATA[Lina Zhou]]></person:name><rdfs:label><![CDATA[Lina Zhou]]></rdfs:label></person:Person>
+								</rdf:first>
+								<rdf:rest rdf:resource="&rdf;nil" />
+							</rdf:List>
+						</rdf:rest>
+					</rdf:List>
+				</rdf:rest>
+			</rdf:List>
+		</pub:author>
+		<pub:firstAuthor>
+<person:Person rdf:about="http://ebiquity.umbc.edu/person/html/Anupam/Joshi"><person:name><![CDATA[Anupam Joshi]]></person:name><rdfs:label><![CDATA[Anupam Joshi]]></rdfs:label></person:Person>
+		</pub:firstAuthor>
+		<pub:relatedProject><project:PastProject rdf:about="http://ebiquity.umbc.edu/project/html/id/62/FOAF"><project:title><![CDATA[FOAF]]></project:title><rdfs:label><![CDATA[FOAF]]></rdfs:label></project:PastProject></pub:relatedProject>
+		<pub:softCopy><pub:SoftCopy>
+			<pub:softCopyFormat><![CDATA[ZIP Compressed File]]></pub:softCopyFormat>
+			<pub:softCopyURI><![CDATA[http://ebiquity.umbc.edu/get/a/resource/82.zip]]></pub:softCopyURI>
+			<pub:softCopySize>2863537</pub:softCopySize>
+			</pub:SoftCopy>
+			</pub:softCopy>
+		<assert:isPublicationDatasetOf rdf:resource="http://ebiquity.umbc.edu/paper/html/id/202/Analyzing-Social-Networks-on-the-Semantic-Web" />
+		<assert:isPublicationDatasetOf rdf:resource="http://ebiquity.umbc.edu/paper/html/id/184/How-the-Semantic-Web-is-Being-Used-An-Analysis-of-FOAF-Documents" />
+	</pub:Resource>
+
+<rdf:Description rdf:about="">
+	<cc:License rdf:resource="http://creativecommons.org/licenses/by/2.0/" />
+</rdf:Description>
+
+</rdf:RDF>

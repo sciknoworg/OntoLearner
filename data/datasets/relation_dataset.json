@@ -1,0 +1,502 @@
+[
+  {
+    "term1": "image quality",
+    "term2": "image de-noising",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "wireless sensor network",
+    "term2": "group key management",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "integrated circuit layout",
+    "term2": "system-on-chip (soc)",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "numerical examples",
+    "term2": "dynamic output feedback controller",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "delay control systems",
+    "term2": "networked controls",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "diagnostic radiography",
+    "term2": "forward problem",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "ebusiness",
+    "term2": "e-procurement",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "user interfaces",
+    "term2": "context- awareness",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "motion control",
+    "term2": "mobile manipulators",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "wireless communication technology",
+    "term2": "ieee 802.11 standards",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "image de-noising",
+    "term2": "psnr",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "photonic crystal fibers",
+    "term2": "optical fiber sensors",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "probability",
+    "term2": "relay selection",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "wireless sensor network (wsns)",
+    "term2": "temporal correlation",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "particle swarm optimization algorithm",
+    "term2": "self-adaptive",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "program compilers",
+    "term2": "multiprogramming",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "learning activities",
+    "term2": "technology-enhanced learning",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "wireless telecommunication systems",
+    "term2": "uwb communication",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "automation",
+    "term2": "robot programming",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "wavelet transforms",
+    "term2": "fault location",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "mac",
+    "term2": "csma",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "markov decision process",
+    "term2": "value functions",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "wireless telecommunication systems",
+    "term2": "routing strategies",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "software process",
+    "term2": "software cost estimations",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "cognitive radio (cr)",
+    "term2": "random matrix theory",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "lyapunov methods",
+    "term2": "van der pol oscillator",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "semantic relations",
+    "term2": "semantic relatedness",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "population genetics",
+    "term2": "selection (genetics)",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "telecommunication services",
+    "term2": "qoe",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "parallel architecture",
+    "term2": "parallelism",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "frequency division multiplexing",
+    "term2": "fiber laser",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "time-delay system",
+    "term2": "absolute stability",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "search engines",
+    "term2": "rdf data",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "wireless sensor networks",
+    "term2": "internet of things",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "image analysis",
+    "term2": "video surveillance systems",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "intelligent tutoring systems",
+    "term2": "affective state",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "antenna accessories",
+    "term2": "telecommunication technologies",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "artificial neural network",
+    "term2": "determination coefficients",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "chromosome banding",
+    "term2": "centromere",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "ad hoc network",
+    "term2": "dispersion compensation",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "servers",
+    "term2": "video-on-demand (vod)",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "wireless sensor network (wsn)",
+    "term2": "multihop wireless networks",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "manipulators",
+    "term2": "forward and inverse kinematics",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "medical imaging",
+    "term2": "segmentation methods",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "outages",
+    "term2": "ergodic capacity",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "clustering algorithms",
+    "term2": "text document",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "time division multiple access",
+    "term2": "frequency division multiple access",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "quality of service (qos)",
+    "term2": "cooperative relay",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "program processors",
+    "term2": "high level synthesis",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "audio acoustics",
+    "term2": "microphone arrays",
+    "relation": "contributesTo"
+  },
+  {
+    "term1": "telecommunication links",
+    "term2": "electromagnetic bandgap structures",
+    "relation": "none"
+  },
+  {
+    "term1": "mimo systems",
+    "term2": "information contents",
+    "relation": "none"
+  },
+  {
+    "term1": "motion planning",
+    "term2": "music information retrieval",
+    "relation": "none"
+  },
+  {
+    "term1": "image processing",
+    "term2": "dropping probability",
+    "relation": "none"
+  },
+  {
+    "term1": "time delay",
+    "term2": "malicious software",
+    "relation": "none"
+  },
+  {
+    "term1": "adaptive control systems",
+    "term2": "digital signatures",
+    "relation": "none"
+  },
+  {
+    "term1": "mobile robotic",
+    "term2": "data augmentation",
+    "relation": "none"
+  },
+  {
+    "term1": "information management",
+    "term2": "equivalent circuit model",
+    "relation": "none"
+  },
+  {
+    "term1": "computer operating systems",
+    "term2": "deep reinforcement learning",
+    "relation": "none"
+  },
+  {
+    "term1": "genetic predisposition",
+    "term2": "xpath queries",
+    "relation": "none"
+  },
+  {
+    "term1": "ontologies",
+    "term2": "optical-",
+    "relation": "none"
+  },
+  {
+    "term1": "linguistics",
+    "term2": "pattern language",
+    "relation": "none"
+  },
+  {
+    "term1": "synthetic aperture radar (sar) images",
+    "term2": "reactive power compensation",
+    "relation": "none"
+  },
+  {
+    "term1": "network-on-chip",
+    "term2": "degraded images",
+    "relation": "none"
+  },
+  {
+    "term1": "visualization",
+    "term2": "refractive index measurement",
+    "relation": "none"
+  },
+  {
+    "term1": "visualization",
+    "term2": "passive rfid",
+    "relation": "none"
+  },
+  {
+    "term1": "mobile device",
+    "term2": "underwater construction",
+    "relation": "none"
+  },
+  {
+    "term1": "semantics",
+    "term2": "model automobiles",
+    "relation": "none"
+  },
+  {
+    "term1": "multiagent systems",
+    "term2": "tactile displays",
+    "relation": "none"
+  },
+  {
+    "term1": "telecommunication systems",
+    "term2": "social status",
+    "relation": "none"
+  },
+  {
+    "term1": "artificial neural network",
+    "term2": "clustering algorithms",
+    "relation": "none"
+  },
+  {
+    "term1": "visual communication",
+    "term2": "voronoi",
+    "relation": "none"
+  },
+  {
+    "term1": "image quality",
+    "term2": "radio spectra",
+    "relation": "none"
+  },
+  {
+    "term1": "database systems",
+    "term2": "ieee802.11e",
+    "relation": "none"
+  },
+  {
+    "term1": "numerical analysis",
+    "term2": "reduced instruction set computing",
+    "relation": "none"
+  },
+  {
+    "term1": "signaltonoise ratio (snr)",
+    "term2": "residual energy",
+    "relation": "none"
+  },
+  {
+    "term1": "energy conservation",
+    "term2": "video collections",
+    "relation": "none"
+  },
+  {
+    "term1": "multiagent systems",
+    "term2": "queue length",
+    "relation": "none"
+  },
+  {
+    "term1": "performance analysis",
+    "term2": "collaborative work",
+    "relation": "none"
+  },
+  {
+    "term1": "virtual world",
+    "term2": "bayesian frameworks",
+    "relation": "none"
+  },
+  {
+    "term1": "wireless sensor networks (wsns)",
+    "term2": "appearance models",
+    "relation": "none"
+  },
+  {
+    "term1": "telecommunication equipment",
+    "term2": "closed-loop supply chain",
+    "relation": "none"
+  },
+  {
+    "term1": "security mechanism",
+    "term2": "gene duplication",
+    "relation": "none"
+  },
+  {
+    "term1": "parallel processing systems",
+    "term2": "autonomous agent",
+    "relation": "none"
+  },
+  {
+    "term1": "public-key cryptography",
+    "term2": "peak signal to noise ratio",
+    "relation": "none"
+  },
+  {
+    "term1": "image processing",
+    "term2": "cost savings",
+    "relation": "none"
+  },
+  {
+    "term1": "public-key cryptography",
+    "term2": "multi-core processor",
+    "relation": "none"
+  },
+  {
+    "term1": "routing",
+    "term2": "frequency selective surfaces",
+    "relation": "none"
+  },
+  {
+    "term1": "privacy preserving",
+    "term2": "semiconductor optical amplifier",
+    "relation": "none"
+  },
+  {
+    "term1": "direction of arrival (doa)",
+    "term2": "agent-based architecture",
+    "relation": "none"
+  },
+  {
+    "term1": "time-delay systems",
+    "term2": "access category",
+    "relation": "none"
+  },
+  {
+    "term1": "forecasting methods",
+    "term2": "ad hoc networks",
+    "relation": "none"
+  },
+  {
+    "term1": "fundamental solutions",
+    "term2": "software quality criteria",
+    "relation": "none"
+  },
+  {
+    "term1": "approximation theory",
+    "term2": "sub-bands",
+    "relation": "none"
+  },
+  {
+    "term1": "search engines",
+    "term2": "coded modulation",
+    "relation": "none"
+  },
+  {
+    "term1": "blind source separation",
+    "term2": "retail price",
+    "relation": "none"
+  },
+  {
+    "term1": "structures (built objects)",
+    "term2": "learning styles",
+    "relation": "none"
+  },
+  {
+    "term1": "fiber bragg grating",
+    "term2": "pid parameters",
+    "relation": "none"
+  },
+  {
+    "term1": "adaptive controllers",
+    "term2": "passive rfid",
+    "relation": "none"
+  },
+  {
+    "term1": "routing algorithm",
+    "term2": "mems inertial sensors",
+    "relation": "none"
+  }
+]

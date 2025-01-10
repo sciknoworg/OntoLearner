@@ -1,0 +1,402 @@
+[
+  {
+    "term": "prototype filters",
+    "type": "engineering"
+  },
+  {
+    "term": "repetition rate",
+    "type": "computer science"
+  },
+  {
+    "term": "aviators",
+    "type": "computer science"
+  },
+  {
+    "term": "lyapunov-krasovskii functional",
+    "type": "engineering"
+  },
+  {
+    "term": "data exchange",
+    "type": "computer science"
+  },
+  {
+    "term": "web information extraction",
+    "type": "computer science"
+  },
+  {
+    "term": "transponders",
+    "type": "engineering"
+  },
+  {
+    "term": "sliding motions",
+    "type": "engineering"
+  },
+  {
+    "term": "consensus protocols",
+    "type": "computer science"
+  },
+  {
+    "term": "hypervisor",
+    "type": "computer science"
+  },
+  {
+    "term": "remote node",
+    "type": "computer science"
+  },
+  {
+    "term": "uwb systems",
+    "type": "mathematics"
+  },
+  {
+    "term": "e-learning system",
+    "type": "computer science"
+  },
+  {
+    "term": "surface current",
+    "type": "engineering"
+  },
+  {
+    "term": "learning designs",
+    "type": "education"
+  },
+  {
+    "term": "approximation theory",
+    "type": "mathematics"
+  },
+  {
+    "term": "spect imaging",
+    "type": "computer science"
+  },
+  {
+    "term": "particle swarm optimization algorithm",
+    "type": "mathematics"
+  },
+  {
+    "term": "disturbance observer",
+    "type": "computer science"
+  },
+  {
+    "term": "link utilization",
+    "type": "computer science"
+  },
+  {
+    "term": "s-transform",
+    "type": "engineering"
+  },
+  {
+    "term": "wavelet domain",
+    "type": "mathematics"
+  },
+  {
+    "term": "embedded watermarks",
+    "type": "computer science"
+  },
+  {
+    "term": "land mobile radio cellular systems",
+    "type": "engineering"
+  },
+  {
+    "term": "customized products",
+    "type": "computer science"
+  },
+  {
+    "term": "verification techniques",
+    "type": "computer science"
+  },
+  {
+    "term": "distributed random variables",
+    "type": "mathematics"
+  },
+  {
+    "term": "listening tests",
+    "type": "linguistics"
+  },
+  {
+    "term": "mimo radar",
+    "type": "computer science"
+  },
+  {
+    "term": "adaptive genetic algorithm",
+    "type": "computer science"
+  },
+  {
+    "term": "polar codes",
+    "type": "mathematics"
+  },
+  {
+    "term": "logic gates",
+    "type": "computer science"
+  },
+  {
+    "term": "underactuated systems",
+    "type": "engineering"
+  },
+  {
+    "term": "digital signal processor",
+    "type": "engineering"
+  },
+  {
+    "term": "solution accuracy",
+    "type": "computer science"
+  },
+  {
+    "term": "adaptive boosting",
+    "type": "computer science"
+  },
+  {
+    "term": "photoacoustic imaging",
+    "type": "mathematics"
+  },
+  {
+    "term": "diversity methods",
+    "type": "computer science"
+  },
+  {
+    "term": "stationary distribution",
+    "type": "mathematics"
+  },
+  {
+    "term": "spectral clustering",
+    "type": "mathematics"
+  },
+  {
+    "term": "image annotation",
+    "type": "computer science"
+  },
+  {
+    "term": "masked language modeling",
+    "type": "semantics"
+  },
+  {
+    "term": "human visual system (hvs)",
+    "type": "computer science"
+  },
+  {
+    "term": "intermodulation distortion",
+    "type": "computer science"
+  },
+  {
+    "term": "electric fault location",
+    "type": "engineering"
+  },
+  {
+    "term": "loss reduction",
+    "type": "computer science"
+  },
+  {
+    "term": "learning objectives",
+    "type": "computer science"
+  },
+  {
+    "term": "computer aided language translation",
+    "type": "computer science"
+  },
+  {
+    "term": "robust controller design",
+    "type": "engineering"
+  },
+  {
+    "term": "complex targets",
+    "type": "engineering"
+  },
+  {
+    "term": "constant false alarm rate",
+    "type": "computer science"
+  },
+  {
+    "term": "level sets",
+    "type": "computer science"
+  },
+  {
+    "term": "observability",
+    "type": "computer science"
+  },
+  {
+    "term": "hydrophones",
+    "type": "computer science"
+  },
+  {
+    "term": "bit error probability",
+    "type": "mathematics"
+  },
+  {
+    "term": "web information",
+    "type": "linguistics"
+  },
+  {
+    "term": "genetic analysis",
+    "type": "computer science"
+  },
+  {
+    "term": "time slots",
+    "type": "computer science"
+  },
+  {
+    "term": "uml 2.0",
+    "type": "computer science"
+  },
+  {
+    "term": "average linkage clustering",
+    "type": "computer science"
+  },
+  {
+    "term": "agent-based approach",
+    "type": "computer science"
+  },
+  {
+    "term": "adaptive beamforming algorithms",
+    "type": "computer science"
+  },
+  {
+    "term": "microblogs",
+    "type": "computer science"
+  },
+  {
+    "term": "iucn red list",
+    "type": "computer science"
+  },
+  {
+    "term": "orthogonal frequency division multiplexing (ofdm)",
+    "type": "computer science"
+  },
+  {
+    "term": "chromosome translocation 11",
+    "type": "computer science"
+  },
+  {
+    "term": "contourlet transform",
+    "type": "engineering"
+  },
+  {
+    "term": "utaut",
+    "type": "economics"
+  },
+  {
+    "term": "radio frequency identification technology",
+    "type": "computer science"
+  },
+  {
+    "term": "fuzzy classifier",
+    "type": "computer science"
+  },
+  {
+    "term": "space time adaptive processing",
+    "type": "communication"
+  },
+  {
+    "term": "requirements models",
+    "type": "computer science"
+  },
+  {
+    "term": "arrayed waveguide gratings",
+    "type": "computer science"
+  },
+  {
+    "term": "autonomous underwater vehicles",
+    "type": "computer science"
+  },
+  {
+    "term": "rational unified process",
+    "type": "computer science"
+  },
+  {
+    "term": "finite state automata",
+    "type": "linguistics"
+  },
+  {
+    "term": "haptic feedbacks",
+    "type": "computer science"
+  },
+  {
+    "term": "screen reader",
+    "type": "computer science"
+  },
+  {
+    "term": "route discovery",
+    "type": "computer science"
+  },
+  {
+    "term": "exact algorithm",
+    "type": "mathematics"
+  },
+  {
+    "term": "distributed denial of service attack",
+    "type": "computer science"
+  },
+  {
+    "term": "false acceptance rate",
+    "type": "computer science"
+  },
+  {
+    "term": "digital audio broadcasting",
+    "type": "computer science"
+  },
+  {
+    "term": "collaborative optimization",
+    "type": "computer science"
+  },
+  {
+    "term": "e-learning tool",
+    "type": "computer science"
+  },
+  {
+    "term": "additive white gaussian noise (awgn)",
+    "type": "computer science"
+  },
+  {
+    "term": "video collections",
+    "type": "computer science"
+  },
+  {
+    "term": "residue arithmetic",
+    "type": "mathematics"
+  },
+  {
+    "term": "turbo equalizers",
+    "type": "engineering"
+  },
+  {
+    "term": "two-photon absorptions",
+    "type": "computer science"
+  },
+  {
+    "term": "multi-sensor systems",
+    "type": "computer science"
+  },
+  {
+    "term": "mobile service robots",
+    "type": "computer science"
+  },
+  {
+    "term": "biomedical text",
+    "type": "computer science"
+  },
+  {
+    "term": "bipartite matching",
+    "type": "computer science"
+  },
+  {
+    "term": "operational transconductance amplifiers",
+    "type": "computer science"
+  },
+  {
+    "term": "software quality models",
+    "type": "computer science"
+  },
+  {
+    "term": "ad-hoc networks",
+    "type": "computer science"
+  },
+  {
+    "term": "buffer overflows",
+    "type": "computer science"
+  },
+  {
+    "term": "programmability",
+    "type": "computer science"
+  },
+  {
+    "term": "remote control",
+    "type": "computer science"
+  }
+]

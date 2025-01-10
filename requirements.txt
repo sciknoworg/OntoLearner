@@ -1,0 +1,30 @@
+
+rdflib~=7.1.1
+networkx~=3.2.1
+
+seaborn~=0.13.2
+numpy~=1.26.4 # to update
+pandas~=2.0.3 # to update
+
+# Plot and Data Visualization
+matplotlib~=3.9.4
+
+# LangChain Main Packages
+langchain~=0.3.14
+langchain-core~=0.3.29
+langchain-community~=0.3.14
+langchain-cerebras~=0.4.0
+
+# LangChain Extra Packages
+langchain-openai~=0.2.14
+langchain-anthropic~=0.3.1
+langchain-ollama~=0.2.2
+
+# Transformers
+transformers~=4.48.0
+
+# Environment Variables
+python-dotenv~=1.0.1
+
+# Progress Bar
+tqdm~=4.67.1
