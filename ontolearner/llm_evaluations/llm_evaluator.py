@@ -8,7 +8,7 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain_cerebras            import ChatCerebras
 from langchain_openai import ChatOpenAI
 
-from src.utils.utils import load_dataset
+from ontolearner.utils.utils import load_dataset
 
 load_dotenv()
 

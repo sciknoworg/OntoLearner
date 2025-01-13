@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from src.metrics.ontology_analyzer import OntologyAnalyzer
+from ontolearner.metrics.ontology_analyzer import OntologyAnalyzer
 
 model_name="meta-llama/Llama-3.1-8B-Instruct"
 token = "huggingface_token"

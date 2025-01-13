@@ -5,7 +5,7 @@ from typing import Dict, List, Set
 import random
 import logging
 
-from src.utils.utils import save_dataset
+from ontolearner.utils.utils import save_dataset
 
 # Configure logging
 logging.basicConfig(
