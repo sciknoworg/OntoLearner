@@ -91,4 +91,3 @@ test_dataset = load_dataset("../../data/datasets/train_typing_dataset.json")
 llm_accuracy = evaluate_term_typing(llama_model, test_dataset)
 
 logger.info(f"LLM accuracy: {llm_accuracy}")
-

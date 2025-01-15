@@ -32,7 +32,7 @@ class OntologyAnalyzer:
         # Analyze relationship types
         self.relationships = self.analyze_relationship_types()
 
-        print(f"\nBasic Statistics:")
+        print("\nBasic Statistics:")
         print(f"- Total Topics: {len(self.topics):,}")
         print(f"- Total Relationships: {sum(self.relationships.values()):,}")
 
