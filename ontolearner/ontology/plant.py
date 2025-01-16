@@ -1,7 +1,7 @@
 
 from rdflib import URIRef, Namespace
 from ..base.ontology import BaseOntology
-from ..models.schemas import TermTyping, TaxonomyRelation, NonTaxonomicRelation
+from ontolearner.base.data_model import TermTyping, TaxonomyRelation, NonTaxonomicRelation
 from typing import List, Dict, Tuple
 
 
