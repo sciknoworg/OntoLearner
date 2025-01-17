@@ -36,22 +36,6 @@ def save_dataset(data: Dict[str, Any], output_path: str) -> None:
         raise
 
 
-# def save_dataset(dataset: Dict, filename: str):
-#     """
-#     Save a dataset to a JSON file.
-#
-#     Args:
-#         dataset (Dict): The dataset to save
-#         filename (str): Path where to save the JSON file
-#     """
-#     logger.info(f"Saving dataset to {filename}")
-#
-#     with open(filename, 'w') as f:
-#         json.dump(dataset, f, indent=2)
-#
-#     logger.info(f"Successfully saved dataset to {filename}")
-
-
 def load_dataset(filename: str) -> Dict:
     """
     Load a dataset from a JSON file.
