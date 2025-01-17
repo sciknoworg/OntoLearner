@@ -29,6 +29,7 @@ class BaseOntology(ABC):
         self.RDF_SCHEMA = Namespace("http://www.w3.org/2000/01/rdf-schema#")
         self.SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
         self.RDF = RDF
+        self.OWL = Namespace("http://www.w3.org/2002/07/owl#")
 
     def load(self, path: str) -> None:
         """
