@@ -2,7 +2,7 @@
 from pathlib import Path
 import json
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Union
 
 # Configure logging
 logging.basicConfig(
@@ -14,16 +14,19 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def save_dataset(data: Dict[str, Any], output_path: str) -> None:
+def save_dataset(data: Dict[str, Any], output_path: Union[str, Path],) -> None:
     """
     Save dataset to JSON file.
 
-    Args:
+    :arg:
         data: Dictionary containing dataset
         output_path: Path to save the JSON file
     """
     try:
         output_path = Path(output_path)
+
+        if output_path.suffix.lower() != '.json':
+            raise ValueError(f"Invalid file extension: {output_path.suffix}")
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -31,25 +34,32 @@ def save_dataset(data: Dict[str, Any], output_path: str) -> None:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
         logger.info(f"Successfully saved dataset to {output_path}")
+
     except Exception as e:
         logger.error(f"Error saving dataset to {output_path}: {e}")
         raise
 
 
-def load_dataset(filename: str) -> Dict:
+def load_dataset(path: Union[str, Path]) -> Dict[str, Any]:
     """
     Load a dataset from a JSON file.
 
-    Args:
-        filename (str): Path to the JSON file to load
-    Returns:
-        Dict: The loaded dataset
+    :arg: filename (str): Path to the JSON file to load
+    :return: Dict: The loaded dataset
     """
-    logger.info(f"Loading dataset from {filename}")
+    logger.info(f"Loading dataset from {path}")
 
-    with open(filename, 'r') as f:
+    file_path = Path(path)
+
+    if not file_path.exists():
+        raise ValueError(f"File not found: {file_path}")
+
+    if file_path.suffix.lower() != '.json':
+        raise ValueError(f"Invalid file extension: {file_path.suffix}")
+
+    with file_path.open('r', encoding='utf-8') as f:
         dataset = json.load(f)
 
-    logger.info(f"Successfully loaded dataset from {filename}")
+    logger.info(f"Successfully loaded dataset from {path}")
 
     return dataset

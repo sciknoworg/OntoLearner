@@ -5,12 +5,10 @@ from abc import ABC
 from typing import Dict
 import logging
 
-from ontolearner.base.ontology import BaseOntology
+from ..base.ontology import BaseOntology
+from ..base.data_model import OntologyData
+from ..base.metric_model import TopologyMetrics, DatasetMetrics, OntologyMetrics
 
-from ..metric.metric_model import (
-    TopologyMetrics,
-    DatasetMetrics, OntologyMetrics
-)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -139,7 +137,7 @@ class BaseOntologyAnalyzer(ABC):
         Perform complete analysis of ontology
         """
         # Extract data
-        data = self.ontology.extract()
+        data: OntologyData = self.ontology.extract()
 
         return OntologyMetrics(
             name=self.ontology.__class__.__name__,
