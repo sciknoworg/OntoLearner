@@ -1,9 +1,12 @@
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Tuple
+from dataclasses import dataclass
+from typing import List, Tuple
 from rdflib import Graph, Namespace, URIRef, RDF
 import networkx as nx
 import logging
+
+from ..base.data_model import OntologyData, TermTyping, TaxonomyRelation, NonTaxonomicRelation
 
 logging.basicConfig(
     level=logging.INFO,
@@ -11,6 +14,15 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class OntologyNamespaces:
+    """Container for common ontology namespaces"""
+    RDF_SCHEMA: Namespace = Namespace("http://www.w3.org/2000/01/rdf-schema#")
+    SKOS: Namespace = Namespace("http://www.w3.org/2004/02/skos/core#")
+    OWL: Namespace = Namespace("http://www.w3.org/2002/07/owl#")
+    RDF: RDF = RDF
 
 
 class BaseOntology(ABC):
@@ -24,12 +36,8 @@ class BaseOntology(ABC):
         # Initialize both RDF and NetworkX graphs
         self.rdf_graph = Graph()
         self.nx_graph = nx.DiGraph()
+        self.namespaces: OntologyNamespaces = OntologyNamespaces()
 
-        # Common namespaces used across different ontologies
-        self.RDF_SCHEMA = Namespace("http://www.w3.org/2000/01/rdf-schema#")
-        self.SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
-        self.RDF = RDF
-        self.OWL = Namespace("http://www.w3.org/2002/07/owl#")
 
     def load(self, path: str) -> None:
         """
@@ -43,81 +51,104 @@ class BaseOntology(ABC):
 
             self.rdf_graph.parse(path, format="xml")
 
+            if len(self.rdf_graph) == 0:
+                raise ValueError("Loaded ontology contains no triples")
+
             logger.info(f"Loaded {len(self.rdf_graph)} triples")
 
+        except FileNotFoundError:
+            logger.error(f"Ontology file not found: {path}")
+            raise
         except Exception as e:
-            logger.error(f"Error loading ontology: {e}")
+            logger.error(f"Error loading ontology: {str(e)}")
             raise
 
-    def extract(self) -> Dict:
+
+    def extract(self) -> OntologyData:
         """
         Extract all information from all the three functions below.
 
-        :return:
+        :return: Dict containing term typings, taxonomies, and relations
         """
         try:
             term_typings = self.extract_term_typings()
             types, taxonomies = self.extract_type_taxonomies()
-            types, relations, non_taxonomic_relations = self.extract_type_non_taxonomic_relations()
+            types_nt, relations, non_taxonomic = self.extract_type_non_taxonomic_relations()
 
-            return {
-                'term_typings': term_typings,
-                'type_taxonomies': {
+            return OntologyData(
+                term_typings=term_typings,
+                type_taxonomies={
                     'types': types,
                     'taxonomies': taxonomies
                 },
-                'type_non_taxonomic_relations': {
-                    'types': types,
+                type_non_taxonomic_relations={
+                    'types': types_nt,
                     'relations': relations,
-                    'grand_truths': non_taxonomic_relations
+                    'grand_truths': non_taxonomic
                 }
-            }
+            )
         except Exception as e:
             logger.error(f"Error extracting ontology data: {e}")
             raise
 
+
     def get_term_label(self, uri: URIRef) -> str:
         """
-        Get human-readable label for a term.
+        Get human-readable label for a term using standard label properties.
         """
-        labels = list(self.rdf_graph.objects(subject=uri, predicate=self.RDF_SCHEMA.label))
+        # Try standard label properties
+        predicates = [
+            self.namespaces.RDF_SCHEMA.label,
+            self.namespaces.SKOS.prefLabel,
+            self.namespaces.SKOS.altLabel
+        ]
 
-        if not labels:
-            # Try SKOS label if RDF label not found
-            labels = list(self.rdf_graph.objects(subject=uri, predicate=self.SKOS.prefLabel))
+        for predicate in predicates:
+            labels = list(self.rdf_graph.objects(subject=uri, predicate=predicate))
 
-        return str(labels[0]) if labels else str(uri).split('/')[-1]
+            if labels:
+                return str(labels[0])
+
+        # Fallback to URI fragment
+        return str(uri).split('/')[-1]
 
 
     @abstractmethod
     def build_graph(self) -> None:
         """
-        Build NetworkX graph from RDF data. This method should be implemented
-        by each specific ontology class to handle their unique graph structure.
+        Build NetworkX graph from RDF data.
+
+        This method should be implemented by each specific ontology class
+        to handle their unique graph structure.
         """
         pass
 
+
     @abstractmethod
-    def extract_term_typings(self) -> List[Dict]:
+    def extract_term_typings(self) -> List[TermTyping]:
         """
         Extract term typings from the ontology.
-        :return: term_typings
+
+        :return: List of validated term typing entries
         """
         pass
 
+
     @abstractmethod
-    def extract_type_taxonomies(self) -> Tuple[List, List[Dict]]:
+    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomyRelation]]:
         """
         Extract taxonomy from the ontology
-        :return: types, taxonomies
+
+        :return: Types and their taxonomic relationships
         """
         pass
 
+
     @abstractmethod
-    def extract_type_non_taxonomic_relations(self) -> Tuple[List, List, List[Dict]]:
+    def extract_type_non_taxonomic_relations(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
         """
         Extract non-taxonomic relations from the ontology.
 
-        :return: types, relations, grand_truths
+        :return: Types, relations, and validated relationship entries
         """
         pass
