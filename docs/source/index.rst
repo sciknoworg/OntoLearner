@@ -6,7 +6,7 @@ OntoLearner Documentation
    :maxdepth: 1
    :caption: Introduction
 
-   introduction
+   introduction.rst
 
 
 .. toctree::
@@ -14,6 +14,10 @@ OntoLearner Documentation
    :caption: A. Benchmarking Ontologies
 
    benchmarking/computer_science_ontologies.rst
+   benchmarking/emotion_ontologies.rst
+   benchmarking/plant_ontologies.rst
+   integration/huggingface_hub.rst
+
 
 
 .. toctree::
