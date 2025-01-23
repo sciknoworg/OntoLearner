@@ -2,7 +2,6 @@ import time
 
 import networkx as nx
 from abc import ABC
-from typing import Dict
 import logging
 
 from ..base.ontology import BaseOntology
@@ -109,18 +108,18 @@ class BaseOntologyAnalyzer(ABC):
 
 
     @staticmethod
-    def compute_dataset_metrics(data: Dict) -> DatasetMetrics:
+    def compute_dataset_metrics(data: OntologyData) -> DatasetMetrics:
         """
         Compute metrics for generated datasets
         """
-        term_typings = data['term_typings']
-        taxonomies = data['type_taxonomies']['taxonomies']
-        non_taxonomic = data['type_non_taxonomic_relations']['grand_truths']
+        term_typings = data.term_typings
+        taxonomies = data.type_taxonomies['taxonomies']
+        non_taxonomic = data.type_non_taxonomic_relations['grand_truths']
 
         # Count instances per class
         class_counts = {}
         for term_type in term_typings:
-            for type_name in term_type['types']:
+            for type_name in term_type.types:
                 class_counts[type_name] = class_counts.get(type_name, 0) + 1
 
         return DatasetMetrics(

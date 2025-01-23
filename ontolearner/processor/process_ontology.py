@@ -1,6 +1,7 @@
 
 from pathlib import Path
 import logging
+from typing import Union
 
 from ..base.ontology import BaseOntology
 from ..base.metric_model import OntologyMetrics
@@ -21,7 +22,7 @@ class OntologyProcessor:
         self.datasets_dir = datasets_dir
         self.analyzer_class = analyzer_class
 
-    def process_ontology(self, ontology: BaseOntology, ontology_path: str, name: str) -> OntologyMetrics:
+    def process_ontology(self, ontology: BaseOntology, ontology_path: Union[str, Path], name: str) -> OntologyMetrics:
         """
         Process a single ontology through the complete pipeline.
 
@@ -68,4 +69,4 @@ class OntologyProcessor:
         for dataset_type in ['term_typings', 'type_taxonomies', 'type_non_taxonomic_relations']:
             save_path = self.datasets_dir / f"{name}_{dataset_type}_dataset.json"
 
-            save_dataset(data[dataset_type], save_path)
+            save_dataset(data.model_dump()[dataset_type], save_path)
