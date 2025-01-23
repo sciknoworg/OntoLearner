@@ -1,52 +1,62 @@
 Food Ontology Analysis Results
 ============================
 
-Analysis Overview
----------------
-Analysis performed on the FoodOn ontology
+Overview
+------------------
+The Food Ontology is a structured vocabulary and database resource that links food products,
+ingredients, and recipes to nutritional data.
 
-Processing Statistics
--------------------
-- Triples loaded: 428,965
+Basic Information
+------------------
+:Domain: Food Science, Nutrition
+:Category:
+:Current Version:
+:Last Updated Date:
+:Producer:
+:License: Creative Commons 4.0
+:Format: OWL
+:Download: `FoodOn Ontology <http://purl.obolibrary.org/obo/foodon.owl>`_
+:Documentation: `FoodOn Repository <https://github.com/FoodOntology/foodon/tree/master>`_
 
+Ontology Statistics
+------------------
+Graph Metrics:
+    - **Triples**: 428,965
+    - **Nodes**: 47,230
+    - **Total Edges**: 45,154
 
-Dataset Metrics
--------------
-:Term Types: 40,134
-:Taxonomic Relations: 45,159
-:Non-taxonomic Relations: 0
-:Average Terms per Type: 3,087.23
+Hierarchical Structure:
+    - **Maximum Depth**: 30
+    - **Root Nodes**: 10,436
+    - **:Leaf Nodes**: 35,925
 
-Graph Topology Metrics
---------------------
+Dataset Statistics
+-----------------
+Generated Benchmarks:
+    - **Term Types**: 40,134
+    - **Taxonomic Relations**: 45,159
+    - **Non-taxonomic Relations**: 0
+    - **Average Terms per Type**: 3,087.23
 
-Basic Metrics
-~~~~~~~~~~~~
-:Total Nodes: 47,230
-:Total Edges: 45,154
-:Graph Density: ~0.0000
-:Average Degree: 1.91
+Relationship Types
+------------------
+Taxonomic Relations:
 
-Hierarchical Structure
-~~~~~~~~~~~~~~~~~~~~
-:Maximum Depth: 30
-:Root Nodes: 10,436
-:Leaf Nodes: 35,925
+Non-taxonomic Relations:
 
+Alignments
+------------------
 
-Observations
---------------
-1. **Graph Structure**
-   - Highly hierarchical structure (30 levels deep)
-   - Large number of leaf nodes (76% of total nodes)
-   - Significant number of root nodes (22% of total nodes)
+Usage Example
+------------------
+.. code-block:: python
 
-2. **Connectivity**
-   - Very sparse graph (density ~0)
-   - Low average degree (1.91 connections per node)
-   - No non-taxonomic relations identified
+    from ontolearner.ontology.food import FoodOntology
 
-3. **Scale**
-   - Large-scale ontology with over 400K triples
-   - Complex hierarchy with 40K+ term types
-   - Significant taxonomic structure (45K+ relations)
+    # Initialize and load ontology
+    food = FoodOntology()
+
+    food.load("path/to/foodon.owl")
+
+    # Extract datasets
+    data = food.extract()
