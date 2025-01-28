@@ -110,7 +110,7 @@ class Analyzer(ABC):
 
         term_typings = data.term_typings
         taxonomies = data.type_taxonomies.get("taxonomies", {})
-        non_taxonomic = data.type_non_taxonomic_relations.get('grand_truths', {})
+        non_taxonomic = data.type_non_taxonomic_relations.get('non_taxonomies', {})
 
         # Count instances per class
         class_counts = {}
