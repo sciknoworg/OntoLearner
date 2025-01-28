@@ -4,11 +4,10 @@ from typing import Union
 
 from . import logger
 
-from ontolearner.base.ontology import BaseOntology
-from ontolearner.data_structure.metric import OntologyMetrics
-from ontolearner.data_structure.data import OntologyData
-from ontolearner.analyzer.analyzer import OntologyAnalyzer
-from ontolearner.utils.io import save_json
+from .base import BaseOntology
+from .data_structure import OntologyMetrics, OntologyData
+from .tools import Analyzer
+from .utils import io
 
 
 class ProcessorPipeline:
@@ -17,23 +16,23 @@ class ProcessorPipeline:
     loading, extraction, analysis, and saving of results.
     """
 
-    def __init__(self, datasets_dir: Path, analyzer_class: type[OntologyAnalyzer] = OntologyAnalyzer):
+    def __init__(self, datasets_dir: Path, analyzer_class: type[Analyzer] = Analyzer):
         self.datasets_dir = datasets_dir
         self.analyzer_class = analyzer_class
 
-    def process_ontology(self, ontology: BaseOntology, ontology_path: Union[str, Path], name: str) -> OntologyMetrics:
+    def process_ontology(self, ontology: BaseOntology, ontology_path: Union[str, Path], ontology_identifier: str) -> OntologyMetrics:
         """
         Process a single ontology through the complete pipeline.
 
         :arg:
             ontology: The ontology instance to process
             ontology_path: Path to the ontology file
-            name: Name identifier for the ontology
+            ontology_identifier: Ontology identifier name for the ontology
 
         :return: OntologyMetrics: Computed metrics for the ontology
         """
         try:
-            logger.info(f"Processing {name} ontology...")
+            logger.info(f"Processing {ontology_identifier} ontology...")
 
             # Ensure paths exist
             if not Path(ontology_path).exists():
@@ -54,18 +53,18 @@ class ProcessorPipeline:
             metrics: OntologyMetrics = analyzer(ontology)
 
             # Step 5: Save datasets
-            self.save_datasets(data, name)
+            self.save_datasets(data, ontology_identifier)
 
-            logger.info(f"Successfully processed {name} ontology")
+            logger.info(f"Successfully processed {ontology_identifier} ontology")
             return metrics
 
         except Exception as e:
-            logger.error(f"Error processing {name} ontology: {e}")
+            logger.error(f"Error processing {ontology_identifier} ontology: {e}")
             raise
 
-    def save_datasets(self, data: OntologyData, name: str) -> None:
+    def save_datasets(self, data: OntologyData, ontology_identifier: str) -> None:
         """Save extracted datasets to files"""
         for dataset_type in ['term_typings', 'type_taxonomies', 'type_non_taxonomic_relations']:
-            save_path = self.datasets_dir / f"{name}_{dataset_type}_dataset.json"
+            save_path = self.datasets_dir / f"{ontology_identifier}_{dataset_type}_dataset.json"
 
-            save_json(data.model_dump()[dataset_type], save_path)
+            io.save_json(data.model_dump()[dataset_type], save_path)
