@@ -3,15 +3,17 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from ..base.ontology import BaseOntology
+from typing import Dict
+
+from ..base import BaseOntology
 
 
-class OntologyVisualizer:
+class Visualizer:
     """
     Class for visualizing ontology structure and metrics.
     """
 
-    def __init__(self, style_config: dict = None):
+    def __init__(self, style_config: Dict = None):
         """
         Initialize visualizer with optional style configuration.
         """

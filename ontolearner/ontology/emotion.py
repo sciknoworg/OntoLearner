@@ -1,12 +1,9 @@
-
 from rdflib import URIRef, BNode
 from typing import List, Tuple, Set
 
+from ..base import BaseOntology
+from ..data_structure import TermTyping, TaxonomicRelation, NonTaxonomicRelation
 from .. import logger
-
-from ..base.ontology import BaseOntology
-from ontolearner.data_structure.data import TermTyping, TaxonomicRelation, NonTaxonomicRelation
-
 
 class EmotionOntology(BaseOntology):
     """
@@ -15,21 +12,6 @@ class EmotionOntology(BaseOntology):
     This class implements specific processing logic for the Emotion Ontology,
     handling affective phenomena such as emotions and moods.
     """
-    def __init__(self):
-        """
-        Initialize the Emotion Ontology.
-        Sets up namespaces and relations specific to MFOEM.
-        """
-        super().__init__()
-
-        # TODO refactor -> don't define relations manually
-        # Emotion-specific relations
-        self.relations = [
-            URIRef("http://purl.obolibrary.org/obo/BFO_0000050"),  # part_of
-            URIRef("http://purl.obolibrary.org/obo/RO_0000053"),   # has_characteristic
-            URIRef("http://purl.obolibrary.org/obo/RO_0000057")    # has_participant
-        ]
-
     def build_graph(self) -> None:
         """
         Build graph representation of the Emotion Ontology structure
@@ -92,7 +74,6 @@ class EmotionOntology(BaseOntology):
         logger.info(f"Built Emotion Ontology graph with {self.nx_graph.number_of_nodes()} "
                     f"nodes and {self.nx_graph.number_of_edges()} edges")
 
-
     def extract_term_typings(self) -> List[TermTyping]:
         """
         Extract term typings from Emotion Ontology.
@@ -138,7 +119,6 @@ class EmotionOntology(BaseOntology):
 
         return term_typings
 
-
     def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         """
         Extract type taxonomies from Emotion Ontology.
@@ -176,7 +156,6 @@ class EmotionOntology(BaseOntology):
                     )
 
         return types, taxonomies
-
 
     def extract_type_non_taxonomic_relations(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
         """

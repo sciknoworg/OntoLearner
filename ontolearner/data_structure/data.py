@@ -47,7 +47,7 @@ class NonTaxonomicRelations(BaseModel):
     """
     types: List[str] = Field(..., description="List of types involved in relations")
     relations: List[str] = Field(..., description="List of relation types")
-    ground_truths: List[NonTaxonomicRelation] = Field(..., description="List of non-taxonomic relations")
+    non_taxonomies: List[NonTaxonomicRelation] = Field(..., description="List of non-taxonomic relations")
 
 
 class OntologyData(BaseModel):

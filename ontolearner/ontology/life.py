@@ -1,10 +1,8 @@
-
 from rdflib import URIRef, BNode
 from typing import List, Tuple
 
-from ..base.ontology import BaseOntology
-from ontolearner.data_structure.data import TermTyping, TaxonomicRelation, NonTaxonomicRelation
-
+from ..base import BaseOntology
+from ..data_structure import TermTyping, TaxonomicRelation, NonTaxonomicRelation
 from .. import logger
 
 
@@ -24,7 +22,6 @@ class LifeOntology(BaseOntology):
             URIRef("http://purl.obolibrary.org/obo/RO_0002213"),  # positively_regulates
             URIRef("http://purl.obolibrary.org/obo/RO_0002212")  # negatively_regulates
         ]
-
 
     def build_graph(self) -> None:
         """
@@ -50,7 +47,6 @@ class LifeOntology(BaseOntology):
         logger.info(f"Built Life Ontology graph with {self.nx_graph.number_of_nodes()} nodes "
                     f"and {self.nx_graph.number_of_edges()} edges")
 
-
     def extract_term_typings(self) -> List[TermTyping]:
         """Extract term typings for life processes"""
         term_typings = []
@@ -72,7 +68,6 @@ class LifeOntology(BaseOntology):
                 term_typings.append(TermTyping(term=term, types=list(types)))
 
         return term_typings
-
 
     def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         """Extract type taxonomies from Life Ontology"""
@@ -103,7 +98,6 @@ class LifeOntology(BaseOntology):
                     )
 
         return types, taxonomies
-
 
     def extract_type_non_taxonomic_relations(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
         """Extract non-taxonomic relations from Life Ontology"""
@@ -139,92 +133,6 @@ class LifeOntology(BaseOntology):
 
         return types, relations, non_taxonomic_relations
 
-
-    def extract_term_typings_sparql(self) -> List[TermTyping]:
-        query = """
-        SELECT DISTINCT ?term (GROUP_CONCAT(DISTINCT ?type; separator="|") as ?types)
-        WHERE {
-            ?s rdfs:label ?term .
-            ?s rdf:type ?typeUri .
-            ?typeUri rdfs:label ?type .
-            FILTER(isIRI(?typeUri))
-        }
-        GROUP BY ?term
-        """
-        results = self.rdf_graph.query(query)
-        return [TermTyping(term=str(row.term), types=str(row.types).split("|"))
-                for row in results]
-
-
-    def extract_type_taxonomies_sparql(self) -> Tuple[List[str], List[TaxonomicRelation]]:
-        # Get types
-        type_query = """
-       SELECT DISTINCT ?type
-       WHERE {
-           ?s rdf:type owl:Class ;
-              rdfs:label ?type .
-       }
-       """
-        types = [str(row.type) for row in self.rdf_graph.query(type_query)]
-
-        # Get taxonomy relations
-        tax_query = """
-       SELECT DISTINCT ?superclass ?subclass
-       WHERE {
-           ?s rdfs:subClassOf ?o ;
-              rdfs:label ?subclass .
-           ?o rdfs:label ?superclass .
-           FILTER(isIRI(?o))
-       }
-       """
-        taxonomies = [
-            TaxonomicRelation(
-                parent=str(row.superclass),
-                child=str(row.subclass)
-            )
-            for row in self.rdf_graph.query(tax_query)
-        ]
-
-        return types, taxonomies
-
-
-    def extract_type_non_taxonomic_relations_sparql(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
-        types = [str(row.type) for row in self.rdf_graph.query("""
-           SELECT DISTINCT ?type
-           WHERE {
-               ?s rdf:type owl:Class ;
-                  rdfs:label ?type .
-           }
-       """)]
-
-        relations = [str(rel).split('/')[-1] for rel in self.relations]
-
-        # Build VALUES clause for relations
-        values_str = " ".join(f"<{r}>" for r in self.relations)
-
-        non_tax_query = f"""
-       SELECT DISTINCT ?head ?tail ?relation
-       WHERE {{
-           VALUES ?relationType {{ {values_str} }}
-           ?s ?relationType ?o .
-           ?s rdfs:label ?head .
-           ?o rdfs:label ?tail .
-           BIND(STRAFTER(STR(?relationType), "obo/") AS ?relation)
-       }}
-       """
-
-        non_taxonomic_relations = [
-            NonTaxonomicRelation(
-                head=str(row.head),
-                tail=str(row.tail),
-                relation=str(row.relation)
-            )
-            for row in self.rdf_graph.query(non_tax_query)
-        ]
-
-        return types, relations, non_taxonomic_relations
-
-
     def _extract_node_properties(self, node: URIRef) -> dict:
         """Extract properties for a life process node"""
         properties = {
@@ -250,7 +158,6 @@ class LifeOntology(BaseOntology):
 
         return properties
 
-
     def _add_hierarchical_relationships(self) -> None:
         """Add hierarchical relationships between life processes"""
 
@@ -263,7 +170,6 @@ class LifeOntology(BaseOntology):
 
                 if s_label and o_label:
                     self.nx_graph.add_edge(o_label, s_label, relation_type='subClassOf')
-
 
     def _add_life_specific_relationships(self) -> None:
         """Add life-specific relationships"""
