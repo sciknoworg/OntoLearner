@@ -1,22 +1,18 @@
 import time
-
 import networkx as nx
 from abc import ABC
 
 from .. import logger
-
-from ..base.ontology import BaseOntology
-from ontolearner.data_structure.data import OntologyData
-from ontolearner.data_structure.metric import TopologyMetrics, DatasetMetrics, OntologyMetrics
+from ..base import BaseOntology
+from ..data_structure import OntologyData, TopologyMetrics, DatasetMetrics, OntologyMetrics
 
 
-class OntologyAnalyzer(ABC):
+class Analyzer(ABC):
     """
     Base class for ontology analysis
     """
     def __init__(self):
         pass
-
 
     def __call__(self, ontology: BaseOntology) -> OntologyMetrics:
         """
@@ -27,7 +23,6 @@ class OntologyAnalyzer(ABC):
             topology=self.compute_topology_metrics(ontology),
             dataset=self.compute_dataset_metrics(ontology)
         )
-
 
     @staticmethod
     def compute_topology_metrics(ontology: BaseOntology) -> TopologyMetrics:
@@ -40,7 +35,6 @@ class OntologyAnalyzer(ABC):
 
         # Time the computation
         start_time = time.time()
-
         graph = ontology.nx_graph
 
         # Early checks
@@ -89,9 +83,8 @@ class OntologyAnalyzer(ABC):
 
         avg_path_length = sum(path_lengths) / len(path_lengths) if path_lengths else 0
 
-        # TODO refactor -> the return is too long
-        # Create TopologyMetrics with all required fields
-        return TopologyMetrics(
+        # TODO refactor ->  Create TopologyMetrics with all required fields
+        topology_metrics = TopologyMetrics(
             total_nodes=graph.number_of_nodes(),
             total_edges=graph.number_of_edges(),
             density=nx.density(graph),
@@ -105,6 +98,7 @@ class OntologyAnalyzer(ABC):
             avg_path_length=avg_path_length,
             diameter=diameter
         )
+        return topology_metrics
 
 
     @staticmethod
@@ -126,10 +120,11 @@ class OntologyAnalyzer(ABC):
 
         avg_terms_per_type = len(term_typings) / len(class_counts) if class_counts else 0
 
-        return DatasetMetrics(
+        dataset_metrics = DatasetMetrics(
             num_term_types=len(term_typings),
             num_taxonomic_relations=len(taxonomies),
             num_non_taxonomic_relations=len(non_taxonomic),
             class_distribution=class_counts,
             avg_terms=avg_terms_per_type
         )
+        return dataset_metrics
