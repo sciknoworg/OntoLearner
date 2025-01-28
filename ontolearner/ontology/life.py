@@ -1,22 +1,11 @@
 
-from dataclasses import dataclass
-from rdflib import URIRef, Namespace, BNode
+from rdflib import URIRef, BNode
 from typing import List, Tuple
-import logging
 
-from ..base.ontology import BaseOntology, OntologyNamespaces
-from ..base.data_model import TermTyping, TaxonomyRelation, NonTaxonomicRelation
+from ..base.ontology import BaseOntology
+from ontolearner.data_structure.data import TermTyping, TaxonomicRelation, NonTaxonomicRelation
 
-logger = logging.getLogger(__name__)
-
-
-@dataclass
-class LifeOntologyNamespaces(OntologyNamespaces):
-    """Extended namespaces for Life Ontology"""
-    LIFO_SCHEMA: Namespace = Namespace("http://purl.obolibrary.org/obo/lifo#")
-    OBO: Namespace = Namespace("http://purl.obolibrary.org/obo/")
-    IAO: Namespace = Namespace("http://purl.obolibrary.org/obo/IAO_")
-    NCBI_TAXON: Namespace = Namespace("http://purl.obolibrary.org/obo/ncbitaxon#")
+from .. import logger
 
 
 class LifeOntology(BaseOntology):
@@ -24,8 +13,8 @@ class LifeOntology(BaseOntology):
 
     def __init__(self):
         super().__init__()
-        self.namespaces = LifeOntologyNamespaces()
 
+        # TODO refactor -> don't define relations manually
         self.relations = [
             URIRef("http://purl.obolibrary.org/obo/BFO_0000050"),  # part_of
             URIRef("http://purl.obolibrary.org/obo/RO_0002202"),   # develops_from
@@ -38,11 +27,18 @@ class LifeOntology(BaseOntology):
 
 
     def build_graph(self) -> None:
-        """Build graph representation of the Life Ontology structure"""
+        """
+        Build graph representation of the Life Ontology structure
+        TODO: refactor
+            - move the function into the Base class
+        """
         self.nx_graph.clear()
 
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
+
         # Add life process classes and their properties
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.OWL.Class):
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
             if isinstance(s, (URIRef, BNode)):
                 s_label = self.get_term_label(s)
                 properties = self._extract_node_properties(s)
@@ -59,11 +55,14 @@ class LifeOntology(BaseOntology):
         """Extract term typings for life processes"""
         term_typings = []
 
-        for s, p, o in self.rdf_graph.triples((None, self.namespaces.RDF_SCHEMA.label, None)):
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+
+        for s, p, o in self.rdf_graph.triples((None, rdfs.label, None)):
             term = str(o)
             types = set()
 
-            for _, _, type_uri in self.rdf_graph.triples((s, self.namespaces.RDF.type, None)):
+            for _, _, type_uri in self.rdf_graph.triples((s, rdf.type, None)):
                 if isinstance(type_uri, (URIRef, BNode)):
                     type_label = self.get_term_label(type_uri)
                     if type_label:
@@ -75,29 +74,31 @@ class LifeOntology(BaseOntology):
         return term_typings
 
 
-    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomyRelation]]:
+    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         """Extract type taxonomies from Life Ontology"""
         types: List[str] = []
-        taxonomies: List[TaxonomyRelation] = []
+        taxonomies: List[TaxonomicRelation] = []
 
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.OWL.Class):
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
+
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
             if isinstance(s, (URIRef, BNode)):
                 type_label = self.get_term_label(s)
                 if type_label:
                     types.append(type_label)
 
-        for s, _, o in self.rdf_graph.triples((None, self.namespaces.RDF_SCHEMA.subClassOf, None)):
+        for s, _, o in self.rdf_graph.triples((None, rdfs.subClassOf, None)):
             if isinstance(o, (URIRef, BNode)):
                 superclass_label = self.get_term_label(o)
                 subclass_label = self.get_term_label(s)
 
                 if superclass_label and subclass_label:
                     taxonomies.append(
-                        TaxonomyRelation(
-                            term1=superclass_label,
-                            term2=subclass_label,
-                            relation=True,
-                            relationship_type="direct"
+                        TaxonomicRelation(
+                            parent=superclass_label,
+                            child=subclass_label,
                         )
                     )
 
@@ -107,17 +108,20 @@ class LifeOntology(BaseOntology):
     def extract_type_non_taxonomic_relations(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
         """Extract non-taxonomic relations from Life Ontology"""
         types: List[str] = []
-        relations: List[str] = [str(rel).split('/')[-1] for rel in self.relations]
+        relations: List[str] = [self.get_term_label(rel) for rel in self.relations]
         non_taxonomic_relations: List[NonTaxonomicRelation] = []
 
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.OWL.Class):
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
+
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
             if isinstance(s, (URIRef, BNode)):
                 type_label = self.get_term_label(s)
                 if type_label:
                     types.append(type_label)
 
         for relation in self.relations:
-            relation_label = relation.split('/')[-1] if '/' in relation else str(relation)
+            relation_label = self.get_term_label(relation)
 
             for s, _, o in self.rdf_graph.triples((None, relation, None)):
                 if isinstance(s, (URIRef, BNode)) and isinstance(o, (URIRef, BNode)):
@@ -130,7 +134,6 @@ class LifeOntology(BaseOntology):
                                 head=head_label,
                                 tail=tail_label,
                                 relation=relation_label,
-                                valid=True
                             )
                         )
 
@@ -153,7 +156,7 @@ class LifeOntology(BaseOntology):
                 for row in results]
 
 
-    def extract_type_taxonomies_sparql(self) -> Tuple[List[str], List[TaxonomyRelation]]:
+    def extract_type_taxonomies_sparql(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         # Get types
         type_query = """
        SELECT DISTINCT ?type
@@ -175,11 +178,9 @@ class LifeOntology(BaseOntology):
        }
        """
         taxonomies = [
-            TaxonomyRelation(
-                term1=str(row.superclass),
-                term2=str(row.subclass),
-                relation=True,
-                relationship_type="direct"
+            TaxonomicRelation(
+                parent=str(row.superclass),
+                child=str(row.subclass)
             )
             for row in self.rdf_graph.query(tax_query)
         ]
@@ -216,8 +217,7 @@ class LifeOntology(BaseOntology):
             NonTaxonomicRelation(
                 head=str(row.head),
                 tail=str(row.tail),
-                relation=str(row.relation),
-                valid=True
+                relation=str(row.relation)
             )
             for row in self.rdf_graph.query(non_tax_query)
         ]
@@ -225,50 +225,6 @@ class LifeOntology(BaseOntology):
         return types, relations, non_taxonomic_relations
 
 
-    # def _query_with_sparql(self, query: str) -> List[Dict]:
-    #     """
-    #     Execute a SPARQL query against the loaded ontology.
-    #     """
-    #     try:
-    #         prepared_query = prepareQuery(
-    #             query,
-    #             initNs={
-    #                 "rdfs": self.namespaces.RDF_SCHEMA,
-    #                 "owl": self.namespaces.OWL,
-    #                 "rdf": self.namespaces.RDF
-    #             }
-    #         )
-    #
-    #         # Execute query against the loaded OWL file
-    #         results = self.rdf_graph.query(prepared_query)
-    #
-    #         # Convert results to a more usable format
-    #         return [dict(row.asdict()) for row in results]
-    #
-    #     except Exception as e:
-    #         logger.error(f"SPARQL query failed: {e}")
-    #         return []
-    #
-    #
-    # def _get_class_hierarchy_sparql(self) -> List[Dict]:
-    #     """
-    #     Get class hierarchy using SPARQL query.
-    #     """
-    #     query = """
-    #     SELECT ?parent ?child ?parentLabel ?childLabel
-    #     WHERE {
-    #         ?child rdfs:subClassOf ?parent .
-    #         OPTIONAL { ?parent rdfs:label ?parentLabel }
-    #         OPTIONAL { ?child rdfs:label ?childLabel }
-    #         FILTER(isIRI(?parent))
-    #     }
-    #     """
-    #     return self.query_with_sparql(query)
-
-
-    ##############################
-    # Helper methods
-    ##############################
     def _extract_node_properties(self, node: URIRef) -> dict:
         """Extract properties for a life process node"""
         properties = {
@@ -294,23 +250,30 @@ class LifeOntology(BaseOntology):
 
         return properties
 
+
     def _add_hierarchical_relationships(self) -> None:
         """Add hierarchical relationships between life processes"""
-        for s, _, o in self.rdf_graph.triples((None, self.namespaces.RDF_SCHEMA.subClassOf, None)):
+
+        rdfs = self.get_namespace('rdfs')
+
+        for s, _, o in self.rdf_graph.triples((None, rdfs.subClassOf, None)):
             if isinstance(o, URIRef):
                 s_label = self.get_term_label(s)
                 o_label = self.get_term_label(o)
+
                 if s_label and o_label:
                     self.nx_graph.add_edge(o_label, s_label, relation_type='subClassOf')
+
 
     def _add_life_specific_relationships(self) -> None:
         """Add life-specific relationships"""
         for relation in self.relations:
-            relation_name = str(relation).split('/')[-1]
+            relation_name = self.get_term_label(relation)
 
             for s, _, o in self.rdf_graph.triples((None, relation, None)):
                 if isinstance(s, (URIRef, BNode)) and isinstance(o, (URIRef, BNode)):
                     s_label = self.get_term_label(s)
                     o_label = self.get_term_label(o)
+
                     if s_label and o_label:
                         self.nx_graph.add_edge(s_label, o_label, relation_type=relation_name)

@@ -14,7 +14,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def save_dataset(data: Dict[str, Any], output_path: Union[str, Path],) -> None:
+def save_json(data: Dict[str, Any], output_path: Union[str, Path],) -> None:
     """
     Save dataset to JSON file.
 
@@ -40,7 +40,7 @@ def save_dataset(data: Dict[str, Any], output_path: Union[str, Path],) -> None:
         raise
 
 
-def load_dataset(path: Union[str, Path]) -> Dict[str, Any]:
+def load_json(path: Union[str, Path]) -> Dict[str, Any]:
     """
     Load a dataset from a JSON file.
 

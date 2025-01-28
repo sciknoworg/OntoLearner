@@ -1,18 +1,11 @@
 
 from typing import List, Tuple, Set
-from rdflib import URIRef, Namespace, BNode
-import logging
+from rdflib import URIRef, BNode
 
-from ..base.ontology import BaseOntology, OntologyNamespaces
-from ..base.data_model import TermTyping, TaxonomyRelation, NonTaxonomicRelation
+from ..base.ontology import BaseOntology
+from ontolearner.data_structure.data import TermTyping, TaxonomicRelation, NonTaxonomicRelation
 
-
-logger = logging.getLogger(__name__)
-
-
-class PlantOntologyNamespaces(OntologyNamespaces):
-    """Container for Plant Ontology specific namespaces"""
-    PLANT_SCHEMA: Namespace = Namespace("http://purl.obolibrary.org/obo/po#")
+from .. import logger
 
 
 class PlantOntology(BaseOntology):
@@ -24,8 +17,8 @@ class PlantOntology(BaseOntology):
         Initialize the Plant Ontology.
         """
         super().__init__()
-        self.namespaces = PlantOntologyNamespaces()
 
+        # TODO refactor -> don't define relations manually
         # Plant Ontology specific relations
         self.relations = [
             URIRef("http://www.w3.org/2004/02/skos/core#related"),
@@ -36,11 +29,18 @@ class PlantOntology(BaseOntology):
         """
         Build a comprehensive graph representation of the Plant Ontology structure.
         Captures class hierarchy, relationships, and ontological properties.
+
+        TODO: refactor
+            - move the function into the Base class
         """
         self.nx_graph.clear()
 
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
+
         # Add classes and their properties
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.PLANT_SCHEMA.Class):
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
             s_label = self.get_term_label(s)
 
             properties = {}
@@ -53,7 +53,7 @@ class PlantOntology(BaseOntology):
             self.nx_graph.add_node(s_label, **properties)
 
         # Add hierarchical relationships
-        for s, p, o in self.rdf_graph.triples((None, self.namespaces.PLANT_SCHEMA.subClassOf, None)):
+        for s, p, o in self.rdf_graph.triples((None, rdfs.subClassOf, None)):
             s_label = self.get_term_label(s)
             o_label = self.get_term_label(o)
             self.nx_graph.add_edge(o_label, s_label, relation_type='subClassOf')
@@ -80,11 +80,14 @@ class PlantOntology(BaseOntology):
         """
         term_typings = []
 
-        for s, p, o in self.rdf_graph.triples((None, self.namespaces.RDF_SCHEMA.label, None)):
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+
+        for s, p, o in self.rdf_graph.triples((None, rdfs.label, None)):
             term = str(o)
             types: Set[str] = set()
 
-            for _, _, type_uri in self.rdf_graph.triples((s, self.namespaces.RDF.type, None)):
+            for _, _, type_uri in self.rdf_graph.triples((s, rdf.type, None)):
                 if isinstance(type_uri, (URIRef, BNode)):
                     type_label = self.get_term_label(type_uri)
                     if type_label:
@@ -97,35 +100,37 @@ class PlantOntology(BaseOntology):
         return term_typings
 
 
-    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomyRelation]]:
+    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         """
         Extract type taxonomies from Plant Ontology.
 
         :return: types, taxonomies
         """
         types: List[str] = []
-        taxonomies: List[TaxonomyRelation] = []
+        taxonomies: List[TaxonomicRelation] = []
+
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
 
         # Collect types using Plant Ontology specific classes
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.PLANT_SCHEMA.Class):
-            type_label = self.get_term_label(s)
-            if type_label:
-                types.append(type_label)
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
+            if isinstance(s, (URIRef, BNode)):
+                type_label = self.get_term_label(s)
+                if type_label:
+                    types.append(type_label)
 
         # Extract taxonomic relationships
-        subclass_relation = self.namespaces.PLANT_SCHEMA.subClassOf
-        for s, _, o in self.rdf_graph.triples((None, subclass_relation, None)):
+        for s, _, o in self.rdf_graph.triples((None, rdfs.subClassOf, None)):
             superclass_label = self.get_term_label(o)
             subclass_label = self.get_term_label(s)
 
             if superclass_label and subclass_label:
                 # Append a validated TaxonomyRelation instance
                 taxonomies.append(
-                    TaxonomyRelation(
-                        term1=superclass_label,
-                        term2=subclass_label,
-                        relation=True,
-                        relationship_type="direct"
+                    TaxonomicRelation(
+                        parent=superclass_label,
+                        child=subclass_label
                     )
                 )
 
@@ -139,18 +144,21 @@ class PlantOntology(BaseOntology):
         :return: types, relations, non_taxonomic_relations
         """
         types: List[str] = []
-        relations: List[str] = [str(rel).split('/')[-1] for rel in self.relations]
+        relations: List[str] = [self.get_term_label(rel) for rel in self.relations]
         non_taxonomic_relations: List[NonTaxonomicRelation] = []
 
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
+
         # Collect types
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.PLANT_SCHEMA.Class):
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
             type_label = self.get_term_label(s)
             if type_label:
                 types.append(type_label)
 
         # Extract non-taxonomic relations
         for relation in self.relations:
-            relation_label = str(relation).split('#')[-1]
+            relation_label = self.get_term_label(relation)
 
             for s, _, o in self.rdf_graph.triples((None, relation, None)):
                 head_label = self.get_term_label(s)
@@ -162,8 +170,7 @@ class PlantOntology(BaseOntology):
                         NonTaxonomicRelation(
                             head=head_label,
                             tail=tail_label,
-                            relation=relation_label,
-                            valid=True
+                            relation=relation_label
                         )
                     )
 

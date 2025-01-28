@@ -1,24 +1,23 @@
 
 from pathlib import Path
-import logging
 from typing import Union
 
-from ..base.ontology import BaseOntology
-from ..base.metric_model import OntologyMetrics
-from ..base.data_model import OntologyData
-from ..analyzer.analyzer import BaseOntologyAnalyzer
-from ..utils.io_utils import save_dataset
+from . import logger
 
-logger = logging.getLogger(__name__)
+from ontolearner.base.ontology import BaseOntology
+from ontolearner.data_structure.metric import OntologyMetrics
+from ontolearner.data_structure.data import OntologyData
+from ontolearner.analyzer.analyzer import OntologyAnalyzer
+from ontolearner.utils.io import save_json
 
 
-class OntologyProcessor:
+class ProcessorPipeline:
     """
     Handles the complete ontology processing pipeline including:
     loading, extraction, analysis, and saving of results.
     """
 
-    def __init__(self, datasets_dir: Path, analyzer_class: type[BaseOntologyAnalyzer] = BaseOntologyAnalyzer):
+    def __init__(self, datasets_dir: Path, analyzer_class: type[OntologyAnalyzer] = OntologyAnalyzer):
         self.datasets_dir = datasets_dir
         self.analyzer_class = analyzer_class
 
@@ -50,9 +49,9 @@ class OntologyProcessor:
             ontology.build_graph()
 
             # Step 4: Analyze ontology structure
-            analyzer = self.analyzer_class(ontology)
+            analyzer = self.analyzer_class()
 
-            metrics: OntologyMetrics = analyzer.analyze()
+            metrics: OntologyMetrics = analyzer(ontology)
 
             # Step 5: Save datasets
             self.save_datasets(data, name)
@@ -69,4 +68,4 @@ class OntologyProcessor:
         for dataset_type in ['term_typings', 'type_taxonomies', 'type_non_taxonomic_relations']:
             save_path = self.datasets_dir / f"{name}_{dataset_type}_dataset.json"
 
-            save_dataset(data.model_dump()[dataset_type], save_path)
+            save_json(data.model_dump()[dataset_type], save_path)

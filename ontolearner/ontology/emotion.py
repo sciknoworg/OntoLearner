@@ -1,21 +1,11 @@
 
-from dataclasses import dataclass
-from rdflib import URIRef, Namespace, BNode
+from rdflib import URIRef, BNode
 from typing import List, Tuple, Set
-import logging
 
-from ..base.ontology import BaseOntology, OntologyNamespaces
-from ..base.data_model import TermTyping, TaxonomyRelation, NonTaxonomicRelation
+from .. import logger
 
-logger = logging.getLogger(__name__)
-
-
-@dataclass
-class EmotionOntologyNamespaces(OntologyNamespaces):
-    """Extended namespaces for Mental Functioning Ontology of Emotions (MFOEM)"""
-    MFOEM_SCHEMA: Namespace = Namespace("http://purl.obolibrary.org/obo/MFOEM#")
-    OBO: Namespace = Namespace("http://purl.obolibrary.org/obo/")
-    IAO: Namespace = Namespace("http://purl.obolibrary.org/obo/IAO_")
+from ..base.ontology import BaseOntology
+from ontolearner.data_structure.data import TermTyping, TaxonomicRelation, NonTaxonomicRelation
 
 
 class EmotionOntology(BaseOntology):
@@ -31,8 +21,8 @@ class EmotionOntology(BaseOntology):
         Sets up namespaces and relations specific to MFOEM.
         """
         super().__init__()
-        self.namespaces = EmotionOntologyNamespaces()
 
+        # TODO refactor -> don't define relations manually
         # Emotion-specific relations
         self.relations = [
             URIRef("http://purl.obolibrary.org/obo/BFO_0000050"),  # part_of
@@ -41,11 +31,21 @@ class EmotionOntology(BaseOntology):
         ]
 
     def build_graph(self) -> None:
-        """Build graph representation of the Emotion Ontology structure"""
+        """
+        Build graph representation of the Emotion Ontology structure
+        TODO: refactor
+            - move the function into the Base class
+        """
         self.nx_graph.clear()
 
+        # Get required namespaces
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
+        obo = self.get_namespace('obo')
+
         # Add emotion classes and their properties
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.OWL.Class):
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
             if isinstance(s, (URIRef, BNode)):
                 s_label = self.get_term_label(s)
 
@@ -56,23 +56,23 @@ class EmotionOntology(BaseOntology):
                 }
 
                 # Get definition (IAO_0000115)
-                definitions = list(self.rdf_graph.objects(s, self.namespaces.IAO['0000115']))
+                definitions = list(self.rdf_graph.objects(s, obo['IAO_0000115']))
                 if definitions:
                     properties['definition'] = str(definitions[0])
 
                 # Get examples (IAO_0000112)
-                examples = list(self.rdf_graph.objects(s, self.namespaces.IAO['0000112']))
+                examples = list(self.rdf_graph.objects(s, obo['IAO_0000112']))
                 properties['examples'] = [str(ex) for ex in examples]
 
                 # Get curation status (IAO_0000114)
-                status = list(self.rdf_graph.objects(s, self.namespaces.IAO['0000114']))
+                status = list(self.rdf_graph.objects(s, obo['IAO_0000114']))
                 if status:
                     properties['curation_status'] = str(status[0])
 
                 self.nx_graph.add_node(s_label, **properties)
 
         # Add hierarchical relationships (subClassOf)
-        for s, _, o in self.rdf_graph.triples((None, self.namespaces.RDF_SCHEMA.subClassOf, None)):
+        for s, _, o in self.rdf_graph.triples((None, rdfs.subClassOf, None)):
             s_label = self.get_term_label(s)
             o_label = self.get_term_label(o)
             if s_label and o_label:
@@ -80,10 +80,12 @@ class EmotionOntology(BaseOntology):
 
         # Add emotion-specific relationships
         for relation in self.relations:
-            relation_name = str(relation).split('/')[-1]
+            relation_name = self.get_term_label(relation)
+
             for s, _, o in self.rdf_graph.triples((None, relation, None)):
                 s_label = self.get_term_label(s)
                 o_label = self.get_term_label(o)
+
                 if s_label and o_label:
                     self.nx_graph.add_edge(s_label, o_label, relation_type=relation_name)
 
@@ -99,19 +101,30 @@ class EmotionOntology(BaseOntology):
         """
         term_typings = []
 
-        for s, p, o in self.rdf_graph.triples((None, self.namespaces.RDF_SCHEMA.label, None)):
+        # Get required namespaces
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+        mfoem = self.get_default_namespace()
+
+        # Verify all required namespaces are available
+        if not all([rdfs, rdf, mfoem]):
+            logger.warning("Required namespaces (rdfs, rdf, mfoem) not found")
+            return term_typings
+
+        for s, p, o in self.rdf_graph.triples((None, rdfs.label, None)):
             term = str(o)
             types: Set[str] = set()
 
             # Get types from class hierarchy
-            for _, _, type_uri in self.rdf_graph.triples((s, self.namespaces.RDF.type, None)):
+            for _, _, type_uri in self.rdf_graph.triples((s, rdf.type, None)):
                 if isinstance(type_uri, (URIRef, BNode)):
                     type_label = self.get_term_label(type_uri)
                     if type_label:
                         types.add(type_label)
 
             # Add emotional category if available
-            for _, _, category in self.rdf_graph.triples((s, self.namespaces.MFOEM_SCHEMA.hasEmotionalCategory, None)):
+            emotional_predicate = mfoem['hasEmotionalCategory']
+            for _, _, category in self.rdf_graph.triples((s, emotional_predicate, None)):
                 if isinstance(category, (URIRef, BNode)):
                     category_label = self.get_term_label(category)
                     if category_label:
@@ -121,27 +134,34 @@ class EmotionOntology(BaseOntology):
                 # Append a validated TermTyping instance
                 term_typings.append(TermTyping(term=term, types=list(types)))
 
+        logger.debug(f"Extracted {len(term_typings)} term typings")
+
         return term_typings
 
 
-    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomyRelation]]:
+    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         """
         Extract type taxonomies from Emotion Ontology.
 
         :return: Tuple containing list of types and list of taxonomy relations
         """
         types: List[str] = []
-        taxonomies: List[TaxonomyRelation] = []
+        taxonomies: List[TaxonomicRelation] = []
+
+        # Get required namespaces
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
 
         # Collect emotion types
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.OWL.Class):
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
             if isinstance(s, (URIRef, BNode)):
                 type_label = self.get_term_label(s)
                 if type_label:
                     types.append(type_label)
 
         # Extract subclass relationships
-        for s, _, o in self.rdf_graph.triples((None, self.namespaces.RDF_SCHEMA.subClassOf, None)):
+        for s, _, o in self.rdf_graph.triples((None, rdfs.subClassOf, None)):
             if isinstance(o, URIRef):
                 superclass_label = self.get_term_label(o)
                 subclass_label = self.get_term_label(s)
@@ -149,11 +169,9 @@ class EmotionOntology(BaseOntology):
                 if superclass_label and subclass_label:
                     # Append a validated TaxonomyRelation instance
                     taxonomies.append(
-                        TaxonomyRelation(
-                            term1=superclass_label,
-                            term2=subclass_label,
-                            relation=True,
-                            relationship_type="direct"
+                        TaxonomicRelation(
+                            parent=superclass_label,
+                            child=subclass_label,
                         )
                     )
 
@@ -167,11 +185,14 @@ class EmotionOntology(BaseOntology):
         :return: emotion types and their non-hierarchical relationships.
         """
         types: List[str] = []
-        relations: List[str] = [str(rel).split('/')[-1] for rel in self.relations]
+        relations: List[str] = [self.get_term_label(rel) for rel in self.relations]
         non_taxonomic_relations: List[NonTaxonomicRelation] = []
 
+        rdf = self.get_namespace('rdf')
+        owl = self.get_namespace('owl')
+
         # Collect emotion types
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.OWL.Class):
+        for s in self.rdf_graph.subjects(rdf.type, owl.Class):
             if isinstance(s, (URIRef, BNode)):
                 type_label = self.get_term_label(s)
                 if type_label:
@@ -179,7 +200,7 @@ class EmotionOntology(BaseOntology):
 
         # Extract defined relationships
         for relation in self.relations:
-            relation_label = str(relation).split('/')[-1]
+            relation_label = self.get_term_label(relation)
 
             for s, _, o in self.rdf_graph.triples((None, relation, None)):
                 if isinstance(s, (URIRef, BNode)) and isinstance(o, (URIRef, BNode)):
@@ -192,8 +213,7 @@ class EmotionOntology(BaseOntology):
                             NonTaxonomicRelation(
                                 head=head_label,
                                 tail=tail_label,
-                                relation=relation_label,
-                                valid=True
+                                relation=relation_label
                             )
                         )
 

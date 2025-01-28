@@ -1,19 +1,11 @@
 
-from dataclasses import dataclass
-from rdflib import URIRef, Namespace, BNode
+from rdflib import URIRef, BNode
 from typing import List, Tuple, Set
-import logging
 
-from ..base.ontology import BaseOntology, OntologyNamespaces
-from ..base.data_model import TermTyping, TaxonomyRelation, NonTaxonomicRelation
+from ..base.ontology import BaseOntology
+from ontolearner.data_structure.data import TermTyping, TaxonomicRelation, NonTaxonomicRelation
 
-logger = logging.getLogger(__name__)
-
-
-@dataclass
-class ComputerOntologyNamespaces(OntologyNamespaces):
-    """Extended namespaces for Computer Science Ontology"""
-    CSO_SCHEMA: Namespace = Namespace("http://cso.kmi.open.ac.uk/schema/cso#")
+from .. import logger
 
 
 class ComputerOntology(BaseOntology):
@@ -28,23 +20,40 @@ class ComputerOntology(BaseOntology):
         Initialize the Computer Science Ontology.
         """
         super().__init__()
-        self.namespaces = ComputerOntologyNamespaces()
 
+        # TODO refactor -> don't define relations manually
         # CS-specific relations
         self.relations = [
             URIRef("http://cso.kmi.open.ac.uk/schema/cso#contributesTo"),
-            URIRef("http://cso.kmi.open.ac.uk/schema/cso#relatedEquivalent")
         ]
+
+        # CS-specific class axioms
+        # class_axioms = [
+        #     URIRef("http://cso.kmi.open.ac.uk/schema/cso#relatedEquivalent")
+        # ]
 
 
     def build_graph(self) -> None:
         """
         Build graph representation of the Computer Science Ontology structure
+
+        TODO: refactor
+            - move the function into the Base class
+            - separate the steps and make each step as function
+            - for any ontology that the steps are different you can define the function for it
+            Steps:
+                1. Adding classes and their properties
+                2. Adding hierarchical relations
+                3. Adding all defined relationships!
+                4. Adapt this behavior in all the ontology classes that you have on the list for now!
         """
         self.nx_graph.clear()
 
+        rdf = self.get_namespace('rdf')
+        cso = self.get_namespace('ns0')
+
         # Add all topics
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.CSO_SCHEMA.Topic):
+        for s in self.rdf_graph.subjects(rdf.type, cso.Topic):
             if isinstance(s, (URIRef, BNode)):
                 s_label = self.get_term_label(s)
                 self.nx_graph.add_node(s_label)
@@ -59,10 +68,13 @@ class ComputerOntology(BaseOntology):
 
     def _add_topic_relationships(self) -> None:
         """Add topic hierarchical relationships"""
-        for s, _, o in self.rdf_graph.triples((None, self.namespaces.CSO_SCHEMA.superTopicOf, None)):
+        cso = self.get_namespace('ns0')
+
+        for s, _, o in self.rdf_graph.triples((None, cso.superTopicOf, None)):
             if isinstance(s, (URIRef, BNode)) and isinstance(o, (URIRef, BNode)):
                 s_label = self.get_term_label(s)
                 o_label = self.get_term_label(o)
+
                 if s_label and o_label:
                     self.nx_graph.add_edge(s_label, o_label)
 
@@ -70,7 +82,8 @@ class ComputerOntology(BaseOntology):
     def _add_contribution_relationships(self) -> None:
         """Add contribution relationships between topics"""
         for relation in self.relations:
-            relation_name = str(relation).split('#')[-1]
+            relation_name = self.get_term_label(relation)
+
             for s, _, o in self.rdf_graph.triples((None, relation, None)):
                 if isinstance(s, (URIRef, BNode)) and isinstance(o, (URIRef, BNode)):
                     s_label = self.get_term_label(s)
@@ -83,18 +96,29 @@ class ComputerOntology(BaseOntology):
         """
         Extract term typings for Computer Science Ontology.
 
-        :return: List of term typings
+        :return: List of validated term-type mappings
         """
         term_typings = []
 
-        for s, p, o in self.rdf_graph.triples((None, self.namespaces.RDF_SCHEMA.label, None)):
-            if (s, self.namespaces.RDF.type, self.namespaces.CSO_SCHEMA.Topic) in self.rdf_graph:
+        # Get required namespaces
+        rdfs = self.get_namespace('rdfs')
+        rdf = self.get_namespace('rdf')
+        cso = self.get_namespace('ns0')
+
+        if not all([rdfs, rdf, cso]):
+            logger.warning("Required namespaces not found")
+            return term_typings
+
+        for s, p, o in self.rdf_graph.triples((None, rdfs.label, None)):
+            if (s, rdf.type, cso.Topic) in self.rdf_graph:
                 term = str(o)
                 types: Set[str] = set()
 
-                for _, _, type_uri in self.rdf_graph.triples((s, self.namespaces.RDF.type, None)):
+                # Collect all types for this term
+                for _, _, type_uri in self.rdf_graph.triples((s, rdf.type, None)):
                     if isinstance(type_uri, (URIRef, BNode)):
                         type_label = self.get_term_label(type_uri)
+
                         if type_label:
                             types.add(type_label)
 
@@ -102,65 +126,101 @@ class ComputerOntology(BaseOntology):
                     # Append a validated TermTyping instance
                     term_typings.append(TermTyping(term=term, types=list(types)))
 
+        logger.debug(f"Extracted {len(term_typings)} term typings")
+
         return term_typings
 
 
-    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomyRelation]]:
+    def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         """
         Extract type taxonomies from CSO.
 
-        :return: Tuple containing list of types and list of taxonomy relations
+        This method performs two main tasks:
+        1. Collects all types (topics) defined in the ontology
+        2. Extracts hierarchical relationships between these types using superTopicOf relations
+
+        :return:
+            A tuple containing:
+                - List of all types found in the ontology
+                - List of taxonomic relationships between these types
         """
         types: List[str] = []
-        taxonomies: List[TaxonomyRelation] = []
+        taxonomies: List[TaxonomicRelation] = []
+
+        # Get required namespaces
+        rdf = self.get_namespace('rdf')
+        cso = self.get_namespace('ns0')
+
+        if not all([rdf, cso]):
+            logger.warning("Required namespaces (rdf, cso) not found")
+            return [], []
 
         # Collect all types
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.CSO_SCHEMA.Topic):
+        for s in self.rdf_graph.subjects(rdf.type, cso.Topic):
             if isinstance(s, (URIRef, BNode)):
                 type_label = self.get_term_label(s)
                 if type_label:
                     types.append(type_label)
 
-        # Extract taxonomic relationships
-        for s, _, o in self.rdf_graph.triples((None, self.namespaces.CSO_SCHEMA.superTopicOf, None)):
-            if isinstance(s, (URIRef, BNode)) and isinstance(o, (URIRef, BNode)):
-                superclass_label = self.get_term_label(o)
-                subclass_label = self.get_term_label(s)
+        # Extract taxonomic relationships using superTopicOf predicate
+        for s, _, o in self.rdf_graph.triples((None, cso.superTopicOf, None)):
+            superclass_label = self.get_term_label(o)
+            subclass_label = self.get_term_label(s)
 
-                if superclass_label and subclass_label:
-                    # Append a validated TaxonomyRelation instance
-                    taxonomies.append(
-                        TaxonomyRelation(
-                            term1=superclass_label,
-                            term2=subclass_label,
-                            relation=True,
-                            relationship_type="direct"
-                        )
+            if superclass_label and subclass_label:
+                # Append a validated TaxonomyRelation instance
+                taxonomies.append(
+                    TaxonomicRelation(
+                        parent=superclass_label,
+                        child=subclass_label
                     )
+                )
+
+        logger.debug(f"Extracted {len(types)} types and {len(taxonomies)} taxonomic relations")
 
         return types, taxonomies
 
 
     def extract_type_non_taxonomic_relations(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
         """
-        Extract non-taxonomic relations from CSO.
-        Returns types, non_taxonomic_relations, and their grand truths.
+        Extract non-taxonomic relations from the Computer Science Ontology.
+
+        This method performs three main tasks:
+            1. Collects all types (topics) from the ontology
+            2. Gets the labels for all defined relations
+            3. Extracts non-taxonomic relationships between topics using these relations
+
+        :returns:
+            Tuple containing:
+            - List[str]: All types found in the ontology
+            - List[str]: Names of all non-taxonomic relations
+            - List[NonTaxonomicRelation]: The actual relationship instances found
         """
         types: List[str] = []
-        relations: List[str] = [str(rel).split('#')[-1] for rel in self.relations]
+        relations: List[str] = [self.get_term_label(rel) for rel in self.relations]
         non_taxonomic_relations: List[NonTaxonomicRelation] = []
 
+        # Get required namespaces
+        rdf = self.get_namespace('rdf')
+        cso = self.get_namespace('ns0')
+
+        if not all([rdf, cso]):
+            logger.warning("Required namespaces (rdf, cso) not found")
+            return [], [], []
+
         # Collect all types first
-        for s in self.rdf_graph.subjects(self.namespaces.RDF.type, self.namespaces.CSO_SCHEMA.Topic):
+        for s in self.rdf_graph.subjects(rdf.type, cso.Topic):
             if isinstance(s, (URIRef, BNode)):
                 type_label = self.get_term_label(s)
+
                 if type_label:
                     types.append(type_label)
 
         # Extract non-taxonomic relations
         for relation in self.relations:
-            relation_label = str(relation).split('#')[-1]
+            relation_label = self.get_term_label(relation)
 
+            # Find all triples using this relation
             for s, _, o in self.rdf_graph.triples((None, relation, None)):
                 if isinstance(s, (URIRef, BNode)) and isinstance(o, (URIRef, BNode)):
                     head_label = self.get_term_label(s)
@@ -172,9 +232,15 @@ class ComputerOntology(BaseOntology):
                             NonTaxonomicRelation(
                                 head=head_label,
                                 tail=tail_label,
-                                relation=relation_label,
-                                valid=True
+                                relation=relation_label
                             )
                         )
+
+        logger.debug(
+            f"Extracted non-taxonomic relations:\n"
+            f"- {len(types)} types\n"
+            f"- {len(relations)} relation types\n"
+            f"- {len(non_taxonomic_relations)} relationship instances"
+        )
 
         return types, relations, non_taxonomic_relations

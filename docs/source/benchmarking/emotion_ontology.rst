@@ -42,12 +42,12 @@ Relationship Types
 -----------------
 Taxonomic Relations:
     - subClassOf
-    - hasEmotionalCategory
 
 Non-taxonomic Relations:
     - part_of
     - has_characteristic
     - has_participant
+    - hasEmotionalCategory
 
 Alignments
 -----------------

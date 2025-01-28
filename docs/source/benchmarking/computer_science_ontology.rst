@@ -6,8 +6,6 @@ Overview
 The Computer Science Ontology (CSO) is a large-scale ontology of research areas in computer science.
 It provides a comprehensive vocabulary of research topics in computing, organized in a hierarchical structure.
 
-Basic Information
----------------
 :Domain: Computer Science
 :Category: Research Areas
 :Current Version: 3.4
@@ -18,17 +16,35 @@ Basic Information
 :Download: `CSO Homepage <https://cso.kmi.open.ac.uk/home>`_
 :Documentation: `CSO Documentation <https://cso.kmi.open.ac.uk/about>`_
 
-Ontology Statistics
-------------------
-Graph Metrics:
-    - **Total Triples**:
-    - **Nodes**: 14,604
-    - **Edges**: 93,289
+Base Metrics
+---------------
+    - Axioms: {axioms}
+    - Classes: {class_count}
+    - Object Properties: {op_count}
+    - Data Properties: {dp_count}
+    - Annotation Assertions: {ann_count}
+    - DL Expressivity: {dl_expr}
 
-Hierarchical Structure:
-    - **Maximum Depth**: 11
+Schema Metrics
+---------------
+    - Attribute Richness: {attr_richness}
+    - Inheritance Richness: {inh_richness}
+    - Relationship Richness: {rel_richness}
+    - Axiom/Class Ratio: {acr}
+    - Equivalence Ratio: {eq_ratio}
+
+Graph Metrics:
+------------------
+    - **Total Nodes**: 14,604
     - **Root Nodes**: 9
     - **Leaf Nodes**: 8,353
+    - **Maximum Depth**: 11
+    - **Edges**: 93,289
+    - Average Depth: {avg_depth}
+    - External Classes: {ext_class_count}
+    - Maximum Breadth: {max_breadth}
+    - Average Breadth: {avg_breadth}
+    - Tangledness: {tangledness}
 
 Dataset Statistics
 -----------------
@@ -46,7 +62,9 @@ Taxonomic Relations:
 
 Non-taxonomic Relations:
    - contributesTo
-   - relatedEquivalent
+
+Class Axioms
+   - relatedEquivalent (represents equivalent classes/synonyms)
 
 Alignments
 -----------------
