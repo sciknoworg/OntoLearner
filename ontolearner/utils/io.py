@@ -1,18 +1,9 @@
 
 from pathlib import Path
 import json
-import logging
 from typing import Any, Dict, Union
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-
-# Create a logger
-logger = logging.getLogger(__name__)
-
+from .. import logger
 
 def save_json(data: Dict[str, Any], output_path: Union[str, Path],) -> None:
     """
