@@ -2,6 +2,7 @@
 
 # Ignore the following directories
 data/
+trash/*
 
 __pycache__/
 *.py[cod]
