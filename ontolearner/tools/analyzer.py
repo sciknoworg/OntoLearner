@@ -109,8 +109,8 @@ class Analyzer(ABC):
         data: OntologyData = ontology.extract()
 
         term_typings = data.term_typings
-        taxonomies = data.type_taxonomies.get("taxonomies", {})
-        non_taxonomic = data.type_non_taxonomic_relations.get('non_taxonomies', {})
+        taxonomies = data.type_taxonomies.taxonomies
+        non_taxonomic = data.type_non_taxonomic_relations.non_taxonomies
 
         # Count instances per class
         class_counts = {}

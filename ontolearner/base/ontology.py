@@ -1,5 +1,5 @@
-from abc import ABC, abstractmethod
-from typing import List, Tuple, Any
+from abc import ABC
+from typing import List, Tuple, Any, Set
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
 import networkx as nx
 
@@ -12,7 +12,7 @@ class BaseOntology(ABC):
     """
     Base class for ontology processing
     """
-    def __init__(self, language: str ='en'):
+    def __init__(self, language: str = 'en'):
         """Initialize the ontology"""
         self.rdf_graph = None
         self.nx_graph = None
@@ -64,7 +64,8 @@ class BaseOntology(ABC):
             )
         )
 
-    def is_valid_label(self, label: str) -> Any:
+    @staticmethod
+    def is_valid_label(label: str) -> Any:
         invalids = ['root', 'thing']
         if label.lower() in invalids:
             return None
@@ -76,8 +77,6 @@ class BaseOntology(ABC):
         If no valid label is found, returns None.
 
         :param uri: URI of the entity to retrieve the label for.
-        :param graph: RDF graph (rdflib.Graph) containing the ontology data.
-        :param language: The language code to extract the label (default is 'en').
         :return: The label in the specified language, or None if no label found.
         """
         entity = URIRef(uri)
@@ -91,7 +90,6 @@ class BaseOntology(ABC):
                 return self.is_valid_label(first_label)
         return self.is_valid_label(uri.split("#")[-1]) if "#" in uri else None
 
-    @abstractmethod
     def build_graph(self) -> None:
         """
         Build NetworkX graph from RDF data.
@@ -108,26 +106,30 @@ class BaseOntology(ABC):
             self.nx_graph.add_node(object_str)
             self.nx_graph.add_edge(subject_str, object_str, label=predicate_str)
 
-    @abstractmethod
+    # ------------------- Term Typings -------------------
     def extract_term_typings(self) -> List[TermTyping]:
         """
-        Extract term typings from the ontology.
-
-        :return: List of validated term typing entries
+        Extract term-to-type mappings (e.g., instances of classes).
         """
         term_typings = []
-        classes = set(self.rdf_graph.subjects(predicate=RDF.type, object=RDFS.Class)) | \
-                  set(self.rdf_graph.subjects(predicate=RDF.type, object=OWL.Class))
-        for class_uri in classes:
-            instances = self.rdf_graph.subjects(predicate=RDF.type, object=class_uri)
-            for instance in instances:
+        for class_uri in self._get_relevant_classes():
+            for instance in self._get_instances_for_class(class_uri):
                 term = self.get_label(uri=str(instance))
                 types = self.get_label(uri=str(class_uri))
                 if term and types:
                     term_typings.append(TermTyping(term=term, types=list(types)))
+        logger.debug(f"Extracted {len(term_typings)} term typings for the Ontology.")
         return term_typings
 
-    @abstractmethod
+    def _get_relevant_classes(self) -> Set[URIRef]:
+        """Hook: Define which classes to process (default: all classes)."""
+        return set(self.rdf_graph.subjects(RDF.type, RDFS.Class)) | set(self.rdf_graph.subjects(RDF.type, OWL.Class))
+
+    def _get_instances_for_class(self, class_uri: URIRef) -> Set[URIRef]:
+        """Hook: Get instances of a class (default: direct instances)."""
+        return set(self.rdf_graph.subjects(RDF.type, class_uri))
+
+    # ------------------- Taxonomy Extraction -------------------
     def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         """
         Extract taxonomy from the ontology
@@ -146,13 +148,58 @@ class BaseOntology(ABC):
                     types.append(parent)
                     taxonomies.append(TaxonomicRelation(parent=parent,child=child))
         types = list(set(types))
+        logger.debug(f"Extracted {len(taxonomies)} taxonomic relations for the Ontology.")
         return types, taxonomies
 
-    @abstractmethod
+    # ------------------- Non-Taxonomic Relations -------------------
     def extract_type_non_taxonomic_relations(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
         """
-        Extract non-taxonomic relations from the ontology.
+         Extract non-taxonomic relations from the ontology.
 
-        :return: Types, relations, and validated relationship entries
-        """
-        pass
+         :return: Types, relations, and validated relationship entries
+         """
+        types_set = set()
+        relations_set = set()
+        non_taxonomic_pairs: List[NonTaxonomicRelation] = []
+
+        # Iterate over all triples in the RDF graph
+        for s, p, o in self.rdf_graph:
+            # If both subject and object are classes and the predicate is not rdfs:subClassOf,
+            # it's a non-taxonomic relationship
+            if self._is_valid_non_taxonomic_triple(s, p, o):
+                # Retrieve labels for subject, object, and predicate
+                head = self.get_label(str(s))
+                tail = self.get_label(str(o))
+                relation = self.get_label(str(p))
+
+                if head and tail and relation:
+                    non_taxonomic_pairs.append(
+                        NonTaxonomicRelation(
+                            head=head,
+                            tail=tail,
+                            relation=relation
+                        )
+                    )
+                    types_set.update([head, tail])
+                    relations_set.add(relation)
+
+        # Convert sets to sorted lists for consistent output
+        types = sorted(types_set)
+        relations = sorted(relations_set)
+        logger.debug(f"Extracted {len(non_taxonomic_pairs)} non-taxonomic relations for the Ontology.")
+        return types, relations, non_taxonomic_pairs
+
+    def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
+        """Hook: Validate if a triple represents a non-taxonomic relation."""
+        return (
+            self.check_if_class(s) and
+            self.check_if_class(o) and
+            p != RDFS.subClassOf
+        )
+
+    def check_if_class(self, entity):
+        """Check if an entity is a class (i.e., rdf:type rdfs:Class or owl:Class)."""
+        for _, _, obj in self.rdf_graph.triples((entity, RDF.type, None)):
+            if obj in (RDFS.Class, OWL.Class):
+                return True
+        return False
