@@ -99,12 +99,14 @@ class BaseOntology(ABC):
         """
         self.nx_graph = nx.DiGraph()
         for subject, predicate, obj in self.rdf_graph:
-            subject_str = str(subject)
-            predicate_str = str(predicate)
-            object_str = str(obj)
-            self.nx_graph.add_node(subject_str)
-            self.nx_graph.add_node(object_str)
-            self.nx_graph.add_edge(subject_str, object_str, label=predicate_str)
+            subject_label = self.get_label(str(subject))
+            object_label = self.get_label(str(obj))
+            predicate_label = self.get_label(str(predicate))
+
+            if subject_label and object_label and predicate_label:
+                self.nx_graph.add_node(subject_label)
+                self.nx_graph.add_node(object_label)
+                self.nx_graph.add_edge(subject_label, object_label, label=predicate_label)
 
     # ------------------- Term Typings -------------------
     def extract_term_typings(self) -> List[TermTyping]:
