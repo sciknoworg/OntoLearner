@@ -54,9 +54,9 @@ Usage Example
    from ontolearner.ontology.conference import ConferenceOntology
 
    # Initialize and load ontology
-   cso = ConferenceOntology()
-   cso.load("path/to/ontology.owl")
-   data = cso.extract()
+   conference = ConferenceOntology()
+   conference.load("path/to/ontology.owl")
+   data = conference.extract()
    # Access specific relations
    term_types = data.term_typings
    taxonomic_relations = data.type_taxonomies
