@@ -20,6 +20,7 @@ OntoLearner Documentation
    benchmarking/emotion_ontology.rst
    benchmarking/plant_ontology.rst
    benchmarking/sweet_ontology.rst
+   benchmarking/human_disease_ontology.rst
    benchmarking/computer_science_ontology.rst
    benchmarking/food_ontology.rst
    integration/huggingface_hub.rst
