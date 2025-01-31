@@ -13,6 +13,8 @@ OntoLearner Documentation
    :maxdepth: 1
    :caption: A. Benchmarking Ontologies
 
+   benchmarking/conference.rst
+   benchmarking/life_ontology.rst
    benchmarking/computer_science_ontology.rst
    benchmarking/emotion_ontology.rst
    benchmarking/food_ontology.rst
