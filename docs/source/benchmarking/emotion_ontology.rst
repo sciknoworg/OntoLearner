@@ -6,53 +6,44 @@ Overview
 The Mental Functioning Ontology - Emotion Module (MFOEM) is an ontology for affective phenomena
 such as emotions and moods.
 
-Basic Information
------------------
 :Domain**: Psychology, Mental Health
-:Category:
+:Category: Emotion
 :Current Version:
-:Last Updated Date:
+:Last Updated:
 :Producer: Swiss Centre for Affective Sciences & University at Buffalo
 :License: Creative Commons 3.0
 :Format: OWL
 :Download: `Emotion Ontology <http://purl.obolibrary.org/obo/MFOEM.owl>`_
 :Documentation:
 
-Ontology Statistics
------------------
-Graph Metrics:
-    - **Triples**:
-    - **Nodes**: 726
-    - **Edges**: 750
+Base Metrics
+---------------
+    - Classes:
+    - Properties:
+    - Annotation Assertions:
+    - DL Expressivity:
 
-Hierarchical Structure:
+Schema Metrics
+---------------
+    - Attribute Richness:
+    - Inheritance Richness:
+    - Relationship Richness:
+
+Graph Metrics
+-----------------
+    - **Nodes**: 727
+    - **Root Nodes**: 498
+    - **Leaf Nodes**: 14
     - **Maximum Depth**: 13
-    - **Root Nodes**: 106
-    - **Leaf Nodes**: 443
+    - **Edges**: 1446
 
 Dataset Statistics
 -----------------
 Generated Benchmarks:
-    - **Term Types**: 768
-    - **Taxonomic Relations**: 752
-    - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 76.80
-
-Relationship Types
------------------
-Taxonomic Relations:
-    - subClassOf
-
-Non-taxonomic Relations:
-    - part_of
-    - has_characteristic
-    - has_participant
-    - hasEmotionalCategory
-
-Alignments
------------------
-    - Basic Formal Ontology (BFO)
-    - Mental Functioning Ontology (MF)
+    - **Term Types**: 19
+    - **Taxonomic Relations**: 832
+    - **Non-taxonomic Relations**: 20
+    - **Average Terms per Type**: 1.06
 
 Usage Example
 -----------------
@@ -62,8 +53,10 @@ Usage Example
 
     # Initialize and load ontology
     emotion = EmotionOntology()
-
-    emotion.load("path/to/mfoem.owl")
-
+    emotion.load("path/to/ontology.owl")
     # Extract datasets
-    data = cso.extract()
+    data = emotion.extract()
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations
