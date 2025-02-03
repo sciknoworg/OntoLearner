@@ -13,13 +13,17 @@ OntoLearner Documentation
    :maxdepth: 1
    :caption: A. Benchmarking Ontologies
 
-   benchmarking/computer_science_ontology.rst
-   benchmarking/emotion_ontology.rst
-   benchmarking/food_ontology.rst
-   benchmarking/plant_ontology.rst
+   benchmarking/conference.rst
    benchmarking/icon_ontology.rst
+   benchmarking/life_ontology.rst
+   benchmarking/dbpedia_ontology.rst
+   benchmarking/emotion_ontology.rst
+   benchmarking/plant_ontology.rst
+   benchmarking/sweet_ontology.rst
+   benchmarking/human_disease_ontology.rst
+   benchmarking/computer_science_ontology.rst
+   benchmarking/food_ontology.rst
    integration/huggingface_hub.rst
-
 
 
 .. toctree::
