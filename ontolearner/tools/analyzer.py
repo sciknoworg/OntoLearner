@@ -50,38 +50,38 @@ class Analyzer(ABC):
         root_nodes = [node for node in graph.nodes() if graph.in_degree(node) == 0]
         leaf_nodes = [node for node in graph.nodes() if graph.out_degree(node) == 0]
 
-        # Calculate depths
-        depths = []
-        for node in graph.nodes():
-            for root in root_nodes:
-                try:
-                    depth = nx.shortest_path_length(graph, root, node)
-                    depths.append(depth)
-                except nx.NetworkXNoPath:
-                    continue
+        # # Calculate depths
+        # depths = []
+        # for node in graph.nodes():
+        #     for root in root_nodes:
+        #         try:
+        #             depth = nx.shortest_path_length(graph, root, node)
+        #             depths.append(depth)
+        #         except nx.NetworkXNoPath:
+        #             continue
 
         # Calculate degree-related metrics
         in_degrees = [graph.in_degree(n) for n in graph.nodes()]
         out_degrees = [graph.out_degree(n) for n in graph.nodes()]
 
-        # Calculate path-related metrics
-        path_lengths = []
-        diameter = 0
-        for source in graph.nodes():
-            for target in graph.nodes():
-                if source != target:
-                    try:
-                        path_length = nx.shortest_path_length(graph, source, target)
-                        path_lengths.append(path_length)
-                        diameter = max(diameter, path_length)
-                    except nx.NetworkXNoPath:
-                        continue
+        # # Calculate path-related metrics
+        # path_lengths = []
+        # diameter = 0
+        # for source in graph.nodes():
+        #     for target in graph.nodes():
+        #         if source != target:
+        #             try:
+        #                 path_length = nx.shortest_path_length(graph, source, target)
+        #                 path_lengths.append(path_length)
+        #                 diameter = max(diameter, path_length)
+        #             except nx.NetworkXNoPath:
+        #                 continue
 
         logger.info(f"Completed topology metrics computation in {time.time() - start_time:.2f} seconds")
 
         avg_degree = sum(dict(graph.degree()).values()) / graph.number_of_nodes() if graph.number_of_nodes() > 0 else 0
 
-        avg_path_length = sum(path_lengths) / len(path_lengths) if path_lengths else 0
+        # avg_path_length = sum(path_lengths) / len(path_lengths) if path_lengths else 0
 
         # TODO refactor ->  Create TopologyMetrics with all required fields
         topology_metrics = TopologyMetrics(
@@ -91,12 +91,12 @@ class Analyzer(ABC):
             avg_degree=avg_degree,
             max_in_degree=max(in_degrees) if in_degrees else 0,
             max_out_degree=max(out_degrees) if out_degrees else 0,
-            max_depth=max(depths) if depths else 0,
-            avg_depth=sum(depths) / len(depths) if depths else 0,
+            # max_depth=max(depths) if depths else 0,
+            # avg_depth=sum(depths) / len(depths) if depths else 0,
             num_root_nodes=len(root_nodes),
             num_leaf_nodes=len(leaf_nodes),
-            avg_path_length=avg_path_length,
-            diameter=diameter
+            # avg_path_length=avg_path_length,
+            # diameter=diameter
         )
         return topology_metrics
 

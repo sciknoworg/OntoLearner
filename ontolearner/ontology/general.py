@@ -3,7 +3,7 @@ from rdflib import URIRef, RDF, RDFS
 from ..base import BaseOntology
 
 
-class DBPediaOntology(BaseOntology):
+class DBO(BaseOntology):
     """Processes DBPedia Ontology using default behavior."""
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:

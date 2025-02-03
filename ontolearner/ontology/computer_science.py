@@ -5,7 +5,7 @@ from ..base.ontology import BaseOntology
 from ..data_structure import TaxonomicRelation
 
 
-class ComputerOntology(BaseOntology):
+class CSO(BaseOntology):
     """
     Processes Computer Science Ontology (CSO) with custom hooks for:
     - Topic-based class detection

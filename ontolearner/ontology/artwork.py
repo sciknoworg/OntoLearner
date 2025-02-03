@@ -1,5 +1,5 @@
 from ..base import BaseOntology
 
 
-class IconOntology(BaseOntology):
+class ICON(BaseOntology):
     """Processes Icon Ontology using default behavior."""
