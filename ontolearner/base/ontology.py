@@ -12,6 +12,7 @@ class BaseOntology(ABC):
     """
     Base class for ontology processing
     """
+    ontology_full_name: str = None
     def __init__(self, language: str = 'en'):
         """Initialize the ontology"""
         self.rdf_graph = None

@@ -5,6 +5,7 @@ from ..base import BaseOntology
 
 class DBO(BaseOntology):
     """Processes DBPedia Ontology using default behavior."""
+    ontology_full_name = "DBPedia Ontology"
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
         # Include datatype properties and validate domain/range

@@ -12,7 +12,7 @@ class CSO(BaseOntology):
     - superTopicOf relationships
     - contributesTo relationships
     """
-
+    ontology_full_name = "Computer Science Ontology"
     # CSO-specific URIs
     CSO_TOPIC = URIRef("http://cso.kmi.open.ac.uk/schema/cso#Topic")
     SUPER_TOPIC_OF = URIRef("http://cso.kmi.open.ac.uk/schema/cso#superTopicOf")
