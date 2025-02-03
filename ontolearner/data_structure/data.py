@@ -1,0 +1,59 @@
+
+from typing import List
+from uuid import uuid4
+
+from pydantic import BaseModel, Field
+
+
+class TermTyping(BaseModel):
+    """
+    Schema for term typing (Task A)
+    """
+    ID: str = Field(default_factory=lambda: f"TT_{str(uuid4())[:8]}", description="Unique identifier for the term")
+    term: str = Field(..., description="The term being typed")
+    types: List[str] = Field(..., description="List of types assigned to the term")
+
+
+class TaxonomicRelation(BaseModel):
+    """
+    Schema for taxonomy relations (Task B)
+    """
+    ID: str = Field(default_factory=lambda: f"TR_{str(uuid4())[:8]}", description="Unique identifier for the relation")
+    parent: str = Field(..., description="First term in taxonomy relation")
+    child: str = Field(..., description="Second term in taxonomy relation")
+
+
+class NonTaxonomicRelation(BaseModel):
+    """
+    Schema for non-taxonomic relations (Task C)
+    """
+    ID: str = Field(default_factory=lambda: f"NR_{str(uuid4())[:8]}", description="Unique identifier for the relation")
+    head: str = Field(..., description="Head term in the relation")
+    tail: str = Field(..., description="Tail term in the relation")
+    relation: str = Field(..., description="Type of relation")
+
+
+class TypeTaxonomies(BaseModel):
+    """
+    Schema for taxonomy information
+    """
+    types: List[str] = Field(..., description="List of types in the taxonomy")
+    taxonomies: List[TaxonomicRelation] = Field(..., description="List of taxonomic relations")
+
+
+class NonTaxonomicRelations(BaseModel):
+    """
+    Schema for non-taxonomic relation information
+    """
+    types: List[str] = Field(..., description="List of types involved in relations")
+    relations: List[str] = Field(..., description="List of relation types")
+    non_taxonomies: List[NonTaxonomicRelation] = Field(..., description="List of non-taxonomic relations")
+
+
+class OntologyData(BaseModel):
+    """
+    Schema for complete ontology data
+    """
+    term_typings: List[TermTyping] = Field(..., description="List of term typing entries")
+    type_taxonomies: TypeTaxonomies = Field(..., description="Taxonomy information")
+    type_non_taxonomic_relations: NonTaxonomicRelations = Field(..., description="Non-taxonomic relation information")

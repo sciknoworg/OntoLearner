@@ -1,0 +1,8 @@
+sphinx
+sphinx-book-theme
+sphinx_autodoc_typehints
+myst-parser
+sphinx_markdown_tables
+sphinx-copybutton
+sphinx_inline_tabs
+sphinxcontrib-mermaid

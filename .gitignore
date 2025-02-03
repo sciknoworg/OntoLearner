@@ -1,4 +1,9 @@
 # Byte-compiled / optimized / DLL files
+
+# Ignore the following directories
+data/
+trash/*
+
 __pycache__/
 *.py[cod]
 *$py.class
