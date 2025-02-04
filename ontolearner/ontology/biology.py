@@ -9,3 +9,8 @@ class LIFO(BaseOntology):
 class GO(BaseOntology):
     """Processes Gene Ontology using default behavior."""
     ontology_full_name = "Gene Ontology"
+
+
+class RO(BaseOntology):
+    """Processes Relation Ontology using default behavior."""
+    ontology_full_name = "Relation Ontology"

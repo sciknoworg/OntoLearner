@@ -26,6 +26,7 @@ OntoLearner Documentation
    benchmarking/envo.rst
    benchmarking/go.rst
    benchmarking/chebi.rst
+   benchmarking/ro.rst
    integration/huggingface_hub.rst
 
 

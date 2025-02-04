@@ -1,6 +1,7 @@
 from .agricultural import * # NOQA
 from .artwork import * # NOQA
 from .biology import * # NOQA
+from .chemistry import * # NOQA
 from .computer_science import * # NOQA
 from .environment import * # NOQA
 from .event import * # NOQA
