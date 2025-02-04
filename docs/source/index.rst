@@ -23,6 +23,7 @@ OntoLearner Documentation
    benchmarking/human_disease_ontology.rst
    benchmarking/computer_science_ontology.rst
    benchmarking/food_ontology.rst
+   benchmarking/envo.rst
    integration/huggingface_hub.rst
 
 
