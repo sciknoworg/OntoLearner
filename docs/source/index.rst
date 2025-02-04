@@ -25,6 +25,7 @@ OntoLearner Documentation
    benchmarking/food_ontology.rst
    benchmarking/envo.rst
    benchmarking/go.rst
+   benchmarking/chebi.rst
    integration/huggingface_hub.rst
 
 
