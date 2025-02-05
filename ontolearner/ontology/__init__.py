@@ -7,3 +7,4 @@ from .environment import * # NOQA
 from .event import * # NOQA
 from .general import * # NOQA
 from .healthcare import * # NOQA
+from .philosophy import * # NOQA

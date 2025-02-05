@@ -23,10 +23,11 @@ OntoLearner Documentation
    benchmarking/human_disease_ontology.rst
    benchmarking/computer_science_ontology.rst
    benchmarking/food_ontology.rst
-   benchmarking/envo.rst
-   benchmarking/go.rst
-   benchmarking/chebi.rst
-   benchmarking/ro.rst
+   benchmarking/environment_ontology.rst
+   benchmarking/gene_ontology.rst
+   benchmarking/chebi_ontology.rst
+   benchmarking/relations_ontology.rst
+   benchmarking/basic_formal_ontology.rst
    integration/huggingface_hub.rst
 
 
