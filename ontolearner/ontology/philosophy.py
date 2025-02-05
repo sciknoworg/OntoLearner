@@ -41,3 +41,7 @@ class BFO(BaseOntology):
         types = sorted(types_set)
         relations = sorted(relations_set)
         return types, relations, non_taxonomic_pairs
+
+
+class GFO(BaseOntology):
+    ontology_full_name = "General Formal Ontology"
