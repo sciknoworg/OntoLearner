@@ -31,18 +31,18 @@ Schema Metrics
 
 Graph Metrics:
 ------------------
-    - **Total Nodes**: 87
-    - **Root Nodes**: 40
-    - **Leaf Nodes**: 6
+    - **Total Nodes**: 538
+    - **Root Nodes**: 16
+    - **Leaf Nodes**: 276
     - **Maximum Depth**:
-    - **Edges**: 206
+    - **Edges**: 1002
 
 Dataset Statistics
 -----------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 66
-    - **Non-taxonomic Relations**: 23
+    - **Taxonomic Relations**: 162
+    - **Non-taxonomic Relations**: 40
     - **Average Terms per Type**: 0
 
 Usage Example
