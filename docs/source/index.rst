@@ -28,6 +28,7 @@ OntoLearner Documentation
    benchmarking/chebi_ontology.rst
    benchmarking/relations_ontology.rst
    benchmarking/basic_formal_ontology.rst
+   benchmarking/gist_ontology.rst
    integration/huggingface_hub.rst
 
 
