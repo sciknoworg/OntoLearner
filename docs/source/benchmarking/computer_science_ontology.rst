@@ -22,7 +22,6 @@ Base Metrics
     - Individuals:
     - Properties:
     - Annotation Assertions:
-    - DL Expressivity:
 
 Schema Metrics
 ---------------
@@ -50,10 +49,10 @@ Usage Example
 ------------------
 .. code-block:: python
 
-   from ontolearner.ontology.computer import ComputerOntology
+   from ontolearner.ontology import CSO
 
    # Initialize and load ontology
-   cso = ComputerOntology()
+   cso = CSO()
    cso.load("path/to/ontology.owl")
    # Extract datasets
    data = cso.extract()
