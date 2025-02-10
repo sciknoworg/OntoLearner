@@ -7,7 +7,7 @@ The Computer Science Ontology (CSO) is a large-scale ontology of research areas 
 It provides a comprehensive vocabulary of research topics in computing, organized in a hierarchical structure.
 
 :Domain: Computer Science
-:Category: Research Areas
+:Category: Scholarly Knowledge
 :Current Version: 3.4
 :Last Updated:
 :Producer: Knowledge Media Institute, Open University
@@ -21,7 +21,6 @@ Base Metrics
     - Classes:
     - Individuals:
     - Properties:
-    - Annotation Assertions:
 
 Schema Metrics
 ---------------
