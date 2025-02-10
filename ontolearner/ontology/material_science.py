@@ -19,3 +19,8 @@ class MI(BaseOntology):
 class MatOnto(BaseOntology):
     """Materials Ontology (MatOnto)"""
     ontology_full_name = "Materials Ontology"
+
+
+class EMMO(BaseOntology):
+    """The Elementary Multiperspective Material Ontology (EMMO)"""
+    ontology_full_name = "The Elementary Multiperspective Material Ontology (EMMO)"
