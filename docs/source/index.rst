@@ -29,7 +29,9 @@ OntoLearner Documentation
    benchmarking/relations_ontology.rst
    benchmarking/basic_formal_ontology.rst
    benchmarking/gist_ontology.rst
+   benchmarking/eurio.rst
    benchmarking/metadata4ing.rst
+   benchmarking/materials_mechanics_ontology.rst
    integration/huggingface_hub.rst
 
 
