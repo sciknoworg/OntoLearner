@@ -29,6 +29,7 @@ OntoLearner Documentation
    benchmarking/relations_ontology.rst
    benchmarking/basic_formal_ontology.rst
    benchmarking/gist_ontology.rst
+   benchmarking/metadata4ing.rst
    integration/huggingface_hub.rst
 
 

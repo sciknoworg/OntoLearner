@@ -57,3 +57,13 @@ class CSO(BaseOntology):
             # Fallback: Use last URI fragment without decoding
             return uri.split("/")[-1].replace("_", " ").title()
         return label
+
+
+class EURIO(BaseOntology):
+    """Processes EUropean Research Information Ontology (EURIO)"""
+    ontology_full_name = "EUropean Research Information Ontology"
+
+
+class Metadata4Ing(BaseOntology):
+    """Processes Metadata for Intelligent Engineering (Metadata4Ing)"""
+    ontology_full_name = "Metadata for Intelligent Engineering"
