@@ -9,3 +9,8 @@ class MMO(BaseOntology):
 class HPOnt(BaseOntology):
     """The Heat Pump Ontology (HPOnt)"""
     ontology_full_name = "The Heat Pump Ontology"
+
+
+class MI(BaseOntology):
+    """Materials Informatics (MI)"""
+    ontology_full_name = "Material Information"

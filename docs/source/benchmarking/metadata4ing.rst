@@ -5,7 +5,7 @@ Overview
 -----------------
 An ontology for describing the generation of research data within a scientific activity.
 
-:Domain: Engineering
+:Domain: Material Science and Engineering
 :Category: Scholarly Knowledge
 :Current Version: 1.3.0
 :Last Updated: 2024-09-20
