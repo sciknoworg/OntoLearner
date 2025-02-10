@@ -32,6 +32,7 @@ OntoLearner Documentation
    benchmarking/eurio.rst
    benchmarking/metadata4ing.rst
    benchmarking/materials_mechanics_ontology.rst
+   benchmarking/units_of_measure_ontology.rst
    integration/huggingface_hub.rst
 
 

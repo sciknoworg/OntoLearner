@@ -67,3 +67,8 @@ class EURIO(BaseOntology):
 class Metadata4Ing(BaseOntology):
     """Processes Metadata for Intelligent Engineering (Metadata4Ing)"""
     ontology_full_name = "Metadata for Intelligent Engineering"
+
+
+class OM(BaseOntology):
+    """Processes Ontology of Units of Measure and Related Concepts (OM)"""
+    ontology_full_name = "Ontology of Units of Measure"
