@@ -36,6 +36,7 @@ OntoLearner Documentation
    benchmarking/saref_ontology.rst
    benchmarking/heat_pump_ontology.rst
    benchmarking/material_information.rst
+   benchmarking/materials_ontology.rst
    integration/huggingface_hub.rst
 
 

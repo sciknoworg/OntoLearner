@@ -14,3 +14,8 @@ class HPOnt(BaseOntology):
 class MI(BaseOntology):
     """Materials Informatics (MI)"""
     ontology_full_name = "Material Information"
+
+
+class MatOnto(BaseOntology):
+    """Materials Ontology (MatOnto)"""
+    ontology_full_name = "Materials Ontology"
