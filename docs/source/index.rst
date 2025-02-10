@@ -33,6 +33,8 @@ OntoLearner Documentation
    benchmarking/metadata4ing.rst
    benchmarking/materials_mechanics_ontology.rst
    benchmarking/units_of_measure_ontology.rst
+   benchmarking/saref_ontology.rst
+   benchmarking/heat_pump_ontology.rst
    integration/huggingface_hub.rst
 
 
