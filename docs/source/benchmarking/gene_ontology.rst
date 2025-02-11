@@ -5,7 +5,6 @@ Overview
 -----------------
 The Gene Ontology (GO) Provides structured controlled vocabularies for the annotation of gene products
 with respect to their molecular function, cellular component, and biological role.
-The Gene Ontology consists of three Vocabularies.
 
 :Domain: Molecular Biology
 :Category: Genomic and Proteomic

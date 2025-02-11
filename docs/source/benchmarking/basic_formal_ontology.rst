@@ -42,7 +42,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 162
-    - **Non-taxonomic Relations**: 40
+    - **Non-taxonomic Relations**: 18
     - **Average Terms per Type**: 0
 
 Usage Example

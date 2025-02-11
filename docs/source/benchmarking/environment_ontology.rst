@@ -3,8 +3,10 @@ The Environment Ontology (ENVO)
 
 Overview
 -----------------
-ENVO is an ontology which represents knowledge about environments, environmental processes,
-ecosystems, habitats, and related entities.
+ENVO is an expressive, community ontology which helps humans, machines,
+and semantic web applications understand environmental entities of all kinds,
+from microscopic to intergalactic scales. As a FAIR-compliant resource, it promotes interoperability
+through the concise, controlled description of all things environmental.
 
 :Domain: Environment
 :Category: Environment, Ecosystems, Habitats

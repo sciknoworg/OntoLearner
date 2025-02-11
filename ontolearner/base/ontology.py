@@ -160,7 +160,7 @@ class BaseOntology(ABC):
                 if child and parent:
                     types.append(child)
                     types.append(parent)
-                    taxonomies.append(TaxonomicRelation(parent=parent,child=child))
+                    taxonomies.append(TaxonomicRelation(parent=parent, child=child))
         types = list(set(types))
         logger.debug(f"Extracted {len(taxonomies)} taxonomic relations for the Ontology.")
         return types, taxonomies
