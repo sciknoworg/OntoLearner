@@ -45,3 +45,7 @@ class BFO(BaseOntology):
 
 class GFO(BaseOntology):
     ontology_full_name = "General Formal Ontology"
+
+
+class DOLCE(BaseOntology):
+    ontology_full_name = "Descriptive Ontology for Linguistic and Cognitive Engineering"
