@@ -13,6 +13,7 @@ class BaseOntology(ABC):
     Base class for ontology processing
     """
     ontology_full_name: str = None
+
     def __init__(self, language: str = 'en'):
         """Initialize the ontology"""
         self.rdf_graph = None
@@ -89,7 +90,16 @@ class BaseOntology(ABC):
             first_label = str(labels[0])
             if len(first_label) > 3 and not first_label.startswith("http"):
                 return self.is_valid_label(first_label)
-        return self.is_valid_label(uri.split("#")[-1]) if "#" in uri else None
+        if "#" in uri:
+            local_name = uri.split("#")[-1]
+        elif "/" in uri:
+            local_name = uri.split("/")[-1]
+        else:
+            local_name = uri
+        label = self.is_valid_label(local_name)
+        if not label:
+            logger.warning(f"No valid label for URI: {uri}")
+        return label
 
     def build_graph(self) -> None:
         """
@@ -126,7 +136,8 @@ class BaseOntology(ABC):
 
     def _get_relevant_classes(self) -> Set[URIRef]:
         """Hook: Define which classes to process (default: all classes)."""
-        return set(self.rdf_graph.subjects(RDF.type, RDFS.Class)) | set(self.rdf_graph.subjects(RDF.type, OWL.Class))
+        return (set(self.rdf_graph.subjects(RDF.type, RDFS.Class)) |
+                set(self.rdf_graph.subjects(RDF.type, OWL.Class)))
 
     def _get_instances_for_class(self, class_uri: URIRef) -> Set[URIRef]:
         """Hook: Get instances of a class (default: direct instances)."""
@@ -149,7 +160,7 @@ class BaseOntology(ABC):
                 if child and parent:
                     types.append(child)
                     types.append(parent)
-                    taxonomies.append(TaxonomicRelation(parent=parent,child=child))
+                    taxonomies.append(TaxonomicRelation(parent=parent, child=child))
         types = list(set(types))
         logger.debug(f"Extracted {len(taxonomies)} taxonomic relations for the Ontology.")
         return types, taxonomies

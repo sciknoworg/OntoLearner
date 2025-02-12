@@ -4,8 +4,15 @@ from ..base import BaseOntology
 
 
 class DBO(BaseOntology):
-    """Processes DBPedia Ontology using default behavior."""
-    ontology_full_name = "DBPedia Ontology"
+    """
+    The DBpedia ontology is generated from the manually created specifications in the DBpedia Mappings Wiki.
+    Each release of this ontology corresponds to a new release of the DBpedia dataset, which contains
+    instance data extracted from various language versions of Wikipedia. The DBpedia ontology has evolved
+    into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
+
+    This class processes DBpedia Ontology using default behavior.
+    """
+    ontology_full_name = "DBpedia Ontology"
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
         # Include datatype properties and validate domain/range

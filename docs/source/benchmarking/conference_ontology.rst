@@ -3,7 +3,10 @@ The Conference Ontology
 
 Overview
 -----------------
-The conference-ontology is a self-contained ontology for modelling knowledge about conferences.
+The conference-ontology is a new self-contained ontology for modeling knowledge about conferences.
+The conference-ontology adopts the best ontology design practices (e.g., Ontology Design Patterns,
+ontology reuse and interlinking) and guarantees interoperability with SWC ontology
+and all other pertinent vocabularies.
 
 :Domain: Conferences
 :Category: Events

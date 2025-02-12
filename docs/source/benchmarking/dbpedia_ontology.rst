@@ -3,7 +3,10 @@ The DBpedia Ontology
 
 Overview
 -----------------
-The DBpedia ontology provides the classes and properties used in the DBpedia data set.
+The DBpedia ontology is generated from the manually created specifications in the DBpedia Mappings Wiki.
+Each release of this ontology corresponds to a new release of the DBpedia dataset, which contains
+instance data extracted from various language versions of Wikipedia. The DBpedia ontology has evolved
+into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
 
 :Domain: General Knowledge
 :Category: Knowledge Graph
