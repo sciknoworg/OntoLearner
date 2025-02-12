@@ -7,7 +7,10 @@ from ..data_structure import TaxonomicRelation
 
 class CSO(BaseOntology):
     """
-    Processes Computer Science Ontology (CSO) with custom hooks for:
+    The Computer Science Ontology (CSO) is a large-scale ontology of research areas in computer science.
+    It provides a comprehensive vocabulary of research topics in computing, organized in a hierarchical structure.
+
+    This class processes the Computer Science Ontology (CSO) with custom hooks for:
     - Topic-based class detection
     - superTopicOf relationships
     - contributesTo relationships
@@ -60,5 +63,11 @@ class CSO(BaseOntology):
 
 
 class EURIO(BaseOntology):
-    """Processes EUropean Research Information Ontology (EURIO)"""
+    """
+    EURIO (EUropean Research Information Ontology) conceptualises, formally encodes and makes available in an open,
+    structured and machine-readable format data about resarch projects funded by the EU's
+    framework programmes for research and innovation.
+
+    This class processes the EUropean Research Information Ontology (EURIO) using default behavior.
+    """
     ontology_full_name = "EUropean Research Information Ontology"
