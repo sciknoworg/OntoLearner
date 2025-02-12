@@ -23,6 +23,23 @@ OntoLearner Documentation
    benchmarking/human_disease_ontology.rst
    benchmarking/computer_science_ontology.rst
    benchmarking/food_ontology.rst
+   benchmarking/environment_ontology.rst
+   benchmarking/gene_ontology.rst
+   benchmarking/chebi_ontology.rst
+   benchmarking/relations_ontology.rst
+   benchmarking/basic_formal_ontology.rst
+   benchmarking/gist_ontology.rst
+   benchmarking/eurio.rst
+   benchmarking/metadata4ing.rst
+   benchmarking/materials_mechanics_ontology.rst
+   benchmarking/units_of_measure_ontology.rst
+   benchmarking/saref_ontology.rst
+   benchmarking/heat_pump_ontology.rst
+   benchmarking/material_information.rst
+   benchmarking/materials_ontology.rst
+   benchmarking/emmo_ontology.rst
+   benchmarking/mdo_ontology.rst
+   benchmarking/dolce_ontology.rst
    integration/huggingface_hub.rst
 
 

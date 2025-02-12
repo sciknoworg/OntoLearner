@@ -12,7 +12,7 @@ class CSO(BaseOntology):
     - superTopicOf relationships
     - contributesTo relationships
     """
-
+    ontology_full_name = "Computer Science Ontology"
     # CSO-specific URIs
     CSO_TOPIC = URIRef("http://cso.kmi.open.ac.uk/schema/cso#Topic")
     SUPER_TOPIC_OF = URIRef("http://cso.kmi.open.ac.uk/schema/cso#superTopicOf")
@@ -57,3 +57,8 @@ class CSO(BaseOntology):
             # Fallback: Use last URI fragment without decoding
             return uri.split("/")[-1].replace("_", " ").title()
         return label
+
+
+class EURIO(BaseOntology):
+    """Processes EUropean Research Information Ontology (EURIO)"""
+    ontology_full_name = "EUropean Research Information Ontology"

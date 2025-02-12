@@ -3,8 +3,10 @@ Mental Functioning Ontology - Emotion (MFOEM)
 
 Overview
 -----------------
-The Mental Functioning Ontology - Emotion Module (MFOEM) is an ontology for affective phenomena
-such as emotions and moods.
+The Mental Functioning Ontology - Emotion Module (MFOEM) aims to include all relevant aspects of affective phenomena
+including their bearers, the different types of emotions, moods, etc., their different parts and dimensions of variation,
+their facial and vocal expressions, and the role of emotions and affective phenomena
+in general in influencing human behavior.
 
 :Domain**: Psychology, Mental Health
 :Category: Emotion
