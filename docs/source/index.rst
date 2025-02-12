@@ -42,6 +42,7 @@ OntoLearner Documentation
    benchmarking/dolce_ontology.rst
    benchmarking/digital_buildings_ontology.rst
    benchmarking/industrial_ontology_foundry.rst
+   benchmarking/nfdi_ontology.rst
    integration/huggingface_hub.rst
 
 

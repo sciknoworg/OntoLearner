@@ -71,3 +71,16 @@ class EURIO(BaseOntology):
     This class processes the EUropean Research Information Ontology (EURIO) using default behavior.
     """
     ontology_full_name = "EUropean Research Information Ontology"
+
+
+class NFDIcore(BaseOntology):
+    """
+    The National Research Data Infrastructure (NFDI) initiative has led to the formation of various consortia,
+    each focused on developing a research data infrastructure tailored to its specific domain.
+    To ensure interoperability across these consortia, the NFDIcore ontology has been developed
+    as a mid-level ontology for representing metadata related to NFDI resources, including individuals,
+    organizations, projects, data portals, and more.
+
+    This class processes the National Research Data Infrastructure (NFDI) using default behavior.
+    """
+    ontology_full_name = "National Research Data Infrastructure Ontology (NFDIcore)"
