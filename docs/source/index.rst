@@ -43,6 +43,7 @@ OntoLearner Documentation
    benchmarking/digital_buildings_ontology.rst
    benchmarking/industrial_ontology_foundry.rst
    benchmarking/nfdi_ontology.rst
+   benchmarking/music_ontology.rst
    integration/huggingface_hub.rst
 
 
