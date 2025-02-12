@@ -11,4 +11,5 @@ from .event import * # NOQA
 from .general import * # NOQA
 from .healthcare import * # NOQA
 from .interoperability import * # NOQA
+from .manufacturing import * # NOQA
 from .material_science_engineering import * # NOQA
