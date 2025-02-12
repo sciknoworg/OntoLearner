@@ -3,7 +3,7 @@ from rdflib import URIRef, RDF, RDFS
 from ..base import BaseOntology
 
 
-class DBO(BaseOntology):
+class DBpedia(BaseOntology):
     """
     The DBpedia ontology is generated from the manually created specifications in the DBpedia Mappings Wiki.
     Each release of this ontology corresponds to a new release of the DBpedia dataset, which contains

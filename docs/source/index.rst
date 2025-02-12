@@ -40,6 +40,7 @@ OntoLearner Documentation
    benchmarking/emmo_ontology.rst
    benchmarking/mdo_ontology.rst
    benchmarking/dolce_ontology.rst
+   benchmarking/digital_buildings_ontology.rst
    integration/huggingface_hub.rst
 
 

@@ -2,6 +2,7 @@ from .agricultural import * # NOQA
 from .artwork import * # NOQA
 from .basic import * # NOQA
 from .biology import * # NOQA
+from .building_equipment import * # NOQA
 from .chemistry import * # NOQA
 from .enterprise import * # NOQA
 from .scholarly_knowledge import * # NOQA
