@@ -48,6 +48,7 @@ OntoLearner Documentation
    benchmarking/chord_ontology.rst
    benchmarking/sioc_ontology.rst
    benchmarking/foaf_ontology.rst
+   benchmarking/dublin_core_ontology.rst
    integration/huggingface_hub.rst
 
 
