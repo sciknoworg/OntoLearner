@@ -21,3 +21,23 @@ class MusicOntology(BaseOntology):
     This class processes the Music Ontology using default behavior.
     """
     ontology_full_name = "Music Ontology"
+
+
+class TimelineOntology(BaseOntology):
+    """
+    The Timeline Ontology is centered around the notion of timeline,
+    seen here as a way to identify a temporal backbone.
+    A timeline may support a signal, a video, a score, a work, etc.
+
+    This class processes the Timeline Ontology using default behavior.
+    """
+    ontology_full_name = "Timeline Ontology"
+
+
+class ChordOntology(BaseOntology):
+    """
+    The Chord Ontology is an ontology for describing chords in musical pieces.
+
+    This class processes the Chord Ontology using default behavior.
+    """
+    ontology_full_name = "Chord Ontology"

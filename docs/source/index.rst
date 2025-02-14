@@ -44,6 +44,8 @@ OntoLearner Documentation
    benchmarking/industrial_ontology_foundry.rst
    benchmarking/nfdi_ontology.rst
    benchmarking/music_ontology.rst
+   benchmarking/timeline_ontology.rst
+   benchmarking/chord_ontology.rst
    benchmarking/sioc_ontology.rst
    integration/huggingface_hub.rst
 
