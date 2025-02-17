@@ -1,4 +1,5 @@
 from .agricultural import * # NOQA
+from .animal_science import * # NOQA
 from .artwork import * # NOQA
 from .basic import * # NOQA
 from .biology import * # NOQA
