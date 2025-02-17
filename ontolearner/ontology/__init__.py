@@ -1,11 +1,11 @@
 from .agricultural import * # NOQA
-from .animal_science import * # NOQA
+from .livestock import * # NOQA
 from .artwork import * # NOQA
 from .basic import * # NOQA
 from .biology import * # NOQA
 from .building_equipment import * # NOQA
 from .chemistry import * # NOQA
-from .enterprise import * # NOQA
+from .industry import * # NOQA
 from .environment import * # NOQA
 from .event import * # NOQA
 from .general import * # NOQA
