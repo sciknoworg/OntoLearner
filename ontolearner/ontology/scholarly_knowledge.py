@@ -84,3 +84,16 @@ class NFDIcore(BaseOntology):
     This class processes the National Research Data Infrastructure (NFDI) using default behavior.
     """
     ontology_full_name = "National Research Data Infrastructure Ontology (NFDIcore)"
+
+
+class AIISO(BaseOntology):
+    """
+    The Academic Institution Internal Structure Ontology (AIISO) provides classes and properties
+    to describe the internal organizational structure of an academic institution. AIISO is designed to work
+    in partnership with Participation (http://purl.org/vocab/participation/schema),
+    FOAF (http://xmlns.com/foaf/0.1/) and aiiso-roles (http://purl.org/vocab/aiiso-roles/schema)
+    to describe the roles that people play within an institution.
+
+    This class processes the Academic Institution Internal Structure Ontology (AIISO) using default behavior.
+    """
+    ontology_full_name = "Academic Institution Internal Structure Ontology (AIISO)"
