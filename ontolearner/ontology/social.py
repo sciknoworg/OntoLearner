@@ -1,3 +1,5 @@
+from typing import Any
+
 from ..base.ontology import BaseOntology
 
 
@@ -21,3 +23,24 @@ class FOAF(BaseOntology):
     This class processes the FOAF ontology using default behavior.
     """
     ontology_full_name = "Friend of a Friend (FOAF) Ontology"
+
+
+class BIO(BaseOntology):
+    """
+    The BIO vocabulary contains terms useful for finding out more about people and their backgrounds and has some cross-over into genealogical information.
+    The approach taken is to describe a person's life as a series of interconnected key events, around which other information can be woven.
+    This vocabulary defines the event framework and supplies a set of core event types that cover many use cases, but it is expected that it
+    will be extended in other vocabularies to suit their needs. The intention of this vocabulary is to describe biographical events of people
+    and this intention carries through to the definitions of the properties and classes which are person-centric rather than neutral. For example
+    the Employment event puts the person being employed as the principal agent in the event rather than the employer.
+
+    This class processes BIO Ontology using default behavior.
+    """
+    ontology_full_name = "BIO: A vocabulary for biographical information"
+
+    @staticmethod
+    def is_valid_label(label: str) -> Any:
+        invalids = ['root']  # Allow 'Thing'
+        if label.lower() in invalids:
+            return None
+        return label
