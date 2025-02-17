@@ -53,6 +53,7 @@ OntoLearner Documentation
    benchmarking/atol.rst
    benchmarking/aiiso.rst
    benchmarking/bio_ontology.rst
+   benchmarking/voaf_ontology.rst
    integration/huggingface_hub.rst
 
 

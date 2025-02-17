@@ -1,4 +1,3 @@
-from typing import Any
 
 from ..base.ontology import BaseOntology
 
@@ -38,9 +37,12 @@ class BIO(BaseOntology):
     """
     ontology_full_name = "BIO: A vocabulary for biographical information"
 
-    @staticmethod
-    def is_valid_label(label: str) -> Any:
-        invalids = ['root']  # Allow 'Thing'
-        if label.lower() in invalids:
-            return None
-        return label
+
+class VOAF(BaseOntology):
+    """
+    The Vocabulary of a Friend (VOAF) is a vocabulary to describe vocabularies (meta-vocabulary), allowing to document
+    and publish information about vocabularies (RDFS vocabularies or OWL ontologies) on the Semantic Web.
+
+    This class processes the VOAF ontology using default behavior.
+    """
+    ontology_full_name = "Vocabulary of a Friend (VOAF) Ontology"
