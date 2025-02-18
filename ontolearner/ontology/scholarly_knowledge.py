@@ -1,5 +1,5 @@
 from rdflib import URIRef, RDF
-from typing import Set, Tuple, List
+from typing import Set, Tuple, List, Optional
 
 from ..base.ontology import BaseOntology
 from ..data_structure import TaxonomicRelation
@@ -97,3 +97,24 @@ class AIISO(BaseOntology):
     This class processes the Academic Institution Internal Structure Ontology (AIISO) using default behavior.
     """
     ontology_full_name = "Academic Institution Internal Structure Ontology (AIISO)"
+
+
+class OntoCAPE(BaseOntology):
+    """
+    OntoCAPE is a large-scale ontology for the domain of Computer Aided Process Engineering (CAPE). Represented in a formal,
+    machine-interpretable ontology language, OntoCAPE captures consensual knowledge of the process engineering domain
+    in a generic way such that it can be reused and shared by groups of people and across software systems.
+    On the basis of OntoCAPE, novel software support for various engineering activities can be developed;
+    possible applications include the systematic management and retrieval of simulation models and design documents,
+    electronic procurement of plant equipment, mathematical modeling,
+    as well as the integration of design data from distributed sources.
+
+    This class processes the Ontology of Computer-Aided Process Engineering (OntoCAPE) using default behavior.
+    """
+    ontology_full_name = "Ontology of Computer-Aided Process Engineering (OntoCAPE)"
+
+    def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
+        super().__init__(
+            language=language,
+            base_dir=base_dir
+        )
