@@ -96,3 +96,13 @@ class OM(BaseOntology):
     This class processes the Ontology of Units of Measure and Related Concepts (OM) using default behavior.
     """
     ontology_full_name = "Ontology of Units of Measure (OM)"
+
+
+class FSO(BaseOntology):
+    """
+    The Flow Systems Ontology (FSO) is an ontology for describing interconnected systems
+    with material or energy flow connections, and their components.
+
+    This class processes the Food Study Ontology (FSO) using default behavior.
+    """
+    ontology_full_name = "Food Study Ontology (FSO)"

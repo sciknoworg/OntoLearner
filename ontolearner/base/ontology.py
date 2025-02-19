@@ -49,8 +49,7 @@ class BaseOntology(ABC):
             return
         visited.add(path)
 
-        # Parse the current ontology file
-        self.rdf_graph.parse(path, format="xml")
+        self.rdf_graph.parse(path)
 
         # Process owl:imports
         for ontology in self.rdf_graph.subjects(RDF.type, OWL.Ontology):
