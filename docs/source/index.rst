@@ -55,6 +55,7 @@ OntoLearner Documentation
     benchmarking/bio_ontology.rst
     benchmarking/voaf_ontology.rst
     benchmarking/cape_ontology.rst
+    benchmarking/tubes_ontology.rst
     integration/huggingface_hub.rst
 
 

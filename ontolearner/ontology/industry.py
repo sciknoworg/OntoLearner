@@ -1,3 +1,4 @@
+
 from ..base import BaseOntology
 
 
@@ -33,3 +34,15 @@ class DBO(BaseOntology):
     This class processes DBO Ontology using default behavior.
     """
     ontology_full_name = "Digital Buildings Ontology (DBO)"
+
+
+class TUBES(BaseOntology):
+    """
+    The scope of the TUBES System Ontology is to explicitly define interconnected building service system
+    in the AECO industry, their hierarchical subdivisions, structural and functional aspects,
+    and links to spatial entities. As such, TSO supports the effort to represent linkable information
+    in a future semantic web of building data. It has a strong alignment to other ontologies within the W3C community.
+
+    This class processes TUBES ontology using default behavior.
+    """
+    ontology_full_name = "TUBES System Ontology"
