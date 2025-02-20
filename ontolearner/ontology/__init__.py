@@ -3,6 +3,7 @@ from .artwork import * # NOQA
 from .basic import * # NOQA
 from .biology import * # NOQA
 from .chemistry import * # NOQA
+from .education import * # NOQA
 from .environment import * # NOQA
 from .event import * # NOQA
 from .general import * # NOQA
