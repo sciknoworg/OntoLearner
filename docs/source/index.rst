@@ -57,6 +57,7 @@ OntoLearner Documentation
     benchmarking/cape_ontology.rst
     benchmarking/tubes_ontology.rst
     benchmarking/fso_ontology.rst
+    benchmarking/ssn_ontology.rst
     integration/huggingface_hub.rst
 
 

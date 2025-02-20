@@ -106,3 +106,20 @@ class FSO(BaseOntology):
     This class processes the Food Study Ontology (FSO) using default behavior.
     """
     ontology_full_name = "Food Study Ontology (FSO)"
+
+
+class SSN(BaseOntology):
+    """
+    The Semantic Sensor Network (SSN) ontology is an ontology for describing sensors and their observations,
+    the involved procedures, the studied features of interest, the samples used to do so, and the observed properties,
+    as well as actuators. SSN follows a horizontal and vertical modularization architecture
+    by including a lightweight but self-contained core ontology called SOSA (Sensor, Observation, Sample, and Actuator)
+    for its elementary classes and properties. With their different scope and different degrees of axiomatization,
+    SSN and SOSA are able to support a wide range of applications and use cases, including satellite imagery,
+    large-scale scientific monitoring, industrial and household infrastructures, social sensing, citizen science,
+    observation-driven ontology engineering, and the Web of Things. Both ontologies are described below,
+    and examples of their usage are given.
+
+    This class processes the Semantic Sensor Network Ontology (SSN) using default behavior.
+    """
+    ontology_full_name = "Semantic Sensor Network Ontology (SSN)"
