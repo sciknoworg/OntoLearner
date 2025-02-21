@@ -142,3 +142,19 @@ class OntoCAPE(BaseOntology):
                 if os.path.exists(resolved_path):
                     return resolved_path
         return super()._resolve_import_uri(uri)
+
+
+class DCAT(BaseOntology):
+    """
+    Data Catalog Vocabulary (DCAT) is an RDF vocabulary designed to facilitate interoperability
+    between data catalogs published on the Web. This document defines the schema and provides examples for its use.
+    DCAT enables a publisher to describe datasets and data services in a catalog using a standard model
+    and vocabulary that facilitates the consumption and aggregation of metadata from multiple catalogs.
+    This can increase the discoverability of datasets and data services. It also makes it possible
+    to have a decentralized approach to publishing data catalogs and makes federated search for datasets across catalogs
+    in multiple sites possible using the same query mechanism and structure. Aggregated DCAT metadata
+    can serve as a manifest file as part of the digital preservation process.
+
+    This class processes the Data Catalog Vocabulary (DCAT) using default behavior.
+    """
+    ontology_full_name = "Data Catalog Vocabulary (DCAT)"
