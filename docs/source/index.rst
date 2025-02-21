@@ -62,6 +62,7 @@ OntoLearner Documentation
     benchmarking/good_relations_ontology.rst
     benchmarking/dcat_ontology.rst
     benchmarking/geonames_ontology.rst
+    benchmarking/yago_ontology.rst
     integration/huggingface_hub.rst
 
 
