@@ -61,6 +61,7 @@ OntoLearner Documentation
     benchmarking/bibframe_ontology.rst
     benchmarking/good_relations_ontology.rst
     benchmarking/dcat_ontology.rst
+    benchmarking/geonames_ontology.rst
     integration/huggingface_hub.rst
 
 
