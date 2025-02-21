@@ -59,6 +59,7 @@ OntoLearner Documentation
     benchmarking/fso_ontology.rst
     benchmarking/ssn_ontology.rst
     benchmarking/bibframe_ontology.rst
+    benchmarking/good_relations_ontology.rst
     integration/huggingface_hub.rst
 
 
