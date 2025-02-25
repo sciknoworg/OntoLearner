@@ -42,7 +42,7 @@ Dataset Statistics
 -----------------
 Generated Benchmarks:
     - **Term Types**: 30
-    - **Taxonomic Relations**: 11
+    - **Taxonomic Relations**: 0
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.88
 

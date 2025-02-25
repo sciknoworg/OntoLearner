@@ -1,4 +1,3 @@
-from typing import Any
 
 from ..base import BaseOntology
 
@@ -51,10 +50,3 @@ class MarineTLO(BaseOntology):
     This class processes MarineTLO Ontology using default behavior.
     """
     ontology_full_name = "Marine Taxonomy and Life Ontology (MarineTLO)"
-
-    @staticmethod
-    def is_valid_label(label: str) -> Any:
-        invalids = ['root']  # Allow 'Thing'
-        if label.lower() in invalids:
-            return None
-        return label

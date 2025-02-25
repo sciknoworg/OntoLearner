@@ -1,4 +1,3 @@
-from typing import Any
 from rdflib import URIRef, RDF, RDFS
 
 from ..base import BaseOntology
@@ -39,13 +38,6 @@ class DublinCore(BaseOntology):
     This class processes Dublin Core Ontology using default behavior.
     """
     ontology_full_name = "Dublin Core Ontology"
-
-    @staticmethod
-    def is_valid_label(label: str) -> Any:
-        invalids = ['root']  # Allow 'Thing'
-        if label.lower() in invalids:
-            return None
-        return label
 
 
 class YAGO(BaseOntology):
