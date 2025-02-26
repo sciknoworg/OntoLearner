@@ -63,6 +63,10 @@ OntoLearner Documentation
     benchmarking/dcat_ontology.rst
     benchmarking/geonames_ontology.rst
     benchmarking/yago_ontology.rst
+    benchmarking/product_types_ontology.rst
+    benchmarking/schema_org.rst
+    benchmarking/doap_vocabulary.rst
+    benchmarking/copyright_ontology.rst
     integration/huggingface_hub.rst
 
 
