@@ -1,5 +1,6 @@
+import os
 from abc import ABC
-from typing import List, Tuple, Any, Set
+from typing import List, Tuple, Any, Set, Optional
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
 import networkx as nx
 
@@ -14,11 +15,12 @@ class BaseOntology(ABC):
     """
     ontology_full_name: str = None
 
-    def __init__(self, language: str = 'en'):
+    def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
         """Initialize the ontology"""
         self.rdf_graph = None
         self.nx_graph = None
         self.language = language
+        self.base_dir = base_dir
 
     def load(self, path: str) -> None:
         """
@@ -29,19 +31,59 @@ class BaseOntology(ABC):
         try:
             logger.info(f"Loading ontology from {path}")
             self.rdf_graph = Graph()
-            self.rdf_graph.parse(path, format="xml")
+            self._load_ontology_with_imports(path)
             if len(self.rdf_graph) == 0:
                 raise ValueError("Loaded ontology contains no triples")
-            logger.info(
-                f"Successfully loaded ontology:\n"
-                f"- {len(self.rdf_graph)} triples\n"
-            )
+            logger.info(f"Successfully loaded ontology with {len(self.rdf_graph)} triples")
         except FileNotFoundError:
             logger.error(f"Ontology file not found: {path}")
             raise
         except Exception as e:
             logger.error(f"Error loading ontology: {str(e)}")
             raise
+
+    def _load_ontology_with_imports(self, path: str, visited: Optional[set] = None) -> None:
+        if visited is None:
+            visited = set()
+        if path in visited:
+            return
+        visited.add(path)
+
+        self.rdf_graph.parse(path)
+
+        # Process owl:imports
+        for ontology in self.rdf_graph.subjects(RDF.type, OWL.Ontology):
+            for import_stmt in self.rdf_graph.objects(ontology, OWL.imports):
+                import_path = self._resolve_import_uri(import_stmt)
+
+                if import_path and os.path.exists(import_path):
+                    self._load_ontology_with_imports(import_path, visited)
+                else:
+                    logger.warning(f"Could not resolve import: {import_stmt}")
+
+    def _resolve_import_uri(self, uri: URIRef) -> Optional[str]:
+        """Resolve imported URIs to local file paths."""
+        uri_str = str(uri)
+
+        if uri_str.startswith("file:///"):
+            file_path = uri_str[8:]
+        elif uri_str.startswith("file://"):
+            file_path = uri_str[7:]
+        else:
+            file_path = uri_str
+
+        # Convert path separators to Unix style
+        file_path = file_path.replace('\\', '/')
+
+        # Handle Windows drive letter
+        if ':' in file_path:
+            file_path = file_path.split(':', 1)[1]
+
+        if self.base_dir:
+            resolved_path = os.path.join(self.base_dir, file_path.lstrip('/'))
+            if os.path.exists(resolved_path):
+                return resolved_path
+        return None
 
     def extract(self) -> OntologyData:
         """
@@ -113,7 +155,6 @@ class BaseOntology(ABC):
             subject_label = self.get_label(str(subject))
             object_label = self.get_label(str(obj))
             predicate_label = self.get_label(str(predicate))
-
             if subject_label and object_label and predicate_label:
                 self.nx_graph.add_node(subject_label)
                 self.nx_graph.add_node(object_label)

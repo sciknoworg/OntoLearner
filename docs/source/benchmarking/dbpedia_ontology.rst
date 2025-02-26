@@ -56,7 +56,7 @@ Usage Example
    from ontolearner.ontology.dbpedia import DBpediaOntology
 
    # Initialize and load ontology
-   dbpedia = DBpediaOntology()
+   dbpedia = DBpedia()
    dbpedia.load("path/to/ontology.owl")
    # Extract datasets
    data = dbpedia.extract()

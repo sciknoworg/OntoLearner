@@ -1,3 +1,4 @@
+
 from ..base import BaseOntology
 
 
@@ -31,3 +32,21 @@ class RO(BaseOntology):
     This class processes Relation Ontology using default behavior.
     """
     ontology_full_name = "Relation Ontology (RO)"
+
+
+class MarineTLO(BaseOntology):
+    """
+    MarineTLO is a top level ontology, generic enough to provide consistent abstractions or
+    specifications of concepts included in all data models or ontologies of marine data sources and
+    provide the necessary properties to make this distributed knowledge base a coherent source of
+    facts relating observational data with the respective spatiotemporal context and categorical
+    (systematic) domain knowledge. It can be used as the core schema for publishing Linked Data, as
+    well as for setting up integration systems for the marine domain. It can be extended to any level
+    of detail on demand, while preserving monotonicity. For its development and evolution we have
+    adopted an iterative and incremental methodology where a new version is released every two
+    months. For the implementation we use OWL 2, and to evaluate it we use a set of competency
+    queries, formulating the domain requirements provided by the related communities.
+
+    This class processes MarineTLO Ontology using default behavior.
+    """
+    ontology_full_name = "Marine Taxonomy and Life Ontology (MarineTLO)"

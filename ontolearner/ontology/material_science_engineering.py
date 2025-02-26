@@ -1,3 +1,8 @@
+import os
+from typing import Optional
+
+from rdflib import URIRef
+
 from ..base.ontology import BaseOntology
 
 
@@ -96,3 +101,74 @@ class OM(BaseOntology):
     This class processes the Ontology of Units of Measure and Related Concepts (OM) using default behavior.
     """
     ontology_full_name = "Ontology of Units of Measure (OM)"
+
+
+class FSO(BaseOntology):
+    """
+    The Flow Systems Ontology (FSO) is an ontology for describing interconnected systems
+    with material or energy flow connections, and their components.
+
+    This class processes the Food Study Ontology (FSO) using default behavior.
+    """
+    ontology_full_name = "Food Study Ontology (FSO)"
+
+
+class SSN(BaseOntology):
+    """
+    The Semantic Sensor Network (SSN) ontology is an ontology for describing sensors and their observations,
+    the involved procedures, the studied features of interest, the samples used to do so, and the observed properties,
+    as well as actuators. SSN follows a horizontal and vertical modularization architecture
+    by including a lightweight but self-contained core ontology called SOSA (Sensor, Observation, Sample, and Actuator)
+    for its elementary classes and properties. With their different scope and different degrees of axiomatization,
+    SSN and SOSA are able to support a wide range of applications and use cases, including satellite imagery,
+    large-scale scientific monitoring, industrial and household infrastructures, social sensing, citizen science,
+    observation-driven ontology engineering, and the Web of Things. Both ontologies are described below,
+    and examples of their usage are given.
+
+    This class processes the Semantic Sensor Network Ontology (SSN) using default behavior.
+    """
+    ontology_full_name = "Semantic Sensor Network Ontology (SSN)"
+
+
+class OntoCAPE(BaseOntology):
+    """
+    OntoCAPE is a large-scale ontology for the domain of Computer Aided Process Engineering (CAPE). Represented in a formal,
+    machine-interpretable ontology language, OntoCAPE captures consensual knowledge of the process engineering domain
+    in a generic way such that it can be reused and shared by groups of people and across software systems.
+    On the basis of OntoCAPE, novel software support for various engineering activities can be developed;
+    possible applications include the systematic management and retrieval of simulation models and design documents,
+    electronic procurement of plant equipment, mathematical modeling,
+    as well as the integration of design data from distributed sources.
+
+    This class processes the Ontology of Computer-Aided Process Engineering (OntoCAPE) using default behavior.
+    """
+    ontology_full_name = "Ontology of Computer-Aided Process Engineering (OntoCAPE)"
+
+    def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
+        super().__init__(language=language, base_dir=base_dir)
+
+    def _resolve_import_uri(self, uri: URIRef) -> Optional[str]:
+        uri_str = str(uri)
+        # Process file URI
+        if uri_str.startswith("file:///"):
+            file_path = uri_str[8:]
+        elif uri_str.startswith("file://"):
+            file_path = uri_str[7:]
+        else:
+            file_path = uri_str
+
+        file_path = file_path.replace('\\', '/')
+
+        # Handle Windows drive letter
+        if ':' in file_path:
+            file_path = file_path.split(':', 1)[1]
+
+        # OntoCAPE-specific handling: extract path after 'OntoCAPE/'
+        if 'OntoCAPE/' in file_path:
+            parts = file_path.split('OntoCAPE/', 1)
+            if len(parts) > 1:
+                relative_path = parts[1]
+                resolved_path = os.path.join(self.base_dir, relative_path)
+                if os.path.exists(resolved_path):
+                    return resolved_path
+        return super()._resolve_import_uri(uri)
