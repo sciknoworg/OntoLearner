@@ -44,9 +44,20 @@ class YAGO(BaseOntology):
     """
     YAGO is a large semantic knowledge base, derived from Wikipedia, WordNet, and GeoNames.
     It contains knowledge about more than 10 million entities and contains more than 120 million facts about these entities.
-    YAGO is special in several ways: It has a clean taxonomy, which was manually built, and it is the only knowledge base with such a large coverage,
+    YAGO is special in several ways: It has a clean taxonomy, which was manually built,
+    and it is the only knowledge base with such a large coverage,
     the clean taxonomy, and the extraction from Wikipedia, WordNet, and GeoNames.
 
     This class processes YAGO Ontology using default behavior.
     """
     ontology_full_name = "YAGO Ontology"
+
+
+class SchemaOrg(BaseOntology):
+    """
+    Schema.org is a collaborative, community activity with a mission to create,
+    maintain, and promote schemas for structured data on the Internet, on web pages, in email messages, and beyond.
+
+    This class processes Schema.org Ontology using default behavior.
+    """
+    ontology_full_name = "Schema.org Ontology"
