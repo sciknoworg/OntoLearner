@@ -6,6 +6,7 @@ from .chemistry import * # NOQA
 from .education import * # NOQA
 from .environment import * # NOQA
 from .event import * # NOQA
+from .finance import * # NOQA
 from .general import * # NOQA
 from .geography import * # NOQA
 from .healthcare import * # NOQA
