@@ -58,3 +58,13 @@ class GoodRelations(BaseOntology):
     This class processes GoodRelations ontology using default behavior.
     """
     ontology_full_name = "Good Relations Language Reference (GoodRelations)"
+
+
+class PTO(BaseOntology):
+    """
+    The Product Types Ontology is designed to be used in combination with GoodRelations,
+    a standard vocabulary for the commercial aspects of offers.
+
+    This class processes Product Types Ontology using default behavior.
+    """
+    ontology_full_name = "Product Types Ontology (PTO)"
