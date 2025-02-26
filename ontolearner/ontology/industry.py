@@ -68,3 +68,13 @@ class PTO(BaseOntology):
     This class processes Product Types Ontology using default behavior.
     """
     ontology_full_name = "Product Types Ontology (PTO)"
+
+
+class DOAP(BaseOntology):
+    """
+    The Description of a Project (DOAP) vocabulary, described using W3C RDF Schema and the Web Ontology Language
+    to describe software projects, and in particular open source projects.
+
+    This class processes DOAP ontology using default behavior.
+    """
+    ontology_full_name = "The Description of a Project (DOAP) vocabulary"
