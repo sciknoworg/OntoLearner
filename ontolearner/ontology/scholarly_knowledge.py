@@ -123,3 +123,16 @@ class CiTO(BaseOntology):
     This class processes the Citation Typing Ontology (CiTO) using default behavior.
     """
     ontology_full_name = "Citation Typing Ontology (CiTO)"
+
+
+class FRBRoo(BaseOntology):
+    """
+    The FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) initiative
+    is a joint effort of the CIDOC Conceptual Reference Model
+    and Functional Requirements for Bibliographic Records international working groups to establish
+    a formal ontology intended to capture and represent the underlying semantics of bibliographic information
+    and to facilitate the integration, mediation, and interchange of bibliographic and museum information.
+
+    This class processes the FRBRoo ontology using default behavior.
+    """
+    ontology_full_name = "Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)"

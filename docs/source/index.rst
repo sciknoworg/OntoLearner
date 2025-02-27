@@ -72,6 +72,7 @@ OntoLearner Documentation
     benchmarking/owl_time.rst
     benchmarking/icalendar.rst
     benchmarking/citation_typing_ontology.rst
+    benchmarking/fbrroo.rst
     integration/huggingface_hub.rst
 
 
