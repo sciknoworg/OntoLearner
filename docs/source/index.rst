@@ -71,6 +71,7 @@ OntoLearner Documentation
     benchmarking/geographical_entity_ontology.rst
     benchmarking/owl_time.rst
     benchmarking/icalendar.rst
+    benchmarking/citation_typing_ontology.rst
     integration/huggingface_hub.rst
 
 

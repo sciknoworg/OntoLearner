@@ -113,3 +113,13 @@ class DCAT(BaseOntology):
     This class processes the Data Catalog Vocabulary (DCAT) using default behavior.
     """
     ontology_full_name = "Data Catalog Vocabulary (DCAT)"
+
+
+class CiTO(BaseOntology):
+    """
+    The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,
+    both factually and rhetorically.
+
+    This class processes the Citation Typing Ontology (CiTO) using default behavior.
+    """
+    ontology_full_name = "Citation Typing Ontology (CiTO)"
