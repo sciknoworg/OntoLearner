@@ -20,3 +20,7 @@ class GEO(BaseOntology):
     This class processes Geographical Entities Ontology (GEO) using default behavior.
     """
     ontology_full_name = "Geographical Entities Ontology (GEO)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True

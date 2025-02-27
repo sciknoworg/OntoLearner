@@ -31,7 +31,7 @@ class BaseOntology(ABC):
         try:
             logger.info(f"Loading ontology from {path}")
             self.rdf_graph = Graph()
-            self._load_ontology_with_imports(path)
+            self._load(path)
             if len(self.rdf_graph) == 0:
                 raise ValueError("Loaded ontology contains no triples")
             logger.info(f"Successfully loaded ontology with {len(self.rdf_graph)} triples")
@@ -42,7 +42,7 @@ class BaseOntology(ABC):
             logger.error(f"Error loading ontology: {str(e)}")
             raise
 
-    def _load_ontology_with_imports(self, path: str, visited: Optional[set] = None) -> None:
+    def _load(self, path: str, visited: Optional[set] = None) -> None:
         if visited is None:
             visited = set()
         if path in visited:
@@ -51,20 +51,27 @@ class BaseOntology(ABC):
 
         self.rdf_graph.parse(path)
 
+        if not self.contains_imports():
+            return
+
         # Process owl:imports
         for ontology in self.rdf_graph.subjects(RDF.type, OWL.Ontology):
-            for import_stmt in self.rdf_graph.objects(ontology, OWL.imports):
-                import_path = self._resolve_import_uri(import_stmt)
+            for import_def in self.rdf_graph.objects(ontology, OWL.imports):
+                import_uri = self._resolve_import_def(import_def)
 
-                if import_path:
+                if import_uri:
                     try:
-                        self._load_ontology_with_imports(import_path, visited)
+                        self._load(import_uri, visited)
                     except Exception as e:
-                        logger.error(f"Failed to load import {import_path}: {str(e)}")
+                        logger.error(f"Failed to load import {import_uri}: {str(e)}")
                 else:
-                    logger.warning(f"Could not resolve import: {import_stmt}")
+                    logger.warning(f"Could not resolve import: {import_def}")
 
-    def _resolve_import_uri(self, uri: URIRef) -> Optional[str]:
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return False
+
+    def _resolve_import_def(self, uri: URIRef) -> Optional[str]:
         """Resolve imported URIs to local file paths."""
         uri_str = str(uri)
 
