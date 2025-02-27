@@ -56,8 +56,11 @@ class BaseOntology(ABC):
             for import_stmt in self.rdf_graph.objects(ontology, OWL.imports):
                 import_path = self._resolve_import_uri(import_stmt)
 
-                if import_path and os.path.exists(import_path):
-                    self._load_ontology_with_imports(import_path, visited)
+                if import_path:
+                    try:
+                        self._load_ontology_with_imports(import_path, visited)
+                    except Exception as e:
+                        logger.error(f"Failed to load import {import_path}: {str(e)}")
                 else:
                     logger.warning(f"Could not resolve import: {import_stmt}")
 
@@ -65,7 +68,22 @@ class BaseOntology(ABC):
         """Resolve imported URIs to local file paths."""
         uri_str = str(uri)
 
-        if uri_str.startswith("file:///"):
+        # Handle OBO PURLs
+        if uri_str.startswith("http://purl.obolibrary.org/obo/"):
+            path = uri_str.replace("http://purl.obolibrary.org/obo/", "")
+            if self.base_dir:
+                local_path = os.path.join(self.base_dir, path)
+                if os.path.exists(local_path):
+                    return local_path
+            # Fallback to HTTP if local file not found
+            logger.info(f"Fetching import from HTTP: {uri_str}")
+            return uri_str
+        # Handle other HTTP URIs
+        elif uri_str.startswith("http://") or uri_str.startswith("https://"):
+            logger.info(f"Fetching import from HTTP: {uri_str}")
+            return uri_str
+        # Handle file:// URIs
+        elif uri_str.startswith("file:///"):
             file_path = uri_str[8:]
         elif uri_str.startswith("file://"):
             file_path = uri_str[7:]
@@ -76,13 +94,14 @@ class BaseOntology(ABC):
         file_path = file_path.replace('\\', '/')
 
         # Handle Windows drive letter
-        if ':' in file_path:
+        if ':' in file_path and os.name == 'nt':
             file_path = file_path.split(':', 1)[1]
 
         if self.base_dir:
             resolved_path = os.path.join(self.base_dir, file_path.lstrip('/'))
             if os.path.exists(resolved_path):
                 return resolved_path
+
         return None
 
     def extract(self) -> OntologyData:
