@@ -68,6 +68,7 @@ OntoLearner Documentation
     benchmarking/doap_vocabulary.rst
     benchmarking/copyright_ontology.rst
     benchmarking/agrovoc.rst
+    benchmarking/geographical_entity_ontology.rst
     integration/huggingface_hub.rst
 
 
