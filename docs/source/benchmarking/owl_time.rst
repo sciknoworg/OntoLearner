@@ -11,7 +11,7 @@ using either the conventional (Gregorian) calendar and clock, or using another t
 such as Unix-time, geologic time, or different calendars.
 
 :Domain: Temporal Reasoning
-:Category: Event
+:Category: Event Management
 :Current Version: 1.0
 :Last Updated: 15 November 2022
 :Producer: World Wide Web Consortium

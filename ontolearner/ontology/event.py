@@ -25,3 +25,17 @@ class OWLTime(BaseOntology):
     This class processes OWL-Time ontology using default behavior.
     """
     ontology_full_name = "Time Ontology in OWL (OWL-Time)"
+
+
+class ICalendar(BaseOntology):
+    """
+    iCalendar is an Internet standard for exchanging calendar and scheduling data across different applications
+    and platforms using a standardized text-based format (.ics). It enables interoperability for events, tasks,
+    and scheduling, supporting features like recurring events, invitations, and time zone adjustments.
+    While widely used in applications like Google Calendar and Outlook, its complexity and partial implementations
+    pose challenges, leading to efforts to integrate it with Semantic Web technologies
+    for enhanced data linking and automation.
+
+    This class processes iCalendar ontology using default behavior.
+    """
+    ontology_full_name = "iCalendar Vocabulary"

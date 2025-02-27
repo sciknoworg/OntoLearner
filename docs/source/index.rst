@@ -70,6 +70,7 @@ OntoLearner Documentation
     benchmarking/agrovoc.rst
     benchmarking/geographical_entity_ontology.rst
     benchmarking/owl_time.rst
+    benchmarking/icalendar.rst
     integration/huggingface_hub.rst
 
 
