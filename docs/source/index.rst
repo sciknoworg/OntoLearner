@@ -69,6 +69,7 @@ OntoLearner Documentation
     benchmarking/copyright_ontology.rst
     benchmarking/agrovoc.rst
     benchmarking/geographical_entity_ontology.rst
+    benchmarking/owl_time.rst
     integration/huggingface_hub.rst
 
 
