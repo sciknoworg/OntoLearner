@@ -32,3 +32,14 @@ class DOLCE(BaseOntology):
     This class processes DOLCE using default behavior.
     """
     ontology_full_name = "Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE)"
+
+
+class SIO(BaseOntology):
+    """
+    The semanticscience integrated ontology (SIO) provides a simple, integrated upper level ontology (types, relations)
+    for consistent knowledge representation across physical, processual and informational entities.
+    This project provides foundational support for the Bio2RDF (http://bio2rdf.org) and SADI (http://sadiframework.org) projects.
+
+    This class processes SIO using default behavior.
+    """
+    ontology_full_name = "Semanticscience Integrated Ontology (SIO)"

@@ -75,6 +75,7 @@ OntoLearner Documentation
     benchmarking/fbrroo.rst
     benchmarking/lex_info.rst
     benchmarking/as2.rst
+    benchmarking/sio.rst
     integration/huggingface_hub.rst
 
 
