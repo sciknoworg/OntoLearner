@@ -46,3 +46,14 @@ class VOAF(BaseOntology):
     This class processes the VOAF ontology using default behavior.
     """
     ontology_full_name = "Vocabulary of a Friend (VOAF) Ontology"
+
+
+class AS2(BaseOntology):
+    """
+    The Activity Streams 2.0 ontology is a vocabulary for describing social activities and actions.
+    It is based on the Activity Streams 2.0 specification and provides a set of classes and properties
+    for describing activities on the web.
+
+    This class processes the AS2 ontology using default behavior.
+    """
+    ontology_full_name = "Activity Streams 2.0 Ontology"

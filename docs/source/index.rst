@@ -74,6 +74,7 @@ OntoLearner Documentation
     benchmarking/citation_typing_ontology.rst
     benchmarking/fbrroo.rst
     benchmarking/lex_info.rst
+    benchmarking/as2.rst
     integration/huggingface_hub.rst
 
 
