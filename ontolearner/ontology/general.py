@@ -61,3 +61,16 @@ class SchemaOrg(BaseOntology):
     This class processes Schema.org Ontology using default behavior.
     """
     ontology_full_name = "Schema.org Ontology"
+
+
+class UMBEL(BaseOntology):
+    """
+    UMBEL is the Upper Mapping and Binding Exchange Layer, designed to help content interoperate on the Web.
+    UMBEL provides two valuable functions: First, it is a broad, general reference structure of 34,000 concepts,
+    which provides a scaffolding to link and interoperate other datasets and domain vocabularies.
+    Second, it is a base vocabulary for the construction of other concept-based domain ontologies,
+    also designed for interoperation.
+
+    This class processes UMBEL Ontology using default behavior.
+    """
+    ontology_full_name = "Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary"
