@@ -73,6 +73,7 @@ OntoLearner Documentation
     benchmarking/icalendar.rst
     benchmarking/citation_typing_ontology.rst
     benchmarking/fbrroo.rst
+    benchmarking/lex_info.rst
     integration/huggingface_hub.rst
 
 

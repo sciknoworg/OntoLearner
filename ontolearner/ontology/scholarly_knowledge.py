@@ -136,3 +136,14 @@ class FRBRoo(BaseOntology):
     This class processes the FRBRoo ontology using default behavior.
     """
     ontology_full_name = "Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)"
+
+
+class LexInfo(BaseOntology):
+    """
+    LexInfo allows us to associate linguistic information to elements in an ontology with respect
+    to any level of linguistic description and expressive. LexInfo has been implemented as an OWL ontology
+    and is available together with an API.
+
+    This class processes the LexInfo ontology using default behavior.
+    """
+    ontology_full_name = "LexInfo"
