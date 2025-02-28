@@ -77,6 +77,7 @@ OntoLearner Documentation
     benchmarking/as2.rst
     benchmarking/sio.rst
     benchmarking/umbel.rst
+    benchmarking/bio_pax.rst
     integration/huggingface_hub.rst
 
 

@@ -50,3 +50,15 @@ class MarineTLO(BaseOntology):
     This class processes MarineTLO Ontology using default behavior.
     """
     ontology_full_name = "Marine Taxonomy and Life Ontology (MarineTLO)"
+
+
+class BioPAX(BaseOntology):
+    """
+    BioPAX is a standard language that aims to enable integration, exchange, visualization and analysis
+    of biological pathway data. Specifically, BioPAX supports data exchange between pathway data
+    groups and thus reduces the complexity of interchange between data formats by providing an
+    accepted standard format for pathway data.
+
+    This class processes BioPAX Ontology using default behavior.
+    """
+    ontology_full_name = "Biological Pathways Exchange (BioPAX)"
