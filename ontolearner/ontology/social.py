@@ -1,4 +1,3 @@
-
 from ..base.ontology import BaseOntology
 
 

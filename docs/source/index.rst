@@ -78,6 +78,7 @@ OntoLearner Documentation
     benchmarking/sio.rst
     benchmarking/umbel.rst
     benchmarking/bio_pax.rst
+    benchmarking/nomisma_ontology.rst
     integration/huggingface_hub.rst
 
 
