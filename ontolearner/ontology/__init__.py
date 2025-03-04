@@ -17,3 +17,4 @@ from .livestock import * # NOQA
 from .material_science_engineering import * # NOQA
 from .scholarly_knowledge import * # NOQA
 from .social import * # NOQA
+from .web import * # NOQA
