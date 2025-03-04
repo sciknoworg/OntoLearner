@@ -147,7 +147,7 @@ class OntoCAPE(BaseOntology):
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
         super().__init__(language=language, base_dir=base_dir)
 
-    def _resolve_import_uri(self, uri: URIRef) -> Optional[str]:
+    def _resolve_import_def(self, uri: URIRef) -> Optional[str]:
         uri_str = str(uri)
         # Process file URI
         if uri_str.startswith("file:///"):
@@ -171,4 +171,13 @@ class OntoCAPE(BaseOntology):
                 resolved_path = os.path.join(self.base_dir, relative_path)
                 if os.path.exists(resolved_path):
                     return resolved_path
-        return super()._resolve_import_uri(uri)
+        return super()._resolve_import_def(uri)
+
+
+class QUDT(BaseOntology):
+    """
+    QUDT is an advocate for the development and implementation of standards to quantify data expressed in RDF and JSON.
+
+    This class processes the Quantities, Units, Dimensions and Data Types (QUDT) using default behavior.
+    """
+    ontology_full_name = "Quantities, Units, Dimensions and Data Types (QUDT)"

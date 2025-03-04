@@ -81,6 +81,7 @@ OntoLearner Documentation
     benchmarking/nomisma_ontology.rst
     benchmarking/hydra.rst
     benchmarking/doco.rst
+    benchmarking/qudt.rst
     integration/huggingface_hub.rst
 
 
