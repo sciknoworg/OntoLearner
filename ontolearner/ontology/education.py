@@ -18,3 +18,13 @@ class Bibframe(BaseOntology):
     This class processes the Bibliographic Framework Ontology (BIBFRAME) using default behavior.
     """
     ontology_full_name = "Bibliographic Framework Ontology (BIBFRAME)"
+
+
+class DoCO(BaseOntology):
+    """
+    DoCO, the Document Components Ontology, is an OWL 2 DL ontology that provides a general-purpose structured vocabulary
+    of document elements. DoCO has been designed as a general unifying ontological framework for describing different aspects
+    related to the content of scientific and other scholarly texts. Its primary goal has been to improve the interoperability
+    and shareability of academic documents (and related services) when multiple formats are actually used for their storage.
+    """
+    ontology_full_name = "Document Components Ontology (DoCO)"

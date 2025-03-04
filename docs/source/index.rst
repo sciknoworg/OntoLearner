@@ -80,6 +80,7 @@ OntoLearner Documentation
     benchmarking/bio_pax.rst
     benchmarking/nomisma_ontology.rst
     benchmarking/hydra.rst
+    benchmarking/doco.rst
     integration/huggingface_hub.rst
 
 
