@@ -83,6 +83,7 @@ OntoLearner Documentation
     benchmarking/doco.rst
     benchmarking/qudt.rst
     benchmarking/bbc_ontologies.rst
+    benchmarking/frapo.rst
     integration/huggingface_hub.rst
 
 
