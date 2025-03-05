@@ -15,6 +15,7 @@ from .interoperability import * # NOQA
 from .law import * # NOQA
 from .livestock import * # NOQA
 from .material_science_engineering import * # NOQA
+from .news import * # NOQA
 from .scholarly_knowledge import * # NOQA
 from .social import * # NOQA
 from .web import * # NOQA
