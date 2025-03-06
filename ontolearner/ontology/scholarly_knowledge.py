@@ -147,3 +147,15 @@ class LexInfo(BaseOntology):
     This class processes the LexInfo ontology using default behavior.
     """
     ontology_full_name = "LexInfo"
+
+
+class PreMOn(BaseOntology):
+    """
+    The PreMOn Ontology is an extension of lemon (W3C Ontology Lexicon Community Group, 2015)
+    for representing predicate models and their mappings. The Core Module of the PreMOn Ontology
+    defines the main abstractions for modelling semantic classes with their semantic roles,
+    mappings between different predicate models, and annotations.
+
+    This class processes the PreMOn ontology using default behavior.
+    """
+    ontology_full_name = "Pre-Modern Ontology (PreMOn)"
