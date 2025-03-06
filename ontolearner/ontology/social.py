@@ -56,3 +56,17 @@ class AS2(BaseOntology):
     This class processes the AS2 ontology using default behavior.
     """
     ontology_full_name = "Activity Streams 2.0 Ontology"
+
+
+class Contact(BaseOntology):
+    """
+    Ontology to capture concepts related to contact information (addresses, phone numbers).
+    Reuses the iContact Ontology developed by the Enterprise Integration Lab in Toronto.
+    The iContact ontology is extended to introduce a specialized definition of Hours of Operation,
+    defined as a subclass of both the iContact definition of hours of operation,
+    and a subclass of the Recurring Event class defined in the iCity Recurring Event ontology.
+    The Contact ontology also extends the definition of address to include an associated location.
+
+    This class processes the Contact ontology using default behavior.
+    """
+    ontology_full_name = "Contact Ontology"
