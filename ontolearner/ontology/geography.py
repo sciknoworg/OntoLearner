@@ -24,3 +24,14 @@ class GEO(BaseOntology):
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
         return True
+
+
+class GTS(BaseOntology):
+    """
+    This is an RDF/OWL representation of the GeoSciML Geologic Timescale model, which has been adapted
+    from the model described in Cox, S.J.D, & Richard, S.M. (2005) A formal model for the geologic timescale and GSSP,
+    compatible with geospatial information transfer standards, Geosphere, Geological Society of America.
+
+    This class processes Geologic Timescale model (GTS) using default behavior.
+    """
+    ontology_full_name = "Geologic Timescale model (GTS)"

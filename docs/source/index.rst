@@ -86,6 +86,7 @@ OntoLearner Documentation
     benchmarking/frapo.rst
     benchmarking/contact.rst
     benchmarking/chmo.rst
+    benchmarking/geologic_timescale_model.rst
     integration/huggingface_hub.rst
 
 
