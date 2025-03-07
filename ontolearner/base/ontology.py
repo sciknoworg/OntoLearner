@@ -152,7 +152,7 @@ class BaseOntology(ABC):
         entity = URIRef(uri)
         labels = list(self.rdf_graph.objects(subject=entity, predicate=RDFS.label))
         for label in labels:
-            if label.language == self.language:
+            if hasattr(label, 'language') and label.language == self.language:
                 return self.is_valid_label(str(label))
         if labels:
             first_label = str(labels[0])

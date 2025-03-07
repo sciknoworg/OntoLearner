@@ -88,6 +88,7 @@ OntoLearner Documentation
     benchmarking/chmo.rst
     benchmarking/geologic_timescale_model.rst
     benchmarking/premon.rst
+    benchmarking/datacite.rst
     integration/huggingface_hub.rst
 
 

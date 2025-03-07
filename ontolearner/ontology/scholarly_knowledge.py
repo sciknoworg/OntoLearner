@@ -159,3 +159,15 @@ class PreMOn(BaseOntology):
     This class processes the PreMOn ontology using default behavior.
     """
     ontology_full_name = "Pre-Modern Ontology (PreMOn)"
+
+
+class DataCite(BaseOntology):
+    """
+    The DataCite Ontology (DataCite) is an ontology that enables the metadata properties
+    of the DataCite Metadata Schema Specification (i.e., a list of metadata properties
+    for the accurate and consistent identification of a resource for citation
+    and retrieval purposes) to be described in RDF.
+
+    This class processes the DataCite ontology using default behavior.
+    """
+    ontology_full_name = "DataCite"
