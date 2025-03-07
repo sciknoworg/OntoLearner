@@ -35,3 +35,12 @@ class GTS(BaseOntology):
     This class processes Geologic Timescale model (GTS) using default behavior.
     """
     ontology_full_name = "Geologic Timescale model (GTS)"
+
+
+class Juso(BaseOntology):
+    """
+    Juso Ontology is a Web vocabulary for describing geographical addresses and features.
+
+    This class processes Juso Ontology using default behavior.
+    """
+    ontology_full_name = "Juso Ontology"
