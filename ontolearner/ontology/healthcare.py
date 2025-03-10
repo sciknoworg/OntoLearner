@@ -34,3 +34,14 @@ class OBI(BaseOntology):
     This class processes the Ontology for Biomedical Investigations (OBI) using default behavior.
     """
     ontology_full_name = "Ontology for Biomedical Investigations (OBI)"
+
+
+class PRoteinOntology(BaseOntology):
+    """
+    The PRotein Ontology (PRO) formally defines taxon-specific and taxon-neutral protein-related entities
+    in three major areas: proteins related by evolution; proteins produced from a given gene;
+    and protein-containing complexes.
+
+    This class processes the Protein Ontology (PRO) using default behavior.
+    """
+    ontology_full_name = "Protein Ontology (PRO)"

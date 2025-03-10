@@ -91,6 +91,7 @@ OntoLearner Documentation
     benchmarking/datacite.rst
     benchmarking/juso.rst
     benchmarking/obi_ontology.rst
+    benchmarking/protein_ontology.rst
     integration/huggingface_hub.rst
 
 
