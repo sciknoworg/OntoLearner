@@ -92,6 +92,7 @@ OntoLearner Documentation
     benchmarking/juso.rst
     benchmarking/obi_ontology.rst
     benchmarking/protein_ontology.rst
+    benchmarking/rxno.rst
     integration/huggingface_hub.rst
 
 

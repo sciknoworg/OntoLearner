@@ -27,3 +27,13 @@ class ChMO(BaseOntology):
     This class processes Chemical Methods Ontology using default behavior.
     """
     ontology_full_name = "Chemical Methods Ontology"
+
+
+class RXNO(BaseOntology):
+    """
+    RXNO is the name reaction ontology. It contains more than 500 classes representing organic reactions
+    such as the Diels–Alder cyclization.
+
+    This class processes the Reaction Ontology (RXNO) using default behavior.
+    """
+    ontology_full_name = "Reaction Ontology (RXNO)"
