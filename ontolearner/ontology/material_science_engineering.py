@@ -181,3 +181,20 @@ class QUDT(BaseOntology):
     This class processes the Quantities, Units, Dimensions and Data Types (QUDT) using default behavior.
     """
     ontology_full_name = "Quantities, Units, Dimensions and Data Types (QUDT)"
+
+
+class ENM(BaseOntology):
+    """
+    The eNanoMapper project (https://www.enanomapper.net/), NanoCommons project (https://www.nanocommons.eu/)
+    and ACEnano project (http://acenano-project.eu/) are creating a pan-European computational infrastructure
+    for toxicological data management for ENMs, based on semantic web standards and ontologies.
+    This ontology is an application ontology targeting the full domain of nanomaterial safety assessment.
+    It re-uses several other ontologies including the NPO, CHEMINF, ChEBI, and ENVO.
+
+    This class processes the Environmental Noise Measurement Ontology (ENM) using default behavior.
+    """
+    ontology_full_name = "Environmental Noise Measurement Ontology (ENM)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
