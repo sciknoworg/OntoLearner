@@ -90,6 +90,7 @@ OntoLearner Documentation
     benchmarking/premon.rst
     benchmarking/datacite.rst
     benchmarking/juso.rst
+    benchmarking/obi_ontology.rst
     integration/huggingface_hub.rst
 
 

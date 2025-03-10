@@ -24,3 +24,13 @@ class MFOEM(BaseOntology):
     This class processes the Emotion Ontology (MFOEM) using default behavior.
     """
     ontology_full_name = "Emotion Ontology -- Mental Functioning Ontology of Emotions"
+
+
+class OBI(BaseOntology):
+    """
+    The Ontology for Biomedical Investigations (OBI) helps you communicate clearly about scientific investigations
+    by defining more than 2500 terms for assays, devices, objectives, and more.
+
+    This class processes the Ontology for Biomedical Investigations (OBI) using default behavior.
+    """
+    ontology_full_name = "Ontology for Biomedical Investigations (OBI)"
