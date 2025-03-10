@@ -95,6 +95,7 @@ OntoLearner Documentation
     benchmarking/rxno.rst
     benchmarking/sumo.rst
     benchmarking/enm_ontology.rst
+    benchmarking/prov_ontology.rst
     integration/huggingface_hub.rst
 
 

@@ -74,3 +74,17 @@ class UMBEL(BaseOntology):
     This class processes UMBEL Ontology using default behavior.
     """
     ontology_full_name = "Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary"
+
+
+class PROV(BaseOntology):
+    """
+    The PROV Ontology (PROV-O) expresses the PROV Data Model [PROV-DM] using the OWL2 Web Ontology Language (OWL2) [OWL2-OVERVIEW].
+    It provides a set of classes, properties, and restrictions that can be used to represent
+    and interchange provenance information generated in different systems and under different contexts.
+    It can also be specialized to create new classes and properties to model provenance information
+    for different applications and domains. The PROV Document Overview describes the overall state of PROV,
+    and should be read before other PROV documents.
+
+    This class processes PROV Ontology using default behavior.
+    """
+    ontology_full_name = "PROV Ontology"
