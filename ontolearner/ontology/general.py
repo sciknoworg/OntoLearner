@@ -88,3 +88,14 @@ class PROV(BaseOntology):
     This class processes PROV Ontology using default behavior.
     """
     ontology_full_name = "PROV Ontology"
+
+
+class EDAM(BaseOntology):
+    """
+    EDAM is a domain ontology of data analysis and data management in bio- and other sciences, and science-based applications.
+    It comprises concepts related to analysis, modelling, optimisation, and data life cycle. Targetting usability by diverse users,
+    the structure of EDAM is relatively simple, divided into 4 main sections: Topic, Operation, Data (incl. Identifier), and Format.
+
+    This class processes EDAM Ontology using default behavior.
+    """
+    ontology_full_name = "The ontology of data analysis and management (EDAM)"
