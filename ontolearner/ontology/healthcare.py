@@ -55,3 +55,14 @@ class BTO(BaseOntology):
     This class processes the BRENDA Tissue Ontology (BTO) using default behavior.
     """
     ontology_full_name = "BRENDA Tissue Ontology (BTO)"
+
+
+class NCIt(BaseOntology):
+    """
+    NCI Thesaurus (NCIt) is a reference terminology that includes broad coverage of the cancer domain,
+    including cancer related diseases, findings and abnormalities. The NCIt OBO Edition aims to increase integration
+    of the NCIt with OBO Library ontologies. NCIt OBO Edition releases should be considered experimental.
+
+    This class processes the National Cancer Institute Thesaurus (NCIt) using default behavior.
+    """
+    ontology_full_name = "NCI Thesaurus (NCIt)"

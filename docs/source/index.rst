@@ -99,6 +99,7 @@ OntoLearner Documentation
     benchmarking/bto_ontology.rst
     benchmarking/rex.rst
     benchmarking/duo.rst
+    benchmarking/ncit.rst
     integration/huggingface_hub.rst
 
 

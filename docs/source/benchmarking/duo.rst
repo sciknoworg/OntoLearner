@@ -5,8 +5,8 @@ Overview
 -----------------
 DUO is an ontology which represent data use conditions.
 
-:Domain: General
-:Category: General
+:Domain: Scholarly Knowledge
+:Category: Scholarly Knowledge
 :Current Version: 1.0
 :Last Updated: 2025-02-17
 :Producer: N/A
@@ -23,17 +23,17 @@ Base Metrics
 
 Graph Metrics:
 ------------------
-    - **Nodes**: 308
-    - **Root Nodes**: 1
-    - **Leaf Nodes**: 0
-    - **Maximum Depth**: 0
-    - **Edges**: 134
+    - **Nodes**: 476
+    - **Root Nodes**: 196
+    - **Leaf Nodes**: 168
+    - **Maximum Depth**: 10
+    - **Edges**: 583
 
 Dataset Statistics
 ------------------
 Generated Benchmarks:
     * **Term Types**: 0
-    * **Taxonomic Relations**: 0
+    * **Taxonomic Relations**: 309
     * **Non-taxonomic Relations**: 0
     * **Average Terms per Type**: 0
 
