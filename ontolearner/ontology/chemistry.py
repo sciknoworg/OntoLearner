@@ -37,13 +37,3 @@ class RXNO(BaseOntology):
     This class processes the Reaction Ontology (RXNO) using default behavior.
     """
     ontology_full_name = "Reaction Ontology (RXNO)"
-
-
-class BTO(BaseOntology):
-    """
-    A structured controlled vocabulary for the source of an enzyme comprising tissues,
-    cell lines, cell types and cell cultures.
-
-    This class processes the BRENDA Tissue Ontology (BTO) using default behavior.
-    """
-    ontology_full_name = "BRENDA Tissue Ontology (BTO)"
