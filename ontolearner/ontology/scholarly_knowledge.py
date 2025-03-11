@@ -171,3 +171,12 @@ class DataCite(BaseOntology):
     This class processes the DataCite ontology using default behavior.
     """
     ontology_full_name = "DataCite"
+
+
+class DUO(BaseOntology):
+    """
+    DUO is an ontology which represent data use conditions.
+
+    This class processes the Data Use Ontology (DUO) using default behavior.
+    """
+    ontology_full_name = "Data Use Ontology (DUO)"

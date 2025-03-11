@@ -98,6 +98,7 @@ OntoLearner Documentation
     benchmarking/prov_ontology.rst
     benchmarking/bto_ontology.rst
     benchmarking/rex.rst
+    benchmarking/duo.rst
     integration/huggingface_hub.rst
 
 
