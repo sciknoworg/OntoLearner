@@ -5,8 +5,8 @@ Overview
 -----------------
 A structured controlled vocabulary for the source of an enzyme comprising tissues, cell lines, cell types and cell cultures.
 
-:Domain: Chemistry
-:Category: Chemistry
+:Domain: Healthcare
+:Category: Healthcare
 :Current Version: 2021-10-26
 :Last Updated: 2021-10-26
 :Producer: N/A
@@ -20,12 +20,6 @@ Base Metrics
     - Classes: 6569
     - Properties: 37
     - Individuals: 0
-
-Schema Metrics
----------------
-    - Attribute Richness: 0
-    - Inheritance Richness: 0
-    - Relationship Richness: 0
 
 Graph Metrics:
 ------------------
