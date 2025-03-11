@@ -37,3 +37,14 @@ class RXNO(BaseOntology):
     This class processes the Reaction Ontology (RXNO) using default behavior.
     """
     ontology_full_name = "Reaction Ontology (RXNO)"
+
+
+class REX(BaseOntology):
+    """
+    REX is an ontology of physico-chemical processes, i.e. physico-chemical changes occurring in course of time.
+    REX includes both microscopic processes (involving molecular entities or subatomic particles) and macroscopic processes.
+    Some biochemical processes from Gene Ontology (GO Biological process) can be described as instances of REX.
+
+    This class processes the Reaction Expression Ontology (REX) using default behavior.
+    """
+    ontology_full_name = "Physico-chemical process ontology (REX)"
