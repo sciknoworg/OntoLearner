@@ -180,3 +180,18 @@ class DUO(BaseOntology):
     This class processes the Data Use Ontology (DUO) using default behavior.
     """
     ontology_full_name = "Data Use Ontology (DUO)"
+
+
+class OBOE(BaseOntology):
+    """
+    The Extensible Observation Ontology (OBOE) is a formal ontology for capturing the semantics
+    of scientific observation and measurement. The ontology supports researchers to add detailed semantic annotations
+    to scientific data, thereby clarifying the inherent meaning of scientific observations.
+
+    This class processes the Extensible Observation Ontology (OBOE) using default behavior.
+    """
+    ontology_full_name = "Extensible Observation Ontology (OBOE)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
