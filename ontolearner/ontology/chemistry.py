@@ -60,3 +60,26 @@ class CHEMINF(BaseOntology):
     This class processes the Chemical Information Ontology (CHEMINF) using default behavior.
     """
     ontology_full_name = "Chemical Information Ontology (CHEMINF)"
+
+
+class NMRCV(BaseOntology):
+    """
+    This artefact is an MSI-approved controlled vocabulary primarily developed under COSMOS EU and PhenoMeNal EU governance.
+    The nmrCV is supporting the nmrML XML format with standardized terms. nmrML is a vendor agnostic open access NMR raw data standard.
+    Its primaly role is analogous to the mzCV for the PSI-approved mzML XML format. It uses BFO2.0 as its Top level.
+    This CV was derived from two predecessors (The NMR CV from the David Wishart Group, developed by Joseph Cruz)
+    and the MSI nmr CV developed by Daniel Schober at the EBI. This simple taxonomy of terms (no DL semantics used)
+    serves the nuclear magnetic resonance markup language (nmrML) with meaningful descriptors to amend the nmrML xml file
+    with CV terms. Metabolomics scientists are encouraged to use this CV to annotrate their raw and experimental context data,
+    i.e. within nmrML. The approach to have an exchange syntax mixed of an xsd and CV stems from the PSI mzML effort.
+    The reason to branch out from an xsd into a CV is, that in areas where the terminology is likely to change faster
+    than the nmrML xsd could be updated and aligned, an externally and decentrallised maintained CV can accompensate
+    for such dynamics in a more flexible way. A second reason for this set-up is that semantic validity of CV terms
+    used in an nmrML XML instance (allowed CV terms, position/relation to each other, cardinality) can be validated
+    by rule-based proprietary validators: By means of cardinality specifications and XPath expressions defined
+    in an XML mapping file (an instances of the CvMappingRules.xsd ), one can define what ontology terms are allowed
+    in a specific location of the data model.
+
+    This class processes the Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV) using default behavior.
+    """
+    ontology_full_name = "Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV)"

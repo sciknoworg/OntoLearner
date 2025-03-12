@@ -103,6 +103,7 @@ OntoLearner Documentation
     benchmarking/edam.rst
     benchmarking/uo.rst
     benchmarking/cheminf.rst
+    benchmarking/nmrcv.rst
     integration/huggingface_hub.rst
 
 
