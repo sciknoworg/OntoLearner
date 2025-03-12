@@ -26,7 +26,7 @@ class ChMO(BaseOntology):
 
     This class processes Chemical Methods Ontology using default behavior.
     """
-    ontology_full_name = "Chemical Methods Ontology"
+    ontology_full_name = "Chemical Methods Ontology (Chebi)"
 
 
 class RXNO(BaseOntology):
@@ -48,3 +48,15 @@ class REX(BaseOntology):
     This class processes the Reaction Expression Ontology (REX) using default behavior.
     """
     ontology_full_name = "Physico-chemical process ontology (REX)"
+
+
+class CHEMINF(BaseOntology):
+    """
+    The chemical information ontology (cheminf) describes information entities about chemical entities.
+    It provides qualitative and quantitative attributes to richly describe chemicals.
+    Includes terms for the descriptors commonly used in cheminformatics software applications
+    and the algorithms which generate them.
+
+    This class processes the Chemical Information Ontology (CHEMINF) using default behavior.
+    """
+    ontology_full_name = "Chemical Information Ontology (CHEMINF)"
