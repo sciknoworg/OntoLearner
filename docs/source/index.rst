@@ -101,6 +101,7 @@ OntoLearner Documentation
     benchmarking/duo.rst
     benchmarking/ncit.rst
     benchmarking/edam.rst
+    benchmarking/uo.rst
     integration/huggingface_hub.rst
 
 

@@ -198,3 +198,12 @@ class ENM(BaseOntology):
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
         return True
+
+
+class UO(BaseOntology):
+    """
+    Metrical units for use in conjunction with PATO.
+
+    This class processes the Units of Measurement Ontology (UO) using default behavior.
+    """
+    ontology_full_name = "Units of Measurement Ontology (UO)"
