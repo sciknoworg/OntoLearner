@@ -207,3 +207,31 @@ class UO(BaseOntology):
     This class processes the Units of Measurement Ontology (UO) using default behavior.
     """
     ontology_full_name = "Units of Measurement Ontology (UO)"
+
+
+class SOSA(BaseOntology):
+    """
+    The SOSA ontology is an ontology for describing sensors and their observations,
+    the involved procedures, the studied features of interest, the samples used to do so, and the observed properties,
+    as well as actuators. SOSA follows a horizontal and vertical modularization architecture
+    by including a lightweight but self-contained core ontology called SOSA (Sensor, Observation, Sample, and Actuator)
+    for its elementary classes and properties. With their different scope and different degrees of axiomatization,
+    SSN and SOSA are able to support a wide range of applications and use cases, including satellite imagery,
+    large-scale scientific monitoring, industrial and household infrastructures, social sensing, citizen science,
+    observation-driven ontology engineering, and the Web of Things. Both ontologies are described below,
+    and examples of their usage are given.
+
+    This class processes the Sensor, Observation, Sample, and Actuator (SOSA) using default behavior.
+    """
+    ontology_full_name = "Sensor, Observation, Sample, and Actuator (SOSA)"
+
+
+class SWO(BaseOntology):
+    """
+    The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions,
+    provenance and associated data. It contains detailed information on licensing and formats
+    as well as software applications themselves, mainly (but not limited) to the bioinformatics community.
+
+    This class processes the Software Ontology (SWO) using default behavior.
+    """
+    ontology_full_name = "Software Ontology (SWO)"

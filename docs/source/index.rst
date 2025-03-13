@@ -107,6 +107,7 @@ OntoLearner Documentation
     benchmarking/oboe.rst
     benchmarking/pato.rst
     benchmarking/ontokin.rst
+    benchmarking/swo.rst
     integration/huggingface_hub.rst
 
 
