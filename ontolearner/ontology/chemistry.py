@@ -83,3 +83,12 @@ class NMRCV(BaseOntology):
     This class processes the Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV) using default behavior.
     """
     ontology_full_name = "Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV)"
+
+
+class OntoKin(BaseOntology):
+    """
+    OntoKin is an ontology developed for representing chemical kinetic reaction mechanisms.
+
+    This class processes the OntoKin ontology using default behavior.
+    """
+    ontology_full_name = "OntoKin"
