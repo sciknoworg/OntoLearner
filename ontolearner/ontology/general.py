@@ -99,3 +99,13 @@ class EDAM(BaseOntology):
     This class processes EDAM Ontology using default behavior.
     """
     ontology_full_name = "The ontology of data analysis and management (EDAM)"
+
+
+class RO(BaseOntology):
+    """
+    The Relations Ontology (RO) is a collection of OWL relations (ObjectProperties) intended for use
+    across a wide variety of biological ontologies.
+
+    This class processes Relation Ontology using default behavior.
+    """
+    ontology_full_name = "Relation Ontology (RO)"

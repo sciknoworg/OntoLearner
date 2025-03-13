@@ -105,6 +105,7 @@ OntoLearner Documentation
     benchmarking/cheminf.rst
     benchmarking/nmrcv.rst
     benchmarking/oboe.rst
+    benchmarking/pato.rst
     integration/huggingface_hub.rst
 
 
