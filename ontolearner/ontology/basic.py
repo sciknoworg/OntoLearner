@@ -43,3 +43,14 @@ class SIO(BaseOntology):
     This class processes SIO using default behavior.
     """
     ontology_full_name = "Semanticscience Integrated Ontology (SIO)"
+
+
+class SUMO(BaseOntology):
+    """
+    The Suggested Upper Merged Ontology (SUMO) and its domain ontologies form the largest formal public ontology
+    in existence today. They are being used for research and applications in search, linguistics and reasoning.
+    SUMO is the only formal ontology that has been mapped to all of the WordNet lexicon.
+
+    This class processes SUMO using default behavior.
+    """
+    ontology_full_name = "Suggested Upper Merged Ontology (SUMO)"
