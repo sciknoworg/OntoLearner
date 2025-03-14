@@ -82,7 +82,13 @@ OntoLearner Documentation
     benchmarking/hydra.rst
     benchmarking/doco.rst
     benchmarking/qudt.rst
-    benchmarking/bbc_ontologies.rst
+    benchmarking/bbc_ontology.rst
+    benchmarking/bbc_politics.rst
+    benchmarking/bbc_programmes.rst
+    benchmarking/bbc_provenance.rst
+    benchmarking/bbc_sport.rst
+    benchmarking/bbc_storyline.rst
+    benchmarking/bbc_wildlife.rst
     benchmarking/frapo.rst
     benchmarking/contact.rst
     benchmarking/chmo.rst
