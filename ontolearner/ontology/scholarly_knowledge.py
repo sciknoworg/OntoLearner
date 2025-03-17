@@ -113,3 +113,85 @@ class DCAT(BaseOntology):
     This class processes the Data Catalog Vocabulary (DCAT) using default behavior.
     """
     ontology_full_name = "Data Catalog Vocabulary (DCAT)"
+
+
+class CiTO(BaseOntology):
+    """
+    The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,
+    both factually and rhetorically.
+
+    This class processes the Citation Typing Ontology (CiTO) using default behavior.
+    """
+    ontology_full_name = "Citation Typing Ontology (CiTO)"
+
+
+class FRBRoo(BaseOntology):
+    """
+    The FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) initiative
+    is a joint effort of the CIDOC Conceptual Reference Model
+    and Functional Requirements for Bibliographic Records international working groups to establish
+    a formal ontology intended to capture and represent the underlying semantics of bibliographic information
+    and to facilitate the integration, mediation, and interchange of bibliographic and museum information.
+
+    This class processes the FRBRoo ontology using default behavior.
+    """
+    ontology_full_name = "Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)"
+
+
+class LexInfo(BaseOntology):
+    """
+    LexInfo allows us to associate linguistic information to elements in an ontology with respect
+    to any level of linguistic description and expressive. LexInfo has been implemented as an OWL ontology
+    and is available together with an API.
+
+    This class processes the LexInfo ontology using default behavior.
+    """
+    ontology_full_name = "LexInfo"
+
+
+class PreMOn(BaseOntology):
+    """
+    The PreMOn Ontology is an extension of lemon (W3C Ontology Lexicon Community Group, 2015)
+    for representing predicate models and their mappings. The Core Module of the PreMOn Ontology
+    defines the main abstractions for modelling semantic classes with their semantic roles,
+    mappings between different predicate models, and annotations.
+
+    This class processes the PreMOn ontology using default behavior.
+    """
+    ontology_full_name = "Pre-Modern Ontology (PreMOn)"
+
+
+class DataCite(BaseOntology):
+    """
+    The DataCite Ontology (DataCite) is an ontology that enables the metadata properties
+    of the DataCite Metadata Schema Specification (i.e., a list of metadata properties
+    for the accurate and consistent identification of a resource for citation
+    and retrieval purposes) to be described in RDF.
+
+    This class processes the DataCite ontology using default behavior.
+    """
+    ontology_full_name = "DataCite"
+
+
+class DUO(BaseOntology):
+    """
+    DUO is an ontology which represent data use conditions.
+
+    This class processes the Data Use Ontology (DUO) using default behavior.
+    """
+    ontology_full_name = "Data Use Ontology (DUO)"
+
+
+class OBOE(BaseOntology):
+    """
+    The Extensible Observation Ontology (OBOE) is a formal ontology for capturing the semantics
+    of scientific observation and measurement. The ontology supports researchers to add detailed semantic annotations
+    to scientific data, thereby clarifying the inherent meaning of scientific observations.
+
+    This class processes the Extensible Observation Ontology (OBOE) using default behavior.
+    """
+    ontology_full_name = "Extensible Observation Ontology (OBOE)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True

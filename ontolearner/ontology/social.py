@@ -1,4 +1,3 @@
-
 from ..base.ontology import BaseOntology
 
 
@@ -46,3 +45,28 @@ class VOAF(BaseOntology):
     This class processes the VOAF ontology using default behavior.
     """
     ontology_full_name = "Vocabulary of a Friend (VOAF) Ontology"
+
+
+class AS2(BaseOntology):
+    """
+    The Activity Streams 2.0 ontology is a vocabulary for describing social activities and actions.
+    It is based on the Activity Streams 2.0 specification and provides a set of classes and properties
+    for describing activities on the web.
+
+    This class processes the AS2 ontology using default behavior.
+    """
+    ontology_full_name = "Activity Streams 2.0 Ontology"
+
+
+class Contact(BaseOntology):
+    """
+    Ontology to capture concepts related to contact information (addresses, phone numbers).
+    Reuses the iContact Ontology developed by the Enterprise Integration Lab in Toronto.
+    The iContact ontology is extended to introduce a specialized definition of Hours of Operation,
+    defined as a subclass of both the iContact definition of hours of operation,
+    and a subclass of the Recurring Event class defined in the iCity Recurring Event ontology.
+    The Contact ontology also extends the definition of address to include an associated location.
+
+    This class processes the Contact ontology using default behavior.
+    """
+    ontology_full_name = "Contact Ontology"

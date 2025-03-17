@@ -147,7 +147,7 @@ class OntoCAPE(BaseOntology):
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
         super().__init__(language=language, base_dir=base_dir)
 
-    def _resolve_import_uri(self, uri: URIRef) -> Optional[str]:
+    def _resolve_import_def(self, uri: URIRef) -> Optional[str]:
         uri_str = str(uri)
         # Process file URI
         if uri_str.startswith("file:///"):
@@ -171,4 +171,67 @@ class OntoCAPE(BaseOntology):
                 resolved_path = os.path.join(self.base_dir, relative_path)
                 if os.path.exists(resolved_path):
                     return resolved_path
-        return super()._resolve_import_uri(uri)
+        return super()._resolve_import_def(uri)
+
+
+class QUDT(BaseOntology):
+    """
+    QUDT is an advocate for the development and implementation of standards to quantify data expressed in RDF and JSON.
+
+    This class processes the Quantities, Units, Dimensions and Data Types (QUDT) using default behavior.
+    """
+    ontology_full_name = "Quantities, Units, Dimensions and Data Types (QUDT)"
+
+
+class ENM(BaseOntology):
+    """
+    The eNanoMapper project (https://www.enanomapper.net/), NanoCommons project (https://www.nanocommons.eu/)
+    and ACEnano project (http://acenano-project.eu/) are creating a pan-European computational infrastructure
+    for toxicological data management for ENMs, based on semantic web standards and ontologies.
+    This ontology is an application ontology targeting the full domain of nanomaterial safety assessment.
+    It re-uses several other ontologies including the NPO, CHEMINF, ChEBI, and ENVO.
+
+    This class processes the Environmental Noise Measurement Ontology (ENM) using default behavior.
+    """
+    ontology_full_name = "Environmental Noise Measurement Ontology (ENM)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class UO(BaseOntology):
+    """
+    Metrical units for use in conjunction with PATO.
+
+    This class processes the Units of Measurement Ontology (UO) using default behavior.
+    """
+    ontology_full_name = "Units of Measurement Ontology (UO)"
+
+
+class SOSA(BaseOntology):
+    """
+    The SOSA ontology is an ontology for describing sensors and their observations,
+    the involved procedures, the studied features of interest, the samples used to do so, and the observed properties,
+    as well as actuators. SOSA follows a horizontal and vertical modularization architecture
+    by including a lightweight but self-contained core ontology called SOSA (Sensor, Observation, Sample, and Actuator)
+    for its elementary classes and properties. With their different scope and different degrees of axiomatization,
+    SSN and SOSA are able to support a wide range of applications and use cases, including satellite imagery,
+    large-scale scientific monitoring, industrial and household infrastructures, social sensing, citizen science,
+    observation-driven ontology engineering, and the Web of Things. Both ontologies are described below,
+    and examples of their usage are given.
+
+    This class processes the Sensor, Observation, Sample, and Actuator (SOSA) using default behavior.
+    """
+    ontology_full_name = "Sensor, Observation, Sample, and Actuator (SOSA)"
+
+
+class SWO(BaseOntology):
+    """
+    The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions,
+    provenance and associated data. It contains detailed information on licensing and formats
+    as well as software applications themselves, mainly (but not limited) to the bioinformatics community.
+
+    This class processes the Software Ontology (SWO) using default behavior.
+    """
+    ontology_full_name = "Software Ontology (SWO)"

@@ -14,8 +14,8 @@ class TopologyMetrics(BaseModel):
     max_in_degree: int = Field(..., description="Maximum number of incoming edges to any node", ge=0)
     max_out_degree: int = Field(..., description="Maximum number of outgoing edges from any node", ge=0)
     # Hierarchical metrics
-    # max_depth: int = Field(..., description="Maximum depth of the concept hierarchy", ge=0)
-    # avg_depth: float = Field(..., description="Average depth of nodes in the hierarchy", ge=0.0)
+    max_depth: int = Field(..., description="Maximum depth of the concept hierarchy", ge=0)
+    avg_depth: float = Field(..., description="Average depth of nodes in the hierarchy", ge=0.0)
     num_root_nodes: int = Field(..., description="Number of top-level (root) concepts", ge=0)
     num_leaf_nodes: int = Field(..., description="Number of bottom-level (leaf) concepts", ge=0)
     # Path-related metrics
