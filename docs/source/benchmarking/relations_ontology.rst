@@ -21,13 +21,6 @@ Base Metrics
     - Classes: 57
     - Individuals: 35
     - Properties: 807
-    - Annotation Assertions: 0
-
-Schema Metrics
----------------
-    - Attribute Richness: 0
-    - Inheritance Richness: 0
-    - Relationship Richness: 0
 
 Graph Metrics:
 ------------------

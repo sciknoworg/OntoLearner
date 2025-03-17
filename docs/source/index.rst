@@ -63,6 +63,57 @@ OntoLearner Documentation
     benchmarking/dcat_ontology.rst
     benchmarking/geonames_ontology.rst
     benchmarking/yago_ontology.rst
+    benchmarking/product_types_ontology.rst
+    benchmarking/schema_org.rst
+    benchmarking/doap_vocabulary.rst
+    benchmarking/copyright_ontology.rst
+    benchmarking/agrovoc.rst
+    benchmarking/geographical_entity_ontology.rst
+    benchmarking/owl_time.rst
+    benchmarking/icalendar.rst
+    benchmarking/citation_typing_ontology.rst
+    benchmarking/fbrroo.rst
+    benchmarking/lex_info.rst
+    benchmarking/as2.rst
+    benchmarking/sio.rst
+    benchmarking/umbel.rst
+    benchmarking/bio_pax.rst
+    benchmarking/nomisma_ontology.rst
+    benchmarking/hydra.rst
+    benchmarking/doco.rst
+    benchmarking/qudt.rst
+    benchmarking/bbc_ontology.rst
+    benchmarking/bbc_politics.rst
+    benchmarking/bbc_programmes.rst
+    benchmarking/bbc_provenance.rst
+    benchmarking/bbc_sport.rst
+    benchmarking/bbc_storyline.rst
+    benchmarking/bbc_wildlife.rst
+    benchmarking/frapo.rst
+    benchmarking/contact.rst
+    benchmarking/chmo.rst
+    benchmarking/geologic_timescale_model.rst
+    benchmarking/premon.rst
+    benchmarking/datacite.rst
+    benchmarking/juso.rst
+    benchmarking/obi_ontology.rst
+    benchmarking/protein_ontology.rst
+    benchmarking/rxno.rst
+    benchmarking/sumo.rst
+    benchmarking/enm_ontology.rst
+    benchmarking/prov_ontology.rst
+    benchmarking/bto_ontology.rst
+    benchmarking/rex.rst
+    benchmarking/duo.rst
+    benchmarking/ncit.rst
+    benchmarking/edam.rst
+    benchmarking/uo.rst
+    benchmarking/cheminf.rst
+    benchmarking/nmrcv.rst
+    benchmarking/oboe.rst
+    benchmarking/pato.rst
+    benchmarking/ontokin.rst
+    benchmarking/swo.rst
     integration/huggingface_hub.rst
 
 

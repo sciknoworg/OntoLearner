@@ -48,13 +48,21 @@ class TUBES(BaseOntology):
     ontology_full_name = "TUBES System Ontology"
 
 
-class GoodRelations(BaseOntology):
+class PTO(BaseOntology):
     """
-    GoodRelations is a standardized vocabulary (also known as "schema", "data dictionary", or "ontology") for product,
-    price, store, and company data that can (1) be embedded into existing static and dynamic Web pages and that
-    (2) can be processed by other computers. This increases the visibility of your products and services
-    in the latest generation of search engines, recommender systems, and other novel applications.
+    The Product Types Ontology is designed to be used in combination with GoodRelations,
+    a standard vocabulary for the commercial aspects of offers.
 
-    This class processes GoodRelations ontology using default behavior.
+    This class processes Product Types Ontology using default behavior.
     """
-    ontology_full_name = "Good Relations Language Reference (GoodRelations)"
+    ontology_full_name = "Product Types Ontology (PTO)"
+
+
+class DOAP(BaseOntology):
+    """
+    The Description of a Project (DOAP) vocabulary, described using W3C RDF Schema and the Web Ontology Language
+    to describe software projects, and in particular open source projects.
+
+    This class processes DOAP ontology using default behavior.
+    """
+    ontology_full_name = "The Description of a Project (DOAP) vocabulary"

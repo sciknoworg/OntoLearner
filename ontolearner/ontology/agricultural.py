@@ -22,3 +22,15 @@ class PO(BaseOntology):
     This class processes Plant Ontology using default behavior.
     """
     ontology_full_name = "Plant Ontology (PO)"
+
+
+class AGROVOC(BaseOntology):
+    """
+    AGROVOC is a relevant Linked Open Data set about agriculture available for public use and facilitates
+    access and visibility of data across domains and languages. It offers a structured collection of agricultural concepts,
+    terms, definitions and relationships which are used to unambiguously identify resources, allowing standardized
+    indexing processes and making searches more efficient.
+
+    This class processes AGROVOC using default behavior.
+    """
+    ontology_full_name = "AGROVOC Multilingual Thesaurus"

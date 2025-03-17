@@ -24,16 +24,6 @@ class GO(BaseOntology):
     ontology_full_name = "Gene Ontology (GO)"
 
 
-class RO(BaseOntology):
-    """
-    The Relations Ontology (RO) is a collection of OWL relations (ObjectProperties) intended for use
-    across a wide variety of biological ontologies.
-
-    This class processes Relation Ontology using default behavior.
-    """
-    ontology_full_name = "Relation Ontology (RO)"
-
-
 class MarineTLO(BaseOntology):
     """
     MarineTLO is a top level ontology, generic enough to provide consistent abstractions or
@@ -50,3 +40,37 @@ class MarineTLO(BaseOntology):
     This class processes MarineTLO Ontology using default behavior.
     """
     ontology_full_name = "Marine Taxonomy and Life Ontology (MarineTLO)"
+
+
+class BioPAX(BaseOntology):
+    """
+    BioPAX is a standard language that aims to enable integration, exchange, visualization and analysis
+    of biological pathway data. Specifically, BioPAX supports data exchange between pathway data
+    groups and thus reduces the complexity of interchange between data formats by providing an
+    accepted standard format for pathway data.
+
+    This class processes BioPAX Ontology using default behavior.
+    """
+    ontology_full_name = "Biological Pathways Exchange (BioPAX)"
+
+
+class EFO(BaseOntology):
+    """
+    The Experimental Factor Ontology (EFO) provides a systematic description of many experimental variables
+    available in EBI databases, and for projects such as the GWAS catalog. It combines parts of several biological ontologies,
+    such as UBERON anatomy, ChEBI chemical compounds, and Cell Ontology. The scope of EFO is to support the annotation,
+    analysis and visualization of data handled by many groups at the EBI and as the core ontology for Open Targets.
+    EFO is developed by the EMBL-EBI Samples, Phenotypes and Ontologies Team (SPOT).
+
+    This class processes Experimental Factor Ontology using default behavior.
+    """
+    ontology_full_name = "Experimental Factor Ontology (EFO)"
+
+
+class PATO(BaseOntology):
+    """
+    An ontology of phenotypic qualities (properties, attributes or characteristics).
+
+    This class processes Phenotype and Trait Ontology (PATO) using default behavior.
+    """
+    ontology_full_name = "Phenotype and Trait Ontology (PATO)"
