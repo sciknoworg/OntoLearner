@@ -2,7 +2,7 @@
 name = "OntoLearner"
 version = "0.1.0"
 description = "OntoLearner: Ontology Learning Framework."
-authors = ["Hamed Babaei Giglou <hamedbabaeigiglou@gmail.com>", "Andrei C. Aioanei <andrei.aioanei@tib.eu>"]
+authors = ["Hamed Babaei Giglou <hamedbabaeigiglou@gmail.com>", "Andrei C. Aioanei <andrei.c.aioanei@gmail.com>"]
 license = "MIT License"
 readme = "README.md"
 homepage = "https://ontolearner.readthedocs.io/"
