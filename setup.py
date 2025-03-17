@@ -23,7 +23,7 @@ setup(
         "tqdm==4.67.1",
         "pydantic==2.10.5",
         "pathlib==1.0.1",
-        "logging==0.4.9.6"
+        "logging>=0.4.9.6"
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

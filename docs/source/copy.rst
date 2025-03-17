@@ -1,0 +1,124 @@
+OntoLearner Documentation
+==================================
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Introduction
+
+   introduction.rst
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: A. Benchmarking Ontologies
+
+    benchmarking/conference.rst
+    benchmarking/icon_ontology.rst
+    benchmarking/life_ontology.rst
+    benchmarking/dbpedia_ontology.rst
+    benchmarking/emotion_ontology.rst
+    benchmarking/plant_ontology.rst
+    benchmarking/sweet_ontology.rst
+    benchmarking/human_disease_ontology.rst
+    benchmarking/computer_science_ontology.rst
+    benchmarking/food_ontology.rst
+    benchmarking/environment_ontology.rst
+    benchmarking/gene_ontology.rst
+    benchmarking/chebi_ontology.rst
+    benchmarking/relations_ontology.rst
+    benchmarking/basic_formal_ontology.rst
+    benchmarking/gist_ontology.rst
+    benchmarking/eurio.rst
+    benchmarking/metadata4ing.rst
+    benchmarking/materials_mechanics_ontology.rst
+    benchmarking/units_of_measure_ontology.rst
+    benchmarking/saref_ontology.rst
+    benchmarking/heat_pump_ontology.rst
+    benchmarking/material_information.rst
+    benchmarking/materials_ontology.rst
+    benchmarking/emmo_ontology.rst
+    benchmarking/mdo_ontology.rst
+    benchmarking/dolce_ontology.rst
+    benchmarking/digital_buildings_ontology.rst
+    benchmarking/industrial_ontology_foundry.rst
+    benchmarking/nfdi_ontology.rst
+    benchmarking/music_ontology.rst
+    benchmarking/timeline_ontology.rst
+    benchmarking/chord_ontology.rst
+    benchmarking/sioc_ontology.rst
+    benchmarking/foaf_ontology.rst
+    benchmarking/dublin_core_ontology.rst
+    benchmarking/marine_tlo_ontology.rst
+    benchmarking/atol.rst
+    benchmarking/aiiso.rst
+    benchmarking/bio_ontology.rst
+    benchmarking/voaf_ontology.rst
+    benchmarking/cape_ontology.rst
+    benchmarking/tubes_ontology.rst
+    benchmarking/fso_ontology.rst
+    benchmarking/ssn_ontology.rst
+    benchmarking/bibframe_ontology.rst
+    benchmarking/good_relations_ontology.rst
+    benchmarking/dcat_ontology.rst
+    benchmarking/geonames_ontology.rst
+    benchmarking/yago_ontology.rst
+    benchmarking/product_types_ontology.rst
+    benchmarking/schema_org.rst
+    benchmarking/doap_vocabulary.rst
+    benchmarking/copyright_ontology.rst
+    benchmarking/agrovoc.rst
+    benchmarking/geographical_entity_ontology.rst
+    benchmarking/owl_time.rst
+    benchmarking/icalendar.rst
+    benchmarking/citation_typing_ontology.rst
+    benchmarking/fbrroo.rst
+    benchmarking/lex_info.rst
+    benchmarking/as2.rst
+    benchmarking/sio.rst
+    benchmarking/umbel.rst
+    benchmarking/bio_pax.rst
+    benchmarking/nomisma_ontology.rst
+    benchmarking/hydra.rst
+    benchmarking/doco.rst
+    benchmarking/qudt.rst
+    benchmarking/bbc_ontology.rst
+    benchmarking/bbc_politics.rst
+    benchmarking/bbc_programmes.rst
+    benchmarking/bbc_provenance.rst
+    benchmarking/bbc_sport.rst
+    benchmarking/bbc_storyline.rst
+    benchmarking/bbc_wildlife.rst
+    benchmarking/frapo.rst
+    benchmarking/contact.rst
+    benchmarking/chmo.rst
+    benchmarking/geologic_timescale_model.rst
+    benchmarking/premon.rst
+    benchmarking/datacite.rst
+    benchmarking/juso.rst
+    benchmarking/obi_ontology.rst
+    benchmarking/protein_ontology.rst
+    benchmarking/rxno.rst
+    benchmarking/sumo.rst
+    benchmarking/enm_ontology.rst
+    benchmarking/prov_ontology.rst
+    benchmarking/bto_ontology.rst
+    benchmarking/rex.rst
+    benchmarking/duo.rst
+    benchmarking/ncit.rst
+    benchmarking/edam.rst
+    benchmarking/uo.rst
+    benchmarking/cheminf.rst
+    benchmarking/nmrcv.rst
+    benchmarking/oboe.rst
+    benchmarking/pato.rst
+    benchmarking/ontokin.rst
+    benchmarking/swo.rst
+    integration/huggingface_hub.rst
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Learning Models
+
+   models/rag
