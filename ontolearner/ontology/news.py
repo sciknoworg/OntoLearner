@@ -18,7 +18,7 @@ class BBCBusiness(BaseOntology):
     ontology_full_name = "BBC Business News Ontology"
 
 
-class BBC_CMS(BaseOntology):
+class BBCCMS(BaseOntology):
     """
     The Content Management Systems ontology defines the terms that LDP needs to interact with systems that produce content.
     The linked data platform contain semantic metadata for the creative content and also the things the BBC produces content about.
