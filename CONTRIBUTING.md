@@ -30,8 +30,8 @@ To contribute changes to the library, please follow these steps:
 
 1. Clone the repository.
 ```bash
-git clone git@github.com:sciknoworg/OntoAligner.git
-cd OntoAligner
+git clone git@github.com:sciknoworg/OntoLearner.git
+cd OntoLearner
 ```
 2. Create a virtual environment with python>=3.9, activate it, install the required dependencies and install the pre-commit configuration:
 ```bash
