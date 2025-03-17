@@ -15,5 +15,4 @@ tqdm==4.67.1
 # Pydantic
 pydantic==2.10.5
 
-logging
 pathlib
