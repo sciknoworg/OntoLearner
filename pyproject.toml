@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "OntoLearner"
+version = "0.1.0"
+description = "OntoLearner: Ontology Learning Framework."
+authors = ["Hamed Babaei Giglou <hamedbabaeigiglou@gmail.com>", "Andrei C. Aioanei <andrei.aioanei@tib.eu>"]
+license = "MIT License"
+readme = "README.md"
+homepage = "https://ontolearner.readthedocs.io/"
+repository = "https://github.com/sciknoworg/OntoLearner/"
+include = ["images/logo.png"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0.0"
+rdflib ="7.1.1"
+networkx ="3.2.1"
+seaborn="0.13.2"
+numpy="1.26.4"
+pandas="2.0.3"
+matplotlib="3.9.4"
+tqdm="4.67.1"
+pydantic="2.10.5"
+pathlib="1.0.1"
+logging="0.4.9.6"
+
+[tool.poetry.dev-dependencies]
+ruff = "*"
+pre-commit = "*"
+setuptools = "*"
+wheel = "*"
+twine = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
