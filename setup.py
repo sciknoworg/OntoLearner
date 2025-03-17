@@ -6,8 +6,8 @@ with open("README.md", encoding="utf-8") as f:
 setup(
     name="OntoLearner",
     version="0.1.0",
-    author="Hamed Babaei Giglou",
-    author_email="hamedbabaeigiglou@gmail.com",
+    author="Hamed Babaei Giglou, Andrei C. Aioanei",
+    author_email="hamedbabaeigiglou@gmail.com, andrei.c.aioanei@gmail.com",
     description="OntoLearner: Ontology Learning Framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
