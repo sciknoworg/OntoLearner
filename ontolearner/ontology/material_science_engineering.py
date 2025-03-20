@@ -1,6 +1,5 @@
 import os
 from typing import Optional
-
 from rdflib import URIRef
 
 from ..base.ontology import BaseOntology
@@ -103,14 +102,23 @@ class OM(BaseOntology):
     ontology_full_name = "Ontology of Units of Measure (OM)"
 
 
+class UO(BaseOntology):
+    """
+    Metrical units for use in conjunction with PATO.
+
+    This class processes the Units of Measurement Ontology (UO) using default behavior.
+    """
+    ontology_full_name = "Units of Measurement Ontology (UO)"
+
+
 class FSO(BaseOntology):
     """
     The Flow Systems Ontology (FSO) is an ontology for describing interconnected systems
     with material or energy flow connections, and their components.
 
-    This class processes the Food Study Ontology (FSO) using default behavior.
+    This class processes the Flow Systems Ontology (FSO) using default behavior.
     """
-    ontology_full_name = "Food Study Ontology (FSO)"
+    ontology_full_name = "Flow Systems Ontology (FSO)"
 
 
 class SSN(BaseOntology):
@@ -198,32 +206,6 @@ class ENM(BaseOntology):
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
         return True
-
-
-class UO(BaseOntology):
-    """
-    Metrical units for use in conjunction with PATO.
-
-    This class processes the Units of Measurement Ontology (UO) using default behavior.
-    """
-    ontology_full_name = "Units of Measurement Ontology (UO)"
-
-
-class SOSA(BaseOntology):
-    """
-    The SOSA ontology is an ontology for describing sensors and their observations,
-    the involved procedures, the studied features of interest, the samples used to do so, and the observed properties,
-    as well as actuators. SOSA follows a horizontal and vertical modularization architecture
-    by including a lightweight but self-contained core ontology called SOSA (Sensor, Observation, Sample, and Actuator)
-    for its elementary classes and properties. With their different scope and different degrees of axiomatization,
-    SSN and SOSA are able to support a wide range of applications and use cases, including satellite imagery,
-    large-scale scientific monitoring, industrial and household infrastructures, social sensing, citizen science,
-    observation-driven ontology engineering, and the Web of Things. Both ontologies are described below,
-    and examples of their usage are given.
-
-    This class processes the Sensor, Observation, Sample, and Actuator (SOSA) using default behavior.
-    """
-    ontology_full_name = "Sensor, Observation, Sample, and Actuator (SOSA)"
 
 
 class SWO(BaseOntology):

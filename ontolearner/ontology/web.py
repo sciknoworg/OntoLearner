@@ -1,17 +1,6 @@
 from ..base.ontology import BaseOntology
 
 
-class SecurityOntology(BaseOntology):
-    """
-    The vocabulary used to ensure the authenticity and integrity of Verifiable Credentials and similar types
-    of constrained digital documents using cryptography, especially through the use of digital signatures
-    and related mathematical proofs.
-
-    This class processes the Security Ontology using default behavior.
-    """
-    ontology_full_name = "Security Ontology"
-
-
 class Hydra(BaseOntology):
     """
     Hydra is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts
@@ -20,3 +9,16 @@ class Hydra(BaseOntology):
     This class processes the Hydra Ontology using default behavior.
     """
     ontology_full_name = "Hydra Ontology"
+
+
+class SAREF(BaseOntology):
+    """
+    The Smart Applications REFerence (SAREF) suite of ontologies forms a shared model of consensus
+    intended to enable semantic interoperability between solutions from different providers
+    and among various activity sectors in the Internet of Things (IoT),
+    thus contributing to the development of data spaces. SAREF is published as a set of open standards
+    produced by ETSI Technical Committee Smart Machine-to-Machine communications (SmartM2M).
+
+    This class processes the Smart Applications REFerence ontology (SAREF) using default behavior.
+    """
+    ontology_full_name = "Smart Applications REFerence ontology"

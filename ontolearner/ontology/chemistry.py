@@ -26,7 +26,7 @@ class ChMO(BaseOntology):
 
     This class processes Chemical Methods Ontology using default behavior.
     """
-    ontology_full_name = "Chemical Methods Ontology (Chebi)"
+    ontology_full_name = "Chemical Methods Ontology (ChMO)"
 
 
 class RXNO(BaseOntology):

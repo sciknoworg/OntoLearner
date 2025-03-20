@@ -14,16 +14,6 @@ class FoodOn(BaseOntology):
     ontology_full_name = "Food Ontology (FoodON)"
 
 
-class PO(BaseOntology):
-    """
-    The Plant Ontology (PO) is a structured vocabulary and database resource that links plant anatomy,
-    morphology and growth and development to plant genomics data.
-
-    This class processes Plant Ontology using default behavior.
-    """
-    ontology_full_name = "Plant Ontology (PO)"
-
-
 class AGROVOC(BaseOntology):
     """
     AGROVOC is a relevant Linked Open Data set about agriculture available for public use and facilitates
