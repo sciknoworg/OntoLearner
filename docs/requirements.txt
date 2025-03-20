@@ -1,5 +1,5 @@
 sphinx
-sphinx-book-theme
+sphinx-rtd-theme
 sphinx_autodoc_typehints
 myst-parser
 sphinx_markdown_tables
