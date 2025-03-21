@@ -66,7 +66,7 @@ Earth Science
 .. toctree::
    :maxdepth: 3
 
-   environment/sweet_ontology.rst
+   earth_science/sweet_ontology.rst
 
 Livestock
 =========
