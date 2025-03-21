@@ -1,5 +1,5 @@
 Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary
-==========================================================
+===========================================================
 
 Overview
 -----------------
@@ -34,7 +34,7 @@ Graph Metrics:
     - **Edges**: 2868
 
 Dataset Statistics
------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 10
     - **Taxonomic Relations**: 64

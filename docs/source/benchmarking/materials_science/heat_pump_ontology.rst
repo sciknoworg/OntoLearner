@@ -18,13 +18,13 @@ from the European Union’s Horizon 2020 research and innovation programme under
 :Documentation: `HPOnt Documentation <https://react2020.github.io/REACT-ONTOLOGY/HPOnt/index-en.html>`_
 
 Base Metrics
----------------
+------------
     - Classes:
     - Individuals:
     - Properties:
 
-Graph Metrics:
-------------------
+Graph Metrics
+-------------
     - **Total Nodes**: 84
     - **Root Nodes**: 16
     - **Leaf Nodes**: 43
@@ -32,7 +32,7 @@ Graph Metrics:
     - **Edges**: 143
 
 Dataset Statistics
------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 5
     - **Taxonomic Relations**: 4

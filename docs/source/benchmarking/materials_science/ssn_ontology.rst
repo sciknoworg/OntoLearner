@@ -24,13 +24,13 @@ and examples of their usage are given.
 :Documentation: `SSN Documentation <https://github.com/w3c/sdw-sosa-ssn/tree/482484fe2edc1ba8aa7f19214a72bdb77123e833>`_
 
 Base Metrics
--------------------
+-------------
     - Classes:
     - Individuals:
     - Properties:
 
 Graph Metrics
-------------------
+--------------
     - **Total Nodes**: 196
     - **Root Nodes**: 14
     - **Leaf Nodes**: 52
@@ -38,7 +38,7 @@ Graph Metrics
     - **Edges**: 426
 
 Dataset Statistics
------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 2
     - **Taxonomic Relations**: 514

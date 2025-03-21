@@ -84,8 +84,8 @@ html_context = {
     "github_version": "main/",
 }
 
-html_logo = 'images/logo.jpg'
-html_favicon = "images/logo.ico"
+html_logo = 'images/logo.png'
+html_favicon = "images/icon.ico"
 autoclass_content = "both"
 
 # Required to get rid of some myst.xref_missing warnings

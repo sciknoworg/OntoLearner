@@ -60,6 +60,12 @@ Environment
    :maxdepth: 3
 
    environment/environment_ontology.rst
+
+Earth Science
+=============
+.. toctree::
+   :maxdepth: 3
+
    environment/sweet_ontology.rst
 
 Livestock

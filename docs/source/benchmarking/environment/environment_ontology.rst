@@ -1,5 +1,5 @@
 The Environment Ontology (ENVO)
-============================
+===============================
 
 Overview
 -----------------
@@ -25,8 +25,8 @@ Base Metrics
     - Properties: 208
     - Annotation Assertions: 0
 
-Graph Metrics:
-------------------
+Graph Metrics
+-------------
     - **Total Nodes**: 7423
     - **Root Nodes**: 4399
     - **Leaf Nodes**: 75
@@ -34,7 +34,7 @@ Graph Metrics:
     - **Edges**: 16119
 
 Dataset Statistics
------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 46
     - **Taxonomic Relations**: 15937
