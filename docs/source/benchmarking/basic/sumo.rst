@@ -32,7 +32,7 @@ Graph Metrics:
     - **Edges**:
 
 Dataset Statistics
-------------------
+-------------------
 Generated Benchmarks:
     - **Term Types**:
     - **Taxonomic Relations**:

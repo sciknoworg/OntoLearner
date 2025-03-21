@@ -29,8 +29,8 @@ Base Metrics
     - Individuals: 2,251
     - Properties: 34
 
-Graph Metrics:
-------------------
+Graph Metrics
+--------------
     - **Total Nodes**: 9,352
     - **Root Nodes**: 27
     - **Leaf Nodes**: 4,836
@@ -38,7 +38,7 @@ Graph Metrics:
     - **Edges**: 27,500
 
 Dataset Statistics
------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 1,953
     - **Taxonomic Relations**: 2,016

@@ -34,7 +34,7 @@ Graph Metrics:
     - **Average Depth**: 1.5
 
 Dataset Statistics
------------------
+-------------------
 Generated Benchmarks:
     - **Term Types**:
     - **Taxonomic Relations**: 47

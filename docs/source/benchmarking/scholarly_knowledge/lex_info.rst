@@ -32,7 +32,7 @@ Graph Metrics:
     - **Edges**: 5435
 
 Dataset Statistics
------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 288
     - **Taxonomic Relations**: 282

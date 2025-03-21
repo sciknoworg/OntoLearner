@@ -32,7 +32,7 @@ Graph Metrics
     - **Edges**: 652
 
 Dataset Statistics
------------------
+-------------------
     - **Term Types**: 2
     - **Taxonomic Relations**: 106
     - **Non-taxonomic Relations**: 17

@@ -1,5 +1,5 @@
 Semantic Web for Earth and Environment Technology Ontology (SWEET)
-================================================================
+==================================================================
 
 Overview
 -----------------
@@ -10,7 +10,7 @@ represented using the web ontology language (OWL). It includes both orthogonal c
 Earth realms, physical quantities, etc.) and integrative science knowledge concepts (phenomena, events, etc.).
 
 :Domain: Earth Science, Environmental Science
-:Category: Earth System Science, Geoscience
+:Category: Earth Science, Geoscience
 :Current Version: 3.6.0
 :Last Updated: July 14, 2022
 :Producer: NASA, JPL, Caltech
@@ -19,7 +19,7 @@ Earth realms, physical quantities, etc.) and integrative science knowledge conce
 :Download: `SWEET Homepage <https://bioportal.bioontology.org/ontologies/SWEET>`_
 
 Base Metrics
----------------
+------------
     - Classes: 10,239
     - Individuals: 2,148
     - Properties: 359

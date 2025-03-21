@@ -17,13 +17,13 @@ by defining more than 2500 terms for assays, devices, objectives, and more.
 :Documentation: `OBI Documentation <https://github.com/obi-ontology/obi/tree/master>`_
 
 Base Metrics
----------------
+------------
     - Classes:
     - Individuals:
     - Properties:
 
-Graph Metrics:
-------------------
+Graph Metrics
+-------------
     - **Total Nodes**: 40613
     - **Root Nodes**: 177
     - **Leaf Nodes**: 10917
@@ -31,7 +31,7 @@ Graph Metrics:
     - **Edges**: 104537
 
 Dataset Statistics
--------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 288
     - **Taxonomic Relations**: 22953
