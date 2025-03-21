@@ -19,8 +19,8 @@ release = '0.1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
+    "sphinx.ext.autodoc",
     "myst_parser",
     "sphinx_markdown_tables",
     "sphinx_copybutton",
@@ -28,13 +28,6 @@ extensions = [
     "sphinx.ext.linkcode",
     "sphinx_inline_tabs",
     "sphinxcontrib.mermaid",
-    # "sphinx.ext.mathjax"
-
-    # 'sphinx.ext.duration',
-    # 'sphinx.ext.doctest',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    # 'sphinx.ext.intersphinx',
 ]
 
 # autosummary_generate = True  # Turn on sphinx.ext.autosummary
@@ -61,12 +54,14 @@ master_doc = "index"
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_book_theme"
+html_theme = "sphinx_rtd_theme"
 
 html_theme_options = {
     "external_links": [
           ("Github", "https://github.com/sciknoworg/OntoLearner"),
     ],
+    "navigation_depth": 4,
+    "collapse_navigation": True
 }
 
 html_static_path = ["_static"]

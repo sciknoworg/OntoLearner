@@ -74,3 +74,13 @@ class PATO(BaseOntology):
     This class processes Phenotype and Trait Ontology (PATO) using default behavior.
     """
     ontology_full_name = "Phenotype and Trait Ontology (PATO)"
+
+
+class PO(BaseOntology):
+    """
+    The Plant Ontology (PO) is a structured vocabulary and database resource that links plant anatomy,
+    morphology and growth and development to plant genomics data.
+
+    This class processes Plant Ontology using default behavior.
+    """
+    ontology_full_name = "Plant Ontology (PO)"
