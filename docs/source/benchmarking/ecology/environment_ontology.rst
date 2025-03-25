@@ -8,7 +8,7 @@ and semantic web applications understand environmental entities of all kinds,
 from microscopic to intergalactic scales. As a FAIR-compliant resource, it promotes interoperability
 through the concise, controlled description of all things environmental.
 
-:Domain: Environment
+:Domain: Ecology
 :Category: Environment, Ecosystems, Habitats
 :Current Version: 2024-07-01
 :Last Updated: 2024-07-01

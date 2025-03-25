@@ -12,7 +12,6 @@ from .general import * # NOQA
 from .geography import * # NOQA
 from .healthcare import * # NOQA
 from .industry import * # NOQA
-from .interoperability import * # NOQA
 from .law import * # NOQA
 from .livestock import * # NOQA
 from .material_science_engineering import * # NOQA

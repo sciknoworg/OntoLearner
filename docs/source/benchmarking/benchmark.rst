@@ -26,6 +26,7 @@ Chemistry
    chemistry/rex.rst
    chemistry/nmrcv.rst
    chemistry/ontokin.rst
+   chemistry/mop.rst
 
 Agriculture
 ===========
@@ -54,12 +55,12 @@ Geological Sciences
 
    geology/geologic_timescale_model.rst
 
-Environment
+Ecology
 ===========
 .. toctree::
    :maxdepth: 3
 
-   environment/environment_ontology.rst
+   ecology/environment_ontology.rst
 
 Earth Science
 =============

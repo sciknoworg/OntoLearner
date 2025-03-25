@@ -92,3 +92,13 @@ class OntoKin(BaseOntology):
     This class processes the OntoKin ontology using default behavior.
     """
     ontology_full_name = "OntoKin"
+
+
+class MOP(BaseOntology):
+    """
+    MOP is the molecular process ontology. It contains the molecular processes that underlie
+    the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
+
+    This class processes the Molecular Process Ontology (MOP) using default behavior.
+    """
+    ontology_full_name = "Molecular Process Ontology (MOP)"
