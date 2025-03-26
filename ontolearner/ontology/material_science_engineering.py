@@ -226,3 +226,18 @@ class SystemCapabilities(BaseOntology):
     This class processes the System capabilities vocabulary using default behavior.
     """
     ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
+
+
+class SEPIO(BaseOntology):
+    """
+    The SEPIO ontology is in its early stages of development, undergoing iterative refinement
+    as new requirements emerge and alignment with existing standards is explored. The SEPIO core file imports two files
+    which can be resolved at the URLs below:
+    IAO ontology-metadata import: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/imports/ontology-metadata.owl
+    bfo mireot: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/mireots/bfo-mireot.owl
+    """
+    ontology_full_name = "Scientific Evidence and Provenance Information Ontology (SEPIO)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
