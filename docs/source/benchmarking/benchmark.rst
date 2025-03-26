@@ -101,6 +101,7 @@ Materials Science & Engineering
    materials_science/enm_ontology.rst
    materials_science/uo.rst
    materials_science/swo.rst
+   materials_science/systems_capabilities.rst
 
 Social Sciences
 ===============

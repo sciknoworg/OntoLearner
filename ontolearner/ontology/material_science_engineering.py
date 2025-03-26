@@ -217,3 +217,12 @@ class SWO(BaseOntology):
     This class processes the Software Ontology (SWO) using default behavior.
     """
     ontology_full_name = "Software Ontology (SWO)"
+
+
+class SystemCapabilities(BaseOntology):
+    """
+    This ontology describes system capabilities, operating ranges, and survival ranges.
+
+    This class processes the System capabilities vocabulary using default behavior.
+    """
+    ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
