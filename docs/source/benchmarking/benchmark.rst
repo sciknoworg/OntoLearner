@@ -30,6 +30,7 @@ Chemistry
    chemistry/chiro.rst
    chemistry/proco.rst
    chemistry/fix.rst
+   chemistry/mass_spectrometry.rst
 
 
 Agriculture

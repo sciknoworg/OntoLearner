@@ -137,3 +137,12 @@ class FIX(BaseOntology):
     This class processes the FIX ontology using default behavior.
     """
     ontology_full_name = "FIX Ontology (FIX)"
+
+
+class MassSpectrometry(BaseOntology):
+    """
+    A structured controlled vocabulary for the annotation of experiments concerned with proteomics mass spectrometry.
+
+    This class processes the Mass Spectrometry ontology using default behavior.
+    """
+    ontology_full_name = "Mass Spectrometry Ontology (MS)"
