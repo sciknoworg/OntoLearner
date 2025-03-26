@@ -156,6 +156,7 @@ Basic
    basic/dolce_ontology.rst
    basic/sio.rst
    basic/sumo.rst
+   basic/fair.rst
 
 Scholarly Knowledge
 ===================
