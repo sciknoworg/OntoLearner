@@ -144,6 +144,7 @@ General Knowledge
    general_knowledge/prov_ontology.rst
    general_knowledge/edam.rst
    general_knowledge/relations_ontology.rst
+   general_knowledge/iao.rst
 
 Basic
 =====

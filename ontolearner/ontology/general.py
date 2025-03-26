@@ -109,3 +109,13 @@ class RO(BaseOntology):
     This class processes Relation Ontology using default behavior.
     """
     ontology_full_name = "Relation Ontology (RO)"
+
+
+class IAO(BaseOntology):
+    """
+    The Information Artifact Ontology (IAO) is an ontology of information entities,
+    originally driven by work by the OBI digital entity and realizable information entity branch.
+
+    This class processes Information Artifact Ontology using default behavior.
+    """
+    ontology_full_name = "Information Artifact Ontology (IAO)"
