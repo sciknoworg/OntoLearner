@@ -102,3 +102,38 @@ class MOP(BaseOntology):
     This class processes the Molecular Process Ontology (MOP) using default behavior.
     """
     ontology_full_name = "Molecular Process Ontology (MOP)"
+
+
+class Chiro(BaseOntology):
+    """
+    CHEBI provides a distinct role hierarchy. Chemicals in the structural hierarchy are connected via a 'has role' relation.
+    CHIRO provides links from these roles to useful other classes in other ontologies.
+    This will allow direct connection between chemical structures (small molecules, drugs) and what they do.
+    This could be formalized using 'capable of', in the same way Uberon and the Cell Ontology link structures to processes.
+
+    This class processes the Chiro ontology using default behavior.
+    """
+    ontology_full_name = "Chiro"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class PROCO(BaseOntology):
+    """
+    PROCO (PROcess Chemistry Ontology) is a formal ontology that aims to standardly represent entities
+    and relations among entities in the domain of process chemistry.
+
+    This class processes the PROCO ontology using default behavior.
+    """
+    ontology_full_name = "PROcess Chemistry Ontology (PROCO)"
+
+
+class FIX(BaseOntology):
+    """
+    An ontology of physico-chemical methods and properties.
+
+    This class processes the FIX ontology using default behavior.
+    """
+    ontology_full_name = "FIX Ontology (FIX)"

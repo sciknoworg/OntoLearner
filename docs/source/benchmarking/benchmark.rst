@@ -27,6 +27,10 @@ Chemistry
    chemistry/nmrcv.rst
    chemistry/ontokin.rst
    chemistry/mop.rst
+   chemistry/chiro.rst
+   chemistry/proco.rst
+   chemistry/fix.rst
+
 
 Agriculture
 ===========
