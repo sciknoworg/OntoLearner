@@ -33,6 +33,7 @@ Chemistry
    chemistry/mass_spectrometry.rst
    chemistry/afo.rst
    chemistry/vibso.rst
+   chemistry/psi_mod.rst
 
 Agriculture
 ===========
