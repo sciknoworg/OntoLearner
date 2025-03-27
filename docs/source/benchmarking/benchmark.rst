@@ -199,6 +199,7 @@ Events
    events/conference_ontology.rst
    events/icalendar.rst
    events/owl_time.rst
+   events/lore.rst
 
 News & Media
 ============
