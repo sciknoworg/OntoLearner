@@ -146,3 +146,16 @@ class MassSpectrometry(BaseOntology):
     This class processes the Mass Spectrometry ontology using default behavior.
     """
     ontology_full_name = "Mass Spectrometry Ontology (MS)"
+
+
+class AFO(BaseOntology):
+    """
+    The AFO is an ontology suite that provides a standard vocabulary and semantic model
+    for the representation of laboratory analytical processes. The AFO suite is aligned at the upper layer
+    to the Basic Formal Ontology (BFO). The core domains modeled include, Equipment, Material, Process, and Results.
+    This artifact contains all triples of Allotrope Foundation Merged Without QUDT Ontology Suite (REC/2023/12)
+    together with triples inferred with HermiT.
+
+    This class processes the Allotrope Foundation Ontology (AFO) using default behavior.
+    """
+    ontology_full_name = "Allotrope Foundation Ontology (AFO)"

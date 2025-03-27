@@ -31,7 +31,7 @@ Chemistry
    chemistry/proco.rst
    chemistry/fix.rst
    chemistry/mass_spectrometry.rst
-
+   chemistry/afo.rst
 
 Agriculture
 ===========
