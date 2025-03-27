@@ -159,3 +159,13 @@ class AFO(BaseOntology):
     This class processes the Allotrope Foundation Ontology (AFO) using default behavior.
     """
     ontology_full_name = "Allotrope Foundation Ontology (AFO)"
+
+
+class VIBSO(BaseOntology):
+    """
+    The Vibration Spectroscopy Ontology defines technical terms with which research data produced
+    in vibrational spectroscopy experiments can be semantically enriched, made machine readable and FAIR.
+
+    This class processes the Vibrational Spectroscopy Ontology (VIBSO) using default behavior.
+    """
+    ontology_full_name = "Vibrational Spectroscopy Ontology (VIBSO)"

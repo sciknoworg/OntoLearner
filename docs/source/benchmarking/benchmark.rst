@@ -32,6 +32,7 @@ Chemistry
    chemistry/fix.rst
    chemistry/mass_spectrometry.rst
    chemistry/afo.rst
+   chemistry/vibso.rst
 
 Agriculture
 ===========
