@@ -241,3 +241,10 @@ class SEPIO(BaseOntology):
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
         return True
+
+
+class MGED(BaseOntology):
+    """
+    The Materials Genome Ontology (MGED) is a domain ontology for materials science and engineering.
+    """
+    ontology_full_name = "Materials Genome Ontology (MGED)"
