@@ -190,6 +190,7 @@ Education
 
    education/bibframe_ontology.rst
    education/doco.rst
+   education/common.rst
 
 Events
 ======
