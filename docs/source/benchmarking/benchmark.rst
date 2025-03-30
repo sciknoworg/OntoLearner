@@ -12,6 +12,7 @@ Biology & Life Sciences
    biology/protein_ontology.rst
    biology/pato.rst
    biology/efo.rst
+   biology/microscopy.rst
 
 Chemistry
 =========

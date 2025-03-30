@@ -84,3 +84,18 @@ class PO(BaseOntology):
     This class processes Plant Ontology using default behavior.
     """
     ontology_full_name = "Plant Ontology (PO)"
+
+
+class Microscopy(BaseOntology):
+    """
+    The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The MO facilitates semantic integration
+    and the interoperable connection of diverse data sources from the fields of microscopy and microanalysis. Consequently,
+    the MO paves the way for new, adaptable data applications and analyses across various experiments and studies
+
+    This class processes Microscopy Ontology using default behavior.
+    """
+    ontology_full_name = "Microscopy Ontology (MO)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
