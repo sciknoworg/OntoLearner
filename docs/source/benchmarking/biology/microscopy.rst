@@ -1,5 +1,5 @@
-Microscopy Ontology
-================
+Microscopy Ontology (MO)
+=========================
 
 Overview
 -----------------

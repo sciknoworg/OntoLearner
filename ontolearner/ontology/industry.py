@@ -1,3 +1,7 @@
+"""
+Industry-specific ontology implementations including GIST, IOF, DBO,
+TUBES, PTO, DOAP, GoodRelations, and AUTO.
+"""
 
 from ..base import BaseOntology
 
@@ -60,8 +64,8 @@ class PTO(BaseOntology):
 
 class DOAP(BaseOntology):
     """
-    The Description of a Project (DOAP) vocabulary, described using W3C RDF Schema and the Web Ontology Language
-    to describe software projects, and in particular open source projects.
+    The Description of a Project (DOAP) vocabulary, described using W3C RDF Schema and
+    the Web Ontology Language to describe software projects, and in particular open source projects.
 
     This class processes DOAP ontology using default behavior.
     """
@@ -70,11 +74,28 @@ class DOAP(BaseOntology):
 
 class GoodRelations(BaseOntology):
     """
-    GoodRelations is a standardized vocabulary (also known as "schema", "data dictionary", or "ontology") for product,
-    price, store, and company data that can (1) be embedded into existing static and dynamic Web pages and that
-    (2) can be processed by other computers. This increases the visibility of your products and services
-    in the latest generation of search engines, recommender systems, and other novel applications.
+    GoodRelations is a standardized vocabulary (also known as "schema", "data dictionary",
+    or "ontology") for product, price, store, and company data that can (1) be embedded
+    into existing static and dynamic Web pages and that (2) can be processed by other computers.
+    This increases the visibility of your products and services in the latest generation
+    of search engines, recommender systems, and other novel applications.
 
     This class processes GoodRelations ontology using default behavior.
     """
     ontology_full_name = "Good Relations Language Reference (GoodRelations)"
+
+
+class AUTO(BaseOntology):
+    """
+    The AUTOMOTIVE ONTOLOGY (AUTO) defines the shared conceptual structures
+    in the automotive industry. It is an OWL ontology. It is built upon the auto schema.org
+    extension created by the W3C Automotive Ontology Community Group. AUTO's development process
+    follows the best practices established by the EDMC FIBO Community.
+
+    This class processes Automotive Ontology using default behavior.
+    """
+    ontology_full_name = "Automotive Ontology (AUTO)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True

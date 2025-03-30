@@ -255,6 +255,7 @@ Industry
    industry/tubes_ontology.rst
    industry/product_types_ontology.rst
    industry/good_relations_ontology.rst
+   industry/auto.rst
 
 Administration
 ==============
