@@ -302,3 +302,10 @@ class CIFCore(BaseOntology):
     some of the more complex types of information that can be handled with this approach.
     """
     ontology_full_name = "Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)"
+
+
+class Atomistic(BaseOntology):
+    """
+    An EMMO-based domain ontology for atomistic and electronic modelling.
+    """
+    ontology_full_name = "Atomistic Ontology (Atomistic)"

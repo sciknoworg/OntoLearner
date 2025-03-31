@@ -114,6 +114,7 @@ Materials Science & Engineering
    materials_science/bvco.rst
    materials_science/crystallography.rst
    materials_science/cif_core.rst
+   materials_science/atomistic.rst
 
 Social Sciences
 ===============
