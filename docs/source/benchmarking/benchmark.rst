@@ -110,6 +110,7 @@ Materials Science & Engineering
    materials_science/mged.rst
    materials_science/chameo.rst
    materials_science/nanomine.rst
+   materials_science/gpo.rst
 
 Social Sciences
 ===============
