@@ -113,6 +113,7 @@ Materials Science & Engineering
    materials_science/gpo.rst
    materials_science/bvco.rst
    materials_science/crystallography.rst
+   materials_science/cif_core.rst
 
 Social Sciences
 ===============

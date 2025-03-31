@@ -293,3 +293,12 @@ class EMMOCrystallography(BaseOntology):
     A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
     """
     ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"
+
+
+class CIFCore(BaseOntology):
+    """
+    (1) to explain the historical development of CIF dictionaries to define in a machine-actionable manner the contents
+    of data files covering various aspects of crystallography and related structural sciences; (2) to demonstrate
+    some of the more complex types of information that can be handled with this approach.
+    """
+    ontology_full_name = "Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)"
