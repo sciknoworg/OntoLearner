@@ -222,8 +222,6 @@ class SWO(BaseOntology):
 class SystemCapabilities(BaseOntology):
     """
     This ontology describes system capabilities, operating ranges, and survival ranges.
-
-    This class processes the System capabilities vocabulary using default behavior.
     """
     ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
 
@@ -266,8 +264,6 @@ class NanoMine(BaseOntology):
     Polymer Nanocomposites based ontology which enable researchers to develop and test
     broad-reaching hypotheses about how inter-relationships between different materials
     processing methods and composition result in specific changes in material properties.
-
-    The ontology is designed to be extensible and to allow for the addition of new classes
     """
     ontology_full_name = "NanoMine Ontology (NanoMine)"
 
@@ -278,7 +274,15 @@ class GPO(BaseOntology):
     that transform inputs/educts (matter, energy, information) into output/products (matter, energy, information)
     with the help of tools (devices, algorithms). They can be decomposed into sub-processes
     and have predecessor and successor processes.
-
-    The General Process Ontology (GPO) is a domain ontology for graphene and graphene-based materials.
     """
     ontology_full_name = "General Process Ontology (GPO)"
+
+
+class BVCO(BaseOntology):
+    """
+    Basically, Battery Value Chain Ontology (BVCO) aims to model processes along the Battery value chain. Processes are
+    holistic perspective elements that transform inputs/educts (matter, energy, information)
+    into output/products (matter, energy, information) with the help of tools (devices, algorithms).
+    They can be decomposed into sub-processes and have predecessor and successor processes.
+    """
+    ontology_full_name = "Battery Value Chain Ontology (BVCO)"

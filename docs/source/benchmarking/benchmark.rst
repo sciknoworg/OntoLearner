@@ -111,6 +111,7 @@ Materials Science & Engineering
    materials_science/chameo.rst
    materials_science/nanomine.rst
    materials_science/gpo.rst
+   materials_science/bvco.rst
 
 Social Sciences
 ===============
