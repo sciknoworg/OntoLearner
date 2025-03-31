@@ -248,3 +248,14 @@ class MGED(BaseOntology):
     The Materials Genome Ontology (MGED) is a domain ontology for materials science and engineering.
     """
     ontology_full_name = "Materials Genome Ontology (MGED)"
+
+
+class CHAMEO(BaseOntology):
+    """
+    An ontology for materials characterization which represents the evolution of the CHADA template
+    in an ontological form, allowing to generate FAIR documentation of Characterisation Experiments
+    and that has been used as a basis for the development of a number of technique-specific
+    or application-specific ontologies in the materials characterisation domain. CHAMEO
+    has been used as a foundation for the definition of the new CHADA template during the CWA.
+    """
+    ontology_full_name = "Characterisation Methodology Domain Ontology (CHAMEO)"

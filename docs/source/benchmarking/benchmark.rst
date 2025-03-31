@@ -108,6 +108,7 @@ Materials Science & Engineering
    materials_science/systems_capabilities.rst
    materials_science/sepio.rst
    materials_science/mged.rst
+   materials_science/chameo.rst
 
 Social Sciences
 ===============
