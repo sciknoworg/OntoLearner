@@ -286,3 +286,10 @@ class BVCO(BaseOntology):
     They can be decomposed into sub-processes and have predecessor and successor processes.
     """
     ontology_full_name = "Battery Value Chain Ontology (BVCO)"
+
+
+class EMMOCrystallography(BaseOntology):
+    """
+    A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
+    """
+    ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"

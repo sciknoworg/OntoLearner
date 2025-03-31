@@ -112,6 +112,7 @@ Materials Science & Engineering
    materials_science/nanomine.rst
    materials_science/gpo.rst
    materials_science/bvco.rst
+   materials_science/crystallography.rst
 
 Social Sciences
 ===============
