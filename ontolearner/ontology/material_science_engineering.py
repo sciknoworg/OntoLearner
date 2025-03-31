@@ -259,3 +259,14 @@ class CHAMEO(BaseOntology):
     has been used as a foundation for the definition of the new CHADA template during the CWA.
     """
     ontology_full_name = "Characterisation Methodology Domain Ontology (CHAMEO)"
+
+
+class NanoMine(BaseOntology):
+    """
+    Polymer Nanocomposites based ontology which enable researchers to develop and test
+    broad-reaching hypotheses about how inter-relationships between different materials
+    processing methods and composition result in specific changes in material properties.
+
+    The ontology is designed to be extensible and to allow for the addition of new classes
+    """
+    ontology_full_name = "NanoMine Ontology (NanoMine)"

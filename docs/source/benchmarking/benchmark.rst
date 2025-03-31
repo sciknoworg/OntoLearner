@@ -109,6 +109,7 @@ Materials Science & Engineering
    materials_science/sepio.rst
    materials_science/mged.rst
    materials_science/chameo.rst
+   materials_science/nanomine.rst
 
 Social Sciences
 ===============
