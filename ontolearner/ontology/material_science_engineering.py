@@ -309,3 +309,36 @@ class Atomistic(BaseOntology):
     An EMMO-based domain ontology for atomistic and electronic modelling.
     """
     ontology_full_name = "Atomistic Ontology (Atomistic)"
+
+
+class DISO(BaseOntology):
+    """
+    DISO is an ontology that defines the linear defect, in particular dislocation concepts
+    and relations between them in crystalline materials.
+    """
+    ontology_full_name = "Dislocation Ontology (DISO)"
+
+
+class BattINFO(BaseOntology):
+    """
+    BattINFO is a foundational resource for harmonizing battery knowledge representation
+    and enhancing data interoperability. The primary objective is to provide the necessary tools
+    to create FAIR (Findable, Accessible, Interoperable, Reusable) battery data
+    that can be integrated into the Semantic Web.
+    """
+    ontology_full_name = "Battery Interface Ontology (BattINFO)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class MAMBO(BaseOntology):
+    """
+    MAMBO (Molecules And Materials Basic Ontology) is a domain ontology for molecular materials.
+    Its main targets are: Allowing the retrieval of structured information regarding molecular materials
+    and related applications (i.e. devices based on molecular materials) Supporting the development of new,
+    complex workflows for modelling systems based on molecular materials (computational modelling
+    and data-driven techniques) Integrating data generated via computational simulations and empirical experiments.
+    """
+    ontology_full_name = "Molecules And Materials Basic Ontology (MAMBO)"

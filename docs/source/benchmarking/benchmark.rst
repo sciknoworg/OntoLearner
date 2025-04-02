@@ -115,6 +115,8 @@ Materials Science & Engineering
    materials_science/crystallography.rst
    materials_science/cif_core.rst
    materials_science/atomistic.rst
+   materials_science/disco.rst
+   materials_science/mambo.rst
 
 Social Sciences
 ===============
