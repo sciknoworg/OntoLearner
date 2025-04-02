@@ -357,3 +357,15 @@ class LPBFO(BaseOntology):
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
         return True
+
+
+class AMOntology(BaseOntology):
+    """
+    The AM ontology has been developed following two major milestones. The ontology developed within the first milestone
+    includes AMProcessOntology, ModelOntology and AMOntology files. AMProcessOntology contains the set of entities
+    used to capture knowledge about additive manufacturing processes. ModelOntology contains the set of entities
+    used to capture knowledge about modeling concepts that represent (possibly) multi-physics multi-scale processes.
+    AMOntology uses AMProcessOntology and ModelOntology files to describe entities that capture knowledge
+    about characteristics of computational models for AM processes.
+    """
+    ontology_full_name = "Additive Manufacturing Ontology (AMOntology)"
