@@ -39,3 +39,19 @@ class ICalendar(BaseOntology):
     This class processes iCalendar ontology using default behavior.
     """
     ontology_full_name = "iCalendar Vocabulary"
+
+
+class LODE(BaseOntology):
+    """
+    People conventionally refer to an action or occurrence taking place at a certain time
+    at a specific location as an event. This notion is potentially useful for connecting individual facts
+    recorded in the rapidly growing collection of linked data sets and for discovering more complex relationships
+    between data. The LODE provide an overview and comparison of existing event models,
+    looking at the different choices they make of how to represent events. It is a model for publishing records
+    of events as Linked Data. A tools for populating this model and a prototype “event directory” web service,
+    which can be used to locate stable URIs for events that have occurred,
+    provide RDFS+OWL descriptions and link to related resources.
+
+    This class processes LODE ontology using default behavior.
+    """
+    ontology_full_name = "Linking Open Descriptions of Events (LODE)"

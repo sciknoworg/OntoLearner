@@ -28,3 +28,12 @@ class DoCO(BaseOntology):
     and shareability of academic documents (and related services) when multiple formats are actually used for their storage.
     """
     ontology_full_name = "Document Components Ontology (DoCO)"
+
+
+class Common(BaseOntology):
+    """
+    OSCCA is a computer course architectural ontology system for associating computer learners to select and
+    explore a set of appropriate courses and curriculums. An ontology is used for defining relationships between
+    items in order to assist the user to find their interesting knowledge points
+    """
+    ontology_full_name = "Common Ontology"

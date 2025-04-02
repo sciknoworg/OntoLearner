@@ -217,3 +217,95 @@ class SWO(BaseOntology):
     This class processes the Software Ontology (SWO) using default behavior.
     """
     ontology_full_name = "Software Ontology (SWO)"
+
+
+class SystemCapabilities(BaseOntology):
+    """
+    This ontology describes system capabilities, operating ranges, and survival ranges.
+    """
+    ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
+
+
+class SEPIO(BaseOntology):
+    """
+    The SEPIO ontology is in its early stages of development, undergoing iterative refinement
+    as new requirements emerge and alignment with existing standards is explored. The SEPIO core file imports two files
+    which can be resolved at the URLs below:
+    IAO ontology-metadata import: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/imports/ontology-metadata.owl
+    bfo mireot: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/mireots/bfo-mireot.owl
+    """
+    ontology_full_name = "Scientific Evidence and Provenance Information Ontology (SEPIO)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class MGED(BaseOntology):
+    """
+    The Materials Genome Ontology (MGED) is a domain ontology for materials science and engineering.
+    """
+    ontology_full_name = "Materials Genome Ontology (MGED)"
+
+
+class CHAMEO(BaseOntology):
+    """
+    An ontology for materials characterization which represents the evolution of the CHADA template
+    in an ontological form, allowing to generate FAIR documentation of Characterisation Experiments
+    and that has been used as a basis for the development of a number of technique-specific
+    or application-specific ontologies in the materials characterisation domain. CHAMEO
+    has been used as a foundation for the definition of the new CHADA template during the CWA.
+    """
+    ontology_full_name = "Characterisation Methodology Domain Ontology (CHAMEO)"
+
+
+class NanoMine(BaseOntology):
+    """
+    Polymer Nanocomposites based ontology which enable researchers to develop and test
+    broad-reaching hypotheses about how inter-relationships between different materials
+    processing methods and composition result in specific changes in material properties.
+    """
+    ontology_full_name = "NanoMine Ontology (NanoMine)"
+
+
+class GPO(BaseOntology):
+    """
+    Basically, this ontology aims to model processes. Processes are holistic perspective elements
+    that transform inputs/educts (matter, energy, information) into output/products (matter, energy, information)
+    with the help of tools (devices, algorithms). They can be decomposed into sub-processes
+    and have predecessor and successor processes.
+    """
+    ontology_full_name = "General Process Ontology (GPO)"
+
+
+class BVCO(BaseOntology):
+    """
+    Basically, Battery Value Chain Ontology (BVCO) aims to model processes along the Battery value chain. Processes are
+    holistic perspective elements that transform inputs/educts (matter, energy, information)
+    into output/products (matter, energy, information) with the help of tools (devices, algorithms).
+    They can be decomposed into sub-processes and have predecessor and successor processes.
+    """
+    ontology_full_name = "Battery Value Chain Ontology (BVCO)"
+
+
+class EMMOCrystallography(BaseOntology):
+    """
+    A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
+    """
+    ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"
+
+
+class CIFCore(BaseOntology):
+    """
+    (1) to explain the historical development of CIF dictionaries to define in a machine-actionable manner the contents
+    of data files covering various aspects of crystallography and related structural sciences; (2) to demonstrate
+    some of the more complex types of information that can be handled with this approach.
+    """
+    ontology_full_name = "Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)"
+
+
+class Atomistic(BaseOntology):
+    """
+    An EMMO-based domain ontology for atomistic and electronic modelling.
+    """
+    ontology_full_name = "Atomistic Ontology (Atomistic)"

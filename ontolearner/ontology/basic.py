@@ -54,3 +54,12 @@ class SUMO(BaseOntology):
     This class processes SUMO using default behavior.
     """
     ontology_full_name = "Suggested Upper Merged Ontology (SUMO)"
+
+
+class FAIR(BaseOntology):
+    """
+    This is the formal vocabulary (ontology) describing the FAIR principles.
+
+    This class processes FAIR using default behavior.
+    """
+    ontology_full_name = "FAIR Vocabulary (FAIR)"

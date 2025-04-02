@@ -92,3 +92,93 @@ class OntoKin(BaseOntology):
     This class processes the OntoKin ontology using default behavior.
     """
     ontology_full_name = "OntoKin"
+
+
+class MOP(BaseOntology):
+    """
+    MOP is the molecular process ontology. It contains the molecular processes that underlie
+    the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
+
+    This class processes the Molecular Process Ontology (MOP) using default behavior.
+    """
+    ontology_full_name = "Molecular Process Ontology (MOP)"
+
+
+class Chiro(BaseOntology):
+    """
+    CHEBI provides a distinct role hierarchy. Chemicals in the structural hierarchy are connected via a 'has role' relation.
+    CHIRO provides links from these roles to useful other classes in other ontologies.
+    This will allow direct connection between chemical structures (small molecules, drugs) and what they do.
+    This could be formalized using 'capable of', in the same way Uberon and the Cell Ontology link structures to processes.
+
+    This class processes the Chiro ontology using default behavior.
+    """
+    ontology_full_name = "Chiro"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class PROCO(BaseOntology):
+    """
+    PROCO (PROcess Chemistry Ontology) is a formal ontology that aims to standardly represent entities
+    and relations among entities in the domain of process chemistry.
+
+    This class processes the PROCO ontology using default behavior.
+    """
+    ontology_full_name = "PROcess Chemistry Ontology (PROCO)"
+
+
+class FIX(BaseOntology):
+    """
+    An ontology of physico-chemical methods and properties.
+
+    This class processes the FIX ontology using default behavior.
+    """
+    ontology_full_name = "FIX Ontology (FIX)"
+
+
+class MassSpectrometry(BaseOntology):
+    """
+    A structured controlled vocabulary for the annotation of experiments concerned with proteomics mass spectrometry.
+
+    This class processes the Mass Spectrometry ontology using default behavior.
+    """
+    ontology_full_name = "Mass Spectrometry Ontology (MS)"
+
+
+class AFO(BaseOntology):
+    """
+    The AFO is an ontology suite that provides a standard vocabulary and semantic model
+    for the representation of laboratory analytical processes. The AFO suite is aligned at the upper layer
+    to the Basic Formal Ontology (BFO). The core domains modeled include, Equipment, Material, Process, and Results.
+    This artifact contains all triples of Allotrope Foundation Merged Without QUDT Ontology Suite (REC/2023/12)
+    together with triples inferred with HermiT.
+
+    This class processes the Allotrope Foundation Ontology (AFO) using default behavior.
+    """
+    ontology_full_name = "Allotrope Foundation Ontology (AFO)"
+
+
+class VIBSO(BaseOntology):
+    """
+    The Vibration Spectroscopy Ontology defines technical terms with which research data produced
+    in vibrational spectroscopy experiments can be semantically enriched, made machine readable and FAIR.
+
+    This class processes the Vibrational Spectroscopy Ontology (VIBSO) using default behavior.
+    """
+    ontology_full_name = "Vibrational Spectroscopy Ontology (VIBSO)"
+
+
+class PSIMOD(BaseOntology):
+    """
+    PSI-MOD is an ontology consisting of terms that describe protein chemical modifications,
+    logically linked by an is_a relationship in such a way as to form a direct acyclic graph (DAG).
+    The PSI-MOD ontology has more than 45 top-level nodes, and provides alternative hierarchical paths
+    for classifying protein modifications either by the molecular structure of the modification,
+    or by the amino acid residue that is modified.
+
+    This class processes the PSI-MOD ontology using default behavior.
+    """
+    ontology_full_name = "Proteomics Standards Initiative (PSI) Protein Modifications Ontology (PSI-MOD)"

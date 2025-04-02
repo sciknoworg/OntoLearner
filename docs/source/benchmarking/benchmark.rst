@@ -12,6 +12,7 @@ Biology & Life Sciences
    biology/protein_ontology.rst
    biology/pato.rst
    biology/efo.rst
+   biology/microscopy.rst
 
 Chemistry
 =========
@@ -26,6 +27,14 @@ Chemistry
    chemistry/rex.rst
    chemistry/nmrcv.rst
    chemistry/ontokin.rst
+   chemistry/mop.rst
+   chemistry/chiro.rst
+   chemistry/proco.rst
+   chemistry/fix.rst
+   chemistry/mass_spectrometry.rst
+   chemistry/afo.rst
+   chemistry/vibso.rst
+   chemistry/psi_mod.rst
 
 Agriculture
 ===========
@@ -54,12 +63,12 @@ Geological Sciences
 
    geology/geologic_timescale_model.rst
 
-Environment
+Ecology
 ===========
 .. toctree::
    :maxdepth: 3
 
-   environment/environment_ontology.rst
+   ecology/environment_ontology.rst
 
 Earth Science
 =============
@@ -96,6 +105,16 @@ Materials Science & Engineering
    materials_science/enm_ontology.rst
    materials_science/uo.rst
    materials_science/swo.rst
+   materials_science/systems_capabilities.rst
+   materials_science/sepio.rst
+   materials_science/mged.rst
+   materials_science/chameo.rst
+   materials_science/nanomine.rst
+   materials_science/gpo.rst
+   materials_science/bvco.rst
+   materials_science/crystallography.rst
+   materials_science/cif_core.rst
+   materials_science/atomistic.rst
 
 Social Sciences
 ===============
@@ -137,6 +156,7 @@ General Knowledge
    general_knowledge/prov_ontology.rst
    general_knowledge/edam.rst
    general_knowledge/relations_ontology.rst
+   general_knowledge/iao.rst
 
 Basic
 =====
@@ -149,6 +169,7 @@ Basic
    basic/dolce_ontology.rst
    basic/sio.rst
    basic/sumo.rst
+   basic/fair.rst
 
 Scholarly Knowledge
 ===================
@@ -177,6 +198,7 @@ Education
 
    education/bibframe_ontology.rst
    education/doco.rst
+   education/common.rst
 
 Events
 ======
@@ -187,6 +209,7 @@ Events
    events/conference_ontology.rst
    events/icalendar.rst
    events/owl_time.rst
+   events/lore.rst
 
 News & Media
 ============
@@ -239,6 +262,7 @@ Industry
    industry/tubes_ontology.rst
    industry/product_types_ontology.rst
    industry/good_relations_ontology.rst
+   industry/auto.rst
 
 Administration
 ==============
