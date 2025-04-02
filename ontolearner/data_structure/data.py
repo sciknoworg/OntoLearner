@@ -1,8 +1,33 @@
-
+from typing import Dict, Union
 from typing import List
 from uuid import uuid4
-
 from pydantic import BaseModel, Field
+
+
+class Term(BaseModel):
+    """Schema for a term extracted from documents"""
+    term: str = Field(..., min_length=1)
+    extraction_method: str = Field("abstractive", description="extractive/abstractive")
+
+
+class DocumentReference(BaseModel):
+    """Reference to a document with extraction method"""
+    doc_id: Union[int, str]
+    extraction_method: str
+
+
+class Document(BaseModel):
+    """Schema for a document"""
+    id: Union[int, str]
+    title: str
+    text: str
+
+
+class TextualData(BaseModel):
+    """Schema for textual data from a single split"""
+    terms: List[Term] = []
+    documents: List[Document] = []
+    term_to_documents: Dict[str, List[DocumentReference]] = {}
 
 
 class TermTyping(BaseModel):
