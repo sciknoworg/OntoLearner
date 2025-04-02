@@ -117,6 +117,7 @@ Materials Science & Engineering
    materials_science/atomistic.rst
    materials_science/disco.rst
    materials_science/mambo.rst
+   materials_science/lpbfo.rst
 
 Social Sciences
 ===============

@@ -342,3 +342,18 @@ class MAMBO(BaseOntology):
     and data-driven techniques) Integrating data generated via computational simulations and empirical experiments.
     """
     ontology_full_name = "Molecules And Materials Basic Ontology (MAMBO)"
+
+
+class LPBFO(BaseOntology):
+    """
+    The LPBF Ontology can be used to describe the additive manufacturing of a component via
+    Laser Powder Bed Fusion (LPBF) / Selective Laser Melting (SLM). The ontology builds on BFO2.0
+    and BWMD_mid and has been developed to be used in conjunction with the digital workflows provided
+    by Fraunhofer IWM. If possible, the terminology within this ontology was used as provided by ISO/ASTM 52900:2015.
+    Recently, classes relevant for Life Cycle Analysis (LCA) were added that enable sustainability assessment.
+    """
+    ontology_full_name = "Laser Powder Bed Fusion Ontology (LPBFO)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
