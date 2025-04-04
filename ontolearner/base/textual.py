@@ -41,14 +41,14 @@ class BaseTextualDataset(ABC):
         # Load raw data from files
         terms_data = self._load_json(path / "terms.json")
         documents_data = self._load_jsonl(path / "documents.jsonl")
-        term_to_documents_data = self._load_json(path / "terms2documents.json")
+        term2documents_data = self._load_json(path / "terms2documents.json")
 
         terms = [Term(**t) for t in terms_data]
         documents = [Document(**d) for d in documents_data]
 
-        term_to_documents = {}
-        for term_name, doc_entries in term_to_documents_data.items():
-            term_to_documents[term_name] = [
+        term2documents = {}
+        for term_name, doc_entries in term2documents_data.items():
+            term2documents[term_name] = [
                 DocumentReference(
                     doc_id=entry["doc_id"],
                     extraction_method=entry["extraction_method"]
@@ -59,7 +59,7 @@ class BaseTextualDataset(ABC):
         return TextualData(
             terms=terms,
             documents=documents,
-            term_to_documents=term_to_documents
+            term2documents=term2documents
         )
 
     @staticmethod
@@ -88,7 +88,7 @@ class BaseTextualDataset(ABC):
         term_list = []
         doc_id_str = str(doc_id)
 
-        for term_name, doc_refs in self.data[split].term_to_documents.items():
+        for term_name, doc_refs in self.data[split].term2documents.items():
             for doc_ref in doc_refs:
                 if str(doc_ref.doc_id) == doc_id_str:
                     # Find the full term data
@@ -116,13 +116,13 @@ class BaseTextualDataset(ABC):
 
         # Count documents per term
         docs_per_term = {
-            term.term: len(data.term_to_documents.get(term.term, []))
+            term.term: len(data.term2documents.get(term.term, []))
             for term in data.terms
         }
 
         # Get all unique document IDs that have terms
         docs_with_terms: Set[Union[int, str]] = set()
-        for refs in data.term_to_documents.values():
+        for refs in data.term2documents.values():
             for ref in refs:
                 docs_with_terms.add(ref.doc_id)
 

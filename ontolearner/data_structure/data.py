@@ -27,7 +27,7 @@ class TextualData(BaseModel):
     """Schema for textual data from a single split"""
     terms: List[Term] = []
     documents: List[Document] = []
-    term_to_documents: Dict[str, List[DocumentReference]] = {}
+    term2documents: Dict[str, List[DocumentReference]] = {}
 
 
 class TermTyping(BaseModel):
