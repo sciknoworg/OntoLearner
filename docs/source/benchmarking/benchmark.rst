@@ -119,6 +119,39 @@ Materials Science & Engineering
    materials_science/mambo.rst
    materials_science/lpbfo.rst
    materials_science/am_ontology.rst
+   materials_science/asmo.rst
+   materials_science/bmo.rst
+   materials_science/cdco.rst
+   materials_science/cmso.rst
+   materials_science/deb.rst
+   materials_science/dsim.rst
+   materials_science/ldo.rst
+   materials_science/m4i.rst
+   materials_science/mat.rst
+   materials_science/matvoc.rst
+   materials_science/mds.rst
+   materials_science/mechanical_testing.rst
+   materials_science/microstructure.rst
+   materials_science/mol-brinell.rst
+   materials_science/moltensile.rst
+   materials_science/mseo.rst
+   materials_science/msle.rst
+   materials_science/npo.rst
+   materials_science/oeo.rst
+   materials_science/oie-materials.rst
+   materials_science/ontorule.rst
+   materials_science/opmw.rst
+   materials_science/periodic_table.rst
+   materials_science/photovoltaics.rst
+   materials_science/pldo.rst
+   materials_science/pmdco.rst
+   materials_science/podo.rst
+   materials_science/prima.rst
+   materials_science/qudv.rst
+   materials_science/sp-document.rst
+   materials_science/sp-workflow.rst
+   materials_science/vimo.rst
+   materials_science/wild.rst
 
 Social Sciences
 ===============

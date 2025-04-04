@@ -369,3 +369,305 @@ class AMOntology(BaseOntology):
     about characteristics of computational models for AM processes.
     """
     ontology_full_name = "Additive Manufacturing Ontology (AMOntology)"
+
+
+class BMO(BaseOntology):
+    """
+    Building Material Ontology defines the main concepts of building material,
+    types, layers, and properties.
+    """
+    ontology_full_name = "Building Material Ontology (BMO)"
+
+
+class DEB(BaseOntology):
+    """
+    The devices, experimental scaffolds, and biomaterials ontology (DEB) is an open resource
+    for organizing information about biomaterials, their design, manufacture, and biological testing.
+    It was developed using text analysis for identifying ontology terms from a biomaterials gold standard corpus,
+    systematically curated to represent the domain's lexicon. Topics covered were validated by members
+    of the biomaterials research community.
+    """
+    ontology_full_name = "Devices, Experimental scaffolds and Biomaterials Ontology (DEB)"
+
+
+class MatVoc(BaseOntology):
+    """
+    The official ontology produced in the context of the STREAM project.
+    """
+    ontology_full_name = "Materials Vocabulary (MatVoc)"
+
+
+class PRIMA(BaseOntology):
+    """
+    An ontology that captures the provenance information in the materials science domain.
+    """
+    ontology_full_name = "PRovenance Information in MAterials science (PRIMA)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class MechanicalTesting(BaseOntology):
+    """
+    A domain ontology for mechanical testing based on EMMO.
+    """
+    ontology_full_name = "Mechanical Testing Ontology (MTO)"
+
+
+class MicroStructures(BaseOntology):
+    """
+    This is intended to be a domain ontology for metallic microstructures, covering aspects like: composition,
+    particles, both stable (primary) and metastable (precipitates), grains, subgrains,
+    grain boundaries & particle free zones (PFZs), texture, dislocations. The aim is to support
+    both microstructure modelling as well as characterisation.
+    """
+    ontology_full_name = "EMMO-based ontology for microstructures (MicroStructures)"
+
+
+class MDS(BaseOntology):
+    """
+    Materials Data Science(MDS) is an ontology encompassing multiple domains relevant to materials science,
+    chemical synthesis and characterizations, photovoltaics and geospatial datasets. The terms used for classes,
+    subclasses and instances are mapped to PMDCo and BFO Ontologies.
+    """
+    ontology_full_name = "Materials Data Science Ontology (MDS)"
+
+
+class SPWorkflow(BaseOntology):
+    """
+    SP-Workflow module represents: i) the executable  elements of a protocol; ii) the experimental actions
+    and material entities that participates in instructions (sample/specimen, organisms, reagents,
+    instruments);  and iii) the order of execution of the instructions.
+    """
+    ontology_full_name = "SMART Protocols Ontology: Workflow Module (SP-Workflow)"
+
+
+class SPDocument(BaseOntology):
+    """
+    SMART Protocols Ontology: Document Module is an ontology designed
+    to represent metadata used to report an experimental protocol.
+    """
+    ontology_full_name = "SMART Protocols Ontology: Document Module (SP-Document)"
+
+
+class NPO(BaseOntology):
+    """
+    NanoParticle Ontology (NPO) is developed within the framework of the Basic Formal Ontology (BFO),
+    and implemented in the Ontology Web Language (OWL) using well-defined ontology design principles.
+    The NPO was developed to represent knowledge underlying the preparation, chemical composition,
+    and characterization of nanomaterials involved in cancer research. Public releases of the NPO
+    are available through BioPortal website, maintained by the National Center for Biomedical Ontology.
+    Mechanisms for editorial and governance processes are being developed for the maintenance,
+    review, and growth of the NPO.
+    """
+    ontology_full_name = "NanoParticle Ontology (NPO)"
+
+
+class PMDco(BaseOntology):
+    """
+    The PMD Core Ontology (PMDco) is a comprehensive framework for representing knowledge that encompasses
+    fundamental concepts from the domains of materials science and engineering (MSE). The PMDco
+    has been designed as a mid-level ontology to establish a connection between specific MSE application ontologies
+    and the domain neutral concepts found in established top-level ontologies. The primary goal of the PMDco
+    is to promote interoperability between diverse domains.
+    """
+    ontology_full_name = "The Platform MaterialDigital core ontology (PMDco)"
+
+
+class MSEO(BaseOntology):
+    """
+    MSEO utilizes the IOF Ontology stack giving materials scientists and engineers the ability
+    to represent their experiments and resulting data. The goal is to create machine and human readable sematic data
+    which can be easily digested by other science domains. It is a product of the joint venture Materials Open Lab Project
+    between the Bundesanstalt für Materialforschung und -prüfung (BAM) and the Fraunhofer Group MATERIALS
+    and uses the BWMD ontology created by Fraunhofer IWM as a starting point.
+    """
+    ontology_full_name = "Materials Science and Engineering Ontology (MSEO)"
+
+
+class MOLTENSILE(BaseOntology):
+    """
+    An ontology for describing the tensile test process, made in the Materials Open Lab Project.
+    """
+    ontology_full_name = "Matolab Tensile Test Ontology (MOL_TENSILE)"
+
+
+class ONTORULE(BaseOntology):
+    """
+    This deliverable consists of the ontology developed in ONTORULE for the steel industry use case.
+    It is presented as an attachment to this document as an html document which was generated by SpecGen
+    from the OWL file. The original OWL file is also included. This document describes the different concepts
+    and attributes included in the ontology. For a better understanding of the decisions taken at the time
+    of representing the knowledge in the ontology, the reader is encouraged to also read the document D5.4.
+    """
+    ontology_full_name = "Ontology for the Steel Domain (ONTORULE)"
+
+
+class PeriodicTable(BaseOntology):
+    """
+    PeriodicTable.owl is a representation of the Periodic Table of the Elements in the OWL Web Ontology Language.
+    It provides reference data to support Semantic Web applications in chemistry and related disciplines.
+    """
+    ontology_full_name = "Periodic Table of the Elements Ontology (PeriodicTable)"
+
+
+class OEO(BaseOntology):
+    """
+    The Open Energy Ontology (OEO) is a domain ontology of the energy system analysis context.
+    It is developed as part of the Open Energy Family. The OEO is published on GitHub under
+    an open source license. The language used is the Manchester OWL Syntax, which was chosen
+    because it is user-friendly for editing and viewing differences of edited files. The OEO is constantly
+    being extended. The first version of the OEO has been released on June 11th 2020. A Steering Committee (OEO-SC)
+    was created to accompany the development, increase awareness of the ontology and include it in current projects.
+    """
+    ontology_full_name = "The Open Energy Ontology (OEO)"
+
+
+class QUDV(BaseOntology):
+    """
+    The SysML QUDV (Quantities, Units, Dimensions and Values) modelLibrary is specified in a UML/SysML
+    class/block diagram. In order to generalize its potential usage and alignment with other standardization efforts
+    concerning quantities and units, it is of interest to verify that the QUDV model can also be represented
+    in the form of an ontology using a formal ontology definition language.
+    """
+    ontology_full_name = "Quantities, Units, Dimensions and Values (QUDV)"
+
+
+class WiLD(BaseOntology):
+    """
+    Ontology to describe Workflows in Linked Data
+    """
+    ontology_full_name = "Workflows in Linked Data (WiLD)"
+
+
+class VIMMP(BaseOntology):
+    """
+    The Virtual Materials Marketplace (VIMMP) project is developing an open platform for providing
+    and accessing services related to materials modelling. Within VIMMP, a system of marketplace-level ontologies
+    is developed to characterize services, models, and interactions between users; the European Materials
+    and Modelling Ontology (EMMO, recently renamed while keeping the original acronym) is employed
+    as a top-level ontology. The ontologies are used to annotate data that are stored in the ZONTAL Space component
+    of VIMMP and to support the ingest and retrieval of data and metadata at the VIMMP marketplace front-end.
+    """
+    ontology_full_name = "Virtual Materials Marketplace (VIMMP) Ontologies"
+
+
+class MOLBRINELL(BaseOntology):
+    """
+    An ontology for describing the Brinell hardness testing process, made in the Materials Open Lab Project.
+    """
+    ontology_full_name = "MatoLab Brinell Test Ontology (MOLBRINELL)"
+
+
+class M4I(BaseOntology):
+    """
+    Metadata4Ing is an ontology for describing engineering results and their corresponding workflow.
+    The ontology is maintained by the Metadata4Ing working group, a subgroup of the Special Interest Group (SIG)
+    Metadata & Ontologies within NFDI4Ing.
+    """
+    ontology_full_name = "Metadata for Engineering (M4I)"
+
+
+class OPMW(BaseOntology):
+    """
+    The Open Provenance Model for Workflows (OPMW) is an ontology for describing workflow traces
+    and their templates based on the Open Provenance Model. It has been designed as a profile for OPM,
+    extending and reusing OPM's core ontologies OPMV (OPM-Vocabulary) and OPMO (OPM-Ontology).
+    """
+    ontology_full_name = "Open Provenance Model for Workflows (OPMW)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class MAT(BaseOntology):
+    """
+    The Material Properties Ontology aims to provide the vocabulary to describe the building components,
+    materials, and their corresponding properties, relevant within the construction industry. More specifically,
+    the building elements and properties covered in this ontology support applications
+    focused on the design of building renovation projects.
+    """
+    ontology_full_name = "Material Properties Ontology (MAT)"
+
+
+class CMSO(BaseOntology):
+    """
+    CMSO is an ontology that aims to describe computational materials science samples (or structures),
+    including crystalline defects. Initially focusing on the description at the atomic scale.
+    """
+    ontology_full_name = "Computational Material Sample Ontology (CMSO)"
+
+
+class Photovoltaics(BaseOntology):
+    """
+    This ontology is describing Perovskite solar cells.
+    """
+    ontology_full_name = "EMMO Domain Ontology for Photovoltaics (Photovoltaics)"
+
+
+class DSIM(BaseOntology):
+    """
+    Dislocation simulation and model ontology (DSIM) is an ontology developed to model various concepts
+    and relationships in the discrete dislocation dynamics domain and microscopy techniques
+    used in the dislocation domain. The various concepts are the numerical representation
+    of dislocation applied in the dislocation dynamic simulation and the pictorial concept of pixel
+    applied in representing dislocation in the experimental image, eg., TEM image, SEM image, and FIM image.
+    """
+    ontology_full_name = "Dislocation Simulation and Model Ontology (DSIM)"
+
+
+class ASMO(BaseOntology):
+    """
+    ASMO is an ontology that aims to define the concepts needed to describe commonly
+    used atomic scale simulation methods, i.e. density functional theory, molecular dynamics,
+    Monte Carlo methods, etc. ASMO uses the Provenance Ontology (PROV-O) to describe the simulation process.
+    """
+    ontology_full_name = "Atomistic Simulation Methods Ontology (ASMO)"
+
+
+class PODO(BaseOntology):
+    """
+    PODO focuses on the description of point defects in crystalline materials.
+    """
+    ontology_full_name = "Point Defects Ontology (PODO)"
+
+
+class CDCO(BaseOntology):
+    """
+    CDCO defines the common terminology shared across all types of crystallographic defects,
+    providing a unified framework for data integration in materials science.
+    """
+    ontology_full_name = "Crystallographic Defect Core Ontology (CDCO)"
+
+
+class LDO(BaseOntology):
+    """
+    LDO is an ontology designed to describe line defects in crystalline materials,
+    such as dislocations and disclinations.
+    """
+    ontology_full_name = "Line Defect Ontology (LDO)"
+
+
+class PLDO(BaseOntology):
+    """
+    PLDO is an ontology designed to describe planar defects in crystalline materials,
+    such as grain boundaries and stacking faults, with a focus on their atomic-scale structure and properties.
+    """
+    ontology_full_name = "Planar Defects Ontology (PLDO)"
+
+
+class MSLE(BaseOntology):
+    """
+    The current ontology describes Material Science Lab Equipment.
+    """
+    ontology_full_name = "Material Science Lab Equipment Ontology (MSLE)"
+
+
+class OIEMaterials(BaseOntology):
+    """
+    The materials module populates the physicalistic perspective with materials subclasses categorised
+    according to modern applied physical sciences.
+    """
+    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Materials module (OIEMaterials)"
