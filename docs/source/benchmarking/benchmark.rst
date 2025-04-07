@@ -313,7 +313,6 @@ Ontologies used in cataloging, archiving, and authority control of cultural and 
 .. toctree::
    :maxdepth: 3
 
-
 Law
 ===
 Ontologies dealing with legal processes, regulations, and rights (e.g., copyright).
@@ -335,8 +334,18 @@ Ontologies describing industrial processes, smart buildings, manufacturing syste
    industry/digital_buildings_ontology.rst
    industry/tubes_ontology.rst
    industry/product_types_ontology.rst
-   industry/good_relations_ontology.rst
    industry/auto.rst
+
+
+Finance
+=======
+Ontologies describing economic indicators, e-commerce, trade, and financial instruments.
+
+.. toctree::
+   :maxdepth: 3
+
+   finance/good_relations_ontology.rst
+
 
 Web & Internet
 ==============
