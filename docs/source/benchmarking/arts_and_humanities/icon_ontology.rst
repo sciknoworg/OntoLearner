@@ -45,14 +45,14 @@ Usage Example
 ------------------
 .. code-block:: python
 
-   from ontolearner.ontology.icon import IconOntology
+    from ontolearner.ontology.icon import IconOntology
 
-   # Initialize and load ontology
-   icon = IconOntology()
-   icon.load("path/to/ontology.owl")
-   # Extract datasets
-   data = icon.extract()
-   # Access specific relations
-   term_types = data.term_typings
-   taxonomic_relations = data.type_taxonomies
-   non_taxonomic_relations = data.type_non_taxonomic_relations
+    # Initialize and load ontology
+    icon = IconOntology()
+    icon.load("path/to/ontology.owl")
+    # Extract datasets
+    data = icon.extract()
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations

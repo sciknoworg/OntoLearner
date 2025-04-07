@@ -1,5 +1,5 @@
 Computational Material Sample Ontology (CMSO)
-===================
+==============================================
 
 Overview
 -----------------
@@ -41,16 +41,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import CMSO
 
-    # Initialize and load ontology
-    ontology = CMSO()
-    ontology.load("path/to/cmso.owl")
+   from ontolearner.ontology import CMSO
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = CMSO()
+   ontology.load("path/to/cmso.owl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

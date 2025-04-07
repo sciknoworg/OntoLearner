@@ -41,14 +41,14 @@ Usage Example
 ------------------
 .. code-block:: python
 
-   from ontolearner.ontology import Chord
+    from ontolearner.ontology import Chord
 
-   # Initialize and load ontology
-   chord = Chord()
-   chord.load("path/to/ontology.rdf")
-   # Extract datasets
-   data = chord.extract()
-   # Access specific relations
-   term_types = data.term_typings
-   taxonomic_relations = data.type_taxonomies
-   non_taxonomic_relations = data.type_non_taxonomic_relations
+    # Initialize and load ontology
+    chord = Chord()
+    chord.load("path/to/ontology.rdf")
+    # Extract datasets
+    data = chord.extract()
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations

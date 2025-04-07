@@ -12,8 +12,6 @@ class MMO(BaseOntology):
     some fairly general MSE concepts that could prospectively be merged into PMDco or other upper materials ontologies
     such as descriptions of crystallographic defects and microstructural entities.
     Furthermore, concepts related to the materials fatigue subdomain are also heavily incorporated.
-
-    Materials Mechanics Ontology (MMO)
     """
     ontology_full_name = "Materials Mechanics Ontology (MMO)"
 
@@ -70,45 +68,6 @@ class MDO(BaseOntology):
     This class processes the Materials Design Ontology (MDO) using default behavior.
     """
     ontology_full_name = "Materials Design Ontology (MDO)"
-
-
-class Metadata4Ing(BaseOntology):
-    """
-    The ontology Metadata4Ing provides a framework for the semantic description of research data
-    and of the whole data generation process, embracing the object of investigation,
-    all sample and data manipulation methods and tools, the data files themselves,
-    and the roles of persons and institutions. The structure and application of the ontology
-    are based on the principles of modularity and inheritance.
-
-    This class processes the  Metadata for Intelligent Engineering (Metadata4Ing) using default behavior.
-    """
-    ontology_full_name = "Metadata for Intelligent Engineering (Metadata4Ing)"
-
-
-class OM(BaseOntology):
-    """
-    The Ontology of units of Measure (OM) models concepts and relations important to scientific research.
-    It has a strong focus on units, quantities, measurements, and dimensions.
-    It includes, for instance, common units such as the SI units metre and kilogram,
-    but also units from other systems of units such as the mile or nautical mile. For many application areas
-    it includes more specific units and quantities, such as the unit of the Hubble constant or the quantity vaselife.
-    The following application areas are supported by OM: Geometry; Mechanics; Thermodynamics; Electromagnetism;
-    Fluid mechanics; Chemical physics; Photometry; Radiometry and Radiobiology; Nuclear physics;
-    Astronomy and Astrophysics; Cosmology; Earth science; Meteorology; Material science; Microbiology;
-    Economics; Information technology and Typography.
-
-    This class processes the Ontology of Units of Measure and Related Concepts (OM) using default behavior.
-    """
-    ontology_full_name = "Ontology of Units of Measure (OM)"
-
-
-class UO(BaseOntology):
-    """
-    Metrical units for use in conjunction with PATO.
-
-    This class processes the Units of Measurement Ontology (UO) using default behavior.
-    """
-    ontology_full_name = "Units of Measurement Ontology (UO)"
 
 
 class FSO(BaseOntology):
@@ -182,70 +141,11 @@ class OntoCAPE(BaseOntology):
         return super()._resolve_import_def(uri)
 
 
-class QUDT(BaseOntology):
-    """
-    QUDT is an advocate for the development and implementation of standards to quantify data expressed in RDF and JSON.
-
-    This class processes the Quantities, Units, Dimensions and Data Types (QUDT) using default behavior.
-    """
-    ontology_full_name = "Quantities, Units, Dimensions and Data Types (QUDT)"
-
-
-class ENM(BaseOntology):
-    """
-    The eNanoMapper project (https://www.enanomapper.net/), NanoCommons project (https://www.nanocommons.eu/)
-    and ACEnano project (http://acenano-project.eu/) are creating a pan-European computational infrastructure
-    for toxicological data management for ENMs, based on semantic web standards and ontologies.
-    This ontology is an application ontology targeting the full domain of nanomaterial safety assessment.
-    It re-uses several other ontologies including the NPO, CHEMINF, ChEBI, and ENVO.
-
-    This class processes the Environmental Noise Measurement Ontology (ENM) using default behavior.
-    """
-    ontology_full_name = "Environmental Noise Measurement Ontology (ENM)"
-
-    def contains_imports(self) -> bool:
-        """Hook: Check if the ontology contains imports."""
-        return True
-
-
-class SWO(BaseOntology):
-    """
-    The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions,
-    provenance and associated data. It contains detailed information on licensing and formats
-    as well as software applications themselves, mainly (but not limited) to the bioinformatics community.
-
-    This class processes the Software Ontology (SWO) using default behavior.
-    """
-    ontology_full_name = "Software Ontology (SWO)"
-
-
 class SystemCapabilities(BaseOntology):
     """
     This ontology describes system capabilities, operating ranges, and survival ranges.
     """
     ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
-
-
-class SEPIO(BaseOntology):
-    """
-    The SEPIO ontology is in its early stages of development, undergoing iterative refinement
-    as new requirements emerge and alignment with existing standards is explored. The SEPIO core file imports two files
-    which can be resolved at the URLs below:
-    IAO ontology-metadata import: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/imports/ontology-metadata.owl
-    bfo mireot: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/mireots/bfo-mireot.owl
-    """
-    ontology_full_name = "Scientific Evidence and Provenance Information Ontology (SEPIO)"
-
-    def contains_imports(self) -> bool:
-        """Hook: Check if the ontology contains imports."""
-        return True
-
-
-class MGED(BaseOntology):
-    """
-    The Materials Genome Ontology (MGED) is a domain ontology for materials science and engineering.
-    """
-    ontology_full_name = "Materials Genome Ontology (MGED)"
 
 
 class CHAMEO(BaseOntology):
@@ -379,17 +279,6 @@ class BMO(BaseOntology):
     ontology_full_name = "Building Material Ontology (BMO)"
 
 
-class DEB(BaseOntology):
-    """
-    The devices, experimental scaffolds, and biomaterials ontology (DEB) is an open resource
-    for organizing information about biomaterials, their design, manufacture, and biological testing.
-    It was developed using text analysis for identifying ontology terms from a biomaterials gold standard corpus,
-    systematically curated to represent the domain's lexicon. Topics covered were validated by members
-    of the biomaterials research community.
-    """
-    ontology_full_name = "Devices, Experimental scaffolds and Biomaterials Ontology (DEB)"
-
-
 class MatVoc(BaseOntology):
     """
     The official ontology produced in the context of the STREAM project.
@@ -432,36 +321,6 @@ class MDS(BaseOntology):
     subclasses and instances are mapped to PMDCo and BFO Ontologies.
     """
     ontology_full_name = "Materials Data Science Ontology (MDS)"
-
-
-class SPWorkflow(BaseOntology):
-    """
-    SP-Workflow module represents: i) the executable  elements of a protocol; ii) the experimental actions
-    and material entities that participates in instructions (sample/specimen, organisms, reagents,
-    instruments);  and iii) the order of execution of the instructions.
-    """
-    ontology_full_name = "SMART Protocols Ontology: Workflow Module (SP-Workflow)"
-
-
-class SPDocument(BaseOntology):
-    """
-    SMART Protocols Ontology: Document Module is an ontology designed
-    to represent metadata used to report an experimental protocol.
-    """
-    ontology_full_name = "SMART Protocols Ontology: Document Module (SP-Document)"
-
-
-class NPO(BaseOntology):
-    """
-    NanoParticle Ontology (NPO) is developed within the framework of the Basic Formal Ontology (BFO),
-    and implemented in the Ontology Web Language (OWL) using well-defined ontology design principles.
-    The NPO was developed to represent knowledge underlying the preparation, chemical composition,
-    and characterization of nanomaterials involved in cancer research. Public releases of the NPO
-    are available through BioPortal website, maintained by the National Center for Biomedical Ontology.
-    Mechanisms for editorial and governance processes are being developed for the maintenance,
-    review, and growth of the NPO.
-    """
-    ontology_full_name = "NanoParticle Ontology (NPO)"
 
 
 class PMDco(BaseOntology):
@@ -512,35 +371,6 @@ class PeriodicTable(BaseOntology):
     ontology_full_name = "Periodic Table of the Elements Ontology (PeriodicTable)"
 
 
-class OEO(BaseOntology):
-    """
-    The Open Energy Ontology (OEO) is a domain ontology of the energy system analysis context.
-    It is developed as part of the Open Energy Family. The OEO is published on GitHub under
-    an open source license. The language used is the Manchester OWL Syntax, which was chosen
-    because it is user-friendly for editing and viewing differences of edited files. The OEO is constantly
-    being extended. The first version of the OEO has been released on June 11th 2020. A Steering Committee (OEO-SC)
-    was created to accompany the development, increase awareness of the ontology and include it in current projects.
-    """
-    ontology_full_name = "The Open Energy Ontology (OEO)"
-
-
-class QUDV(BaseOntology):
-    """
-    The SysML QUDV (Quantities, Units, Dimensions and Values) modelLibrary is specified in a UML/SysML
-    class/block diagram. In order to generalize its potential usage and alignment with other standardization efforts
-    concerning quantities and units, it is of interest to verify that the QUDV model can also be represented
-    in the form of an ontology using a formal ontology definition language.
-    """
-    ontology_full_name = "Quantities, Units, Dimensions and Values (QUDV)"
-
-
-class WiLD(BaseOntology):
-    """
-    Ontology to describe Workflows in Linked Data
-    """
-    ontology_full_name = "Workflows in Linked Data (WiLD)"
-
-
 class VIMMP(BaseOntology):
     """
     The Virtual Materials Marketplace (VIMMP) project is developing an open platform for providing
@@ -558,28 +388,6 @@ class MOLBRINELL(BaseOntology):
     An ontology for describing the Brinell hardness testing process, made in the Materials Open Lab Project.
     """
     ontology_full_name = "MatoLab Brinell Test Ontology (MOLBRINELL)"
-
-
-class M4I(BaseOntology):
-    """
-    Metadata4Ing is an ontology for describing engineering results and their corresponding workflow.
-    The ontology is maintained by the Metadata4Ing working group, a subgroup of the Special Interest Group (SIG)
-    Metadata & Ontologies within NFDI4Ing.
-    """
-    ontology_full_name = "Metadata for Engineering (M4I)"
-
-
-class OPMW(BaseOntology):
-    """
-    The Open Provenance Model for Workflows (OPMW) is an ontology for describing workflow traces
-    and their templates based on the Open Provenance Model. It has been designed as a profile for OPM,
-    extending and reusing OPM's core ontologies OPMV (OPM-Vocabulary) and OPMO (OPM-Ontology).
-    """
-    ontology_full_name = "Open Provenance Model for Workflows (OPMW)"
-
-    def contains_imports(self) -> bool:
-        """Hook: Check if the ontology contains imports."""
-        return True
 
 
 class MAT(BaseOntology):
@@ -671,3 +479,26 @@ class OIEMaterials(BaseOntology):
     according to modern applied physical sciences.
     """
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Materials module (OIEMaterials)"
+
+
+class OIEManufacturing(BaseOntology):
+    """
+    The manufacturing module populates the physicalistic perspective with manufacturing subclasses categorised
+    according to modern applied physical sciences.
+    """
+    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Manufacturing module (OIEManufacturing)"
+
+
+class OIESoftware(BaseOntology):
+    """
+    Software module.
+    """
+    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Software module (OIESoftware)"
+
+
+class OIEModels(BaseOntology):
+    """
+    The models module defines models as semiotic signs that stands for an object by resembling or imitating it,
+    in shape or by sharing a similar logical structure.
+    """
+    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Models module (OIEModels)"

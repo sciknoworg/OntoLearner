@@ -40,6 +40,7 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
+
     from ontolearner.ontology import FAIR
 
     # Initialize and load ontology

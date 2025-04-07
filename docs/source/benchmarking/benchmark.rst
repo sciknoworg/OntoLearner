@@ -1,11 +1,11 @@
 Biology & Life Sciences
 =======================
+Ontologies about biological entities, systems, organisms, and molecular biology.
 
 .. toctree::
    :maxdepth: 3
 
    biology/gene_ontology.rst
-   biology/plant_ontology.rst
    biology/life_ontology.rst
    biology/bio_pax.rst
    biology/marine_tlo_ontology.rst
@@ -13,9 +13,12 @@ Biology & Life Sciences
    biology/pato.rst
    biology/efo.rst
    biology/microscopy.rst
+   biology/mged.rst
+   biology/npo.rst
 
 Chemistry
 =========
+Ontologies describing chemical entities, reactions, methods, and computational chemistry models.
 
 .. toctree::
    :maxdepth: 3
@@ -34,19 +37,31 @@ Chemistry
    chemistry/mass_spectrometry.rst
    chemistry/afo.rst
    chemistry/vibso.rst
-   chemistry/psi_mod.rst
+   chemistry/psi-mod.rst
 
 Agriculture
 ===========
+Ontologies about farming systems, crops, food production, and agricultural vocabularies.
 
 .. toctree::
    :maxdepth: 3
 
    agriculture/agrovoc.rst
    agriculture/food_ontology.rst
+   agriculture/plant_ontology.rst
+
+Food & Beverage
+=========================
+Ontologies related to food, beverages, ingredients, and culinary products.
+
+.. toctree::
+   :maxdepth: 3
+
+   food_and_beverage/wine.rst
 
 Geography
 =========
+Ontologies for modeling spatial and geopolitical entities, locations, and place names.
 
 .. toctree::
    :maxdepth: 3
@@ -54,31 +69,23 @@ Geography
    geography/geonames_ontology.rst
    geography/geographical_entity_ontology.rst
    geography/juso.rst
+   geography/geologic_timescale_model.rst
 
-Geological Sciences
-===================
+Ecology & Environment
+=====================
+Ontologies about ecological systems, environments, biomes, and sustainability science.
 
 .. toctree::
    :maxdepth: 3
 
-   geology/geologic_timescale_model.rst
-
-Ecology
-===========
-.. toctree::
-   :maxdepth: 3
-
-   ecology/environment_ontology.rst
-
-Earth Science
-=============
-.. toctree::
-   :maxdepth: 3
-
-   earth_science/sweet_ontology.rst
+   ecology_and_environment/environment_ontology.rst
+   ecology_and_environment/oeo.rst
+   ecology_and_environment/sweet_ontology.rst
 
 Livestock
 =========
+Ontologies about traits, breeding, and management of domesticated animals for agriculture.
+
 .. toctree::
    :maxdepth: 3
 
@@ -86,6 +93,7 @@ Livestock
 
 Materials Science & Engineering
 ===============================
+Ontologies related to materials, their structure, properties, processing, and engineering applications.
 
 .. toctree::
    :maxdepth: 3
@@ -96,18 +104,10 @@ Materials Science & Engineering
    materials_science/materials_ontology.rst
    materials_science/emmo_ontology.rst
    materials_science/mdo_ontology.rst
-   materials_science/metadata4ing.rst
-   materials_science/units_of_measure_ontology.rst
    materials_science/fso_ontology.rst
    materials_science/ssn_ontology.rst
    materials_science/cape_ontology.rst
-   materials_science/qudt.rst
-   materials_science/enm_ontology.rst
-   materials_science/uo.rst
-   materials_science/swo.rst
-   materials_science/systems_capabilities.rst
-   materials_science/sepio.rst
-   materials_science/mged.rst
+   materials_science/system_capabilities.rst
    materials_science/chameo.rst
    materials_science/nanomine.rst
    materials_science/gpo.rst
@@ -123,10 +123,8 @@ Materials Science & Engineering
    materials_science/bmo.rst
    materials_science/cdco.rst
    materials_science/cmso.rst
-   materials_science/deb.rst
    materials_science/dsim.rst
    materials_science/ldo.rst
-   materials_science/m4i.rst
    materials_science/mat.rst
    materials_science/matvoc.rst
    materials_science/mds.rst
@@ -136,25 +134,21 @@ Materials Science & Engineering
    materials_science/moltensile.rst
    materials_science/mseo.rst
    materials_science/msle.rst
-   materials_science/npo.rst
-   materials_science/oeo.rst
-   materials_science/oie-materials.rst
    materials_science/ontorule.rst
-   materials_science/opmw.rst
-   materials_science/periodic_table.rst
+   materials_science/periodic-table.rst
    materials_science/photovoltaics.rst
    materials_science/pldo.rst
    materials_science/pmdco.rst
    materials_science/podo.rst
    materials_science/prima.rst
-   materials_science/qudv.rst
-   materials_science/sp-document.rst
-   materials_science/sp-workflow.rst
-   materials_science/vimo.rst
-   materials_science/wild.rst
+   materials_science/vimmp.rst
+   materials_science/oie-materials.rst
+   materials_science/oie-manufacturing.rst
+   materials_science/oie-software.rst
 
 Social Sciences
 ===============
+Ontologies for modeling societal structures, behavior, identity, and social interaction.
 
 .. toctree::
    :maxdepth: 3
@@ -162,25 +156,28 @@ Social Sciences
    social_sciences/bio_ontology.rst
    social_sciences/sioc_ontology.rst
    social_sciences/foaf_ontology.rst
-   social_sciences/voaf_ontology.rst
    social_sciences/as2.rst
    social_sciences/contact_ontology.rst
 
-Healthcare
+Medicine
 ==========
+Ontologies covering clinical knowledge, diseases, drugs, treatments, and biomedical data.
 
 .. toctree::
    :maxdepth: 3
 
-   healthcare/bto_ontology.rst
-   healthcare/obi_ontology.rst
-   healthcare/human_disease_ontology.rst
-   healthcare/emotion_ontology.rst
-   healthcare/protein_ontology.rst
-   healthcare/ncit.rst
+   medicine/bto_ontology.rst
+   medicine/obi_ontology.rst
+   medicine/human_disease_ontology.rst
+   medicine/emotion_ontology.rst
+   medicine/protein_ontology.rst
+   medicine/ncit.rst
+   medicine/deb.rst
+   medicine/enm_ontology.rst
 
 General Knowledge
 =================
+Broad-scope ontologies and upper vocabularies used across disciplines for general-purpose semantic modeling.
 
 .. toctree::
    :maxdepth: 3
@@ -194,22 +191,39 @@ General Knowledge
    general_knowledge/edam.rst
    general_knowledge/relations_ontology.rst
    general_knowledge/iao.rst
+   general_knowledge/gist_ontology.rst
 
-Basic
-=====
+
+Units and Measurements
+======================
+Ontologies defining scientific units, quantities, dimensions, and observational models.
 
 .. toctree::
    :maxdepth: 3
 
-   basic/basic_formal_ontology.rst
-   basic/general_formal_ontology.rst
-   basic/dolce_ontology.rst
-   basic/sio.rst
-   basic/sumo.rst
-   basic/fair.rst
+   units_and_measurements/units_of_measure_ontology.rst
+   units_and_measurements/qudv.rst
+   units_and_measurements/qudt.rst
+   units_and_measurements/uo.rst
+   units_and_measurements/owl_time.rst
+
+Upper Ontologies
+================
+Foundational ontologies that provide abstract concepts like objects, processes, and relations.
+
+.. toctree::
+   :maxdepth: 3
+
+   upper_ontologies/basic_formal_ontology.rst
+   upper_ontologies/general_formal_ontology.rst
+   upper_ontologies/dolce_ontology.rst
+   upper_ontologies/sio.rst
+   upper_ontologies/sumo.rst
+   upper_ontologies/fair.rst
 
 Scholarly Knowledge
 ===================
+Ontologies modeling the structure, process, and administration of scholarly research, publications, and infrastructure.
 
 .. toctree::
    :maxdepth: 3
@@ -226,9 +240,20 @@ Scholarly Knowledge
    scholarly_knowledge/datacite.rst
    scholarly_knowledge/duo.rst
    scholarly_knowledge/oboe.rst
+   scholarly_knowledge/swo.rst
+   scholarly_knowledge/metadata4ing.rst
+   scholarly_knowledge/sepio.rst
+   scholarly_knowledge/sp-document.rst
+   scholarly_knowledge/sp-workflow.rst
+   scholarly_knowledge/wild.rst
+   scholarly_knowledge/m4i.rst
+   scholarly_knowledge/opmw.rst
+   scholarly_knowledge/voaf_ontology.rst
+   scholarly_knowledge/frapo.rst
 
 Education
 =========
+Ontologies describing learning content, educational programs, competencies, and teaching resources.
 
 .. toctree::
    :maxdepth: 3
@@ -239,17 +264,18 @@ Education
 
 Events
 ======
+Ontologies for representing events, time, schedules, and calendar-based occurrences.
 
 .. toctree::
    :maxdepth: 3
 
    events/conference_ontology.rst
    events/icalendar.rst
-   events/owl_time.rst
    events/lore.rst
 
 News & Media
 ============
+Ontologies that model journalism, broadcasting, creative works, and media metadata.
 
 .. toctree::
    :maxdepth: 3
@@ -267,19 +293,30 @@ News & Media
    media/bbc_wildlife.rst
    media/bbc_business_news.rst
 
-Artwork
-=======
+Arts and Humanities
+===================
+Ontologies that describe music, iconography, cultural artifacts, and humanistic content.
 
 .. toctree::
    :maxdepth: 3
 
-   artwork/icon_ontology.rst
-   artwork/music_ontology.rst
-   artwork/timeline_ontology.rst
-   artwork/chord_ontology.rst
+   arts_and_humanities/icon_ontology.rst
+   arts_and_humanities/music_ontology.rst
+   arts_and_humanities/timeline_ontology.rst
+   arts_and_humanities/chord_ontology.rst
+   arts_and_humanities/nomisma_ontology.rst
+
+Library & Cultural Heritage
+============================
+Ontologies used in cataloging, archiving, and authority control of cultural and scholarly resources. Includes standards for bibliographic metadata, identity disambiguation, and linked data for museums, libraries, and archives.
+
+.. toctree::
+   :maxdepth: 3
+
 
 Law
 ===
+Ontologies dealing with legal processes, regulations, and rights (e.g., copyright).
 
 .. toctree::
    :maxdepth: 3
@@ -288,12 +325,12 @@ Law
 
 Industry
 ========
+Ontologies describing industrial processes, smart buildings, manufacturing systems, and equipment.
 
 .. toctree::
    :maxdepth: 3
 
    industry/doap_vocabulary.rst
-   industry/gist_ontology.rst
    industry/industrial_ontology_foundry.rst
    industry/digital_buildings_ontology.rst
    industry/tubes_ontology.rst
@@ -301,27 +338,12 @@ Industry
    industry/good_relations_ontology.rst
    industry/auto.rst
 
-Administration
-==============
-
-.. toctree::
-   :maxdepth: 3
-
-   administration/frapo.rst
-
 Web & Internet
 ==============
+Ontologies that model web semantics, linked data, APIs, and online communication standards.
 
 .. toctree::
    :maxdepth: 3
 
    web/hydra.rst
    web/saref_ontology.rst
-
-Finance
-=======
-
-.. toctree::
-   :maxdepth: 3
-
-   finance/nomisma_ontology.rst

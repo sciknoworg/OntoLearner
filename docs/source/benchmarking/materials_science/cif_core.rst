@@ -42,16 +42,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import {{ class_name }}
 
-    # Initialize and load ontology
-    ontology = {{ class_name }}()
-    ontology.load("path/to/ontology.ttl")
+   from ontolearner.ontology import CIFCore
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = CIFCore()
+   ontology.load("path/to/ontology.ttl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

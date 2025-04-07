@@ -44,16 +44,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import DSIM
 
-    # Initialize and load ontology
-    ontology = DSIM()
-    ontology.load("path/to/dsim.owl")
+   from ontolearner.ontology import DSIM
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = DSIM()
+   ontology.load("path/to/dsim.owl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

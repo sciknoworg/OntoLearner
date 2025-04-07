@@ -41,16 +41,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import CDCO
 
-    # Initialize and load ontology
-    ontology = CDCO()
-    ontology.load("path/to/cdco.ttl")
+   from ontolearner.ontology import CDCO
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = CDCO()
+   ontology.load("path/to/cdco.ttl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

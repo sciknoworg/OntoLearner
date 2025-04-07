@@ -76,16 +76,6 @@ class PATO(BaseOntology):
     ontology_full_name = "Phenotype and Trait Ontology (PATO)"
 
 
-class PO(BaseOntology):
-    """
-    The Plant Ontology (PO) is a structured vocabulary and database resource that links plant anatomy,
-    morphology and growth and development to plant genomics data.
-
-    This class processes Plant Ontology using default behavior.
-    """
-    ontology_full_name = "Plant Ontology (PO)"
-
-
 class Microscopy(BaseOntology):
     """
     The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The MO facilitates semantic integration
@@ -99,3 +89,27 @@ class Microscopy(BaseOntology):
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
         return True
+
+
+class MGED(BaseOntology):
+    """
+    An ontology for microarray experiments in support of MAGE v.1. Concepts, definitions, terms,
+    and resources for standardized description of a microarray experiment in support of MAGE v.1.
+    The MGED ontology is divided into the MGED Core ontology which is intended to be stable and
+    in synch with MAGE v.1; and the MGED Extended ontology which adds further associations
+    and classes not found in MAGE v.1
+    """
+    ontology_full_name = "MGED Ontology (MGED)"
+
+
+class NPO(BaseOntology):
+    """
+    NanoParticle Ontology (NPO) is developed within the framework of the Basic Formal Ontology (BFO),
+    and implemented in the Ontology Web Language (OWL) using well-defined ontology design principles.
+    The NPO was developed to represent knowledge underlying the preparation, chemical composition,
+    and characterization of nanomaterials involved in cancer research. Public releases of the NPO
+    are available through BioPortal website, maintained by the National Center for Biomedical Ontology.
+    Mechanisms for editorial and governance processes are being developed for the maintenance,
+    review, and growth of the NPO.
+    """
+    ontology_full_name = "NanoParticle Ontology (NPO)"

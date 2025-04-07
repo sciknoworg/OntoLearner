@@ -45,16 +45,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import AMOntology
 
-    # Initialize and load ontology
-    ontology = AMOntology()
-    ontology.load("path/to/am_ontology.ttl")
+   from ontolearner.ontology import AMOntology
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = AMOntology()
+   ontology.load("path/to/am_ontology.ttl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

@@ -47,12 +47,14 @@ Usage Example
 ------------------
 .. code-block:: python
 
-   from ontolearner.ontology import ChEBI
+    from ontolearner.ontology import ChEBI
 
-   # Initialize and load ontology
-   chebi = ChEBI()
-   chebi.load("path/to/ontology.owl")
-   # Extract datasets
-   data = chebi.extract()
-   # Access specific relations
-   term_types = data.term_typings
+    # Initialize and load ontology
+    chebi = ChEBI()
+    chebi.load("path/to/ontology.owl")
+    # Extract datasets
+    data = chebi.extract()
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations

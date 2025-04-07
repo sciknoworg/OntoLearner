@@ -42,6 +42,7 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
+
     from ontolearner.ontology import M4I
 
     # Initialize and load ontology

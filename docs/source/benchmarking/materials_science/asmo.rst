@@ -1,5 +1,5 @@
 Atomistic Simulation Methods Ontology (ASMO)
-===================
+=============================================
 
 Overview
 -----------------
@@ -42,16 +42,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import ASMO
 
-    # Initialize and load ontology
-    ontology = ASMO()
-    ontology.load("path/to/asmo.owl")
+   from ontolearner.ontology import ASMO
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = ASMO()
+   ontology.load("path/to/asmo.owl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

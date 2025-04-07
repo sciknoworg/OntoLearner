@@ -2,7 +2,7 @@ HuggingFace Integration
 ==========================
 
 Accessing Ontologies via Hub
----------------------------
+-----------------------------
 OntoLearner ontologies are available on HuggingFace Hub for easy access and integration:
 
 .. code-block:: python
@@ -17,7 +17,7 @@ OntoLearner ontologies are available on HuggingFace Hub for easy access and inte
     )
 
 Available Ontologies
-------------------
+--------------------
 .. list-table:: Available Ontologies on Hub
    :header-rows: 1
    :widths: 20 20 20 40
@@ -40,10 +40,10 @@ Available Ontologies
      - TIB/ontologies/plant.owl
 
 LLM Integration Examples
-----------------------
+-------------------------
 
 Fine-tuning
-^^^^^^^^^^
+^^^^^^^^^^^
 .. code-block:: python
 
     from ontolearner.utils.llm_utils import prepare_ontology_for_finetuning
@@ -56,7 +56,7 @@ Fine-tuning
     )
 
 Inference
-^^^^^^^^
+^^^^^^^^^
 .. code-block:: python
 
     from ontolearner.utils.llm_utils import load_ontology_context

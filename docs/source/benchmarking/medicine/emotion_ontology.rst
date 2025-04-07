@@ -45,7 +45,7 @@ Usage Example
 -----------------
 .. code-block:: python
 
-    from ontolearner.ontology.emotion import EmotionOntology
+    from ontolearner.ontology import EmotionOntology
 
     # Initialize and load ontology
     emotion = EmotionOntology()

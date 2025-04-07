@@ -45,7 +45,7 @@ Usage Example
 ------------------
 .. code-block:: python
 
-   from ontolearner.ontology.disease import DiseaseOntology
+   from ontolearner.ontology import DiseaseOntology
 
    # Initialize and load ontology
    do = DiseaseOntology()

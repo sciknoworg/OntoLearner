@@ -24,3 +24,15 @@ class ENVO(BaseOntology):
     This class processes the Environment Ontology (ENVO).
     """
     ontology_full_name = "Environment Ontology (ENVO)"
+
+
+class OEO(BaseOntology):
+    """
+    The Open Energy Ontology (OEO) is a domain ontology of the energy system analysis context.
+    It is developed as part of the Open Energy Family. The OEO is published on GitHub under
+    an open source license. The language used is the Manchester OWL Syntax, which was chosen
+    because it is user-friendly for editing and viewing differences of edited files. The OEO is constantly
+    being extended. The first version of the OEO has been released on June 11th 2020. A Steering Committee (OEO-SC)
+    was created to accompany the development, increase awareness of the ontology and include it in current projects.
+    """
+    ontology_full_name = "The Open Energy Ontology (OEO)"
