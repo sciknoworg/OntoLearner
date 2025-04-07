@@ -43,14 +43,14 @@ Usage Example
 ------------------
 .. code-block:: python
 
-   from ontolearner.ontology import PRO
+    from ontolearner.ontology import PRO
 
-   # Initialize and load ontology
-   pro = PRO()
-   pro.load("path/to/ontology.owl")
-   # Extract datasets
-   data = pro.extract()
-   # Access specific relations
-   term_types = data.term_typings
-   taxonomic_relations = data.type_taxonomies
-   non_taxonomic_relations = data.type_non_taxonomic_relations
+    # Initialize and load ontology
+    pro = PRO()
+    pro.load("path/to/ontology.owl")
+    # Extract datasets
+    data = pro.extract()
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations

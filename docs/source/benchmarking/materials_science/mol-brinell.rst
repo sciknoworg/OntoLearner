@@ -40,16 +40,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import MOLBRINELL
 
-    # Initialize and load ontology
-    ontology = MOLBRINELL()
-    ontology.load("path/to/mol-brinell.ttl")
+   from ontolearner.ontology import MOLBRINELL
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = MOLBRINELL()
+   ontology.load("path/to/mol-brinell.ttl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

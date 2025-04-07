@@ -41,6 +41,7 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
+
     from ontolearner.ontology import SPDocument
 
     # Initialize and load ontology

@@ -40,6 +40,7 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
+
     from ontolearner.ontology import WiLD
 
     # Initialize and load ontology

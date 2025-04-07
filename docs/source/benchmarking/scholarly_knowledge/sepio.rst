@@ -44,6 +44,7 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
+
     from ontolearner.ontology import SEPIO
 
     # Initialize and load ontology

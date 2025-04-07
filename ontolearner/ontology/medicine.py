@@ -66,3 +66,31 @@ class NCIt(BaseOntology):
     This class processes the National Cancer Institute Thesaurus (NCIt) using default behavior.
     """
     ontology_full_name = "NCI Thesaurus (NCIt)"
+
+
+class DEB(BaseOntology):
+    """
+    The devices, experimental scaffolds, and biomaterials ontology (DEB) is an open resource
+    for organizing information about biomaterials, their design, manufacture, and biological testing.
+    It was developed using text analysis for identifying ontology terms from a biomaterials gold standard corpus,
+    systematically curated to represent the domain's lexicon. Topics covered were validated by members
+    of the biomaterials research community.
+    """
+    ontology_full_name = "Devices, Experimental scaffolds and Biomaterials Ontology (DEB)"
+
+
+class ENM(BaseOntology):
+    """
+    The eNanoMapper project (https://www.enanomapper.net/), NanoCommons project (https://www.nanocommons.eu/)
+    and ACEnano project (http://acenano-project.eu/) are creating a pan-European computational infrastructure
+    for toxicological data management for ENMs, based on semantic web standards and ontologies.
+    This ontology is an application ontology targeting the full domain of nanomaterial safety assessment.
+    It re-uses several other ontologies including the NPO, CHEMINF, ChEBI, and ENVO.
+
+    This class processes the Environmental Noise Measurement Ontology (ENM) using default behavior.
+    """
+    ontology_full_name = "Environmental Noise Measurement Ontology (ENM)"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True

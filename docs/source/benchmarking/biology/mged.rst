@@ -40,9 +40,11 @@ Generated Benchmarks:
     - **Non-taxonomic Relations**: 6
     - **Average Terms per Type**: 16.53
 
+
 Usage Example
-------------------
+--------------
 .. code-block:: python
+
     from ontolearner.ontology import MGED
 
     # Initialize and load ontology

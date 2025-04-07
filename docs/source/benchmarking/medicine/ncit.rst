@@ -43,7 +43,7 @@ Usage Example
 -----------------
 .. code-block:: python
 
-    from ontolearner.ontology.ncit import NCITOntology
+    from ontolearner.ontology import NCITOntology
 
     # Initialize and load ontology
     ncit = NCITOntology()

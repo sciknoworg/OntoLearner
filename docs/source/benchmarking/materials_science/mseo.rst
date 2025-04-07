@@ -44,16 +44,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import MSEO
 
-    # Initialize and load ontology
-    ontology = MSEO()
-    ontology.load("path/to/mseo.ttl")
+   from ontolearner.ontology import MSEO
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = MSEO()
+   ontology.load("path/to/mseo.ttl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

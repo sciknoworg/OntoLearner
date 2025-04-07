@@ -43,6 +43,7 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
+
     from ontolearner.ontology import QUDV
 
     # Initialize and load ontology

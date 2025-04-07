@@ -40,16 +40,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import Photovoltaics
 
-    # Initialize and load ontology
-    ontology = Photovoltaics()
-    ontology.load("path/to/photovoltaics.ttl")
+   from ontolearner.ontology import Photovoltaics
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = Photovoltaics()
+   ontology.load("path/to/photovoltaics.ttl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

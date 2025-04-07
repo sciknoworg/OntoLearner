@@ -1,5 +1,5 @@
 Plant Ontology (PO)
-==================
+===================
 
 Overview
 -----------------
@@ -14,7 +14,7 @@ morphology and growth and development to plant genomics data.
 :License: Creative Commons 4.0
 :Format: owl, ttl, csv, nt
 :Download:`Plant Ontology <https://github.com/Planteome/plant-ontology>`_
-:Documentation:
+:Documentation: `Plant Ontology <https://github.com/Planteome/plant-ontology>`_
 
 Base Metrics
 ---------------

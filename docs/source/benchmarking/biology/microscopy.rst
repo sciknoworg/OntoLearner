@@ -42,6 +42,7 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
+
     from ontolearner.ontology import Microscopy
 
     # Initialize and load ontology

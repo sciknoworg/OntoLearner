@@ -1,5 +1,5 @@
 The Open Energy Ontology (OEO)
-===================
+==============================
 
 Overview
 -----------------
@@ -40,16 +40,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import OEO
 
-    # Initialize and load ontology
-    ontology = OEO()
-    ontology.load("path/to/oeo-full.owl")
+   from ontolearner.ontology import OEO
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = OEO()
+   ontology.load("path/to/oeo-full.owl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

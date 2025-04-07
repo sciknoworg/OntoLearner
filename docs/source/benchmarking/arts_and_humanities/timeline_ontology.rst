@@ -42,14 +42,14 @@ Usage Example
 ------------------
 .. code-block:: python
 
-   from ontolearner.ontology import Timeline
+    from ontolearner.ontology import Timeline
 
-   # Initialize and load ontology
-   timeline = Timeline()
-   timeline.load("path/to/ontology.rdf")
-   # Extract datasets
-   data = timeline.extract()
-   # Access specific relations
-   term_types = data.term_typings
-   taxonomic_relations = data.type_taxonomies
-   non_taxonomic_relations = data.type_non_taxonomic_relations
+    # Initialize and load ontology
+    timeline = Timeline()
+    timeline.load("path/to/ontology.rdf")
+    # Extract datasets
+    data = timeline.extract()
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations
