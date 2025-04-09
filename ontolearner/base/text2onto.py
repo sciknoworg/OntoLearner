@@ -6,7 +6,7 @@ from typing import Any, List, Dict, Union, Set
 from ontolearner.data_structure import TextualData, Term, Document, DocumentReference
 
 
-class BaseTextualDataset(ABC):
+class BaseTextOntoDataset(ABC):
     """Base class for textual datasets."""
     data_full_name: str = None
 
