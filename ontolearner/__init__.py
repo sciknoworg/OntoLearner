@@ -10,12 +10,13 @@ logging.basicConfig(
 logger = logging.getLogger("ontolearner")
 
 from .pipeline import ProcessorPipeline
-from ontolearner import base, data_structure, ontology, utils, tools
+from ontolearner import base, data_structure, ontology, text2onto, utils, tools
 
 __all__ = [
     "base",
     "data_structure",
     "ontology",
+    "text2onto",
     "tools",
     "utils",
     "ProcessorPipeline"

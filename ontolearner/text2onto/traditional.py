@@ -1,7 +1,7 @@
-from ..base.text2onto import BaseTextOntoDataset
+from ..base.text2onto import BaseText2OntoDataset
 
 
-class OLLMWikipedia(BaseTextOntoDataset):
+class OLLMWikipedia(BaseText2OntoDataset):
     """
     OLLM Wikipedia is a synthetic ontology generated from Wikipedia articles.
     It is used to evaluate the performance of ontology learning algorithms.
