@@ -38,3 +38,20 @@ Generated Benchmarks:
     - **Taxonomic Relations**: 4
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.23
+
+
+Usage Example
+^^^^^^^^^^^^^
+.. code-block:: python
+
+    from ontolearner.ontology import HPOnt
+
+    # Initialize and load ontology
+    hpo = HPOnt()
+    hpo.load("path/to/ontology.owl")
+    # Extract datasets
+    data = hpo.extract()
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations

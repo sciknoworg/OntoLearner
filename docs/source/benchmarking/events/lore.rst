@@ -47,10 +47,11 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import {{ class_name }}
+
+    from ontolearner.ontology import LODE
 
     # Initialize and load ontology
-    ontology = {{ class_name }}()
+    ontology = LODE()
     ontology.load("path/to/ontology.ttl")
 
     # Extract datasets

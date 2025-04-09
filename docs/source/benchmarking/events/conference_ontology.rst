@@ -47,7 +47,7 @@ Usage Example
 ------------------
 .. code-block:: python
 
-   from ontolearner.ontology.conference import ConferenceOntology
+   from ontolearner.ontology import ConferenceOntology
 
    # Initialize and load ontology
    conference = ConferenceOntology()

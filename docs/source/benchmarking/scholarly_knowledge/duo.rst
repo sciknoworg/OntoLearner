@@ -41,7 +41,7 @@ Usage Example
 -----------------
 .. code-block:: python
 
-    from ontolearner.ontology.duo import DUOOntology
+    from ontolearner.ontology import DUOOntology
 
     # Initialize and load ontology
     duo = DUOOntology()

@@ -1,5 +1,5 @@
 Dislocation Ontology (DISCO)
-===================
+=================================
 
 Overview
 -----------------
@@ -41,16 +41,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import DISCO
 
-    # Initialize and load ontology
-    ontology = DISCO()
-    ontology.load("path/to/disco.owl")
+   from ontolearner.ontology import DISCO
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = DISCO()
+   ontology.load("path/to/disco.owl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations

@@ -10,7 +10,7 @@ according to modern applied physical sciences.
 :Category: Materials
 :Current Version:
 :Last Updated:
-:Creator: Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro"
+:Creator: Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 :Format: TTL
 :Download: `OIE Homepage <https://github.com/emmo-repo/OIE-Ontologies/>`_
@@ -41,16 +41,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import OIEMaterials
 
-    # Initialize and load ontology
-    ontology = OIEMaterials()
-    ontology.load("path/to/oie-materials.ttl")
+   from ontolearner.ontology import OIEMaterials
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = OIEMaterials()
+   ontology.load("path/to/oie-materials.ttl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

@@ -1,5 +1,5 @@
 Molecular Process Ontology (MOP)
-================
+================================
 
 Overview
 -----------------
@@ -41,16 +41,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import MOP
 
-    # Initialize and load ontology
-    ontology = MOP()
-    ontology.load("path/to/ontology.owl")
+   from ontolearner.ontology import MOP
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = MOP()
+   ontology.load("path/to/ontology.owl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

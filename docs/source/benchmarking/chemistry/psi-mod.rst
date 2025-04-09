@@ -44,16 +44,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import PSIMOD
 
-    # Initialize and load ontology
-    ontology = PSIMOD()
-    ontology.load("path/to/ontology.ttl")
+   from ontolearner.ontology import PSIMOD
+
+   # Initialize and load ontology
+   ontology = PSIMOD()
+   ontology.load("path/to/ontology.ttl")
 
     # Extract datasets
-    data = ontology.extract()
+   data = ontology.extract()
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations

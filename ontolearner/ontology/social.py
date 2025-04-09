@@ -37,16 +37,6 @@ class BIO(BaseOntology):
     ontology_full_name = "BIO: A vocabulary for biographical information"
 
 
-class VOAF(BaseOntology):
-    """
-    The Vocabulary of a Friend (VOAF) is a vocabulary to describe vocabularies (meta-vocabulary), allowing to document
-    and publish information about vocabularies (RDFS vocabularies or OWL ontologies) on the Semantic Web.
-
-    This class processes the VOAF ontology using default behavior.
-    """
-    ontology_full_name = "Vocabulary of a Friend (VOAF) Ontology"
-
-
 class AS2(BaseOntology):
     """
     The Activity Streams 2.0 ontology is a vocabulary for describing social activities and actions.

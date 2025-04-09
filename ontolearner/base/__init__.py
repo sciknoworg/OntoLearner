@@ -1,2 +1,2 @@
 from .ontology import BaseOntology
-from .textual import BaseTextualDataset
+from .text2onto import BaseTextOntoDataset

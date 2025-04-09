@@ -1,5 +1,5 @@
 Nanomaterials Ontology (NanoMine)
-============================
+==================================
 
 Overview
 -----------------
@@ -42,16 +42,17 @@ Generated Benchmarks:
 Usage Example
 ------------------
 .. code-block:: python
-    from ontolearner.ontology import NanoMine
 
-    # Initialize and load ontology
-    ontology = NanoMine()
-    ontology.load("path/to/nanomine.ttl")
+   from ontolearner.ontology import NanoMine
 
-    # Extract datasets
-    data = ontology.extract()
+   # Initialize and load ontology
+   ontology = NanoMine()
+   ontology.load("path/to/nanomine.ttl")
 
-    # Access specific relations
-    term_types = data.term_typings
-    taxonomic_relations = data.type_taxonomies
-    non_taxonomic_relations = data.type_non_taxonomic_relations
+   # Extract datasets
+   data = ontology.extract()
+
+   # Access specific relations
+   term_types = data.term_typings
+   taxonomic_relations = data.type_taxonomies
+   non_taxonomic_relations = data.type_non_taxonomic_relations
