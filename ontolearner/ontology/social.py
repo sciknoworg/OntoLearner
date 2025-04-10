@@ -6,9 +6,8 @@ class SIOC(BaseOntology):
     The SIOC (Semantically-Interlinked Online Communities) Ontology is an ontology for describing the
     information in online communities. This includes sites that support online discussions, blogging,
     file sharing, photo sharing, social networking, etc.
-
-    This class processes the SIOC ontology using default behavior.
     """
+    ontology_id = "SIOC"
     ontology_full_name = "Semantically-Interlinked Online Communities (SIOC) Ontology"
 
 
@@ -17,9 +16,8 @@ class FOAF(BaseOntology):
     FOAF is a project devoted to linking people and information using the Web.
     Regardless of whether information is in people's heads, in physical or digital documents,
     or in the form of factual data, it can be linked.
-
-    This class processes the FOAF ontology using default behavior.
     """
+    ontology_id = "FOAF"
     ontology_full_name = "Friend of a Friend (FOAF) Ontology"
 
 
@@ -31,9 +29,8 @@ class BIO(BaseOntology):
     will be extended in other vocabularies to suit their needs. The intention of this vocabulary is to describe biographical events of people
     and this intention carries through to the definitions of the properties and classes which are person-centric rather than neutral. For example
     the Employment event puts the person being employed as the principal agent in the event rather than the employer.
-
-    This class processes BIO Ontology using default behavior.
     """
+    ontology_id = "BIO"
     ontology_full_name = "BIO: A vocabulary for biographical information"
 
 
@@ -42,9 +39,8 @@ class AS2(BaseOntology):
     The Activity Streams 2.0 ontology is a vocabulary for describing social activities and actions.
     It is based on the Activity Streams 2.0 specification and provides a set of classes and properties
     for describing activities on the web.
-
-    This class processes the AS2 ontology using default behavior.
     """
+    ontology_id = "AS2"
     ontology_full_name = "Activity Streams 2.0 Ontology"
 
 
@@ -56,7 +52,6 @@ class Contact(BaseOntology):
     defined as a subclass of both the iContact definition of hours of operation,
     and a subclass of the Recurring Event class defined in the iCity Recurring Event ontology.
     The Contact ontology also extends the definition of address to include an associated location.
-
-    This class processes the Contact ontology using default behavior.
     """
+    ontology_id = "Contact"
     ontology_full_name = "Contact Ontology"

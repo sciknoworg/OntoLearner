@@ -13,6 +13,7 @@ class BaseOntology(ABC):
     """
     Base class for ontology processing
     """
+    ontology_id: str = None
     ontology_full_name: str = None
 
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):

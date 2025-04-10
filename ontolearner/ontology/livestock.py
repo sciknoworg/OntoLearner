@@ -12,7 +12,6 @@ class ATOL(BaseOntology):
     - represent traits as generic as possible for livestock vertebrates;
     - make the ATOL ontology as operational as possible and closely related to measurement techniques;
     - structure the ontology in relation to animal production.
-
-    This class processes Animal Trait Ontology for Livestock (ATOL) using default behavior.
     """
+    ontology_id = "ATOL"
     ontology_full_name = "Animal Trait Ontology for Livestock (ATOL)"

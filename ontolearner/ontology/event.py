@@ -7,10 +7,9 @@ class ConferenceOntology(BaseOntology):
     The conference-ontology adopts the best ontology design practices (e.g., Ontology Design Patterns,
     ontology reuse and interlinking) and guarantees interoperability with SWC ontology
     and all other pertinent vocabularies.
-
-    This class processes Conference Ontology using default behavior.
     """
-    ontology_full_name = "Conference Ontology"
+    ontology_id = "Conference"
+    ontology_full_name = "Conference Ontology (Conference)"
 
 
 class ICalendar(BaseOntology):
@@ -21,10 +20,9 @@ class ICalendar(BaseOntology):
     While widely used in applications like Google Calendar and Outlook, its complexity and partial implementations
     pose challenges, leading to efforts to integrate it with Semantic Web technologies
     for enhanced data linking and automation.
-
-    This class processes iCalendar ontology using default behavior.
     """
-    ontology_full_name = "iCalendar Vocabulary"
+    ontology_id = "iCalendar"
+    ontology_full_name = "iCalendar Vocabulary (iCalendar)"
 
 
 class LODE(BaseOntology):
@@ -37,7 +35,6 @@ class LODE(BaseOntology):
     of events as Linked Data. A tools for populating this model and a prototype “event directory” web service,
     which can be used to locate stable URIs for events that have occurred,
     provide RDFS+OWL descriptions and link to related resources.
-
-    This class processes LODE ontology using default behavior.
     """
+    ontology_id = "LODE"
     ontology_full_name = "Linking Open Descriptions of Events (LODE)"

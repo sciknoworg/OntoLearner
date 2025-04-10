@@ -9,9 +9,8 @@ class DBpedia(BaseOntology):
     Each release of this ontology corresponds to a new release of the DBpedia dataset, which contains
     instance data extracted from various language versions of Wikipedia. The DBpedia ontology has evolved
     into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
-
-    This class processes DBpedia Ontology using default behavior.
     """
+    ontology_id = "DBpedia"
     ontology_full_name = "DBpedia Ontology"
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
@@ -34,10 +33,9 @@ class DublinCore(BaseOntology):
     Dublin Core Metadata may be used for multiple purposes, from simple resource description,
     to combining metadata vocabularies of different metadata standards, to providing interoperability
     for metadata vocabularies in the Linked Data cloud and Semantic Web implementations.
-
-    This class processes Dublin Core Ontology using default behavior.
     """
-    ontology_full_name = "Dublin Core Ontology"
+    ontology_id = "DublinCore"
+    ontology_full_name = "Dublin Core Vocabulary (DublinCore)"
 
 
 class YAGO(BaseOntology):
@@ -47,20 +45,18 @@ class YAGO(BaseOntology):
     YAGO is special in several ways: It has a clean taxonomy, which was manually built,
     and it is the only knowledge base with such a large coverage,
     the clean taxonomy, and the extraction from Wikipedia, WordNet, and GeoNames.
-
-    This class processes YAGO Ontology using default behavior.
     """
-    ontology_full_name = "YAGO Ontology"
+    ontology_id = "YAGO"
+    ontology_full_name = "YAGO Ontology (YAGO)"
 
 
 class SchemaOrg(BaseOntology):
     """
     Schema.org is a collaborative, community activity with a mission to create,
     maintain, and promote schemas for structured data on the Internet, on web pages, in email messages, and beyond.
-
-    This class processes Schema.org Ontology using default behavior.
     """
-    ontology_full_name = "Schema.org Ontology"
+    ontology_id = "SchemaOrg"
+    ontology_full_name = "Schema.org Ontology (SchemaOrg)"
 
 
 class UMBEL(BaseOntology):
@@ -70,9 +66,8 @@ class UMBEL(BaseOntology):
     which provides a scaffolding to link and interoperate other datasets and domain vocabularies.
     Second, it is a base vocabulary for the construction of other concept-based domain ontologies,
     also designed for interoperation.
-
-    This class processes UMBEL Ontology using default behavior.
     """
+    ontology_id = "UMBEL"
     ontology_full_name = "Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary"
 
 
@@ -84,10 +79,9 @@ class PROV(BaseOntology):
     It can also be specialized to create new classes and properties to model provenance information
     for different applications and domains. The PROV Document Overview describes the overall state of PROV,
     and should be read before other PROV documents.
-
-    This class processes PROV Ontology using default behavior.
     """
-    ontology_full_name = "PROV Ontology"
+    ontology_id = "PROV-O"
+    ontology_full_name = "PROV Ontology (PROV-O)"
 
 
 class EDAM(BaseOntology):
@@ -95,9 +89,8 @@ class EDAM(BaseOntology):
     EDAM is a domain ontology of data analysis and data management in bio- and other sciences, and science-based applications.
     It comprises concepts related to analysis, modelling, optimisation, and data life cycle. Targetting usability by diverse users,
     the structure of EDAM is relatively simple, divided into 4 main sections: Topic, Operation, Data (incl. Identifier), and Format.
-
-    This class processes EDAM Ontology using default behavior.
     """
+    ontology_id = "EDAM"
     ontology_full_name = "The ontology of data analysis and management (EDAM)"
 
 
@@ -105,9 +98,8 @@ class RO(BaseOntology):
     """
     The Relations Ontology (RO) is a collection of OWL relations (ObjectProperties) intended for use
     across a wide variety of biological ontologies.
-
-    This class processes Relation Ontology using default behavior.
     """
+    ontology_id = "RO"
     ontology_full_name = "Relation Ontology (RO)"
 
 
@@ -115,9 +107,8 @@ class IAO(BaseOntology):
     """
     The Information Artifact Ontology (IAO) is an ontology of information entities,
     originally driven by work by the OBI digital entity and realizable information entity branch.
-
-    This class processes Information Artifact Ontology using default behavior.
     """
+    ontology_id = "IAO"
     ontology_full_name = "Information Artifact Ontology (IAO)"
 
 
@@ -126,7 +117,6 @@ class GIST(BaseOntology):
     Gist is Semantic Arts' minimalist upper ontology for the enterprise.
     It is designed to have the maximum coverage of typical business ontology concepts
     with the fewest number of primitives and the least amount of ambiguity.
-
-    This class processes GIST ontology using default behavior.
     """
-    ontology_full_name = "GIST Upper Ontology"
+    ontology_id = "GIST"
+    ontology_full_name = "GIST Upper Ontology (GIST)"

@@ -8,9 +8,8 @@ class SWEET(BaseOntology):
     SWEET is a collection of ontologies conceptualizing a knowledge space for Earth system science,
     represented using the web ontology language (OWL). It includes both orthogonal concepts (space, time,
     Earth realms, physical quantities, etc.) and integrative science knowledge concepts (phenomena, events, etc.).
-
-    This class processes the Semantic Web for Earth and Environment Technology Ontology (SWEET).
     """
+    ontology_id = "SWEET"
     ontology_full_name = "Semantic Web for Earth and Environment Technology Ontology (SWEET)"
 
 
@@ -20,9 +19,8 @@ class ENVO(BaseOntology):
     and semantic web applications understand environmental entities of all kinds,
     from microscopic to intergalactic scales. As a FAIR-compliant resource, it promotes interoperability
     through the concise, controlled description of all things environmental.
-
-    This class processes the Environment Ontology (ENVO).
     """
+    ontology_id = "ENVO"
     ontology_full_name = "Environment Ontology (ENVO)"
 
 
@@ -35,4 +33,5 @@ class OEO(BaseOntology):
     being extended. The first version of the OEO has been released on June 11th 2020. A Steering Committee (OEO-SC)
     was created to accompany the development, increase awareness of the ontology and include it in current projects.
     """
+    ontology_id = "OEO"
     ontology_full_name = "The Open Energy Ontology (OEO)"

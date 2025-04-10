@@ -5,4 +5,5 @@ class Wine(BaseOntology):
     """
     A project to define an RDF style ontology for wines and the wine-industry
     """
+    ontology_id = "Wine"
     ontology_full_name = "Wine Ontology (Wine)"

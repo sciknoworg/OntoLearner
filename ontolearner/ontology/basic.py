@@ -5,9 +5,8 @@ class BFO(BaseOntology):
     """
     The Basic Formal Ontology (BFO) is a small, upper-level ontology that describes
     the basic types of entities in the world and how they relate to each other.
-
-    This class processes Basic Formal Ontology with BFO-specific behavior.
     """
+    ontology_id = "BFO"
     ontology_full_name = "Basic Formal Ontology (BFO)"
 
 
@@ -18,9 +17,8 @@ class GFO(BaseOntology):
     processes, time and space, properties, relations, roles, functions, facts, and situations.
     Moreover, we are working on an integration with the notion of levels of reality in order
     to more appropriately capture entities in the material, mental, and social areas.
-
-    This class processes General Formal Ontology using default behavior
     """
+    ontology_id = "GFO"
     ontology_full_name = "General Formal Ontology (GFO)"
 
 
@@ -39,9 +37,8 @@ class SIO(BaseOntology):
     The semanticscience integrated ontology (SIO) provides a simple, integrated upper level ontology (types, relations)
     for consistent knowledge representation across physical, processual and informational entities.
     This project provides foundational support for the Bio2RDF (http://bio2rdf.org) and SADI (http://sadiframework.org) projects.
-
-    This class processes SIO using default behavior.
     """
+    ontology_id = "SIO"
     ontology_full_name = "Semanticscience Integrated Ontology (SIO)"
 
 
@@ -50,16 +47,14 @@ class SUMO(BaseOntology):
     The Suggested Upper Merged Ontology (SUMO) and its domain ontologies form the largest formal public ontology
     in existence today. They are being used for research and applications in search, linguistics and reasoning.
     SUMO is the only formal ontology that has been mapped to all of the WordNet lexicon.
-
-    This class processes SUMO using default behavior.
     """
+    ontology_id = "SUMO"
     ontology_full_name = "Suggested Upper Merged Ontology (SUMO)"
 
 
 class FAIR(BaseOntology):
     """
     This is the formal vocabulary (ontology) describing the FAIR principles.
-
-    This class processes FAIR using default behavior.
     """
+    ontology_id = "FAIR"
     ontology_full_name = "FAIR Vocabulary (FAIR)"

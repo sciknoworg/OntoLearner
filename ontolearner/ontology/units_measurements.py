@@ -13,6 +13,7 @@ class OM(BaseOntology):
     Astronomy and Astrophysics; Cosmology; Earth science; Meteorology; Material science; Microbiology;
     Economics; Information technology and Typography.
     """
+    ontology_id = "OM"
     ontology_full_name = "Ontology of Units of Measure (OM)"
 
 
@@ -23,6 +24,7 @@ class QUDV(BaseOntology):
     concerning quantities and units, it is of interest to verify that the QUDV model can also be represented
     in the form of an ontology using a formal ontology definition language.
     """
+    ontology_id = "QUDV"
     ontology_full_name = "Quantities, Units, Dimensions and Values (QUDV)"
 
 
@@ -30,6 +32,7 @@ class UO(BaseOntology):
     """
     Metrical units for use in conjunction with PATO.
     """
+    ontology_id = "UO"
     ontology_full_name = "Units of Measurement Ontology (UO)"
 
 
@@ -37,6 +40,7 @@ class QUDT(BaseOntology):
     """
     QUDT is an advocate for the development and implementation of standards to quantify data expressed in RDF and JSON.
     """
+    ontology_id = "QUDT"
     ontology_full_name = "Quantities, Units, Dimensions and Data Types (QUDT)"
 
 
@@ -49,4 +53,5 @@ class OWLTime(BaseOntology):
     using either the conventional (Gregorian) calendar and clock, or using another temporal reference system
     such as Unix-time, geologic time, or different calendars.
     """
+    ontology_id = "OWL-Time"
     ontology_full_name = "Time Ontology in OWL (OWL-Time)"
