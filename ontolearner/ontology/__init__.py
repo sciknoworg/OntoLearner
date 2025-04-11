@@ -1,6 +1,6 @@
 from .agricultural import * # NOQA
 from .arts_humanities import * # NOQA
-from .basic import * # NOQA
+from .upper_ontologies import * # NOQA
 from .biology import * # NOQA
 from .chemistry import * # NOQA
 from .education import * # NOQA
