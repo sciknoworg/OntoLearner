@@ -23,19 +23,19 @@ Base Metrics
 
 Graph Metrics:
 ------------------
-    - **Nodes**:
-    - **Root Nodes**:
-    - **Leaf Nodes**:
-    - **Maximum Depth**:
-    - **Edges**:
+    - **Nodes**: 98691
+    - **Root Nodes**: 16564
+    - **Leaf Nodes**: 45644
+    - **Maximum Depth**: 6
+    - **Edges**: 259386
 
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    * **Term Types**:
-    * **Taxonomic Relations**:
-    * **Non-taxonomic Relations**:
-    * **Average Terms per Type**:
+    * **Term Types**: 0
+    * **Taxonomic Relations**: 62605
+    * **Non-taxonomic Relations**: 5456
+    * **Average Terms per Type**: 0
 
 Usage Example
 -----------------
