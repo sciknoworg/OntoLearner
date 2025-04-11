@@ -7,7 +7,7 @@ NCI Thesaurus (NCIt) is a reference terminology that includes broad coverage of 
 including cancer related diseases, findings and abnormalities. The NCIt OBO Edition aims to increase integration
 of the NCIt with OBO Library ontologies. NCIt OBO Edition releases should be considered experimental.
 
-:Domain: Life Sciences, Biology
+:Domain: Medicine
 :Category: Cancer, Oncology
 :Current Version: 24.04e
 :Last Updated: 2023-10-19

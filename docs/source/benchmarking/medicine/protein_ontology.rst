@@ -7,15 +7,15 @@ The PRotein Ontology (PRO) formally defines taxon-specific and taxon-neutral pro
 in three major areas: proteins related by evolution; proteins produced from a given gene;
 and protein-containing complexes.
 
-:Domain: Biomedical Science
+:Domain: Medicine
 :Category: Healthcare
-:Current Version:
-:Last Updated:
+:Current Version: 1.2
+:Last Updated: 08:08:2024
 :Producer:
-:License: Creative Commons 4.0
-:Format:
-:Download:
-:Documentation:
+:License: `Creative Commons 4.0 <https://creativecommons.org/licenses/by/4.0/>`_
+:Format: RDF
+:Download: `PRO Homepage <http://purl.obolibrary.org/obo/pr.owl>`_
+:Documentation: `PRO Documentation <https://proconsortium.org/protein-ontology/>`_
 
 Base Metrics
 ---------------
@@ -25,19 +25,19 @@ Base Metrics
 
 Graph Metrics:
 ---------------
-    - **Total Nodes**:
-    - **Root Nodes**:
-    - **Leaf Nodes**:
-    - **Maximum Depth**:
-    - **Edges**:
+    - **Total Nodes**: 4214485
+    - **Root Nodes**: 1158591
+    - **Leaf Nodes**: 1642782
+    - **Maximum Depth**: 1
+    - **Edges**: 13562571
 
 Dataset Statistics
 -------------------
 Generated Benchmarks:
-    - **Term Types**:
-    - **Taxonomic Relations**:
-    - **Non-taxonomic Relations**:
-    - **Average Terms per Type**:
+    - **Term Types**: 0
+    - **Taxonomic Relations**: 2783894
+    - **Non-taxonomic Relations**: 127293
+    - **Average Terms per Type**: 0
 
 Usage Example
 ------------------
@@ -47,7 +47,7 @@ Usage Example
 
    # Initialize and load ontology
    pro = PRoteinOntology()
-   pro.load("path/to/ontology.owl")
+   pro.load("path/to/pro.rdf")
    # Extract datasets
    data = pro.extract()
    # Access specific relations

@@ -9,7 +9,7 @@ for toxicological data management for ENMs, based on semantic web standards and 
 This ontology is an application ontology targeting the full domain of nanomaterial safety assessment.
 It re-uses several other ontologies including the NPO, CHEMINF, ChEBI, and ENVO.
 
-:Domain: Nanomaterials
+:Domain: Medicine
 :Category: Material Science and Engineering
 :Current Version: 10.0
 :Last Updated: 2025-02-17
