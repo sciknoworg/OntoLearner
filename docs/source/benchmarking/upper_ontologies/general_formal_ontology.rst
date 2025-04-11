@@ -9,7 +9,7 @@ processes, time and space, properties, relations, roles, functions, facts, and s
 Moreover, we are working on an integration with the notion of levels of reality in order
 to more appropriately capture entities in the material, mental, and social areas.
 
-:Domain: Basic
+:Domain: Upper Ontology
 :Category: Upper-Level Ontology
 :Current Version:
 :Last Updated: 2024-11-18

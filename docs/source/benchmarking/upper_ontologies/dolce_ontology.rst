@@ -6,8 +6,8 @@ Overview
 The Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE) is a foundational ontology
 that provides a conceptual framework for the formalization of domain ontologies.
 
-:Domain: Linguistics, Cognitive Science
-:Category: Foundational Ontology
+:Domain: Upper Ontology
+:Category: Linguistics, Cognitive Science
 :Current Version:
 :Last Updated:
 :Producer: Laboratory for Applied Ontology, ISTC-CNR

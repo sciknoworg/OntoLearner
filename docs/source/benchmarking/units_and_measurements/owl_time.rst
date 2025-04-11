@@ -10,7 +10,7 @@ and about temporal position including date-time information. Time positions and 
 using either the conventional (Gregorian) calendar and clock, or using another temporal reference system
 such as Unix-time, geologic time, or different calendars.
 
-:Domain: Events
+:Domain: Units and Measurements
 :Category: Temporal Reasoning
 :Current Version: 1.0
 :Last Updated: 15 November 2022

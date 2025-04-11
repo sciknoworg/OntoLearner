@@ -8,8 +8,8 @@ class/block diagram. In order to generalize its potential usage and alignment wi
 concerning quantities and units, it is of interest to verify that the QUDV model can also be represented
 in the form of an ontology using a formal ontology definition language.
 
-:Domain: Materials Science and Engineering
-:Category: Materials Science
+:Domain: Units and Measurements
+:Category: Units and Measurements
 :Current Version: 2009-10-30
 :Last Updated: 2009-10-30
 :Creator: SysML

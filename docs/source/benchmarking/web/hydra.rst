@@ -6,7 +6,7 @@ Overview
 Hydra is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts
 commonly used in Web APIs it enables the creation of generic API clients.
 
-:Domain: Web Development
+:Domain: Web & Internet
 :Category: Web Development
 :Current Version:
 :Last Updated: 13 July 2021

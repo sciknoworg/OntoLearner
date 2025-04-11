@@ -5,8 +5,8 @@ Overview
 -----------------
 Metrical units for use in conjunction with PATO
 
-:Domain: Material Science and Engineering
-:Category: Material Science and Engineering
+:Domain: Units and Measurements
+:Category: Units and Measurements
 :Current Version:
 :Last Updated: 2023-05-25
 :Producer: KAUST
