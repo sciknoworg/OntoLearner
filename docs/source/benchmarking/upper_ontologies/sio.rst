@@ -7,7 +7,7 @@ The semanticscience integrated ontology (SIO) provides a simple, integrated uppe
 for consistent knowledge representation across physical, processual and informational entities.
 This project provides foundational support for the Bio2RDF (http://bio2rdf.org) and SADI (http://sadiframework.org) projects.
 
-:Domain: General Knowledge
+:Domain: Upper Ontology
 :Category: Basic
 :Current Version: 1.59
 :Last Updated: 03/25/2024

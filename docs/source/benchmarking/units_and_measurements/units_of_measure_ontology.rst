@@ -13,8 +13,8 @@ Fluid mechanics; Chemical physics; Photometry; Radiometry and Radiobiology; Nucl
 Astronomy and Astrophysics; Cosmology; Earth science; Meteorology; Material science; Microbiology;
 Economics; Information technology and Typography.
 
-:Domain: Science
-:Category: Scholarly Knowledge
+:Domain: Units and Measurements
+:Category: Units and Measurements
 :Current Version: 2.0.57
 :Last Updated: June 28, 2024
 :Producer: Hajo Rijgersberg, Don Willems, Jan Top

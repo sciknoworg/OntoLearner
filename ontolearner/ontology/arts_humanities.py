@@ -7,6 +7,7 @@ class ICON(BaseOntology):
     Panofsky's theory of levels of interpretation, therefore artworks can be described according
     to Pre-iconographical, Iconographical and Iconological information.
     """
+    ontology_id = "ICON"
     ontology_full_name = "Icon Ontology (ICON)"
 
 
@@ -16,6 +17,7 @@ class MusicOntology(BaseOntology):
     properties fo describing music (i.e. artists, albums and tracks)
     on the Semantic Web.
     """
+    ontology_id = "Music"
     ontology_full_name = "Music Ontology"
 
 
@@ -25,6 +27,7 @@ class TimelineOntology(BaseOntology):
     seen here as a way to identify a temporal backbone.
     A timeline may support a signal, a video, a score, a work, etc.
     """
+    ontology_id = "Timeline"
     ontology_full_name = "Timeline Ontology"
 
 
@@ -32,6 +35,7 @@ class ChordOntology(BaseOntology):
     """
     The Chord Ontology is an ontology for describing chords in musical pieces.
     """
+    ontology_id = "Chord"
     ontology_full_name = "Chord Ontology"
 
 
@@ -42,4 +46,5 @@ class Nomisma(BaseOntology):
     about a concept in various formats. The project is a collaborative effort of the American Numismatic Society
     and the Institute for the Study of the Ancient World at New York University.
     """
-    ontology_full_name = "Nomisma Ontology"
+    ontology_id = "Nomisma"
+    ontology_full_name = "Nomisma Ontology (Nomisma)"

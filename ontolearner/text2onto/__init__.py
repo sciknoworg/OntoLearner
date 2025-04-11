@@ -1,1 +1,1 @@
-from .traditional import * # NOQA
+from .general import * # NOQA

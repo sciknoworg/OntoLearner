@@ -13,6 +13,7 @@ class MMO(BaseOntology):
     such as descriptions of crystallographic defects and microstructural entities.
     Furthermore, concepts related to the materials fatigue subdomain are also heavily incorporated.
     """
+    ontology_id = "MMO"
     ontology_full_name = "Materials Mechanics Ontology (MMO)"
 
 
@@ -21,29 +22,26 @@ class HPOnt(BaseOntology):
     The Heat Pump Ontology (HPOnt) aims to formalize and represent all the relevant information of Heat Pumps.
     The HPOnt has been developed as part of the REACT project which has received funding
     from the European Union’s Horizon 2020 research and innovation programme under grant agreement no. 824395.
-
-    The Heat Pump Ontology (HPOnt)
     """
+    ontology_id = "HPOnt"
     ontology_full_name = "The Heat Pump Ontology (HPOnt)"
 
 
-class MI(BaseOntology):
+class MaterialInformation(BaseOntology):
     """
     The Material Information ontology is divided into smaller ontologies (partitions).
     The partitions are Environment, Geometry, Material Information, Manufacturing Process, Property,
     Substance, Unit Dimension, Structure, Equation and Physical Constant.
-
-    This class processes the Material Information ontology us using default behavior.
     """
-    ontology_full_name = "Material Information Ontology (MI)"
+    ontology_id = "MaterialInformation"
+    ontology_full_name = "Material Information Ontology (MaterialInformation)"
 
 
 class MatOnto(BaseOntology):
     """
     The Material Ontology (MatOnto) is based on the upper level ontology, the BFO.
-
-    This class processes the Materials Ontology (MatOnto) using default behavior.
     """
+    ontology_id = "MatOnto"
     ontology_full_name = "Material Ontology (MatOnto)"
 
 
@@ -54,9 +52,8 @@ class EMMO(BaseOntology):
     and characterization knowledge. Instead of starting from general upper level concepts, as done by other ontologies,
     the EMMO development started from the very bottom level, using the actual picture of the physical world coming
     from applied sciences, and in particular from physics and material sciences.
-
-    This class processes the Elementary Multiperspective Material Ontology (EMMO) using default behavior.
     """
+    ontology_id = "EMMO"
     ontology_full_name = "The Elementary Multiperspective Material Ontology (EMMO)"
 
 
@@ -64,9 +61,8 @@ class MDO(BaseOntology):
     """
     MDO is an ontology for materials design field, representing the domain knowledge specifically related
     to solid-state physics and computational materials science.
-
-    This class processes the Materials Design Ontology (MDO) using default behavior.
     """
+    ontology_id = "MDO"
     ontology_full_name = "Materials Design Ontology (MDO)"
 
 
@@ -74,9 +70,8 @@ class FSO(BaseOntology):
     """
     The Flow Systems Ontology (FSO) is an ontology for describing interconnected systems
     with material or energy flow connections, and their components.
-
-    This class processes the Flow Systems Ontology (FSO) using default behavior.
     """
+    ontology_id = "FSO"
     ontology_full_name = "Flow Systems Ontology (FSO)"
 
 
@@ -91,9 +86,8 @@ class SSN(BaseOntology):
     large-scale scientific monitoring, industrial and household infrastructures, social sensing, citizen science,
     observation-driven ontology engineering, and the Web of Things. Both ontologies are described below,
     and examples of their usage are given.
-
-    This class processes the Semantic Sensor Network Ontology (SSN) using default behavior.
     """
+    ontology_id = "SSN"
     ontology_full_name = "Semantic Sensor Network Ontology (SSN)"
 
 
@@ -106,9 +100,8 @@ class OntoCAPE(BaseOntology):
     possible applications include the systematic management and retrieval of simulation models and design documents,
     electronic procurement of plant equipment, mathematical modeling,
     as well as the integration of design data from distributed sources.
-
-    This class processes the Ontology of Computer-Aided Process Engineering (OntoCAPE) using default behavior.
     """
+    ontology_id = "OntoCAPE"
     ontology_full_name = "Ontology of Computer-Aided Process Engineering (OntoCAPE)"
 
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
@@ -145,6 +138,7 @@ class SystemCapabilities(BaseOntology):
     """
     This ontology describes system capabilities, operating ranges, and survival ranges.
     """
+    ontology_id = "SystemCapabilities"
     ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
 
 
@@ -156,6 +150,7 @@ class CHAMEO(BaseOntology):
     or application-specific ontologies in the materials characterisation domain. CHAMEO
     has been used as a foundation for the definition of the new CHADA template during the CWA.
     """
+    ontology_id = "CHAMEO"
     ontology_full_name = "Characterisation Methodology Domain Ontology (CHAMEO)"
 
 
@@ -165,6 +160,7 @@ class NanoMine(BaseOntology):
     broad-reaching hypotheses about how inter-relationships between different materials
     processing methods and composition result in specific changes in material properties.
     """
+    ontology_id = "NanoMine"
     ontology_full_name = "NanoMine Ontology (NanoMine)"
 
 
@@ -175,6 +171,7 @@ class GPO(BaseOntology):
     with the help of tools (devices, algorithms). They can be decomposed into sub-processes
     and have predecessor and successor processes.
     """
+    ontology_id = "GPO"
     ontology_full_name = "General Process Ontology (GPO)"
 
 
@@ -185,6 +182,7 @@ class BVCO(BaseOntology):
     into output/products (matter, energy, information) with the help of tools (devices, algorithms).
     They can be decomposed into sub-processes and have predecessor and successor processes.
     """
+    ontology_id = "BVCO"
     ontology_full_name = "Battery Value Chain Ontology (BVCO)"
 
 
@@ -192,6 +190,7 @@ class EMMOCrystallography(BaseOntology):
     """
     A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
     """
+    ontology_id = "EMMOCrystallography"
     ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"
 
 
@@ -201,6 +200,7 @@ class CIFCore(BaseOntology):
     of data files covering various aspects of crystallography and related structural sciences; (2) to demonstrate
     some of the more complex types of information that can be handled with this approach.
     """
+    ontology_id = "CIFCore"
     ontology_full_name = "Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)"
 
 
@@ -208,6 +208,7 @@ class Atomistic(BaseOntology):
     """
     An EMMO-based domain ontology for atomistic and electronic modelling.
     """
+    ontology_id = "Atomistic"
     ontology_full_name = "Atomistic Ontology (Atomistic)"
 
 
@@ -216,6 +217,7 @@ class DISO(BaseOntology):
     DISO is an ontology that defines the linear defect, in particular dislocation concepts
     and relations between them in crystalline materials.
     """
+    ontology_id = "DISO"
     ontology_full_name = "Dislocation Ontology (DISO)"
 
 
@@ -226,6 +228,7 @@ class BattINFO(BaseOntology):
     to create FAIR (Findable, Accessible, Interoperable, Reusable) battery data
     that can be integrated into the Semantic Web.
     """
+    ontology_id = "BattINFO"
     ontology_full_name = "Battery Interface Ontology (BattINFO)"
 
     def contains_imports(self) -> bool:
@@ -241,6 +244,7 @@ class MAMBO(BaseOntology):
     complex workflows for modelling systems based on molecular materials (computational modelling
     and data-driven techniques) Integrating data generated via computational simulations and empirical experiments.
     """
+    ontology_id = "MAMBO"
     ontology_full_name = "Molecules And Materials Basic Ontology (MAMBO)"
 
 
@@ -252,6 +256,7 @@ class LPBFO(BaseOntology):
     by Fraunhofer IWM. If possible, the terminology within this ontology was used as provided by ISO/ASTM 52900:2015.
     Recently, classes relevant for Life Cycle Analysis (LCA) were added that enable sustainability assessment.
     """
+    ontology_id = "LPBFO"
     ontology_full_name = "Laser Powder Bed Fusion Ontology (LPBFO)"
 
     def contains_imports(self) -> bool:
@@ -268,6 +273,7 @@ class AMOntology(BaseOntology):
     AMOntology uses AMProcessOntology and ModelOntology files to describe entities that capture knowledge
     about characteristics of computational models for AM processes.
     """
+    ontology_id = "AMOntology"
     ontology_full_name = "Additive Manufacturing Ontology (AMOntology)"
 
 
@@ -283,6 +289,7 @@ class MatVoc(BaseOntology):
     """
     The official ontology produced in the context of the STREAM project.
     """
+    ontology_id = "MatVoc"
     ontology_full_name = "Materials Vocabulary (MatVoc)"
 
 
@@ -290,6 +297,7 @@ class PRIMA(BaseOntology):
     """
     An ontology that captures the provenance information in the materials science domain.
     """
+    ontology_id = "PRIMA"
     ontology_full_name = "PRovenance Information in MAterials science (PRIMA)"
 
     def contains_imports(self) -> bool:
@@ -301,7 +309,8 @@ class MechanicalTesting(BaseOntology):
     """
     A domain ontology for mechanical testing based on EMMO.
     """
-    ontology_full_name = "Mechanical Testing Ontology (MTO)"
+    ontology_id = "MechanicalTesting"
+    ontology_full_name = "Mechanical Testing Ontology (MechanicalTesting)"
 
 
 class MicroStructures(BaseOntology):
@@ -311,15 +320,17 @@ class MicroStructures(BaseOntology):
     grain boundaries & particle free zones (PFZs), texture, dislocations. The aim is to support
     both microstructure modelling as well as characterisation.
     """
+    ontology_id = "MicroStructures"
     ontology_full_name = "EMMO-based ontology for microstructures (MicroStructures)"
 
 
 class MDS(BaseOntology):
     """
-    Materials Data Science(MDS) is an ontology encompassing multiple domains relevant to materials science,
+    Materials Data Science (MDS) is an ontology encompassing multiple domains relevant to materials science,
     chemical synthesis and characterizations, photovoltaics and geospatial datasets. The terms used for classes,
     subclasses and instances are mapped to PMDCo and BFO Ontologies.
     """
+    ontology_id = "MDS"
     ontology_full_name = "Materials Data Science Ontology (MDS)"
 
 
@@ -331,6 +342,7 @@ class PMDco(BaseOntology):
     and the domain neutral concepts found in established top-level ontologies. The primary goal of the PMDco
     is to promote interoperability between diverse domains.
     """
+    ontology_id = "PMDco"
     ontology_full_name = "The Platform MaterialDigital core ontology (PMDco)"
 
 
@@ -342,6 +354,7 @@ class MSEO(BaseOntology):
     between the Bundesanstalt für Materialforschung und -prüfung (BAM) and the Fraunhofer Group MATERIALS
     and uses the BWMD ontology created by Fraunhofer IWM as a starting point.
     """
+    ontology_id = "MSEO"
     ontology_full_name = "Materials Science and Engineering Ontology (MSEO)"
 
 
@@ -349,6 +362,7 @@ class MOLTENSILE(BaseOntology):
     """
     An ontology for describing the tensile test process, made in the Materials Open Lab Project.
     """
+    ontology_id = "MOL_TENSILE"
     ontology_full_name = "Matolab Tensile Test Ontology (MOL_TENSILE)"
 
 
@@ -360,6 +374,7 @@ class ONTORULE(BaseOntology):
     and attributes included in the ontology. For a better understanding of the decisions taken at the time
     of representing the knowledge in the ontology, the reader is encouraged to also read the document D5.4.
     """
+    ontology_id = "ONTORULE"
     ontology_full_name = "Ontology for the Steel Domain (ONTORULE)"
 
 
@@ -368,6 +383,7 @@ class PeriodicTable(BaseOntology):
     PeriodicTable.owl is a representation of the Periodic Table of the Elements in the OWL Web Ontology Language.
     It provides reference data to support Semantic Web applications in chemistry and related disciplines.
     """
+    ontology_id = "PeriodicTable"
     ontology_full_name = "Periodic Table of the Elements Ontology (PeriodicTable)"
 
 
@@ -380,6 +396,7 @@ class VIMMP(BaseOntology):
     as a top-level ontology. The ontologies are used to annotate data that are stored in the ZONTAL Space component
     of VIMMP and to support the ingest and retrieval of data and metadata at the VIMMP marketplace front-end.
     """
+    ontology_id = "VIMMP"
     ontology_full_name = "Virtual Materials Marketplace (VIMMP) Ontologies"
 
 
@@ -387,7 +404,8 @@ class MOLBRINELL(BaseOntology):
     """
     An ontology for describing the Brinell hardness testing process, made in the Materials Open Lab Project.
     """
-    ontology_full_name = "MatoLab Brinell Test Ontology (MOLBRINELL)"
+    ontology_id = "MOL_BRINELL"
+    ontology_full_name = "MatoLab Brinell Test Ontology (MOL_BRINELL)"
 
 
 class MAT(BaseOntology):
@@ -397,6 +415,7 @@ class MAT(BaseOntology):
     the building elements and properties covered in this ontology support applications
     focused on the design of building renovation projects.
     """
+    ontology_id = "MAT"
     ontology_full_name = "Material Properties Ontology (MAT)"
 
 
@@ -405,6 +424,7 @@ class CMSO(BaseOntology):
     CMSO is an ontology that aims to describe computational materials science samples (or structures),
     including crystalline defects. Initially focusing on the description at the atomic scale.
     """
+    ontology_id = "CMSO"
     ontology_full_name = "Computational Material Sample Ontology (CMSO)"
 
 
@@ -412,6 +432,7 @@ class Photovoltaics(BaseOntology):
     """
     This ontology is describing Perovskite solar cells.
     """
+    ontology_id = "Photovoltaics"
     ontology_full_name = "EMMO Domain Ontology for Photovoltaics (Photovoltaics)"
 
 
@@ -423,6 +444,7 @@ class DSIM(BaseOntology):
     of dislocation applied in the dislocation dynamic simulation and the pictorial concept of pixel
     applied in representing dislocation in the experimental image, eg., TEM image, SEM image, and FIM image.
     """
+    ontology_id = "DSIM"
     ontology_full_name = "Dislocation Simulation and Model Ontology (DSIM)"
 
 
@@ -432,6 +454,7 @@ class ASMO(BaseOntology):
     used atomic scale simulation methods, i.e. density functional theory, molecular dynamics,
     Monte Carlo methods, etc. ASMO uses the Provenance Ontology (PROV-O) to describe the simulation process.
     """
+    ontology_id = "ASMO"
     ontology_full_name = "Atomistic Simulation Methods Ontology (ASMO)"
 
 
@@ -439,6 +462,7 @@ class PODO(BaseOntology):
     """
     PODO focuses on the description of point defects in crystalline materials.
     """
+    ontology_id = "PODO"
     ontology_full_name = "Point Defects Ontology (PODO)"
 
 
@@ -447,6 +471,7 @@ class CDCO(BaseOntology):
     CDCO defines the common terminology shared across all types of crystallographic defects,
     providing a unified framework for data integration in materials science.
     """
+    ontology_id = "CDCO"
     ontology_full_name = "Crystallographic Defect Core Ontology (CDCO)"
 
 
@@ -455,6 +480,7 @@ class LDO(BaseOntology):
     LDO is an ontology designed to describe line defects in crystalline materials,
     such as dislocations and disclinations.
     """
+    ontology_id = "LDO"
     ontology_full_name = "Line Defect Ontology (LDO)"
 
 
@@ -463,6 +489,7 @@ class PLDO(BaseOntology):
     PLDO is an ontology designed to describe planar defects in crystalline materials,
     such as grain boundaries and stacking faults, with a focus on their atomic-scale structure and properties.
     """
+    ontology_id = "PLDO"
     ontology_full_name = "Planar Defects Ontology (PLDO)"
 
 
@@ -470,6 +497,7 @@ class MSLE(BaseOntology):
     """
     The current ontology describes Material Science Lab Equipment.
     """
+    ontology_id = "MSLE"
     ontology_full_name = "Material Science Lab Equipment Ontology (MSLE)"
 
 
@@ -478,6 +506,7 @@ class OIEMaterials(BaseOntology):
     The materials module populates the physicalistic perspective with materials subclasses categorised
     according to modern applied physical sciences.
     """
+    ontology_id = "OIEMaterials"
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Materials module (OIEMaterials)"
 
 
@@ -486,6 +515,7 @@ class OIEManufacturing(BaseOntology):
     The manufacturing module populates the physicalistic perspective with manufacturing subclasses categorised
     according to modern applied physical sciences.
     """
+    ontology_id = "OIEManufacturing"
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Manufacturing module (OIEManufacturing)"
 
 
@@ -493,6 +523,7 @@ class OIESoftware(BaseOntology):
     """
     Software module.
     """
+    ontology_id = "OIESoftware"
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Software module (OIESoftware)"
 
 
@@ -501,4 +532,5 @@ class OIEModels(BaseOntology):
     The models module defines models as semiotic signs that stands for an object by resembling or imitating it,
     in shape or by sharing a similar logical structure.
     """
+    ontology_id = "OIEModels"
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Models module (OIEModels)"

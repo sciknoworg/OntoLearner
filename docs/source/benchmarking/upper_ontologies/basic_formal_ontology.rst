@@ -6,8 +6,8 @@ Overview
 The Basic Formal Ontology (BFO) is a small, upper-level ontology that describes
 the basic types of entities in the world and how they relate to each other.
 
-:Domain: Basic
-:Category: Upper-Level Ontology
+:Domain: Upper Ontology
+:Category: Basic
 :Current Version: 2.0
 :Last Updated: 2020
 :Producer: University at Buffalo

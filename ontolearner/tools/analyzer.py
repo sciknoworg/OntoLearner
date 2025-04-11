@@ -28,12 +28,8 @@ class Analyzer(ABC):
     def compute_topology_metrics(ontology: BaseOntology) -> TopologyMetrics:
         """
         Compute comprehensive topology metrics for the ontology.
-
-        :return: TopologyMetrics object with all computed metrics
         """
         logger.info("Starting topology metrics computation")
-
-        # Time the computation
         start_time = time.time()
         graph = ontology.nx_graph
 
@@ -46,19 +42,23 @@ class Analyzer(ABC):
                 num_leaf_nodes=0, avg_path_length=0, diameter=0
             )
 
-        # Basic node metrics
         root_nodes = [node for node in graph.nodes() if graph.in_degree(node) == 0]
         leaf_nodes = [node for node in graph.nodes() if graph.out_degree(node) == 0]
 
-        # Calculate depths
-        depths = []
-        for node in graph.nodes():
-            for root in root_nodes:
-                try:
-                    depth = nx.shortest_path_length(graph, root, node)
-                    depths.append(depth)
-                except nx.NetworkXNoPath:
-                    continue
+        depths = {}
+        visited = {}
+        for root in root_nodes:
+            visited = {root: 0}
+            queue = [root]
+            while queue:
+                node = queue.pop(0)
+                depth = visited[node]
+                for child in graph.successors(node):
+                    if child not in visited or visited[child] > depth + 1:
+                        visited[child] = depth + 1
+                        queue.append(child)
+
+        max_depth = max(visited.values()) if visited else 0
 
         # Calculate degree-related metrics
         in_degrees = [graph.in_degree(n) for n in graph.nodes()]
@@ -90,7 +90,7 @@ class Analyzer(ABC):
             avg_degree=avg_degree,
             max_in_degree=max(in_degrees) if in_degrees else 0,
             max_out_degree=max(out_degrees) if out_degrees else 0,
-            max_depth=max(depths) if depths else 0,
+            max_depth=max_depth,
             avg_depth=sum(depths) / len(depths) if depths else 0,
             num_root_nodes=len(root_nodes),
             num_leaf_nodes=len(leaf_nodes),
@@ -99,6 +99,27 @@ class Analyzer(ABC):
         )
         return topology_metrics
 
+
+    @staticmethod
+    def _compute_depths(graph, root_nodes):
+        depths = {}
+        for root in root_nodes:
+            level = 0
+            frontier = [root]
+            visited = {root}
+
+            while frontier:
+                next_frontier = []
+                for node in frontier:
+                    depths[node] = min(depths.get(node, float('inf')), level)
+                    for neighbor in graph.successors(node):
+                        if neighbor not in visited:
+                            visited.add(neighbor)
+                            next_frontier.append(neighbor)
+                frontier = next_frontier
+                level += 1
+
+        return depths
 
     @staticmethod
     def compute_dataset_metrics(ontology: BaseOntology) -> DatasetMetrics:

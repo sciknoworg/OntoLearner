@@ -15,6 +15,7 @@ class CSO(BaseOntology):
     - superTopicOf relationships
     - contributesTo relationships
     """
+    ontology_id = "CSO"
     ontology_full_name = "Computer Science Ontology"
     # CSO-specific URIs
     CSO_TOPIC = URIRef("http://cso.kmi.open.ac.uk/schema/cso#Topic")
@@ -68,6 +69,7 @@ class EURIO(BaseOntology):
     structured and machine-readable format data about resarch projects funded by the EU's
     framework programmes for research and innovation.
     """
+    ontology_id = "EURIO"
     ontology_full_name = "EUropean Research Information Ontology"
 
 
@@ -79,6 +81,7 @@ class NFDIcore(BaseOntology):
     as a mid-level ontology for representing metadata related to NFDI resources, including individuals,
     organizations, projects, data portals, and more.
     """
+    ontology_id = "NFDIcore"
     ontology_full_name = "National Research Data Infrastructure Ontology (NFDIcore)"
 
 
@@ -90,6 +93,7 @@ class AIISO(BaseOntology):
     FOAF (http://xmlns.com/foaf/0.1/) and aiiso-roles (http://purl.org/vocab/aiiso-roles/schema)
     to describe the roles that people play within an institution.
     """
+    ontology_id = "AIISO"
     ontology_full_name = "Academic Institution Internal Structure Ontology (AIISO)"
 
 
@@ -104,6 +108,7 @@ class DCAT(BaseOntology):
     in multiple sites possible using the same query mechanism and structure. Aggregated DCAT metadata
     can serve as a manifest file as part of the digital preservation process.
     """
+    ontology_id = "DCAT"
     ontology_full_name = "Data Catalog Vocabulary (DCAT)"
 
 
@@ -112,6 +117,7 @@ class CiTO(BaseOntology):
     The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,
     both factually and rhetorically.
     """
+    ontology_id = "CiTO"
     ontology_full_name = "Citation Typing Ontology (CiTO)"
 
 
@@ -123,6 +129,7 @@ class FRBRoo(BaseOntology):
     a formal ontology intended to capture and represent the underlying semantics of bibliographic information
     and to facilitate the integration, mediation, and interchange of bibliographic and museum information.
     """
+    ontology_id = "FRBRoo"
     ontology_full_name = "Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)"
 
 
@@ -132,6 +139,7 @@ class LexInfo(BaseOntology):
     to any level of linguistic description and expressive. LexInfo has been implemented as an OWL ontology
     and is available together with an API.
     """
+    ontology_id = "LexInfo"
     ontology_full_name = "LexInfo"
 
 
@@ -142,6 +150,7 @@ class PreMOn(BaseOntology):
     defines the main abstractions for modelling semantic classes with their semantic roles,
     mappings between different predicate models, and annotations.
     """
+    ontology_id = "PreMOn"
     ontology_full_name = "Pre-Modern Ontology (PreMOn)"
 
 
@@ -152,6 +161,7 @@ class DataCite(BaseOntology):
     for the accurate and consistent identification of a resource for citation
     and retrieval purposes) to be described in RDF.
     """
+    ontology_id = "DataCite"
     ontology_full_name = "DataCite"
 
 
@@ -159,6 +169,7 @@ class DUO(BaseOntology):
     """
     DUO is an ontology which represent data use conditions.
     """
+    ontology_id = "DUO"
     ontology_full_name = "Data Use Ontology (DUO)"
 
 
@@ -168,6 +179,7 @@ class OBOE(BaseOntology):
     of scientific observation and measurement. The ontology supports researchers to add detailed semantic annotations
     to scientific data, thereby clarifying the inherent meaning of scientific observations.
     """
+    ontology_id = "OBOE"
     ontology_full_name = "Extensible Observation Ontology (OBOE)"
 
     def contains_imports(self) -> bool:
@@ -181,6 +193,7 @@ class SWO(BaseOntology):
     provenance and associated data. It contains detailed information on licensing and formats
     as well as software applications themselves, mainly (but not limited) to the bioinformatics community.
     """
+    ontology_id = "SWO"
     ontology_full_name = "Software Ontology (SWO)"
 
 
@@ -192,6 +205,7 @@ class Metadata4Ing(BaseOntology):
     and the roles of persons and institutions. The structure and application of the ontology
     are based on the principles of modularity and inheritance.
     """
+    ontology_id = "Metadata4Ing"
     ontology_full_name = "Metadata for Intelligent Engineering (Metadata4Ing)"
 
 
@@ -201,6 +215,7 @@ class M4I(BaseOntology):
     The ontology is maintained by the Metadata4Ing working group, a subgroup of the Special Interest Group (SIG)
     Metadata & Ontologies within NFDI4Ing.
     """
+    ontology_id = "M4I"
     ontology_full_name = "Metadata for Engineering (M4I)"
 
 
@@ -212,6 +227,7 @@ class SEPIO(BaseOntology):
     IAO ontology-metadata import: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/imports/ontology-metadata.owl
     bfo mireot: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/mireots/bfo-mireot.owl
     """
+    ontology_id = "SEPIO"
     ontology_full_name = "Scientific Evidence and Provenance Information Ontology (SEPIO)"
 
     def contains_imports(self) -> bool:
@@ -225,6 +241,7 @@ class SPWorkflow(BaseOntology):
     and material entities that participates in instructions (sample/specimen, organisms, reagents,
     instruments);  and iii) the order of execution of the instructions.
     """
+    ontology_id = "SP-Workflow"
     ontology_full_name = "SMART Protocols Ontology: Workflow Module (SP-Workflow)"
 
 
@@ -233,6 +250,7 @@ class SPDocument(BaseOntology):
     SMART Protocols Ontology: Document Module is an ontology designed
     to represent metadata used to report an experimental protocol.
     """
+    ontology_id = "SP-Document"
     ontology_full_name = "SMART Protocols Ontology: Document Module (SP-Document)"
 
 
@@ -240,6 +258,7 @@ class WiLD(BaseOntology):
     """
     Ontology to describe Workflows in Linked Data.
     """
+    ontology_id = "WiLD"
     ontology_full_name = "Workflows in Linked Data (WiLD)"
 
 
@@ -249,6 +268,7 @@ class OPMW(BaseOntology):
     and their templates based on the Open Provenance Model. It has been designed as a profile for OPM,
     extending and reusing OPM's core ontologies OPMV (OPM-Vocabulary) and OPMO (OPM-Ontology).
     """
+    ontology_id = "OPMW"
     ontology_full_name = "Open Provenance Model for Workflows (OPMW)"
 
     def contains_imports(self) -> bool:
@@ -261,6 +281,7 @@ class VOAF(BaseOntology):
     The Vocabulary of a Friend (VOAF) is a vocabulary to describe vocabularies (meta-vocabulary), allowing to document
     and publish information about vocabularies (RDFS vocabularies or OWL ontologies) on the Semantic Web.
     """
+    ontology_id = "VOAF"
     ontology_full_name = "Vocabulary of a Friend (VOAF) Ontology"
 
 
@@ -270,4 +291,5 @@ class FRAPO(BaseOntology):
     for describing the administrative information of research projects, e.g., grant applications,
     funding bodies, project partners, etc.
     """
+    ontology_id = "FRAPO"
     ontology_full_name = "Funding, Research Administration and Projects Ontology (FRAPO)"

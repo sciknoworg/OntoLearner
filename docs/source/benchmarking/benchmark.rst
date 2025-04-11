@@ -313,6 +313,8 @@ Ontologies used in cataloging, archiving, and authority control of cultural and 
 .. toctree::
    :maxdepth: 3
 
+    library_cultural_heritage/gnd.rst
+
 Law
 ===
 Ontologies dealing with legal processes, regulations, and rights (e.g., copyright).

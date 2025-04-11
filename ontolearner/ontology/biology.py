@@ -8,9 +8,8 @@ class LIFO(BaseOntology):
     life processes of organisms and related entities and relations. LifO is a general
     purpose ontology that covers the common features associated with different
     organisms such as unicellular prokaryotes (e.g., E. coli) and multicellular organisms (e.g., human).
-
-    This class processes Life Ontology using default behavior.
     """
+    ontology_id = "LifO"
     ontology_full_name = "Life Ontology (LifO)"
 
 
@@ -18,9 +17,8 @@ class GO(BaseOntology):
     """
     The Gene Ontology (GO) Provides structured controlled vocabularies for the annotation of gene products
     with respect to their molecular function, cellular component, and biological role.
-
-    This class processes Gene Ontology using default behavior.
     """
+    ontology_id = "GO"
     ontology_full_name = "Gene Ontology (GO)"
 
 
@@ -36,9 +34,8 @@ class MarineTLO(BaseOntology):
     adopted an iterative and incremental methodology where a new version is released every two
     months. For the implementation we use OWL 2, and to evaluate it we use a set of competency
     queries, formulating the domain requirements provided by the related communities.
-
-    This class processes MarineTLO Ontology using default behavior.
     """
+    ontology_id = "MarineTLO"
     ontology_full_name = "Marine Taxonomy and Life Ontology (MarineTLO)"
 
 
@@ -48,9 +45,8 @@ class BioPAX(BaseOntology):
     of biological pathway data. Specifically, BioPAX supports data exchange between pathway data
     groups and thus reduces the complexity of interchange between data formats by providing an
     accepted standard format for pathway data.
-
-    This class processes BioPAX Ontology using default behavior.
     """
+    ontology_id = "BioPAX"
     ontology_full_name = "Biological Pathways Exchange (BioPAX)"
 
 
@@ -61,18 +57,16 @@ class EFO(BaseOntology):
     such as UBERON anatomy, ChEBI chemical compounds, and Cell Ontology. The scope of EFO is to support the annotation,
     analysis and visualization of data handled by many groups at the EBI and as the core ontology for Open Targets.
     EFO is developed by the EMBL-EBI Samples, Phenotypes and Ontologies Team (SPOT).
-
-    This class processes Experimental Factor Ontology using default behavior.
     """
+    ontology_id = "EFO"
     ontology_full_name = "Experimental Factor Ontology (EFO)"
 
 
 class PATO(BaseOntology):
     """
     An ontology of phenotypic qualities (properties, attributes or characteristics).
-
-    This class processes Phenotype and Trait Ontology (PATO) using default behavior.
     """
+    ontology_id = "PATO"
     ontology_full_name = "Phenotype and Trait Ontology (PATO)"
 
 
@@ -81,9 +75,8 @@ class Microscopy(BaseOntology):
     The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The MO facilitates semantic integration
     and the interoperable connection of diverse data sources from the fields of microscopy and microanalysis. Consequently,
     the MO paves the way for new, adaptable data applications and analyses across various experiments and studies
-
-    This class processes Microscopy Ontology using default behavior.
     """
+    ontology_id = "Microscopy"
     ontology_full_name = "Microscopy Ontology (MO)"
 
     def contains_imports(self) -> bool:
@@ -99,6 +92,7 @@ class MGED(BaseOntology):
     in synch with MAGE v.1; and the MGED Extended ontology which adds further associations
     and classes not found in MAGE v.1
     """
+    ontology_id = "MGED"
     ontology_full_name = "MGED Ontology (MGED)"
 
 
@@ -112,4 +106,5 @@ class NPO(BaseOntology):
     Mechanisms for editorial and governance processes are being developed for the maintenance,
     review, and growth of the NPO.
     """
+    ontology_id = "NPO"
     ontology_full_name = "NanoParticle Ontology (NPO)"
