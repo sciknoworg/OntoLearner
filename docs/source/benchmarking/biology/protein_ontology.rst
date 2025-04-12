@@ -7,7 +7,7 @@ The PRotein Ontology (PRO) formally defines taxon-specific and taxon-neutral pro
 in three major areas: proteins related by evolution; proteins produced from a given gene;
 and protein-containing complexes
 
-:Domain: Biology
+:Domain: Biology & Life Sciences
 :Category: Healthcare
 :Current Version: 70.0
 :Last Updated: 08:08:2024

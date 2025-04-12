@@ -5,7 +5,7 @@ Overview
 -----------------
 An ontology of phenotypic qualities (properties, attributes or characteristics).
 
-:Domain: Biology
+:Domain: Biology & Life Sciences
 :Category: Biology
 :Current Version: 1.2
 :Last Updated: 2025-02-01

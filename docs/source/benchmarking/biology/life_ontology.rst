@@ -7,7 +7,7 @@ LifO is a formal ontology that represents the life processes of organisms and re
 LifO is a general purpose ontology that covers the common features associated with different types of organisms
 such as unicellular prokaryotes (e.g., E. coli) and multicellular organisms (e.g., humans).
 
-:Domain: Biology, Life Sciences
+:Domain: Biology & Life Sciences
 :Category: General Purpose
 :Current Version: 1.0.17
 :Last Updated: March 11, 2018

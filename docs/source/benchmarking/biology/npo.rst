@@ -5,7 +5,7 @@ Overview
 -----------------
 NanoParticle Ontology (NPO) is developed within the framework of the Basic Formal Ontology (BFO), and implemented in the Ontology Web Language (OWL) using well-defined ontology design principles. The NPO was developed to represent knowledge underlying the preparation, chemical composition, and characterization of nanomaterials involved in cancer research. Public releases of the NPO are available through BioPortal website, maintained by the National Center for Biomedical Ontology. Mechanisms for editorial and governance processes are being developed for the maintenance, review, and growth of the NPO.
 
-:Domain: Materials Science & Engineering
+:Domain: Biology & Life Sciences
 :Category: Materials Science
 :Current Version: 2013-05-31
 :Last Updated: 2013-05-31

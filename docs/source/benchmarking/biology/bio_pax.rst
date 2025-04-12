@@ -10,7 +10,7 @@ data formats by providing an accepted standard format for pathway data. It is an
 by the community of researchers, software developers, and institutions. BioPAX is defined in OWL DL
 and is represented in the RDF/XML format
 
-:Domain: Biology
+:Domain: Biology & Life Sciences
 :Category: Bioinformatics
 :Current Version: 1.0
 :Last Updated: 16 April 2015

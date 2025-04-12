@@ -7,7 +7,7 @@ Concepts, definitions, terms, and resources for standardized description of a mi
 The MGED ontology is divided into the MGED Core ontology which is intended to be stable and in synch with MAGE v.1;
 and the MGED Extended ontology which adds further associations and classes not found in MAGE v.1
 
-:Domain: Materials Science and Engineering
+:Domain: Biology & Life Sciences
 :Category: Domain Ontology
 :Current Version: 1.3.1.1
 :Last Updated: Feb. 9, 2007
