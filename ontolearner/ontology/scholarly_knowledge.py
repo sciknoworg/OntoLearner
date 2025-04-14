@@ -311,3 +311,16 @@ class PPlan(BaseOntology):
     """
     ontology_id = "PPlan"
     ontology_full_name = "Ontology for Provenance and Plans (P-Plan)"
+
+
+class TribAIn(BaseOntology):
+    """
+    The tribAIn1 ontology aims to formalize knowledge gained from tribological experiments for reuse,
+    comparison and documentation. Therefore, the tribAin ontology provides concepts for the specification
+    of methodological background knowledge of experimental design, the documentation of the experimental setup
+    and the representation of different kinds of results (e.g. measurements series, analysis,
+    interpretation in natural-language). Using the EXPO2 (ontology of scientific experiments) as basis,
+    gives tribAIn a generic background about scientific experimental design, methodology and results representation.
+    """
+    ontology_id = "TribAIn"
+    ontology_full_name = "Tribological Artificial Intelligence (TribAIn) Ontology"

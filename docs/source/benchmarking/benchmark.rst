@@ -253,6 +253,7 @@ Ontologies modeling the structure, process, and administration of scholarly rese
    scholarly_knowledge/frapo.rst
    scholarly_knowledge/expo.rst
    scholarly_knowledge/p-plan.rst
+   scholarly_knowledge/tribain.rst
 
 Education
 =========
