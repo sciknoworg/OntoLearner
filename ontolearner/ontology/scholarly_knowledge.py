@@ -293,3 +293,11 @@ class FRAPO(BaseOntology):
     """
     ontology_id = "FRAPO"
     ontology_full_name = "Funding, Research Administration and Projects Ontology (FRAPO)"
+
+
+class EXPO(BaseOntology):
+    """
+    Formalise generic knowledge about scientific experimental design, methodology, and results representation.
+    """
+    ontology_id = "EXPO"
+    ontology_full_name = "Ontology of Scientific Experiments (EXPO)"

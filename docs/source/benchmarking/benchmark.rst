@@ -192,6 +192,7 @@ Broad-scope ontologies and upper vocabularies used across disciplines for genera
    general_knowledge/relations_ontology.rst
    general_knowledge/iao.rst
    general_knowledge/gist_ontology.rst
+   general_knowledge/cco.rst
 
 
 Units and Measurements
@@ -250,6 +251,7 @@ Ontologies modeling the structure, process, and administration of scholarly rese
    scholarly_knowledge/opmw.rst
    scholarly_knowledge/voaf_ontology.rst
    scholarly_knowledge/frapo.rst
+   scholarly_knowledge/expo.rst
 
 Education
 =========
