@@ -301,3 +301,13 @@ class EXPO(BaseOntology):
     """
     ontology_id = "EXPO"
     ontology_full_name = "Ontology of Scientific Experiments (EXPO)"
+
+
+class PPlan(BaseOntology):
+    """
+    The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology [PROV-O]
+    created to represent the plans that guided the execution of scientific processes. P-Plan describes
+    how the plans are composed and their correspondence to provenance records that describe the execution itself.
+    """
+    ontology_id = "PPlan"
+    ontology_full_name = "Ontology for Provenance and Plans (P-Plan)"
