@@ -90,6 +90,10 @@ class SSN(BaseOntology):
     ontology_id = "SSN"
     ontology_full_name = "Semantic Sensor Network Ontology (SSN)"
 
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
 
 class OntoCAPE(BaseOntology):
     """

@@ -120,3 +120,12 @@ class GIST(BaseOntology):
     """
     ontology_id = "GIST"
     ontology_full_name = "GIST Upper Ontology (GIST)"
+
+
+class CCO(BaseOntology):
+    """
+    The Common Core Ontologies (CCO) is a widely-used suite of eleven ontologies that consist
+    of logically well-defined generic terms and relations among them reflecting entities across all domains of interest.
+    """
+    ontology_id = "CCO"
+    ontology_full_name = "Common Core Ontologies (CCO)"
