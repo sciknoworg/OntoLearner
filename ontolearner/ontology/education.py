@@ -2,7 +2,7 @@
 from ..base import BaseOntology
 
 
-class Bibframe(BaseOntology):
+class BIBFRAME(BaseOntology):
     """
     The Bibframe vocabulary consists of RDF classes and properties used for the description of
     items cataloged principally by libraries, but may also be used to describe items cataloged by museums and archives.

@@ -9,7 +9,7 @@ class LIFO(BaseOntology):
     purpose ontology that covers the common features associated with different
     organisms such as unicellular prokaryotes (e.g., E. coli) and multicellular organisms (e.g., human).
     """
-    ontology_id = "LifO"
+    ontology_id = "LIFO"
     ontology_full_name = "Life Ontology (LifO)"
 
 

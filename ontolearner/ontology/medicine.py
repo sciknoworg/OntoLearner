@@ -39,7 +39,7 @@ class PRoteinOntology(BaseOntology):
     in three major areas: proteins related by evolution; proteins produced from a given gene;
     and protein-containing complexes.
     """
-    ontology_id = "PRO"
+    ontology_id = "PRoteinOntology"
     ontology_full_name = "Protein Ontology (PRO)"
 
 

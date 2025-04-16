@@ -241,7 +241,7 @@ class SPWorkflow(BaseOntology):
     and material entities that participates in instructions (sample/specimen, organisms, reagents,
     instruments);  and iii) the order of execution of the instructions.
     """
-    ontology_id = "SP-Workflow"
+    ontology_id = "SPWorkflow"
     ontology_full_name = "SMART Protocols Ontology: Workflow Module (SP-Workflow)"
 
 
@@ -250,7 +250,7 @@ class SPDocument(BaseOntology):
     SMART Protocols Ontology: Document Module is an ontology designed
     to represent metadata used to report an experimental protocol.
     """
-    ontology_id = "SP-Document"
+    ontology_id = "SPDocument"
     ontology_full_name = "SMART Protocols Ontology: Document Module (SP-Document)"
 
 

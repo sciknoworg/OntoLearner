@@ -12,7 +12,7 @@ class ConferenceOntology(BaseOntology):
     ontology_full_name = "Conference Ontology (Conference)"
 
 
-class ICalendar(BaseOntology):
+class iCalendar(BaseOntology):
     """
     iCalendar is an Internet standard for exchanging calendar and scheduling data across different applications
     and platforms using a standardized text-based format (.ics). It enables interoperability for events, tasks,

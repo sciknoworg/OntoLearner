@@ -80,7 +80,7 @@ class PROV(BaseOntology):
     for different applications and domains. The PROV Document Overview describes the overall state of PROV,
     and should be read before other PROV documents.
     """
-    ontology_id = "PROV-O"
+    ontology_id = "PROV"
     ontology_full_name = "PROV Ontology (PROV-O)"
 
 

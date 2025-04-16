@@ -53,5 +53,5 @@ class OWLTime(BaseOntology):
     using either the conventional (Gregorian) calendar and clock, or using another temporal reference system
     such as Unix-time, geologic time, or different calendars.
     """
-    ontology_id = "OWL-Time"
+    ontology_id = "OWLTime"
     ontology_full_name = "Time Ontology in OWL (OWL-Time)"

@@ -366,7 +366,7 @@ class MOLTENSILE(BaseOntology):
     """
     An ontology for describing the tensile test process, made in the Materials Open Lab Project.
     """
-    ontology_id = "MOL_TENSILE"
+    ontology_id = "MOLTENSILE"
     ontology_full_name = "Matolab Tensile Test Ontology (MOL_TENSILE)"
 
 
@@ -408,7 +408,7 @@ class MOLBRINELL(BaseOntology):
     """
     An ontology for describing the Brinell hardness testing process, made in the Materials Open Lab Project.
     """
-    ontology_id = "MOL_BRINELL"
+    ontology_id = "MOLBRINELL"
     ontology_full_name = "MatoLab Brinell Test Ontology (MOL_BRINELL)"
 
 

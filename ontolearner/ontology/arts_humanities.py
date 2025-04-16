@@ -17,7 +17,7 @@ class MusicOntology(BaseOntology):
     properties fo describing music (i.e. artists, albums and tracks)
     on the Semantic Web.
     """
-    ontology_id = "Music"
+    ontology_id = "MusicOntology"
     ontology_full_name = "Music Ontology"
 
 
@@ -27,7 +27,7 @@ class TimelineOntology(BaseOntology):
     seen here as a way to identify a temporal backbone.
     A timeline may support a signal, a video, a score, a work, etc.
     """
-    ontology_id = "Timeline"
+    ontology_id = "TimelineOntology"
     ontology_full_name = "Timeline Ontology"
 
 
@@ -35,7 +35,7 @@ class ChordOntology(BaseOntology):
     """
     The Chord Ontology is an ontology for describing chords in musical pieces.
     """
-    ontology_id = "Chord"
+    ontology_id = "ChordOntology"
     ontology_full_name = "Chord Ontology"
 
 

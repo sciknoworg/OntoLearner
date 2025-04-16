@@ -124,6 +124,7 @@ class FIX(BaseOntology):
     """
     An ontology of physico-chemical methods and properties.
     """
+    ontology_id = "FIX"
     ontology_full_name = "FIX Ontology (FIX)"
 
 
@@ -164,5 +165,5 @@ class PSIMOD(BaseOntology):
     for classifying protein modifications either by the molecular structure of the modification,
     or by the amino acid residue that is modified.
     """
-    ontology_id = "PSI-MOD"
+    ontology_id = "PSIMOD"
     ontology_full_name = "Proteomics Standards Initiative (PSI) Protein Modifications Ontology (PSI-MOD)"
