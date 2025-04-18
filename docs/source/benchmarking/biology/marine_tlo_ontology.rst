@@ -14,7 +14,7 @@ adopted an iterative and incremental methodology where a new version is released
 months. For the implementation we use OWL 2, and to evaluate it we use a set of competency
 queries, formulating the domain requirements provided by the related communities.
 
-:Domain: Biology
+:Domain: Biology & Life Sciences
 :Category: Marine Science, Oceanography
 :Current Version: 1.0
 :Last Updated: 2017-01-05

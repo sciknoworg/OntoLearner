@@ -9,7 +9,7 @@ It was developed using text analysis for identifying ontology terms from a bioma
 systematically curated to represent the domain's lexicon. Topics covered were validated by members
 of the biomaterials research community.
 
-:Domain: Materials Science & Engineering
+:Domain: Medicine
 :Category: Materials Science
 :Current Version: 06/2021
 :Last Updated: Jun 2, 2021

@@ -8,7 +8,7 @@ with the purpose of providing the biomedical community with consistent,
 reusable and sustainable descriptions of human disease terms,
 phenotype characteristics and related medical vocabulary disease concepts.
 
-:Domain: Biology, Life Sciences
+:Domain: Medicine
 :Category: Human Diseases
 :Current Version:
 :Last Updated: 2024-12-18

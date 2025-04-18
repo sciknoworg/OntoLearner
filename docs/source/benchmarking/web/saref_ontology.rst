@@ -9,7 +9,7 @@ and among various activity sectors in the Internet of Things (IoT),
 thus contributing to the development of data spaces. SAREF is published as a set of open standards
 produced by ETSI Technical Committee Smart Machine-to-Machine communications (SmartM2M).
 
-:Domain: Internet of Things
+:Domain: Web & Internet
 :Category: interoperability
 :Current Version: 3.2.1
 :Last Updated: 2020-12-31

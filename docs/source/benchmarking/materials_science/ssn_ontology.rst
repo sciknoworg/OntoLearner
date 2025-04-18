@@ -31,19 +31,19 @@ Base Metrics
 
 Graph Metrics
 --------------
-    - **Total Nodes**: 196
-    - **Root Nodes**: 14
-    - **Leaf Nodes**: 52
-    - **Maximum Depth**:
-    - **Edges**: 426
+    - **Total Nodes**: 551
+    - **Root Nodes**: 22
+    - **Leaf Nodes**: 106
+    - **Maximum Depth**: 1
+    - **Edges**: 1643
 
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 2
-    - **Taxonomic Relations**: 514
+    - **Term Types**: 7
+    - **Taxonomic Relations**: 7585
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.40
+    - **Average Terms per Type**: 1.40
 
 Usage Example
 ------------------
@@ -53,7 +53,7 @@ Usage Example
 
    # Initialize and load ontology
    ssn = SSN()
-   ssn.load("path/to/ontology.owl")
+   ssn.load("path/to/ssn.ttl")
    # Extract datasets
    data = ssn.extract()
    # Access specific relations

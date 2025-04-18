@@ -7,8 +7,8 @@ QUDT.org exists to make the QUDT Ontologies, derived models and vocabularies ava
 Originally, QUDT models were developed for the NASA Exploration Initiatives Ontology Models (NExIOM) project,
 a Constellation Program initiative at the AMES Research Center (ARC).
 
-:Domain: Physics
-:Category: Materials Science and Engineering
+:Domain: Units and Measurements
+:Category: Physics
 :Current Version: 2.1
 :Last Updated: March 1, 2022
 :Producer: NASA Ames Research Center

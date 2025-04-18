@@ -8,7 +8,7 @@ including their bearers, the different types of emotions, moods, etc., their dif
 their facial and vocal expressions, and the role of emotions and affective phenomena
 in general in influencing human behavior.
 
-:Domain**: Psychology, Mental Health
+:Domain**: Medicine
 :Category: Emotion
 :Current Version:
 :Last Updated:

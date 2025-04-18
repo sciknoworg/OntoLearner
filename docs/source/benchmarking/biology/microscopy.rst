@@ -7,7 +7,7 @@ The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The
 and the interoperable connection of diverse data sources from the fields of microscopy and microanalysis. Consequently,
 the MO paves the way for new, adaptable data applications and analyses across various experiments and studies
 
-:Domain: Biology
+:Domain: Biology & Life Sciences
 :Category: Microscopy
 :Current Version: 2.0
 :Last Updated:

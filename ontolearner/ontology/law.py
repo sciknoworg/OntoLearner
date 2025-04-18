@@ -7,7 +7,6 @@ class CopyrightOnto(BaseOntology):
     automated (or computer-supported) copyright management through the whole content value chain,
     as it is shaped by copyright law. Therefore, it does not focus just on the last step,
     end-users permissions to consume content, like many rights languages and ontologies do.
-
-    This class processes Copyright Ontology using default behavior.
     """
+    ontology_id = "CopyrightOnto"
     ontology_full_name = "Copyright Ontology"

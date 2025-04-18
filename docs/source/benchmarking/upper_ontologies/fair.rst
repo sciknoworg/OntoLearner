@@ -5,7 +5,7 @@ Overview
 -----------------
 This is the formal vocabulary (ontology) describing the FAIR principles.
 
-:Domain: Basic
+:Domain: Upper Ontology
 :Category: Data, Metadata, Ontology
 :Current Version:
 :Last Updated:

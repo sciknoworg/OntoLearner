@@ -1,5 +1,6 @@
 import os
 from abc import ABC
+import concurrent.futures
 from typing import List, Tuple, Any, Set, Optional
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
 import networkx as nx
@@ -10,10 +11,17 @@ from .. import logger
 
 
 class BaseOntology(ABC):
-    """
-    Base class for ontology processing
-    """
+    """Base class for ontology processing"""
+    ontology_id: str = None
     ontology_full_name: str = None
+    domain: str = None
+    category: str = None
+    version: str = None
+    last_updated: str = None
+    creator: str = None
+    license: str = None
+    format: str = None
+    download_url = None
 
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
         """Initialize the ontology"""
@@ -23,11 +31,7 @@ class BaseOntology(ABC):
         self.base_dir = base_dir
 
     def load(self, path: str) -> None:
-        """
-         Load an ontology from a file and initialize its namespaces.
-
-        :param path: Path to the ontology file
-        """
+        """Load an ontology from a file and initialize its namespaces."""
         try:
             logger.info(f"Loading ontology from {path}")
             self.rdf_graph = Graph()
@@ -114,12 +118,15 @@ class BaseOntology(ABC):
     def extract(self) -> OntologyData:
         """
         Extract all information from all the three functions below.
-
-        :return: Dict containing term typings, taxonomies, and relations
         """
-        term_typings = self.extract_term_typings()
-        types, taxonomies = self.extract_type_taxonomies()
-        types_nt, relations, non_taxonomies = self.extract_type_non_taxonomic_relations()
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            term_typings_future = executor.submit(self.extract_term_typings)
+            taxonomies_future = executor.submit(self.extract_type_taxonomies)
+            non_taxonomic_future = executor.submit(self.extract_type_non_taxonomic_relations)
+
+            term_typings = term_typings_future.result()
+            types, taxonomies = taxonomies_future.result()
+            types_nt, relations, non_taxonomies = non_taxonomic_future.result()
 
         return OntologyData(
             term_typings=term_typings,
@@ -145,9 +152,6 @@ class BaseOntology(ABC):
         """
         Extracts the label for a given URI in the specified language from the RDF graph.
         If no valid label is found, returns None.
-
-        :param uri: URI of the entity to retrieve the label for.
-        :return: The label in the specified language, or None if no label found.
         """
         entity = URIRef(uri)
         labels = list(self.rdf_graph.objects(subject=entity, predicate=RDFS.label))
@@ -235,10 +239,8 @@ class BaseOntology(ABC):
     # ------------------- Non-Taxonomic Relations -------------------
     def extract_type_non_taxonomic_relations(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
         """
-         Extract non-taxonomic relations from the ontology.
-
-         :return: Types, relations, and validated relationship entries
-         """
+        Extract non-taxonomic relations from the ontology.
+        """
         types_set = set()
         relations_set = set()
         non_taxonomic_pairs: List[NonTaxonomicRelation] = []

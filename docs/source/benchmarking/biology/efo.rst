@@ -9,7 +9,7 @@ such as UBERON anatomy, ChEBI chemical compounds, and Cell Ontology. The scope o
 analysis and visualization of data handled by many groups at the EBI and as the core ontology for Open Targets.
 EFO is developed by the EMBL-EBI Samples, Phenotypes and Ontologies Team (SPOT).
 
-:Domain: Biology
+:Domain: Biology & Life Sciences
 :Category: Biology
 :Current Version: 3.75.0
 :Last Updated: 2025-02-17
@@ -27,19 +27,19 @@ Base Metrics
 
 Graph Metrics:
 ------------------
-    - **Nodes**:
-    - **Root Nodes**:
-    - **Leaf Nodes**:
-    - **Maximum Depth**:
-    - **Edges**:
+    - **Nodes**: 948012
+    - **Root Nodes**: 308011
+    - **Leaf Nodes**: 443836
+    - **Maximum Depth**: 1
+    - **Edges**: 2874304
 
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**:
-    - **Taxonomic Relations**:
-    - **Non-taxonomic Relations**:
-    - **Average Terms per Type**:
+    - **Term Types**: 0
+    - **Taxonomic Relations**: 280860
+    - **Non-taxonomic Relations**: 15975
+    - **Average Terms per Type**: 0
 
 Usage Example
 ------------------
@@ -49,7 +49,7 @@ Usage Example
 
    # Initialize and load ontology
    efo = EFO()
-   efo.load("path/to/ontology.owl")
+   efo.load("path/to/efo.owl")
    # Extract datasets
    data = efo.extract()
    # Access specific relations

@@ -6,7 +6,7 @@ Overview
 The Ontology for Biomedical Investigations (OBI) helps you communicate clearly about scientific investigations
 by defining more than 2500 terms for assays, devices, objectives, and more.
 
-:Domain: Biomedical Science
+:Domain: Medicine
 :Category: Healthcare
 :Current Version:
 :Last Updated: 2025-01-09

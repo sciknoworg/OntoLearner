@@ -5,7 +5,7 @@ Overview
 -----------------
 A structured controlled vocabulary for the source of an enzyme comprising tissues, cell lines, cell types and cell cultures.
 
-:Domain: Healthcare
+:Domain: Medicine
 :Category: Healthcare
 :Current Version: 2021-10-26
 :Last Updated: 2021-10-26

@@ -5,9 +5,8 @@ class Hydra(BaseOntology):
     """
     Hydra is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts
     commonly used in Web APIs it enables the creation of generic API clients.
-
-    This class processes the Hydra Ontology using default behavior.
     """
+    ontology_id = "Hydra"
     ontology_full_name = "Hydra Ontology"
 
 
@@ -19,4 +18,5 @@ class SAREF(BaseOntology):
     thus contributing to the development of data spaces. SAREF is published as a set of open standards
     produced by ETSI Technical Committee Smart Machine-to-Machine communications (SmartM2M).
     """
+    ontology_id = "SAREF"
     ontology_full_name = "Smart Applications REFerence ontology (SAREF)"

@@ -9,4 +9,5 @@ class OLLMWikipedia(BaseText2OntoDataset):
 
     This class processes OLLM Wikipedia using default textual processing methods.
     """
-    ontology_full_name: str = "OLLM Wikipedia Ontology"
+    dataset_id: str = "OLLMWikipedia"
+    dataset_full_name: str = "OLLM Wikipedia Ontology"
