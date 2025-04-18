@@ -1,18 +1,12 @@
-
-rdflib==7.1.1
-networkx==3.2.1
-
-seaborn==0.13.2
-numpy==1.26.4 # to update
-pandas==2.0.3 # to update
-
-# Plot and Data Visualization
-matplotlib==3.9.4
-
-# Progress Bar
-tqdm==4.67.1
-
-# Pydantic
-pydantic==2.10.5
-
-pathlib
+rdflib~=7.1.4
+networkx~=3.4.2
+jinja2~=3.1.6
+docutils~=0.21.2
+seaborn~=0.13.2
+numpy~=2.2.4
+pandas~=2.2.3
+matplotlib~=3.10.0
+tqdm~=4.67.1
+pydantic~=2.11.3
+pathlib~=1.0.1
+setuptools~=78.1.0

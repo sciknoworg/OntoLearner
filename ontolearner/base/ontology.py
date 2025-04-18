@@ -11,11 +11,17 @@ from .. import logger
 
 
 class BaseOntology(ABC):
-    """
-    Base class for ontology processing
-    """
+    """Base class for ontology processing"""
     ontology_id: str = None
     ontology_full_name: str = None
+    domain: str = None
+    category: str = None
+    version: str = None
+    last_updated: str = None
+    creator: str = None
+    license: str = None
+    format: str = None
+    download_url = None
 
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
         """Initialize the ontology"""
@@ -25,9 +31,7 @@ class BaseOntology(ABC):
         self.base_dir = base_dir
 
     def load(self, path: str) -> None:
-        """
-         Load an ontology from a file and initialize its namespaces.
-        """
+        """Load an ontology from a file and initialize its namespaces."""
         try:
             logger.info(f"Loading ontology from {path}")
             self.rdf_graph = Graph()
