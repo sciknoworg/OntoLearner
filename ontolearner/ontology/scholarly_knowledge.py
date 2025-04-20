@@ -5,6 +5,43 @@ from ..base.ontology import BaseOntology
 from ..data_structure import TaxonomicRelation
 
 
+class AIISO(BaseOntology):
+    """
+    The Academic Institution Internal Structure Ontology (AIISO) provides classes and properties
+    to describe the internal organizational structure of an academic institution. AIISO is designed to work
+    in partnership with Participation (http://purl.org/vocab/participation/schema),
+    FOAF (http://xmlns.com/foaf/0.1/) and aiiso-roles (http://purl.org/vocab/aiiso-roles/schema)
+    to describe the roles that people play within an institution.
+    """
+    ontology_id = "AIISO"
+    ontology_full_name = "Academic Institution Internal Structure Ontology (AIISO)"
+    domain = "Scholarly Knowledge"
+    category = "Academic Institution"
+    version = "1.0"
+    last_updated = "2008-05-14"
+    creator = "Open University"
+    license = "Creative Commons 4.0"
+    format = "RDF/XML"
+    download_url = "https://vocab.org/aiiso/"
+
+
+class CiTO(BaseOntology):
+    """
+    The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,
+    both factually and rhetorically.
+    """
+    ontology_id = "CiTO"
+    ontology_full_name = "Citation Typing Ontology (CiTO)"
+    domain = "Scholarly Knowledge"
+    category = "Scholarly Communication"
+    version = "2.8.1"
+    last_updated = "2018-02-16"
+    creator = "Silvio Peroni, David Shotton"
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL, CSV, NT"
+    download_url = "https://github.com/SPAROntologies/cito/tree/master/docs/current"
+
+
 class CSO(BaseOntology):
     """
     The Computer Science Ontology (CSO) is a large-scale ontology of research areas in computer science.
@@ -17,6 +54,14 @@ class CSO(BaseOntology):
     """
     ontology_id = "CSO"
     ontology_full_name = "Computer Science Ontology"
+    domain = "Scholarly Knowledge"
+    category = "Computer Science"
+    version = "3.4"
+    last_updated = None
+    creator = "Knowledge Media Institute, Open University"
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL, CSV, NT"
+    download_url = "https://cso.kmi.open.ac.uk/home"
     # CSO-specific URIs
     CSO_TOPIC = URIRef("http://cso.kmi.open.ac.uk/schema/cso#Topic")
     SUPER_TOPIC_OF = URIRef("http://cso.kmi.open.ac.uk/schema/cso#superTopicOf")
@@ -63,38 +108,23 @@ class CSO(BaseOntology):
         return label
 
 
-class EURIO(BaseOntology):
+class DataCite(BaseOntology):
     """
-    EURIO (EUropean Research Information Ontology) conceptualises, formally encodes and makes available in an open,
-    structured and machine-readable format data about resarch projects funded by the EU's
-    framework programmes for research and innovation.
+    The DataCite Ontology (DataCite) is an ontology that enables the metadata properties
+    of the DataCite Metadata Schema Specification (i.e., a list of metadata properties
+    for the accurate and consistent identification of a resource for citation
+    and retrieval purposes) to be described in RDF.
     """
-    ontology_id = "EURIO"
-    ontology_full_name = "EUropean Research Information Ontology"
-
-
-class NFDIcore(BaseOntology):
-    """
-    The National Research Data Infrastructure (NFDI) initiative has led to the formation of various consortia,
-    each focused on developing a research data infrastructure tailored to its specific domain.
-    To ensure interoperability across these consortia, the NFDIcore ontology has been developed
-    as a mid-level ontology for representing metadata related to NFDI resources, including individuals,
-    organizations, projects, data portals, and more.
-    """
-    ontology_id = "NFDIcore"
-    ontology_full_name = "National Research Data Infrastructure Ontology (NFDIcore)"
-
-
-class AIISO(BaseOntology):
-    """
-    The Academic Institution Internal Structure Ontology (AIISO) provides classes and properties
-    to describe the internal organizational structure of an academic institution. AIISO is designed to work
-    in partnership with Participation (http://purl.org/vocab/participation/schema),
-    FOAF (http://xmlns.com/foaf/0.1/) and aiiso-roles (http://purl.org/vocab/aiiso-roles/schema)
-    to describe the roles that people play within an institution.
-    """
-    ontology_id = "AIISO"
-    ontology_full_name = "Academic Institution Internal Structure Ontology (AIISO)"
+    ontology_id = "DataCite"
+    ontology_full_name = "DataCite"
+    domain = "Scholarly Knowledge"
+    category = "Metadata"
+    version = "3.1"
+    last_updated = "15/09/2022"
+    creator = "David Shotton, Silvio Peroni"
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL, CSV, NT"
+    download_url = "https://schema.datacite.org/"
 
 
 class DCAT(BaseOntology):
@@ -110,15 +140,82 @@ class DCAT(BaseOntology):
     """
     ontology_id = "DCAT"
     ontology_full_name = "Data Catalog Vocabulary (DCAT)"
+    domain = "Scholarly Knowledge"
+    category = "Data Catalogs"
+    version = "3.0"
+    last_updated = "22 August 2024"
+    creator = "Digital Enterprise Research Institute (DERI)"
+    license = "W3C Document License"
+    format = "RDF/XML, Turtle, JSON-LD"
+    download_url = "https://www.w3.org/TR/vocab-dcat-3/"
 
 
-class CiTO(BaseOntology):
+class DUO(BaseOntology):
     """
-    The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,
-    both factually and rhetorically.
+    DUO is an ontology which represent data use conditions.
     """
-    ontology_id = "CiTO"
-    ontology_full_name = "Citation Typing Ontology (CiTO)"
+    ontology_id = "DUO"
+    ontology_full_name = "Data Use Ontology (DUO)"
+    domain = "Scholarly Knowledge"
+    category = "Scholarly Knowledge"
+    version = "1.0"
+    last_updated = "2025-02-17"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/DUO/"
+
+
+class EURIO(BaseOntology):
+    """
+    EURIO (EUropean Research Information Ontology) conceptualises, formally encodes and makes available in an open,
+    structured and machine-readable format data about resarch projects funded by the EU's
+    framework programmes for research and innovation.
+    """
+    ontology_id = "EURIO"
+    ontology_full_name = "EUropean Research Information Ontology"
+    domain = "Scholarly Knowledge"
+    category = "Research Information"
+    version = "2.4"
+    last_updated = "2023-10-19"
+    creator = "Publications Office of the European Commission"
+    license = "Creative Commons 4.0"
+    format = "RDF"
+    download_url = "https://op.europa.eu/de/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/eurio"
+
+
+class EXPO(BaseOntology):
+    """
+    Formalise generic knowledge about scientific experimental design, methodology, and results representation.
+    """
+    ontology_id = "EXPO"
+    ontology_full_name = "Ontology of Scientific Experiments (EXPO)"
+    domain = "Scholarly Knowledge"
+    category = "Scientific Experiments"
+    version = None
+    last_updated = None
+    creator = None
+    license = "Academic Free License (AFL)"
+    format = "OWL"
+    download_url = "https://expo.sourceforge.net/"
+
+
+class FRAPO(BaseOntology):
+    """
+    The Funding, Research Administration and Projects Ontology (FRAPO) is an ontology
+    for describing the administrative information of research projects, e.g., grant applications,
+    funding bodies, project partners, etc.
+    """
+    ontology_id = "FRAPO"
+    ontology_full_name = "Funding, Research Administration and Projects Ontology (FRAPO)"
+    domain = "Scholarly Knowledge"
+    category = "Administration"
+    version = None
+    last_updated = None
+    creator = "David Shotton"
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL, NT"
+    download_url = "http://www.sparontologies.net/ontologies/frapo"
 
 
 class FRBRoo(BaseOntology):
@@ -131,70 +228,50 @@ class FRBRoo(BaseOntology):
     """
     ontology_id = "FRBRoo"
     ontology_full_name = "Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)"
+    domain = "Scholarly Knowledge"
+    category = "Bibliographic Records"
+    version = "2.4"
+    last_updated = "November 2015"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL, RDF"
+    download_url = "https://ontome.net/namespace/6#summary"
 
 
 class LexInfo(BaseOntology):
     """
     LexInfo allows us to associate linguistic information to elements in an ontology with respect
-    to any level of linguistic description and expressive. LexInfo has been implemented as an OWL ontology
+    to any level of linguistic description and expressivity. LexInfo has been implemented as an OWL ontology
     and is available together with an API.
     """
     ontology_id = "LexInfo"
     ontology_full_name = "LexInfo"
+    domain = "Scholarly Knowledge"
+    category = "Linguistics"
+    version = "3.0"
+    last_updated = None
+    creator = None
+    license = "Apache 2.0"
+    format = "RDF"
+    download_url = "https://lexinfo.net/index.html"
 
 
-class PreMOn(BaseOntology):
+class M4I(BaseOntology):
     """
-    The PreMOn Ontology is an extension of lemon (W3C Ontology Lexicon Community Group, 2015)
-    for representing predicate models and their mappings. The Core Module of the PreMOn Ontology
-    defines the main abstractions for modelling semantic classes with their semantic roles,
-    mappings between different predicate models, and annotations.
+    Metadata4Ing is an ontology for describing engineering results and their corresponding workflow.
+    The ontology is maintained by the Metadata4Ing working group, a subgroup of the Special Interest Group (SIG)
+    Metadata & Ontologies within NFDI4Ing.
     """
-    ontology_id = "PreMOn"
-    ontology_full_name = "Pre-Modern Ontology (PreMOn)"
-
-
-class DataCite(BaseOntology):
-    """
-    The DataCite Ontology (DataCite) is an ontology that enables the metadata properties
-    of the DataCite Metadata Schema Specification (i.e., a list of metadata properties
-    for the accurate and consistent identification of a resource for citation
-    and retrieval purposes) to be described in RDF.
-    """
-    ontology_id = "DataCite"
-    ontology_full_name = "DataCite"
-
-
-class DUO(BaseOntology):
-    """
-    DUO is an ontology which represent data use conditions.
-    """
-    ontology_id = "DUO"
-    ontology_full_name = "Data Use Ontology (DUO)"
-
-
-class OBOE(BaseOntology):
-    """
-    The Extensible Observation Ontology (OBOE) is a formal ontology for capturing the semantics
-    of scientific observation and measurement. The ontology supports researchers to add detailed semantic annotations
-    to scientific data, thereby clarifying the inherent meaning of scientific observations.
-    """
-    ontology_id = "OBOE"
-    ontology_full_name = "Extensible Observation Ontology (OBOE)"
-
-    def contains_imports(self) -> bool:
-        """Hook: Check if the ontology contains imports."""
-        return True
-
-
-class SWO(BaseOntology):
-    """
-    The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions,
-    provenance and associated data. It contains detailed information on licensing and formats
-    as well as software applications themselves, mainly (but not limited) to the bioinformatics community.
-    """
-    ontology_id = "SWO"
-    ontology_full_name = "Software Ontology (SWO)"
+    ontology_id = "M4I"
+    ontology_full_name = "Metadata for Engineering (M4I)"
+    domain = "Scholarly Knowledge"
+    category = "Materials Science"
+    version = "1.3.1"
+    last_updated = "2025-03-10"
+    creator = "Metadata4Ing Workgroup"
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL"
+    download_url = "https://git.rwth-aachen.de/nfdi4ing/metadata4ing/metadata4ing"
 
 
 class Metadata4Ing(BaseOntology):
@@ -207,16 +284,115 @@ class Metadata4Ing(BaseOntology):
     """
     ontology_id = "Metadata4Ing"
     ontology_full_name = "Metadata for Intelligent Engineering (Metadata4Ing)"
+    domain = "Scholarly Knowledge"
+    category = "Materials Science"
+    version = "1.3.0"
+    last_updated = "2024-09-20"
+    creator = "Metadata4Ing Workgroup"
+    license = "Creative Commons 4.0"
+    format = "TTL, OWL"
+    download_url = "https://nfdi4ing.pages.rwth-aachen.de/metadata4ing/metadata4ing/"
 
 
-class M4I(BaseOntology):
+class NFDIcore(BaseOntology):
     """
-    Metadata4Ing is an ontology for describing engineering results and their corresponding workflow.
-    The ontology is maintained by the Metadata4Ing working group, a subgroup of the Special Interest Group (SIG)
-    Metadata & Ontologies within NFDI4Ing.
+    The National Research Data Infrastructure (NFDI) initiative has led to the formation of various consortia,
+    each focused on developing a research data infrastructure tailored to its specific domain.
+    To ensure interoperability across these consortia, the NFDIcore ontology has been developed
+    as a mid-level ontology for representing metadata related to NFDI resources, including individuals,
+    organizations, projects, data portals, and more.
     """
-    ontology_id = "M4I"
-    ontology_full_name = "Metadata for Engineering (M4I)"
+    ontology_id = "NFDIcore"
+    ontology_full_name = "National Research Data Infrastructure Ontology (NFDIcore)"
+    domain = "Scholarly Knowledge"
+    category = "Research Data Infrastructure"
+    version = "3.0.0"
+    last_updated = "2025-02-07"
+    creator = "Jörg Waitelonis, Oleksandra Bruns, Tabea Tietz, Etienne Posthumus, Hossein Beygi Nasrabadi, Harald Sack"
+    license = "Creative Commons 1.0"
+    format = "RDF/XML, TTL, JSON-LD"
+    download_url = "https://ise-fizkarlsruhe.github.io/nfdicore/"
+
+
+class OBOE(BaseOntology):
+    """
+    The Extensible Observation Ontology (OBOE) is a formal ontology for capturing the semantics
+    of scientific observation and measurement. The ontology supports researchers to add detailed semantic annotations
+    to scientific data, thereby clarifying the inherent meaning of scientific observations.
+    """
+    ontology_id = "OBOE"
+    ontology_full_name = "Extensible Observation Ontology (OBOE)"
+    domain = "Scholarly Knowledge"
+    category = "Scientific Observation"
+    version = "1.2"
+    last_updated = None
+    creator = "The Regents of the University of California"
+    license = "Creative Commons 3.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/OBOE"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class OPMW(BaseOntology):
+    """
+    The Open Provenance Model for Workflows (OPMW) is an ontology for describing workflow traces
+    and their templates based on the Open Provenance Model. It has been designed as a profile for OPM,
+    extending and reusing OPM's core ontologies OPMV (OPM-Vocabulary) and OPMO (OPM-Ontology).
+    """
+    ontology_id = "OPMW"
+    ontology_full_name = "Open Provenance Model for Workflows (OPMW)"
+    domain = "Scholarly Knowledge"
+    category = "Workflows"
+    version = "3.1"
+    last_updated = "2014-12-22"
+    creator = "http://delicias.dia.fi.upm.es/members/DGarijo/#me, http://www.isi.edu/~gil/"
+    license = "Creative Commons Attribution 2.0 Generic (CC BY 2.0)"
+    format = "OWL"
+    download_url = "https://www.opmw.org/model/OPMW_20141222/"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
+
+
+class PPlan(BaseOntology):
+    """
+    The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology [PROV-O]
+    created to represent the plans that guided the execution of scientific processes. P-Plan describes
+    how the plans are composed and their correspondence to provenance records that describe the execution itself.
+    """
+    ontology_id = "PPlan"
+    ontology_full_name = "Ontology for Provenance and Plans (P-Plan)"
+    domain = "Scholarly Knowledge"
+    category = "Scholarly Knowledge"
+    version = "1.3"
+    last_updated = "2014-03-12"
+    creator = "http://www.isi.edu/~gil/"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://vocab.linkeddata.es/p-plan/index.html"
+
+
+class PreMOn(BaseOntology):
+    """
+    The PreMOn Ontology is an extension of lemon (W3C Ontology Lexicon Community Group, 2015)
+    for representing predicate models and their mappings. The Core Module of the PreMOn Ontology
+    defines the main abstractions for modelling semantic classes with their semantic roles,
+    mappings between different predicate models, and annotations.
+    """
+    ontology_id = "PreMOn"
+    ontology_full_name = "Pre-Modern Ontology (PreMOn)"
+    domain = "Scholarly Knowledge"
+    category = "Linguistics"
+    version = "2018a"
+    last_updated = "2018-02-15"
+    creator = "Francesco Corcoglioniti, Marco Rospocher <https://dkm.fbk.eu/rospocher>"
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL, CSV, NT"
+    download_url = "https://premon.fbk.eu/ontology/core#"
 
 
 class SEPIO(BaseOntology):
@@ -229,10 +405,35 @@ class SEPIO(BaseOntology):
     """
     ontology_id = "SEPIO"
     ontology_full_name = "Scientific Evidence and Provenance Information Ontology (SEPIO)"
+    domain = "Scholarly Knowledge"
+    category = "Scientific Evidence"
+    version = None
+    last_updated = "2015-02-23"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/SEPIO"
 
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
         return True
+
+
+class SPDocument(BaseOntology):
+    """
+    SMART Protocols Ontology: Document Module is an ontology designed
+    to represent metadata used to report an experimental protocol.
+    """
+    ontology_id = "SPDocument"
+    ontology_full_name = "SMART Protocols Ontology: Document Module (SP-Document)"
+    domain = "Scholarly Knowledge"
+    category = "Materials Science"
+    version = "4.0"
+    last_updated = "2013-07-01"
+    creator = "http://oxgiraldo.wordpress.com"
+    license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+    format = "OWL/XML"
+    download_url = "https://github.com/SMARTProtocols/SMART-Protocols"
 
 
 class SPWorkflow(BaseOntology):
@@ -243,15 +444,67 @@ class SPWorkflow(BaseOntology):
     """
     ontology_id = "SPWorkflow"
     ontology_full_name = "SMART Protocols Ontology: Workflow Module (SP-Workflow)"
+    domain = "Scholarly Knowledge"
+    category = "Workflows"
+    version = "4.0"
+    last_updated = "2013-07-01"
+    creator = "http://oxgiraldo.wordpress.com"
+    license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+    format = "OWL"
+    download_url = "https://github.com/SMARTProtocols/SMART-Protocols"
 
 
-class SPDocument(BaseOntology):
+class SWO(BaseOntology):
     """
-    SMART Protocols Ontology: Document Module is an ontology designed
-    to represent metadata used to report an experimental protocol.
+    The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions,
+    provenance and associated data. It contains detailed information on licensing and formats
+    as well as software applications themselves, mainly (but not limited) to the bioinformatics community.
     """
-    ontology_id = "SPDocument"
-    ontology_full_name = "SMART Protocols Ontology: Document Module (SP-Document)"
+    ontology_id = "SWO"
+    ontology_full_name = "Software Ontology (SWO)"
+    domain = "Scholarly Knowledge"
+    category = "Software"
+    version = "1.0"
+    last_updated = "2013-07-01"
+    creator = "Allyson Lister, Andy Brown, Duncan Hull, Helen Parkinson, James Malone, Jon Ison, Nandini Badarinarayan, Robert Stevens"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/SWO"
+
+
+class TribAIn(BaseOntology):
+    """
+    TribAIn is an ontology for the description of tribological experiments and their results.
+    It is designed to be used in the context of the TribAIn project, which aims to develop
+    a knowledge-based system for the design of tribological systems.
+    """
+    ontology_id = "TribAIn"
+    ontology_full_name = "Tribology and Artificial Intelligence Ontology (TribAIn)"
+    domain = "Scholarly Knowledge"
+    category = "Scholarly Knowledge"
+    version = None
+    last_updated = None
+    creator = "Patricia Kügler"
+    license = "Creative Commons 4.0"
+    format = "TTL"
+    download_url = "https://github.com/snow0815/tribAIn"
+
+
+class VOAF(BaseOntology):
+    """
+    The Vocabulary of a Friend (VOAF) is a vocabulary specification providing elements allowing the description
+    of vocabularies (RDFS vocabularies or OWL ontologies). It is based on Dublin Core and VOID.
+    """
+    ontology_id = "VOAF"
+    ontology_full_name = "Vocabulary of a Friend (VOAF)"
+    domain = "Scholarly Knowledge"
+    category = "Social Network"
+    version = "2.3"
+    last_updated = "2013-05-24"
+    creator = "Bernard Vatant"
+    license = "Creative Commons 3.0"
+    format = "RDF/XML"
+    download_url = "https://lov.linkeddata.es/vocommons/voaf/v2.3/"
 
 
 class WiLD(BaseOntology):
@@ -260,67 +513,11 @@ class WiLD(BaseOntology):
     """
     ontology_id = "WiLD"
     ontology_full_name = "Workflows in Linked Data (WiLD)"
-
-
-class OPMW(BaseOntology):
-    """
-    The Open Provenance Model for Workflows (OPMW) is an ontology for describing workflow traces
-    and their templates based on the Open Provenance Model. It has been designed as a profile for OPM,
-    extending and reusing OPM's core ontologies OPMV (OPM-Vocabulary) and OPMO (OPM-Ontology).
-    """
-    ontology_id = "OPMW"
-    ontology_full_name = "Open Provenance Model for Workflows (OPMW)"
-
-    def contains_imports(self) -> bool:
-        """Hook: Check if the ontology contains imports."""
-        return True
-
-
-class VOAF(BaseOntology):
-    """
-    The Vocabulary of a Friend (VOAF) is a vocabulary to describe vocabularies (meta-vocabulary), allowing to document
-    and publish information about vocabularies (RDFS vocabularies or OWL ontologies) on the Semantic Web.
-    """
-    ontology_id = "VOAF"
-    ontology_full_name = "Vocabulary of a Friend (VOAF) Ontology"
-
-
-class FRAPO(BaseOntology):
-    """
-    The Funding, Research Administration and Projects Ontology (FRAPO) is an ontology
-    for describing the administrative information of research projects, e.g., grant applications,
-    funding bodies, project partners, etc.
-    """
-    ontology_id = "FRAPO"
-    ontology_full_name = "Funding, Research Administration and Projects Ontology (FRAPO)"
-
-
-class EXPO(BaseOntology):
-    """
-    Formalise generic knowledge about scientific experimental design, methodology, and results representation.
-    """
-    ontology_id = "EXPO"
-    ontology_full_name = "Ontology of Scientific Experiments (EXPO)"
-
-
-class PPlan(BaseOntology):
-    """
-    The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology [PROV-O]
-    created to represent the plans that guided the execution of scientific processes. P-Plan describes
-    how the plans are composed and their correspondence to provenance records that describe the execution itself.
-    """
-    ontology_id = "PPlan"
-    ontology_full_name = "Ontology for Provenance and Plans (P-Plan)"
-
-
-class TribAIn(BaseOntology):
-    """
-    The tribAIn1 ontology aims to formalize knowledge gained from tribological experiments for reuse,
-    comparison and documentation. Therefore, the tribAin ontology provides concepts for the specification
-    of methodological background knowledge of experimental design, the documentation of the experimental setup
-    and the representation of different kinds of results (e.g. measurements series, analysis,
-    interpretation in natural-language). Using the EXPO2 (ontology of scientific experiments) as basis,
-    gives tribAIn a generic background about scientific experimental design, methodology and results representation.
-    """
-    ontology_id = "TribAIn"
-    ontology_full_name = "Tribological Artificial Intelligence (TribAIn) Ontology"
+    domain = "Scholarly Knowledge"
+    category = "Materials Science"
+    version = None
+    last_updated = "2020-06-10"
+    creator = "Tobias Käfer"
+    license = "DBpedia License"
+    format = "TTL"
+    download_url = "https://databus.dbpedia.org/ontologies/purl.org/wild--vocab/2020.06.10-210552"

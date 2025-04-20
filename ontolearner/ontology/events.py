@@ -10,6 +10,14 @@ class ConferenceOntology(BaseOntology):
     """
     ontology_id = "Conference"
     ontology_full_name = "Conference Ontology (Conference)"
+    domain = "Events"
+    category = "Conferences"
+    version = None
+    last_updated = "2016/04/30"
+    creator = "Aldo Gangemi et al."
+    license = "Creative Commons 3.0"
+    format = "OWL"
+    download_url = "http://www.scholarlydata.org/ontology/conference-ontology.owl"
 
 
 class iCalendar(BaseOntology):
@@ -23,6 +31,14 @@ class iCalendar(BaseOntology):
     """
     ontology_id = "iCalendar"
     ontology_full_name = "iCalendar Vocabulary (iCalendar)"
+    domain = "Events"
+    category = "Calendar and Scheduling"
+    version = "1.14"
+    last_updated = "2004/04/07"
+    creator = "Dan Connolly, W3C, Libby Miller, ASemantics"
+    license = "Open Publication License"
+    format = "RDF"
+    download_url = "https://www.w3.org/2002/12/cal/"
 
 
 class LODE(BaseOntology):
@@ -38,3 +54,11 @@ class LODE(BaseOntology):
     """
     ontology_id = "LODE"
     ontology_full_name = "Linking Open Descriptions of Events (LODE)"
+    domain = "Events"
+    category = "Events"
+    version = "2020-10-31"
+    last_updated = "2020-10-31"
+    creator = "Ryan Shaw"
+    license = "Creative Commons Attribution 3.0"
+    format = "RDF, TTL"
+    download_url = "https://linkedevents.org/ontology/"

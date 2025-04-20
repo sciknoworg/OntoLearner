@@ -1,6 +1,26 @@
 from ..base import BaseOntology
 
 
+class AFO(BaseOntology):
+    """
+    The AFO is an ontology suite that provides a standard vocabulary and semantic model
+    for the representation of laboratory analytical processes. The AFO suite is aligned at the upper layer
+    to the Basic Formal Ontology (BFO). The core domains modeled include, Equipment, Material, Process, and Results.
+    This artifact contains all triples of Allotrope Foundation Merged Without QUDT Ontology Suite (REC/2023/12)
+    together with triples inferred with HermiT.
+    """
+    ontology_id = "AFO"
+    ontology_full_name = "Allotrope Foundation Ontology (AFO)"
+    domain = "Chemistry"
+    category = "Laboratory Analytical Processes"
+    version = "2024-06"
+    last_updated = "2024-06-28"
+    creator = "Allotrope Foundation"
+    license = "CC BY 4.0"
+    format = "TTL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/AFO"
+
+
 class ChEBI(BaseOntology):
     """
     Chemical Entities of Biological Interest (ChEBI) is a dictionary of molecular entities
@@ -13,6 +33,56 @@ class ChEBI(BaseOntology):
     """
     ontology_id = "ChEBI"
     ontology_full_name = "Chemical Entities of Biological Interest (ChEBI)"
+    domain = "Chemistry"
+    category = "Chemical Entities"
+    version = "239"
+    last_updated = "01/01/2025"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL, OBO, JSON"
+    download_url = "https://www.ebi.ac.uk/chebi/"
+
+
+class CHEMINF(BaseOntology):
+    """
+    The chemical information ontology (cheminf) describes information entities about chemical entities.
+    It provides qualitative and quantitative attributes to richly describe chemicals.
+    Includes terms for the descriptors commonly used in cheminformatics software applications
+    and the algorithms which generate them.
+    """
+    ontology_id = "CHEMINF"
+    ontology_full_name = "Chemical Information Ontology (CHEMINF)"
+    domain = "Chemistry"
+    category = "Chemistry"
+    version = "2.1.0"
+    last_updated = None
+    creator = "Egon Willighagen, Nina Jeliazkova, Ola Spjuth, Valery Tkachenko"
+    license = "Creative Commons 1.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/CHEMINF"
+
+
+class CHIRO(BaseOntology):
+    """
+    CHEBI provides a distinct role hierarchy. Chemicals in the structural hierarchy are connected via a 'has role' relation.
+    CHIRO provides links from these roles to useful other classes in other ontologies.
+    This will allow direct connection between chemical structures (small molecules, drugs) and what they do.
+    This could be formalized using 'capable of', in the same way Uberon and the Cell Ontology link structures to processes.
+    """
+    ontology_id = "CHIRO"
+    ontology_full_name = "CHEBI Integrated Role Ontology (CHIRO)"
+    domain = "Chemistry"
+    category = "Chemicals, Roles"
+    version = "2015-11-23"
+    last_updated = "2015-11-23"
+    creator = None
+    license = "Creative Commons 1.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/chiro"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
 
 
 class ChMO(BaseOntology):
@@ -25,36 +95,63 @@ class ChMO(BaseOntology):
     """
     ontology_id = "ChMO"
     ontology_full_name = "Chemical Methods Ontology (ChMO)"
+    domain = "Chemistry"
+    category = "Chemistry"
+    version = None
+    last_updated = "2022-04-19"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL, CSV, NT"
+    download_url = "https://github.com/rsc-ontologies/rsc-cmo"
 
 
-class RXNO(BaseOntology):
+class FIX(BaseOntology):
     """
-    RXNO is the name reaction ontology. It contains more than 500 classes representing organic reactions
-    such as the Diels–Alder cyclization.
+    An ontology of physico-chemical methods and properties.
     """
-    ontology_id = "RXNO"
-    ontology_full_name = "Reaction Ontology (RXNO)"
+    ontology_id = "FIX"
+    ontology_full_name = "FIX Ontology (FIX)"
+    domain = "Chemistry"
+    category = "Chemicals, Properties"
+    version = "2020-04-13"
+    last_updated = "2020-04-13"
+    creator = None
+    license = None
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/FIX"
 
 
-class REX(BaseOntology):
+class MassSpectrometry(BaseOntology):
     """
-    REX is an ontology of physico-chemical processes, i.e. physico-chemical changes occurring in course of time.
-    REX includes both microscopic processes (involving molecular entities or subatomic particles) and macroscopic processes.
-    Some biochemical processes from Gene Ontology (GO Biological process) can be described as instances of REX.
+    A structured controlled vocabulary for the annotation of experiments concerned with proteomics mass spectrometry.
     """
-    ontology_id = "REX"
-    ontology_full_name = "Physico-chemical process ontology (REX)"
+    ontology_id = "MassSpectrometry"
+    ontology_full_name = "Mass Spectrometry Ontology (MassSpectrometry)"
+    domain = "Chemistry"
+    category = "Mass Spectrometry, Proteomics"
+    version = None
+    last_updated = "12:02:2025"
+    creator = "Andreas Bertsch"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/MS"
 
 
-class CHEMINF(BaseOntology):
+class MOP(BaseOntology):
     """
-    The chemical information ontology (cheminf) describes information entities about chemical entities.
-    It provides qualitative and quantitative attributes to richly describe chemicals.
-    Includes terms for the descriptors commonly used in cheminformatics software applications
-    and the algorithms which generate them.
+    MOP is the molecular process ontology. It contains the molecular processes that underlie
+    the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
     """
-    ontology_id = "CHEMINF"
-    ontology_full_name = "Chemical Information Ontology (CHEMINF)"
+    ontology_id = "MOP"
+    ontology_full_name = "Molecular Process Ontology (MOP)"
+    domain = "Chemistry"
+    category = "Chemistry, Molecular Biology"
+    version = "2022-05-11"
+    last_updated = "2022-05-11"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/MOP"
 
 
 class NMRCV(BaseOntology):
@@ -77,6 +174,14 @@ class NMRCV(BaseOntology):
     """
     ontology_id = "NMRCV"
     ontology_full_name = "Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV)"
+    domain = "Chemistry"
+    category = "Chemistry"
+    version = "1.1.0"
+    last_updated = "2017-10-19"
+    creator = "Daniel Schober"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/NMRCV"
 
 
 class OntoKin(BaseOntology):
@@ -85,30 +190,14 @@ class OntoKin(BaseOntology):
     """
     ontology_id = "OntoKin"
     ontology_full_name = "OntoKin"
-
-
-class MOP(BaseOntology):
-    """
-    MOP is the molecular process ontology. It contains the molecular processes that underlie
-    the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
-    """
-    ontology_id = "MOP"
-    ontology_full_name = "Molecular Process Ontology (MOP)"
-
-
-class CHIRO(BaseOntology):
-    """
-    CHEBI provides a distinct role hierarchy. Chemicals in the structural hierarchy are connected via a 'has role' relation.
-    CHIRO provides links from these roles to useful other classes in other ontologies.
-    This will allow direct connection between chemical structures (small molecules, drugs) and what they do.
-    This could be formalized using 'capable of', in the same way Uberon and the Cell Ontology link structures to processes.
-    """
-    ontology_id = "CHIRO"
-    ontology_full_name = "CHEBI Integrated Role Ontology (CHIRO)"
-
-    def contains_imports(self) -> bool:
-        """Hook: Check if the ontology contains imports."""
-        return True
+    domain = "Chemistry"
+    category = "Chemistry"
+    version = "1.0"
+    last_updated = "08 February 2022"
+    creator = "IEEE"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://www.ontologyportal.org/"
 
 
 class PROCO(BaseOntology):
@@ -118,43 +207,14 @@ class PROCO(BaseOntology):
     """
     ontology_id = "PROCO"
     ontology_full_name = "PROcess Chemistry Ontology (PROCO)"
-
-
-class FIX(BaseOntology):
-    """
-    An ontology of physico-chemical methods and properties.
-    """
-    ontology_id = "FIX"
-    ontology_full_name = "FIX Ontology (FIX)"
-
-
-class MassSpectrometry(BaseOntology):
-    """
-    A structured controlled vocabulary for the annotation of experiments concerned with proteomics mass spectrometry.
-    """
-    ontology_id = "MassSpectrometry"
-    ontology_full_name = "Mass Spectrometry Ontology (MassSpectrometry)"
-
-
-class AFO(BaseOntology):
-    """
-    The AFO is an ontology suite that provides a standard vocabulary and semantic model
-    for the representation of laboratory analytical processes. The AFO suite is aligned at the upper layer
-    to the Basic Formal Ontology (BFO). The core domains modeled include, Equipment, Material, Process, and Results.
-    This artifact contains all triples of Allotrope Foundation Merged Without QUDT Ontology Suite (REC/2023/12)
-    together with triples inferred with HermiT.
-    """
-    ontology_id = "AFO"
-    ontology_full_name = "Allotrope Foundation Ontology (AFO)"
-
-
-class VIBSO(BaseOntology):
-    """
-    The Vibration Spectroscopy Ontology defines technical terms with which research data produced
-    in vibrational spectroscopy experiments can be semantically enriched, made machine readable and FAIR.
-    """
-    ontology_id = "VIBSO"
-    ontology_full_name = "Vibrational Spectroscopy Ontology (VIBSO)"
+    domain = "Chemistry"
+    category = "Chemicals, Processes"
+    version = "04-14-2022"
+    last_updated = "04-14-2022"
+    creator = "Anna Dun, Wes A. Schafer, Yongqun \"Oliver\" He (YH), Zachary Dance"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://github.com/proco-ontology/PROCO"
 
 
 class PSIMOD(BaseOntology):
@@ -167,3 +227,63 @@ class PSIMOD(BaseOntology):
     """
     ontology_id = "PSIMOD"
     ontology_full_name = "Proteomics Standards Initiative (PSI) Protein Modifications Ontology (PSI-MOD)"
+    domain = "Chemistry"
+    category = "Protein Modifications"
+    version = "1.031.6"
+    last_updated = "2022-06-13"
+    creator = None
+    license = "Creative Commons Attribution 4.0"
+    format = "OWL"
+    download_url = "https://github.com/HUPO-PSI/psi-mod-CV"
+
+
+class REX(BaseOntology):
+    """
+    REX is an ontology of physico-chemical processes, i.e. physico-chemical changes occurring in course of time.
+    REX includes both microscopic processes (involving molecular entities or subatomic particles) and macroscopic processes.
+    Some biochemical processes from Gene Ontology (GO Biological process) can be described as instances of REX.
+    """
+    ontology_id = "REX"
+    ontology_full_name = "Physico-chemical process ontology (REX)"
+    domain = "Chemistry"
+    category = "Chemistry"
+    version = "1.0"
+    last_updated = "2025-03-11"
+    creator = "University of Warsaw"
+    license = "Creative Commons 4.0"
+    format = "OWL, RDF"
+    download_url = "https://terminology.tib.eu/ts/ontologies/REX"
+
+
+class RXNO(BaseOntology):
+    """
+    RXNO is the name reaction ontology. It contains more than 500 classes representing organic reactions
+    such as the Diels–Alder cyclization.
+    """
+    ontology_id = "RXNO"
+    ontology_full_name = "Reaction Ontology (RXNO)"
+    domain = "Chemistry"
+    category = "Chemistry"
+    version = None
+    last_updated = "2021-12-16"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://github.com/rsc-ontologies/rxno"
+
+
+class VIBSO(BaseOntology):
+    """
+    The Vibration Spectroscopy Ontology defines technical terms with which research data produced
+    in vibrational spectroscopy experiments can be semantically enriched, made machine readable and FAIR.
+    """
+    ontology_id = "VIBSO"
+    ontology_full_name = "Vibrational Spectroscopy Ontology (VIBSO)"
+    domain = "Chemistry"
+    category = "Spectroscopy"
+    version = "2024-09-23"
+    last_updated = "2024-09-23"
+    creator = "VIBSO Workgroup"
+    license = "Creative Commons Attribution 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/vibso"

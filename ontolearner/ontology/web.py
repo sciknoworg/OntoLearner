@@ -8,6 +8,14 @@ class Hydra(BaseOntology):
     """
     ontology_id = "Hydra"
     ontology_full_name = "Hydra Ontology"
+    domain = "Web & Internet"
+    category = "Web Development"
+    version = None
+    last_updated = "13 July 2021"
+    creator = "Hydra W3C Community Group"
+    license = "Creative Commons 4.0"
+    format = "JSON-LD, RDF, TTL"
+    download_url = "https://www.hydra-cg.com/spec/latest/core/#references"
 
 
 class SAREF(BaseOntology):
@@ -20,3 +28,11 @@ class SAREF(BaseOntology):
     """
     ontology_id = "SAREF"
     ontology_full_name = "Smart Applications REFerence ontology (SAREF)"
+    domain = "Web & Internet"
+    category = "interoperability"
+    version = "3.2.1"
+    last_updated = "2020-12-31"
+    creator = "ETSI Technical Committee Smart Machine-to-Machine communications (SmartM2M)"
+    license = None
+    format = "OWL, RDF/XML, TTL, JSON-LD"
+    download_url = "https://saref.etsi.org/core/v3.2.1/"

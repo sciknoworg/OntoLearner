@@ -10,3 +10,11 @@ class CopyrightOnto(BaseOntology):
     """
     ontology_id = "CopyrightOnto"
     ontology_full_name = "Copyright Ontology"
+    domain = "Law"
+    category = "Legal Knowledge"
+    version = None
+    last_updated = "2019-09"
+    creator = "Rhizomik"
+    license = "Creative Commons 4.0"
+    format = "RDF"
+    download_url = "https://rhizomik.net/ontologies/copyrightonto/"
