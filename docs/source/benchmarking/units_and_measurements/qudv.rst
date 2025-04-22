@@ -1,8 +1,8 @@
 Quantities, Units, Dimensions and Values (QUDV)
-===============================================
+==========================
 
 Overview
------------------
+--------
 The SysML QUDV (Quantities, Units, Dimensions and Values) modelLibrary is specified in a UML/SysML
 class/block diagram. In order to generalize its potential usage and alignment with other standardization efforts
 concerning quantities and units, it is of interest to verify that the QUDV model can also be represented
@@ -13,42 +13,54 @@ in the form of an ontology using a formal ontology definition language.
 :Current Version: 2009-10-30
 :Last Updated: 2009-10-30
 :Creator: SysML
-:License: `Apache License 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_
+:License: Apache License 2.0
 :Format: OWL
-:Download: `QUDV Homepage <https://www.omgwiki.org/OMGSysML/doku.php?id=sysml-qudv:qudv_owl>`_
-:Documentation: `QUDV Documentation <https://www.omgwiki.org/OMGSysML/doku.php?id=sysml-qudv:qudv_owl>`_
-
-Base Metrics
----------------
-    - Classes:
-    - Individuals:
-    - Properties:
+:Download: `Quantities, Units, Dimensions and Values (QUDV) Homepage <https://www.omgwiki.org/OMGSysML/doku.php?id=sysml-qudv:qudv_owl>`_
 
 Graph Metrics
-------------------
+-------------
     - **Total Nodes**: 186
+    - **Total Edges**: 491
     - **Root Nodes**: 4
     - **Leaf Nodes**: 20
+
+Knowledge coverage
+------------------
+    - Classes: 33
+    - Individuals: 0
+    - Properties: 25
+
+Hierarchical metrics
+--------------------
     - **Maximum Depth**: 21
-    - **Edges**: 491
+    - **Minimum Depth**: 0
+    - **Average Depth**: 8.44
+    - **Depth Variance**: 24.45
+
+Breadth metrics
+------------------
+    - **Maximum Breadth**: 17
+    - **Minimum Breadth**: 1
+    - **Average Breadth**: 8.00
+    - **Breadth Variance**: 22.18
 
 Dataset Statistics
--------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 9
     - **Non-taxonomic Relations**: 10
-    - **Average Terms per Type**: 0
+    - **Average Terms per Type**: 0.00
 
 Usage Example
-------------------
+-------------
 .. code-block:: python
 
     from ontolearner.ontology import QUDV
 
     # Initialize and load ontology
     ontology = QUDV()
-    ontology.load("path/to/qudv.ttl")
+    ontology.load("path/to/ontology.owl")
 
     # Extract datasets
     data = ontology.extract()

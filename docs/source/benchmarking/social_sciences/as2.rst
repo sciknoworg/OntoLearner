@@ -1,34 +1,47 @@
-Activity Streams 2.0 Vocabulary
-===============================
+Activity Streams 2.0 Ontology
+==========================
 
 Overview
------------------
-Activity Streams 2.0 (AS2) is a social data format. Its types represent activities, content objects,
-and actors like people or groups on the social web.
+--------
+The Activity Streams 2.0 ontology is a vocabulary for describing social activities and actions.
+It is based on the Activity Streams 2.0 specification and provides a set of classes and properties
+for describing activities on the web.
 
-:Domain: Social Media
+:Domain: Social Sciences
 :Category: Social
 :Current Version: 2.0
 :Last Updated: 23 May 2017
-:Producer:
+:Creator: None
 :License: W3C Document License
 :Format: OWL
-:Download: `AS2 Homepage <https://github.com/w3c/activitystreams?tab=License-1-ov-file#readme>`_
-:Documentation: `AS2 Documentation <https://github.com/w3c/activitystreams?tab=License-1-ov-file#readme>`_
+:Download: `Activity Streams 2.0 Ontology Homepage <https://github.com/w3c/activitystreams?tab=License-1-ov-file#readme>`_
 
-Base Metrics
----------------
-    - Classes: 10
-    - Individuals: 0
-    - Properties: 0
-
-Graph Metrics:
-------------------
+Graph Metrics
+-------------
     - **Total Nodes**: 426
+    - **Total Edges**: 945
     - **Root Nodes**: 0
     - **Leaf Nodes**: 120
+
+Knowledge coverage
+------------------
+    - Classes: 107
+    - Individuals: 1
+    - Properties: 69
+
+Hierarchical metrics
+--------------------
     - **Maximum Depth**: 0
-    - **Edges**: 945
+    - **Minimum Depth**: 0
+    - **Average Depth**: 0.00
+    - **Depth Variance**: 0.00
+
+Breadth metrics
+------------------
+    - **Maximum Breadth**: 0
+    - **Minimum Breadth**: 0
+    - **Average Breadth**: 0.00
+    - **Breadth Variance**: 0.00
 
 Dataset Statistics
 ------------------
@@ -36,20 +49,22 @@ Generated Benchmarks:
     - **Term Types**: 1
     - **Taxonomic Relations**: 59
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 0
+    - **Average Terms per Type**: 0.12
 
 Usage Example
-------------------
+-------------
 .. code-block:: python
 
-   from ontolearner.ontology import AS2
+    from ontolearner.ontology import AS2
 
-   # Initialize and load ontology
-   as2 = AS2()
-   as2.load("path/to/ontology.owl")
-   # Extract datasets
-   data = as2.extract()
-   # Access specific relations
-   term_types = data.term_typings
-   taxonomic_relations = data.type_taxonomies
-   non_taxonomic_relations = data.type_non_taxonomic_relations
+    # Initialize and load ontology
+    ontology = AS2()
+    ontology.load("path/to/ontology.owl")
+
+    # Extract datasets
+    data = ontology.extract()
+
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations

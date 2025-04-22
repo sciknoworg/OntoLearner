@@ -1,56 +1,69 @@
-The Software Ontology (SWO)
-============================
+Software Ontology (SWO)
+==========================
 
 Overview
------------------
+--------
 The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions,
 provenance and associated data. It contains detailed information on licensing and formats
 as well as software applications themselves, mainly (but not limited) to the bioinformatics community.
 
-:Domain: General
-:Category: General
+:Domain: Scholarly Knowledge
+:Category: Software
 :Current Version: 1.0
-:Last Updated: 	2023-03-05
-:Producer: Allyson Lister, Andy Brown, Duncan Hull, Helen Parkinson, James Malone, Jon Ison, Nandini Badarinarayan, Robert Stevens
+:Last Updated: 2013-07-01
+:Creator: Allyson Lister, Andy Brown, Duncan Hull, Helen Parkinson, James Malone, Jon Ison, Nandini Badarinarayan, Robert Stevens
 :License: Creative Commons 4.0
 :Format: OWL
-:Download: `SWO Homepage <https://terminology.tib.eu/ts/ontologies/SWO>`_
-:Documentation: `SWO Documentation <https://terminology.tib.eu/ts/ontologies/SWO>`_
+:Download: `Software Ontology (SWO) Homepage <https://terminology.tib.eu/ts/ontologies/SWO>`_
 
-Base Metrics
----------------
-    - Classes: 1971
-    - Properties: 240
-    - Individuals: 446
+Graph Metrics
+-------------
+    - **Total Nodes**: 11581
+    - **Total Edges**: 33570
+    - **Root Nodes**: 177
+    - **Leaf Nodes**: 3150
 
-Graph Metrics:
+Knowledge coverage
 ------------------
-    - **Nodes**: 12367
-    - **Root Nodes**: 176
-    - **Leaf Nodes**: 8223
-    - **Maximum Depth**: 17
-    - **Edges**: 36215
+    - Classes: 2746
+    - Individuals: 443
+    - Properties: 165
+
+Hierarchical metrics
+--------------------
+    - **Maximum Depth**: 13
+    - **Minimum Depth**: 0
+    - **Average Depth**: 3.07
+    - **Depth Variance**: 5.30
+
+Breadth metrics
+------------------
+    - **Maximum Breadth**: 392
+    - **Minimum Breadth**: 1
+    - **Average Breadth**: 132.93
+    - **Breadth Variance**: 17222.21
 
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 0
-    - **Taxonomic Relations**: 9748
-    - **Non-taxonomic Relations**: 1314
-    - **Average Terms per Type**: 0
+    - **Term Types**: 444
+    - **Taxonomic Relations**: 20936
+    - **Non-taxonomic Relations**: 699
+    - **Average Terms per Type**: 10.33
 
 Usage Example
------------------
+-------------
 .. code-block:: python
 
-    from ontolearner.ontology.swo import SWO
+    from ontolearner.ontology import SWO
 
     # Initialize and load ontology
-    swo = SWO()
-    # Load ontology from file
-    swo.load("path/to/ontology.owl")
+    ontology = SWO()
+    ontology.load("path/to/ontology.owl")
+
     # Extract datasets
-    data = swo.extract()
+    data = ontology.extract()
+
     # Access specific relations
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies

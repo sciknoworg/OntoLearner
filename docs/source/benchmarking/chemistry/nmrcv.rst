@@ -1,8 +1,8 @@
-The Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV)
-============================================================
+Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV)
+==========================
 
 Overview
------------------
+--------
 This artefact is an MSI-approved controlled vocabulary primarily developed under COSMOS EU and PhenoMeNal EU governance.
 The nmrCV is supporting the nmrML XML format with standardized terms. nmrML is a vendor agnostic open access NMR raw data standard.
 Its primaly role is analogous to the mzCV for the PSI-approved mzML XML format. It uses BFO2.0 as its Top level.
@@ -23,25 +23,37 @@ in a specific location of the data model.
 :Category: Chemistry
 :Current Version: 1.1.0
 :Last Updated: 2017-10-19
-:Producer: Daniel Schober
+:Creator: Daniel Schober
 :License: Creative Commons 4.0
 :Format: OWL
-:Download: `nmrCV Homepage <https://terminology.tib.eu/ts/ontologies/NMRCV>`_
-:Documentation: `nmrCV Documentation <https://terminology.tib.eu/ts/ontologies/NMRCV>`_
+:Download: `Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV) Homepage <https://terminology.tib.eu/ts/ontologies/NMRCV>`_
 
-Base Metrics
----------------
-    - Classes: 792
-    - Properties: 46
-    - Individuals: 0
-
-Graph Metrics:
-------------------
-    - **Nodes**: 1596
+Graph Metrics
+-------------
+    - **Total Nodes**: 1596
+    - **Total Edges**: 3951
     - **Root Nodes**: 184
     - **Leaf Nodes**: 662
-    - **Maximum Depth**: 8
-    - **Edges**: 3951
+
+Knowledge coverage
+------------------
+    - Classes: 757
+    - Individuals: 0
+    - Properties: 0
+
+Hierarchical metrics
+--------------------
+    - **Maximum Depth**: 5
+    - **Minimum Depth**: 0
+    - **Average Depth**: 1.01
+    - **Depth Variance**: 0.72
+
+Breadth metrics
+------------------
+    - **Maximum Breadth**: 273
+    - **Minimum Breadth**: 2
+    - **Average Breadth**: 103.83
+    - **Breadth Variance**: 10836.47
 
 Dataset Statistics
 ------------------
@@ -49,20 +61,21 @@ Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 792
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0
+    - **Average Terms per Type**: 0.00
 
 Usage Example
------------------
+-------------
 .. code-block:: python
 
-    from ontolearner.ontology.nmrcv import NMRCV
+    from ontolearner.ontology import NMRCV
 
     # Initialize and load ontology
-    nmrcv = NMRCV()
-    # Load ontology from file
-    nmrcv.load("path/to/ontology.owl")
+    ontology = NMRCV()
+    ontology.load("path/to/ontology.owl")
+
     # Extract datasets
-    data = nmrcv.extract()
+    data = ontology.extract()
+
     # Access specific relations
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
