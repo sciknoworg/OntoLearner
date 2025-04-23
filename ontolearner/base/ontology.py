@@ -201,7 +201,7 @@ class BaseOntology(ABC):
                 term = self.get_label(uri=str(instance))
                 types = self.get_label(uri=str(class_uri))
                 if term and types:
-                    term_typings.append(TermTyping(term=term, types=list(types)))
+                    term_typings.append(TermTyping(term=term, types=[types]))
         logger.debug(f"Extracted {len(term_typings)} term typings for the Ontology.")
         return term_typings
 
