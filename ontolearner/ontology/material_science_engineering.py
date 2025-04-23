@@ -499,6 +499,36 @@ class MatVoc(BaseOntology):
     download_url = "https://stream-project.github.io/#overv"
 
 
+class MatWerk(BaseOntology):
+    """
+    NFDI-MatWerk aims to establish a digital infrastructure for Materials Science and Engineering (MSE),
+    fostering improved data sharing and collaboration. This repository provides comprehensive documentation
+    for NFDI MatWerk Ontology (MWO) v3.0, a foundational framework designed to structure research data
+    and enhance interoperability within the MSE community. To ensure compliance with top-level ontology standards,
+    MWO v3.0 is aligned with the Basic Formal Ontology (BFO) and incorporates the modular approach
+    of the NFDIcore mid-level ontology, enriching metadata through standardized classes and properties.
+    The MWO addresses key aspects of MSE research data, including the NFDI-MatWerk community structure,
+    covering task areas, infrastructure use cases, projects, researchers, and organizations.
+    It also describes essential NFDI resources, such as software, workflows, ontologies, publications,
+    datasets, metadata schemas, instruments, facilities, and educational materials. Additionally,
+    MWO represents NFDI-MatWerk services, academic events, courses, and international collaborations.
+    As the foundation for the MSE Knowledge Graph, MWO facilitates efficient data integration and retrieval,
+    promoting collaboration and knowledge representation across MSE domains. This digital transformation
+    enhances data discoverability, reusability, and accelerates scientific exchange, innovation,
+    and discoveries by optimizing research data management and accessibility.
+    """
+    ontology_id = "MatWerk"
+    ontology_full_name = "NFDI MatWerk Ontology (MatWerk)"
+    domain = "Materials Science & Engineering"
+    category = "Research Data, Interoperability"
+    version = "3.0.0"
+    last_updated = "2025-03-01"
+    creator = "Hossein Beygi Nasrabadi, Jörg Waitelonis, Ebrahim Norouzi, Kostiantyn Hubaiev, Harald Sack"
+    license = "Creative Commons 1.0"
+    format = "TTL"
+    download_url = "https://github.com/ISE-FIZKarlsruhe/mwo?tab=readme-ov-file"
+
+
 class MDO(BaseOntology):
     """
     MDO is an ontology for materials design field, representing the domain knowledge specifically related
