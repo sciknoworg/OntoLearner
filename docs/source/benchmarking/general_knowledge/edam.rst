@@ -1,56 +1,69 @@
 The ontology of data analysis and management (EDAM)
-===================================================
+==========================
 
 Overview
------------------
+--------
 EDAM is a domain ontology of data analysis and data management in bio- and other sciences, and science-based applications.
 It comprises concepts related to analysis, modelling, optimisation, and data life cycle. Targetting usability by diverse users,
 the structure of EDAM is relatively simple, divided into 4 main sections: Topic, Operation, Data (incl. Identifier), and Format.
 
-:Domain: General
+:Domain: General Knowledge
 :Category: General
 :Current Version: 1.25-20240924T0027Z-unstable(1.26)
 :Last Updated: 24.09.2024
-:Producer: Federico Bianchini, Hervé Ménager, Jon Ison, Matúš Kalaš
+:Creator: Federico Bianchini, Hervé Ménager, Jon Ison, Matúš Kalaš
 :License: Creative Commons 4.0
 :Format: owl
-:Download:`EDAM Ontology <https://terminology.tib.eu/ts/ontologies/edam>`_
-:Documentation: `EDAM Documentation <https://terminology.tib.eu/ts/ontologies/edam>`_
+:Download: `The ontology of data analysis and management (EDAM) Homepage <https://terminology.tib.eu/ts/ontologies/edam>`_
 
-Base Metrics
----------------
-    - Classes: 3511
-    - Properties: 75
-    - Individuals: 0
-
-Graph Metrics:
-------------------
-    - **Nodes**: 12367
+Graph Metrics
+-------------
+    - **Total Nodes**: 12367
+    - **Total Edges**: 36215
     - **Root Nodes**: 176
     - **Leaf Nodes**: 8223
-    - **Maximum Depth**: 17
-    - **Edges**: 36215
+
+Knowledge coverage
+------------------
+    - Classes: 3513
+    - Individuals: 0
+    - Properties: 12
+
+Hierarchical metrics
+--------------------
+    - **Maximum Depth**: 10
+    - **Minimum Depth**: 0
+    - **Average Depth**: 2.75
+    - **Depth Variance**: 4.24
+
+Breadth metrics
+------------------
+    - **Maximum Breadth**: 635
+    - **Minimum Breadth**: 5
+    - **Average Breadth**: 196.55
+    - **Breadth Variance**: 31795.52
 
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    * **Term Types**: 0
-    * **Taxonomic Relations**: 9748
-    * **Non-taxonomic Relations**: 1314
-    * **Average Terms per Type**: 0
+    - **Term Types**: 0
+    - **Taxonomic Relations**: 9748
+    - **Non-taxonomic Relations**: 1314
+    - **Average Terms per Type**: 0.00
 
 Usage Example
------------------
+-------------
 .. code-block:: python
 
-    from ontolearner.ontology.edam import EdamOntology
+    from ontolearner.ontology import EDAM
 
     # Initialize and load ontology
-    edam = EdamOntology()
-    # Load ontology from file
-    edam.load("path/to/edam-ontology.owl")
+    ontology = EDAM()
+    ontology.load("path/to/ontology.owl")
+
     # Extract datasets
-    data = edam.extract()
+    data = ontology.extract()
+
     # Access specific relations
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies

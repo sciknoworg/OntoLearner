@@ -1,8 +1,8 @@
-Animal Trait Ontology for Livestock
-====================================
+Animal Trait Ontology for Livestock (ATOL)
+==========================
 
 Overview
------------------
+--------
 ATOL (Animal Trait Ontology for Livestock) is an ontology of characteristics defining phenotypes of livestock
 in their environment (EOL). ATOL aims to:
 - provide a reference ontology of phenotypic traits of farm animals for the international scientific and educational
@@ -13,50 +13,64 @@ semantic analysis and modeling;
 - make the ATOL ontology as operational as possible and closely related to measurement techniques;
 - structure the ontology in relation to animal production.
 
-:Domain: Animal Science
-:Category: Livestock
+:Domain: Livestock
+:Category: Animal Science
 :Current Version: 6.0
 :Last Updated: May 11, 2020
-:Producer: INRAE, France
+:Creator: INRAE, France
 :License: Creative Commons 4.0
 :Format: OWL, TTL, CSV, NT
-:Download: `ATOL Homepage <https://bioportal.bioontology.org/ontologies/ATOL>`_
-:Documentation: `ATOL Documentation <https://bioportal.bioontology.org/ontologies/ATOL>`_
+:Download: `Animal Trait Ontology for Livestock (ATOL) Homepage <https://bioportal.bioontology.org/ontologies/ATOL>`_
 
-Base Metrics
----------------
-    - Classes: 2,352
+Graph Metrics
+-------------
+    - **Total Nodes**: 8220
+    - **Total Edges**: 52090
+    - **Root Nodes**: 12
+    - **Leaf Nodes**: 5868
+
+Knowledge coverage
+------------------
+    - Classes: 2352
     - Individuals: 0
     - Properties: 0
 
-Graph Metrics
+Hierarchical metrics
+--------------------
+    - **Maximum Depth**: 7
+    - **Minimum Depth**: 0
+    - **Average Depth**: 2.30
+    - **Depth Variance**: 2.58
+
+Breadth metrics
 ------------------
-    - **Total Nodes**: 8,220
-    - **Root Nodes**: 12
-    - **Leaf Nodes**: 5,868
-    - **Maximum Depth**: 12
-    - **Edges**: 52,090
+    - **Maximum Breadth**: 38
+    - **Minimum Breadth**: 2
+    - **Average Breadth**: 16.12
+    - **Breadth Variance**: 137.86
 
 Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 2,628
+    - **Taxonomic Relations**: 2628
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0
+    - **Average Terms per Type**: 0.00
 
 Usage Example
-------------------
+-------------
 .. code-block:: python
 
-   from ontolearner.ontology import ATOL
+    from ontolearner.ontology import ATOL
 
-   # Initialize and load ontology
-   atol = ATOL()
-   atol.load("path/to/ontology.owl")
-   # Extract datasets
-   data = atol.extract()
-   # Access specific relations
-   term_types = data.term_typings
-   taxonomic_relations = data.type_taxonomies
-   non_taxonomic_relations = data.non_type_taxonomies
+    # Initialize and load ontology
+    ontology = ATOL()
+    ontology.load("path/to/ontology.owl")
+
+    # Extract datasets
+    data = ontology.extract()
+
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations

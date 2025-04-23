@@ -3,16 +3,40 @@ from rdflib import URIRef, RDF, RDFS
 from ..base import BaseOntology
 
 
+class CCO(BaseOntology):
+    """
+    The Common Core Ontologies (CCO) is a widely-used suite of eleven ontologies that consist
+    of logically well-defined generic terms and relations among them reflecting entities across all domains of interest.
+    """
+    ontology_id = "CCO"
+    ontology_full_name = "Common Core Ontologies (CCO)"
+    domain = "General Knowledge"
+    category = "General"
+    version = "2.0"
+    last_updated = "2024-11-06"
+    creator = None
+    license = "BSD-3-Clause license"
+    format = "TTL"
+    download_url = "https://github.com/CommonCoreOntology/CommonCoreOntologies"
+
+
 class DBpedia(BaseOntology):
     """
     The DBpedia ontology is generated from the manually created specifications in the DBpedia Mappings Wiki.
     Each release of this ontology corresponds to a new release of the DBpedia dataset, which contains
     instance data extracted from various language versions of Wikipedia. The DBpedia ontology has evolved
     into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
-
-    This class processes DBpedia Ontology using default behavior.
     """
+    ontology_id = "DBpedia"
     ontology_full_name = "DBpedia Ontology"
+    domain = "General Knowledge"
+    category = "Knowledge Graph"
+    version = None
+    last_updated = "2008-11-17"
+    creator = "DBpedia Maintainers and Contributors"
+    license = "Creative Commons 3.0"
+    format = "OWL"
+    download_url = "https://wiki.dbpedia.org/"
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
         # Include datatype properties and validate domain/range
@@ -34,46 +58,70 @@ class DublinCore(BaseOntology):
     Dublin Core Metadata may be used for multiple purposes, from simple resource description,
     to combining metadata vocabularies of different metadata standards, to providing interoperability
     for metadata vocabularies in the Linked Data cloud and Semantic Web implementations.
-
-    This class processes Dublin Core Ontology using default behavior.
     """
-    ontology_full_name = "Dublin Core Ontology"
+    ontology_id = "DublinCore"
+    ontology_full_name = "Dublin Core Vocabulary (DublinCore)"
+    domain = "General Knowledge"
+    category = "Metadata"
+    version = "1.1"
+    last_updated = "February 17, 2017"
+    creator = "The Dublin Core Metadata Initiative"
+    license = "Public Domain"
+    format = "RDF, OWL, TTL, CSV, NT"
+    download_url = "https://bioportal.bioontology.org/ontologies/DC"
 
 
-class YAGO(BaseOntology):
+class EDAM(BaseOntology):
     """
-    YAGO is a large semantic knowledge base, derived from Wikipedia, WordNet, and GeoNames.
-    It contains knowledge about more than 10 million entities and contains more than 120 million facts about these entities.
-    YAGO is special in several ways: It has a clean taxonomy, which was manually built,
-    and it is the only knowledge base with such a large coverage,
-    the clean taxonomy, and the extraction from Wikipedia, WordNet, and GeoNames.
-
-    This class processes YAGO Ontology using default behavior.
+    EDAM is a domain ontology of data analysis and data management in bio- and other sciences, and science-based applications.
+    It comprises concepts related to analysis, modelling, optimisation, and data life cycle. Targetting usability by diverse users,
+    the structure of EDAM is relatively simple, divided into 4 main sections: Topic, Operation, Data (incl. Identifier), and Format.
     """
-    ontology_full_name = "YAGO Ontology"
+    ontology_id = "EDAM"
+    ontology_full_name = "The ontology of data analysis and management (EDAM)"
+    domain = "General Knowledge"
+    category = "General"
+    version = "1.25-20240924T0027Z-unstable(1.26)"
+    last_updated = "24.09.2024"
+    creator = "Federico Bianchini, Hervé Ménager, Jon Ison, Matúš Kalaš"
+    license = "Creative Commons 4.0"
+    format = "owl"
+    download_url = "https://terminology.tib.eu/ts/ontologies/edam"
 
 
-class SchemaOrg(BaseOntology):
+class GIST(BaseOntology):
     """
-    Schema.org is a collaborative, community activity with a mission to create,
-    maintain, and promote schemas for structured data on the Internet, on web pages, in email messages, and beyond.
-
-    This class processes Schema.org Ontology using default behavior.
+    Gist is Semantic Arts' minimalist upper ontology for the enterprise.
+    It is designed to have the maximum coverage of typical business ontology concepts
+    with the fewest number of primitives and the least amount of ambiguity.
     """
-    ontology_full_name = "Schema.org Ontology"
+    ontology_id = "GIST"
+    ontology_full_name = "GIST Upper Ontology (GIST)"
+    domain = "General Knowledge"
+    category = "Upper Ontology"
+    version = "12.1.0"
+    last_updated = "2024-Feb-27"
+    creator = "Semantic Arts"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://semanticarts.com/gist"
 
 
-class UMBEL(BaseOntology):
+class IAO(BaseOntology):
     """
-    UMBEL is the Upper Mapping and Binding Exchange Layer, designed to help content interoperate on the Web.
-    UMBEL provides two valuable functions: First, it is a broad, general reference structure of 34,000 concepts,
-    which provides a scaffolding to link and interoperate other datasets and domain vocabularies.
-    Second, it is a base vocabulary for the construction of other concept-based domain ontologies,
-    also designed for interoperation.
-
-    This class processes UMBEL Ontology using default behavior.
+    The Information Artifact Ontology (IAO) is an ontology of information entities,
+    originally driven by work by the OBI digital entity and realizable information entity branch.
     """
-    ontology_full_name = "Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary"
+    ontology_id = "IAO"
+    ontology_full_name = "Information Artifact Ontology (IAO)"
+    domain = "General Knowledge"
+    category = "Information, Data, Knowledge"
+    version = None
+    last_updated = "2022-11-07"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/IAO"
 
 
 class PROV(BaseOntology):
@@ -84,49 +132,88 @@ class PROV(BaseOntology):
     It can also be specialized to create new classes and properties to model provenance information
     for different applications and domains. The PROV Document Overview describes the overall state of PROV,
     and should be read before other PROV documents.
-
-    This class processes PROV Ontology using default behavior.
     """
-    ontology_full_name = "PROV Ontology"
-
-
-class EDAM(BaseOntology):
-    """
-    EDAM is a domain ontology of data analysis and data management in bio- and other sciences, and science-based applications.
-    It comprises concepts related to analysis, modelling, optimisation, and data life cycle. Targetting usability by diverse users,
-    the structure of EDAM is relatively simple, divided into 4 main sections: Topic, Operation, Data (incl. Identifier), and Format.
-
-    This class processes EDAM Ontology using default behavior.
-    """
-    ontology_full_name = "The ontology of data analysis and management (EDAM)"
+    ontology_id = "PROV"
+    ontology_full_name = "PROV Ontology (PROV-O)"
+    domain = "General Knowledge"
+    category = "General"
+    version = "2013-04-30"
+    last_updated = "2013-04-30"
+    creator = None
+    license = "W3C Software License"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/PROV"
 
 
 class RO(BaseOntology):
     """
     The Relations Ontology (RO) is a collection of OWL relations (ObjectProperties) intended for use
     across a wide variety of biological ontologies.
-
-    This class processes Relation Ontology using default behavior.
     """
+    ontology_id = "RO"
     ontology_full_name = "Relation Ontology (RO)"
+    domain = "General Knowledge"
+    category = "Relations"
+    version = "2024-04-24"
+    last_updated = "2024-04-24"
+    creator = None
+    license = "CC0"
+    format = "OWL"
+    download_url = "http://purl.obolibrary.org/obo/ro.owl"
 
 
-class IAO(BaseOntology):
+class SchemaOrg(BaseOntology):
     """
-    The Information Artifact Ontology (IAO) is an ontology of information entities,
-    originally driven by work by the OBI digital entity and realizable information entity branch.
-
-    This class processes Information Artifact Ontology using default behavior.
+    Schema.org is a collaborative, community activity with a mission to create,
+    maintain, and promote schemas for structured data on the Internet, on web pages, in email messages, and beyond.
     """
-    ontology_full_name = "Information Artifact Ontology (IAO)"
+    ontology_id = "SchemaOrg"
+    ontology_full_name = "Schema.org Ontology (SchemaOrg)"
+    domain = "General Knowledge"
+    category = "Web Development"
+    version = "28.1"
+    last_updated = "2024-11-22"
+    creator = "Schema.org Community"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://github.com/schemaorg/schemaorg/blob/main/data/releases/28.1/schemaorg.owl"
 
 
-class GIST(BaseOntology):
+class UMBEL(BaseOntology):
     """
-    Gist is Semantic Arts' minimalist upper ontology for the enterprise.
-    It is designed to have the maximum coverage of typical business ontology concepts
-    with the fewest number of primitives and the least amount of ambiguity.
-
-    This class processes GIST ontology using default behavior.
+    UMBEL is the Upper Mapping and Binding Exchange Layer, designed to help content interoperate on the Web.
+    UMBEL provides two valuable functions: First, it is a broad, general reference structure of 34,000 concepts,
+    which provides a scaffolding to link and interoperate other datasets and domain vocabularies.
+    Second, it is a base vocabulary for the construction of other concept-based domain ontologies,
+    also designed for interoperation.
     """
-    ontology_full_name = "GIST Upper Ontology"
+    ontology_id = "UMBEL"
+    ontology_full_name = "Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary"
+    domain = "General Knowledge"
+    category = "Web Development"
+    version = "1.50"
+    last_updated = "May 10, 2016"
+    creator = None
+    license = None
+    format = "n3"
+    download_url = "https://github.com/structureddynamics/UMBEL/tree/master/Ontology"
+
+
+class YAGO(BaseOntology):
+    """
+    YAGO is a large semantic knowledge base, derived from Wikipedia, WordNet, and GeoNames.
+    It contains knowledge about more than 10 million entities and contains more than 120 million facts about these entities.
+    YAGO is special in several ways: It has a clean taxonomy, which was manually built,
+    and it is the only knowledge base with such a large coverage,
+    the clean taxonomy, and the extraction from Wikipedia, WordNet, and GeoNames.
+    """
+    ontology_id = "YAGO"
+    ontology_full_name = "YAGO Ontology (YAGO)"
+    domain = "General Knowledge"
+    category = "People, Cities, Countries, Movies, Organizations"
+    version = "4.5"
+    last_updated = "April, 2024"
+    creator = "Max Planck Institute for Informatics"
+    license = "Creative Commons 3.0"
+    format = "TTL"
+    download_url = "https://yago-knowledge.org/downloads/yago-4-5"

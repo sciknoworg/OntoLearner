@@ -1,55 +1,69 @@
-Reactions Ontology (RXNO)
-=========================
+Reaction Ontology (RXNO)
+==========================
 
 Overview
------------------
+--------
 RXNO is the name reaction ontology. It contains more than 500 classes representing organic reactions
 such as the Diels–Alder cyclization.
 
 :Domain: Chemistry
 :Category: Chemistry
-:Current Version:
+:Current Version: None
 :Last Updated: 2021-12-16
-:Producer:
+:Creator: None
 :License: Creative Commons 4.0
 :Format: OWL
-:Download: `RXNO Homepage <https://github.com/rsc-ontologies/rxno>`_
-:Documentation: `RXNO Documentation <https://github.com/rsc-ontologies/rxno>`_
+:Download: `Reaction Ontology (RXNO) Homepage <https://github.com/rsc-ontologies/rxno>`_
 
-Base Metrics
----------------
-    - Classes: 0
-    - Individuals: 0
-    - Properties: 0
-
-Graph Metrics:
-------------------
+Graph Metrics
+-------------
     - **Total Nodes**: 5676
+    - **Total Edges**: 14841
     - **Root Nodes**: 845
     - **Leaf Nodes**: 2924
-    - **Maximum Depth**: 16
-    - **Edges**: 14,841
+
+Knowledge coverage
+------------------
+    - Classes: 1109
+    - Individuals: 0
+    - Properties: 14
+
+Hierarchical metrics
+--------------------
+    - **Maximum Depth**: 8
+    - **Minimum Depth**: 0
+    - **Average Depth**: 1.71
+    - **Depth Variance**: 1.67
+
+Breadth metrics
+------------------
+    - **Maximum Breadth**: 2230
+    - **Minimum Breadth**: 12
+    - **Average Breadth**: 623.00
+    - **Breadth Variance**: 588146.89
 
 Dataset Statistics
------------------
+------------------
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 3757
     - **Non-taxonomic Relations**: 87
-    - **Average Terms per Type**: 0
+    - **Average Terms per Type**: 0.00
 
 Usage Example
-------------------
+-------------
 .. code-block:: python
 
-   from ontolearner.ontology import RXNO
+    from ontolearner.ontology import RXNO
 
-   # Initialize and load ontology
-   rxno = RXNO()
-   rxno.load("path/to/ontology.owl")
-   # Extract datasets
-   data = rxno.extract()
-   # Access specific relations
-   term_types = data.term_typings
-   taxonomic_relations = data.type_taxonomies
-   non_taxonomic_relations = data.type_non_taxonomic_relations
+    # Initialize and load ontology
+    ontology = RXNO()
+    ontology.load("path/to/ontology.owl")
+
+    # Extract datasets
+    data = ontology.extract()
+
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations

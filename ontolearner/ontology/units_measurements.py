@@ -13,31 +13,16 @@ class OM(BaseOntology):
     Astronomy and Astrophysics; Cosmology; Earth science; Meteorology; Material science; Microbiology;
     Economics; Information technology and Typography.
     """
+    ontology_id = "OM"
     ontology_full_name = "Ontology of Units of Measure (OM)"
-
-
-class QUDV(BaseOntology):
-    """
-    The SysML QUDV (Quantities, Units, Dimensions and Values) modelLibrary is specified in a UML/SysML
-    class/block diagram. In order to generalize its potential usage and alignment with other standardization efforts
-    concerning quantities and units, it is of interest to verify that the QUDV model can also be represented
-    in the form of an ontology using a formal ontology definition language.
-    """
-    ontology_full_name = "Quantities, Units, Dimensions and Values (QUDV)"
-
-
-class UO(BaseOntology):
-    """
-    Metrical units for use in conjunction with PATO.
-    """
-    ontology_full_name = "Units of Measurement Ontology (UO)"
-
-
-class QUDT(BaseOntology):
-    """
-    QUDT is an advocate for the development and implementation of standards to quantify data expressed in RDF and JSON.
-    """
-    ontology_full_name = "Quantities, Units, Dimensions and Data Types (QUDT)"
+    domain = "Units and Measurements"
+    category = "Units and Measurements"
+    version = "2.0.57"
+    last_updated = "June 28, 2024"
+    creator = "Hajo Rijgersberg, Don Willems, Jan Top"
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL, CSV, NT"
+    download_url = "https://bioportal.bioontology.org/ontologies/OM"
 
 
 class OWLTime(BaseOntology):
@@ -49,4 +34,64 @@ class OWLTime(BaseOntology):
     using either the conventional (Gregorian) calendar and clock, or using another temporal reference system
     such as Unix-time, geologic time, or different calendars.
     """
+    ontology_id = "OWLTime"
     ontology_full_name = "Time Ontology in OWL (OWL-Time)"
+    domain = "Units and Measurements"
+    category = "Temporal Reasoning"
+    version = "1.0"
+    last_updated = "15 November 2022"
+    creator = "World Wide Web Consortium"
+    license = "W3C Software Notice and Document License"
+    format = "TTL, OWL"
+    download_url = "https://www.w3.org/TR/owl-time/"
+
+
+class QUDT(BaseOntology):
+    """
+    QUDT is an advocate for the development and implementation of standards to quantify data expressed in RDF and JSON.
+    """
+    ontology_id = "QUDT"
+    ontology_full_name = "Quantities, Units, Dimensions and Data Types (QUDT)"
+    domain = "Units and Measurements"
+    category = "Physics"
+    version = "2.1"
+    last_updated = "March 1, 2022"
+    creator = "NASA Ames Research Center"
+    license = "Creative Commons 4.0"
+    format = "TTL"
+    download_url = "https://qudt.org/"
+
+
+class QUDV(BaseOntology):
+    """
+    The SysML QUDV (Quantities, Units, Dimensions and Values) modelLibrary is specified in a UML/SysML
+    class/block diagram. In order to generalize its potential usage and alignment with other standardization efforts
+    concerning quantities and units, it is of interest to verify that the QUDV model can also be represented
+    in the form of an ontology using a formal ontology definition language.
+    """
+    ontology_id = "QUDV"
+    ontology_full_name = "Quantities, Units, Dimensions and Values (QUDV)"
+    domain = "Units and Measurements"
+    category = "Units and Measurements"
+    version = "2009-10-30"
+    last_updated = "2009-10-30"
+    creator = "SysML"
+    license = "Apache License 2.0"
+    format = "OWL"
+    download_url = "https://www.omgwiki.org/OMGSysML/doku.php?id=sysml-qudv:qudv_owl"
+
+
+class UO(BaseOntology):
+    """
+    Metrical units for use in conjunction with PATO.
+    """
+    ontology_id = "UO"
+    ontology_full_name = "Units of Measurement Ontology (UO)"
+    domain = "Units and Measurements"
+    category = "Units and Measurements"
+    version = None
+    last_updated = "2023-05-25"
+    creator = "KAUST"
+    license = "Creative Commons 3.0"
+    format = "owl"
+    download_url = "https://bioportal.bioontology.org/ontologies/UO"

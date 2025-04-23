@@ -1,5 +1,60 @@
-
 from ..base import BaseOntology
+
+
+class BioPAX(BaseOntology):
+    """
+    BioPAX is a standard language that aims to enable integration, exchange, visualization and analysis
+    of biological pathway data. Specifically, BioPAX supports data exchange between pathway data
+    groups and thus reduces the complexity of interchange between data formats by providing an
+    accepted standard format for pathway data.
+    """
+    ontology_id = "BioPAX"
+    ontology_full_name = "Biological Pathways Exchange (BioPAX)"
+    domain = "Biology & Life Sciences"
+    category = "Bioinformatics"
+    version = "1.0"
+    last_updated = "16 April 2015"
+    creator = None
+    license = None
+    format = "OWL"
+    download_url = "http://www.biopax.org/"
+
+
+class EFO(BaseOntology):
+    """
+    The Experimental Factor Ontology (EFO) provides a systematic description of many experimental variables
+    available in EBI databases, and for projects such as the GWAS catalog. It combines parts of several biological ontologies,
+    such as UBERON anatomy, ChEBI chemical compounds, and Cell Ontology. The scope of EFO is to support the annotation,
+    analysis and visualization of data handled by many groups at the EBI and as the core ontology for Open Targets.
+    EFO is developed by the EMBL-EBI Samples, Phenotypes and Ontologies Team (SPOT).
+    """
+    ontology_id = "EFO"
+    ontology_full_name = "Experimental Factor Ontology (EFO)"
+    domain = "Biology & Life Sciences"
+    category = "Biology"
+    version = "3.75.0"
+    last_updated = "2025-02-17"
+    creator = None
+    license = "Apache 2.0"
+    format = "OWL, TTL, CSV, NT"
+    download_url = "https://www.ebi.ac.uk/efo"
+
+
+class GO(BaseOntology):
+    """
+    The Gene Ontology (GO) Provides structured controlled vocabularies for the annotation of gene products
+    with respect to their molecular function, cellular component, and biological role.
+    """
+    ontology_id = "GO"
+    ontology_full_name = "Gene Ontology (GO)"
+    domain = "Biology & Life Sciences"
+    category = "Molecular Biology, Genetics"
+    version = None
+    last_updated = "2024-11-03"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL, OBO, JSON"
+    download_url = "https://geneontology.org/docs/download-ontology/"
 
 
 class LIFO(BaseOntology):
@@ -8,20 +63,17 @@ class LIFO(BaseOntology):
     life processes of organisms and related entities and relations. LifO is a general
     purpose ontology that covers the common features associated with different
     organisms such as unicellular prokaryotes (e.g., E. coli) and multicellular organisms (e.g., human).
-
-    This class processes Life Ontology using default behavior.
     """
+    ontology_id = "LIFO"
     ontology_full_name = "Life Ontology (LifO)"
-
-
-class GO(BaseOntology):
-    """
-    The Gene Ontology (GO) Provides structured controlled vocabularies for the annotation of gene products
-    with respect to their molecular function, cellular component, and biological role.
-
-    This class processes Gene Ontology using default behavior.
-    """
-    ontology_full_name = "Gene Ontology (GO)"
+    domain = "Biology & Life Sciences"
+    category = "General Purpose"
+    version = "1.0.17"
+    last_updated = "March 11, 2018"
+    creator = "Yongqun \"Oliver\" He (YH)"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://bioportal.bioontology.org/ontologies/LIFO"
 
 
 class MarineTLO(BaseOntology):
@@ -36,59 +88,17 @@ class MarineTLO(BaseOntology):
     adopted an iterative and incremental methodology where a new version is released every two
     months. For the implementation we use OWL 2, and to evaluate it we use a set of competency
     queries, formulating the domain requirements provided by the related communities.
-
-    This class processes MarineTLO Ontology using default behavior.
     """
+    ontology_id = "MarineTLO"
     ontology_full_name = "Marine Taxonomy and Life Ontology (MarineTLO)"
-
-
-class BioPAX(BaseOntology):
-    """
-    BioPAX is a standard language that aims to enable integration, exchange, visualization and analysis
-    of biological pathway data. Specifically, BioPAX supports data exchange between pathway data
-    groups and thus reduces the complexity of interchange between data formats by providing an
-    accepted standard format for pathway data.
-
-    This class processes BioPAX Ontology using default behavior.
-    """
-    ontology_full_name = "Biological Pathways Exchange (BioPAX)"
-
-
-class EFO(BaseOntology):
-    """
-    The Experimental Factor Ontology (EFO) provides a systematic description of many experimental variables
-    available in EBI databases, and for projects such as the GWAS catalog. It combines parts of several biological ontologies,
-    such as UBERON anatomy, ChEBI chemical compounds, and Cell Ontology. The scope of EFO is to support the annotation,
-    analysis and visualization of data handled by many groups at the EBI and as the core ontology for Open Targets.
-    EFO is developed by the EMBL-EBI Samples, Phenotypes and Ontologies Team (SPOT).
-
-    This class processes Experimental Factor Ontology using default behavior.
-    """
-    ontology_full_name = "Experimental Factor Ontology (EFO)"
-
-
-class PATO(BaseOntology):
-    """
-    An ontology of phenotypic qualities (properties, attributes or characteristics).
-
-    This class processes Phenotype and Trait Ontology (PATO) using default behavior.
-    """
-    ontology_full_name = "Phenotype and Trait Ontology (PATO)"
-
-
-class Microscopy(BaseOntology):
-    """
-    The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The MO facilitates semantic integration
-    and the interoperable connection of diverse data sources from the fields of microscopy and microanalysis. Consequently,
-    the MO paves the way for new, adaptable data applications and analyses across various experiments and studies
-
-    This class processes Microscopy Ontology using default behavior.
-    """
-    ontology_full_name = "Microscopy Ontology (MO)"
-
-    def contains_imports(self) -> bool:
-        """Hook: Check if the ontology contains imports."""
-        return True
+    domain = "Biology & Life Sciences"
+    category = "Marine Science, Oceanography"
+    version = "1.0"
+    last_updated = "2017-01-05"
+    creator = "Information System Laboratory (ISL), Institute of Computer Science (ICS), Foundation for Research and Technology - Hellas (FORTH)"
+    license = "Creative Commons 4.0"
+    format = "OWL, TTL, CSV, NT"
+    download_url = "https://projects.ics.forth.gr/isl/MarineTLO/"
 
 
 class MGED(BaseOntology):
@@ -99,7 +109,38 @@ class MGED(BaseOntology):
     in synch with MAGE v.1; and the MGED Extended ontology which adds further associations
     and classes not found in MAGE v.1
     """
+    ontology_id = "MGED"
     ontology_full_name = "MGED Ontology (MGED)"
+    domain = "Biology & Life Sciences"
+    category = "Domain Ontology"
+    version = "1.3.1.1"
+    last_updated = "Feb. 9, 2007"
+    creator = "Chris Stoeckert, Helen Parkinson, Trish Whetzel, Paul Spellman, Catherine A. Ball, Joseph White, John Matese, Liju Fan, Gilberto Fragoso, Mervi Heiskanen, Susanna Sansone, Helen Causton, Laurence Game, Chris Taylor"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://mged.sourceforge.net/ontologies/MGEDontology.php/"
+
+
+class Microscopy(BaseOntology):
+    """
+    The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The MO facilitates semantic integration
+    and the interoperable connection of diverse data sources from the fields of microscopy and microanalysis. Consequently,
+    the MO paves the way for new, adaptable data applications and analyses across various experiments and studies
+    """
+    ontology_id = "Microscopy"
+    ontology_full_name = "Microscopy Ontology (MO)"
+    domain = "Biology & Life Sciences"
+    category = "Microscopy"
+    version = "2.0"
+    last_updated = None
+    creator = "https://orcid.org/0000-0002-3717-7104,https://orcid.org/0000-0002-7094-5371"
+    license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+    format = "Turtle"
+    download_url = "https://github.com/materialdigital/microscopy-ontology?tab=readme-ov-file"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
 
 
 class NPO(BaseOntology):
@@ -112,4 +153,29 @@ class NPO(BaseOntology):
     Mechanisms for editorial and governance processes are being developed for the maintenance,
     review, and growth of the NPO.
     """
+    ontology_id = "NPO"
     ontology_full_name = "NanoParticle Ontology (NPO)"
+    domain = "Biology & Life Sciences"
+    category = "Materials Science"
+    version = "2013-05-31"
+    last_updated = "2013-05-31"
+    creator = "Dennis G. Thomas"
+    license = "BSD-3-Clause license"
+    format = "OWL"
+    download_url = "https://github.com/sobolevnrm/npo?tab=readme-ov-file"
+
+
+class PATO(BaseOntology):
+    """
+    An ontology of phenotypic qualities (properties, attributes or characteristics).
+    """
+    ontology_id = "PATO"
+    ontology_full_name = "Phenotype and Trait Ontology (PATO)"
+    domain = "Biology & Life Sciences"
+    category = "Biology"
+    version = "1.2"
+    last_updated = "2025-02-01"
+    creator = None
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://terminology.tib.eu/ts/ontologies/PATO"

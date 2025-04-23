@@ -1,5 +1,7 @@
 import os
+import re
 from abc import ABC
+import concurrent.futures
 from typing import List, Tuple, Any, Set, Optional
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
 import networkx as nx
@@ -10,10 +12,17 @@ from .. import logger
 
 
 class BaseOntology(ABC):
-    """
-    Base class for ontology processing
-    """
+    """Base class for ontology processing"""
+    ontology_id: str = None
     ontology_full_name: str = None
+    domain: str = None
+    category: str = None
+    version: str = None
+    last_updated: str = None
+    creator: str = None
+    license: str = None
+    format: str = None
+    download_url = None
 
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
         """Initialize the ontology"""
@@ -23,11 +32,7 @@ class BaseOntology(ABC):
         self.base_dir = base_dir
 
     def load(self, path: str) -> None:
-        """
-         Load an ontology from a file and initialize its namespaces.
-
-        :param path: Path to the ontology file
-        """
+        """Load an ontology from a file and initialize its namespaces."""
         try:
             logger.info(f"Loading ontology from {path}")
             self.rdf_graph = Graph()
@@ -114,12 +119,15 @@ class BaseOntology(ABC):
     def extract(self) -> OntologyData:
         """
         Extract all information from all the three functions below.
-
-        :return: Dict containing term typings, taxonomies, and relations
         """
-        term_typings = self.extract_term_typings()
-        types, taxonomies = self.extract_type_taxonomies()
-        types_nt, relations, non_taxonomies = self.extract_type_non_taxonomic_relations()
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            term_typings_future = executor.submit(self.extract_term_typings)
+            taxonomies_future = executor.submit(self.extract_type_taxonomies)
+            non_taxonomic_future = executor.submit(self.extract_type_non_taxonomic_relations)
+
+            term_typings = term_typings_future.result()
+            types, taxonomies = taxonomies_future.result()
+            types_nt, relations, non_taxonomies = non_taxonomic_future.result()
 
         return OntologyData(
             term_typings=term_typings,
@@ -145,9 +153,6 @@ class BaseOntology(ABC):
         """
         Extracts the label for a given URI in the specified language from the RDF graph.
         If no valid label is found, returns None.
-
-        :param uri: URI of the entity to retrieve the label for.
-        :return: The label in the specified language, or None if no label found.
         """
         entity = URIRef(uri)
         labels = list(self.rdf_graph.objects(subject=entity, predicate=RDFS.label))
@@ -197,7 +202,7 @@ class BaseOntology(ABC):
                 term = self.get_label(uri=str(instance))
                 types = self.get_label(uri=str(class_uri))
                 if term and types:
-                    term_typings.append(TermTyping(term=term, types=list(types)))
+                    term_typings.append(TermTyping(term=term, types=[types]))
         logger.debug(f"Extracted {len(term_typings)} term typings for the Ontology.")
         return term_typings
 
@@ -214,20 +219,20 @@ class BaseOntology(ABC):
     def extract_type_taxonomies(self) -> Tuple[List[str], List[TaxonomicRelation]]:
         """
         Extract taxonomy from the ontology
-
-        :return: Types and their taxonomic relationships
         """
         types, taxonomies = [], []
         subclasses = self.rdf_graph.subjects(predicate=RDFS.subClassOf)
         for subclass in subclasses:
-            parent_class = self.rdf_graph.objects(subject=subclass, predicate=RDFS.subClassOf)
-            for parent in parent_class:
-                child = self.get_label(uri=str(subclass))
-                parent = self.get_label(uri=str(parent))
-                if child and parent:
-                    types.append(child)
-                    types.append(parent)
-                    taxonomies.append(TaxonomicRelation(parent=parent, child=child))
+            parent_classes = self.rdf_graph.objects(subject=subclass, predicate=RDFS.subClassOf)
+            subclass_label = self.get_label(str(subclass))
+            for parent in parent_classes:
+                parent_label = self.get_label(uri=str(parent))
+                if (subclass_label and parent_label and
+                        not self._is_anonymous_id(subclass_label) and
+                        not self._is_anonymous_id(parent_label)):
+                    types.append(subclass_label)
+                    types.append(parent_label)
+                    taxonomies.append(TaxonomicRelation(parent=parent_label, child=subclass_label))
         types = list(set(types))
         logger.debug(f"Extracted {len(taxonomies)} taxonomic relations for the Ontology.")
         return types, taxonomies
@@ -235,44 +240,38 @@ class BaseOntology(ABC):
     # ------------------- Non-Taxonomic Relations -------------------
     def extract_type_non_taxonomic_relations(self) -> Tuple[List[str], List[str], List[NonTaxonomicRelation]]:
         """
-         Extract non-taxonomic relations from the ontology.
-
-         :return: Types, relations, and validated relationship entries
-         """
+        Extract non-taxonomic relations from the ontology.
+        """
         types_set = set()
         relations_set = set()
         non_taxonomic_pairs: List[NonTaxonomicRelation] = []
 
-        # Iterate over all triples in the RDF graph
         for s, p, o in self.rdf_graph:
-            # If both subject and object are classes and the predicate is not rdfs:subClassOf,
-            # it's a non-taxonomic relationship
             if self._is_valid_non_taxonomic_triple(s, p, o):
-                # Retrieve labels for subject, object, and predicate
                 head = self.get_label(str(s))
                 tail = self.get_label(str(o))
                 relation = self.get_label(str(p))
 
-                if head and tail and relation:
+                # Filter out anonymous class identifiers
+                if (head and tail and relation and
+                        not self._is_anonymous_id(head) and
+                        not self._is_anonymous_id(tail)):
                     non_taxonomic_pairs.append(
-                        NonTaxonomicRelation(
-                            head=head,
-                            tail=tail,
-                            relation=relation
-                        )
+                        NonTaxonomicRelation(head=head, tail=tail, relation=relation)
                     )
                     types_set.update([head, tail])
                     relations_set.add(relation)
 
-        # Convert sets to sorted lists for consistent output
         types = sorted(types_set)
         relations = sorted(relations_set)
         logger.debug(f"Extracted {len(non_taxonomic_pairs)} non-taxonomic relations for the Ontology.")
         return types, relations, non_taxonomic_pairs
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
-        """Hook: Validate if a triple represents a non-taxonomic relation."""
+        """Validate non-taxonomic relations between named classes (URIRefs only)."""
         return (
+            isinstance(s, URIRef) and  # Exclude BNodes
+            isinstance(o, URIRef) and  # Exclude BNodes
             self.check_if_class(s) and
             self.check_if_class(o) and
             p != RDFS.subClassOf
@@ -283,4 +282,22 @@ class BaseOntology(ABC):
         for _, _, obj in self.rdf_graph.triples((entity, RDF.type, None)):
             if obj in (RDFS.Class, OWL.Class):
                 return True
+        return False
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Check if a label represents an anonymous class identifier."""
+        if not label:
+            return True
+
+        # Check for common blank node patterns
+        if label.startswith('N') and label[1:].isdigit():  # N followed by numbers
+            return True
+        if label.startswith('_:'):  # Standard RDF blank node notation
+            return True
+        if label.startswith('genid-'):  # common format
+            return True
+        if re.match(r'^b[0-9a-f]+$', label):  # bnode format sometimes used
+            return True
+
         return False
