@@ -1,5 +1,18 @@
 ## Changelog
 
+### v0.3.0 (April 24, 2025)
+- Added full ontologies
+- Automated documentation generation
+- Added ontology evaluation metrics
+- Added initial text2onto module
+- Code refactoring
+- Bug fixes
+
+### v0.2.0 (April 10, 2025)
+- Added new ontologies
+- Added documnetations to new ontologies
+- Fixed domains according to [#205](https://github.com/sciknoworg/OntoLearner/issues/205)
+
 ### v0.1.0 (March 17, 2025)
 Features
 - Framework for processing, analyzing, and visualizing diverse ontologies.
