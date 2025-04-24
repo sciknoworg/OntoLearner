@@ -1,5 +1,5 @@
 Hydra Ontology
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 14
     - **Taxonomic Relations**: 15
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 1.56
+    - **Average Terms per Type**: 14.00
 
 Usage Example
 -------------
