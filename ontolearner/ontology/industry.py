@@ -103,7 +103,7 @@ class TUBES(BaseOntology):
     in a future semantic web of building data. It has a strong alignment to other ontologies within the W3C community.
     """
     ontology_id = "TUBES"
-    ontology_full_name = "TUBES System Ontology"
+    ontology_full_name = "TUBES System Ontology (TUBES)"
     domain = "Industry"
     category = "Building Services"
     version = "0.3.0"

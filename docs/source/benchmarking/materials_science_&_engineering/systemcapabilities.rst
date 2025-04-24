@@ -1,5 +1,5 @@
 System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Generated Benchmarks:
     - **Term Types**: 2
     - **Taxonomic Relations**: 148
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.40
+    - **Average Terms per Type**: 2.00
 
 Usage Example
 -------------

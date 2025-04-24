@@ -1,5 +1,5 @@
 Semanticscience Integrated Ontology (SIO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 3006
-    - **Non-taxonomic Relations**: 115
+    - **Non-taxonomic Relations**: 65
     - **Average Terms per Type**: 0.00
 
 Usage Example

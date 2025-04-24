@@ -1,5 +1,5 @@
 Periodic Table of the Elements Ontology (PeriodicTable)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 156
     - **Taxonomic Relations**: 302
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 7.09
+    - **Average Terms per Type**: 26.00
 
 Usage Example
 -------------

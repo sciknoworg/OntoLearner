@@ -1,5 +1,5 @@
 Geographical Entities Ontology (GEO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,8 +48,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 46949
     - **Taxonomic Relations**: 664
-    - **Non-taxonomic Relations**: 65
-    - **Average Terms per Type**: 1877.96
+    - **Non-taxonomic Relations**: 19
+    - **Average Terms per Type**: 1805.73
 
 Usage Example
 -------------

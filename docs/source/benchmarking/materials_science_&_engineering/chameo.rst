@@ -1,5 +1,5 @@
 Characterisation Methodology Domain Ontology (CHAMEO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,7 +50,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 397
-    - **Non-taxonomic Relations**: 4
+    - **Non-taxonomic Relations**: 2
     - **Average Terms per Type**: 0.00
 
 Usage Example

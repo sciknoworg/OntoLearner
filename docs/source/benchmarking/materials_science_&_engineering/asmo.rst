@@ -1,5 +1,5 @@
 Atomistic Simulation Methods Ontology (ASMO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 30
     - **Taxonomic Relations**: 99
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 0.94
+    - **Average Terms per Type**: 3.75
 
 Usage Example
 -------------

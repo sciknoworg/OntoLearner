@@ -1,5 +1,5 @@
 Ontology for Biomedical Investigations (OBI)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,9 +46,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 288
-    - **Taxonomic Relations**: 22953
-    - **Non-taxonomic Relations**: 1121
-    - **Average Terms per Type**: 6.70
+    - **Taxonomic Relations**: 22933
+    - **Non-taxonomic Relations**: 38
+    - **Average Terms per Type**: 5.65
 
 Usage Example
 -------------

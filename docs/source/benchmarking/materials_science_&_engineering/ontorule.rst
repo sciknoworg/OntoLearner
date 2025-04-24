@@ -1,5 +1,5 @@
 Ontology for the Steel Domain (ONTORULE)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -51,7 +51,7 @@ Generated Benchmarks:
     - **Term Types**: 13
     - **Taxonomic Relations**: 16
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 0.48
+    - **Average Terms per Type**: 2.17
 
 Usage Example
 -------------

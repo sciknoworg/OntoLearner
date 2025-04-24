@@ -1,5 +1,5 @@
 Virtual Materials Marketplace (VIMMP) Ontologies
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -51,8 +51,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 1939
     - **Taxonomic Relations**: 4077
-    - **Non-taxonomic Relations**: 404
-    - **Average Terms per Type**: 34.02
+    - **Non-taxonomic Relations**: 298
+    - **Average Terms per Type**: 5.42
 
 Usage Example
 -------------

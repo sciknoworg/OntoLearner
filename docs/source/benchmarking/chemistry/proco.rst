@@ -1,5 +1,5 @@
 PROcess Chemistry Ontology (PROCO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,8 +47,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 14
     - **Taxonomic Relations**: 2975
-    - **Non-taxonomic Relations**: 17
-    - **Average Terms per Type**: 0.93
+    - **Non-taxonomic Relations**: 1
+    - **Average Terms per Type**: 7.00
 
 Usage Example
 -------------

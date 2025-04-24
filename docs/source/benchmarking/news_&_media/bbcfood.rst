@@ -1,5 +1,5 @@
-BBC Food Ontology
-==========================
+BBC Food Ontology (BBCFood)
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ the Food Ontology should be applicable to a wide range of recipe data publishing
 :Creator: None
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Food Ontology Homepage <https://www.bbc.co.uk/ontologies/food-ontology>`_
+:Download: `BBC Food Ontology (BBCFood) Homepage <https://www.bbc.co.uk/ontologies/food-ontology>`_
 
 Graph Metrics
 -------------

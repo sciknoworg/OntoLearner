@@ -1,5 +1,5 @@
 Reaction Ontology (RXNO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 3757
-    - **Non-taxonomic Relations**: 87
+    - **Non-taxonomic Relations**: 16
     - **Average Terms per Type**: 0.00
 
 Usage Example

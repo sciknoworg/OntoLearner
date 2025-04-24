@@ -229,6 +229,7 @@ Ontologies related to materials, their structure, properties, processing, and en
    materials_science_&_engineering/materialinformation.rst
    materials_science_&_engineering/matonto.rst
    materials_science_&_engineering/matvoc.rst
+   materials_science_&_engineering/matwerk.rst
    materials_science_&_engineering/mdo.rst
    materials_science_&_engineering/mds.rst
    materials_science_&_engineering/mechanicaltesting.rst

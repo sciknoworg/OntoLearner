@@ -1,5 +1,5 @@
 Quantities, Units, Dimensions and Values (QUDV)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,7 +49,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 9
-    - **Non-taxonomic Relations**: 10
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example

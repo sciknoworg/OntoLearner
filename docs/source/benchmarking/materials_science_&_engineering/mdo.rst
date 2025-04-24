@@ -1,5 +1,5 @@
 Materials Design Ontology (MDO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 2
     - **Taxonomic Relations**: 8
     - **Non-taxonomic Relations**: 1
-    - **Average Terms per Type**: 0.50
+    - **Average Terms per Type**: 2.00
 
 Usage Example
 -------------

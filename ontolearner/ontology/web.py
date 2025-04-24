@@ -7,7 +7,7 @@ class Hydra(BaseOntology):
     commonly used in Web APIs it enables the creation of generic API clients.
     """
     ontology_id = "Hydra"
-    ontology_full_name = "Hydra Ontology"
+    ontology_full_name = "Hydra Ontology (Hydra)"
     domain = "Web & Internet"
     category = "Web Development"
     version = None

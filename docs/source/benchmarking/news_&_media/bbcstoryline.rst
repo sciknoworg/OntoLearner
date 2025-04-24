@@ -1,5 +1,5 @@
-BBC Storyline Ontology
-==========================
+BBC Storyline Ontology (BBCStoryline)
+========================================================================================================================
 
 Overview
 --------
@@ -16,7 +16,7 @@ such as an article or news report. It can also be the editorial view on events o
 :Creator: http://uk.linkedin.com/in/paulwilton, http://www.bbc.co.uk/blogs/internet/authors/Jeremy_Tarling, http://uk.linkedin.com/in/jarredmcginnis
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Storyline Ontology Homepage <https://iptc.org/thirdparty/bbc-ontologies/storyline.html>`_
+:Download: `BBC Storyline Ontology (BBCStoryline) Homepage <https://iptc.org/thirdparty/bbc-ontologies/storyline.html>`_
 
 Graph Metrics
 -------------

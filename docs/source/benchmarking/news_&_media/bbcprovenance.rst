@@ -1,5 +1,5 @@
-BBC Provenance News Ontology
-==========================
+BBC Provenance News Ontology (BBCProvenance)
+========================================================================================================================
 
 Overview
 --------
@@ -16,7 +16,7 @@ A named graph is, in effect, a 'fourth part' to a triple, hence the term 'quad s
 :Creator: LinkedData@bbc.co.uk
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Provenance News Ontology Homepage <https://www.bbc.co.uk/ontologies/provenance-ontology>`_
+:Download: `BBC Provenance News Ontology (BBCProvenance) Homepage <https://www.bbc.co.uk/ontologies/provenance-ontology>`_
 
 Graph Metrics
 -------------
@@ -51,7 +51,7 @@ Generated Benchmarks:
     - **Term Types**: 1
     - **Taxonomic Relations**: 6
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.14
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

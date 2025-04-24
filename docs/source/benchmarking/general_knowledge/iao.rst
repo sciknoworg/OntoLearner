@@ -1,5 +1,5 @@
 Information Artifact Ontology (IAO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,8 +47,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 18
     - **Taxonomic Relations**: 567
-    - **Non-taxonomic Relations**: 35
-    - **Average Terms per Type**: 1.06
+    - **Non-taxonomic Relations**: 19
+    - **Average Terms per Type**: 6.00
 
 Usage Example
 -------------

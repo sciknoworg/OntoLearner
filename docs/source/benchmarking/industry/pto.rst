@@ -1,5 +1,5 @@
 Product Types Ontology (PTO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 3001
     - **Taxonomic Relations**: 4000
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 375.12
+    - **Average Terms per Type**: 3001.00
 
 Usage Example
 -------------

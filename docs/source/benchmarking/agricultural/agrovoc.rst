@@ -1,5 +1,5 @@
-AGROVOC Multilingual Thesaurus
-===================================
+AGROVOC Multilingual Thesaurus (AGROVOC)
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ indexing processes and making searches more efficient.
 :Creator: Food and Agriculture Organization of the United Nations
 :License: Creative Commons 4.0
 :Format: RDF, SKOS
-:Download: `AGROVOC Multilingual Thesaurus Homepage <https://agroportal.lirmm.fr/ontologies/AGROVOC>`_
+:Download: `AGROVOC Multilingual Thesaurus (AGROVOC) Homepage <https://agroportal.lirmm.fr/ontologies/AGROVOC>`_
 
 Graph Metrics
 -------------
@@ -50,7 +50,7 @@ Generated Benchmarks:
     - **Term Types**: 1234769
     - **Taxonomic Relations**: 13
     - **Non-taxonomic Relations**: 7
-    - **Average Terms per Type**: 47491.12
+    - **Average Terms per Type**: 137196.56
 
 Usage Example
 -------------

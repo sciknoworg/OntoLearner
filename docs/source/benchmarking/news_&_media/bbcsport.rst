@@ -1,5 +1,5 @@
-BBC Sport Ontology
-==========================
+BBC Sport Ontology (BBCSport)
+========================================================================================================================
 
 Overview
 --------
@@ -19,7 +19,7 @@ In particular, it draws heavily upon the events ontology.
 :Creator: https://uk.linkedin.com/pub/jem-rayfield/27/b19/757, https://uk.linkedin.com/in/paulwilton, https://www.blockslabpillar.com, https://www.linkedin.com/in/tfgrahame, https://uk.linkedin.com/pub/stuart-williams/8/684/351, https://uk.linkedin.com/in/brianwmcbride
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Sport Ontology Homepage <https://www.bbc.co.uk/ontologies/sport-ontology>`_
+:Download: `BBC Sport Ontology (BBCSport) Homepage <https://www.bbc.co.uk/ontologies/sport-ontology>`_
 
 Graph Metrics
 -------------
@@ -54,7 +54,7 @@ Generated Benchmarks:
     - **Term Types**: 40
     - **Taxonomic Relations**: 25
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 2.35
+    - **Average Terms per Type**: 13.33
 
 Usage Example
 -------------

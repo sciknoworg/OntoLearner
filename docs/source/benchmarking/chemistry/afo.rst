@@ -1,5 +1,5 @@
 Allotrope Foundation Ontology (AFO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,8 +50,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 38
     - **Taxonomic Relations**: 9889
-    - **Non-taxonomic Relations**: 208
-    - **Average Terms per Type**: 1.41
+    - **Non-taxonomic Relations**: 34
+    - **Average Terms per Type**: 3.45
 
 Usage Example
 -------------

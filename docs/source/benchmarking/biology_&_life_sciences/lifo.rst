@@ -1,5 +1,5 @@
 Life Ontology (LifO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,8 +49,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 9
     - **Taxonomic Relations**: 581
-    - **Non-taxonomic Relations**: 15
-    - **Average Terms per Type**: 0.69
+    - **Non-taxonomic Relations**: 0
+    - **Average Terms per Type**: 9.00
 
 Usage Example
 -------------

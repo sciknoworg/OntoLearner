@@ -1,5 +1,5 @@
 MGED Ontology (MGED)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -51,7 +51,7 @@ Generated Benchmarks:
     - **Term Types**: 744
     - **Taxonomic Relations**: 1536
     - **Non-taxonomic Relations**: 6
-    - **Average Terms per Type**: 16.53
+    - **Average Terms per Type**: 7.83
 
 Usage Example
 -------------

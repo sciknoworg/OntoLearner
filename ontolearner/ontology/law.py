@@ -9,7 +9,7 @@ class CopyrightOnto(BaseOntology):
     end-users permissions to consume content, like many rights languages and ontologies do.
     """
     ontology_id = "CopyrightOnto"
-    ontology_full_name = "Copyright Ontology"
+    ontology_full_name = "Copyright Ontology (CopyrightOnto)"
     domain = "Law"
     category = "Legal Knowledge"
     version = None

@@ -29,7 +29,7 @@ class AGROVOC(BaseOntology):
     indexing processes and making searches more efficient.
     """
     ontology_id = "AGROVOC"
-    ontology_full_name = "AGROVOC Multilingual Thesaurus"
+    ontology_full_name = "AGROVOC Multilingual Thesaurus (AGROVOC)"
     domain = "Agricultural"
     category = "Agricultural Knowledge"
     version = "2024-04"

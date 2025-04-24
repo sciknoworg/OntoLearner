@@ -1,5 +1,5 @@
 Good Relations Language Reference (GoodRelations)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,8 +50,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 47
     - **Taxonomic Relations**: 25
-    - **Non-taxonomic Relations**: 265
-    - **Average Terms per Type**: 1.74
+    - **Non-taxonomic Relations**: 264
+    - **Average Terms per Type**: 5.22
 
 Usage Example
 -------------

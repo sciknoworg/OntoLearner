@@ -1,5 +1,5 @@
 SMART Protocols Ontology: Workflow Module (SP-Workflow)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,8 +48,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 5
     - **Taxonomic Relations**: 1079
-    - **Non-taxonomic Relations**: 24
-    - **Average Terms per Type**: 0.24
+    - **Non-taxonomic Relations**: 22
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

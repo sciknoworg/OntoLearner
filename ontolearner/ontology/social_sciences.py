@@ -8,7 +8,7 @@ class AS2(BaseOntology):
     for describing activities on the web.
     """
     ontology_id = "AS2"
-    ontology_full_name = "Activity Streams 2.0 Ontology"
+    ontology_full_name = "Activity Streams 2.0 Ontology (AS2)"
     domain = "Social Sciences"
     category = "Social"
     version = "2.0"
@@ -29,7 +29,7 @@ class BIO(BaseOntology):
     the Employment event puts the person being employed as the principal agent in the event rather than the employer.
     """
     ontology_id = "BIO"
-    ontology_full_name = "BIO: A vocabulary for biographical information"
+    ontology_full_name = "BIO: A vocabulary for biographical information (BIO)"
     domain = "Social Sciences"
     category = "Biographical Information"
     version = "0.1"
@@ -50,7 +50,7 @@ class Contact(BaseOntology):
     The Contact ontology also extends the definition of address to include an associated location.
     """
     ontology_id = "Contact"
-    ontology_full_name = "Contact Ontology"
+    ontology_full_name = "Contact Ontology (Contact)"
     domain = "Social Sciences"
     category = "Social"
     version = "1.0"
@@ -68,7 +68,7 @@ class FOAF(BaseOntology):
     or in the form of factual data, it can be linked.
     """
     ontology_id = "FOAF"
-    ontology_full_name = "Friend of a Friend (FOAF) Ontology"
+    ontology_full_name = "Friend of a Friend (FOAF)"
     domain = "Social Sciences"
     category = "Social"
     version = "0.1"
@@ -86,7 +86,7 @@ class SIOC(BaseOntology):
     file sharing, photo sharing, social networking, etc.
     """
     ontology_id = "SIOC"
-    ontology_full_name = "Semantically-Interlinked Online Communities (SIOC) Ontology"
+    ontology_full_name = "Semantically-Interlinked Online Communities (SIOC)"
     domain = "Social Sciences"
     category = "Social Networks"
     version = "1.36"

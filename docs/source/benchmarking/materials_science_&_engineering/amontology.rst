@@ -1,5 +1,5 @@
 Additive Manufacturing Ontology (AMOntology)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -51,8 +51,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 59
     - **Taxonomic Relations**: 1603
-    - **Non-taxonomic Relations**: 24
-    - **Average Terms per Type**: 1.48
+    - **Non-taxonomic Relations**: 5
+    - **Average Terms per Type**: 1.26
 
 Usage Example
 -------------

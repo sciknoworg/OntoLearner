@@ -1,5 +1,5 @@
 Gene Ontology (GO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 206031
-    - **Non-taxonomic Relations**: 14155
+    - **Non-taxonomic Relations**: 3676
     - **Average Terms per Type**: 0.00
 
 Usage Example

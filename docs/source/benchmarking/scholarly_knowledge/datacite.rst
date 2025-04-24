@@ -1,5 +1,5 @@
-DataCite
-==========================
+DataCite Ontology (DataCite)
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ and retrieval purposes) to be described in RDF.
 :Creator: David Shotton, Silvio Peroni
 :License: Creative Commons 4.0
 :Format: OWL, TTL, CSV, NT
-:Download: `DataCite Homepage <https://schema.datacite.org/>`_
+:Download: `DataCite Ontology (DataCite) Homepage <https://schema.datacite.org/>`_
 
 Graph Metrics
 -------------
@@ -50,7 +50,7 @@ Generated Benchmarks:
     - **Term Types**: 71
     - **Taxonomic Relations**: 55
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 3.55
+    - **Average Terms per Type**: 8.88
 
 Usage Example
 -------------

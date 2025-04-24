@@ -1,5 +1,5 @@
-BBC Ontology
-==========================
+BBC Ontology (BBC)
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ for example Education propositions are part of the K&L (Knowledge and Learning) 
 :Creator: LinkedData@bbc.co.uk
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Ontology Homepage <https://www.bbc.co.uk/ontologies/bbc-ontology/>`_
+:Download: `BBC Ontology (BBC) Homepage <https://www.bbc.co.uk/ontologies/bbc-ontology/>`_
 
 Graph Metrics
 -------------
@@ -50,7 +50,7 @@ Generated Benchmarks:
     - **Term Types**: 10
     - **Taxonomic Relations**: 35
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.91
+    - **Average Terms per Type**: 5.00
 
 Usage Example
 -------------

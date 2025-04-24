@@ -1,5 +1,5 @@
 NanoParticle Ontology (NPO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -52,7 +52,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 6895
-    - **Non-taxonomic Relations**: 12640
+    - **Non-taxonomic Relations**: 12277
     - **Average Terms per Type**: 0.00
 
 Usage Example

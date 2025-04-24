@@ -1,5 +1,5 @@
 Scientific Evidence and Provenance Information Ontology (SEPIO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,8 +50,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 21
     - **Taxonomic Relations**: 223
-    - **Non-taxonomic Relations**: 12
-    - **Average Terms per Type**: 1.11
+    - **Non-taxonomic Relations**: 6
+    - **Average Terms per Type**: 4.20
 
 Usage Example
 -------------

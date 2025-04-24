@@ -1,5 +1,5 @@
 Relation Ontology (RO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,8 +47,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 2
     - **Taxonomic Relations**: 98
-    - **Non-taxonomic Relations**: 13
-    - **Average Terms per Type**: 0.15
+    - **Non-taxonomic Relations**: 10
+    - **Average Terms per Type**: 2.00
 
 Usage Example
 -------------

@@ -1,5 +1,5 @@
 Industrial Ontology Foundry (IOF)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,7 +50,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 298
-    - **Non-taxonomic Relations**: 29
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example

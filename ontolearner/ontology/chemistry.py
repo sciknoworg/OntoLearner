@@ -189,7 +189,7 @@ class OntoKin(BaseOntology):
     OntoKin is an ontology developed for representing chemical kinetic reaction mechanisms.
     """
     ontology_id = "OntoKin"
-    ontology_full_name = "OntoKin"
+    ontology_full_name = "Chemical Kinetics Ontology (OntoKin)"
     domain = "Chemistry"
     category = "Chemistry"
     version = "1.0"

@@ -1,5 +1,5 @@
 Geologic Timescale model (GTS)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 7
     - **Taxonomic Relations**: 549
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 0.47
+    - **Average Terms per Type**: 7.00
 
 Usage Example
 -------------

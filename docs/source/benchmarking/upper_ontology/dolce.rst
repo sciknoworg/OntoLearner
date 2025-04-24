@@ -1,5 +1,5 @@
 Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 231
-    - **Non-taxonomic Relations**: 24
+    - **Non-taxonomic Relations**: 18
     - **Average Terms per Type**: 0.00
 
 Usage Example

@@ -1,5 +1,5 @@
 Crystallography Ontology (EMMOCrystallography)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,7 +46,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 331
-    - **Non-taxonomic Relations**: 2
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example

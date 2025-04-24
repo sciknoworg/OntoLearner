@@ -31,7 +31,7 @@ class Common(BaseOntology):
     Ontology for the representation of commons elements in the Trias ontology
     """
     ontology_id = "Common"
-    ontology_full_name = "Common Ontology"
+    ontology_full_name = "Common Ontology (Common)"
     domain = "Education"
     category = "Computer Science"
     version = "0.1.0"

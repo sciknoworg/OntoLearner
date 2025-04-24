@@ -1,5 +1,5 @@
-BBC Core Concepts Ontology
-==========================
+BBC Core Concepts Ontology (BBCCoreConcepts)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ link their own concepts e.g., athletes or politicians using rdfs:sublClassOf the
 :Creator: jeremy.tarling@bbc.co.uk, tom.hodgkinson@bbc.co.uk
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Core Concepts Ontology Homepage <https://www.bbc.co.uk/ontologies/core-concepts-ontology>`_
+:Download: `BBC Core Concepts Ontology (BBCCoreConcepts) Homepage <https://www.bbc.co.uk/ontologies/core-concepts-ontology>`_
 
 Graph Metrics
 -------------

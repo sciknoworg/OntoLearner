@@ -1,5 +1,5 @@
 Open Innovation Environment (OIE) domain ontologies, Manufacturing module (OIEManufacturing)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 249
-    - **Non-taxonomic Relations**: 2
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example

@@ -1,5 +1,5 @@
 Building Material Ontology (BMO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 12
     - **Taxonomic Relations**: 20
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.67
+    - **Average Terms per Type**: 3.00
 
 Usage Example
 -------------

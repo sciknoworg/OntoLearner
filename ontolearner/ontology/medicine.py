@@ -90,7 +90,7 @@ class MFOEM(BaseOntology):
     using default behavior.
     """
     ontology_id = "MFOEM"
-    ontology_full_name = "Emotion Ontology -- Mental Functioning Ontology of Emotions"
+    ontology_full_name = "Mental Functioning Ontology of Emotions - Emotion Module (MFOEM)"
     domain = "Medicine"
     category = "Emotion"
     version = None

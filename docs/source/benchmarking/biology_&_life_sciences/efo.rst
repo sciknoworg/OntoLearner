@@ -1,5 +1,5 @@
 Experimental Factor Ontology (EFO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,8 +49,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 280860
-    - **Non-taxonomic Relations**: 15975
+    - **Taxonomic Relations**: 280844
+    - **Non-taxonomic Relations**: 10335
     - **Average Terms per Type**: 0.00
 
 Usage Example

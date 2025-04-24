@@ -1,5 +1,5 @@
-BBC CMS Ontology
-==========================
+BBC CMS Ontology (BBCCMS)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ The CMS ontology defines how these things and content are associated with other 
 :Creator: LinkedData@bbc.co.uk
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC CMS Ontology Homepage <https://www.bbc.co.uk/ontologies/cms-ontology>`_
+:Download: `BBC CMS Ontology (BBCCMS) Homepage <https://www.bbc.co.uk/ontologies/cms-ontology>`_
 
 Graph Metrics
 -------------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 4
     - **Taxonomic Relations**: 17
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.67
+    - **Average Terms per Type**: 4.00
 
 Usage Example
 -------------

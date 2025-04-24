@@ -1,5 +1,5 @@
 Material Ontology (MatOnto)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,8 +46,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 122
     - **Taxonomic Relations**: 2228
-    - **Non-taxonomic Relations**: 434
-    - **Average Terms per Type**: 5.08
+    - **Non-taxonomic Relations**: 167
+    - **Average Terms per Type**: 1.94
 
 Usage Example
 -------------

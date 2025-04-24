@@ -1,5 +1,5 @@
 Vocabulary of a Friend (VOAF)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 1
     - **Taxonomic Relations**: 4
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.11
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

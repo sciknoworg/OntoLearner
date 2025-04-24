@@ -1,5 +1,5 @@
-Computer Science Ontology
-==========================
+Computer Science Ontology (CSO)
+========================================================================================================================
 
 Overview
 --------
@@ -18,7 +18,7 @@ This class processes the Computer Science Ontology (CSO) with custom hooks for:
 :Creator: Knowledge Media Institute, Open University
 :License: Creative Commons 4.0
 :Format: OWL, TTL, CSV, NT
-:Download: `Computer Science Ontology Homepage <https://cso.kmi.open.ac.uk/home>`_
+:Download: `Computer Science Ontology (CSO) Homepage <https://cso.kmi.open.ac.uk/home>`_
 
 Graph Metrics
 -------------
@@ -52,7 +52,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 44204
-    - **Non-taxonomic Relations**: 49085
+    - **Non-taxonomic Relations**: 49081
     - **Average Terms per Type**: 0.00
 
 Usage Example

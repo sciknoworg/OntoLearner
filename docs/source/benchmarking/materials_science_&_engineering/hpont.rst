@@ -1,5 +1,5 @@
 The Heat Pump Ontology (HPOnt)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 5
     - **Taxonomic Relations**: 4
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.23
+    - **Average Terms per Type**: 2.50
 
 Usage Example
 -------------

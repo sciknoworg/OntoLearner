@@ -1,5 +1,5 @@
-Timeline Ontology
-==========================
+Timeline Ontology (TimelineOntology)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ A timeline may support a signal, a video, a score, a work, etc.
 :Creator: Christopher Sutton, Yves Raimond, Matthias Mauch
 :License: Creative Commons 1.0
 :Format: RDF/XML
-:Download: `Timeline Ontology Homepage <https://github.com/motools/timelineontology>`_
+:Download: `Timeline Ontology (TimelineOntology) Homepage <https://github.com/motools/timelineontology>`_
 
 Graph Metrics
 -------------
@@ -48,8 +48,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 2
     - **Taxonomic Relations**: 106
-    - **Non-taxonomic Relations**: 17
-    - **Average Terms per Type**: 0.12
+    - **Non-taxonomic Relations**: 10
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

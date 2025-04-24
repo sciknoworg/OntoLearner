@@ -1,5 +1,5 @@
-Emotion Ontology -- Mental Functioning Ontology of Emotions
-==========================
+Mental Functioning Ontology of Emotions - Emotion Module (MFOEM)
+========================================================================================================================
 
 Overview
 --------
@@ -16,7 +16,7 @@ using default behavior.
 :Creator: Swiss Centre for Affective Sciences & University at Buffalo
 :License: Creative Commons 3.0
 :Format: OWL
-:Download: `Emotion Ontology -- Mental Functioning Ontology of Emotions Homepage <http://purl.obolibrary.org/obo/MFOEM.owl>`_
+:Download: `Mental Functioning Ontology of Emotions - Emotion Module (MFOEM) Homepage <http://purl.obolibrary.org/obo/MFOEM.owl>`_
 
 Graph Metrics
 -------------
@@ -50,8 +50,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 19
     - **Taxonomic Relations**: 1067
-    - **Non-taxonomic Relations**: 29
-    - **Average Terms per Type**: 1.06
+    - **Non-taxonomic Relations**: 20
+    - **Average Terms per Type**: 4.75
 
 Usage Example
 -------------

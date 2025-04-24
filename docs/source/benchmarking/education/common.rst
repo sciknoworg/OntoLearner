@@ -1,5 +1,5 @@
-Common Ontology
-==========================
+Common Ontology (Common)
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ Ontology for the representation of commons elements in the Trias ontology
 :Creator: Jhon Toledo, Miguel Angel García, Oscar Corcho
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 :Format: RDF/XML
-:Download: `Common Ontology Homepage <https://w3id.org/mobility/trias/common/0.1.0>`_
+:Download: `Common Ontology (Common) Homepage <https://w3id.org/mobility/trias/common/0.1.0>`_
 
 Graph Metrics
 -------------

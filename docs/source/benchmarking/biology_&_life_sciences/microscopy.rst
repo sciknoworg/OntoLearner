@@ -1,5 +1,5 @@
 Microscopy Ontology (MO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,8 +48,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 1
     - **Taxonomic Relations**: 1181
-    - **Non-taxonomic Relations**: 114
-    - **Average Terms per Type**: 0.06
+    - **Non-taxonomic Relations**: 20
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

@@ -1,5 +1,5 @@
 Dublin Core Vocabulary (DublinCore)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,7 +50,7 @@ Generated Benchmarks:
     - **Term Types**: 30
     - **Taxonomic Relations**: 0
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.88
+    - **Average Terms per Type**: 3.00
 
 Usage Example
 -------------

@@ -1,5 +1,5 @@
 Marine Taxonomy and Life Ontology (MarineTLO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -56,7 +56,7 @@ Generated Benchmarks:
     - **Term Types**: 1
     - **Taxonomic Relations**: 113
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.17
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

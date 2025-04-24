@@ -1,5 +1,5 @@
-Semantically-Interlinked Online Communities (SIOC) Ontology
-==========================
+Semantically-Interlinked Online Communities (SIOC)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ file sharing, photo sharing, social networking, etc.
 :Creator: Data Science Institute, NUI Galway
 :License: Creative Commons 3.0
 :Format: RDF/XML
-:Download: `Semantically-Interlinked Online Communities (SIOC) Ontology Homepage <http://rdfs.org/sioc/spec/>`_
+:Download: `Semantically-Interlinked Online Communities (SIOC) Homepage <http://rdfs.org/sioc/spec/>`_
 
 Graph Metrics
 -------------

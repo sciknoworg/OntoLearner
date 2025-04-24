@@ -1,5 +1,5 @@
 The Platform MaterialDigital core ontology (PMDco)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,7 +50,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 1126
-    - **Non-taxonomic Relations**: 115
+    - **Non-taxonomic Relations**: 19
     - **Average Terms per Type**: 0.00
 
 Usage Example

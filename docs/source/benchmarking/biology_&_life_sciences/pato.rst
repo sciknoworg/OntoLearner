@@ -1,5 +1,5 @@
 Phenotype and Trait Ontology (PATO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,7 +46,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 62605
-    - **Non-taxonomic Relations**: 5456
+    - **Non-taxonomic Relations**: 752
     - **Average Terms per Type**: 0.00
 
 Usage Example

@@ -1,5 +1,5 @@
-BBC Business News Ontology
-==========================
+BBC Business News Ontology (BBCBusiness)
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ The Business News Ontology describes the concepts that occur in BBC business new
 :Creator: https://www.bbc.co.uk/blogs/internet/authors/Jeremy_Tarling, https://uk.linkedin.com/in/amaalmohamed
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Business News Ontology Homepage <https://www.bbc.co.uk/ontologies/business-news-ontology>`_
+:Download: `BBC Business News Ontology (BBCBusiness) Homepage <https://www.bbc.co.uk/ontologies/business-news-ontology>`_
 
 Graph Metrics
 -------------

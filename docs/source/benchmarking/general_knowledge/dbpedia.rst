@@ -1,5 +1,5 @@
-DBpedia Ontology
-==========================
+DBpedia Ontology (DBpedia)
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
 :Creator: DBpedia Maintainers and Contributors
 :License: Creative Commons 3.0
 :Format: OWL
-:Download: `DBpedia Ontology Homepage <https://wiki.dbpedia.org/>`_
+:Download: `DBpedia Ontology (DBpedia) Homepage <https://wiki.dbpedia.org/>`_
 
 Graph Metrics
 -------------

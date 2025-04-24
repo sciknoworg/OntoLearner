@@ -1,5 +1,5 @@
 Citation Typing Ontology (CiTO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 11
-    - **Non-taxonomic Relations**: 1
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example

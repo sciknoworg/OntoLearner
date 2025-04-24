@@ -1,5 +1,5 @@
 Semantic Web for Earth and Environment Technology Ontology (SWEET)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,9 +49,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 2439
-    - **Taxonomic Relations**: 18840
-    - **Non-taxonomic Relations**: 517
-    - **Average Terms per Type**: 81.30
+    - **Taxonomic Relations**: 18839
+    - **Non-taxonomic Relations**: 515
+    - **Average Terms per Type**: 11.67
 
 Usage Example
 -------------

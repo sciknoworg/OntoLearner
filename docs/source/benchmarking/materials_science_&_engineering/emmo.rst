@@ -1,5 +1,5 @@
 The Elementary Multiperspective Material Ontology (EMMO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,8 +50,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 2
     - **Taxonomic Relations**: 27873
-    - **Non-taxonomic Relations**: 77
-    - **Average Terms per Type**: 0.20
+    - **Non-taxonomic Relations**: 52
+    - **Average Terms per Type**: 2.00
 
 Usage Example
 -------------

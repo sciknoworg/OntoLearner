@@ -1,5 +1,5 @@
-EUropean Research Information Ontology
-==========================
+EUropean Research Information Ontology (EURIO)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ framework programmes for research and innovation.
 :Creator: Publications Office of the European Commission
 :License: Creative Commons 4.0
 :Format: RDF
-:Download: `EUropean Research Information Ontology Homepage <https://op.europa.eu/de/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/eurio>`_
+:Download: `EUropean Research Information Ontology (EURIO) Homepage <https://op.europa.eu/de/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/eurio>`_
 
 Graph Metrics
 -------------

@@ -53,7 +53,7 @@ class CSO(BaseOntology):
     - contributesTo relationships
     """
     ontology_id = "CSO"
-    ontology_full_name = "Computer Science Ontology"
+    ontology_full_name = "Computer Science Ontology (CSO)"
     domain = "Scholarly Knowledge"
     category = "Computer Science"
     version = "3.4"
@@ -116,7 +116,7 @@ class DataCite(BaseOntology):
     and retrieval purposes) to be described in RDF.
     """
     ontology_id = "DataCite"
-    ontology_full_name = "DataCite"
+    ontology_full_name = "DataCite Ontology (DataCite)"
     domain = "Scholarly Knowledge"
     category = "Metadata"
     version = "3.1"
@@ -173,7 +173,7 @@ class EURIO(BaseOntology):
     framework programmes for research and innovation.
     """
     ontology_id = "EURIO"
-    ontology_full_name = "EUropean Research Information Ontology"
+    ontology_full_name = "EUropean Research Information Ontology (EURIO)"
     domain = "Scholarly Knowledge"
     category = "Research Information"
     version = "2.4"
@@ -245,7 +245,7 @@ class LexInfo(BaseOntology):
     and is available together with an API.
     """
     ontology_id = "LexInfo"
-    ontology_full_name = "LexInfo"
+    ontology_full_name = "LexInfo (LexInfo)"
     domain = "Scholarly Knowledge"
     category = "Linguistics"
     version = "3.0"

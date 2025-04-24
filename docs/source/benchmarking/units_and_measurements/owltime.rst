@@ -1,5 +1,5 @@
 Time Ontology in OWL (OWL-Time)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -52,7 +52,7 @@ Generated Benchmarks:
     - **Term Types**: 17
     - **Taxonomic Relations**: 529
     - **Non-taxonomic Relations**: 1
-    - **Average Terms per Type**: 0.94
+    - **Average Terms per Type**: 8.50
 
 Usage Example
 -------------

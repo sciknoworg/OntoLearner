@@ -6,7 +6,7 @@ class ChordOntology(BaseOntology):
     The Chord Ontology is an ontology for describing chords in musical pieces.
     """
     ontology_id = "ChordOntology"
-    ontology_full_name = "Chord Ontology"
+    ontology_full_name = "Chord Ontology (ChordOntology)"
     domain = "Arts & Humanities"
     category = "Musical Works"
     version = "1.0"
@@ -42,7 +42,7 @@ class MusicOntology(BaseOntology):
     on the Semantic Web.
     """
     ontology_id = "MusicOntology"
-    ontology_full_name = "Music Ontology"
+    ontology_full_name = "Music Ontology (MusicOntology)"
     domain = "Arts & Humanities"
     category = "Music Theory"
     version = "2.1.5"
@@ -79,7 +79,7 @@ class TimelineOntology(BaseOntology):
     A timeline may support a signal, a video, a score, a work, etc.
     """
     ontology_id = "TimelineOntology"
-    ontology_full_name = "Timeline Ontology"
+    ontology_full_name = "Timeline Ontology (TimelineOntology)"
     domain = "Arts & Humanities"
     category = "Music Theory"
     version = "1.0"

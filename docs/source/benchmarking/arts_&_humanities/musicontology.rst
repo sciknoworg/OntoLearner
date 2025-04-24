@@ -1,5 +1,5 @@
-Music Ontology
-==========================
+Music Ontology (MusicOntology)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ on the Semantic Web.
 :Creator: Knowledge Media Institute, Open University
 :License: Creative Commons 4.0
 :Format: RDF/XML
-:Download: `Music Ontology Homepage <https://github.com/motools/musicontology>`_
+:Download: `Music Ontology (MusicOntology) Homepage <https://github.com/motools/musicontology>`_
 
 Graph Metrics
 -------------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 13
     - **Taxonomic Relations**: 67
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 1.18
+    - **Average Terms per Type**: 6.50
 
 Usage Example
 -------------

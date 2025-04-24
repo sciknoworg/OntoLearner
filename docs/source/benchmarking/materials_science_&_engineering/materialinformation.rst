@@ -1,5 +1,5 @@
 Material Information Ontology (MaterialInformation)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,8 +48,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 410
     - **Taxonomic Relations**: 611
-    - **Non-taxonomic Relations**: 32
-    - **Average Terms per Type**: 6.72
+    - **Non-taxonomic Relations**: 30
+    - **Average Terms per Type**: 1.03
 
 Usage Example
 -------------

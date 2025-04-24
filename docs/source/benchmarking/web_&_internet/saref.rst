@@ -1,5 +1,5 @@
 Smart Applications REFerence ontology (SAREF)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -51,7 +51,7 @@ Generated Benchmarks:
     - **Term Types**: 10
     - **Taxonomic Relations**: 224
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 2.50
+    - **Average Terms per Type**: 10.00
 
 Usage Example
 -------------

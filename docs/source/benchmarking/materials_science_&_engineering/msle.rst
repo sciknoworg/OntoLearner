@@ -1,5 +1,5 @@
 Material Science Lab Equipment Ontology (MSLE)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,8 +46,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 4
     - **Taxonomic Relations**: 83
-    - **Non-taxonomic Relations**: 229
-    - **Average Terms per Type**: 0.16
+    - **Non-taxonomic Relations**: 228
+    - **Average Terms per Type**: 1.33
 
 Usage Example
 -------------

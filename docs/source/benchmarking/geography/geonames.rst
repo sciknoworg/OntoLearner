@@ -1,5 +1,5 @@
 GeoNames Ontology (GeoNames)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 699
     - **Taxonomic Relations**: 150
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 99.86
+    - **Average Terms per Type**: 349.50
 
 Usage Example
 -------------

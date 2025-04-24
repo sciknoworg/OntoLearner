@@ -28,6 +28,7 @@ extensions = [
     "sphinx.ext.linkcode",
     "sphinx_inline_tabs",
     "sphinxcontrib.mermaid",
+    'sphinx_tabs.tabs',
 ]
 
 # autosummary_generate = True  # Turn on sphinx.ext.autosummary

@@ -1,5 +1,5 @@
 Quantities, Units, Dimensions and Data Types (QUDT)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Generated Benchmarks:
     - **Term Types**: 27
     - **Taxonomic Relations**: 3252
     - **Non-taxonomic Relations**: 12
-    - **Average Terms per Type**: 0.96
+    - **Average Terms per Type**: 2.45
 
 Usage Example
 -------------

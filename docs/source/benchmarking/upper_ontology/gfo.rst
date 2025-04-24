@@ -1,5 +1,5 @@
 General Formal Ontology (GFO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,8 +50,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 1
     - **Taxonomic Relations**: 203
-    - **Non-taxonomic Relations**: 40
-    - **Average Terms per Type**: 0.33
+    - **Non-taxonomic Relations**: 34
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

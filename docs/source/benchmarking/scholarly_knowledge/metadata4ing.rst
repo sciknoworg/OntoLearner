@@ -1,5 +1,5 @@
 Metadata for Intelligent Engineering (Metadata4Ing)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -51,7 +51,7 @@ Generated Benchmarks:
     - **Term Types**: 47
     - **Taxonomic Relations**: 122
     - **Non-taxonomic Relations**: 6
-    - **Average Terms per Type**: 2.76
+    - **Average Terms per Type**: 11.75
 
 Usage Example
 -------------

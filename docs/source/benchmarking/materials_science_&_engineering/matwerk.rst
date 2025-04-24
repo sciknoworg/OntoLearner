@@ -1,5 +1,5 @@
 NFDI MatWerk Ontology (MatWerk)
-==============================================================================
+========================================================================================================================
 
 Overview
 --------
@@ -20,12 +20,12 @@ enhances data discoverability, reusability, and accelerates scientific exchange,
 and discoveries by optimizing research data management and accessibility.
 
 :Domain: Materials Science & Engineering
-:Category: Materials Science
+:Category: Research Data, Interoperability
 :Current Version: 3.0.0
-:Last Updated: 2024-01-30
+:Last Updated: 2025-03-01
 :Creator: Hossein Beygi Nasrabadi, Jörg Waitelonis, Ebrahim Norouzi, Kostiantyn Hubaiev, Harald Sack
-:License: Creative Commons 4.0
-:Format: OWL, TTL
+:License: Creative Commons 1.0
+:Format: TTL
 :Download: `NFDI MatWerk Ontology (MatWerk) Homepage <https://github.com/ISE-FIZKarlsruhe/mwo?tab=readme-ov-file>`_
 
 Graph Metrics

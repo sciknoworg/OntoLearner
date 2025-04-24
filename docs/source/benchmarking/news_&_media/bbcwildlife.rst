@@ -1,5 +1,5 @@
-BBC Wildlife Ontology
-==========================
+BBC Wildlife Ontology (BBCWildlife)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ conservation status, and behavioural characteristics, etc.
 :Creator: https://www.ldodds.com#me, http://tomscott.name/
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Wildlife Ontology Homepage <https://www.bbc.co.uk/ontologies/wildlife-ontology>`_
+:Download: `BBC Wildlife Ontology (BBCWildlife) Homepage <https://www.bbc.co.uk/ontologies/wildlife-ontology>`_
 
 Graph Metrics
 -------------

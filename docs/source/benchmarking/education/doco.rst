@@ -1,5 +1,5 @@
 Document Components Ontology (DoCO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,7 +49,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 156
-    - **Non-taxonomic Relations**: 13
+    - **Non-taxonomic Relations**: 7
     - **Average Terms per Type**: 0.00
 
 Usage Example

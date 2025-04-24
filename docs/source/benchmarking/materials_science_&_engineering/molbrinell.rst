@@ -1,5 +1,5 @@
 MatoLab Brinell Test Ontology (MOL_BRINELL)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Generated Benchmarks:
     - **Term Types**: 3053
     - **Taxonomic Relations**: 14
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 82.51
+    - **Average Terms per Type**: 105.28
 
 Usage Example
 -------------

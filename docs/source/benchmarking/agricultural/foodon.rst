@@ -1,5 +1,5 @@
 Food Ontology (FoodON)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,8 +50,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 16
     - **Taxonomic Relations**: 98513
-    - **Non-taxonomic Relations**: 7924
-    - **Average Terms per Type**: 0.94
+    - **Non-taxonomic Relations**: 2072
+    - **Average Terms per Type**: 8.00
 
 Usage Example
 -------------

@@ -1,5 +1,5 @@
 Mechanical Testing Ontology (MechanicalTesting)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,7 +46,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 2745
-    - **Non-taxonomic Relations**: 14
+    - **Non-taxonomic Relations**: 3
     - **Average Terms per Type**: 0.00
 
 Usage Example

@@ -1,5 +1,5 @@
 Digital Buildings Ontology (DBO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 35
     - **Taxonomic Relations**: 37016
     - **Non-taxonomic Relations**: 12
-    - **Average Terms per Type**: 1.09
+    - **Average Terms per Type**: 2.06
 
 Usage Example
 -------------

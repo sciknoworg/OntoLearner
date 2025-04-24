@@ -1,5 +1,5 @@
 Ontology of Units of Measure (OM)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -54,8 +54,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 1953
     - **Taxonomic Relations**: 2016
-    - **Non-taxonomic Relations**: 230
-    - **Average Terms per Type**: 55.80
+    - **Non-taxonomic Relations**: 0
+    - **Average Terms per Type**: 42.46
 
 Usage Example
 -------------

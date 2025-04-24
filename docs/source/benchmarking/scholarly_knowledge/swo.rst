@@ -1,5 +1,5 @@
 Software Ontology (SWO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,8 +48,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 444
     - **Taxonomic Relations**: 20936
-    - **Non-taxonomic Relations**: 699
-    - **Average Terms per Type**: 10.33
+    - **Non-taxonomic Relations**: 644
+    - **Average Terms per Type**: 8.38
 
 Usage Example
 -------------

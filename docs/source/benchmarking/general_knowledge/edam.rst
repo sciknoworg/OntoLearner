@@ -1,5 +1,5 @@
 The ontology of data analysis and management (EDAM)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 9748
+    - **Taxonomic Relations**: 9745
     - **Non-taxonomic Relations**: 1314
     - **Average Terms per Type**: 0.00
 

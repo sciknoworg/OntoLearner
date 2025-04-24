@@ -1,5 +1,5 @@
 Conference Ontology (Conference)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,7 +50,7 @@ Generated Benchmarks:
     - **Term Types**: 32
     - **Taxonomic Relations**: 184
     - **Non-taxonomic Relations**: 3
-    - **Average Terms per Type**: 2.00
+    - **Average Terms per Type**: 10.67
 
 Usage Example
 -------------

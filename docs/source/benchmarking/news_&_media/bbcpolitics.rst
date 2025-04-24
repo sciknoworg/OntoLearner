@@ -1,5 +1,5 @@
-BBC Politics News Ontology
-==========================
+BBC Politics News Ontology (BBCPolitics)
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ The Politics Ontology describes the concepts that occur in BBC politics news.
 :Creator: https://www.r4isstatic.com/
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Politics News Ontology Homepage <https://www.bbc.co.uk/ontologies/politics-ontology>`_
+:Download: `BBC Politics News Ontology (BBCPolitics) Homepage <https://www.bbc.co.uk/ontologies/politics-ontology>`_
 
 Graph Metrics
 -------------

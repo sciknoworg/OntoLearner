@@ -1,5 +1,5 @@
 Suggested Upper Merged Ontology (SUMO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,9 +47,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 80282
-    - **Taxonomic Relations**: 7178
-    - **Non-taxonomic Relations**: 311
-    - **Average Terms per Type**: 1867.02
+    - **Taxonomic Relations**: 7174
+    - **Non-taxonomic Relations**: 310
+    - **Average Terms per Type**: 165.53
 
 Usage Example
 -------------

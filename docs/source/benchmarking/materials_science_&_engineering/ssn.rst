@@ -1,5 +1,5 @@
 Semantic Sensor Network Ontology (SSN)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -55,7 +55,7 @@ Generated Benchmarks:
     - **Term Types**: 7
     - **Taxonomic Relations**: 7585
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 1.40
+    - **Average Terms per Type**: 7.00
 
 Usage Example
 -------------

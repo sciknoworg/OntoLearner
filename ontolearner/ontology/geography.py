@@ -63,7 +63,7 @@ class Juso(BaseOntology):
     Juso Ontology is a Web vocabulary for describing geographical addresses and features.
     """
     ontology_id = "Juso"
-    ontology_full_name = "Juso Ontology"
+    ontology_full_name = "Juso Ontology (Juso)"
     domain = "Geography"
     category = "geographical knowledge"
     version = "0.1.1"

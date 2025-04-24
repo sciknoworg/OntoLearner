@@ -1,5 +1,5 @@
 Tribology and Artificial Intelligence Ontology (TribAIn)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 21
     - **Taxonomic Relations**: 488
     - **Non-taxonomic Relations**: 24
-    - **Average Terms per Type**: 0.70
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

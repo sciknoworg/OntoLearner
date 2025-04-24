@@ -1,5 +1,5 @@
-BIO: A vocabulary for biographical information
-==========================
+BIO: A vocabulary for biographical information (BIO)
+========================================================================================================================
 
 Overview
 --------
@@ -17,7 +17,7 @@ the Employment event puts the person being employed as the principal agent in th
 :Creator: Ian Davis and David Galbraith
 :License: Public Domain
 :Format: RDF, TTL, CSV, NT
-:Download: `BIO: A vocabulary for biographical information Homepage <https://vocab.org/bio/>`_
+:Download: `BIO: A vocabulary for biographical information (BIO) Homepage <https://vocab.org/bio/>`_
 
 Graph Metrics
 -------------
@@ -51,8 +51,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 1
     - **Taxonomic Relations**: 62
-    - **Non-taxonomic Relations**: 1
-    - **Average Terms per Type**: 0.17
+    - **Non-taxonomic Relations**: 0
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------

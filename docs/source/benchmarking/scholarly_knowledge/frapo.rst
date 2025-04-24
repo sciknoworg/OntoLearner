@@ -1,5 +1,5 @@
 Funding, Research Administration and Projects Ontology (FRAPO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 25
     - **Taxonomic Relations**: 82
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 1.67
+    - **Average Terms per Type**: 8.33
 
 Usage Example
 -------------

@@ -1,5 +1,5 @@
-TUBES System Ontology
-==========================
+TUBES System Ontology (TUBES)
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ in a future semantic web of building data. It has a strong alignment to other on
 :Creator: Nicolas Pauen
 :License: Creative Commons 4.0
 :Format: RDF/XML, Turtle, JSON-LD
-:Download: `TUBES System Ontology Homepage <https://rwth-e3d.github.io/tso/>`_
+:Download: `TUBES System Ontology (TUBES) Homepage <https://rwth-e3d.github.io/tso/>`_
 
 Graph Metrics
 -------------

@@ -1,5 +1,5 @@
-BBC Creative Work Ontology
-==========================
+BBC Creative Work Ontology (BBCCreativeWork)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ their more specific types (BlogPost, NewsItem, Programme) and audiences (audienc
 :Creator: LinkedData@bbc.co.uk
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Creative Work Ontology Homepage <https://www.bbc.co.uk/ontologies/creative-work-ontology>`_
+:Download: `BBC Creative Work Ontology (BBCCreativeWork) Homepage <https://www.bbc.co.uk/ontologies/creative-work-ontology>`_
 
 Graph Metrics
 -------------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 15
     - **Taxonomic Relations**: 17
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.79
+    - **Average Terms per Type**: 5.00
 
 Usage Example
 -------------

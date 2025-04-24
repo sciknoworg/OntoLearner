@@ -1,5 +1,5 @@
 Matolab Tensile Test Ontology (MOL_TENSILE)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Generated Benchmarks:
     - **Term Types**: 20
     - **Taxonomic Relations**: 370
     - **Non-taxonomic Relations**: 20
-    - **Average Terms per Type**: 1.43
+    - **Average Terms per Type**: 6.67
 
 Usage Example
 -------------

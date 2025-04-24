@@ -1,5 +1,5 @@
 Vibrational Spectroscopy Ontology (VIBSO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,8 +47,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 40
     - **Taxonomic Relations**: 856
-    - **Non-taxonomic Relations**: 125
-    - **Average Terms per Type**: 1.48
+    - **Non-taxonomic Relations**: 23
+    - **Average Terms per Type**: 2.35
 
 Usage Example
 -------------

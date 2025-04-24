@@ -1,5 +1,5 @@
 SMART Protocols Ontology: Document Module (SP-Document)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,8 +47,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 45
     - **Taxonomic Relations**: 1194
-    - **Non-taxonomic Relations**: 74
-    - **Average Terms per Type**: 1.88
+    - **Non-taxonomic Relations**: 73
+    - **Average Terms per Type**: 2.65
 
 Usage Example
 -------------

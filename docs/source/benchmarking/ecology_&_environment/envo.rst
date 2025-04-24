@@ -1,5 +1,5 @@
 Environment Ontology (ENVO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,8 +49,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 46
     - **Taxonomic Relations**: 28876
-    - **Non-taxonomic Relations**: 1244
-    - **Average Terms per Type**: 2.30
+    - **Non-taxonomic Relations**: 148
+    - **Average Terms per Type**: 5.75
 
 Usage Example
 -------------

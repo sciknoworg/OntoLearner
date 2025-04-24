@@ -1,5 +1,5 @@
-BBC Programmes Ontology
-==========================
+BBC Programmes Ontology (BBCProgrammes)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ Its development was funded by the BBC, and is heavily grounded on previous progr
 :Creator: https://moustaki.org/foaf.rdf#moustaki
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `BBC Programmes Ontology Homepage <https://www.bbc.co.uk/ontologies/programmes-ontology>`_
+:Download: `BBC Programmes Ontology (BBCProgrammes) Homepage <https://www.bbc.co.uk/ontologies/programmes-ontology>`_
 
 Graph Metrics
 -------------

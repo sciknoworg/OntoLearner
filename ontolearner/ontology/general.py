@@ -28,7 +28,7 @@ class DBpedia(BaseOntology):
     into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
     """
     ontology_id = "DBpedia"
-    ontology_full_name = "DBpedia Ontology"
+    ontology_full_name = "DBpedia Ontology (DBpedia)"
     domain = "General Knowledge"
     category = "Knowledge Graph"
     version = None

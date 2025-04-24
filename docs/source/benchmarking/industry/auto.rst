@@ -1,5 +1,5 @@
 Automotive Ontology (AUTO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,9 +48,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 58
-    - **Taxonomic Relations**: 13448
-    - **Non-taxonomic Relations**: 49
-    - **Average Terms per Type**: 2.32
+    - **Taxonomic Relations**: 13439
+    - **Non-taxonomic Relations**: 42
+    - **Average Terms per Type**: 3.62
 
 Usage Example
 -------------

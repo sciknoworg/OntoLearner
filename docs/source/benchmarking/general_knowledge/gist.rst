@@ -1,5 +1,5 @@
 GIST Upper Ontology (GIST)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,8 +48,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 8
     - **Taxonomic Relations**: 78
-    - **Non-taxonomic Relations**: 106
-    - **Average Terms per Type**: 1.33
+    - **Non-taxonomic Relations**: 56
+    - **Average Terms per Type**: 8.00
 
 Usage Example
 -------------
