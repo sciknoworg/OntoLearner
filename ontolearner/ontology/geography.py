@@ -18,10 +18,6 @@ class GEO(BaseOntology):
     format = "OWL"
     download_url = "http://purl.obolibrary.org/obo/geo.owl"
 
-    def contains_imports(self) -> bool:
-        """Hook: Check if the ontology contains imports."""
-        return True
-
 
 class GeoNames(BaseOntology):
     """
