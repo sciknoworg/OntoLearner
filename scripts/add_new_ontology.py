@@ -95,7 +95,7 @@ def main():
         #     (LODE(), "events/lode.rdf"),
         #
         #     # Finance Ontologies
-        #     (GoodRelations(), "finance/good_relations.owl"),
+        #     (GoodRelations(), "finance/goodrelations.owl"),
         #
         #     # Food & Beverage Ontologies
         #     (Wine(), "food_&_beverage/wine.rdf"),
