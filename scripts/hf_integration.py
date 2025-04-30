@@ -1,11 +1,12 @@
 import logging
 from pathlib import Path
-from typing import Union
+from typing import Union, Any
 import shutil
 import json
-from huggingface_hub import HfApi, Repository, login
+from huggingface_hub import HfApi, Repository, login, hf_hub_download
 from huggingface_hub.errors import RepositoryNotFoundError
 
+from ontolearner.data_structure import OntologyData
 from ontolearner.ontology import *  # noqa
 from ontolearner.base import BaseOntology
 
@@ -24,7 +25,7 @@ DATASET_DIR = DATA_DIR / "datasets"
 # Hugging Face
 TMP_DIR = Path("./tmp")
 HF_TOKEN = "hf_token"
-
+ORGANIZATION = "SciKnowOrg/OntoLearner"
 
 def create_readme(ontology: BaseOntology) -> str:
     """
@@ -87,7 +88,7 @@ def push_to_huggingface(ontology: BaseOntology, ontology_path: Union[str, Path],
             api.create_repo(repo_id=repo_name, repo_type="dataset", private=False)
             repo = Repository(local_dir=local_dir, clone_from=repo_name, repo_type="dataset")
 
-        # --- File Validation ---
+        # File Validation
         required_files = [
             ontology_path,
             dataset_dir / f"{ontology.domain.lower().replace(' ', '_')}" /
@@ -97,7 +98,7 @@ def push_to_huggingface(ontology: BaseOntology, ontology_path: Union[str, Path],
             logger.error(f"Missing files for {ontology.ontology_id}")
             return False, repo_name
 
-        # --- Copy Files ---
+        # Copy Files
         # README
         readme_content = create_readme(ontology)  # Your existing function
         (local_dir / "README.md").write_text(readme_content)
@@ -126,7 +127,7 @@ def push_to_huggingface(ontology: BaseOntology, ontology_path: Union[str, Path],
         with open(local_dir / "dataset_infos.json", "w", encoding="utf-8") as f:
             json.dump(metadata, f, indent=2)
 
-        # --- Push ---
+        # Push
         repo.git_add(auto_lfs_track=True)
         repo.git_commit("Update datasets and ontology")
         repo.git_push()
@@ -141,14 +142,81 @@ def push_to_huggingface(ontology: BaseOntology, ontology_path: Union[str, Path],
             shutil.rmtree(local_dir)
 
 
+def load_from_huggingface(ontology_id: str) -> Tuple[BaseOntology, OntologyData]:
+    """Load ontology and datasets from Hugging Face"""
+    repo_name = f"ontology-{ontology_id.lower().replace(' ', '-')}"
+    local_dir = TMP_DIR / repo_name
+
+    # Clone repository
+    try:
+        repo = Repository(local_dir=local_dir, clone_from=repo_name, repo_type="dataset")
+
+        # Load ontology file
+        ontology_files = list(local_dir.glob("*.owl")) + list(local_dir.glob("*.rdf")) + list(local_dir.glob("*.ttl"))
+
+        if not ontology_files:
+            raise FileNotFoundError("No ontology file found")
+
+        # Instantiate the correct ontology class based on ID
+        ontology_class = get_ontology_class_by_id(ontology_id)
+        ontology = ontology_class()
+
+        # Load datasets
+        datasets = OntologyData(
+            term_typings=json.loads((local_dir / "term_typings.json").read_text()),
+            type_taxonomies=json.loads((local_dir / "type_taxonomies.json").read_text()),
+            type_non_taxonomic_relations=json.loads((local_dir / "non_taxonomic_relations.json").read_text())
+        )
+
+        return ontology, datasets
+    finally:
+        if local_dir.exists():
+            shutil.rmtree(local_dir)
+
+
+def load_ontology_from_hf(ontology_id: str, cache_dir: Path) -> tuple[Path, dict[Any, Any]]:
+    repo_id = f"ontology-{ontology_id.lower().replace(' ', '-')}"
+
+    # Download ontology file (you'll need to know the format)
+    ontology_file = hf_hub_download(
+        repo_id=repo_id,
+        filename=f"{ontology_id}.owl",  # or other format
+        repo_type="dataset",
+        cache_dir=cache_dir
+    )
+
+    # Download datasets if needed
+    datasets = {}
+    for dataset_file in ["term_typings.json", "taxonomies.json", "non_taxonomic_relations.json"]:
+        try:
+            datasets[dataset_file] = hf_hub_download(
+                repo_id=repo_id,
+                filename=dataset_file,
+                repo_type="dataset",
+                cache_dir=cache_dir
+            )
+        except:
+            logger.warning(f"Dataset file {dataset_file} not found in repository")
+
+    return Path(ontology_file), datasets
+
+
+def get_ontology_class_by_id(ontology_id: str) -> type[BaseOntology]:
+    """Returns the ontology class based on the ontology ID"""
+    for cls in BaseOntology.__subclasses__():
+        if cls.ontology_id == ontology_id:
+            return cls
+    raise ValueError(f"No ontology class found for ID: {ontology_id}")
+
+
 def main():
     try:
         ontologies = [
             # Agricultural Ontologies
-            # (FoodOn(), "agricultural/foodon.owl"),
-            # (AGROVOC(), "agricultural/AGROVOC.rdf"),
-            # (PO(), "agricultural/plant.owl"),
-            #
+            (FoodOn(), "agricultural/foodon.owl"),
+            (AGROVOC(), "agricultural/agrovoc.rdf"),
+            (PO(), "agricultural/po.owl"),
+
             # # Arts and Humanities Ontologies
             # (ChordOntology(), "arts_&_humanities/chord.rdf"),
             # (ICON(), "arts_&_humanities/icon.owl"),
