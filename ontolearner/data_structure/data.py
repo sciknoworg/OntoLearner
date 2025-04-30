@@ -82,3 +82,18 @@ class OntologyData(BaseModel):
     term_typings: List[TermTyping] = Field(..., description="List of term typing entries")
     type_taxonomies: TypeTaxonomies = Field(..., description="Taxonomy information")
     type_non_taxonomic_relations: NonTaxonomicRelations = Field(..., description="Non-taxonomic relation information")
+
+class PseudoSentence(BaseModel):
+    id: str
+    pseudo_sentences: List[List[str]]
+    terms: List[str]
+    types: List[str]
+
+
+class SyntheticText2OntoData(BaseModel):
+    """
+    Schema for synthetic text2onto generator
+    """
+    child_to_parent: Dict[str, List[str]] = Field(..., description="Mapping from child terms to their parent terms")
+    pseudo_sentences: List[PseudoSentence] = Field(..., description="List of pseudo sentence batches with metadata")
+    generated_docs: List[Document] = Field(..., description="Generated documents from pseudo sentences")
