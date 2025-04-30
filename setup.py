@@ -22,7 +22,8 @@ setup(
         "matplotlib==3.9.4",
         "tqdm==4.67.1",
         "pydantic==2.10.5",
-        "pathlib==1.0.1"
+        "pathlib==1.0.1",
+        "dspy==2.6.22"
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
