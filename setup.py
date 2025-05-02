@@ -18,11 +18,12 @@ setup(
         "networkx==3.2.1",
         "seaborn==0.13.2",
         "numpy==1.26.4",
-        "pandas==2.0.3",
+        "pandas==2.1.1",
         "matplotlib==3.9.4",
         "tqdm==4.67.1",
         "pydantic==2.10.5",
-        "pathlib==1.0.1"
+        "pathlib==1.0.1",
+        "dspy==2.6.22"
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
