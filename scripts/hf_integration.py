@@ -48,6 +48,17 @@ TMP_DIR = Path("./tmp")
 ORGANIZATION = "SciKnowOrg/OntoLearner"
 
 
+DOMAINS_DEFINITIONS = {
+    "agricultural": "Agricultural ontologies encompass formal knowledge representations of farming systems, crops, food production, and agricultural vocabularies, providing structured taxonomies and semantic relationships that model the complex interactions within agricultural domains. These ontologies capture critical concepts including crop varieties, growth cycles, farming practices, soil properties, irrigation methods, pest management, harvest techniques, food processing chains, nutritional values, agricultural economics, and regional farming terminologies. By standardizing agricultural knowledge in machine-readable formats, these ontologies enable interoperability between agricultural information systems and enhance data integration for agricultural research. The OntoLearner library's collection of these domain-specific resources promotes ontology reuse, standardization, and benchmarking for automated ontology learning applications in agricultural contexts.",
+    "arts_&_humanities": "Arts and Humanities Ontologies",
+    "biology_&_life_sciences": "Biology & Life Sciences Ontologies",
+    "computer_science": "Computer Science Ontologies",
+    "education": "Education Ontologies",
+    "engineering": "Engineering Ontologies",
+    "environment": "Environment Ontologies",
+}
+
+
 def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
     """
     Copy ontology file and documentation to the domain directory.
@@ -100,14 +111,28 @@ def create_domain_readme(domain: str, ontologies: List[BaseOntology], metrics: D
     domain_title = domain.replace('_', ' ').title()
 
     readme = f"""
-# {domain_title} Ontologies Dataset
+---
+license: mit
+language:
+- en
+tags:
+- OntoLearner
+- ontology-learning
+- {domain}
+pretty_name: Agricultural
+---
+<div>
+  <img  src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/main/images/logo.png"  alt="OntoLearner"
+    style="display: block; margin: 0 auto; width: 500px; height: auto;">
+  <h1 style="text-align: center; margin-top: 1em;">{domain_title} Domain Ontologies</h1>
+</div>
 
 ## Overview
-This repository contains ontologies and their processed datasets for the {domain_title} domain.
+{DOMAINS_DEFINITIONS[domain]}
 
 ## Ontologies
-| Ontology ID | Full Name | Classes | Properties | Terms | Last Updated | License |
-|-------------|-----------|---------|------------|-------|--------------|---------|
+| Ontology ID | Full Name | Classes | Properties | Last Updated |
+|-------------|-----------|---------|------------|--------------|
 """
 
     # Add a row for each ontology
@@ -116,13 +141,11 @@ This repository contains ontologies and their processed datasets for the {domain
         if metrics_data:
             num_classes = metrics_data.topology.num_classes
             num_properties = metrics_data.topology.num_properties
-            num_terms = metrics_data.dataset.num_term_types
         else:
             num_classes = "N/A"
             num_properties = "N/A"
-            num_terms = "N/A"
 
-        readme += f"| {ontology.ontology_id} | {ontology.ontology_full_name} | {num_classes} | {num_properties} | {num_terms} | {ontology.last_updated} | {ontology.license} |\n"
+        readme += f"| {ontology.ontology_id} | {ontology.ontology_full_name} | {num_classes} | {num_properties} | {ontology.last_updated}|\n"
 
     readme += """
 ## Dataset Files
@@ -149,7 +172,7 @@ def push_domain_to_huggingface(domain: str, ontologies: List[BaseOntology],
     login(token=huggingface_key)
 
     # Create repository name from domain
-    repo_name = f"SciKnowOrg/ontology-domain-{domain.lower().replace(' ', '-').replace('&', 'and')}"
+    repo_name = f"SciKnowOrg/ontolearner-{domain.lower()}"
     local_dir = TMP_DIR / repo_name
 
     try:
@@ -190,7 +213,8 @@ def push_domain_to_huggingface(domain: str, ontologies: List[BaseOntology],
                 "ontology",
                 domain.lower().replace("&", "and").replace(" ", "-"),
                 "knowledge-graph"
-            ]
+            ],
+            "ontologies": [ontology.ontology_id for ontology in ontologies]
         }
         with open(local_dir / "dataset_infos.json", "w", encoding="utf-8") as f:
             json.dump(metadata, f, indent=2)
