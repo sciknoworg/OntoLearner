@@ -288,7 +288,7 @@ def load_metrics_from_excel(metrics_file: Path) -> Dict[str, OntologyMetrics]:
 def main():
     try:
         ontologies: list[tuple[BaseOntology, str]] = [
-            # # Agricultural Ontologies
+            # Agricultural Ontologies
             # (FoodOn(), "owl"),
             # (AGROVOC(), "rdf"),
             # (PO(), "owl"),
