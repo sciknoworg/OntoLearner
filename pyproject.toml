@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "OntoLearner"
-version = "0.3.0"
+version = "0.4.0"
 description = "OntoLearner: Ontology Learning Framework."
 authors = ["Hamed Babaei Giglou <hamedbabaeigiglou@gmail.com>", "Andrei C. Aioanei <andrei.c.aioanei@gmail.com>"]
 license = "MIT License"

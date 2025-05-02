@@ -1,5 +1,11 @@
 ## Changelog
 
+### v0.4.0 (May 2, 2025)
+- Added text2onto module
+- Bug fixings to the text2onto new module
+- Added text2onto documentation page
+- Added minor necessary files to the repo.
+
 ### v0.3.0 (April 24, 2025)
 - Added full ontologies
 - Automated documentation generation
