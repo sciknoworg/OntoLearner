@@ -85,7 +85,7 @@ class OntologyData(BaseModel):
 
 class PseudoSentence(BaseModel):
     id: str
-    pseudo_sentences: List[List[str]]
+    pseudo_sentences: List[str]
     terms: List[str]
     types: List[str]
 

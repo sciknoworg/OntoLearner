@@ -24,7 +24,7 @@ class SyntheticDataSplitter:
             for a_term in row.terms:
                 self.term_to_doc_id[a_term].add(doc_id)
 
-        self.doc_id_to_doc = {doc['id']: doc for doc in synthetic_data.generated_docs}
+        self.doc_id_to_doc = {doc.id: doc for doc in synthetic_data.generated_docs}
         print(f"loaded {len(self.doc_id_to_doc)} documents!")
 
         total_type_count = len(set().union(*self.doc_id_to_types.values()))
@@ -63,8 +63,7 @@ class SyntheticDataSplitter:
         return split_targets, split_docs_targets
 
     def assign_types_with_propagation(self, split_name, split_targets, split_docs_targets,
-                                      split_types, split_docs, unassigned_types, unassigned_docs):
-        assigned_docs = set()
+                                      split_types, split_docs, unassigned_types, unassigned_docs, assigned_docs):
         target_size = split_targets[split_name]
         docs_target_size = split_docs_targets[split_name]
         while len(split_types[split_name]) < target_size and len(
@@ -82,13 +81,13 @@ class SyntheticDataSplitter:
                     if doc_id in assigned_docs:
                         continue
                     split_docs[split_name].add(doc_id)
-                    self.assigned_docs.add(doc_id)
+                    assigned_docs.add(doc_id)
                     unassigned_docs.discard(doc_id)
                     for t in self.doc_id_to_types[doc_id]:
                         if t not in split_types['train'] | split_types['val'] | split_types['test']:
                             queue.append(t)
                             unassigned_types.discard(t)
-        return split_types, split_docs, unassigned_docs
+        return split_types, split_docs, unassigned_docs, assigned_docs
 
     def create_train_val_test_splits(self, split_targets, split_docs_targets):
         split_types = {'train': set(), 'val': set(), 'test': set()}
@@ -98,18 +97,20 @@ class SyntheticDataSplitter:
         random.shuffle(all_types)
         unassigned_types = set(all_types)
         unassigned_docs = set(self.doc_id_to_doc.keys())
+        assigned_docs = set()
 
         for split_name in ['train', 'test', 'val']:
-            split_types, split_docs, unassigned_docs = self.assign_types_with_propagation(split_name,
+            split_types, split_docs, unassigned_docs, assigned_docs = self.assign_types_with_propagation(split_name,
                                                                                          split_targets,
                                                                                          split_docs_targets,
                                                                                          split_types,
                                                                                          split_docs,
                                                                                          unassigned_types,
-                                                                                         unassigned_docs)
+                                                                                         unassigned_docs,
+                                                                                         assigned_docs)
 
         # assign the unassigned documents based on their overlap with types in the already assigned types to splits
-        for doc_id in unassigned_docs:
+        for doc_id in unassigned_docs.copy():
             doc_types = self.doc_id_to_types[doc_id]
             doc_type_split_counts = {"train": 0, "test": 0, "val": 0}
             for a_type in doc_types:
@@ -123,6 +124,7 @@ class SyntheticDataSplitter:
             else:
                 max_key = max(doc_type_split_counts, key=doc_type_split_counts.get)
                 split_docs[max_key].add(doc_id)
+            unassigned_docs.discard(doc_id)
 
         assert len(unassigned_docs) == 0, "There are no unassigned documents."
 
@@ -165,7 +167,7 @@ class SyntheticDataSplitter:
             for doc_id in split_docs[split_name]:
                 doc = self.doc_id_to_doc[doc_id]
                 docs_split[split_name].append(doc)
-                split_to_text[split_name] += " " + doc['title'] + " " + doc['text']
+                split_to_text[split_name] += " " + doc.title + " " + doc.text
 
         types2docs_splits = {}
         for split_name in ['train', 'val', 'test']:

@@ -7,7 +7,6 @@ from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
 
 
 load_dotenv(override=True)
-
 # configure LLM for DSPy with LiteLLM - https://docs.litellm.ai/docs/providers
 dspy_llm = dspy.LM(
     model=os.environ["LLM_MODEL_ID"],
@@ -27,9 +26,9 @@ ontology = OM()
 ontology_path = "../data/om-2.0.rdf"
 ontology.load(ontology_path)
 ontological_data = ontology.extract()
-print(f"term types: {len(ontological_data.term_types)}")
-print(f"taxonomic relations: {len(ontological_data.taxonomic_relations.taxonomies)}")
-print(f"non-taxonomic relations: {len(ontological_data.non_taxonomic_relations.non_taxonomies)}")
+print(f"term types: {len(ontological_data.term_typings)}")
+print(f"taxonomic relations: {len(ontological_data.type_taxonomies.taxonomies)}")
+print(f"non-taxonomic relations: {len(ontological_data.type_non_taxonomic_relations.non_taxonomies)}")
 
 synthetic_data = text2onto_synthetic_generator.generate(ontological_data=ontological_data,
                                                                   topic=ontology.domain)
@@ -37,3 +36,15 @@ synthetic_data = text2onto_synthetic_generator.generate(ontological_data=ontolog
 splitter = SyntheticDataSplitter(synthetic_data=synthetic_data, onto_name=ontology.ontology_id)
 
 terms, types, docs, types2docs = splitter.split(train=0.8, val=0.1, test=0.1)
+
+print("Terms:")
+for split in terms:
+    print(f"  {split}: {len(terms[split])}")
+
+print("Types:")
+for split in types:
+    print(f"  {split}: {len(types[split])}")
+
+print("Docs:")
+for split in types:
+    print(f"  {split}: {len(docs[split])}")
