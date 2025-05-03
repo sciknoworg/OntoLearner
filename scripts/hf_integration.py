@@ -1,3 +1,4 @@
+import time
 from pathlib import Path
 from typing import Dict, List, Tuple
 import os
@@ -128,7 +129,7 @@ def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
     ontology_dir.mkdir(parents=True, exist_ok=True)
 
     # Copy ontology file from source to domain directory
-    source_file = ONTOLOGIES_DIR / ontology.domain.lower() / f"{ontology.ontology_id.lower()}.{format}"
+    source_file = ONTOLOGIES_DIR / ontology.domain.lower().replace(' ', '_') / f"{ontology.ontology_id.lower()}.{format}"
     if source_file.exists():
         shutil.copy2(source_file, ontology_dir / f"{ontology.ontology_id.lower()}.{format}")
         logger.info(f"Copied ontology file: {source_file}")
@@ -136,7 +137,7 @@ def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
         logger.warning(f"Ontology file not found at {source_file}. Skipping.")
 
     # Copy documentation file
-    doc_file = BENCHMARK_DIR / ontology.domain.lower() / f"{ontology.ontology_id.lower()}.rst"
+    doc_file = BENCHMARK_DIR / ontology.domain.lower().replace(' ', '_') / f"{ontology.ontology_id.lower()}.rst"
     if doc_file.exists():
         shutil.copy2(doc_file, ontology_dir / f"{ontology.ontology_id.lower()}.rst")
         logger.info(f"Copied documentation file: {doc_file}")
@@ -144,25 +145,13 @@ def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
         logger.warning(f"Documentation file not found at {doc_file}. Skipping.")
 
     # Copy dataset files
-    dataset_paths = [
-        DATASETS_DIR / ontology.domain.lower() / ontology.ontology_id.lower() / "term_typings.json",
-        DATASETS_DIR / ontology.domain.lower() / ontology.ontology_id.lower() / "type_taxonomies.json",
-        DATASETS_DIR / ontology.domain.lower() / ontology.ontology_id.lower() / "type_non_taxonomic_relations.json"
-    ]
-    for path in dataset_paths:
-        if path.exists():
-            shutil.copy2(path, ontology_dir / path.name)
-            logger.info(f"Copied dataset file: {path}")
-        else:
-            logger.warning(f"Dataset file not found at {path}. Skipping.")
-
-    # dataset_path = DATASETS_DIR / ontology.domain.lower() / ontology.ontology_id.lower()
-    # if dataset_path.is_dir():
-    #     for file in dataset_path.glob("*.json"):
-    #         shutil.copy2(file, ontology_dir)
-    #         logger.info(f"Copied dataset file: {file}")
-    # else:
-    #     logger.warning(f"Dataset path not found at {dataset_path}. Skipping.")
+    dataset_path = DATASETS_DIR / ontology.domain.lower().replace(' ', '_') / ontology.ontology_id.lower()
+    if dataset_path.is_dir():
+        for file in dataset_path.glob("*.json"):
+            shutil.copy2(file, ontology_dir)
+            logger.info(f"Copied dataset file: {file}")
+    else:
+        logger.warning(f"Dataset path not found at {dataset_path}. Skipping.")
 
 
 def create_domain_readme(domain: str,
@@ -273,7 +262,7 @@ def push_domain_to_huggingface(domain: str, domain_definition: str,
             "license": "mixed",
             "tags": [
                 "ontology",
-                domain.lower().replace("&", "and").replace(" ", "-"),
+                domain.lower().replace(" ", "-"),
                 "knowledge-graph"
             ],
             "ontologies": [ontology.ontology_id for ontology in ontologies]
@@ -628,6 +617,9 @@ def main():
                 successes += 1
             else:
                 failures += 1
+
+            logger.info("Waiting 30 seconds before processing next domain...")
+            time.sleep(30)
 
         logger.info(f"Completed processing all domains. Successes: {successes}, Failures: {failures}")
     except Exception as e:
