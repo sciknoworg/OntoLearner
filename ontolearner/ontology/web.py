@@ -8,7 +8,7 @@ class Hydra(BaseOntology):
     """
     ontology_id = "Hydra"
     ontology_full_name = "Hydra Ontology (Hydra)"
-    domain = "Web & Internet"
+    domain = "Web and Internet"
     category = "Web Development"
     version = None
     last_updated = "13 July 2021"
@@ -28,7 +28,7 @@ class SAREF(BaseOntology):
     """
     ontology_id = "SAREF"
     ontology_full_name = "Smart Applications REFerence ontology (SAREF)"
-    domain = "Web & Internet"
+    domain = "Web and Internet"
     category = "interoperability"
     version = "3.2.1"
     last_updated = "2020-12-31"

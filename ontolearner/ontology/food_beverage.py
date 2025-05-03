@@ -7,7 +7,7 @@ class Wine(BaseOntology):
     """
     ontology_id = "Wine"
     ontology_full_name = "Wine Ontology (Wine)"
-    domain = "Food & Beverage"
+    domain = "Food and Beverage"
     category = "Wine"
     version = None
     last_updated = None

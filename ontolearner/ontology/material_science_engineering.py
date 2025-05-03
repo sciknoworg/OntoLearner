@@ -16,7 +16,7 @@ class AMOntology(BaseOntology):
     """
     ontology_id = "AMOntology"
     ontology_full_name = "Additive Manufacturing Ontology (AMOntology)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Manufacturing"
     version = "1.0"
     last_updated = "2023-05-10"
@@ -34,7 +34,7 @@ class ASMO(BaseOntology):
     """
     ontology_id = "ASMO"
     ontology_full_name = "Atomistic Simulation Methods Ontology (ASMO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = None
@@ -50,7 +50,7 @@ class Atomistic(BaseOntology):
     """
     ontology_id = "Atomistic"
     ontology_full_name = "Atomistic Ontology (Atomistic)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.0.2"
     last_updated = None
@@ -69,7 +69,7 @@ class BattINFO(BaseOntology):
     """
     ontology_id = "BattINFO"
     ontology_full_name = "Battery Interface Ontology (BattINFO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -90,7 +90,7 @@ class BMO(BaseOntology):
     """
     ontology_id = "BMO"
     ontology_full_name = "Building Material Ontology (BMO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = "0.1"
     last_updated = "2019-12-10"
@@ -109,7 +109,7 @@ class BVCO(BaseOntology):
     """
     ontology_id = "BVCO"
     ontology_full_name = "Battery Value Chain Ontology (BVCO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.4.3"
     last_updated = None
@@ -131,7 +131,7 @@ class OntoCAPE(BaseOntology):
     """
     ontology_id = "OntoCAPE"
     ontology_full_name = "Ontology of Computer-Aided Process Engineering (OntoCAPE)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Manufacturing"
     version = "2.0"
     last_updated = None
@@ -177,7 +177,7 @@ class CDCO(BaseOntology):
     """
     ontology_id = "CDCO"
     ontology_full_name = "Crystallographic Defect Core Ontology (CDCO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = None
@@ -197,7 +197,7 @@ class CHAMEO(BaseOntology):
     """
     ontology_id = "CHAMEO"
     ontology_full_name = "Characterisation Methodology Domain Ontology (CHAMEO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = "2024-04-12"
@@ -215,7 +215,7 @@ class CIFCore(BaseOntology):
     """
     ontology_id = "CIFCore"
     ontology_full_name = "Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.1.0"
     last_updated = "May 24, 2023"
@@ -232,7 +232,7 @@ class CMSO(BaseOntology):
     """
     ontology_id = "CMSO"
     ontology_full_name = "Computational Material Sample Ontology (CMSO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.0.1"
     last_updated = None
@@ -249,7 +249,7 @@ class DISO(BaseOntology):
     """
     ontology_id = "DISO"
     ontology_full_name = "Dislocation Ontology (DISO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0"
     last_updated = "21.03.202"
@@ -269,7 +269,7 @@ class DSIM(BaseOntology):
     """
     ontology_id = "DSIM"
     ontology_full_name = "Dislocation Simulation and Model Ontology (DSIM)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0"
     last_updated = "17.08.2023"
@@ -289,7 +289,7 @@ class EMMO(BaseOntology):
     """
     ontology_id = "EMMO"
     ontology_full_name = "The Elementary Multiperspective Material Ontology (EMMO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Modelling"
     version = "1.0.0-rc3"
     last_updated = "2024-03"
@@ -305,7 +305,7 @@ class EMMOCrystallography(BaseOntology):
     """
     ontology_id = "EMMOCrystallography"
     ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Crystallography"
     version = "0.0.1"
     last_updated = None
@@ -322,7 +322,7 @@ class FSO(BaseOntology):
     """
     ontology_id = "FSO"
     ontology_full_name = "Flow Systems Ontology (FSO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.1.0"
     last_updated = "2020-08-06"
@@ -341,7 +341,7 @@ class GPO(BaseOntology):
     """
     ontology_id = "GPO"
     ontology_full_name = "General Process Ontology (GPO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -359,7 +359,7 @@ class HPOnt(BaseOntology):
     """
     ontology_id = "HPOnt"
     ontology_full_name = "The Heat Pump Ontology (HPOnt)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.2"
     last_updated = None
@@ -376,7 +376,7 @@ class LDO(BaseOntology):
     """
     ontology_id = "LDO"
     ontology_full_name = "Line Defect Ontology (LDO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Defects"
     version = "1.0.0"
     last_updated = None
@@ -396,7 +396,7 @@ class LPBFO(BaseOntology):
     """
     ontology_id = "LPBFO"
     ontology_full_name = "Laser Powder Bed Fusion Ontology (LPBFO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.1.9"
     last_updated = "2022-09-20"
@@ -420,7 +420,7 @@ class MAMBO(BaseOntology):
     """
     ontology_id = "MAMBO"
     ontology_full_name = "Molecules And Materials Basic Ontology (MAMBO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -439,7 +439,7 @@ class MAT(BaseOntology):
     """
     ontology_id = "MAT"
     ontology_full_name = "Material Properties Ontology (MAT)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Properties"
     version = "0.0.8"
     last_updated = None
@@ -457,7 +457,7 @@ class MaterialInformation(BaseOntology):
     """
     ontology_id = "MaterialInformation"
     ontology_full_name = "Material Information Ontology (MaterialInformation)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -473,7 +473,7 @@ class MatOnto(BaseOntology):
     """
     ontology_id = "MatOnto"
     ontology_full_name = "Material Ontology (MatOnto)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Scholarly Knowledge"
     version = None
     last_updated = None
@@ -489,7 +489,7 @@ class MatVoc(BaseOntology):
     """
     ontology_id = "MatVoc"
     ontology_full_name = "Materials Vocabulary (MatVoc)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = "2022-12-12"
@@ -519,7 +519,7 @@ class MatWerk(BaseOntology):
     """
     ontology_id = "MatWerk"
     ontology_full_name = "NFDI MatWerk Ontology (MatWerk)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Research Data, Interoperability"
     version = "3.0.0"
     last_updated = "2025-03-01"
@@ -536,7 +536,7 @@ class MDO(BaseOntology):
     """
     ontology_id = "MDO"
     ontology_full_name = "Materials Design Ontology (MDO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Design"
     version = "1.1"
     last_updated = "2022-08-02"
@@ -554,7 +554,7 @@ class MDS(BaseOntology):
     """
     ontology_id = "MDS"
     ontology_full_name = "Materials Data Science Ontology (MDS)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.3.0.0"
     last_updated = "03/24/2024"
@@ -570,7 +570,7 @@ class MechanicalTesting(BaseOntology):
     """
     ontology_id = "MechanicalTesting"
     ontology_full_name = "Mechanical Testing Ontology (MechanicalTesting)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Mechanical Testing"
     version = "1.0.0"
     last_updated = None
@@ -589,7 +589,7 @@ class MicroStructures(BaseOntology):
     """
     ontology_id = "MicroStructures"
     ontology_full_name = "EMMO-based ontology for microstructures (MicroStructures)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Microstructure"
     version = None
     last_updated = None
@@ -609,7 +609,7 @@ class MMO(BaseOntology):
     """
     ontology_id = "MMO"
     ontology_full_name = "Materials Mechanics Ontology (MMO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Scholarly Knowledge"
     version = "1.0.1"
     last_updated = "2024-01-30"
@@ -625,7 +625,7 @@ class MOLBRINELL(BaseOntology):
     """
     ontology_id = "MOLBRINELL"
     ontology_full_name = "MatoLab Brinell Test Ontology (MOL_BRINELL)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Testing"
     version = "0.1"
     last_updated = "05/05/2022"
@@ -641,7 +641,7 @@ class MOLTENSILE(BaseOntology):
     """
     ontology_id = "MOLTENSILE"
     ontology_full_name = "Matolab Tensile Test Ontology (MOL_TENSILE)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Testings"
     version = "0.4"
     last_updated = "04/16/2021"
@@ -661,7 +661,7 @@ class MSEO(BaseOntology):
     """
     ontology_id = "MSEO"
     ontology_full_name = "Materials Science and Engineering Ontology (MSEO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -677,7 +677,7 @@ class MSLE(BaseOntology):
     """
     ontology_id = "MSLE"
     ontology_full_name = "Material Science Lab Equipment Ontology (MSLE)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.1"
     last_updated = "Sep 15, 2022"
@@ -695,7 +695,7 @@ class NanoMine(BaseOntology):
     """
     ontology_id = "NanoMine"
     ontology_full_name = "NanoMine Ontology (NanoMine)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -712,7 +712,7 @@ class OIEManufacturing(BaseOntology):
     """
     ontology_id = "OIEManufacturing"
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Manufacturing module (OIEManufacturing)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
     last_updated = None
@@ -729,7 +729,7 @@ class OIEMaterials(BaseOntology):
     """
     ontology_id = "OIEMaterials"
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Materials module (OIEMaterials)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
     last_updated = None
@@ -746,7 +746,7 @@ class OIEModels(BaseOntology):
     """
     ontology_id = "OIEModels"
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Models module (OIEModels)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
     last_updated = None
@@ -762,7 +762,7 @@ class OIESoftware(BaseOntology):
     """
     ontology_id = "OIESoftware"
     ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Software module (OIESoftware)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = "0.1"
     last_updated = None
@@ -782,7 +782,7 @@ class ONTORULE(BaseOntology):
     """
     ontology_id = "ONTORULE"
     ontology_full_name = "Ontology for the Steel Domain (ONTORULE)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = "2010-05-31"
@@ -799,7 +799,7 @@ class PeriodicTable(BaseOntology):
     """
     ontology_id = "PeriodicTable"
     ontology_full_name = "Periodic Table of the Elements Ontology (PeriodicTable)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Periodic Table of Elements"
     version = "1.10"
     last_updated = "2004/02/05"
@@ -815,7 +815,7 @@ class Photovoltaics(BaseOntology):
     """
     ontology_id = "Photovoltaics"
     ontology_full_name = "EMMO Domain Ontology for Photovoltaics (Photovoltaics)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.0.1"
     last_updated = None
@@ -832,7 +832,7 @@ class PLDO(BaseOntology):
     """
     ontology_id = "PLDO"
     ontology_full_name = "Planar Defects Ontology (PLDO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Defects"
     version = "1.0.0"
     last_updated = None
@@ -852,7 +852,7 @@ class PMDco(BaseOntology):
     """
     ontology_id = "PMDco"
     ontology_full_name = "The Platform MaterialDigital core ontology (PMDco)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "3.0.0-alpha1"
     last_updated = "2025-03-20"
@@ -868,7 +868,7 @@ class PODO(BaseOntology):
     """
     ontology_id = "PODO"
     ontology_full_name = "Point Defects Ontology (PODO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = None
@@ -884,7 +884,7 @@ class PRIMA(BaseOntology):
     """
     ontology_id = "PRIMA"
     ontology_full_name = "PRovenance Information in MAterials science (PRIMA)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "2.0"
     last_updated = "2024-01-29"
@@ -912,7 +912,7 @@ class SSN(BaseOntology):
     """
     ontology_id = "SSN"
     ontology_full_name = "Semantic Sensor Network Ontology (SSN)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Sensor Networks"
     version = "1.0"
     last_updated = "2017-04-17"
@@ -932,7 +932,7 @@ class SystemCapabilities(BaseOntology):
     """
     ontology_id = "SystemCapabilities"
     ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science, Engineering, Systems"
     version = None
     last_updated = "2017-05-14"
@@ -953,7 +953,7 @@ class VIMMP(BaseOntology):
     """
     ontology_id = "VIMMP"
     ontology_full_name = "Virtual Materials Marketplace (VIMMP) Ontologies"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Modeling"
     version = None
     last_updated = "2021-01-02"
