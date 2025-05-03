@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = {{ class_name }}()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.{{ format }}")
 
     # Extract datasets
     data = ontology.extract()
