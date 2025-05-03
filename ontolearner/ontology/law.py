@@ -16,5 +16,5 @@ class CopyrightOnto(BaseOntology):
     last_updated = "2019-09"
     creator = "Rhizomik"
     license = "Creative Commons 4.0"
-    format = "RDF"
+    format = "TTL"
     download_url = "https://rhizomik.net/ontologies/copyrightonto/"

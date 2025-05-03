@@ -36,7 +36,7 @@ class EFO(BaseOntology):
     last_updated = "2025-02-17"
     creator = None
     license = "Apache 2.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://www.ebi.ac.uk/efo"
 
 
@@ -53,7 +53,7 @@ class GO(BaseOntology):
     last_updated = "2024-11-03"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, OBO, JSON"
+    format = "OWL"
     download_url = "https://geneontology.org/docs/download-ontology/"
 
 
@@ -97,7 +97,7 @@ class MarineTLO(BaseOntology):
     last_updated = "2017-01-05"
     creator = "Information System Laboratory (ISL), Institute of Computer Science (ICS), Foundation for Research and Technology - Hellas (FORTH)"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://projects.ics.forth.gr/isl/MarineTLO/"
 
 
@@ -121,13 +121,13 @@ class MGED(BaseOntology):
     download_url = "https://mged.sourceforge.net/ontologies/MGEDontology.php/"
 
 
-class Microscopy(BaseOntology):
+class MO(BaseOntology):
     """
     The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The MO facilitates semantic integration
     and the interoperable connection of diverse data sources from the fields of microscopy and microanalysis. Consequently,
     the MO paves the way for new, adaptable data applications and analyses across various experiments and studies
     """
-    ontology_id = "Microscopy"
+    ontology_id = "MO"
     ontology_full_name = "Microscopy Ontology (MO)"
     domain = "Biology & Life Sciences"
     category = "Microscopy"
@@ -135,7 +135,7 @@ class Microscopy(BaseOntology):
     last_updated = None
     creator = "https://orcid.org/0000-0002-3717-7104,https://orcid.org/0000-0002-7094-5371"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "Turtle"
+    format = "TTL"
     download_url = "https://github.com/materialdigital/microscopy-ontology?tab=readme-ov-file"
 
     def contains_imports(self) -> bool:

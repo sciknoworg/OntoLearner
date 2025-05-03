@@ -67,7 +67,7 @@ class DublinCore(BaseOntology):
     last_updated = "February 17, 2017"
     creator = "The Dublin Core Metadata Initiative"
     license = "Public Domain"
-    format = "RDF, OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "https://bioportal.bioontology.org/ontologies/DC"
 
 
@@ -85,7 +85,7 @@ class EDAM(BaseOntology):
     last_updated = "24.09.2024"
     creator = "Federico Bianchini, Hervé Ménager, Jon Ison, Matúš Kalaš"
     license = "Creative Commons 4.0"
-    format = "owl"
+    format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/edam"
 
 
@@ -103,7 +103,7 @@ class GIST(BaseOntology):
     last_updated = "2024-Feb-27"
     creator = "Semantic Arts"
     license = "Creative Commons 4.0"
-    format = "OWL"
+    format = "RDF"
     download_url = "https://semanticarts.com/gist"
 
 

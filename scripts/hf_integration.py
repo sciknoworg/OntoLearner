@@ -9,6 +9,10 @@ import json
 from huggingface_hub import HfApi, Repository, login
 from huggingface_hub.errors import RepositoryNotFoundError
 
+from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
+from langchain.prompts import PromptTemplate
+
 from ontolearner.data_structure import OntologyMetrics, TopologyMetrics, DatasetMetrics
 from ontolearner.ontology import *  # noqa
 from ontolearner.base import BaseOntology
@@ -49,14 +53,70 @@ ORGANIZATION = "SciKnowOrg/OntoLearner"
 
 
 DOMAINS_DEFINITIONS = {
-    "agricultural": "Agricultural ontologies encompass formal knowledge representations of farming systems, crops, food production, and agricultural vocabularies, providing structured taxonomies and semantic relationships that model the complex interactions within agricultural domains. These ontologies capture critical concepts including crop varieties, growth cycles, farming practices, soil properties, irrigation methods, pest management, harvest techniques, food processing chains, nutritional values, agricultural economics, and regional farming terminologies. By standardizing agricultural knowledge in machine-readable formats, these ontologies enable interoperability between agricultural information systems and enhance data integration for agricultural research. The OntoLearner library's collection of these domain-specific resources promotes ontology reuse, standardization, and benchmarking for automated ontology learning applications in agricultural contexts.",
-    "arts_&_humanities": "Arts and Humanities Ontologies",
-    "biology_&_life_sciences": "Biology & Life Sciences Ontologies",
-    "computer_science": "Computer Science Ontologies",
-    "education": "Education Ontologies",
-    "engineering": "Engineering Ontologies",
-    "environment": "Environment Ontologies",
+    "agricultural": "Ontologies about farming systems, crops, food production, and agricultural vocabularies.",
+    "arts_&_humanities": "Ontologies that describe music, iconography, cultural artifacts, and humanistic content.",
+    "biology_&_life_sciences": "Ontologies about biological entities, systems, organisms, and molecular biology.",
+    "chemistry": "Ontologies describing chemical entities, reactions, methods, and computational chemistry models.",
+    "ecology_&_environment": "Ontologies about ecological systems, environments, biomes, and sustainability science.",
+    "education": "Ontologies describing learning content, educational programs, competencies, and teaching resources.",
+    "events": "Ontologies for representing events, time, schedules, and calendar-based occurrences.",
+    "finance": "Ontologies describing economic indicators, e-commerce, trade, and financial instruments.",
+    "food_&_beverage": "Ontologies related to food, beverages, ingredients, and culinary products.",
+    "general_knowledge": "Broad-scope ontologies and upper vocabularies used across disciplines for general-purpose semantic modeling.",
+    "geography": "Ontologies for modeling spatial and geopolitical entities, locations, and place names.",
+    "industry": "Ontologies describing industrial processes, smart buildings, manufacturing systems, and equipment.",
+    "law": "Ontologies dealing with legal processes, regulations, and rights (e.g., copyright).",
+    "library_&_cultural_heritage": "Ontologies used in cataloging, archiving, and authority control of cultural and scholarly resources.",
+    "livestock": "Ontologies about traits, breeding, and management of domesticated animals for agriculture.",
+    "materials_science_&_engineering": "Ontologies related to materials, their structure, properties, processing, and engineering applications.",
+    "medicine": "Ontologies covering clinical knowledge, diseases, drugs, treatments, and biomedical data.",
+    "news_&_media": "Ontologies that model journalism, broadcasting, creative works, and media metadata.",
+    "scholarly_knowledge": "Ontologies modeling the structure, process, and administration of scholarly research, publications, and infrastructure.",
+    "social_sciences": "Ontologies for modeling societal structures, behavior, identity, and social interaction.",
+    "units_and_measurements": "Ontologies defining scientific units, quantities, dimensions, and observational models.",
+    "upper_ontology": "Foundational ontologies that provide abstract concepts like objects, processes, and relations.",
+    "web_&_internet": "Ontologies that model web semantics, linked data, APIs, and online communication standards.",
 }
+
+SYSTEM_PROMPT = """
+As an ontology domain expert, enhance this domain definition with precision and academic clarity.
+
+Domain: {domain}
+Current definition: {domain_definition}
+
+The OntoLearner library includes these ontologies in this domain (for context only):
+{ontologies}
+
+Create a concise, enhanced domain definition (2-3 sentences) that:
+- Accurately describes the domain's scope and technical focus
+- Highlights its significance in knowledge representation
+- Avoids any reference to specific ontologies in the definition
+
+Enhanced definition:
+"""
+gpt_4o_llm = ChatOpenAI(
+    api_key = os.environ['OPENAI_API_KEY'],
+    model = "gpt-4o",
+    temperature = 0,
+)
+prompt = PromptTemplate(input_variables=["domain", "domain_definition", "ontologies"], template=SYSTEM_PROMPT)
+chain = prompt | gpt_4o_llm | StrOutputParser()
+
+
+def improve_domain_definition(domain: str, domain_definition: str, ontologies: List[BaseOntology]) -> str:
+    """Improve the domain definition using GPT-4o"""
+    try:
+        result = chain.invoke(
+            {
+                "domain": domain,
+                "domain_definition": domain_definition,
+                "ontologies": "\n".join([f"- {ontology.ontology_full_name}" for ontology in ontologies])
+            }
+        )
+        return result
+    except Exception as e:
+        logger.error(f"Failed to improve domain definition: {str(e)}", exc_info=True)
+        return domain_definition
 
 
 def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
@@ -105,11 +165,12 @@ def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
     #     logger.warning(f"Dataset path not found at {dataset_path}. Skipping.")
 
 
-def create_domain_readme(domain: str, ontologies: List[BaseOntology], metrics: Dict[str, OntologyMetrics]) -> str:
+def create_domain_readme(domain: str,
+                         domain_definition: str,
+                         ontologies: List[BaseOntology],
+                         metrics: Dict[str, OntologyMetrics]) -> str:
     """Generate a README file for a domain with a table of ontologies and their metrics."""
-    # Convert domain name to proper title format
     domain_title = domain.replace('_', ' ').title()
-
     readme = f"""
 ---
 license: mit
@@ -128,7 +189,7 @@ pretty_name: Agricultural
 </div>
 
 ## Overview
-{DOMAINS_DEFINITIONS[domain]}
+{domain_definition}
 
 ## Ontologies
 | Ontology ID | Full Name | Classes | Properties | Last Updated |
@@ -163,7 +224,8 @@ These datasets are intended for ontology learning research and applications.
     return readme
 
 
-def push_domain_to_huggingface(domain: str, ontologies: List[BaseOntology],
+def push_domain_to_huggingface(domain: str, domain_definition: str,
+                               ontologies: List[BaseOntology],
                                metrics: Dict[str, OntologyMetrics]) -> Tuple[bool, str]:
     """
     Push a domain with all its ontologies to Hugging Face as a single repository
@@ -201,7 +263,7 @@ def push_domain_to_huggingface(domain: str, ontologies: List[BaseOntology],
             )
 
         # Create domain README
-        readme_content = create_domain_readme(domain, ontologies, metrics)
+        readme_content = create_domain_readme(domain, domain_definition, ontologies, metrics)
         (local_dir / "README.md").write_text(readme_content)
 
         # Create dataset card (metadata.json)
@@ -242,11 +304,11 @@ def get_ontology_class_by_id(ontology_id: str) -> type[BaseOntology]:
     raise ValueError(f"No ontology class found for ID: {ontology_id}")
 
 
-def group_ontologies_by_domain(ontologies: List[Tuple[BaseOntology, str]]) -> Dict[str, List[BaseOntology]]:
+def group_ontologies_by_domain(ontologies: List[BaseOntology]) -> Dict[str, List[BaseOntology]]:
     """Group ontologies by their domain."""
     domain_groups = {}
 
-    for ontology, _ in ontologies:
+    for ontology in ontologies:
         domain = ontology.domain.lower().replace(' ', '_')
         if domain not in domain_groups:
             domain_groups[domain] = []
@@ -311,18 +373,231 @@ def load_metrics_from_excel(metrics_file: Path) -> Dict[str, OntologyMetrics]:
 
 def main():
     try:
-        ontologies: list[tuple[BaseOntology, str]] = [
-            # Agricultural Ontologies
-            # (FoodOn(), "owl"),
-            # (AGROVOC(), "rdf"),
-            # (PO(), "owl"),
-
+        ontologies: list[BaseOntology] = [
+            # # Agricultural Ontologies
+            # FoodOn(),
+            # AGROVOC(),
+            # PO(),
+            #
             # # Arts and Humanities Ontologies
-            # (ChordOntology(), "rdf"),
-            # (ICON(), "icon.owl"),
-            # (MusicOntology(), "music.rdf"),
-            # (Nomisma(), "nomisma.ttl"),
-            # (TimelineOntology(), "timeline.rdf"),
+            # ChordOntology(),
+            # ICON(),
+            # MusicOntology(),
+            # Nomisma(),
+            # TimelineOntology(),
+            #
+            # # Biology & Life Sciences Ontologies
+            # BioPAX(),
+            # EFO(),
+            # GO(),
+            # LIFO(),
+            # MarineTLO(),
+            # MGED(),
+            # MO(),
+            # NPO(),
+            # PATO(),
+            #
+            # # Chemistry Ontologies
+            # AFO(),
+            # ChEBI(),
+            # CHEMINF(),
+            # CHIRO(),
+            # ChMO(),
+            # FIX(),
+            # MassSpectrometry(),
+            # MOP(),
+            # NMRCV(),
+            # OntoKin(),
+            # PROCO(),
+            # PSIMOD(),
+            # REX(),
+            # RXNO(),
+            # VIBSO(),
+            #
+            # # Ecology & Environment Ontologies
+            # ENVO(),
+            # OEO(),
+            # SWEET(),
+            #
+            # # Education Ontologies
+            # BIBFRAME(),
+            # Common(),
+            # DoCO(),
+            #
+            # # # Event Ontologies
+            # ConferenceOntology(),
+            # iCalendar(),
+            # LODE(),
+            #
+            # # Finance Ontologies
+            # GoodRelations(),
+            #
+            # # Food & Beverage Ontologies
+            # Wine(),
+            #
+            # # General Knowledge Ontologies
+            # CCO(),
+            # DBpedia(),
+            # DublinCore(),
+            # EDAM(),
+            # GIST(),
+            # IAO(),
+            # PROV(),
+            # RO(),
+            # SchemaOrg(),
+            # UMBEL(),
+            # YAGO(),
+            #
+            # # Geography Ontologies
+            # GEO(),
+            # GeoNames(),
+            # GTS(),
+            # Juso(),
+            #
+            # # Industry
+            # AUTO(),
+            # DBO(),
+            # DOAP(),
+            # IOF(),
+            # PTO(),
+            # TUBES(),
+            #
+            # # Law Ontologies
+            # CopyrightOnto(),
+            #
+            # # Library & Cultural Heritage
+            # GND(),
+            #
+            # # Livestock Ontologies
+            # ATOL(),
+            #
+            # # Materials Science & Engineering
+            # AMOntology(),
+            # ASMO(),
+            # Atomistic(),
+            # BattINFO(),
+            # BMO(),
+            # BVCO(),
+            # CDCO(),
+            # CHAMEO(),
+            # CIFCore(),
+            # CMSO(),
+            # DISO(),
+            # DSIM(),
+            # EMMO(),
+            # EMMOCrystallography(),
+            # FSO(),
+            # GPO(),
+            # HPOnt(),
+            # LDO(),
+            # LPBFO(),
+            # MAMBO(),
+            # MAT(),
+            # MaterialInformation(),
+            # MatOnto(),
+            # MatVoc(),
+            # MatWerk(),
+            # MDO(),
+            # MDS(),
+            # MechanicalTesting(),
+            # MicroStructures(),
+            # MMO(),
+            # MOLBRINELL(),
+            # MOLTENSILE(),
+            # MSEO(),
+            # MSLE(),
+            # NanoMine(),
+            # OIEManufacturing(),
+            # OIEMaterials(),
+            # OIEModels(),
+            # OIESoftware(),
+            # #(OntoCAPE(language='en', base_dir=str(ONTOLOGIES_DIR / "materials_science_&_engineering")), "materials_science_&_engineering/OntoCAPE/OntoCAPE.owl"),
+            # ONTORULE(),
+            # PeriodicTable(),
+            # Photovoltaics(),
+            # PLDO(),
+            # PMDco(),
+            # PODO(),
+            # PRIMA(),
+            # SSN(),
+            # SystemCapabilities(),
+            # VIMMP(),
+            #
+            # # Medicine Ontologies
+            # BTO(),
+            # DEB(),
+            # DOID(),
+            # ENM(),
+            # MFOEM(),
+            # NCIt(),
+            # OBI(),
+            # PRotein(),  # large
+            #
+            # # News & Media Ontologies
+            # BBC(),
+            # BBCBusiness(),
+            # BBCCMS(),
+            # BBCCoreConcepts(),
+            # BBCCreativeWork(),
+            # BBCFood(),
+            # BBCPolitics(),
+            # BBCProgrammes(),
+            # BBCProvenance(),
+            # BBCSport(),
+            # BBCStoryline(),
+            # BBCWildlife(),
+            #
+            # # Scholarly Knowledge Ontologies
+            # AIISO(),
+            # CiTO(),
+            # CSO(),
+            # DataCite(),
+            # DCAT(),
+            # DUO(),
+            # EURIO(),
+            # EXPO(),
+            # FRAPO(),
+            # FRBRoo(),
+            # LexInfo(),
+            # Metadata4Ing(),
+            # NFDIcore(),
+            # OBOE(),
+            # OPMW(),
+            # PPlan(),
+            # PreMOn(),
+            # SEPIO(),
+            # SPDocument(),
+            # SPWorkflow(),
+            # SWO(),
+            # TribAIn(),
+            # VOAF(),
+            # WiLD(),
+            #
+            # # Social Sciences
+            # AS2(),
+            # BIO(),
+            # Contact(),
+            # FOAF(),
+            # SIOC(),
+            #
+            # # Units and Measurements
+            # OM(),
+            # OWLTime(),
+            # QUDT(),
+            # QUDV(),
+            # UO(),
+            #
+            # # Upper Ontologies
+            # BFO(),
+            # DOLCE(),
+            # FAIR(),
+            # GFO(),
+            # SIO(),
+            # SUMO(),
+            #
+            # # Web Ontologies
+            # Hydra(),
+            # SAREF(),
         ]
 
         # Group ontologies by domain
@@ -336,8 +611,15 @@ def main():
         failures = 0
 
         for domain, domain_ontologies in domain_groups.items():
+            logger.info(f"Processing {domain} domain with {len(domain_ontologies)} ontologies")
+
+            extended_definition = improve_domain_definition(domain, DOMAINS_DEFINITIONS[domain], domain_ontologies)
+
+            logger.info(f"Extended domain definition: {extended_definition}")
+
             success, _ = push_domain_to_huggingface(
                 domain=domain,
+                domain_definition=extended_definition,
                 ontologies=domain_ontologies,
                 metrics=metrics
             )

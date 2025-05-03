@@ -14,7 +14,7 @@ class BTO(BaseOntology):
     last_updated = "2021-10-26"
     creator = None
     license = "Creative Commons 4.0"
-    format = "owl"
+    format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/BTO"
 
 
@@ -34,7 +34,7 @@ class DEB(BaseOntology):
     last_updated = "Jun 2, 2021"
     creator = "Osnat Hakimi"
     license = "GPL-3.0"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/ProjectDebbie/Ontology_DEB"
 
 
@@ -115,7 +115,7 @@ class NCIt(BaseOntology):
     last_updated = "2023-10-19"
     creator = None
     license = "Creative Commons 4.0"
-    format = "owl"
+    format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/NCIT"
 
 
@@ -132,7 +132,7 @@ class OBI(BaseOntology):
     last_updated = "2025-01-09"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://github.com/obi-ontology/obi/tree/master"
 
 

@@ -13,5 +13,5 @@ class Wine(BaseOntology):
     last_updated = None
     creator = None
     license = None
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://github.com/UCDavisLibrary/wine-ontology"

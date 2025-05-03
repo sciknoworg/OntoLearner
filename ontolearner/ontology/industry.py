@@ -37,7 +37,7 @@ class DBO(BaseOntology):
     last_updated = "02/23/2023"
     creator = "Google"
     license = "Apache 2.0"
-    format = "OWL, CSV, RDF/XML"
+    format = "RDF"
     download_url = "https://github.com/google/digitalbuildings?tab=readme-ov-file"
 
 
@@ -74,7 +74,7 @@ class IOF(BaseOntology):
     last_updated = "2020"
     creator = "IOF Core Working Group"
     license = "MIT"
-    format = "RDF, OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "https://oagi.org/pages/Released-Ontologies"
 
 
@@ -91,7 +91,7 @@ class PTO(BaseOntology):
     last_updated = "2025-02-21"
     creator = "Martin Hepp"
     license = "Creative Commons 3.0"
-    format = "RDF, OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "http://www.productontology.org/"
 
 
@@ -110,5 +110,5 @@ class TUBES(BaseOntology):
     last_updated = "2022-02-01"
     creator = "Nicolas Pauen"
     license = "Creative Commons 4.0"
-    format = "RDF/XML, Turtle, JSON-LD"
+    format = "RDF"
     download_url = "https://rwth-e3d.github.io/tso/"

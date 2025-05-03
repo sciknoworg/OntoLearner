@@ -39,7 +39,7 @@ class ChEBI(BaseOntology):
     last_updated = "01/01/2025"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, OBO, JSON"
+    format = "OWL"
     download_url = "https://www.ebi.ac.uk/chebi/"
 
 
@@ -101,7 +101,7 @@ class ChMO(BaseOntology):
     last_updated = "2022-04-19"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://github.com/rsc-ontologies/rsc-cmo"
 
 
@@ -251,7 +251,7 @@ class REX(BaseOntology):
     last_updated = "2025-03-11"
     creator = "University of Warsaw"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF"
+    format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/REX"
 
 

@@ -32,7 +32,7 @@ class GeoNames(BaseOntology):
     last_updated = "2022-01-30"
     creator = "Bernard Vatant"
     license = "Creative Commons 3.0"
-    format = "RDF/XML, Turtle, JSON-LD"
+    format = "RDF"
     download_url = "https://www.geonames.org/ontology"
 
 
@@ -50,7 +50,7 @@ class GTS(BaseOntology):
     last_updated = "2020-05-31"
     creator = "Simon J D Cox (simon.cox@csiro.au) of CSIRO"
     license = "Creative Commons 1.0"
-    format = "OWL, TTL"
+    format = "TTL"
     download_url = "https://raw.githack.com/CGI-IUGS/timescale-ont/master/html/gts.html"
 
 

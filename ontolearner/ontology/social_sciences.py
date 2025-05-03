@@ -15,7 +15,7 @@ class AS2(BaseOntology):
     last_updated = "23 May 2017"
     creator = None
     license = "W3C Document License"
-    format = "OWL"
+    format = "TTL"
     download_url = "https://github.com/w3c/activitystreams?tab=License-1-ov-file#readme"
 
 
@@ -36,7 +36,7 @@ class BIO(BaseOntology):
     last_updated = "2010-05-10"
     creator = "Ian Davis and David Galbraith"
     license = "Public Domain"
-    format = "RDF, TTL, CSV, NT"
+    format = "RDF"
     download_url = "https://vocab.org/bio/"
 
 
@@ -57,7 +57,7 @@ class Contact(BaseOntology):
     last_updated = "2018-07-06"
     creator = "Mark Fox, Megan Katsumi"
     license = None
-    format = "OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "https://enterpriseintegrationlab.github.io/icity/Contact/Contact_1.0/doc/index-en.html"
 
 
@@ -75,7 +75,7 @@ class FOAF(BaseOntology):
     last_updated = "14 January 2014"
     creator = "Dan Brickley, Libby Miller"
     license = "Creative Commons"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "http://xmlns.com/foaf/0.1/"
 
 
@@ -93,5 +93,5 @@ class SIOC(BaseOntology):
     last_updated = "2018/02/28"
     creator = "Data Science Institute, NUI Galway"
     license = "Creative Commons 3.0"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "http://rdfs.org/sioc/spec/"

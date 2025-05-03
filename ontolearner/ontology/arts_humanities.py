@@ -13,7 +13,7 @@ class ChordOntology(BaseOntology):
     last_updated = "2007-10-25"
     creator = "Yves Raimond, Samer Abdallah, Centre for Digital Music, Queen Mary, University of London"
     license = "Creative Commons 3.0"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://github.com/motools/chordontology"
 
 
@@ -49,7 +49,7 @@ class MusicOntology(BaseOntology):
     last_updated = "2013/07/22"
     creator = "Knowledge Media Institute, Open University"
     license = "Creative Commons 4.0"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://github.com/motools/musicontology"
 
 
@@ -68,7 +68,7 @@ class Nomisma(BaseOntology):
     last_updated = "2025-01-22"
     creator = "American Numismatic Society, Institute for the Study of the Ancient World"
     license = "Creative Commons 4.0"
-    format = "RDF, TTL"
+    format = "TTL"
     download_url = "https://www.dainst.org/forschung/projekte/noslug/2098"
 
 
@@ -86,5 +86,5 @@ class TimelineOntology(BaseOntology):
     last_updated = "25th October 2007"
     creator = "Christopher Sutton, Yves Raimond, Matthias Mauch"
     license = "Creative Commons 1.0"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://github.com/motools/timelineontology"

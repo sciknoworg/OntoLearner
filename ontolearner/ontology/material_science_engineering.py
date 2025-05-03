@@ -56,7 +56,7 @@ class Atomistic(BaseOntology):
     last_updated = None
     creator = "Francesca L. Bleken, Jesper Friis"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "Turtle"
+    format = "TTL"
     download_url = "https://github.com/emmo-repo/domain-atomistic"
 
 
@@ -96,7 +96,7 @@ class BMO(BaseOntology):
     last_updated = "2019-12-10"
     creator = "Janakiram Karlapudi, Prathap Valluru"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "TTL, OWL, RDF/XML"
+    format = "TTL"
     download_url = "https://matportal.org/ontologies/BUILDMAT"
 
 
@@ -242,22 +242,6 @@ class CMSO(BaseOntology):
     download_url = "https://github.com/OCDO/cmso/tree/main"
 
 
-class EMMOCrystallography(BaseOntology):
-    """
-    A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
-    """
-    ontology_id = "EMMOCrystallography"
-    ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"
-    domain = "Materials Science & Engineering"
-    category = "Crystallography"
-    version = "0.0.1"
-    last_updated = None
-    creator = None
-    license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "Turtle"
-    download_url = "https://github.com/emmo-repo/domain-crystallography"
-
-
 class DISO(BaseOntology):
     """
     DISO is an ontology that defines the linear defect, in particular dislocation concepts
@@ -271,7 +255,7 @@ class DISO(BaseOntology):
     last_updated = "21.03.202"
     creator = "Ahmad Zainul Ihsan"
     license = "Creative Commons Attribution 3.0 International (CC BY 3.0)"
-    format = "OWL/XML, RDF/XML, Turtle"
+    format = "OWL"
     download_url = "https://github.com/Materials-Data-Science-and-Informatics/dislocation-ontology"
 
 
@@ -291,7 +275,7 @@ class DSIM(BaseOntology):
     last_updated = "17.08.2023"
     creator = "Ahmad Zainul Ihsan"
     license = "Creative Commons Attribution 3.0 Unported (CC BY 3.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/OCDO/DSIM"
 
 
@@ -311,8 +295,24 @@ class EMMO(BaseOntology):
     last_updated = "2024-03"
     creator = "European Materials Modelling Council (EMMC)"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF/XML, TTL, JSON-LD"
+    format = "OWL"
     download_url = "https://emmo-repo.github.io/"
+
+
+class EMMOCrystallography(BaseOntology):
+    """
+    A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
+    """
+    ontology_id = "EMMOCrystallography"
+    ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"
+    domain = "Materials Science & Engineering"
+    category = "Crystallography"
+    version = "0.0.1"
+    last_updated = None
+    creator = None
+    license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+    format = "TTL"
+    download_url = "https://github.com/emmo-repo/domain-crystallography"
 
 
 class FSO(BaseOntology):
@@ -365,7 +365,7 @@ class HPOnt(BaseOntology):
     last_updated = None
     creator = "REACT project team"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://react2020.github.io/REACT-ONTOLOGY/HPOnt/index-en.html/"
 
 
@@ -402,7 +402,7 @@ class LPBFO(BaseOntology):
     last_updated = "2022-09-20"
     creator = "Fraunhofer IWM"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF/XML, Turtle"
+    format = "OWL"
     download_url = "https://matportal.org/ontologies/LPBFO"
 
     def contains_imports(self) -> bool:
@@ -426,7 +426,7 @@ class MAMBO(BaseOntology):
     last_updated = None
     creator = None
     license = "General Public License v3.0 (GPL-3.0)"
-    format = "OWL, TTL"
+    format = "OWL"
     download_url = "https://github.com/daimoners/MAMBO"
 
 
@@ -445,7 +445,7 @@ class MAT(BaseOntology):
     last_updated = None
     creator = "María Poveda-Villalón, Serge Chávez-Feria"
     license = "Creative Commons 4.0"
-    format = "RDF/XML, TTL, N-Triples"
+    format = "RDF"
     download_url = "https://bimerr.iot.linkeddata.es/def/material-properties/"
 
 
@@ -463,7 +463,7 @@ class MaterialInformation(BaseOntology):
     last_updated = None
     creator = "Toshihiro Ashino"
     license = None
-    format = "OWL, RDF/XML"
+    format = "OWL"
     download_url = "https://github.com/EngyNasr/MSE-Benchmark/blob/main/testCases/secondTestCase/MaterialInformation.owl"
 
 
@@ -479,7 +479,7 @@ class MatOnto(BaseOntology):
     last_updated = None
     creator = None
     license = None
-    format = "OWL, TTL"
+    format = "OWL"
     download_url = "https://github.com/EngyNasr/MSE-Benchmark/blob/main/testCases/secondTestCase/MatOnto.owl"
 
 
@@ -495,7 +495,7 @@ class MatVoc(BaseOntology):
     last_updated = "2022-12-12"
     creator = "Tatyana Sheveleva, Javad Chamanara"
     license = "MIT License"
-    format = "RDF/XML,TTL"
+    format = "RDF"
     download_url = "https://stream-project.github.io/#overv"
 
 
@@ -542,7 +542,7 @@ class MDO(BaseOntology):
     last_updated = "2022-08-02"
     creator = "Materials Design Division, National Institute for Materials Science (NIMS)"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF/XML, TTL, JSON-LD"
+    format = "OWL"
     download_url = "https://github.com/LiUSemWeb/Materials-Design-Ontology/tree/master/"
 
 
@@ -560,7 +560,7 @@ class MDS(BaseOntology):
     last_updated = "03/24/2024"
     creator = "SDLE Research Center"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL/XML"
+    format = "TTL"
     download_url = "https://matportal.org/ontologies/MDS"
 
 
@@ -576,7 +576,7 @@ class MechanicalTesting(BaseOntology):
     last_updated = None
     creator = "Fraunhofer IWM"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/emmo-repo/domain-mechanical-testing"
 
 
@@ -595,7 +595,7 @@ class MicroStructures(BaseOntology):
     last_updated = None
     creator = None
     license = None
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/jesper-friis/emmo-microstructure"
 
 
@@ -615,7 +615,7 @@ class MMO(BaseOntology):
     last_updated = "2024-01-30"
     creator = "Akhil Thomas, Ali Riza Durmaz"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL"
+    format = "RDF"
     download_url = "https://iwm-micro-mechanics-public.pages.fraunhofer.de/ontologies/materials-mechanics-ontology/index-en.html"
 
 
@@ -631,7 +631,7 @@ class MOLBRINELL(BaseOntology):
     last_updated = "05/05/2022"
     creator = "Birgit Skrotzki, Hossein Beygi Nasrabadi, Philipp von Hartrott, Vinicius Carrillo Beber, Yue Chen"
     license = None
-    format = "TTL, RDF/XML, OWL"
+    format = "TTL"
     download_url = "https://matportal.org/ontologies/MOL_BRINELL"
 
 
@@ -647,7 +647,7 @@ class MOLTENSILE(BaseOntology):
     last_updated = "04/16/2021"
     creator = "Markus Schilling, markus.schilling@bam.de; Philipp von Hartrott, philipp.von.hartrott@iwm.fraunhofer.de"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL, RDF/XML"
+    format = "RDF"
     download_url = "https://matportal.org/ontologies/MOL_TENSILE"
 
 
@@ -667,7 +667,7 @@ class MSEO(BaseOntology):
     last_updated = None
     creator = "Thomas Hanke, Fraunhofer IWM"
     license = "MIT License"
-    format = "TTL, OWL"
+    format = "TTL"
     download_url = "https://github.com/Mat-O-Lab/MSEO"
 
 
@@ -858,7 +858,7 @@ class PMDco(BaseOntology):
     last_updated = "2025-03-20"
     creator = "Jannis Grundmann"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/materialdigital/core-ontology?tab=readme-ov-file"
 
 
@@ -890,7 +890,7 @@ class PRIMA(BaseOntology):
     last_updated = "2024-01-29"
     creator = "Ahmad Zainul Ihsan, Mehrdad Jalali, Rossella Aversa"
     license = "Creative Commons Attribution 3.0 Unported (CC BY 3.0)"
-    format = "TTL, OWL"
+    format = "TTL"
     download_url = "https://materials-data-science-and-informatics.github.io/MDMC-NEP-top-level-ontology/PRIMA/complete/ver_2_0/index.html"
 
     def contains_imports(self) -> bool:
@@ -918,7 +918,7 @@ class SSN(BaseOntology):
     last_updated = "2017-04-17"
     creator = "W3C/OGC Spatial Data on the Web Working Group"
     license = "http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document"
-    format = "RDF/XML, TTL"
+    format = "TTL"
     download_url = "https://github.com/w3c/sdw-sosa-ssn/tree/482484fe2edc1ba8aa7f19214a72bdb77123e833"
 
     def contains_imports(self) -> bool:

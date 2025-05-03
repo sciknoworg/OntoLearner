@@ -14,7 +14,7 @@ class Hydra(BaseOntology):
     last_updated = "13 July 2021"
     creator = "Hydra W3C Community Group"
     license = "Creative Commons 4.0"
-    format = "JSON-LD, RDF, TTL"
+    format = "JSONLD"
     download_url = "https://www.hydra-cg.com/spec/latest/core/#references"
 
 
@@ -34,5 +34,5 @@ class SAREF(BaseOntology):
     last_updated = "2020-12-31"
     creator = "ETSI Technical Committee Smart Machine-to-Machine communications (SmartM2M)"
     license = None
-    format = "OWL, RDF/XML, TTL, JSON-LD"
+    format = "RDF"
     download_url = "https://saref.etsi.org/core/v3.2.1/"

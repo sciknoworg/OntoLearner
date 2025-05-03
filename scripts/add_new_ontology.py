@@ -224,7 +224,6 @@ def main():
         #     (FRAPO(), "scholarly_knowledge/frapo.rdf"),
         #     (FRBRoo(), "scholarly_knowledge/frbroo.rdf"),
         #     (LexInfo(), "scholarly_knowledge/lexinfo.rdf"),
-        #     # (M4I(), "scholarly_knowledge/metadata4ing.ttl"),
         #     (Metadata4Ing(), "scholarly_knowledge/metadata4ing.ttl"),
         #     (NFDIcore(), "scholarly_knowledge/nfdi.owl"),
         #     (OBOE(), "scholarly_knowledge/oboe.owl"),

@@ -60,5 +60,5 @@ class LODE(BaseOntology):
     last_updated = "2020-10-31"
     creator = "Ryan Shaw"
     license = "Creative Commons Attribution 3.0"
-    format = "RDF, TTL"
+    format = "RDF"
     download_url = "https://linkedevents.org/ontology/"

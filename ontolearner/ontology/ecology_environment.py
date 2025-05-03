@@ -16,7 +16,7 @@ class ENVO(BaseOntology):
     last_updated = "2024-07-01"
     creator = "Pier Luigi Buttigieg (https://orcid.org/0000-0002-4366-3088)"
     license = "Creative Commons 1.0"
-    format = "OWL, OBO, JSON"
+    format = "OWL"
     download_url = "https://obofoundry.org/ontology/envo.html"
 
 
@@ -37,7 +37,7 @@ class OEO(BaseOntology):
     last_updated = "03/2025"
     creator = None
     license = "Creative Commons Attribution 1.0 Generic (CC BY 1.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/OpenEnergyPlatform/ontology?tab=readme-ov-file"
 
 
