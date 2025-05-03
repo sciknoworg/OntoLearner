@@ -291,9 +291,13 @@ class BaseOntology(ABC):
         # Check for common blank node patterns
         if label.startswith('N') and label[1:].isdigit():  # N followed by numbers
             return True
+        if re.match(r'^N[0-9a-f]{32}$', label):
+            return True
         if label.startswith('_:'):  # Standard RDF blank node notation
             return True
-        if label.startswith('genid-'):  # common format
+        if label.startswith('GO_'):
+            return True
+        if label.startswith('genid-'):
             return True
         if re.match(r'^b[0-9a-f]+$', label):  # bnode format sometimes used
             return True
