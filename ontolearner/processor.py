@@ -67,7 +67,7 @@ class Processor:
             domain_dir = self.datasets_dir / f"{ontology.domain.lower().replace(' ', '_')}"
             domain_dir.mkdir(parents=True, exist_ok=True)
 
-            save_path = domain_dir / f"{ontology.ontology_id.lower().replace(' ', '_')} / {dataset_type}.json"
+            save_path = domain_dir / f"{ontology.ontology_id.lower().replace(' ', '_')}/{dataset_type}.json"
             io.save_json(data.model_dump()[dataset_type], save_path)
 
     def _generate_documentation(self, ontology: BaseOntology, metrics: OntologyMetrics):
