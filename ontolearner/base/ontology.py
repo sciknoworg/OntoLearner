@@ -270,8 +270,6 @@ class BaseOntology(ABC):
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
         """Validate non-taxonomic relations between named classes (URIRefs only)."""
         return (
-            isinstance(s, URIRef) and  # Exclude BNodes
-            isinstance(o, URIRef) and  # Exclude BNodes
             self.check_if_class(s) and
             self.check_if_class(o) and
             p != RDFS.subClassOf
