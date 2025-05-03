@@ -288,18 +288,42 @@ class BaseOntology(ABC):
         if not label:
             return True
 
-        # Check for common blank node patterns
-        if label.startswith('N') and label[1:].isdigit():  # N followed by numbers
-            return True
-        if re.match(r'^N[0-9a-f]{32}$', label):
-            return True
+        # Common RDF/OWL blank node patterns
         if label.startswith('_:'):  # Standard RDF blank node notation
             return True
-        if label.startswith('GO_'):
+        if label.startswith('genid-'):  # Common OWL tools like Protégé
             return True
-        if label.startswith('genid-'):
+        if label.startswith('nodeID://'):  # Some RDF serializers
             return True
-        if re.match(r'^b[0-9a-f]+$', label):  # bnode format sometimes used
+
+        # Numeric patterns
+        if re.match(r'^N[0-9]+$', label):  # N followed by numbers
+            return True
+        if re.match(r'^_[0-9]+$', label):  # Underscore followed by numbers
+            return True
+
+        # Hexadecimal patterns
+        if re.match(r'^N[0-9a-f]{32}$', label, re.IGNORECASE):
+            return True
+        if re.match(r'^b[0-9a-f]+$', label, re.IGNORECASE):
+            return True
+        if re.match(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', label, re.IGNORECASE):  # UUID pattern
+            return True
+
+        # Auto-generated node patterns
+        if re.match(r'^node_[0-9a-f_]+$', label, re.IGNORECASE):
+            return True
+        if re.match(r'^auto_gen_[0-9a-zA-Z]+$', label):
+            return True
+        if re.match(r'^blank[0-9]+$', label):
+            return True
+
+        # Tool-specific patterns
+        if label.startswith('ARQ'):  # Apache Jena ARQ
+            return True
+        if label.startswith('jena-'):  # Apache Jena
+            return True
+        if label.startswith('bnode'):  # Some RDF tools
             return True
 
         return False
