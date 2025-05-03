@@ -16,7 +16,11 @@ class GEO(BaseOntology):
     creator = "William R Hogan"
     license = "Creative Commons 4.0"
     format = "OWL"
-    download_url = "http://purl.obolibrary.org/obo/geo.owl"
+    download_url = "https://github.com/mcwdsi/geographical-entity-ontology/blob/master/geo-all.owl"
+
+    def contains_imports(self) -> bool:
+        """Hook: Check if the ontology contains imports."""
+        return True
 
 
 class GeoNames(BaseOntology):

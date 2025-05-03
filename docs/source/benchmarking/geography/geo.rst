@@ -14,7 +14,7 @@ to the specific ones over which the governments have jurisdiction)
 :Creator: William R Hogan
 :License: Creative Commons 4.0
 :Format: OWL
-:Download: `Geographical Entities Ontology (GEO) Homepage <http://purl.obolibrary.org/obo/geo.owl>`_
+:Download: `Geographical Entities Ontology (GEO) Homepage <https://github.com/mcwdsi/geographical-entity-ontology/blob/master/geo-all.owl>`_
 
 Graph Metrics
 -------------
@@ -48,7 +48,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 46949
     - **Taxonomic Relations**: 664
-    - **Non-taxonomic Relations**: 19
+    - **Non-taxonomic Relations**: 65
     - **Average Terms per Type**: 1805.73
 
 Usage Example

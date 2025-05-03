@@ -5,13 +5,13 @@ Overview
 --------
 The Material Ontology (MatOnto) is based on the upper level ontology, the BFO.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Scholarly Knowledge
 :Current Version: None
 :Last Updated: None
 :Creator: None
 :License: None
-:Format: OWL, TTL
+:Format: OWL
 :Download: `Material Ontology (MatOnto) Homepage <https://github.com/EngyNasr/MSE-Benchmark/blob/main/testCases/secondTestCase/MatOnto.owl>`_
 
 Graph Metrics
@@ -46,7 +46,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 122
     - **Taxonomic Relations**: 2228
-    - **Non-taxonomic Relations**: 167
+    - **Non-taxonomic Relations**: 434
     - **Average Terms per Type**: 1.94
 
 Usage Example
