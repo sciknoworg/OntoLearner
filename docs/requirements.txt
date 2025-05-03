@@ -8,3 +8,4 @@ sphinxcontrib-mermaid
 sphinx-panels
 sphinx-design
 sphinx-tabs
+sphinx-inline-tabs
