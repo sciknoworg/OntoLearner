@@ -49,7 +49,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 799
-    - **Non-taxonomic Relations**: 2007
+    - **Non-taxonomic Relations**: 1665
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DBpedia()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -13,7 +13,7 @@ the structure of EDAM is relatively simple, divided into 4 main sections: Topic,
 :Last Updated: 24.09.2024
 :Creator: Federico Bianchini, Hervé Ménager, Jon Ison, Matúš Kalaš
 :License: Creative Commons 4.0
-:Format: owl
+:Format: OWL
 :Download: `The ontology of data analysis and management (EDAM) Homepage <https://terminology.tib.eu/ts/ontologies/edam>`_
 
 Graph Metrics
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 9745
+    - **Taxonomic Relations**: 7916
     - **Non-taxonomic Relations**: 1314
     - **Average Terms per Type**: 0.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = EDAM()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

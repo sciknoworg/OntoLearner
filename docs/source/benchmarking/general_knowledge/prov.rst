@@ -50,7 +50,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 41
+    - **Taxonomic Relations**: 39
     - **Non-taxonomic Relations**: 4
     - **Average Terms per Type**: 0.00
 
@@ -62,7 +62,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PROV()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

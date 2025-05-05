@@ -14,7 +14,7 @@ for metadata vocabularies in the Linked Data cloud and Semantic Web implementati
 :Last Updated: February 17, 2017
 :Creator: The Dublin Core Metadata Initiative
 :License: Public Domain
-:Format: RDF, OWL, TTL, CSV, NT
+:Format: RDF
 :Download: `Dublin Core Vocabulary (DublinCore) Homepage <https://bioportal.bioontology.org/ontologies/DC>`_
 
 Graph Metrics
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DublinCore()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

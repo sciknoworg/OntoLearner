@@ -1,3 +1,4 @@
+import re
 from rdflib import URIRef, RDF, RDFS
 
 from ..base import BaseOntology
@@ -37,6 +38,19 @@ class DBpedia(BaseOntology):
     license = "Creative Commons 3.0"
     format = "OWL"
     download_url = "https://wiki.dbpedia.org/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle DBpedia/Wikidata-specific blank nodes."""
+        # DBpedia/Wikidata-specific patterns
+        if re.match(r'^Q[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
         # Include datatype properties and validate domain/range
@@ -197,6 +211,19 @@ class UMBEL(BaseOntology):
     license = None
     format = "n3"
     download_url = "https://github.com/structureddynamics/UMBEL/tree/master/Ontology"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle UMBEL-specific blank nodes."""
+        # UMBEL-specific patterns
+        if re.match(r'^f5295f96ac3e649dcb1740b0d93d3e6c2b[0-9a-f]+$', label):  # Long hexadecimal identifiers
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class YAGO(BaseOntology):

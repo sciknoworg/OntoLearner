@@ -13,7 +13,7 @@ with the fewest number of primitives and the least amount of ambiguity.
 :Last Updated: 2024-Feb-27
 :Creator: Semantic Arts
 :License: Creative Commons 4.0
-:Format: OWL
+:Format: RDF
 :Download: `GIST Upper Ontology (GIST) Homepage <https://semanticarts.com/gist>`_
 
 Graph Metrics
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 8
-    - **Taxonomic Relations**: 78
+    - **Taxonomic Relations**: 39
     - **Non-taxonomic Relations**: 56
     - **Average Terms per Type**: 8.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GIST()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

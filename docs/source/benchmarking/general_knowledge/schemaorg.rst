@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SchemaOrg()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()
