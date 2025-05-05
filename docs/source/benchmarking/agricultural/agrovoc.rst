@@ -14,7 +14,7 @@ indexing processes and making searches more efficient.
 :Last Updated: August 12, 2024
 :Creator: Food and Agriculture Organization of the United Nations
 :License: Creative Commons 4.0
-:Format: RDF, SKOS
+:Format: RDF
 :Download: `AGROVOC Multilingual Thesaurus (AGROVOC) Homepage <https://agroportal.lirmm.fr/ontologies/AGROVOC>`_
 
 Graph Metrics
@@ -47,10 +47,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 1234769
-    - **Taxonomic Relations**: 13
+    - **Term Types**: 12
+    - **Taxonomic Relations**: 11
     - **Non-taxonomic Relations**: 7
-    - **Average Terms per Type**: 137196.56
+    - **Average Terms per Type**: 3.00
 
 Usage Example
 -------------
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = AGROVOC()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

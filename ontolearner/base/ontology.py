@@ -201,7 +201,10 @@ class BaseOntology(ABC):
             for instance in self._get_instances_for_class(class_uri):
                 term = self.get_label(uri=str(instance))
                 types = self.get_label(uri=str(class_uri))
-                if term and types:
+                # Filter out anonymous class identifiers
+                if (term and types and
+                        not self._is_anonymous_id(term) and
+                        not self._is_anonymous_id(types)):
                     term_typings.append(TermTyping(term=term, types=[types]))
         logger.debug(f"Extracted {len(term_typings)} term typings for the Ontology.")
         return term_typings
@@ -301,13 +304,19 @@ class BaseOntology(ABC):
             return True
         if re.match(r'^_[0-9]+$', label):  # Underscore followed by numbers
             return True
+        if re.match(r'^c_[0-9]+$', label):  # c_ followed by numbers
+            return True
 
         # Hexadecimal patterns
         if re.match(r'^N[0-9a-f]{32}$', label, re.IGNORECASE):
             return True
         if re.match(r'^b[0-9a-f]+$', label, re.IGNORECASE):
             return True
-        if re.match(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', label, re.IGNORECASE):  # UUID pattern
+        if re.match(r'^c_[0-9a-f]+$', label, re.IGNORECASE):
+            return True
+
+        # UUID patterns
+        if re.match(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', label, re.IGNORECASE):
             return True
 
         # Auto-generated node patterns
@@ -324,6 +333,22 @@ class BaseOntology(ABC):
         if label.startswith('jena-'):  # Apache Jena
             return True
         if label.startswith('bnode'):  # Some RDF tools
+            return True
+
+        # AGROVOC-specific patterns
+        if re.match(r'^c_[0-9]+$', label):  # c_ followed by numbers (e.g., c_26382)
+            return True
+
+        # Image and label patterns
+        if re.match(r'^img_', label):  # Any string starting with img_
+            return True
+        if re.match(r'^xl_', label):   # Any string starting with xl_
+            return True
+        if re.match(r'^xl-', label):   # Any string starting with xl-
+            return True
+
+        # SKOS Collection patterns
+        if re.match(r'^skosCollection_[0-9a-f]+$', label):
             return True
 
         return False

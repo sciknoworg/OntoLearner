@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 16
-    - **Taxonomic Relations**: 98513
+    - **Taxonomic Relations**: 76235
     - **Non-taxonomic Relations**: 2072
     - **Average Terms per Type**: 8.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = FoodOn()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()
