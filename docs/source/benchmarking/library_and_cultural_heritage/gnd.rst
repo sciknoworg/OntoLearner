@@ -7,7 +7,7 @@ GND stands for Gemeinsame Normdatei (Integrated Authority File) and offers a bro
 to describe authorities. The GND originates from the German library community and aims
 to solve the name ambiguity problem in the library world.
 
-:Domain: Library & Cultural Heritage
+:Domain: Library and Cultural Heritage
 :Category: Authority Files
 :Current Version: 1.2.0
 :Last Updated: 2024-08-26
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GND()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

@@ -46,10 +46,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 46949
-    - **Taxonomic Relations**: 664
-    - **Non-taxonomic Relations**: 65
-    - **Average Terms per Type**: 1805.73
+    - **Term Types**: 34653
+    - **Taxonomic Relations**: 430
+    - **Non-taxonomic Relations**: 19
+    - **Average Terms per Type**: 1386.12
 
 Usage Example
 -------------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GEO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

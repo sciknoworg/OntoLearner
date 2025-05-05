@@ -12,7 +12,7 @@ about buildings and building-installed equipment.
 :Last Updated: 02/23/2023
 :Creator: Google
 :License: Apache 2.0
-:Format: OWL, CSV, RDF/XML
+:Format: RDF
 :Download: `Digital Buildings Ontology (DBO) Homepage <https://github.com/google/digitalbuildings?tab=readme-ov-file>`_
 
 Graph Metrics
@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 35
-    - **Taxonomic Relations**: 37016
+    - **Taxonomic Relations**: 18738
     - **Non-taxonomic Relations**: 12
     - **Average Terms per Type**: 2.06
 
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DBO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

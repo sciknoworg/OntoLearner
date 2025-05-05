@@ -14,7 +14,7 @@ in a future semantic web of building data. It has a strong alignment to other on
 :Last Updated: 2022-02-01
 :Creator: Nicolas Pauen
 :License: Creative Commons 4.0
-:Format: RDF/XML, Turtle, JSON-LD
+:Format: RDF
 :Download: `TUBES System Ontology (TUBES) Homepage <https://rwth-e3d.github.io/tso/>`_
 
 Graph Metrics
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = TUBES()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

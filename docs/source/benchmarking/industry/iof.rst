@@ -15,7 +15,7 @@ and interoperability across various domain-specific reference ontologies the IOF
 :Last Updated: 2020
 :Creator: IOF Core Working Group
 :License: MIT
-:Format: RDF, OWL, TTL, CSV, NT
+:Format: RDF
 :Download: `Industrial Ontology Foundry (IOF) Homepage <https://oagi.org/pages/Released-Ontologies>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 298
+    - **Taxonomic Relations**: 87
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = IOF()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

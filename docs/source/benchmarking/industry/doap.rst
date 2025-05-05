@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DOAP()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

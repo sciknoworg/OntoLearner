@@ -12,7 +12,7 @@ a standard vocabulary for the commercial aspects of offers.
 :Last Updated: 2025-02-21
 :Creator: Martin Hepp
 :License: Creative Commons 3.0
-:Format: RDF, OWL, TTL, CSV, NT
+:Format: RDF
 :Download: `Product Types Ontology (PTO) Homepage <http://www.productontology.org/>`_
 
 Graph Metrics
@@ -45,10 +45,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 3001
-    - **Taxonomic Relations**: 4000
+    - **Term Types**: 3000
+    - **Taxonomic Relations**: 3996
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 3001.00
+    - **Average Terms per Type**: 3000.00
 
 Usage Example
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PTO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

@@ -14,7 +14,7 @@ end-users permissions to consume content, like many rights languages and ontolog
 :Last Updated: 2019-09
 :Creator: Rhizomik
 :License: Creative Commons 4.0
-:Format: RDF
+:Format: TTL
 :Download: `Copyright Ontology (CopyrightOnto) Homepage <https://rhizomik.net/ontologies/copyrightonto/>`_
 
 Graph Metrics
@@ -48,7 +48,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 7
-    - **Taxonomic Relations**: 403
+    - **Taxonomic Relations**: 118
     - **Non-taxonomic Relations**: 6
     - **Average Terms per Type**: 7.00
 
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = CopyrightOnto()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()
