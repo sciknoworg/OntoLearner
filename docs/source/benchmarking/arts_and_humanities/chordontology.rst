@@ -5,13 +5,13 @@ Overview
 --------
 The Chord Ontology is an ontology for describing chords in musical pieces.
 
-:Domain: Arts & Humanities
+:Domain: Arts and Humanities
 :Category: Musical Works
 :Current Version: 1.0
 :Last Updated: 2007-10-25
 :Creator: Yves Raimond, Samer Abdallah, Centre for Digital Music, Queen Mary, University of London
 :License: Creative Commons 3.0
-:Format: RDF/XML
+:Format: RDF
 :Download: `Chord Ontology (ChordOntology) Homepage <https://github.com/motools/chordontology>`_
 
 Graph Metrics
@@ -44,10 +44,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 108
+    - **Term Types**: 42
     - **Taxonomic Relations**: 4
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 21.60
+    - **Average Terms per Type**: 10.50
 
 Usage Example
 -------------
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ChordOntology()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

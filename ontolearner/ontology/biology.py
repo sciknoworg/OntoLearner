@@ -60,11 +60,11 @@ class GO(BaseOntology):
     def _is_anonymous_id(label: str) -> bool:
         """Override to handle GO-specific blank nodes."""
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
-            return True
-
         # GO-specific patterns
         if label.startswith('GO_'):
+            return True
+
+        if BaseOntology._is_anonymous_id(label):
             return True
 
         return False

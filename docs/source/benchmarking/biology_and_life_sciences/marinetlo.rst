@@ -14,13 +14,13 @@ adopted an iterative and incremental methodology where a new version is released
 months. For the implementation we use OWL 2, and to evaluate it we use a set of competency
 queries, formulating the domain requirements provided by the related communities.
 
-:Domain: Biology & Life Sciences
+:Domain: Biology and Life Sciences
 :Category: Marine Science, Oceanography
 :Current Version: 1.0
 :Last Updated: 2017-01-05
 :Creator: Information System Laboratory (ISL), Institute of Computer Science (ICS), Foundation for Research and Technology - Hellas (FORTH)
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: OWL
 :Download: `Marine Taxonomy and Life Ontology (MarineTLO) Homepage <https://projects.ics.forth.gr/isl/MarineTLO/>`_
 
 Graph Metrics
@@ -66,7 +66,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MarineTLO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

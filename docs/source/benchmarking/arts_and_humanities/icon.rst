@@ -7,7 +7,7 @@ The ICON ontology deals with high granularity art interpretation. It was develop
 Panofsky's theory of levels of interpretation, therefore artworks can be described according
 to Pre-iconographical, Iconographical and Iconological information.
 
-:Domain: Arts & Humanities
+:Domain: Arts and Humanities
 :Category: Art History, Cultural Heritage
 :Current Version: 2.1.0
 :Last Updated: April 26th, 2024
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 126
+    - **Taxonomic Relations**: 65
     - **Non-taxonomic Relations**: 4
     - **Average Terms per Type**: 0.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ICON()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

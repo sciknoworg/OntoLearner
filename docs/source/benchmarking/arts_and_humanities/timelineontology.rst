@@ -7,13 +7,13 @@ The Timeline Ontology is centered around the notion of timeline,
 seen here as a way to identify a temporal backbone.
 A timeline may support a signal, a video, a score, a work, etc.
 
-:Domain: Arts & Humanities
+:Domain: Arts and Humanities
 :Category: Music Theory
 :Current Version: 1.0
 :Last Updated: 25th October 2007
 :Creator: Christopher Sutton, Yves Raimond, Matthias Mauch
 :License: Creative Commons 1.0
-:Format: RDF/XML
+:Format: RDF
 :Download: `Timeline Ontology (TimelineOntology) Homepage <https://github.com/motools/timelineontology>`_
 
 Graph Metrics
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 2
-    - **Taxonomic Relations**: 106
+    - **Taxonomic Relations**: 28
     - **Non-taxonomic Relations**: 10
     - **Average Terms per Type**: 1.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = TimelineOntology()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

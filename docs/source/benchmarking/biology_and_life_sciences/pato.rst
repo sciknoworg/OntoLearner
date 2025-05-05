@@ -5,7 +5,7 @@ Overview
 --------
 An ontology of phenotypic qualities (properties, attributes or characteristics).
 
-:Domain: Biology & Life Sciences
+:Domain: Biology and Life Sciences
 :Category: Biology
 :Current Version: 1.2
 :Last Updated: 2025-02-01
@@ -45,7 +45,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 62605
+    - **Taxonomic Relations**: 32440
     - **Non-taxonomic Relations**: 752
     - **Average Terms per Type**: 0.00
 
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PATO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

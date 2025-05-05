@@ -310,6 +310,8 @@ class BaseOntology(ABC):
         # Hexadecimal patterns
         if re.match(r'^N[0-9a-f]{32}$', label, re.IGNORECASE):
             return True
+        if re.match(r'^n[0-9a-f]+$', label, re.IGNORECASE):
+            return True
         if re.match(r'^b[0-9a-f]+$', label, re.IGNORECASE):
             return True
         if re.match(r'^c_[0-9a-f]+$', label, re.IGNORECASE):
@@ -335,10 +337,6 @@ class BaseOntology(ABC):
         if label.startswith('bnode'):  # Some RDF tools
             return True
 
-        # AGROVOC-specific patterns
-        if re.match(r'^c_[0-9]+$', label):  # c_ followed by numbers (e.g., c_26382)
-            return True
-
         # Image and label patterns
         if re.match(r'^img_', label):  # Any string starting with img_
             return True
@@ -349,6 +347,9 @@ class BaseOntology(ABC):
 
         # SKOS Collection patterns
         if re.match(r'^skosCollection_[0-9a-f]+$', label):
+            return True
+
+        if re.match(r'^PMD_[0-9]+$', label):
             return True
 
         return False

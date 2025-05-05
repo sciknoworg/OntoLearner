@@ -6,13 +6,13 @@ Overview
 The Gene Ontology (GO) Provides structured controlled vocabularies for the annotation of gene products
 with respect to their molecular function, cellular component, and biological role.
 
-:Domain: Biology & Life Sciences
+:Domain: Biology and Life Sciences
 :Category: Molecular Biology, Genetics
 :Current Version: None
 :Last Updated: 2024-11-03
 :Creator: None
 :License: Creative Commons 4.0
-:Format: OWL, OBO, JSON
+:Format: OWL
 :Download: `Gene Ontology (GO) Homepage <https://geneontology.org/docs/download-ontology/>`_
 
 Graph Metrics
@@ -46,8 +46,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 206031
-    - **Non-taxonomic Relations**: 3676
+    - **Taxonomic Relations**: 156430
+    - **Non-taxonomic Relations**: 30
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

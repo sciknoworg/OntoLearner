@@ -7,13 +7,13 @@ The Music Ontology Specification provides main concepts and
 properties fo describing music (i.e. artists, albums and tracks)
 on the Semantic Web.
 
-:Domain: Arts & Humanities
+:Domain: Arts and Humanities
 :Category: Music Theory
 :Current Version: 2.1.5
 :Last Updated: 2013/07/22
 :Creator: Knowledge Media Institute, Open University
 :License: Creative Commons 4.0
-:Format: RDF/XML
+:Format: RDF
 :Download: `Music Ontology (MusicOntology) Homepage <https://github.com/motools/musicontology>`_
 
 Graph Metrics
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MusicOntology()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

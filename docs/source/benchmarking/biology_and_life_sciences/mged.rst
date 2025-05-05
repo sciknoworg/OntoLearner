@@ -9,7 +9,7 @@ The MGED ontology is divided into the MGED Core ontology which is intended to be
 in synch with MAGE v.1; and the MGED Extended ontology which adds further associations
 and classes not found in MAGE v.1
 
-:Domain: Biology & Life Sciences
+:Domain: Biology and Life Sciences
 :Category: Domain Ontology
 :Current Version: 1.3.1.1
 :Last Updated: Feb. 9, 2007
@@ -48,10 +48,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 744
-    - **Taxonomic Relations**: 1536
+    - **Term Types**: 743
+    - **Taxonomic Relations**: 541
     - **Non-taxonomic Relations**: 6
-    - **Average Terms per Type**: 7.83
+    - **Average Terms per Type**: 7.82
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MGED()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

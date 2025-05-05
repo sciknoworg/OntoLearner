@@ -8,7 +8,7 @@ of biological pathway data. Specifically, BioPAX supports data exchange between 
 groups and thus reduces the complexity of interchange between data formats by providing an
 accepted standard format for pathway data.
 
-:Domain: Biology & Life Sciences
+:Domain: Biology and Life Sciences
 :Category: Bioinformatics
 :Current Version: 1.0
 :Last Updated: 16 April 2015
@@ -48,7 +48,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 292
+    - **Taxonomic Relations**: 126
     - **Non-taxonomic Relations**: 446
     - **Average Terms per Type**: 0.00
 
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BioPAX()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -127,12 +127,26 @@ class Processor:
     def export_metrics_to_excel(self):
         """
         Export all collected metrics to an Excel file.
+        If the Excel file already exists, read it, update with new metrics, and write it back.
+        This preserves metrics for ontologies not processed in the current run.
         """
         if not self.all_metrics:
             logger.warning("No metrics to export. Process at least one ontology first.")
             return
 
-        rows = []
+        excel_path = self.metrics_dir / "metrics.xlsx"
+
+        # Try to read existing Excel file if it exists
+        existing_df = None
+        if excel_path.exists():
+            try:
+                existing_df = pd.read_excel(excel_path)
+                logger.info(f"Read existing metrics from {excel_path}")
+            except Exception as e:
+                logger.warning(f"Could not read existing metrics file: {e}. Creating a new file.")
+
+        # Create DataFrame from current metrics
+        current_rows = []
         for ontology_id, data in self.all_metrics.items():
             metrics = data["metrics"]
             row = {
@@ -143,9 +157,27 @@ class Processor:
                 **metrics.topology.dict(),
                 **metrics.dataset.dict()
             }
-            rows.append(row)
+            current_rows.append(row)
 
-        df = pd.DataFrame(rows)
-        excel_path = self.metrics_dir / "metrics.xlsx"
-        df.to_excel(excel_path, index=False)
+        current_df = pd.DataFrame(current_rows)
+
+        # Merge existing and current metrics
+        if existing_df is not None and not existing_df.empty:
+            # Remove rows for ontologies that are in the current metrics (to be updated)
+            current_ontology_ids = current_df["Ontology ID"].tolist()
+            existing_df = existing_df[~existing_df["Ontology ID"].isin(current_ontology_ids)]
+
+            # Concatenate existing (minus updated ones) with current
+            final_df = pd.concat([existing_df, current_df], ignore_index=True)
+
+            # Sort by Ontology ID for consistency
+            final_df = final_df.sort_values("Ontology ID").reset_index(drop=True)
+
+            logger.info(f"Updated metrics for {len(current_ontology_ids)} ontologies, preserved metrics for {len(existing_df)} ontologies")
+        else:
+            final_df = current_df
+            logger.info(f"Created new metrics file with {len(current_rows)} ontologies")
+
+        # Write to Excel
+        final_df.to_excel(excel_path, index=False)
         logger.info(f"Exported metrics to Excel file: {excel_path}")

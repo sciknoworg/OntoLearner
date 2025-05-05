@@ -8,7 +8,7 @@ life processes of organisms and related entities and relations. LifO is a genera
 purpose ontology that covers the common features associated with different
 organisms such as unicellular prokaryotes (e.g., E. coli) and multicellular organisms (e.g., human).
 
-:Domain: Biology & Life Sciences
+:Domain: Biology and Life Sciences
 :Category: General Purpose
 :Current Version: 1.0.17
 :Last Updated: March 11, 2018
@@ -48,7 +48,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 9
-    - **Taxonomic Relations**: 581
+    - **Taxonomic Relations**: 321
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 9.00
 
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = LIFO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

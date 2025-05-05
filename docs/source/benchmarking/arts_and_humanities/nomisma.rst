@@ -8,13 +8,13 @@ to the principles of Linked Open Data. These take the form of http URIs that pro
 about a concept in various formats. The project is a collaborative effort of the American Numismatic Society
 and the Institute for the Study of the Ancient World at New York University.
 
-:Domain: Arts & Humanities
+:Domain: Arts and Humanities
 :Category: Numismatics
 :Current Version: None
 :Last Updated: 2025-01-22
 :Creator: American Numismatic Society, Institute for the Study of the Ancient World
 :License: Creative Commons 4.0
-:Format: RDF, TTL
+:Format: TTL
 :Download: `Nomisma Ontology (Nomisma) Homepage <https://www.dainst.org/forschung/projekte/noslug/2098>`_
 
 Graph Metrics
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = Nomisma()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

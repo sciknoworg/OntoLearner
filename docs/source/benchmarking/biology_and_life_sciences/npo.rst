@@ -11,7 +11,7 @@ are available through BioPortal website, maintained by the National Center for B
 Mechanisms for editorial and governance processes are being developed for the maintenance,
 review, and growth of the NPO.
 
-:Domain: Biology & Life Sciences
+:Domain: Biology and Life Sciences
 :Category: Materials Science
 :Current Version: 2013-05-31
 :Last Updated: 2013-05-31
@@ -51,7 +51,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 6895
+    - **Taxonomic Relations**: 2733
     - **Non-taxonomic Relations**: 12277
     - **Average Terms per Type**: 0.00
 
@@ -63,7 +63,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = NPO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()
