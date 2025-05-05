@@ -178,7 +178,7 @@ class MassSpectrometry(BaseOntology):
 
     @staticmethod
     def _is_anonymous_id(label: str) -> bool:
-        """Override to handle MOP-specific blank nodes."""
+        """Override to handle MassSpectrometry-specific blank nodes."""
         # MassSpectrometry-specific patterns
         if re.match(r'^PEFF_[0-9]+$', label):
             return True
