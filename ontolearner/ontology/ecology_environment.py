@@ -1,3 +1,5 @@
+import re
+
 from ..base import BaseOntology
 
 
@@ -18,6 +20,19 @@ class ENVO(BaseOntology):
     license = "Creative Commons 1.0"
     format = "OWL"
     download_url = "https://obofoundry.org/ontology/envo.html"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle ENVO-specific blank nodes."""
+        # ENVO-specific patterns
+        if re.match(r'^PATO_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class OEO(BaseOntology):

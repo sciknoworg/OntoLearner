@@ -15,7 +15,7 @@ of search engines, recommender systems, and other novel applications.
 :Last Updated: 2011-10-01
 :Creator: Martin Hepp
 :License: Creative Commons 3.0
-:Format: RDF/XML
+:Format: OWL
 :Download: `Good Relations Language Reference (GoodRelations) Homepage <https://www.heppnetz.de/ontologies/goodrelations/v1>`_
 
 Graph Metrics
@@ -48,10 +48,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 47
+    - **Term Types**: 46
     - **Taxonomic Relations**: 25
     - **Non-taxonomic Relations**: 264
-    - **Average Terms per Type**: 5.22
+    - **Average Terms per Type**: 5.75
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GoodRelations()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

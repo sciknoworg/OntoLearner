@@ -9,7 +9,7 @@ SWEET is a collection of ontologies conceptualizing a knowledge space for Earth 
 represented using the web ontology language (OWL). It includes both orthogonal concepts (space, time,
 Earth realms, physical quantities, etc.) and integrative science knowledge concepts (phenomena, events, etc.).
 
-:Domain: Ecology & Environment
+:Domain: Ecology and Environment
 :Category: Earth Science, Geoscience
 :Current Version: 3.6.0
 :Last Updated: July 14, 2022
@@ -48,10 +48,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 2439
-    - **Taxonomic Relations**: 18839
+    - **Term Types**: 2219
+    - **Taxonomic Relations**: 16111
     - **Non-taxonomic Relations**: 515
-    - **Average Terms per Type**: 11.67
+    - **Average Terms per Type**: 11.50
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SWEET()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

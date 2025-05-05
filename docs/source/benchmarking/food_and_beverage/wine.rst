@@ -5,13 +5,13 @@ Overview
 --------
 A project to define an RDF style ontology for wines and the wine-industry
 
-:Domain: Food & Beverage
+:Domain: Food and Beverage
 :Category: Wine
 :Current Version: None
 :Last Updated: None
 :Creator: None
 :License: None
-:Format: RDF/XML
+:Format: RDF
 :Download: `Wine Ontology (Wine) Homepage <https://github.com/UCDavisLibrary/wine-ontology>`_
 
 Graph Metrics
@@ -45,7 +45,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 161
-    - **Taxonomic Relations**: 504
+    - **Taxonomic Relations**: 47
     - **Non-taxonomic Relations**: 1
     - **Average Terms per Type**: 4.13
 
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = Wine()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

@@ -10,13 +10,13 @@ because it is user-friendly for editing and viewing differences of edited files.
 being extended. The first version of the OEO has been released on June 11th 2020. A Steering Committee (OEO-SC)
 was created to accompany the development, increase awareness of the ontology and include it in current projects.
 
-:Domain: Ecology & Environment
+:Domain: Ecology and Environment
 :Category: Energy
 :Current Version: 2.7.0
 :Last Updated: 03/2025
 :Creator: None
 :License: Creative Commons Attribution 1.0 Generic (CC BY 1.0)
-:Format: OWL/XML
+:Format: OWL
 :Download: `The Open Energy Ontology (OEO) Homepage <https://github.com/OpenEnergyPlatform/ontology?tab=readme-ov-file>`_
 
 Graph Metrics
@@ -62,7 +62,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OEO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

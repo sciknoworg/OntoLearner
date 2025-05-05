@@ -8,13 +8,13 @@ and semantic web applications understand environmental entities of all kinds,
 from microscopic to intergalactic scales. As a FAIR-compliant resource, it promotes interoperability
 through the concise, controlled description of all things environmental.
 
-:Domain: Ecology & Environment
+:Domain: Ecology and Environment
 :Category: Environment, Ecosystems, Habitats
 :Current Version: 2024-07-01
 :Last Updated: 2024-07-01
 :Creator: Pier Luigi Buttigieg (https://orcid.org/0000-0002-4366-3088)
 :License: Creative Commons 1.0
-:Format: OWL, OBO, JSON
+:Format: OWL
 :Download: `Environment Ontology (ENVO) Homepage <https://obofoundry.org/ontology/envo.html>`_
 
 Graph Metrics
@@ -48,8 +48,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 46
-    - **Taxonomic Relations**: 28876
-    - **Non-taxonomic Relations**: 148
+    - **Taxonomic Relations**: 16175
+    - **Non-taxonomic Relations**: 147
     - **Average Terms per Type**: 5.75
 
 Usage Example
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ENVO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

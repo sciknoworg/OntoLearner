@@ -18,7 +18,7 @@ provide RDFS+OWL descriptions and link to related resources.
 :Last Updated: 2020-10-31
 :Creator: Ryan Shaw
 :License: Creative Commons Attribution 3.0
-:Format: RDF, TTL
+:Format: RDF
 :Download: `Linking Open Descriptions of Events (LODE) Homepage <https://linkedevents.org/ontology/>`_
 
 Graph Metrics
@@ -64,7 +64,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = LODE()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

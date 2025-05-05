@@ -11,7 +11,7 @@ Ontology for the representation of commons elements in the Trias ontology
 :Last Updated: None
 :Creator: Jhon Toledo, Miguel Angel García, Oscar Corcho
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: RDF/XML
+:Format: RDF
 :Download: `Common Ontology (Common) Homepage <https://w3id.org/mobility/trias/common/0.1.0>`_
 
 Graph Metrics
@@ -45,7 +45,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 26
+    - **Taxonomic Relations**: 0
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = Common()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()
