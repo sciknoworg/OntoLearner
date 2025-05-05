@@ -48,10 +48,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 38
-    - **Taxonomic Relations**: 9889
+    - **Term Types**: 37
+    - **Taxonomic Relations**: 6904
     - **Non-taxonomic Relations**: 34
-    - **Average Terms per Type**: 3.45
+    - **Average Terms per Type**: 3.36
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = AFO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

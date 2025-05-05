@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 8347
+    - **Taxonomic Relations**: 7913
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PSIMOD()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

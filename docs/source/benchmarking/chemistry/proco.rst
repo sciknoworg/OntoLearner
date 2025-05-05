@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 14
-    - **Taxonomic Relations**: 2975
+    - **Taxonomic Relations**: 1757
     - **Non-taxonomic Relations**: 1
     - **Average Terms per Type**: 7.00
 
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PROCO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()
