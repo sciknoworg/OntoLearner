@@ -10,7 +10,7 @@ and Modelling Ontology (EMMO, recently renamed while keeping the original acrony
 as a top-level ontology. The ontologies are used to annotate data that are stored in the ZONTAL Space component
 of VIMMP and to support the ingest and retrieval of data and metadata at the VIMMP marketplace front-end.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Modeling
 :Current Version: None
 :Last Updated: 2021-01-02
@@ -49,10 +49,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 1939
-    - **Taxonomic Relations**: 4077
-    - **Non-taxonomic Relations**: 298
-    - **Average Terms per Type**: 5.42
+    - **Term Types**: 1763
+    - **Taxonomic Relations**: 2474
+    - **Non-taxonomic Relations**: 278
+    - **Average Terms per Type**: 6.14
 
 Usage Example
 -------------
@@ -62,7 +62,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = VIMMP()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

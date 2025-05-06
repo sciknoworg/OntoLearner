@@ -6,7 +6,7 @@ Overview
 The materials module populates the physicalistic perspective with materials subclasses categorised
 according to modern applied physical sciences.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials
 :Current Version: None
 :Last Updated: None
@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 165
+    - **Taxonomic Relations**: 156
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OIEMaterials()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

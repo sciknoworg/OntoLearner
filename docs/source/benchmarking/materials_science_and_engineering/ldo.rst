@@ -6,7 +6,7 @@ Overview
 LDO is an ontology designed to describe line defects in crystalline materials,
 such as dislocations and disclinations.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Defects
 :Current Version: 1.0.0
 :Last Updated: None
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = LDO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

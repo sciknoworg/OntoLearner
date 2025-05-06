@@ -9,13 +9,13 @@ which can be easily digested by other science domains. It is a product of the jo
 between the Bundesanstalt für Materialforschung und -prüfung (BAM) and the Fraunhofer Group MATERIALS
 and uses the BWMD ontology created by Fraunhofer IWM as a starting point.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: None
 :Last Updated: None
 :Creator: Thomas Hanke, Fraunhofer IWM
 :License: MIT License
-:Format: TTL, OWL
+:Format: TTL
 :Download: `Materials Science and Engineering Ontology (MSEO) Homepage <https://github.com/Mat-O-Lab/MSEO>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 124
+    - **Taxonomic Relations**: 102
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MSEO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

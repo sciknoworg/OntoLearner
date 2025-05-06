@@ -9,13 +9,13 @@ and BWMD_mid and has been developed to be used in conjunction with the digital w
 by Fraunhofer IWM. If possible, the terminology within this ontology was used as provided by ISO/ASTM 52900:2015.
 Recently, classes relevant for Life Cycle Analysis (LCA) were added that enable sustainability assessment.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 1.1.9
 :Last Updated: 2022-09-20
 :Creator: Fraunhofer IWM
 :License: Creative Commons 4.0
-:Format: OWL, RDF/XML, Turtle
+:Format: OWL
 :Download: `Laser Powder Bed Fusion Ontology (LPBFO) Homepage <https://matportal.org/ontologies/LPBFO>`_
 
 Graph Metrics
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = LPBFO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

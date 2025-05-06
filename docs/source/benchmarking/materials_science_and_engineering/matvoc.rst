@@ -5,13 +5,13 @@ Overview
 --------
 The official ontology produced in the context of the STREAM project.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 1.0.0
 :Last Updated: 2022-12-12
 :Creator: Tatyana Sheveleva, Javad Chamanara
 :License: MIT License
-:Format: RDF/XML,TTL
+:Format: RDF
 :Download: `Materials Vocabulary (MatVoc) Homepage <https://stream-project.github.io/#overv>`_
 
 Graph Metrics
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MatVoc()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

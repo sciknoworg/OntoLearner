@@ -19,7 +19,7 @@ promoting collaboration and knowledge representation across MSE domains. This di
 enhances data discoverability, reusability, and accelerates scientific exchange, innovation,
 and discoveries by optimizing research data management and accessibility.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Research Data, Interoperability
 :Current Version: 3.0.0
 :Last Updated: 2025-03-01
@@ -59,7 +59,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 29
-    - **Taxonomic Relations**: 562
+    - **Taxonomic Relations**: 369
     - **Non-taxonomic Relations**: 12
     - **Average Terms per Type**: 4.14
 
@@ -71,7 +71,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MatWerk()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

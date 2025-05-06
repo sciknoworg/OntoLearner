@@ -6,13 +6,13 @@ Overview
 DISO is an ontology that defines the linear defect, in particular dislocation concepts
 and relations between them in crystalline materials.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 1.0
 :Last Updated: 21.03.202
 :Creator: Ahmad Zainul Ihsan
 :License: Creative Commons Attribution 3.0 International (CC BY 3.0)
-:Format: OWL/XML, RDF/XML, Turtle
+:Format: OWL
 :Download: `Dislocation Ontology (DISO) Homepage <https://github.com/Materials-Data-Science-and-Informatics/dislocation-ontology>`_
 
 Graph Metrics
@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 202
+    - **Taxonomic Relations**: 38
     - **Non-taxonomic Relations**: 6
     - **Average Terms per Type**: 0.00
 
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DISO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

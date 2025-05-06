@@ -10,7 +10,7 @@ used to capture knowledge about modeling concepts that represent (possibly) mult
 AMOntology uses AMProcessOntology and ModelOntology files to describe entities that capture knowledge
 about characteristics of computational models for AM processes.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Manufacturing
 :Current Version: 1.0
 :Last Updated: 2023-05-10
@@ -50,7 +50,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 59
-    - **Taxonomic Relations**: 1603
+    - **Taxonomic Relations**: 657
     - **Non-taxonomic Relations**: 5
     - **Average Terms per Type**: 1.26
 
@@ -62,7 +62,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = AMOntology()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

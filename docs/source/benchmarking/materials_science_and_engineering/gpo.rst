@@ -8,7 +8,7 @@ that transform inputs/educts (matter, energy, information) into output/products 
 with the help of tools (devices, algorithms). They can be decomposed into sub-processes
 and have predecessor and successor processes.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: None
 :Last Updated: None
@@ -48,8 +48,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 516
-    - **Non-taxonomic Relations**: 1
+    - **Taxonomic Relations**: 0
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GPO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

@@ -6,7 +6,7 @@ Overview
 PeriodicTable.owl is a representation of the Periodic Table of the Elements in the OWL Web Ontology Language.
 It provides reference data to support Semantic Web applications in chemistry and related disciplines.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Periodic Table of Elements
 :Current Version: 1.10
 :Last Updated: 2004/02/05
@@ -45,10 +45,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 156
-    - **Taxonomic Relations**: 302
+    - **Term Types**: 150
+    - **Taxonomic Relations**: 0
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 26.00
+    - **Average Terms per Type**: 25.00
 
 Usage Example
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PeriodicTable()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -9,13 +9,13 @@ has been designed as a mid-level ontology to establish a connection between spec
 and the domain neutral concepts found in established top-level ontologies. The primary goal of the PMDco
 is to promote interoperability between diverse domains.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 3.0.0-alpha1
 :Last Updated: 2025-03-20
 :Creator: Jannis Grundmann
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: OWL/XML
+:Format: OWL
 :Download: `The Platform MaterialDigital core ontology (PMDco) Homepage <https://github.com/materialdigital/core-ontology?tab=readme-ov-file>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 1126
+    - **Taxonomic Relations**: 903
     - **Non-taxonomic Relations**: 19
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PMDco()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

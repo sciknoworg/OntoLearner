@@ -5,7 +5,7 @@ Overview
 --------
 This ontology describes system capabilities, operating ranges, and survival ranges.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science, Engineering, Systems
 :Current Version: None
 :Last Updated: 2017-05-14
@@ -44,10 +44,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 2
-    - **Taxonomic Relations**: 148
+    - **Term Types**: 0
+    - **Taxonomic Relations**: 45
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 2.00
+    - **Average Terms per Type**: 0.00
 
 Usage Example
 -------------
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SystemCapabilities()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

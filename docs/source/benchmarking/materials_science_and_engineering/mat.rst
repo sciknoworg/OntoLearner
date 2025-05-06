@@ -8,13 +8,13 @@ materials, and their corresponding properties, relevant within the construction 
 the building elements and properties covered in this ontology support applications
 focused on the design of building renovation projects.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Properties
 :Current Version: 0.0.8
 :Last Updated: None
 :Creator: María Poveda-Villalón, Serge Chávez-Feria
 :License: Creative Commons 4.0
-:Format: RDF/XML, TTL, N-Triples
+:Format: RDF
 :Download: `Material Properties Ontology (MAT) Homepage <https://bimerr.iot.linkeddata.es/def/material-properties/>`_
 
 Graph Metrics
@@ -48,7 +48,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 323
+    - **Taxonomic Relations**: 128
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MAT()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

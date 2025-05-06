@@ -9,13 +9,13 @@ used in the dislocation domain. The various concepts are the numerical represent
 of dislocation applied in the dislocation dynamic simulation and the pictorial concept of pixel
 applied in representing dislocation in the experimental image, eg., TEM image, SEM image, and FIM image.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 1.0
 :Last Updated: 17.08.2023
 :Creator: Ahmad Zainul Ihsan
 :License: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
-:Format: OWL/XML
+:Format: OWL
 :Download: `Dislocation Simulation and Model Ontology (DSIM) Homepage <https://github.com/OCDO/DSIM>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 164
+    - **Taxonomic Relations**: 51
     - **Non-taxonomic Relations**: 6
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DSIM()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

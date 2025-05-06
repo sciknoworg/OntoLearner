@@ -13,13 +13,13 @@ large-scale scientific monitoring, industrial and household infrastructures, soc
 observation-driven ontology engineering, and the Web of Things. Both ontologies are described below,
 and examples of their usage are given.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Sensor Networks
 :Current Version: 1.0
 :Last Updated: 2017-04-17
 :Creator: W3C/OGC Spatial Data on the Web Working Group
 :License: http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
-:Format: RDF/XML, TTL
+:Format: TTL
 :Download: `Semantic Sensor Network Ontology (SSN) Homepage <https://github.com/w3c/sdw-sosa-ssn/tree/482484fe2edc1ba8aa7f19214a72bdb77123e833>`_
 
 Graph Metrics
@@ -52,10 +52,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 7
-    - **Taxonomic Relations**: 7585
+    - **Term Types**: 0
+    - **Taxonomic Relations**: 93
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 7.00
+    - **Average Terms per Type**: 0.00
 
 Usage Example
 -------------
@@ -65,7 +65,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SSN()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

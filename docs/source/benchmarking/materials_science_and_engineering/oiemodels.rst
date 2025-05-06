@@ -6,7 +6,7 @@ Overview
 The models module defines models as semiotic signs that stands for an object by resembling or imitating it,
 in shape or by sharing a similar logical structure.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials
 :Current Version: None
 :Last Updated: None
@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 130
+    - **Taxonomic Relations**: 101
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OIEModels()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

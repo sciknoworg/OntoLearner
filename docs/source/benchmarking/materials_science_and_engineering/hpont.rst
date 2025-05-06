@@ -7,13 +7,13 @@ The Heat Pump Ontology (HPOnt) aims to formalize and represent all the relevant 
 The HPOnt has been developed as part of the REACT project which has received funding
 from the European Union’s Horizon 2020 research and innovation programme under grant agreement no. 824395.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 0.2
 :Last Updated: None
 :Creator: REACT project team
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: OWL
 :Download: `The Heat Pump Ontology (HPOnt) Homepage <https://react2020.github.io/REACT-ONTOLOGY/HPOnt/index-en.html/>`_
 
 Graph Metrics
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 5
-    - **Taxonomic Relations**: 4
+    - **Taxonomic Relations**: 0
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 2.50
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = HPOnt()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

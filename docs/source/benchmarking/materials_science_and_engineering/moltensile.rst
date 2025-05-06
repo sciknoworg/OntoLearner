@@ -5,13 +5,13 @@ Overview
 --------
 An ontology for describing the tensile test process, made in the Materials Open Lab Project.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Testings
 :Current Version: 0.4
 :Last Updated: 04/16/2021
 :Creator: Markus Schilling, markus.schilling@bam.de; Philipp von Hartrott, philipp.von.hartrott@iwm.fraunhofer.de
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: OWL, RDF/XML
+:Format: RDF
 :Download: `Matolab Tensile Test Ontology (MOL_TENSILE) Homepage <https://matportal.org/ontologies/MOL_TENSILE>`_
 
 Graph Metrics
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MOLTENSILE()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

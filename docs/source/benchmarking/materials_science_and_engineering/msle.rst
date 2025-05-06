@@ -5,7 +5,7 @@ Overview
 --------
 The current ontology describes Material Science Lab Equipment.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 1.1
 :Last Updated: Sep 15, 2022
@@ -44,10 +44,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 4
-    - **Taxonomic Relations**: 83
+    - **Term Types**: 3
+    - **Taxonomic Relations**: 47
     - **Non-taxonomic Relations**: 228
-    - **Average Terms per Type**: 1.33
+    - **Average Terms per Type**: 1.50
 
 Usage Example
 -------------
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MSLE()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

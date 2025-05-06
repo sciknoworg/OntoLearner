@@ -7,13 +7,13 @@ Materials Data Science (MDS) is an ontology encompassing multiple domains releva
 chemical synthesis and characterizations, photovoltaics and geospatial datasets. The terms used for classes,
 subclasses and instances are mapped to PMDCo and BFO Ontologies.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 0.3.0.0
 :Last Updated: 03/24/2024
 :Creator: SDLE Research Center
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: OWL/XML
+:Format: TTL
 :Download: `Materials Data Science Ontology (MDS) Homepage <https://matportal.org/ontologies/MDS>`_
 
 Graph Metrics
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MDS()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

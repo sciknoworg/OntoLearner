@@ -7,7 +7,7 @@ Polymer Nanocomposites based ontology which enable researchers to develop and te
 broad-reaching hypotheses about how inter-relationships between different materials
 processing methods and composition result in specific changes in material properties.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: None
 :Last Updated: None
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 321
+    - **Taxonomic Relations**: 212
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = NanoMine()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

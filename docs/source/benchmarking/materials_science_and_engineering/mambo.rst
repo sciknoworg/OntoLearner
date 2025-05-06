@@ -9,13 +9,13 @@ and related applications (i.e. devices based on molecular materials) Supporting 
 complex workflows for modelling systems based on molecular materials (computational modelling
 and data-driven techniques) Integrating data generated via computational simulations and empirical experiments.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: None
 :Last Updated: None
 :Creator: None
 :License: General Public License v3.0 (GPL-3.0)
-:Format: OWL, TTL
+:Format: OWL
 :Download: `Molecules And Materials Basic Ontology (MAMBO) Homepage <https://github.com/daimoners/MAMBO>`_
 
 Graph Metrics
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MAMBO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -6,7 +6,7 @@ Overview
 CMSO is an ontology that aims to describe computational materials science samples (or structures),
 including crystalline defects. Initially focusing on the description at the atomic scale.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 0.0.1
 :Last Updated: None
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = CMSO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

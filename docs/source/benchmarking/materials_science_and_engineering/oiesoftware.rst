@@ -3,9 +3,9 @@ Open Innovation Environment (OIE) domain ontologies, Software module (OIESoftwar
 
 Overview
 --------
-Software module.
+EMMO-compliant, domain-level OIE ontology tackling the areas of software products.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials
 :Current Version: 0.1
 :Last Updated: None
@@ -45,7 +45,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 188
+    - **Taxonomic Relations**: 179
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OIESoftware()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

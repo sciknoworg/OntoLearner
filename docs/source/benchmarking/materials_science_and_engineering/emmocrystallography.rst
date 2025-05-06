@@ -5,13 +5,13 @@ Overview
 --------
 A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Crystallography
 :Current Version: 0.0.1
 :Last Updated: None
 :Creator: None
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: Turtle
+:Format: TTL
 :Download: `Crystallography Ontology (EMMOCrystallography) Homepage <https://github.com/emmo-repo/domain-crystallography>`_
 
 Graph Metrics
@@ -45,7 +45,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 331
+    - **Taxonomic Relations**: 0
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = EMMOCrystallography()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

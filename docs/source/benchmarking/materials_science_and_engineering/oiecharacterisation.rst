@@ -1,31 +1,29 @@
-Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)
+Open Innovation Environment (OIE) domain ontologies, Characterisation module (OIECharacterisation)
 ========================================================================================================================
 
 Overview
 --------
-(1) to explain the historical development of CIF dictionaries to define in a machine-actionable manner the contents
-of data files covering various aspects of crystallography and related structural sciences; (2) to demonstrate
-some of the more complex types of information that can be handled with this approach.
+EMMO-compliant, domain-level OIE ontology tackling the areas of characterization methods.
 
 :Domain: Materials Science and Engineering
-:Category: Materials Science
-:Current Version: 0.1.0
-:Last Updated: May 24, 2023
-:Creator: None
+:Category: Materials
+:Current Version: None
+:Last Updated: None
+:Creator: Daniele Toti, Gerhard Goldbeck, Pierluigi Del Nostro
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 :Format: TTL
-:Download: `Crystallographic Information Framework (CIF) Core Dictionary (CIFCore) Homepage <https://github.com/emmo-repo/CIF-ontology?tab=readme-ov-file>`_
+:Download: `Open Innovation Environment (OIE) domain ontologies, Characterisation module (OIECharacterisation) Homepage <https://github.com/emmo-repo/OIE-Ontologies/>`_
 
 Graph Metrics
 -------------
-    - **Total Nodes**: 4494
-    - **Total Edges**: 15377
+    - **Total Nodes**: 54
+    - **Total Edges**: 135
     - **Root Nodes**: 1
-    - **Leaf Nodes**: 3310
+    - **Leaf Nodes**: 11
 
 Knowledge coverage
 ------------------
-    - Classes: 1182
+    - Classes: 42
     - Individuals: 0
     - Properties: 0
 
@@ -33,21 +31,21 @@ Hierarchical metrics
 --------------------
     - **Maximum Depth**: 1
     - **Minimum Depth**: 0
-    - **Average Depth**: 0.75
-    - **Depth Variance**: 0.19
+    - **Average Depth**: 0.88
+    - **Depth Variance**: 0.11
 
 Breadth metrics
 ------------------
-    - **Maximum Breadth**: 3
+    - **Maximum Breadth**: 7
     - **Minimum Breadth**: 1
-    - **Average Breadth**: 2.00
-    - **Breadth Variance**: 1.00
+    - **Average Breadth**: 4.00
+    - **Breadth Variance**: 9.00
 
 Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 27150
+    - **Taxonomic Relations**: 41
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -55,10 +53,10 @@ Usage Example
 -------------
 .. code-block:: python
 
-    from ontolearner.ontology import CIFCore
+    from ontolearner.ontology import OIECharacterisation
 
     # Initialize and load ontology
-    ontology = CIFCore()
+    ontology = OIECharacterisation()
     ontology.load("path/to/ontology.TTL")
 
     # Extract datasets

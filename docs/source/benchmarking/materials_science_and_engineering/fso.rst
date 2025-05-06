@@ -6,7 +6,7 @@ Overview
 The Flow Systems Ontology (FSO) is an ontology for describing interconnected systems
 with material or energy flow connections, and their components.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 0.1.0
 :Last Updated: 2020-08-06
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = FSO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

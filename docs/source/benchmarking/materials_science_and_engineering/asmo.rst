@@ -7,7 +7,7 @@ ASMO is an ontology that aims to define the concepts needed to describe commonly
 used atomic scale simulation methods, i.e. density functional theory, molecular dynamics,
 Monte Carlo methods, etc. ASMO uses the Provenance Ontology (PROV-O) to describe the simulation process.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 1.0.0
 :Last Updated: None
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ASMO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

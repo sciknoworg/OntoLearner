@@ -8,13 +8,13 @@ particles, both stable (primary) and metastable (precipitates), grains, subgrain
 grain boundaries & particle free zones (PFZs), texture, dislocations. The aim is to support
 both microstructure modelling as well as characterisation.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Microstructure
 :Current Version: None
 :Last Updated: None
 :Creator: None
 :License: None
-:Format: OWL/XML
+:Format: OWL
 :Download: `EMMO-based ontology for microstructures (MicroStructures) Homepage <https://github.com/jesper-friis/emmo-microstructure>`_
 
 Graph Metrics
@@ -48,7 +48,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 364
+    - **Taxonomic Relations**: 17
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MicroStructures()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

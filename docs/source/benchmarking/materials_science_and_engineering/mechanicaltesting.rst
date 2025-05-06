@@ -5,13 +5,13 @@ Overview
 --------
 A domain ontology for mechanical testing based on EMMO.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Mechanical Testing
 :Current Version: 1.0.0
 :Last Updated: None
 :Creator: Fraunhofer IWM
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: OWL/XML
+:Format: OWL
 :Download: `Mechanical Testing Ontology (MechanicalTesting) Homepage <https://github.com/emmo-repo/domain-mechanical-testing>`_
 
 Graph Metrics
@@ -45,8 +45,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 2745
-    - **Non-taxonomic Relations**: 3
+    - **Taxonomic Relations**: 36
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MechanicalTesting()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

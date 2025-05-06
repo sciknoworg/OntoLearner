@@ -8,7 +8,7 @@ and enhancing data interoperability. The primary objective is to provide the nec
 to create FAIR (Findable, Accessible, Interoperable, Reusable) battery data
 that can be integrated into the Semantic Web.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: None
 :Last Updated: None
@@ -47,10 +47,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 12
-    - **Taxonomic Relations**: 23611
-    - **Non-taxonomic Relations**: 66
-    - **Average Terms per Type**: 6.00
+    - **Term Types**: 10
+    - **Taxonomic Relations**: 195
+    - **Non-taxonomic Relations**: 2
+    - **Average Terms per Type**: 10.00
 
 Usage Example
 -------------
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BattINFO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

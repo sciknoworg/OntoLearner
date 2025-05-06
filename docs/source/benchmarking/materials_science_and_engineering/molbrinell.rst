@@ -5,13 +5,13 @@ Overview
 --------
 An ontology for describing the Brinell hardness testing process, made in the Materials Open Lab Project.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Testing
 :Current Version: 0.1
 :Last Updated: 05/05/2022
 :Creator: Birgit Skrotzki, Hossein Beygi Nasrabadi, Philipp von Hartrott, Vinicius Carrillo Beber, Yue Chen
 :License: None
-:Format: TTL, RDF/XML, OWL
+:Format: TTL
 :Download: `MatoLab Brinell Test Ontology (MOL_BRINELL) Homepage <https://matportal.org/ontologies/MOL_BRINELL>`_
 
 Graph Metrics
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MOLBRINELL()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

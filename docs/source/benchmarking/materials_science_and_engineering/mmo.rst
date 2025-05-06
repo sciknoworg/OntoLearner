@@ -9,13 +9,13 @@ some fairly general MSE concepts that could prospectively be merged into PMDco o
 such as descriptions of crystallographic defects and microstructural entities.
 Furthermore, concepts related to the materials fatigue subdomain are also heavily incorporated.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Scholarly Knowledge
 :Current Version: 1.0.1
 :Last Updated: 2024-01-30
 :Creator: Akhil Thomas, Ali Riza Durmaz
 :License: Creative Commons 4.0
-:Format: OWL, TTL
+:Format: RDF
 :Download: `Materials Mechanics Ontology (MMO) Homepage <https://iwm-micro-mechanics-public.pages.fraunhofer.de/ontologies/materials-mechanics-ontology/index-en.html>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 876
+    - **Taxonomic Relations**: 566
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MMO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

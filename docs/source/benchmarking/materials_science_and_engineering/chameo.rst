@@ -9,7 +9,7 @@ and that has been used as a basis for the development of a number of technique-s
 or application-specific ontologies in the materials characterisation domain. CHAMEO
 has been used as a foundation for the definition of the new CHADA template during the CWA.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 1.0.0
 :Last Updated: 2024-04-12
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 397
+    - **Taxonomic Relations**: 195
     - **Non-taxonomic Relations**: 2
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = CHAMEO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

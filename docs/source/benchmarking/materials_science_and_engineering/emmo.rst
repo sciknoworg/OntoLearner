@@ -9,13 +9,13 @@ and characterization knowledge. Instead of starting from general upper level con
 the EMMO development started from the very bottom level, using the actual picture of the physical world coming
 from applied sciences, and in particular from physics and material sciences.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Modelling
 :Current Version: 1.0.0-rc3
 :Last Updated: 2024-03
 :Creator: European Materials Modelling Council (EMMC)
 :License: Creative Commons 4.0
-:Format: OWL, RDF/XML, TTL, JSON-LD
+:Format: OWL
 :Download: `The Elementary Multiperspective Material Ontology (EMMO) Homepage <https://emmo-repo.github.io/>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 2
-    - **Taxonomic Relations**: 27873
+    - **Taxonomic Relations**: 16281
     - **Non-taxonomic Relations**: 52
     - **Average Terms per Type**: 2.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = EMMO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -45,8 +45,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 122
-    - **Taxonomic Relations**: 2228
-    - **Non-taxonomic Relations**: 434
+    - **Taxonomic Relations**: 1215
+    - **Non-taxonomic Relations**: 167
     - **Average Terms per Type**: 1.94
 
 Usage Example
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MatOnto()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

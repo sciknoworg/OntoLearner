@@ -6,13 +6,13 @@ Overview
 MDO is an ontology for materials design field, representing the domain knowledge specifically related
 to solid-state physics and computational materials science.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Design
 :Current Version: 1.1
 :Last Updated: 2022-08-02
 :Creator: Materials Design Division, National Institute for Materials Science (NIMS)
 :License: Creative Commons 4.0
-:Format: OWL, RDF/XML, TTL, JSON-LD
+:Format: OWL
 :Download: `Materials Design Ontology (MDO) Homepage <https://github.com/LiUSemWeb/Materials-Design-Ontology/tree/master/>`_
 
 Graph Metrics
@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 2
-    - **Taxonomic Relations**: 8
+    - **Taxonomic Relations**: 3
     - **Non-taxonomic Relations**: 1
     - **Average Terms per Type**: 2.00
 
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MDO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

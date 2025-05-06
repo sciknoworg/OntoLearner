@@ -7,13 +7,13 @@ The Material Information ontology is divided into smaller ontologies (partitions
 The partitions are Environment, Geometry, Material Information, Manufacturing Process, Property,
 Substance, Unit Dimension, Structure, Equation and Physical Constant.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: None
 :Last Updated: None
 :Creator: Toshihiro Ashino
 :License: None
-:Format: OWL, RDF/XML
+:Format: OWL
 :Download: `Material Information Ontology (MaterialInformation) Homepage <https://github.com/EngyNasr/MSE-Benchmark/blob/main/testCases/secondTestCase/MaterialInformation.owl>`_
 
 Graph Metrics
@@ -46,8 +46,8 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 410
-    - **Taxonomic Relations**: 611
+    - **Term Types**: 404
+    - **Taxonomic Relations**: 605
     - **Non-taxonomic Relations**: 30
     - **Average Terms per Type**: 1.03
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MaterialInformation()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -6,7 +6,7 @@ Overview
 PLDO is an ontology designed to describe planar defects in crystalline materials,
 such as grain boundaries and stacking faults, with a focus on their atomic-scale structure and properties.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Defects
 :Current Version: 1.0.0
 :Last Updated: None
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PLDO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

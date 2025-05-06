@@ -6,13 +6,13 @@ Overview
 Building Material Ontology defines the main concepts of building material,
 types, layers, and properties.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials
 :Current Version: 0.1
 :Last Updated: 2019-12-10
 :Creator: Janakiram Karlapudi, Prathap Valluru
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: TTL, OWL, RDF/XML
+:Format: TTL
 :Download: `Building Material Ontology (BMO) Homepage <https://matportal.org/ontologies/BUILDMAT>`_
 
 Graph Metrics
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BMO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

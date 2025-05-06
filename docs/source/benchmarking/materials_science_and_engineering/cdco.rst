@@ -6,7 +6,7 @@ Overview
 CDCO defines the common terminology shared across all types of crystallographic defects,
 providing a unified framework for data integration in materials science.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: 1.0.0
 :Last Updated: None
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = CDCO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -9,7 +9,7 @@ from the OWL file. The original OWL file is also included. This document describ
 and attributes included in the ontology. For a better understanding of the decisions taken at the time
 of representing the knowledge in the ontology, the reader is encouraged to also read the document D5.4.
 
-:Domain: Materials Science & Engineering
+:Domain: Materials Science and Engineering
 :Category: Materials Science
 :Current Version: None
 :Last Updated: 2010-05-31
@@ -48,10 +48,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 13
+    - **Term Types**: 11
     - **Taxonomic Relations**: 16
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 2.17
+    - **Average Terms per Type**: 2.20
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ONTORULE()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()
