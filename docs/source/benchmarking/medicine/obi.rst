@@ -12,7 +12,7 @@ by defining more than 2500 terms for assays, devices, objectives, and more.
 :Last Updated: 2025-01-09
 :Creator: None
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: OWL
 :Download: `Ontology for Biomedical Investigations (OBI) Homepage <https://github.com/obi-ontology/obi/tree/master>`_
 
 Graph Metrics
@@ -45,10 +45,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 288
-    - **Taxonomic Relations**: 22933
+    - **Term Types**: 286
+    - **Taxonomic Relations**: 11843
     - **Non-taxonomic Relations**: 38
-    - **Average Terms per Type**: 5.65
+    - **Average Terms per Type**: 5.61
 
 Usage Example
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OBI()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

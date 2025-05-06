@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 19
-    - **Taxonomic Relations**: 1067
+    - **Taxonomic Relations**: 837
     - **Non-taxonomic Relations**: 20
     - **Average Terms per Type**: 4.75
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = MFOEM()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()
