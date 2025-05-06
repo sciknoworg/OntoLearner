@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 1
-    - **Taxonomic Relations**: 203
+    - **Taxonomic Relations**: 143
     - **Non-taxonomic Relations**: 34
     - **Average Terms per Type**: 1.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GFO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

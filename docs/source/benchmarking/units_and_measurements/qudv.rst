@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = QUDV()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

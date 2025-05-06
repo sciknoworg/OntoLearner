@@ -1,4 +1,4 @@
-Hydra Ontology
+Hydra Ontology (Hydra)
 ========================================================================================================================
 
 Overview
@@ -6,14 +6,14 @@ Overview
 Hydra is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts
 commonly used in Web APIs it enables the creation of generic API clients.
 
-:Domain: Web & Internet
+:Domain: Web and Internet
 :Category: Web Development
 :Current Version: None
 :Last Updated: 13 July 2021
 :Creator: Hydra W3C Community Group
 :License: Creative Commons 4.0
-:Format: JSON-LD, RDF, TTL
-:Download: `Hydra Ontology Homepage <https://www.hydra-cg.com/spec/latest/core/#references>`_
+:Format: JSONLD
+:Download: `Hydra Ontology (Hydra) Homepage <https://www.hydra-cg.com/spec/latest/core/#references>`_
 
 Graph Metrics
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = Hydra()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.JSONLD")
 
     # Extract datasets
     data = ontology.extract()

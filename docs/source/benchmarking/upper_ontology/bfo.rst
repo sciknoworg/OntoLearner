@@ -12,7 +12,7 @@ the basic types of entities in the world and how they relate to each other.
 :Last Updated: 2020
 :Creator: University at Buffalo
 :License: Creative Commons 4.0
-:Format: OWL, TTL
+:Format: OWL
 :Download: `Basic Formal Ontology (BFO) Homepage <https://github.com/BFO-ontology/BFO-2020/>`_
 
 Graph Metrics
@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 162
+    - **Taxonomic Relations**: 66
     - **Non-taxonomic Relations**: 5
     - **Average Terms per Type**: 0.00
 
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BFO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

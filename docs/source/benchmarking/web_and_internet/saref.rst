@@ -9,13 +9,13 @@ and among various activity sectors in the Internet of Things (IoT),
 thus contributing to the development of data spaces. SAREF is published as a set of open standards
 produced by ETSI Technical Committee Smart Machine-to-Machine communications (SmartM2M).
 
-:Domain: Web & Internet
+:Domain: Web and Internet
 :Category: interoperability
 :Current Version: 3.2.1
 :Last Updated: 2020-12-31
 :Creator: ETSI Technical Committee Smart Machine-to-Machine communications (SmartM2M)
 :License: None
-:Format: OWL, RDF/XML, TTL, JSON-LD
+:Format: RDF
 :Download: `Smart Applications REFerence ontology (SAREF) Homepage <https://saref.etsi.org/core/v3.2.1/>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 10
-    - **Taxonomic Relations**: 224
+    - **Taxonomic Relations**: 88
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 10.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SAREF()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

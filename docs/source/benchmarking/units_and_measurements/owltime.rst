@@ -16,7 +16,7 @@ such as Unix-time, geologic time, or different calendars.
 :Last Updated: 15 November 2022
 :Creator: World Wide Web Consortium
 :License: W3C Software Notice and Document License
-:Format: TTL, OWL
+:Format: TTL
 :Download: `Time Ontology in OWL (OWL-Time) Homepage <https://www.w3.org/TR/owl-time/>`_
 
 Graph Metrics
@@ -50,7 +50,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 17
-    - **Taxonomic Relations**: 529
+    - **Taxonomic Relations**: 66
     - **Non-taxonomic Relations**: 1
     - **Average Terms per Type**: 8.50
 
@@ -62,7 +62,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OWLTime()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

@@ -19,7 +19,7 @@ Economics; Information technology and Typography.
 :Last Updated: June 28, 2024
 :Creator: Hajo Rijgersberg, Don Willems, Jan Top
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: RDF
 :Download: `Ontology of Units of Measure (OM) Homepage <https://bioportal.bioontology.org/ontologies/OM>`_
 
 Graph Metrics
@@ -53,7 +53,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 1953
-    - **Taxonomic Relations**: 2016
+    - **Taxonomic Relations**: 1124
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 42.46
 
@@ -65,7 +65,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OM()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()
