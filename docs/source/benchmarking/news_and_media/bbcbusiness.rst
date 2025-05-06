@@ -5,7 +5,7 @@ Overview
 --------
 The Business News Ontology describes the concepts that occur in BBC business news.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Business News
 :Current Version: 0.5
 :Last Updated: 2014-11-09
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCBusiness()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

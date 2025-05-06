@@ -7,7 +7,7 @@ The generic BBC ontology for people, places, events, organisations, themes which
 that make sense across the BBC. This model is meant to be generic enough, and allow clients (domain experts)
 link their own concepts e.g., athletes or politicians using rdfs:sublClassOf the particular concept.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Core Concepts
 :Current Version: 1.30
 :Last Updated: 2019-11-21
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCCoreConcepts()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

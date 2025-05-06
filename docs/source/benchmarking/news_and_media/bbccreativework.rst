@@ -7,7 +7,7 @@ This ontology defines the terms required to describe the creative works produced
 This ontology powers reading and writing creative works in the triplestore using tags associated with them (about)
 their more specific types (BlogPost, NewsItem, Programme) and audiences (audience).
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Creative Work
 :Current Version: 1.19
 :Last Updated: 2012-12-01
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCCreativeWork()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

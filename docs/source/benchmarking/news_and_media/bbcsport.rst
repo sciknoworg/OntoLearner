@@ -12,7 +12,7 @@ to a wide range of competitive sporting events data publishing use cases.
 Care has been taken to try and ensure interoperability with more general ontologies in use.
 In particular, it draws heavily upon the events ontology.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Sport
 :Current Version: 3.2
 :Last Updated: None
@@ -64,7 +64,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCSport()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

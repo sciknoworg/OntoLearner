@@ -7,7 +7,7 @@ This ontology aims at providing a simple vocabulary for describing programmes.
 It covers brands, series (seasons), episodes, broadcast events, broadcast services,etc.
 Its development was funded by the BBC, and is heavily grounded on previous programmes data modelling work done there.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Programmes
 :Current Version: 1.1
 :Last Updated: 2009/02/20
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCProgrammes()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

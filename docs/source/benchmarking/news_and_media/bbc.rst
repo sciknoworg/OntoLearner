@@ -8,7 +8,7 @@ for which content is available. Currently, there are 10 major products in Future
 which produce content for BBC online. The majority of those contain more products dedicated in thematic areas,
 for example Education propositions are part of the K&L (Knowledge and Learning) product portfolio.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: News
 :Current Version: 1.37
 :Last Updated: 2012-12-01
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBC()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

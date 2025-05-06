@@ -8,8 +8,8 @@ including the foods they are made from and the foods they create as well as the 
 menus, seasons, courses and occasions they may be suitable for. Whilst it originates in a specific BBC use case,
 the Food Ontology should be applicable to a wide range of recipe data publishing across the web.
 
-:Domain: News & Media
-:Category: Food & Beverage
+:Domain: News and Media
+:Category: Food and Beverage
 :Current Version: 0.1
 :Last Updated: 2014/03/18
 :Creator: None
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCFood()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

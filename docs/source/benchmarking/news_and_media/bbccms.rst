@@ -7,7 +7,7 @@ The Content Management Systems ontology defines the terms that LDP needs to inte
 The linked data platform contain semantic metadata for the creative content and also the things the BBC produces content about.
 The CMS ontology defines how these things and content are associated with other BBC instances of the same thing.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Content Management Systems
 :Current Version: 3.7
 :Last Updated: 2012-12-01
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCCMS()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

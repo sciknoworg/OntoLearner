@@ -9,7 +9,7 @@ At the heart of the ontology, is the concept of Storyline. As a nuance of the En
 has multiple meanings. In news organisations, a story can be an individual piece of content,
 such as an article or news report. It can also be the editorial view on events occurring in the world.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Storyline
 :Current Version: 0.3
 :Last Updated: 2013-05-01
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCStoryline()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

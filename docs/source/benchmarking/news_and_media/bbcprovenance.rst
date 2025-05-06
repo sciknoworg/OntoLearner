@@ -9,7 +9,7 @@ so for example, this would record that geodata was provided by the BBC Locator t
 and not geonames. In the Linked Data Platform, this data is applied to contexts or named graphs.
 A named graph is, in effect, a 'fourth part' to a triple, hence the term 'quad store'.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Provenance
 :Current Version: 1.9
 :Last Updated: 2012-12-01
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCProvenance()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

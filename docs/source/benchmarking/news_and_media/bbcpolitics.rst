@@ -5,7 +5,7 @@ Overview
 --------
 The Politics Ontology describes the concepts that occur in BBC politics news.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Politics
 :Current Version: 0.9
 :Last Updated: 2014-01-06
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCPolitics()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

@@ -7,7 +7,7 @@ A simple vocabulary for describing biological species and related taxa. The voca
 for describing the names and ranking of taxa, as well as providing support for describing their habitats,
 conservation status, and behavioural characteristics, etc.
 
-:Domain: News & Media
+:Domain: News and Media
 :Category: Wildlife
 :Current Version: 1.1
 :Last Updated: 2013/12/18
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BBCWildlife()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()
