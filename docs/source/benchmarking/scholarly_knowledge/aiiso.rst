@@ -15,7 +15,7 @@ to describe the roles that people play within an institution.
 :Last Updated: 2008-05-14
 :Creator: Open University
 :License: Creative Commons 4.0
-:Format: RDF/XML
+:Format: RDF
 :Download: `Academic Institution Internal Structure Ontology (AIISO) Homepage <https://vocab.org/aiiso/>`_
 
 Graph Metrics
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = AIISO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

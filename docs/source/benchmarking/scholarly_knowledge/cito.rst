@@ -12,7 +12,7 @@ both factually and rhetorically.
 :Last Updated: 2018-02-16
 :Creator: Silvio Peroni, David Shotton
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: OWL
 :Download: `Citation Typing Ontology (CiTO) Homepage <https://github.com/SPAROntologies/cito/tree/master/docs/current>`_
 
 Graph Metrics
@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 11
+    - **Taxonomic Relations**: 9
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = CiTO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

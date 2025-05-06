@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = WiLD()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

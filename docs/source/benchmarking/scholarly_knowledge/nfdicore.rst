@@ -15,7 +15,7 @@ organizations, projects, data portals, and more.
 :Last Updated: 2025-02-07
 :Creator: Jörg Waitelonis, Oleksandra Bruns, Tabea Tietz, Etienne Posthumus, Hossein Beygi Nasrabadi, Harald Sack
 :License: Creative Commons 1.0
-:Format: RDF/XML, TTL, JSON-LD
+:Format: OWL
 :Download: `National Research Data Infrastructure Ontology (NFDIcore) Homepage <https://ise-fizkarlsruhe.github.io/nfdicore/>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 391
+    - **Taxonomic Relations**: 237
     - **Non-taxonomic Relations**: 10
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = NFDIcore()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

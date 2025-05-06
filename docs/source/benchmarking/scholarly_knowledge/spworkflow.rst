@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 5
-    - **Taxonomic Relations**: 1079
+    - **Taxonomic Relations**: 577
     - **Non-taxonomic Relations**: 22
     - **Average Terms per Type**: 1.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SPWorkflow()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

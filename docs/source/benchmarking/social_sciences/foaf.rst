@@ -13,7 +13,7 @@ or in the form of factual data, it can be linked.
 :Last Updated: 14 January 2014
 :Creator: Dan Brickley, Libby Miller
 :License: Creative Commons
-:Format: RDF/XML
+:Format: RDF
 :Download: `Friend of a Friend (FOAF) Homepage <http://xmlns.com/foaf/0.1/>`_
 
 Graph Metrics
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = FOAF()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

@@ -13,7 +13,7 @@ for describing activities on the web.
 :Last Updated: 23 May 2017
 :Creator: None
 :License: W3C Document License
-:Format: OWL
+:Format: TTL
 :Download: `Activity Streams 2.0 Ontology (AS2) Homepage <https://github.com/w3c/activitystreams?tab=License-1-ov-file#readme>`_
 
 Graph Metrics
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 1
-    - **Taxonomic Relations**: 59
+    - **Taxonomic Relations**: 55
     - **Non-taxonomic Relations**: 1
     - **Average Terms per Type**: 1.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = AS2()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

@@ -16,7 +16,7 @@ The Contact ontology also extends the definition of address to include an associ
 :Last Updated: 2018-07-06
 :Creator: Mark Fox, Megan Katsumi
 :License: None
-:Format: OWL, TTL, CSV, NT
+:Format: RDF
 :Download: `Contact Ontology (Contact) Homepage <https://enterpriseintegrationlab.github.io/icity/Contact/Contact_1.0/doc/index-en.html>`_
 
 Graph Metrics
@@ -50,7 +50,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 1
-    - **Taxonomic Relations**: 610
+    - **Taxonomic Relations**: 97
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 1.00
 
@@ -62,7 +62,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = Contact()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

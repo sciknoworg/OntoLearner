@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 288
-    - **Taxonomic Relations**: 282
+    - **Taxonomic Relations**: 276
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 11.08
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = LexInfo()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 21
-    - **Taxonomic Relations**: 223
+    - **Taxonomic Relations**: 141
     - **Non-taxonomic Relations**: 6
     - **Average Terms per Type**: 4.20
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SEPIO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

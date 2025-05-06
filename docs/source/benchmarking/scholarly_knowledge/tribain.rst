@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 21
-    - **Taxonomic Relations**: 488
+    - **Taxonomic Relations**: 324
     - **Non-taxonomic Relations**: 24
     - **Average Terms per Type**: 1.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = TribAIn()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

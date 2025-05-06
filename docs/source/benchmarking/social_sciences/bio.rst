@@ -16,7 +16,7 @@ the Employment event puts the person being employed as the principal agent in th
 :Last Updated: 2010-05-10
 :Creator: Ian Davis and David Galbraith
 :License: Public Domain
-:Format: RDF, TTL, CSV, NT
+:Format: RDF
 :Download: `BIO: A vocabulary for biographical information (BIO) Homepage <https://vocab.org/bio/>`_
 
 Graph Metrics
@@ -50,7 +50,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 1
-    - **Taxonomic Relations**: 62
+    - **Taxonomic Relations**: 58
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 1.00
 
@@ -62,7 +62,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BIO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

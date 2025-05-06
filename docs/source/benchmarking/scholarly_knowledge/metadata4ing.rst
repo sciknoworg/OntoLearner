@@ -11,12 +11,12 @@ are based on the principles of modularity and inheritance.
 
 :Domain: Scholarly Knowledge
 :Category: Materials Science
-:Current Version: 1.3.0
-:Last Updated: 2024-09-20
+:Current Version: 1.3.1
+:Last Updated: 2025-03-10
 :Creator: Metadata4Ing Workgroup
 :License: Creative Commons 4.0
-:Format: TTL, OWL
-:Download: `Metadata for Intelligent Engineering (Metadata4Ing) Homepage <https://nfdi4ing.pages.rwth-aachen.de/metadata4ing/metadata4ing/>`_
+:Format: TTL
+:Download: `Metadata for Intelligent Engineering (Metadata4Ing) Homepage <https://git.rwth-aachen.de/nfdi4ing/metadata4ing/metadata4ing>`_
 
 Graph Metrics
 -------------
@@ -48,10 +48,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 47
-    - **Taxonomic Relations**: 122
+    - **Term Types**: 37
+    - **Taxonomic Relations**: 44
     - **Non-taxonomic Relations**: 6
-    - **Average Terms per Type**: 11.75
+    - **Average Terms per Type**: 9.25
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = Metadata4Ing()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()
