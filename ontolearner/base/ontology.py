@@ -1,10 +1,15 @@
+import json
 import os
 import re
+import shutil
+import time
 from abc import ABC
 import concurrent.futures
+from pathlib import Path
 from typing import List, Tuple, Any, Set, Optional
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
 import networkx as nx
+from huggingface_hub import Repository
 
 from ..data_structure import (OntologyData, TermTyping, TaxonomicRelation, NonTaxonomicRelation,
                               TypeTaxonomies, NonTaxonomicRelations)
@@ -71,6 +76,72 @@ class BaseOntology(ABC):
                         logger.error(f"Failed to load import {import_uri}: {str(e)}")
                 else:
                     logger.warning(f"Could not resolve import: {import_def}")
+
+    def load_from_huggingface(self, tmp_dir: Optional[Path] = None) -> Optional[OntologyData]:
+        """
+        Load ontology and datasets from Hugging Face domain repository.
+        """
+        tmp_dir = tmp_dir or Path("./tmp")
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+
+        domain_str = self.domain.lower().replace(' ', '_')
+        repo_name = f"SciKnowOrg/ontolearner-{domain_str}"
+        local_dir = tmp_dir / f"hf_{self.ontology_id.lower()}_{int(time.time())}"
+
+        logger.info(f"Loading ontology {self.ontology_id} from Hugging Face repository {repo_name}")
+
+        try:
+            # Clone the repository without assigning to an unused variable
+            Repository(local_dir=local_dir, clone_from=repo_name, repo_type="dataset")
+
+            ontology_dir = local_dir / self.ontology_id.lower()
+
+            if not ontology_dir.exists():
+                logger.error(f"Ontology directory {self.ontology_id} not found in repository {repo_name}")
+                return None
+
+            ontology_file = ontology_dir / f"{self.ontology_id.lower()}.{self.format.lower()}"
+
+            if not ontology_file.exists():
+                logger.error(f"Ontology file {ontology_file} not found for {self.ontology_id} in {ontology_dir}")
+                return None
+
+            try:
+                self.load(str(ontology_file))
+            except Exception as e:
+                logger.error(f"Failed to load ontology file {ontology_file}: {str(e)}")
+                return None
+
+            try:
+                term_typings_file = ontology_dir / "term_typings.json"
+                type_taxonomies_file = ontology_dir / "type_taxonomies.json"
+                # Check for both possible filenames for taxonomies
+                if not type_taxonomies_file.exists():
+                    type_taxonomies_file = ontology_dir / "taxonomies.json"
+
+                non_taxonomic_file = ontology_dir / "non_taxonomic_relations.json"
+                # Check for both possible filenames for non-taxonomic relations
+                if not non_taxonomic_file.exists():
+                    non_taxonomic_file = ontology_dir / "type_non_taxonomic_relations.json"
+
+                datasets = OntologyData(
+                    term_typings=json.loads(term_typings_file.read_text()),
+                    type_taxonomies=json.loads(type_taxonomies_file.read_text()),
+                    type_non_taxonomic_relations=json.loads(non_taxonomic_file.read_text())
+                )
+
+                logger.info(f"Successfully loaded ontology {self.ontology_id} from Hugging Face")
+                return datasets
+            except FileNotFoundError as e:
+                logger.error(f"Missing dataset file for {self.ontology_id}: {str(e)}")
+                return None
+
+        except Exception as e:
+            logger.error(f"Failed to load ontology {self.ontology_id} from Hugging Face: {str(e)}")
+            return None
+        finally:
+            if local_dir.exists():
+                shutil.rmtree(local_dir)
 
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
