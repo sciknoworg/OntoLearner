@@ -300,11 +300,43 @@ class BaseOntology(ABC):
             return True
 
         # Numeric patterns
-        if re.match(r'^N[0-9]+$', label):  # N followed by numbers
+        if re.match(r'^N[0-9]+$', label):
             return True
-        if re.match(r'^_[0-9]+$', label):  # Underscore followed by numbers
+        if re.match(r'^_[0-9]+$', label):
             return True
-        if re.match(r'^c_[0-9]+$', label):  # c_ followed by numbers
+        if re.match(r'^c_[0-9]+$', label):
+            return True
+        if re.match(r'^BFO_[0-9]+$', label):
+            return True
+        if re.match(r'^IAO_[0-9]+$', label):
+            return True
+        if re.match(r'^OBI_[0-9]+$', label):
+            return True
+        if re.match(r'^FIX_[0-9]+$', label):
+            return True
+        if re.match(r'^REX_[0-9]+$', label):
+            return True
+        if re.match(r'^UO_[0-9]+$', label):
+            return True
+        if re.match(r'^MS_[0-9]+$', label):
+            return True
+        if re.match(r'^AFRL_[0-9]+$', label):
+            return True
+        if re.match(r'^AFFN_[0-9]+$', label):
+            return True
+        if re.match(r'^AFE_[0-9]+$', label):
+            return True
+        if re.match(r'^AFQ_[0-9]+$', label):
+            return True
+        if re.match(r'^AFP_[0-9]+$', label):
+            return True
+        if re.match(r'^AFM_[0-9]+$', label):
+            return True
+        if re.match(r'^AFC_[0-9]+$', label):
+            return True
+        if re.match(r'^ENVO_[0-9]+$', label):
+            return True
+        if re.match(r'^AFR_[0-9]+$', label):
             return True
 
         # Hexadecimal patterns

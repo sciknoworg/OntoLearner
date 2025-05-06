@@ -31,9 +31,9 @@ def main():
         processor = Processor(datasets_dir=DATASET_DIR, templates_dir=TEMPLATES_DIR, benchmark_dir=BENCHMARK_DIR, metrics_dir=METRICS_DIR)
 
         # todo_ontologies = [
-        #     # (YAGO(), "general_knowledge/yago.ttl"),
-        #     # (NCIt(), "medicine/ncit.owl"),
-        #     # (PRotein(), "medicine/protein.rdf"),
+        #     # YAGO(),
+        #     # NCIt(),
+        #     # PRotein(),
         # ]
 
         ontologies = [
@@ -41,14 +41,14 @@ def main():
             # AGROVOC(),
             # FoodOn(),
             # PO(),
-            #
+
             # # Arts and Humanities Ontologies
             # ChordOntology(),
             # ICON(),
             # MusicOntology(),
             # Nomisma(),
             # TimelineOntology(),
-            #
+
             # # Biology & Life Sciences Ontologies
             # BioPAX(),
             # EFO(),
@@ -59,7 +59,7 @@ def main():
             # MO(),
             # NPO(),
             # PATO(),
-            #
+
             # # Chemistry Ontologies
             # AFO(),
             # ChEBI(),
@@ -76,28 +76,28 @@ def main():
             # REX(),
             # RXNO(),
             # VIBSO(),
-            #
+
             # # Ecology & Environment Ontologies
             # ENVO(),
             # OEO(),
             # SWEET(),
-            #
+
             # # Education Ontologies
             # BIBFRAME(),
             # Common(),
             # DoCO(),
-            #
-            # # #Event Ontologies
+
+            # # Event Ontologies
             # ConferenceOntology(),
             # iCalendar(),
             # LODE(),
-            #
+
             # # Finance Ontologies
             # GoodRelations(),
-            #
+
             # # Food & Beverage Ontologies
             # Wine(),
-            #
+
             # # General Knowledge Ontologies
             # CCO(),
             # DBpedia(),
@@ -109,14 +109,14 @@ def main():
             # RO(),
             # SchemaOrg(),
             # UMBEL(),
-            # # (YAGO(), "general_knowledge/yago_facts.ttl"),  # large
-            #
+            # # (YAGO(),  # large
+
             # # Geography Ontologies
             # GEO(),
             # GeoNames(),
             # GTS(),
             # Juso(),
-            #
+
             # # Industry
             # AUTO(),
             # DBO(),
@@ -124,16 +124,16 @@ def main():
             # IOF(),
             # PTO(),
             # TUBES(),
-            #
+
             # # Law Ontologies
             # CopyrightOnto(),
-            #
+
             # # Library & Cultural Heritage
             # GND(),
-            #
+
             # # Livestock Ontologies
             # ATOL(),
-            #
+
             # # Materials Science & Engineering
             # AMOntology(),
             # ASMO(),
@@ -170,6 +170,7 @@ def main():
             # MSEO(),
             # MSLE(),
             # NanoMine(),
+            # OIECharacterisation(),
             # OIEManufacturing(),
             # OIEMaterials(),
             # OIEModels(),
@@ -185,7 +186,7 @@ def main():
             # SSN(),
             # SystemCapabilities(),
             # VIMMP(),
-            #
+
             # # Medicine Ontologies
             # BTO(),
             # DEB(),
@@ -195,7 +196,7 @@ def main():
             # # (NCIt(),  #large
             # OBI(),
             # # (PRotein(),  #large
-            #
+
             # # News & Media Ontologies
             # BBC(),
             # BBCBusiness(),
@@ -209,7 +210,7 @@ def main():
             # BBCSport(),
             # BBCStoryline(),
             # BBCWildlife(),
-            #
+
             # # Scholarly Knowledge Ontologies
             # AIISO(),
             # CiTO(),
@@ -235,21 +236,21 @@ def main():
             # TribAIn(),
             # VOAF(),
             # WiLD(),
-            #
+
             # # Social Sciences
             # AS2(),
             # BIO(),
             # Contact(),
             # FOAF(),
             # SIOC(),
-            #
+
             # # Units and Measurements
             # OM(),
             # OWLTime(),
             # QUDT(),
             # QUDV(),
             # UO(),
-            #
+
             # # Upper Ontologies
             # BFO(),
             # DOLCE(),
@@ -257,7 +258,7 @@ def main():
             # GFO(),
             # SIO(),
             # SUMO(),
-            #
+
             # # Web Ontologies
             # Hydra(),
             # SAREF(),
