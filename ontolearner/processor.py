@@ -34,7 +34,8 @@ class Processor:
             if not Path(ontology_path).exists():
                 raise ValueError(f"Ontology file not found: {ontology_path}")
 
-            ontology.load(str(ontology_path))
+            # ontology.load(str(ontology_path))
+            ontology.load()
 
             data: OntologyData = ontology.extract()
 
