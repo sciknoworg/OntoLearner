@@ -7,6 +7,13 @@ import inspect
 import os
 # -- Project information -----------------------------------------------------
 #
+from sphinx.search import IndexBuilder
+import snowballstemmer
+
+# Override the stemmer with 'english' instead of 'porter'
+IndexBuilder.lang = 'en'
+IndexBuilder.stemmer = snowballstemmer.stemmer('english')
+
 year = str(datetime.datetime.now().year)
 project = 'OntoLearner'
 copyright = year + ' SciKnowOrg'
