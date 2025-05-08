@@ -25,6 +25,14 @@
 
 .. toctree::
    :maxdepth: 1
+   :caption: Text2Onto
+   :hidden:
+
+   text2onto/text2onto
+
+
+.. toctree::
+   :maxdepth: 1
    :caption: Hugging Face Hub
    :hidden:
 
