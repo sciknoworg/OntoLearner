@@ -1,5 +1,5 @@
 Environmental Noise Measurement Ontology (ENM)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,9 +49,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 9
-    - **Taxonomic Relations**: 37103
-    - **Non-taxonomic Relations**: 426
-    - **Average Terms per Type**: 0.39
+    - **Taxonomic Relations**: 36933
+    - **Non-taxonomic Relations**: 84
+    - **Average Terms per Type**: 3.00
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ENM()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -1,5 +1,5 @@
 Workflows in Linked Data (WiLD)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Generated Benchmarks:
     - **Term Types**: 4
     - **Taxonomic Relations**: 9
     - **Non-taxonomic Relations**: 4
-    - **Average Terms per Type**: 0.24
+    - **Average Terms per Type**: 2.00
 
 Usage Example
 -------------
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = WiLD()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

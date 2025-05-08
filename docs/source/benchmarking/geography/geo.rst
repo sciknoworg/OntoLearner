@@ -1,5 +1,5 @@
 Geographical Entities Ontology (GEO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ to the specific ones over which the governments have jurisdiction)
 :Creator: William R Hogan
 :License: Creative Commons 4.0
 :Format: OWL
-:Download: `Geographical Entities Ontology (GEO) Homepage <http://purl.obolibrary.org/obo/geo.owl>`_
+:Download: `Geographical Entities Ontology (GEO) Homepage <https://github.com/mcwdsi/geographical-entity-ontology/blob/master/geo-all.owl>`_
 
 Graph Metrics
 -------------
@@ -46,10 +46,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 46949
-    - **Taxonomic Relations**: 664
-    - **Non-taxonomic Relations**: 65
-    - **Average Terms per Type**: 1877.96
+    - **Term Types**: 34653
+    - **Taxonomic Relations**: 430
+    - **Non-taxonomic Relations**: 19
+    - **Average Terms per Type**: 1386.12
 
 Usage Example
 -------------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GEO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -1,5 +1,5 @@
-Juso Ontology
-==========================
+Juso Ontology (Juso)
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ Juso Ontology is a Web vocabulary for describing geographical addresses and feat
 :Creator: James G. Kim, LiST Inc.
 :License: Creative Commons 4.0
 :Format: TTL
-:Download: `Juso Ontology Homepage <https://rdfs.co/juso/0.1.1/html>`_
+:Download: `Juso Ontology (Juso) Homepage <https://rdfs.co/juso/0.1.1/html>`_
 
 Graph Metrics
 -------------
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = Juso()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

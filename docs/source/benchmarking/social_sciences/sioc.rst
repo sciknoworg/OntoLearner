@@ -1,5 +1,5 @@
-Semantically-Interlinked Online Communities (SIOC) Ontology
-==========================
+Semantically-Interlinked Online Communities (SIOC)
+========================================================================================================================
 
 Overview
 --------
@@ -13,8 +13,8 @@ file sharing, photo sharing, social networking, etc.
 :Last Updated: 2018/02/28
 :Creator: Data Science Institute, NUI Galway
 :License: Creative Commons 3.0
-:Format: RDF/XML
-:Download: `Semantically-Interlinked Online Communities (SIOC) Ontology Homepage <http://rdfs.org/sioc/spec/>`_
+:Format: RDF
+:Download: `Semantically-Interlinked Online Communities (SIOC) Homepage <http://rdfs.org/sioc/spec/>`_
 
 Graph Metrics
 -------------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SIOC()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

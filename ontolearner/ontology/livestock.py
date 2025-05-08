@@ -21,5 +21,5 @@ class ATOL(BaseOntology):
     last_updated = "May 11, 2020"
     creator = "INRAE, France"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://bioportal.bioontology.org/ontologies/ATOL"

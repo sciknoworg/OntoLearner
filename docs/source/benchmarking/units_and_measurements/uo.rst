@@ -1,5 +1,5 @@
 Units of Measurement Ontology (UO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -11,7 +11,7 @@ Metrical units for use in conjunction with PATO.
 :Last Updated: 2023-05-25
 :Creator: KAUST
 :License: Creative Commons 3.0
-:Format: owl
+:Format: OWL
 :Download: `Units of Measurement Ontology (UO) Homepage <https://bioportal.bioontology.org/ontologies/UO>`_
 
 Graph Metrics
@@ -45,8 +45,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 880
-    - **Non-taxonomic Relations**: 356
+    - **Taxonomic Relations**: 708
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = UO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

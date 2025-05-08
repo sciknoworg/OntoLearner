@@ -1,5 +1,5 @@
 BRENDA Tissue Ontology (BTO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ cell lines, cell types and cell cultures.
 :Last Updated: 2021-10-26
 :Creator: None
 :License: Creative Commons 4.0
-:Format: owl
+:Format: OWL
 :Download: `BRENDA Tissue Ontology (BTO) Homepage <https://terminology.tib.eu/ts/ontologies/BTO>`_
 
 Graph Metrics
@@ -46,8 +46,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 10241
-    - **Non-taxonomic Relations**: 3
+    - **Taxonomic Relations**: 5888
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BTO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

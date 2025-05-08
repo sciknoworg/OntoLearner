@@ -1,5 +1,5 @@
 Food Ontology (FoodON)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,9 +49,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 16
-    - **Taxonomic Relations**: 98513
-    - **Non-taxonomic Relations**: 7924
-    - **Average Terms per Type**: 0.94
+    - **Taxonomic Relations**: 76235
+    - **Non-taxonomic Relations**: 2072
+    - **Average Terms per Type**: 8.00
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = FoodOn()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -1,5 +1,5 @@
 General Formal Ontology (GFO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -49,9 +49,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 1
-    - **Taxonomic Relations**: 203
-    - **Non-taxonomic Relations**: 40
-    - **Average Terms per Type**: 0.33
+    - **Taxonomic Relations**: 143
+    - **Non-taxonomic Relations**: 34
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GFO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -1,5 +1,5 @@
 Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ and to facilitate the integration, mediation, and interchange of bibliographic a
 :Last Updated: November 2015
 :Creator: None
 :License: Creative Commons 4.0
-:Format: OWL, RDF
+:Format: RDF
 :Download: `Functional Requirements for Bibliographic Records - object-oriented (FRBRoo) Homepage <https://ontome.net/namespace/6#summary>`_
 
 Graph Metrics
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = FRBRoo()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

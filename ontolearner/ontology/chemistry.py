@@ -1,3 +1,4 @@
+import re
 from ..base import BaseOntology
 
 
@@ -39,8 +40,21 @@ class ChEBI(BaseOntology):
     last_updated = "01/01/2025"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, OBO, JSON"
+    format = "OWL"
     download_url = "https://www.ebi.ac.uk/chebi/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle ChEBI-specific blank nodes."""
+        # ChEBI-specific patterns
+        if re.match(r'^CHEBI_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class CHEMINF(BaseOntology):
@@ -60,6 +74,19 @@ class CHEMINF(BaseOntology):
     license = "Creative Commons 1.0"
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/CHEMINF"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle CHEMINF-specific blank nodes."""
+        # ChEBI-specific patterns
+        if re.match(r'^CHEMINF_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class CHIRO(BaseOntology):
@@ -101,8 +128,21 @@ class ChMO(BaseOntology):
     last_updated = "2022-04-19"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://github.com/rsc-ontologies/rsc-cmo"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle ChMO-specific blank nodes."""
+        # ChEBI-specific patterns
+        if re.match(r'^CHMO_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class FIX(BaseOntology):
@@ -136,6 +176,19 @@ class MassSpectrometry(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/MS"
 
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle MassSpectrometry-specific blank nodes."""
+        # MassSpectrometry-specific patterns
+        if re.match(r'^PEFF_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
+
 
 class MOP(BaseOntology):
     """
@@ -152,6 +205,25 @@ class MOP(BaseOntology):
     license = "Creative Commons 4.0"
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/MOP"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle MOP-specific blank nodes."""
+        # MOP-specific patterns
+        if re.match(r'^MOP_[0-9]+$', label):
+            return True
+        # ChEBI-specific patterns in MOP
+        if re.match(r'^CHEBI_[0-9]+$', label):
+            return True
+        # RXNO-specific patterns in MOP
+        if re.match(r'^RXNO_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class NMRCV(BaseOntology):
@@ -189,7 +261,7 @@ class OntoKin(BaseOntology):
     OntoKin is an ontology developed for representing chemical kinetic reaction mechanisms.
     """
     ontology_id = "OntoKin"
-    ontology_full_name = "OntoKin"
+    ontology_full_name = "Chemical Kinetics Ontology (OntoKin)"
     domain = "Chemistry"
     category = "Chemistry"
     version = "1.0"
@@ -219,14 +291,14 @@ class PROCO(BaseOntology):
 
 class PSIMOD(BaseOntology):
     """
-    PSI-MOD is an ontology consisting of terms that describe protein chemical modifications,
+    PSI-MOD is an ontology developed by the Proteomics Standards Initiative (PSI) that describes protein chemical modifications,
     logically linked by an is_a relationship in such a way as to form a direct acyclic graph (DAG).
     The PSI-MOD ontology has more than 45 top-level nodes, and provides alternative hierarchical paths
     for classifying protein modifications either by the molecular structure of the modification,
     or by the amino acid residue that is modified.
     """
     ontology_id = "PSIMOD"
-    ontology_full_name = "Proteomics Standards Initiative (PSI) Protein Modifications Ontology (PSI-MOD)"
+    ontology_full_name = "Protein Modifications Ontology (PSIMOD)"
     domain = "Chemistry"
     category = "Protein Modifications"
     version = "1.031.6"
@@ -251,7 +323,7 @@ class REX(BaseOntology):
     last_updated = "2025-03-11"
     creator = "University of Warsaw"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF"
+    format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/REX"
 
 
@@ -270,6 +342,22 @@ class RXNO(BaseOntology):
     license = "Creative Commons 4.0"
     format = "OWL"
     download_url = "https://github.com/rsc-ontologies/rxno"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle RXNO-specific blank nodes."""
+        # RXNO-specific patterns
+        if re.match(r'^RXNO_[0-9]+$', label):
+            return True
+        # MOP-specific patterns in RXNO
+        if re.match(r'^MOP_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class VIBSO(BaseOntology):

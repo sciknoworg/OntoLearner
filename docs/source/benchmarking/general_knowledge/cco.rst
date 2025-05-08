@@ -1,5 +1,5 @@
 Common Core Ontologies (CCO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,9 +46,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 362
-    - **Taxonomic Relations**: 1806
-    - **Non-taxonomic Relations**: 86
-    - **Average Terms per Type**: 8.83
+    - **Taxonomic Relations**: 1532
+    - **Non-taxonomic Relations**: 21
+    - **Average Terms per Type**: 10.06
 
 Usage Example
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = CCO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

@@ -14,7 +14,7 @@ class BFO(BaseOntology):
     last_updated = "2020"
     creator = "University at Buffalo"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL"
+    format = "OWL"
     download_url = "https://github.com/BFO-ontology/BFO-2020/"
 
 
@@ -31,7 +31,7 @@ class DOLCE(BaseOntology):
     last_updated = None
     creator = "Laboratory for Applied Ontology, ISTC-CNR"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF/XML, TTL"
+    format = "OWL"
     download_url = "https://www.loa.istc.cnr.it/index.php/dolce/"
 
 
@@ -85,7 +85,7 @@ class SIO(BaseOntology):
     last_updated = "03/25/2024"
     creator = "M. Dumontier"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF, CSV"
+    format = "OWL"
     download_url = "https://bioportal.bioontology.org/ontologies/SIO"
 
 

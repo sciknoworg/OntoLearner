@@ -7,11 +7,11 @@ class Wine(BaseOntology):
     """
     ontology_id = "Wine"
     ontology_full_name = "Wine Ontology (Wine)"
-    domain = "Food & Beverage"
+    domain = "Food and Beverage"
     category = "Wine"
     version = None
     last_updated = None
     creator = None
     license = None
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://github.com/UCDavisLibrary/wine-ontology"

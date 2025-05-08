@@ -1,3 +1,5 @@
+import re
+
 from rdflib import URIRef, RDF
 from typing import Set, Tuple, List
 
@@ -21,7 +23,7 @@ class AIISO(BaseOntology):
     last_updated = "2008-05-14"
     creator = "Open University"
     license = "Creative Commons 4.0"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://vocab.org/aiiso/"
 
 
@@ -38,7 +40,7 @@ class CiTO(BaseOntology):
     last_updated = "2018-02-16"
     creator = "Silvio Peroni, David Shotton"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://github.com/SPAROntologies/cito/tree/master/docs/current"
 
 
@@ -53,14 +55,14 @@ class CSO(BaseOntology):
     - contributesTo relationships
     """
     ontology_id = "CSO"
-    ontology_full_name = "Computer Science Ontology"
+    ontology_full_name = "Computer Science Ontology (CSO)"
     domain = "Scholarly Knowledge"
     category = "Computer Science"
     version = "3.4"
     last_updated = None
     creator = "Knowledge Media Institute, Open University"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://cso.kmi.open.ac.uk/home"
     # CSO-specific URIs
     CSO_TOPIC = URIRef("http://cso.kmi.open.ac.uk/schema/cso#Topic")
@@ -116,14 +118,14 @@ class DataCite(BaseOntology):
     and retrieval purposes) to be described in RDF.
     """
     ontology_id = "DataCite"
-    ontology_full_name = "DataCite"
+    ontology_full_name = "DataCite Ontology (DataCite)"
     domain = "Scholarly Knowledge"
     category = "Metadata"
     version = "3.1"
     last_updated = "15/09/2022"
     creator = "David Shotton, Silvio Peroni"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "https://schema.datacite.org/"
 
 
@@ -146,7 +148,7 @@ class DCAT(BaseOntology):
     last_updated = "22 August 2024"
     creator = "Digital Enterprise Research Institute (DERI)"
     license = "W3C Document License"
-    format = "RDF/XML, Turtle, JSON-LD"
+    format = "RDF"
     download_url = "https://www.w3.org/TR/vocab-dcat-3/"
 
 
@@ -165,6 +167,21 @@ class DUO(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/DUO/"
 
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle DUO-specific blank nodes."""
+        if re.match(r'^APOLLO_SV_[0-9]+$', label):
+            return True
+
+        if re.match(r'^PATO_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
+
 
 class EURIO(BaseOntology):
     """
@@ -173,7 +190,7 @@ class EURIO(BaseOntology):
     framework programmes for research and innovation.
     """
     ontology_id = "EURIO"
-    ontology_full_name = "EUropean Research Information Ontology"
+    ontology_full_name = "EUropean Research Information Ontology (EURIO)"
     domain = "Scholarly Knowledge"
     category = "Research Information"
     version = "2.4"
@@ -214,7 +231,7 @@ class FRAPO(BaseOntology):
     last_updated = None
     creator = "David Shotton"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, NT"
+    format = "RDF"
     download_url = "http://www.sparontologies.net/ontologies/frapo"
 
 
@@ -234,7 +251,7 @@ class FRBRoo(BaseOntology):
     last_updated = "November 2015"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, RDF"
+    format = "RDF"
     download_url = "https://ontome.net/namespace/6#summary"
 
 
@@ -245,7 +262,7 @@ class LexInfo(BaseOntology):
     and is available together with an API.
     """
     ontology_id = "LexInfo"
-    ontology_full_name = "LexInfo"
+    ontology_full_name = "LexInfo (LexInfo)"
     domain = "Scholarly Knowledge"
     category = "Linguistics"
     version = "3.0"
@@ -254,24 +271,6 @@ class LexInfo(BaseOntology):
     license = "Apache 2.0"
     format = "RDF"
     download_url = "https://lexinfo.net/index.html"
-
-
-class M4I(BaseOntology):
-    """
-    Metadata4Ing is an ontology for describing engineering results and their corresponding workflow.
-    The ontology is maintained by the Metadata4Ing working group, a subgroup of the Special Interest Group (SIG)
-    Metadata & Ontologies within NFDI4Ing.
-    """
-    ontology_id = "M4I"
-    ontology_full_name = "Metadata for Engineering (M4I)"
-    domain = "Scholarly Knowledge"
-    category = "Materials Science"
-    version = "1.3.1"
-    last_updated = "2025-03-10"
-    creator = "Metadata4Ing Workgroup"
-    license = "Creative Commons 4.0"
-    format = "OWL, TTL"
-    download_url = "https://git.rwth-aachen.de/nfdi4ing/metadata4ing/metadata4ing"
 
 
 class Metadata4Ing(BaseOntology):
@@ -286,12 +285,24 @@ class Metadata4Ing(BaseOntology):
     ontology_full_name = "Metadata for Intelligent Engineering (Metadata4Ing)"
     domain = "Scholarly Knowledge"
     category = "Materials Science"
-    version = "1.3.0"
-    last_updated = "2024-09-20"
+    version = "1.3.1"
+    last_updated = "2025-03-10"
     creator = "Metadata4Ing Workgroup"
     license = "Creative Commons 4.0"
-    format = "TTL, OWL"
-    download_url = "https://nfdi4ing.pages.rwth-aachen.de/metadata4ing/metadata4ing/"
+    format = "TTL"
+    download_url = "https://git.rwth-aachen.de/nfdi4ing/metadata4ing/metadata4ing"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle Metadata4Ing-specific blank nodes."""
+        if re.match(r'^\d{4}-\d{4}-\d{4}-\d{4}$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class NFDIcore(BaseOntology):
@@ -310,7 +321,7 @@ class NFDIcore(BaseOntology):
     last_updated = "2025-02-07"
     creator = "Jörg Waitelonis, Oleksandra Bruns, Tabea Tietz, Etienne Posthumus, Hossein Beygi Nasrabadi, Harald Sack"
     license = "Creative Commons 1.0"
-    format = "RDF/XML, TTL, JSON-LD"
+    format = "OWL"
     download_url = "https://ise-fizkarlsruhe.github.io/nfdicore/"
 
 
@@ -391,7 +402,7 @@ class PreMOn(BaseOntology):
     last_updated = "2018-02-15"
     creator = "Francesco Corcoglioniti, Marco Rospocher <https://dkm.fbk.eu/rospocher>"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://premon.fbk.eu/ontology/core#"
 
 
@@ -432,7 +443,7 @@ class SPDocument(BaseOntology):
     last_updated = "2013-07-01"
     creator = "http://oxgiraldo.wordpress.com"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/SMARTProtocols/SMART-Protocols"
 
 
@@ -471,6 +482,18 @@ class SWO(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/SWO"
 
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle SWO-specific blank nodes."""
+        if re.match(r'^SWO_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
+
 
 class TribAIn(BaseOntology):
     """
@@ -503,7 +526,7 @@ class VOAF(BaseOntology):
     last_updated = "2013-05-24"
     creator = "Bernard Vatant"
     license = "Creative Commons 3.0"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://lov.linkeddata.es/vocommons/voaf/v2.3/"
 
 

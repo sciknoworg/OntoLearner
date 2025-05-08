@@ -1,5 +1,5 @@
 Plant Ontology (PO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ morphology and growth and development to plant genomics data.
 :Last Updated: None
 :Creator: None
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: OWL
 :Download: `Plant Ontology (PO) Homepage <https://github.com/Planteome/plant-ontology>`_
 
 Graph Metrics
@@ -46,8 +46,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 5288
-    - **Non-taxonomic Relations**: 117
+    - **Taxonomic Relations**: 2866
+    - **Non-taxonomic Relations**: 36
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

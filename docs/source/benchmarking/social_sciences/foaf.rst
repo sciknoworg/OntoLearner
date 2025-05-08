@@ -1,5 +1,5 @@
-Friend of a Friend (FOAF) Ontology
-==========================
+Friend of a Friend (FOAF)
+========================================================================================================================
 
 Overview
 --------
@@ -13,8 +13,8 @@ or in the form of factual data, it can be linked.
 :Last Updated: 14 January 2014
 :Creator: Dan Brickley, Libby Miller
 :License: Creative Commons
-:Format: RDF/XML
-:Download: `Friend of a Friend (FOAF) Ontology Homepage <http://xmlns.com/foaf/0.1/>`_
+:Format: RDF
+:Download: `Friend of a Friend (FOAF) Homepage <http://xmlns.com/foaf/0.1/>`_
 
 Graph Metrics
 -------------
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 13
     - **Taxonomic Relations**: 11
     - **Non-taxonomic Relations**: 21
-    - **Average Terms per Type**: 3.25
+    - **Average Terms per Type**: 13.00
 
 Usage Example
 -------------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = FOAF()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

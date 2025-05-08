@@ -1,5 +1,5 @@
 Chemical Methods Ontology (ChMO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ The Chemical Methods Ontology contains more than 3000 classes and describes meth
 :Last Updated: 2022-04-19
 :Creator: None
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: OWL
 :Download: `Chemical Methods Ontology (ChMO) Homepage <https://github.com/rsc-ontologies/rsc-cmo>`_
 
 Graph Metrics
@@ -49,8 +49,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 4268
-    - **Non-taxonomic Relations**: 216
+    - **Taxonomic Relations**: 3601
+    - **Non-taxonomic Relations**: 1
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ChMO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

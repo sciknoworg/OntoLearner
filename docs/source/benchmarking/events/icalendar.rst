@@ -1,5 +1,5 @@
 iCalendar Vocabulary (iCalendar)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -50,7 +50,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 2994
+    - **Taxonomic Relations**: 0
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -62,7 +62,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = iCalendar()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

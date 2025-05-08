@@ -1,5 +1,5 @@
 Conference Ontology (Conference)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -48,9 +48,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 32
-    - **Taxonomic Relations**: 184
+    - **Taxonomic Relations**: 49
     - **Non-taxonomic Relations**: 3
-    - **Average Terms per Type**: 2.00
+    - **Average Terms per Type**: 10.67
 
 Usage Example
 -------------
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ConferenceOntology()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

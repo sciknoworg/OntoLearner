@@ -1,5 +1,5 @@
 Geologic Timescale model (GTS)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -13,7 +13,7 @@ compatible with geospatial information transfer standards, Geosphere, Geological
 :Last Updated: 2020-05-31
 :Creator: Simon J D Cox (simon.cox@csiro.au) of CSIRO
 :License: Creative Commons 1.0
-:Format: OWL, TTL
+:Format: TTL
 :Download: `Geologic Timescale model (GTS) Homepage <https://raw.githack.com/CGI-IUGS/timescale-ont/master/html/gts.html>`_
 
 Graph Metrics
@@ -47,9 +47,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 7
-    - **Taxonomic Relations**: 549
+    - **Taxonomic Relations**: 77
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 0.47
+    - **Average Terms per Type**: 7.00
 
 Usage Example
 -------------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GTS()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

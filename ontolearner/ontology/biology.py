@@ -10,7 +10,7 @@ class BioPAX(BaseOntology):
     """
     ontology_id = "BioPAX"
     ontology_full_name = "Biological Pathways Exchange (BioPAX)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "Bioinformatics"
     version = "1.0"
     last_updated = "16 April 2015"
@@ -30,13 +30,13 @@ class EFO(BaseOntology):
     """
     ontology_id = "EFO"
     ontology_full_name = "Experimental Factor Ontology (EFO)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "Biology"
     version = "3.75.0"
     last_updated = "2025-02-17"
     creator = None
     license = "Apache 2.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://www.ebi.ac.uk/efo"
 
 
@@ -47,14 +47,27 @@ class GO(BaseOntology):
     """
     ontology_id = "GO"
     ontology_full_name = "Gene Ontology (GO)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "Molecular Biology, Genetics"
     version = None
     last_updated = "2024-11-03"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, OBO, JSON"
+    format = "OWL"
     download_url = "https://geneontology.org/docs/download-ontology/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle GO-specific blank nodes."""
+        # Check the general patterns from the parent class
+        # GO-specific patterns
+        if label.startswith('GO_'):
+            return True
+
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class LIFO(BaseOntology):
@@ -66,7 +79,7 @@ class LIFO(BaseOntology):
     """
     ontology_id = "LIFO"
     ontology_full_name = "Life Ontology (LifO)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "General Purpose"
     version = "1.0.17"
     last_updated = "March 11, 2018"
@@ -91,13 +104,13 @@ class MarineTLO(BaseOntology):
     """
     ontology_id = "MarineTLO"
     ontology_full_name = "Marine Taxonomy and Life Ontology (MarineTLO)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "Marine Science, Oceanography"
     version = "1.0"
     last_updated = "2017-01-05"
     creator = "Information System Laboratory (ISL), Institute of Computer Science (ICS), Foundation for Research and Technology - Hellas (FORTH)"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://projects.ics.forth.gr/isl/MarineTLO/"
 
 
@@ -111,7 +124,7 @@ class MGED(BaseOntology):
     """
     ontology_id = "MGED"
     ontology_full_name = "MGED Ontology (MGED)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "Domain Ontology"
     version = "1.3.1.1"
     last_updated = "Feb. 9, 2007"
@@ -121,21 +134,21 @@ class MGED(BaseOntology):
     download_url = "https://mged.sourceforge.net/ontologies/MGEDontology.php/"
 
 
-class Microscopy(BaseOntology):
+class MO(BaseOntology):
     """
     The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The MO facilitates semantic integration
     and the interoperable connection of diverse data sources from the fields of microscopy and microanalysis. Consequently,
     the MO paves the way for new, adaptable data applications and analyses across various experiments and studies
     """
-    ontology_id = "Microscopy"
+    ontology_id = "MO"
     ontology_full_name = "Microscopy Ontology (MO)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "Microscopy"
     version = "2.0"
     last_updated = None
     creator = "https://orcid.org/0000-0002-3717-7104,https://orcid.org/0000-0002-7094-5371"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "Turtle"
+    format = "TTL"
     download_url = "https://github.com/materialdigital/microscopy-ontology?tab=readme-ov-file"
 
     def contains_imports(self) -> bool:
@@ -155,7 +168,7 @@ class NPO(BaseOntology):
     """
     ontology_id = "NPO"
     ontology_full_name = "NanoParticle Ontology (NPO)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "Materials Science"
     version = "2013-05-31"
     last_updated = "2013-05-31"
@@ -171,7 +184,7 @@ class PATO(BaseOntology):
     """
     ontology_id = "PATO"
     ontology_full_name = "Phenotype and Trait Ontology (PATO)"
-    domain = "Biology & Life Sciences"
+    domain = "Biology and Life Sciences"
     category = "Biology"
     version = "1.2"
     last_updated = "2025-02-01"

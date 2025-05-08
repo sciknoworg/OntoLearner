@@ -1,5 +1,5 @@
 Animal Trait Ontology for Livestock (ATOL)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -19,7 +19,7 @@ semantic analysis and modeling;
 :Last Updated: May 11, 2020
 :Creator: INRAE, France
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: OWL
 :Download: `Animal Trait Ontology for Livestock (ATOL) Homepage <https://bioportal.bioontology.org/ontologies/ATOL>`_
 
 Graph Metrics
@@ -65,7 +65,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ATOL()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

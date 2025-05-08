@@ -9,7 +9,7 @@ class GND(BaseOntology):
     """
     ontology_id = "GND"
     ontology_full_name = "Gemeinsame Normdatei (GND)"
-    domain = "Library & Cultural Heritage"
+    domain = "Library and Cultural Heritage"
     category = "Authority Files"
     version = "1.2.0"
     last_updated = "2024-08-26"

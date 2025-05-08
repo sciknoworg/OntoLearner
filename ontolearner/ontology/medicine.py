@@ -1,3 +1,5 @@
+import re
+
 from ..base import BaseOntology
 
 
@@ -14,8 +16,20 @@ class BTO(BaseOntology):
     last_updated = "2021-10-26"
     creator = None
     license = "Creative Commons 4.0"
-    format = "owl"
+    format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/BTO"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle VIMMP-specific blank nodes."""
+        if re.match(r'^BTO_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class DEB(BaseOntology):
@@ -34,7 +48,7 @@ class DEB(BaseOntology):
     last_updated = "Jun 2, 2021"
     creator = "Osnat Hakimi"
     license = "GPL-3.0"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/ProjectDebbie/Ontology_DEB"
 
 
@@ -90,7 +104,7 @@ class MFOEM(BaseOntology):
     using default behavior.
     """
     ontology_id = "MFOEM"
-    ontology_full_name = "Emotion Ontology -- Mental Functioning Ontology of Emotions"
+    ontology_full_name = "Mental Functioning Ontology of Emotions - Emotion Module (MFOEM)"
     domain = "Medicine"
     category = "Emotion"
     version = None
@@ -115,7 +129,7 @@ class NCIt(BaseOntology):
     last_updated = "2023-10-19"
     creator = None
     license = "Creative Commons 4.0"
-    format = "owl"
+    format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/NCIT"
 
 
@@ -132,7 +146,7 @@ class OBI(BaseOntology):
     last_updated = "2025-01-09"
     creator = None
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://github.com/obi-ontology/obi/tree/master"
 
 

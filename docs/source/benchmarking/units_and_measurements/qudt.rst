@@ -1,5 +1,5 @@
 Quantities, Units, Dimensions and Data Types (QUDT)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -45,9 +45,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 27
-    - **Taxonomic Relations**: 3252
+    - **Taxonomic Relations**: 400
     - **Non-taxonomic Relations**: 12
-    - **Average Terms per Type**: 0.96
+    - **Average Terms per Type**: 2.45
 
 Usage Example
 -------------
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = QUDT()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.TTL")
 
     # Extract datasets
     data = ontology.extract()

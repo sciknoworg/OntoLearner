@@ -1,5 +1,5 @@
 Open Provenance Model for Workflows (OPMW)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -47,7 +47,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 79
+    - **Taxonomic Relations**: 77
     - **Non-taxonomic Relations**: 4
     - **Average Terms per Type**: 0.00
 
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OPMW()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

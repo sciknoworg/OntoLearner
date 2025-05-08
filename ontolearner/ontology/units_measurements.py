@@ -21,7 +21,7 @@ class OM(BaseOntology):
     last_updated = "June 28, 2024"
     creator = "Hajo Rijgersberg, Don Willems, Jan Top"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "https://bioportal.bioontology.org/ontologies/OM"
 
 
@@ -42,7 +42,7 @@ class OWLTime(BaseOntology):
     last_updated = "15 November 2022"
     creator = "World Wide Web Consortium"
     license = "W3C Software Notice and Document License"
-    format = "TTL, OWL"
+    format = "TTL"
     download_url = "https://www.w3.org/TR/owl-time/"
 
 
@@ -93,5 +93,5 @@ class UO(BaseOntology):
     last_updated = "2023-05-25"
     creator = "KAUST"
     license = "Creative Commons 3.0"
-    format = "owl"
+    format = "OWL"
     download_url = "https://bioportal.bioontology.org/ontologies/UO"

@@ -1,5 +1,5 @@
 Vocabulary of a Friend (VOAF)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ of vocabularies (RDFS vocabularies or OWL ontologies). It is based on Dublin Cor
 :Last Updated: 2013-05-24
 :Creator: Bernard Vatant
 :License: Creative Commons 3.0
-:Format: RDF/XML
+:Format: RDF
 :Download: `Vocabulary of a Friend (VOAF) Homepage <https://lov.linkeddata.es/vocommons/voaf/v2.3/>`_
 
 Graph Metrics
@@ -48,7 +48,7 @@ Generated Benchmarks:
     - **Term Types**: 1
     - **Taxonomic Relations**: 4
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.11
+    - **Average Terms per Type**: 1.00
 
 Usage Example
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = VOAF()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

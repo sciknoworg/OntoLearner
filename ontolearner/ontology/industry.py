@@ -37,17 +37,17 @@ class DBO(BaseOntology):
     last_updated = "02/23/2023"
     creator = "Google"
     license = "Apache 2.0"
-    format = "OWL, CSV, RDF/XML"
+    format = "RDF"
     download_url = "https://github.com/google/digitalbuildings?tab=readme-ov-file"
 
 
 class DOAP(BaseOntology):
     """
-    The Description of a Project (DOAP) vocabulary, described using W3C RDF Schema and
+    The Description of a Project vocabulary (DOAP), described using W3C RDF Schema and
     the Web Ontology Language to describe software projects, and in particular open source projects.
     """
     ontology_id = "DOAP"
-    ontology_full_name = "The Description of a Project (DOAP) vocabulary"
+    ontology_full_name = "The Description of a Project vocabulary (DOAP)"
     domain = "Industry"
     category = "Software"
     version = None
@@ -74,7 +74,7 @@ class IOF(BaseOntology):
     last_updated = "2020"
     creator = "IOF Core Working Group"
     license = "MIT"
-    format = "RDF, OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "https://oagi.org/pages/Released-Ontologies"
 
 
@@ -91,7 +91,7 @@ class PTO(BaseOntology):
     last_updated = "2025-02-21"
     creator = "Martin Hepp"
     license = "Creative Commons 3.0"
-    format = "RDF, OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "http://www.productontology.org/"
 
 
@@ -103,12 +103,12 @@ class TUBES(BaseOntology):
     in a future semantic web of building data. It has a strong alignment to other ontologies within the W3C community.
     """
     ontology_id = "TUBES"
-    ontology_full_name = "TUBES System Ontology"
+    ontology_full_name = "TUBES System Ontology (TUBES)"
     domain = "Industry"
     category = "Building Services"
     version = "0.3.0"
     last_updated = "2022-02-01"
     creator = "Nicolas Pauen"
     license = "Creative Commons 4.0"
-    format = "RDF/XML, Turtle, JSON-LD"
+    format = "RDF"
     download_url = "https://rwth-e3d.github.io/tso/"
