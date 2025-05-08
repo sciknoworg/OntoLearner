@@ -12,5 +12,4 @@ pathlib~=1.0.1
 setuptools~=78.1.0
 python-dotenv~=1.1.0
 huggingface-hub~=0.27.1
-pygit2~=1.18.0
 dspy~=2.6.22

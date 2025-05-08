@@ -5,7 +5,7 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="OntoLearner",
-    version="0.4.0",
+    version="0.5.0",
     author="Hamed Babaei Giglou, Andrei C. Aioanei",
     author_email="hamedbabaeigiglou@gmail.com, andrei.c.aioanei@gmail.com",
     description="OntoLearner: Ontology Learning Framework",
@@ -23,7 +23,9 @@ setup(
         "tqdm==4.67.1",
         "pydantic==2.10.5",
         "pathlib==1.0.1",
-        "dspy==2.6.22"
+        "dspy==2.6.22",
+        "huggingface-hub==0.27.1",
+        "python-dotenv==1.1.0"
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
