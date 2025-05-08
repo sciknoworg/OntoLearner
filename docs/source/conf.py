@@ -5,14 +5,16 @@ import datetime
 import importlib
 import inspect
 import os
-# -- Project information -----------------------------------------------------
-#
-# from sphinx.search import IndexBuilder
-# import snowballstemmer
-#
-# # Override the stemmer with 'english' instead of 'porter'
-# IndexBuilder.lang = 'en'
-# IndexBuilder.stemmer = snowballstemmer.stemmer('english')
+from sphinx.search import IndexBuilder
+import snowballstemmer
+
+IndexBuilder.lang = 'en'
+
+try:
+    IndexBuilder.stemmer = snowballstemmer.stemmer('english')
+except KeyError:
+    print("English stemmer not found, using fallback.")
+    IndexBuilder.stemmer = None  # Fallback if stemmer fails
 
 year = str(datetime.datetime.now().year)
 project = 'OntoLearner'
