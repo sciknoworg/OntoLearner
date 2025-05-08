@@ -1,12 +1,12 @@
+# pip install langchain
 import time
 from pathlib import Path
-from typing import Dict, List, Tuple
-import os
 import pandas as pd
 from dotenv import find_dotenv, load_dotenv
 import logging
 import shutil
 import json
+import os
 from huggingface_hub import HfApi, Repository, login
 from huggingface_hub.errors import RepositoryNotFoundError
 
@@ -18,6 +18,7 @@ from ontolearner.data_structure import OntologyMetrics, TopologyMetrics, Dataset
 from ontolearner.ontology import *  # noqa
 from ontolearner.base import BaseOntology
 
+from typing import Dict, List, Tuple
 
 logging.basicConfig(
     level=logging.INFO,
