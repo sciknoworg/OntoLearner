@@ -33,6 +33,13 @@
 
 .. toctree::
    :maxdepth: 1
+   :caption: Learners
+   :hidden:
+
+   models/rag
+
+.. toctree::
+   :maxdepth: 1
    :caption: Hugging Face Hub
    :hidden:
 
