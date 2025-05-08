@@ -1,3 +1,4 @@
+import re
 from rdflib import URIRef, RDF, RDFS
 
 from ..base import BaseOntology
@@ -28,7 +29,7 @@ class DBpedia(BaseOntology):
     into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
     """
     ontology_id = "DBpedia"
-    ontology_full_name = "DBpedia Ontology"
+    ontology_full_name = "DBpedia Ontology (DBpedia)"
     domain = "General Knowledge"
     category = "Knowledge Graph"
     version = None
@@ -37,6 +38,19 @@ class DBpedia(BaseOntology):
     license = "Creative Commons 3.0"
     format = "OWL"
     download_url = "https://wiki.dbpedia.org/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle DBpedia/Wikidata-specific blank nodes."""
+        # DBpedia/Wikidata-specific patterns
+        if re.match(r'^Q[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
         # Include datatype properties and validate domain/range
@@ -67,7 +81,7 @@ class DublinCore(BaseOntology):
     last_updated = "February 17, 2017"
     creator = "The Dublin Core Metadata Initiative"
     license = "Public Domain"
-    format = "RDF, OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "https://bioportal.bioontology.org/ontologies/DC"
 
 
@@ -85,7 +99,7 @@ class EDAM(BaseOntology):
     last_updated = "24.09.2024"
     creator = "Federico Bianchini, Hervé Ménager, Jon Ison, Matúš Kalaš"
     license = "Creative Commons 4.0"
-    format = "owl"
+    format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/edam"
 
 
@@ -103,7 +117,7 @@ class GIST(BaseOntology):
     last_updated = "2024-Feb-27"
     creator = "Semantic Arts"
     license = "Creative Commons 4.0"
-    format = "OWL"
+    format = "RDF"
     download_url = "https://semanticarts.com/gist"
 
 
@@ -188,7 +202,7 @@ class UMBEL(BaseOntology):
     also designed for interoperation.
     """
     ontology_id = "UMBEL"
-    ontology_full_name = "Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary"
+    ontology_full_name = "Upper Mapping and Binding Exchange Layer Vocabulary (UMBEL)"
     domain = "General Knowledge"
     category = "Web Development"
     version = "1.50"
@@ -197,6 +211,19 @@ class UMBEL(BaseOntology):
     license = None
     format = "n3"
     download_url = "https://github.com/structureddynamics/UMBEL/tree/master/Ontology"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle UMBEL-specific blank nodes."""
+        # UMBEL-specific patterns
+        if re.match(r'^f5295f96ac3e649dcb1740b0d93d3e6c2b[0-9a-f]+$', label):  # Long hexadecimal identifiers
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class YAGO(BaseOntology):

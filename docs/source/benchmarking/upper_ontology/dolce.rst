@@ -1,5 +1,5 @@
 Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ that provides a conceptual framework for the formalization of domain ontologies.
 :Last Updated: None
 :Creator: Laboratory for Applied Ontology, ISTC-CNR
 :License: Creative Commons 4.0
-:Format: OWL, RDF/XML, TTL
+:Format: OWL
 :Download: `Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE) Homepage <https://www.loa.istc.cnr.it/index.php/dolce/>`_
 
 Graph Metrics
@@ -46,8 +46,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 231
-    - **Non-taxonomic Relations**: 24
+    - **Taxonomic Relations**: 73
+    - **Non-taxonomic Relations**: 18
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DOLCE()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

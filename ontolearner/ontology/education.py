@@ -22,7 +22,7 @@ class BIBFRAME(BaseOntology):
     last_updated = "2022-10-03"
     creator = "United States, Library of Congress"
     license = "Creative Commons 1.0"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://id.loc.gov/ontologies/bflc.html"
 
 
@@ -31,14 +31,14 @@ class Common(BaseOntology):
     Ontology for the representation of commons elements in the Trias ontology
     """
     ontology_id = "Common"
-    ontology_full_name = "Common Ontology"
+    ontology_full_name = "Common Ontology (Common)"
     domain = "Education"
     category = "Computer Science"
     version = "0.1.0"
     last_updated = None
     creator = "Jhon Toledo, Miguel Angel García, Oscar Corcho"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "RDF/XML"
+    format = "RDF"
     download_url = "https://w3id.org/mobility/trias/common/0.1.0"
 
 
@@ -57,5 +57,5 @@ class DoCO(BaseOntology):
     last_updated = "2015-07-03"
     creator = "David Shotton and Silvio Peroni"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "RDF"
     download_url = "http://www.sparontologies.net/ontologies/doco"

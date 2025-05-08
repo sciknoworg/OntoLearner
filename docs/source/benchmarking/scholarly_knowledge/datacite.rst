@@ -1,5 +1,5 @@
-DataCite
-==========================
+DataCite Ontology (DataCite)
+========================================================================================================================
 
 Overview
 --------
@@ -14,8 +14,8 @@ and retrieval purposes) to be described in RDF.
 :Last Updated: 15/09/2022
 :Creator: David Shotton, Silvio Peroni
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
-:Download: `DataCite Homepage <https://schema.datacite.org/>`_
+:Format: RDF
+:Download: `DataCite Ontology (DataCite) Homepage <https://schema.datacite.org/>`_
 
 Graph Metrics
 -------------
@@ -48,9 +48,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 71
-    - **Taxonomic Relations**: 55
+    - **Taxonomic Relations**: 27
     - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 3.55
+    - **Average Terms per Type**: 8.88
 
 Usage Example
 -------------
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DataCite()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

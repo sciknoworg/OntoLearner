@@ -1,5 +1,5 @@
 Semanticscience Integrated Ontology (SIO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -13,7 +13,7 @@ This project provides foundational support for the Bio2RDF (http://bio2rdf.org) 
 :Last Updated: 03/25/2024
 :Creator: M. Dumontier
 :License: Creative Commons 4.0
-:Format: OWL, RDF, CSV
+:Format: OWL
 :Download: `Semanticscience Integrated Ontology (SIO) Homepage <https://bioportal.bioontology.org/ontologies/SIO>`_
 
 Graph Metrics
@@ -47,8 +47,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 3006
-    - **Non-taxonomic Relations**: 115
+    - **Taxonomic Relations**: 2019
+    - **Non-taxonomic Relations**: 65
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SIO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -1,5 +1,5 @@
 Ontology of Scientific Experiments (EXPO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -45,7 +45,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 1012
+    - **Taxonomic Relations**: 432
     - **Non-taxonomic Relations**: 726
     - **Average Terms per Type**: 0.00
 
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = EXPO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

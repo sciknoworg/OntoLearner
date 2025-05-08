@@ -1,5 +1,5 @@
 Data Catalog Vocabulary (DCAT)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -18,7 +18,7 @@ can serve as a manifest file as part of the digital preservation process.
 :Last Updated: 22 August 2024
 :Creator: Digital Enterprise Research Institute (DERI)
 :License: W3C Document License
-:Format: RDF/XML, Turtle, JSON-LD
+:Format: RDF
 :Download: `Data Catalog Vocabulary (DCAT) Homepage <https://www.w3.org/TR/vocab-dcat-3/>`_
 
 Graph Metrics
@@ -52,7 +52,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 12
+    - **Taxonomic Relations**: 8
     - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
@@ -64,7 +64,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DCAT()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

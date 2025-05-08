@@ -1,10 +1,12 @@
 import os
 import re
+import json
 from abc import ABC
 import concurrent.futures
 from typing import List, Tuple, Any, Set, Optional
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
 import networkx as nx
+from huggingface_hub import hf_hub_download
 
 from ..data_structure import (OntologyData, TermTyping, TaxonomicRelation, NonTaxonomicRelation,
                               TypeTaxonomies, NonTaxonomicRelations)
@@ -23,6 +25,8 @@ class BaseOntology(ABC):
     license: str = None
     format: str = None
     download_url = None
+    from_huggingface = False
+    from_local = False
 
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
         """Initialize the ontology"""
@@ -31,18 +35,23 @@ class BaseOntology(ABC):
         self.language = language
         self.base_dir = base_dir
 
-    def load(self, path: str) -> None:
+    def load(self, path: Optional[str] = None) -> None:
         """Load an ontology from a file and initialize its namespaces."""
+        if path is None:
+            self.from_huggingface = True
+            self.from_local = False
+            logger.info("Set up for loading from HuggingFace")
+            return
+
         try:
-            logger.info(f"Loading ontology from {path}")
+            logger.info(f"Loading ontology from local {path}")
             self.rdf_graph = Graph()
             self._load(path)
+            self.from_huggingface = False
+            self.from_local = True
             if len(self.rdf_graph) == 0:
                 raise ValueError("Loaded ontology contains no triples")
             logger.info(f"Successfully loaded ontology with {len(self.rdf_graph)} triples")
-        except FileNotFoundError:
-            logger.error(f"Ontology file not found: {path}")
-            raise
         except Exception as e:
             logger.error(f"Error loading ontology: {str(e)}")
             raise
@@ -71,6 +80,7 @@ class BaseOntology(ABC):
                         logger.error(f"Failed to load import {import_uri}: {str(e)}")
                 else:
                     logger.warning(f"Could not resolve import: {import_def}")
+
 
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
@@ -116,31 +126,87 @@ class BaseOntology(ABC):
 
         return None
 
-    def extract(self) -> OntologyData:
+    def extract(self, reinforce_extraction: bool = False) -> OntologyData:
         """
         Extract all information from all the three functions below.
         """
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            term_typings_future = executor.submit(self.extract_term_typings)
-            taxonomies_future = executor.submit(self.extract_type_taxonomies)
-            non_taxonomic_future = executor.submit(self.extract_type_non_taxonomic_relations)
+        if self.from_local:
+            logger.info(f"Extracting from local source for {self.ontology_id}")
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                term_typings_future = executor.submit(self.extract_term_typings)
+                taxonomies_future = executor.submit(self.extract_type_taxonomies)
+                non_taxonomic_future = executor.submit(self.extract_type_non_taxonomic_relations)
 
-            term_typings = term_typings_future.result()
-            types, taxonomies = taxonomies_future.result()
-            types_nt, relations, non_taxonomies = non_taxonomic_future.result()
+                term_typings = term_typings_future.result()
+                types, taxonomies = taxonomies_future.result()
+                types_nt, relations, non_taxonomies = non_taxonomic_future.result()
 
-        return OntologyData(
-            term_typings=term_typings,
-            type_taxonomies=TypeTaxonomies(
-                types=types,
-                taxonomies=taxonomies
-            ),
-            type_non_taxonomic_relations=NonTaxonomicRelations(
-                types=types_nt,
-                relations=relations,
-                non_taxonomies=non_taxonomies
-            )
-        )
+                return OntologyData(
+                    term_typings=term_typings,
+                    type_taxonomies=TypeTaxonomies(
+                        types=types,
+                        taxonomies=taxonomies
+                    ),
+                    type_non_taxonomic_relations=NonTaxonomicRelations(
+                        types=types_nt,
+                        relations=relations,
+                        non_taxonomies=non_taxonomies
+                    )
+                )
+        elif self.from_huggingface:
+            logger.info("Loading from HuggingFace with reinforce extraction")
+            ontology_domain = self.domain.lower().replace(' ', '_')
+            repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
+            ontology_id = self.ontology_id.lower()
+
+            if reinforce_extraction:
+                logger.info(f"Attempting reinforced extraction from HuggingFace for {self.ontology_id}")
+                try:
+                    file_path = hf_hub_download(
+                        repo_id=repo_id,
+                        filename=f"{ontology_id}/{ontology_id}.{self.format.lower()}",
+                        repo_type="dataset"
+                    )
+
+                    self.load(file_path)
+
+                    result = self.extract(reinforce_extraction=False)  # Safe now as from_local=True
+
+                    return result
+                except Exception as e:
+                    logger.error(f"Reinforced extraction failed for {self.ontology_id}: {str(e)}")
+                    # Fall through to try pre-extracted data
+
+            logger.info(f"Loading pre-extracted data from HuggingFace for {self.ontology_id}")
+
+            try:
+                term_typings_path = hf_hub_download(repo_id=repo_id,
+                                                    filename=f"{ontology_id}/term_typings.json",
+                                                    repo_type="dataset")
+                taxonomies_path = hf_hub_download(repo_id=repo_id,
+                                                  filename=f"{ontology_id}/type_taxonomies.json",
+                                                  repo_type="dataset")
+                non_taxonomic_path = hf_hub_download(repo_id=repo_id,
+                                                     filename=f"{ontology_id}/type_non_taxonomic_relations.json",
+                                                     repo_type="dataset")
+
+                with open(term_typings_path, 'r') as f:
+                    term_typings = json.load(f)
+                with open(taxonomies_path, 'r') as f:
+                    type_taxonomies = json.load(f)
+                with open(non_taxonomic_path, 'r') as f:
+                    type_non_taxonomic_relations = json.load(f)
+
+                return OntologyData(
+                    term_typings=term_typings,
+                    type_taxonomies=type_taxonomies,
+                    type_non_taxonomic_relations=type_non_taxonomic_relations
+                )
+            except Exception as e:
+                logger.error(f"Failed to load dataset files for {self.ontology_id}: {str(e)}")
+                return None
+
+        return None
 
     @staticmethod
     def is_valid_label(label: str) -> Any:
@@ -182,6 +248,20 @@ class BaseOntology(ABC):
         to handle their unique graph structure.
         """
         self.nx_graph = nx.DiGraph()
+
+        if not self.rdf_graph:
+            logger.info("Loading from HuggingFace")
+            ontology_domain = self.domain.lower().replace(' ', '_')
+            repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
+            ontology_id = self.ontology_id.lower()
+            file_path = hf_hub_download(
+                repo_id=repo_id,
+                filename=f"{ontology_id}/{ontology_id}.{self.format.lower()}",
+                repo_type="dataset"
+            )
+
+            self.load(file_path)
+
         for subject, predicate, obj in self.rdf_graph:
             subject_label = self.get_label(str(subject))
             object_label = self.get_label(str(obj))
@@ -201,7 +281,10 @@ class BaseOntology(ABC):
             for instance in self._get_instances_for_class(class_uri):
                 term = self.get_label(uri=str(instance))
                 types = self.get_label(uri=str(class_uri))
-                if term and types:
+                # Filter out anonymous class identifiers
+                if (term and types and
+                        not self._is_anonymous_id(term) and
+                        not self._is_anonymous_id(types)):
                     term_typings.append(TermTyping(term=term, types=[types]))
         logger.debug(f"Extracted {len(term_typings)} term typings for the Ontology.")
         return term_typings
@@ -270,8 +353,6 @@ class BaseOntology(ABC):
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
         """Validate non-taxonomic relations between named classes (URIRefs only)."""
         return (
-            isinstance(s, URIRef) and  # Exclude BNodes
-            isinstance(o, URIRef) and  # Exclude BNodes
             self.check_if_class(s) and
             self.check_if_class(o) and
             p != RDFS.subClassOf
@@ -290,14 +371,97 @@ class BaseOntology(ABC):
         if not label:
             return True
 
-        # Check for common blank node patterns
-        if label.startswith('N') and label[1:].isdigit():  # N followed by numbers
-            return True
+        # Common RDF/OWL blank node patterns
         if label.startswith('_:'):  # Standard RDF blank node notation
             return True
-        if label.startswith('genid-'):  # common format
+        if label.startswith('genid-'):  # Common OWL tools like Protégé
             return True
-        if re.match(r'^b[0-9a-f]+$', label):  # bnode format sometimes used
+        if label.startswith('nodeID://'):  # Some RDF serializers
+            return True
+
+        # Numeric patterns
+        if re.match(r'^N[0-9]+$', label):
+            return True
+        if re.match(r'^_[0-9]+$', label):
+            return True
+        if re.match(r'^c_[0-9]+$', label):
+            return True
+        if re.match(r'^BFO_[0-9]+$', label):
+            return True
+        if re.match(r'^IAO_[0-9]+$', label):
+            return True
+        if re.match(r'^OBI_[0-9]+$', label):
+            return True
+        if re.match(r'^FIX_[0-9]+$', label):
+            return True
+        if re.match(r'^REX_[0-9]+$', label):
+            return True
+        if re.match(r'^UO_[0-9]+$', label):
+            return True
+        if re.match(r'^MS_[0-9]+$', label):
+            return True
+        if re.match(r'^AFRL_[0-9]+$', label):
+            return True
+        if re.match(r'^AFFN_[0-9]+$', label):
+            return True
+        if re.match(r'^AFE_[0-9]+$', label):
+            return True
+        if re.match(r'^AFQ_[0-9]+$', label):
+            return True
+        if re.match(r'^AFP_[0-9]+$', label):
+            return True
+        if re.match(r'^AFM_[0-9]+$', label):
+            return True
+        if re.match(r'^AFC_[0-9]+$', label):
+            return True
+        if re.match(r'^ENVO_[0-9]+$', label):
+            return True
+        if re.match(r'^AFR_[0-9]+$', label):
+            return True
+
+        # Hexadecimal patterns
+        if re.match(r'^N[0-9a-f]{32}$', label, re.IGNORECASE):
+            return True
+        if re.match(r'^n[0-9a-f]+$', label, re.IGNORECASE):
+            return True
+        if re.match(r'^b[0-9a-f]+$', label, re.IGNORECASE):
+            return True
+        if re.match(r'^c_[0-9a-f]+$', label, re.IGNORECASE):
+            return True
+
+        # UUID patterns
+        if re.match(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', label, re.IGNORECASE):
+            return True
+
+        # Auto-generated node patterns
+        if re.match(r'^node_[0-9a-f_]+$', label, re.IGNORECASE):
+            return True
+        if re.match(r'^auto_gen_[0-9a-zA-Z]+$', label):
+            return True
+        if re.match(r'^blank[0-9]+$', label):
+            return True
+
+        # Tool-specific patterns
+        if label.startswith('ARQ'):  # Apache Jena ARQ
+            return True
+        if label.startswith('jena-'):  # Apache Jena
+            return True
+        if label.startswith('bnode'):  # Some RDF tools
+            return True
+
+        # Image and label patterns
+        if re.match(r'^img_', label):  # Any string starting with img_
+            return True
+        if re.match(r'^xl_', label):   # Any string starting with xl_
+            return True
+        if re.match(r'^xl-', label):   # Any string starting with xl-
+            return True
+
+        # SKOS Collection patterns
+        if re.match(r'^skosCollection_[0-9a-f]+$', label):
+            return True
+
+        if re.match(r'^PMD_[0-9]+$', label):
             return True
 
         return False

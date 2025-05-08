@@ -9,8 +9,8 @@ class BBC(BaseOntology):
     for example Education propositions are part of the K&L (Knowledge and Learning) product portfolio.
     """
     ontology_id = "BBC"
-    ontology_full_name = "BBC Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Ontology (BBC)"
+    domain = "News and Media"
     category = "News"
     version = "1.37"
     last_updated = "2012-12-01"
@@ -25,8 +25,8 @@ class BBCBusiness(BaseOntology):
     The Business News Ontology describes the concepts that occur in BBC business news.
     """
     ontology_id = "BBCBusiness"
-    ontology_full_name = "BBC Business News Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Business News Ontology (BBCBusiness)"
+    domain = "News and Media"
     category = "Business News"
     version = "0.5"
     last_updated = "2014-11-09"
@@ -43,8 +43,8 @@ class BBCCMS(BaseOntology):
     The CMS ontology defines how these things and content are associated with other BBC instances of the same thing.
     """
     ontology_id = "BBCCMS"
-    ontology_full_name = "BBC CMS Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC CMS Ontology (BBCCMS)"
+    domain = "News and Media"
     category = "Content Management Systems"
     version = "3.7"
     last_updated = "2012-12-01"
@@ -61,8 +61,8 @@ class BBCCoreConcepts(BaseOntology):
     link their own concepts e.g., athletes or politicians using rdfs:sublClassOf the particular concept.
     """
     ontology_id = "BBCCoreConcepts"
-    ontology_full_name = "BBC Core Concepts Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Core Concepts Ontology (BBCCoreConcepts)"
+    domain = "News and Media"
     category = "Core Concepts"
     version = "1.30"
     last_updated = "2019-11-21"
@@ -79,8 +79,8 @@ class BBCCreativeWork(BaseOntology):
     their more specific types (BlogPost, NewsItem, Programme) and audiences (audience).
     """
     ontology_id = "BBCCreativeWork"
-    ontology_full_name = "BBC Creative Work Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Creative Work Ontology (BBCCreativeWork)"
+    domain = "News and Media"
     category = "Creative Work"
     version = "1.19"
     last_updated = "2012-12-01"
@@ -99,8 +99,8 @@ class BBCStoryline(BaseOntology):
     such as an article or news report. It can also be the editorial view on events occurring in the world.
     """
     ontology_id = "BBCStoryline"
-    ontology_full_name = "BBC Storyline Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Storyline Ontology (BBCStoryline)"
+    domain = "News and Media"
     category = "Storyline"
     version = "0.3"
     last_updated = "2013-05-01"
@@ -118,9 +118,9 @@ class BBCFood(BaseOntology):
     the Food Ontology should be applicable to a wide range of recipe data publishing across the web.
     """
     ontology_id = "BBCFood"
-    ontology_full_name = "BBC Food Ontology"
-    domain = "News & Media"
-    category = "Food & Beverage"
+    ontology_full_name = "BBC Food Ontology (BBCFood)"
+    domain = "News and Media"
+    category = "Food and Beverage"
     version = "0.1"
     last_updated = "2014/03/18"
     creator = None
@@ -134,8 +134,8 @@ class BBCPolitics(BaseOntology):
     The Politics Ontology describes the concepts that occur in BBC politics news.
     """
     ontology_id = "BBCPolitics"
-    ontology_full_name = "BBC Politics News Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Politics News Ontology (BBCPolitics)"
+    domain = "News and Media"
     category = "Politics"
     version = "0.9"
     last_updated = "2014-01-06"
@@ -152,8 +152,8 @@ class BBCProgrammes(BaseOntology):
     Its development was funded by the BBC, and is heavily grounded on previous programmes data modelling work done there.
     """
     ontology_id = "BBCProgrammes"
-    ontology_full_name = "BBC Programmes Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Programmes Ontology (BBCProgrammes)"
+    domain = "News and Media"
     category = "Programmes"
     version = "1.1"
     last_updated = "2009/02/20"
@@ -172,8 +172,8 @@ class BBCProvenance(BaseOntology):
     A named graph is, in effect, a 'fourth part' to a triple, hence the term 'quad store'.
     """
     ontology_id = "BBCProvenance"
-    ontology_full_name = "BBC Provenance News Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Provenance News Ontology (BBCProvenance)"
+    domain = "News and Media"
     category = "Provenance"
     version = "1.9"
     last_updated = "2012-12-01"
@@ -195,8 +195,8 @@ class BBCSport(BaseOntology):
     In particular, it draws heavily upon the events ontology.
     """
     ontology_id = "BBCSport"
-    ontology_full_name = "BBC Sport Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Sport Ontology (BBCSport)"
+    domain = "News and Media"
     category = "Sport"
     version = "3.2"
     last_updated = None
@@ -213,8 +213,8 @@ class BBCWildlife(BaseOntology):
     conservation status, and behavioural characteristics, etc.
     """
     ontology_id = "BBCWildlife"
-    ontology_full_name = "BBC Wildlife Ontology"
-    domain = "News & Media"
+    ontology_full_name = "BBC Wildlife Ontology (BBCWildlife)"
+    domain = "News and Media"
     category = "Wildlife"
     version = "1.1"
     last_updated = "2013/12/18"

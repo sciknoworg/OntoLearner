@@ -1,5 +1,5 @@
 SMART Protocols Ontology: Document Module (SP-Document)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ to represent metadata used to report an experimental protocol.
 :Last Updated: 2013-07-01
 :Creator: http://oxgiraldo.wordpress.com
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: OWL/XML
+:Format: OWL
 :Download: `SMART Protocols Ontology: Document Module (SP-Document) Homepage <https://github.com/SMARTProtocols/SMART-Protocols>`_
 
 Graph Metrics
@@ -46,9 +46,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 45
-    - **Taxonomic Relations**: 1194
-    - **Non-taxonomic Relations**: 74
-    - **Average Terms per Type**: 1.88
+    - **Taxonomic Relations**: 474
+    - **Non-taxonomic Relations**: 73
+    - **Average Terms per Type**: 2.65
 
 Usage Example
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SPDocument()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -1,5 +1,5 @@
 Funding, Research Administration and Projects Ontology (FRAPO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -13,7 +13,7 @@ funding bodies, project partners, etc.
 :Last Updated: None
 :Creator: David Shotton
 :License: Creative Commons 4.0
-:Format: OWL, TTL, NT
+:Format: RDF
 :Download: `Funding, Research Administration and Projects Ontology (FRAPO) Homepage <http://www.sparontologies.net/ontologies/frapo>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Generated Benchmarks:
     - **Term Types**: 25
     - **Taxonomic Relations**: 82
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 1.67
+    - **Average Terms per Type**: 8.33
 
 Usage Example
 -------------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = FRAPO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

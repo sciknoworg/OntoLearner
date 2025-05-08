@@ -1,5 +1,5 @@
 Bibliographic Framework Ontology (BIBFRAME)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -20,7 +20,7 @@ attribute of an Instance.
 :Last Updated: 2022-10-03
 :Creator: United States, Library of Congress
 :License: Creative Commons 1.0
-:Format: RDF/XML
+:Format: RDF
 :Download: `Bibliographic Framework Ontology (BIBFRAME) Homepage <https://id.loc.gov/ontologies/bflc.html>`_
 
 Graph Metrics
@@ -66,7 +66,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = BIBFRAME()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

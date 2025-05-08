@@ -1,5 +1,5 @@
-Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary
-==========================
+Upper Mapping and Binding Exchange Layer Vocabulary (UMBEL)
+========================================================================================================================
 
 Overview
 --------
@@ -16,7 +16,7 @@ also designed for interoperation.
 :Creator: None
 :License: None
 :Format: n3
-:Download: `Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary Homepage <https://github.com/structureddynamics/UMBEL/tree/master/Ontology>`_
+:Download: `Upper Mapping and Binding Exchange Layer Vocabulary (UMBEL) Homepage <https://github.com/structureddynamics/UMBEL/tree/master/Ontology>`_
 
 Graph Metrics
 -------------
@@ -51,7 +51,7 @@ Generated Benchmarks:
     - **Term Types**: 10
     - **Taxonomic Relations**: 64
     - **Non-taxonomic Relations**: 33
-    - **Average Terms per Type**: 1.25
+    - **Average Terms per Type**: 10.00
 
 Usage Example
 -------------
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = UMBEL()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.n3")
 
     # Extract datasets
     data = ontology.extract()

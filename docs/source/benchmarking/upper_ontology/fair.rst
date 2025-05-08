@@ -1,5 +1,5 @@
 FAIR Vocabulary (FAIR)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,8 +46,8 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 19
     - **Taxonomic Relations**: 3
-    - **Non-taxonomic Relations**: 5
-    - **Average Terms per Type**: 1.19
+    - **Non-taxonomic Relations**: 3
+    - **Average Terms per Type**: 9.50
 
 Usage Example
 -------------
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = FAIR()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

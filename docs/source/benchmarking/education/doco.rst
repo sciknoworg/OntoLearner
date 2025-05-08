@@ -1,5 +1,5 @@
 Document Components Ontology (DoCO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ and shareability of academic documents (and related services) when multiple form
 :Last Updated: 2015-07-03
 :Creator: David Shotton and Silvio Peroni
 :License: Creative Commons 4.0
-:Format: OWL, TTL, CSV, NT
+:Format: RDF
 :Download: `Document Components Ontology (DoCO) Homepage <http://www.sparontologies.net/ontologies/doco>`_
 
 Graph Metrics
@@ -48,8 +48,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 156
-    - **Non-taxonomic Relations**: 13
+    - **Taxonomic Relations**: 59
+    - **Non-taxonomic Relations**: 7
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DoCO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

@@ -1,5 +1,5 @@
 GeoNames Ontology (GeoNames)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ in particular those defined in the geonames.org database.
 :Last Updated: 2022-01-30
 :Creator: Bernard Vatant
 :License: Creative Commons 3.0
-:Format: RDF/XML, Turtle, JSON-LD
+:Format: RDF
 :Download: `GeoNames Ontology (GeoNames) Homepage <https://www.geonames.org/ontology>`_
 
 Graph Metrics
@@ -46,9 +46,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 699
-    - **Taxonomic Relations**: 150
+    - **Taxonomic Relations**: 18
     - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 99.86
+    - **Average Terms per Type**: 349.50
 
 Usage Example
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = GeoNames()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

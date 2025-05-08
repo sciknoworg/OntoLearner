@@ -1,3 +1,5 @@
+import re
+
 from ..base import BaseOntology
 
 
@@ -10,14 +12,27 @@ class ENVO(BaseOntology):
     """
     ontology_id = "ENVO"
     ontology_full_name = "Environment Ontology (ENVO)"
-    domain = "Ecology & Environment"
+    domain = "Ecology and Environment"
     category = "Environment, Ecosystems, Habitats"
     version = "2024-07-01"
     last_updated = "2024-07-01"
     creator = "Pier Luigi Buttigieg (https://orcid.org/0000-0002-4366-3088)"
     license = "Creative Commons 1.0"
-    format = "OWL, OBO, JSON"
+    format = "OWL"
     download_url = "https://obofoundry.org/ontology/envo.html"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle ENVO-specific blank nodes."""
+        # ENVO-specific patterns
+        if re.match(r'^PATO_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class OEO(BaseOntology):
@@ -31,13 +46,13 @@ class OEO(BaseOntology):
     """
     ontology_id = "OEO"
     ontology_full_name = "The Open Energy Ontology (OEO)"
-    domain = "Ecology & Environment"
+    domain = "Ecology and Environment"
     category = "Energy"
     version = "2.7.0"
     last_updated = "03/2025"
     creator = None
     license = "Creative Commons Attribution 1.0 Generic (CC BY 1.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/OpenEnergyPlatform/ontology?tab=readme-ov-file"
 
 
@@ -51,7 +66,7 @@ class SWEET(BaseOntology):
     """
     ontology_id = "SWEET"
     ontology_full_name = "Semantic Web for Earth and Environment Technology Ontology (SWEET)"
-    domain = "Ecology & Environment"
+    domain = "Ecology and Environment"
     category = "Earth Science, Geoscience"
     version = "3.6.0"
     last_updated = "July 14, 2022"

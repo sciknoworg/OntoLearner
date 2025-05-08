@@ -1,5 +1,5 @@
 Ontology for Provenance and Plans (P-Plan)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = PPlan()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

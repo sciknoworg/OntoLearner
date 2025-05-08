@@ -1,5 +1,5 @@
-OntoKin
-==========================
+Chemical Kinetics Ontology (OntoKin)
+========================================================================================================================
 
 Overview
 --------
@@ -12,7 +12,7 @@ OntoKin is an ontology developed for representing chemical kinetic reaction mech
 :Creator: IEEE
 :License: Creative Commons 4.0
 :Format: OWL
-:Download: `OntoKin Homepage <https://www.ontologyportal.org/>`_
+:Download: `Chemical Kinetics Ontology (OntoKin) Homepage <https://www.ontologyportal.org/>`_
 
 Graph Metrics
 -------------
@@ -45,7 +45,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 138
+    - **Taxonomic Relations**: 51
     - **Non-taxonomic Relations**: 1
     - **Average Terms per Type**: 0.00
 
@@ -57,7 +57,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = OntoKin()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

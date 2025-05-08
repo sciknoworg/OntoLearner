@@ -17,5 +17,5 @@ class GoodRelations(BaseOntology):
     last_updated = "2011-10-01"
     creator = "Martin Hepp"
     license = "Creative Commons 3.0"
-    format = "RDF/XML"
+    format = "OWL"
     download_url = "https://www.heppnetz.de/ontologies/goodrelations/v1"

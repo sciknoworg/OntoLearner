@@ -1,5 +1,5 @@
 Devices, Experimental scaffolds and Biomaterials Ontology (DEB)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ of the biomaterials research community.
 :Last Updated: Jun 2, 2021
 :Creator: Osnat Hakimi
 :License: GPL-3.0
-:Format: OWL/XML
+:Format: OWL
 :Download: `Devices, Experimental scaffolds and Biomaterials Ontology (DEB) Homepage <https://github.com/ProjectDebbie/Ontology_DEB>`_
 
 Graph Metrics
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 820
+    - **Taxonomic Relations**: 672
     - **Non-taxonomic Relations**: 8
     - **Average Terms per Type**: 0.00
 
@@ -61,7 +61,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DEB()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

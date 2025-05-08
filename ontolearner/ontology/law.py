@@ -9,12 +9,12 @@ class CopyrightOnto(BaseOntology):
     end-users permissions to consume content, like many rights languages and ontologies do.
     """
     ontology_id = "CopyrightOnto"
-    ontology_full_name = "Copyright Ontology"
+    ontology_full_name = "Copyright Ontology (CopyrightOnto)"
     domain = "Law"
     category = "Legal Knowledge"
     version = None
     last_updated = "2019-09"
     creator = "Rhizomik"
     license = "Creative Commons 4.0"
-    format = "RDF"
+    format = "TTL"
     download_url = "https://rhizomik.net/ontologies/copyrightonto/"

@@ -1,5 +1,5 @@
-LexInfo
-==========================
+LexInfo (LexInfo)
+========================================================================================================================
 
 Overview
 --------
@@ -14,7 +14,7 @@ and is available together with an API.
 :Creator: None
 :License: Apache 2.0
 :Format: RDF
-:Download: `LexInfo Homepage <https://lexinfo.net/index.html>`_
+:Download: `LexInfo (LexInfo) Homepage <https://lexinfo.net/index.html>`_
 
 Graph Metrics
 -------------
@@ -47,9 +47,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 288
-    - **Taxonomic Relations**: 282
-    - **Non-taxonomic Relations**: 75
-    - **Average Terms per Type**: 11.52
+    - **Taxonomic Relations**: 276
+    - **Non-taxonomic Relations**: 0
+    - **Average Terms per Type**: 11.08
 
 Usage Example
 -------------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = LexInfo()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.RDF")
 
     # Extract datasets
     data = ontology.extract()

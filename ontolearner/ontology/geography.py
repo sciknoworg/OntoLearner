@@ -16,7 +16,7 @@ class GEO(BaseOntology):
     creator = "William R Hogan"
     license = "Creative Commons 4.0"
     format = "OWL"
-    download_url = "http://purl.obolibrary.org/obo/geo.owl"
+    download_url = "https://github.com/mcwdsi/geographical-entity-ontology/blob/master/geo-all.owl"
 
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
@@ -36,7 +36,7 @@ class GeoNames(BaseOntology):
     last_updated = "2022-01-30"
     creator = "Bernard Vatant"
     license = "Creative Commons 3.0"
-    format = "RDF/XML, Turtle, JSON-LD"
+    format = "RDF"
     download_url = "https://www.geonames.org/ontology"
 
 
@@ -54,7 +54,7 @@ class GTS(BaseOntology):
     last_updated = "2020-05-31"
     creator = "Simon J D Cox (simon.cox@csiro.au) of CSIRO"
     license = "Creative Commons 1.0"
-    format = "OWL, TTL"
+    format = "TTL"
     download_url = "https://raw.githack.com/CGI-IUGS/timescale-ont/master/html/gts.html"
 
 
@@ -63,7 +63,7 @@ class Juso(BaseOntology):
     Juso Ontology is a Web vocabulary for describing geographical addresses and features.
     """
     ontology_id = "Juso"
-    ontology_full_name = "Juso Ontology"
+    ontology_full_name = "Juso Ontology (Juso)"
     domain = "Geography"
     category = "geographical knowledge"
     version = "0.1.1"

@@ -1,5 +1,5 @@
-DBpedia Ontology
-==========================
+DBpedia Ontology (DBpedia)
+========================================================================================================================
 
 Overview
 --------
@@ -15,7 +15,7 @@ into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
 :Creator: DBpedia Maintainers and Contributors
 :License: Creative Commons 3.0
 :Format: OWL
-:Download: `DBpedia Ontology Homepage <https://wiki.dbpedia.org/>`_
+:Download: `DBpedia Ontology (DBpedia) Homepage <https://wiki.dbpedia.org/>`_
 
 Graph Metrics
 -------------
@@ -49,7 +49,7 @@ Dataset Statistics
 Generated Benchmarks:
     - **Term Types**: 0
     - **Taxonomic Relations**: 799
-    - **Non-taxonomic Relations**: 2007
+    - **Non-taxonomic Relations**: 1665
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -60,7 +60,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = DBpedia()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

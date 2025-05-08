@@ -1,5 +1,5 @@
 Chemical Entities of Biological Interest (ChEBI)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -17,7 +17,7 @@ or classes of entities and their parents and/or children are specified.
 :Last Updated: 01/01/2025
 :Creator: None
 :License: Creative Commons 4.0
-:Format: OWL, OBO, JSON
+:Format: OWL
 :Download: `Chemical Entities of Biological Interest (ChEBI) Homepage <https://www.ebi.ac.uk/chebi/>`_
 
 Graph Metrics
@@ -51,8 +51,8 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 1200620
-    - **Non-taxonomic Relations**: 18607
+    - **Taxonomic Relations**: 739967
+    - **Non-taxonomic Relations**: 0
     - **Average Terms per Type**: 0.00
 
 Usage Example
@@ -63,7 +63,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = ChEBI()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

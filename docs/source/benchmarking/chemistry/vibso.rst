@@ -1,5 +1,5 @@
 Vibrational Spectroscopy Ontology (VIBSO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,9 +46,9 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 40
-    - **Taxonomic Relations**: 856
-    - **Non-taxonomic Relations**: 125
-    - **Average Terms per Type**: 1.48
+    - **Taxonomic Relations**: 599
+    - **Non-taxonomic Relations**: 23
+    - **Average Terms per Type**: 2.35
 
 Usage Example
 -------------
@@ -58,7 +58,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = VIBSO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

@@ -1,5 +1,5 @@
 Suggested Upper Merged Ontology (SUMO)
-==========================
+========================================================================================================================
 
 Overview
 --------
@@ -46,10 +46,10 @@ Breadth metrics
 Dataset Statistics
 ------------------
 Generated Benchmarks:
-    - **Term Types**: 80282
-    - **Taxonomic Relations**: 7178
-    - **Non-taxonomic Relations**: 311
-    - **Average Terms per Type**: 1867.02
+    - **Term Types**: 80280
+    - **Taxonomic Relations**: 7174
+    - **Non-taxonomic Relations**: 310
+    - **Average Terms per Type**: 165.53
 
 Usage Example
 -------------
@@ -59,7 +59,7 @@ Usage Example
 
     # Initialize and load ontology
     ontology = SUMO()
-    ontology.load("path/to/ontology.owl")
+    ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
     data = ontology.extract()

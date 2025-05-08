@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Optional
 from rdflib import URIRef
 
@@ -16,7 +17,7 @@ class AMOntology(BaseOntology):
     """
     ontology_id = "AMOntology"
     ontology_full_name = "Additive Manufacturing Ontology (AMOntology)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Manufacturing"
     version = "1.0"
     last_updated = "2023-05-10"
@@ -34,7 +35,7 @@ class ASMO(BaseOntology):
     """
     ontology_id = "ASMO"
     ontology_full_name = "Atomistic Simulation Methods Ontology (ASMO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = None
@@ -50,14 +51,27 @@ class Atomistic(BaseOntology):
     """
     ontology_id = "Atomistic"
     ontology_full_name = "Atomistic Ontology (Atomistic)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.0.2"
     last_updated = None
     creator = "Francesca L. Bleken, Jesper Friis"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "Turtle"
+    format = "TTL"
     download_url = "https://github.com/emmo-repo/domain-atomistic"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle Atomistic-specific blank nodes."""
+        # EMMO-specific patterns (UUID format) in Atomistic
+        if re.match(r'^EMMO_[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class BattINFO(BaseOntology):
@@ -69,7 +83,7 @@ class BattINFO(BaseOntology):
     """
     ontology_id = "BattINFO"
     ontology_full_name = "Battery Interface Ontology (BattINFO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -77,6 +91,28 @@ class BattINFO(BaseOntology):
     license = None
     format = "TTL"
     download_url = "https://github.com/BIG-MAP/BattINFO"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle BattINFO-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        # Check for substance_, electrochemistry_, battery_ followed by UUIDs
+        if re.match(r'^substance_' + uuid_pattern, label):
+            return True
+        if re.match(r'^electrochemistry_' + uuid_pattern, label):
+            return True
+        if re.match(r'^battery_' + uuid_pattern, label):
+            return True
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
     def contains_imports(self) -> bool:
         """Hook: Check if the ontology contains imports."""
@@ -90,13 +126,13 @@ class BMO(BaseOntology):
     """
     ontology_id = "BMO"
     ontology_full_name = "Building Material Ontology (BMO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = "0.1"
     last_updated = "2019-12-10"
     creator = "Janakiram Karlapudi, Prathap Valluru"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "TTL, OWL, RDF/XML"
+    format = "TTL"
     download_url = "https://matportal.org/ontologies/BUILDMAT"
 
 
@@ -109,7 +145,7 @@ class BVCO(BaseOntology):
     """
     ontology_id = "BVCO"
     ontology_full_name = "Battery Value Chain Ontology (BVCO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.4.3"
     last_updated = None
@@ -117,6 +153,27 @@ class BVCO(BaseOntology):
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
     format = "TTL"
     download_url = "https://github.com/Battery-Value-Chain-Ontology/ontology"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle BVCO-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^BVCO_' + uuid_pattern, label):
+            return True
+        if re.match(r'^GPO_' + uuid_pattern, label):
+            return True
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+        if re.match(r'^electrochemistry_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class OntoCAPE(BaseOntology):
@@ -131,7 +188,7 @@ class OntoCAPE(BaseOntology):
     """
     ontology_id = "OntoCAPE"
     ontology_full_name = "Ontology of Computer-Aided Process Engineering (OntoCAPE)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Manufacturing"
     version = "2.0"
     last_updated = None
@@ -177,7 +234,7 @@ class CDCO(BaseOntology):
     """
     ontology_id = "CDCO"
     ontology_full_name = "Crystallographic Defect Core Ontology (CDCO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = None
@@ -197,7 +254,7 @@ class CHAMEO(BaseOntology):
     """
     ontology_id = "CHAMEO"
     ontology_full_name = "Characterisation Methodology Domain Ontology (CHAMEO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = "2024-04-12"
@@ -205,6 +262,21 @@ class CHAMEO(BaseOntology):
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
     format = "TTL"
     download_url = "https://github.com/emmo-repo/domain-characterisation-methodology"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle CHAMEO-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class CIFCore(BaseOntology):
@@ -214,8 +286,8 @@ class CIFCore(BaseOntology):
     some of the more complex types of information that can be handled with this approach.
     """
     ontology_id = "CIFCore"
-    ontology_full_name = "Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)"
-    domain = "Materials Science & Engineering"
+    ontology_full_name = "Crystallographic Information Framework Core Dictionary (CIFCore)"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.1.0"
     last_updated = "May 24, 2023"
@@ -232,7 +304,7 @@ class CMSO(BaseOntology):
     """
     ontology_id = "CMSO"
     ontology_full_name = "Computational Material Sample Ontology (CMSO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.0.1"
     last_updated = None
@@ -242,22 +314,6 @@ class CMSO(BaseOntology):
     download_url = "https://github.com/OCDO/cmso/tree/main"
 
 
-class EMMOCrystallography(BaseOntology):
-    """
-    A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
-    """
-    ontology_id = "EMMOCrystallography"
-    ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"
-    domain = "Materials Science & Engineering"
-    category = "Crystallography"
-    version = "0.0.1"
-    last_updated = None
-    creator = None
-    license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "Turtle"
-    download_url = "https://github.com/emmo-repo/domain-crystallography"
-
-
 class DISO(BaseOntology):
     """
     DISO is an ontology that defines the linear defect, in particular dislocation concepts
@@ -265,13 +321,13 @@ class DISO(BaseOntology):
     """
     ontology_id = "DISO"
     ontology_full_name = "Dislocation Ontology (DISO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0"
     last_updated = "21.03.202"
     creator = "Ahmad Zainul Ihsan"
     license = "Creative Commons Attribution 3.0 International (CC BY 3.0)"
-    format = "OWL/XML, RDF/XML, Turtle"
+    format = "OWL"
     download_url = "https://github.com/Materials-Data-Science-and-Informatics/dislocation-ontology"
 
 
@@ -285,13 +341,13 @@ class DSIM(BaseOntology):
     """
     ontology_id = "DSIM"
     ontology_full_name = "Dislocation Simulation and Model Ontology (DSIM)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0"
     last_updated = "17.08.2023"
     creator = "Ahmad Zainul Ihsan"
     license = "Creative Commons Attribution 3.0 Unported (CC BY 3.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/OCDO/DSIM"
 
 
@@ -305,14 +361,45 @@ class EMMO(BaseOntology):
     """
     ontology_id = "EMMO"
     ontology_full_name = "The Elementary Multiperspective Material Ontology (EMMO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Modelling"
     version = "1.0.0-rc3"
     last_updated = "2024-03"
     creator = "European Materials Modelling Council (EMMC)"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF/XML, TTL, JSON-LD"
+    format = "OWL"
     download_url = "https://emmo-repo.github.io/"
+
+
+class EMMOCrystallography(BaseOntology):
+    """
+    A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
+    """
+    ontology_id = "EMMOCrystallography"
+    ontology_full_name = "Crystallography Ontology (EMMOCrystallography)"
+    domain = "Materials Science and Engineering"
+    category = "Crystallography"
+    version = "0.0.1"
+    last_updated = None
+    creator = None
+    license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+    format = "TTL"
+    download_url = "https://github.com/emmo-repo/domain-crystallography"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle EMMOCrystallography-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class FSO(BaseOntology):
@@ -322,7 +409,7 @@ class FSO(BaseOntology):
     """
     ontology_id = "FSO"
     ontology_full_name = "Flow Systems Ontology (FSO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.1.0"
     last_updated = "2020-08-06"
@@ -341,7 +428,7 @@ class GPO(BaseOntology):
     """
     ontology_id = "GPO"
     ontology_full_name = "General Process Ontology (GPO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -349,6 +436,23 @@ class GPO(BaseOntology):
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
     format = "TTL"
     download_url = "https://github.com/General-Process-Ontology/ontology"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle GPO-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+        if re.match(r'^GPO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class HPOnt(BaseOntology):
@@ -359,13 +463,13 @@ class HPOnt(BaseOntology):
     """
     ontology_id = "HPOnt"
     ontology_full_name = "The Heat Pump Ontology (HPOnt)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.2"
     last_updated = None
     creator = "REACT project team"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL, CSV, NT"
+    format = "OWL"
     download_url = "https://react2020.github.io/REACT-ONTOLOGY/HPOnt/index-en.html/"
 
 
@@ -376,7 +480,7 @@ class LDO(BaseOntology):
     """
     ontology_id = "LDO"
     ontology_full_name = "Line Defect Ontology (LDO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Defects"
     version = "1.0.0"
     last_updated = None
@@ -396,13 +500,13 @@ class LPBFO(BaseOntology):
     """
     ontology_id = "LPBFO"
     ontology_full_name = "Laser Powder Bed Fusion Ontology (LPBFO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.1.9"
     last_updated = "2022-09-20"
     creator = "Fraunhofer IWM"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF/XML, Turtle"
+    format = "OWL"
     download_url = "https://matportal.org/ontologies/LPBFO"
 
     def contains_imports(self) -> bool:
@@ -420,13 +524,13 @@ class MAMBO(BaseOntology):
     """
     ontology_id = "MAMBO"
     ontology_full_name = "Molecules And Materials Basic Ontology (MAMBO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
     creator = None
     license = "General Public License v3.0 (GPL-3.0)"
-    format = "OWL, TTL"
+    format = "OWL"
     download_url = "https://github.com/daimoners/MAMBO"
 
 
@@ -439,13 +543,13 @@ class MAT(BaseOntology):
     """
     ontology_id = "MAT"
     ontology_full_name = "Material Properties Ontology (MAT)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Properties"
     version = "0.0.8"
     last_updated = None
     creator = "María Poveda-Villalón, Serge Chávez-Feria"
     license = "Creative Commons 4.0"
-    format = "RDF/XML, TTL, N-Triples"
+    format = "RDF"
     download_url = "https://bimerr.iot.linkeddata.es/def/material-properties/"
 
 
@@ -457,13 +561,13 @@ class MaterialInformation(BaseOntology):
     """
     ontology_id = "MaterialInformation"
     ontology_full_name = "Material Information Ontology (MaterialInformation)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
     creator = "Toshihiro Ashino"
     license = None
-    format = "OWL, RDF/XML"
+    format = "OWL"
     download_url = "https://github.com/EngyNasr/MSE-Benchmark/blob/main/testCases/secondTestCase/MaterialInformation.owl"
 
 
@@ -473,13 +577,13 @@ class MatOnto(BaseOntology):
     """
     ontology_id = "MatOnto"
     ontology_full_name = "Material Ontology (MatOnto)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Scholarly Knowledge"
     version = None
     last_updated = None
     creator = None
     license = None
-    format = "OWL, TTL"
+    format = "OWL"
     download_url = "https://github.com/EngyNasr/MSE-Benchmark/blob/main/testCases/secondTestCase/MatOnto.owl"
 
 
@@ -489,13 +593,13 @@ class MatVoc(BaseOntology):
     """
     ontology_id = "MatVoc"
     ontology_full_name = "Materials Vocabulary (MatVoc)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = "2022-12-12"
     creator = "Tatyana Sheveleva, Javad Chamanara"
     license = "MIT License"
-    format = "RDF/XML,TTL"
+    format = "RDF"
     download_url = "https://stream-project.github.io/#overv"
 
 
@@ -519,7 +623,7 @@ class MatWerk(BaseOntology):
     """
     ontology_id = "MatWerk"
     ontology_full_name = "NFDI MatWerk Ontology (MatWerk)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Research Data, Interoperability"
     version = "3.0.0"
     last_updated = "2025-03-01"
@@ -536,13 +640,13 @@ class MDO(BaseOntology):
     """
     ontology_id = "MDO"
     ontology_full_name = "Materials Design Ontology (MDO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Design"
     version = "1.1"
     last_updated = "2022-08-02"
     creator = "Materials Design Division, National Institute for Materials Science (NIMS)"
     license = "Creative Commons 4.0"
-    format = "OWL, RDF/XML, TTL, JSON-LD"
+    format = "OWL"
     download_url = "https://github.com/LiUSemWeb/Materials-Design-Ontology/tree/master/"
 
 
@@ -554,13 +658,13 @@ class MDS(BaseOntology):
     """
     ontology_id = "MDS"
     ontology_full_name = "Materials Data Science Ontology (MDS)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.3.0.0"
     last_updated = "03/24/2024"
     creator = "SDLE Research Center"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL/XML"
+    format = "TTL"
     download_url = "https://matportal.org/ontologies/MDS"
 
 
@@ -570,14 +674,29 @@ class MechanicalTesting(BaseOntology):
     """
     ontology_id = "MechanicalTesting"
     ontology_full_name = "Mechanical Testing Ontology (MechanicalTesting)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Mechanical Testing"
     version = "1.0.0"
     last_updated = None
     creator = "Fraunhofer IWM"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/emmo-repo/domain-mechanical-testing"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle MechanicalTesting-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class MicroStructures(BaseOntology):
@@ -589,14 +708,29 @@ class MicroStructures(BaseOntology):
     """
     ontology_id = "MicroStructures"
     ontology_full_name = "EMMO-based ontology for microstructures (MicroStructures)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Microstructure"
     version = None
     last_updated = None
     creator = None
     license = None
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/jesper-friis/emmo-microstructure"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle MicroStructures-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class MMO(BaseOntology):
@@ -609,13 +743,13 @@ class MMO(BaseOntology):
     """
     ontology_id = "MMO"
     ontology_full_name = "Materials Mechanics Ontology (MMO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Scholarly Knowledge"
     version = "1.0.1"
     last_updated = "2024-01-30"
     creator = "Akhil Thomas, Ali Riza Durmaz"
     license = "Creative Commons 4.0"
-    format = "OWL, TTL"
+    format = "RDF"
     download_url = "https://iwm-micro-mechanics-public.pages.fraunhofer.de/ontologies/materials-mechanics-ontology/index-en.html"
 
 
@@ -625,13 +759,13 @@ class MOLBRINELL(BaseOntology):
     """
     ontology_id = "MOLBRINELL"
     ontology_full_name = "MatoLab Brinell Test Ontology (MOL_BRINELL)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Testing"
     version = "0.1"
     last_updated = "05/05/2022"
     creator = "Birgit Skrotzki, Hossein Beygi Nasrabadi, Philipp von Hartrott, Vinicius Carrillo Beber, Yue Chen"
     license = None
-    format = "TTL, RDF/XML, OWL"
+    format = "TTL"
     download_url = "https://matportal.org/ontologies/MOL_BRINELL"
 
 
@@ -641,13 +775,13 @@ class MOLTENSILE(BaseOntology):
     """
     ontology_id = "MOLTENSILE"
     ontology_full_name = "Matolab Tensile Test Ontology (MOL_TENSILE)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Testings"
     version = "0.4"
     last_updated = "04/16/2021"
     creator = "Markus Schilling, markus.schilling@bam.de; Philipp von Hartrott, philipp.von.hartrott@iwm.fraunhofer.de"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL, RDF/XML"
+    format = "RDF"
     download_url = "https://matportal.org/ontologies/MOL_TENSILE"
 
 
@@ -661,13 +795,13 @@ class MSEO(BaseOntology):
     """
     ontology_id = "MSEO"
     ontology_full_name = "Materials Science and Engineering Ontology (MSEO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
     creator = "Thomas Hanke, Fraunhofer IWM"
     license = "MIT License"
-    format = "TTL, OWL"
+    format = "TTL"
     download_url = "https://github.com/Mat-O-Lab/MSEO"
 
 
@@ -677,7 +811,7 @@ class MSLE(BaseOntology):
     """
     ontology_id = "MSLE"
     ontology_full_name = "Material Science Lab Equipment Ontology (MSLE)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.1"
     last_updated = "Sep 15, 2022"
@@ -695,7 +829,7 @@ class NanoMine(BaseOntology):
     """
     ontology_id = "NanoMine"
     ontology_full_name = "NanoMine Ontology (NanoMine)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = None
@@ -705,21 +839,68 @@ class NanoMine(BaseOntology):
     download_url = "https://github.com/tetherless-world/nanomine-ontology"
 
 
+class OIECharacterisation(BaseOntology):
+    """
+    EMMO-compliant, domain-level OIE ontology tackling the areas of characterization methods.
+    """
+    ontology_id = "OIECharacterisation"
+    ontology_full_name = "Open Innovation Environment Characterisation (OIECharacterisation)"
+    domain = "Materials Science and Engineering"
+    category = "Materials"
+    version = None
+    last_updated = None
+    creator = "Daniele Toti, Gerhard Goldbeck, Pierluigi Del Nostro"
+    license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+    format = "TTL"
+    download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle OIECharacterisation-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
+
+
 class OIEManufacturing(BaseOntology):
     """
     The manufacturing module populates the physicalistic perspective with manufacturing subclasses categorised
     according to modern applied physical sciences.
     """
     ontology_id = "OIEManufacturing"
-    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Manufacturing module (OIEManufacturing)"
-    domain = "Materials Science & Engineering"
+    ontology_full_name = "Open Innovation Environment Manufacturing (OIEManufacturing)"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
     last_updated = None
-    creator = "Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro"
+    creator = ("Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, "
+               "Jesper Friis, Pierluigi Del Nostro")
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle OIEManufacturing-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class OIEMaterials(BaseOntology):
@@ -728,15 +909,31 @@ class OIEMaterials(BaseOntology):
     according to modern applied physical sciences.
     """
     ontology_id = "OIEMaterials"
-    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Materials module (OIEMaterials)"
-    domain = "Materials Science & Engineering"
+    ontology_full_name = "Open Innovation Environment Materials (OIEMaterials)"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
     last_updated = None
-    creator = "Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro"
+    creator = ("Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, "
+               "Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro")
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle OIEMaterials-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class OIEModels(BaseOntology):
@@ -745,31 +942,63 @@ class OIEModels(BaseOntology):
     in shape or by sharing a similar logical structure.
     """
     ontology_id = "OIEModels"
-    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Models module (OIEModels)"
-    domain = "Materials Science & Engineering"
+    ontology_full_name = "Open Innovation Environment Models (OIEModels)"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
     last_updated = None
-    creator = "Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro"
+    creator = ("Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, "
+               "Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro")
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle OIEModels-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class OIESoftware(BaseOntology):
     """
-    Software module.
+    EMMO-compliant, domain-level OIE ontology tackling the areas of software products.
     """
     ontology_id = "OIESoftware"
-    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Software module (OIESoftware)"
-    domain = "Materials Science & Engineering"
+    ontology_full_name = "Open Innovation Environment Software (OIESoftware)"
+    domain = "Materials Science and Engineering"
     category = "Materials"
     version = "0.1"
     last_updated = None
-    creator = "Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro"
+    creator = ("Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, "
+               "Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro")
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle OIESoftware-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 
 class ONTORULE(BaseOntology):
@@ -782,7 +1011,7 @@ class ONTORULE(BaseOntology):
     """
     ontology_id = "ONTORULE"
     ontology_full_name = "Ontology for the Steel Domain (ONTORULE)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = None
     last_updated = "2010-05-31"
@@ -799,7 +1028,7 @@ class PeriodicTable(BaseOntology):
     """
     ontology_id = "PeriodicTable"
     ontology_full_name = "Periodic Table of the Elements Ontology (PeriodicTable)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Periodic Table of Elements"
     version = "1.10"
     last_updated = "2004/02/05"
@@ -815,7 +1044,7 @@ class Photovoltaics(BaseOntology):
     """
     ontology_id = "Photovoltaics"
     ontology_full_name = "EMMO Domain Ontology for Photovoltaics (Photovoltaics)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.0.1"
     last_updated = None
@@ -824,6 +1053,20 @@ class Photovoltaics(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/domain-photovoltaics"
 
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle Photovoltaics-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
 
 class PLDO(BaseOntology):
     """
@@ -832,7 +1075,7 @@ class PLDO(BaseOntology):
     """
     ontology_id = "PLDO"
     ontology_full_name = "Planar Defects Ontology (PLDO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Defects"
     version = "1.0.0"
     last_updated = None
@@ -852,13 +1095,13 @@ class PMDco(BaseOntology):
     """
     ontology_id = "PMDco"
     ontology_full_name = "The Platform MaterialDigital core ontology (PMDco)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "3.0.0-alpha1"
     last_updated = "2025-03-20"
     creator = "Jannis Grundmann"
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
-    format = "OWL/XML"
+    format = "OWL"
     download_url = "https://github.com/materialdigital/core-ontology?tab=readme-ov-file"
 
 
@@ -868,7 +1111,7 @@ class PODO(BaseOntology):
     """
     ontology_id = "PODO"
     ontology_full_name = "Point Defects Ontology (PODO)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "1.0.0"
     last_updated = None
@@ -884,13 +1127,13 @@ class PRIMA(BaseOntology):
     """
     ontology_id = "PRIMA"
     ontology_full_name = "PRovenance Information in MAterials science (PRIMA)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "2.0"
     last_updated = "2024-01-29"
     creator = "Ahmad Zainul Ihsan, Mehrdad Jalali, Rossella Aversa"
     license = "Creative Commons Attribution 3.0 Unported (CC BY 3.0)"
-    format = "TTL, OWL"
+    format = "TTL"
     download_url = "https://materials-data-science-and-informatics.github.io/MDMC-NEP-top-level-ontology/PRIMA/complete/ver_2_0/index.html"
 
     def contains_imports(self) -> bool:
@@ -912,13 +1155,13 @@ class SSN(BaseOntology):
     """
     ontology_id = "SSN"
     ontology_full_name = "Semantic Sensor Network Ontology (SSN)"
-    domain = "Materials Science & Engineering"
+    domain = "Materials Science and Engineering"
     category = "Sensor Networks"
     version = "1.0"
     last_updated = "2017-04-17"
     creator = "W3C/OGC Spatial Data on the Web Working Group"
     license = "http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document"
-    format = "RDF/XML, TTL"
+    format = "TTL"
     download_url = "https://github.com/w3c/sdw-sosa-ssn/tree/482484fe2edc1ba8aa7f19214a72bdb77123e833"
 
     def contains_imports(self) -> bool:
@@ -931,8 +1174,8 @@ class SystemCapabilities(BaseOntology):
     This ontology describes system capabilities, operating ranges, and survival ranges.
     """
     ontology_id = "SystemCapabilities"
-    ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
-    domain = "Materials Science & Engineering"
+    ontology_full_name = "System Capabilities Ontology (SystemCapabilities)"
+    domain = "Materials Science and Engineering"
     category = "Materials Science, Engineering, Systems"
     version = None
     last_updated = "2017-05-14"
@@ -952,8 +1195,8 @@ class VIMMP(BaseOntology):
     of VIMMP and to support the ingest and retrieval of data and metadata at the VIMMP marketplace front-end.
     """
     ontology_id = "VIMMP"
-    ontology_full_name = "Virtual Materials Marketplace (VIMMP) Ontologies"
-    domain = "Materials Science & Engineering"
+    ontology_full_name = "Virtual Materials Marketplace Ontologies (VIMMP)"
+    domain = "Materials Science and Engineering"
     category = "Materials Modeling"
     version = None
     last_updated = "2021-01-02"
@@ -961,3 +1204,21 @@ class VIMMP(BaseOntology):
     license = "Creative Commons Attribution 4.0 International (CC BY 4.0)"
     format = "OWL"
     download_url = "https://matportal.org/ontologies/VIMMP_ONTOLOGIES"
+
+    @staticmethod
+    def _is_anonymous_id(label: str) -> bool:
+        """Override to handle VIMMP-specific blank nodes."""
+        # UUID pattern for various prefixes
+        uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
+
+        if re.match(r'^EMMO_' + uuid_pattern, label):
+            return True
+
+        if re.match(r'^SWO_[0-9]+$', label):
+            return True
+
+        # Check the general patterns from the parent class
+        if BaseOntology._is_anonymous_id(label):
+            return True
+
+        return False
