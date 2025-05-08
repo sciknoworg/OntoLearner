@@ -40,6 +40,7 @@ Ontologies about biological entities, systems, organisms, and molecular biology.
    biology_and_life_sciences/microscopy.rst
    biology_and_life_sciences/npo.rst
    biology_and_life_sciences/pato.rst
+   biology_and_life_sciences/mo.rst
 
 
 Chemistry
@@ -255,7 +256,8 @@ Ontologies related to materials, their structure, properties, processing, and en
    materials_science_and_engineering/ssn.rst
    materials_science_and_engineering/systemcapabilities.rst
    materials_science_and_engineering/vimmp.rst
-
+   materials_science_and_engineering/oiecharacterisation.rst
+   materials_science_and_engineering/prima.rst
 
 Medicine
 ==========

@@ -1,12 +1,12 @@
 Adding New Ontologies
-====================
+======================
 
 This guide explains how to add new ontologies to the OntoLearner framework.
 Adding a new ontology involves creating a class for the ontology, implementing the necessary methods,
 and using the ``add_new_ontology.py`` script to process and benchmark the ontology.
 
 Prerequisites
-------------
+---------------
 
 Before adding a new ontology, make sure you have:
 
@@ -15,7 +15,7 @@ Before adding a new ontology, make sure you have:
 3. The OntoLearner framework installed and set up
 
 Step 1: Create an Ontology Class
---------------------------------
+-----------------------------------
 First, you need to create a class for your ontology that inherits from ``BaseOntology``.
 This class should be added to the appropriate domain-specific file in the ``ontolearner/ontology/`` directory.
 
@@ -57,8 +57,9 @@ For example, if you're adding a medical ontology, you would add it to ``ontolear
 
             return False
 
+
 Step 2: Place the Ontology File
--------------------------------
+----------------------------------
 Place your ontology file in the appropriate directory under ``data/ontologies/``.
 The directory structure should match the domain of your ontology:
 
@@ -72,7 +73,7 @@ The directory structure should match the domain of your ontology:
 The file should be named according to the pattern: ``<ontology_id>.lower().<format>.lower()``.
 
 Step 3: Process the Ontology
-----------------------------
+-------------------------------
 To process the ontology and generate benchmarks, you'll use the ``add_new_ontology.py`` script. This script:
 
 1. Loads the ontology
@@ -110,8 +111,9 @@ The script will:
 5. Save the extracted datasets to ``data/datasets/<domain>/<ontology_id>/``
 6. Update the metrics Excel file in ``data/metrics/metrics.xlsx``
 
+
 Step 4: Review the Generated Documentation
-------------------------------------------
+---------------------------------------------
 
 After running the script, check the generated documentation file at ``docs/source/benchmarking/<domain>/<ontology_id>.rst``.
 This file contains:
@@ -126,16 +128,16 @@ This file contains:
 
 Make any necessary adjustments to the documentation to ensure it accurately represents your ontology.
 
+
 Step 5: Update the Benchmark Index
-----------------------------------
+--------------------------------------
 
 If you're adding an ontology to a new domain that doesn't exist yet, you'll need to update the ``docs/source/benchmarking/benchmark.rst`` file to include the new domain and ontology.
 
 Handling Special Cases
----------------------
+------------------------
 
-Blank Node Patterns
-~~~~~~~~~~~~~~~~~~
+**Blank Node Patterns**
 
 If your ontology contains specific blank node patterns that need to be filtered out during extraction, override the ``_is_anonymous_id`` method in your ontology class:
 
@@ -154,8 +156,9 @@ If your ontology contains specific blank node patterns that need to be filtered 
 
         return False
 
-Ontology Imports
-~~~~~~~~~~~~~~
+
+**Ontology Imports**
+
 
 If your ontology imports other ontologies, override the ``contains_imports`` method:
 
@@ -165,8 +168,7 @@ If your ontology imports other ontologies, override the ``contains_imports`` met
         """Hook: Check if the ontology contains imports."""
         return True
 
-Custom Extraction Logic
-~~~~~~~~~~~~~~~~~~~~~
+**Custom Extraction Logic**
 
 If your ontology requires custom extraction logic, you can override the extraction methods:
 
@@ -183,8 +185,9 @@ For example:
         # Your custom implementation
         pass
 
+
 Troubleshooting
---------------
+--------------------
 Common issues when adding new ontologies:
 
 1. **Ontology file not found**: Ensure the ontology file is in the correct location and has the correct name.
