@@ -1,9 +1,9 @@
-Proteomics Standards Initiative (PSI) Protein Modifications Ontology (PSI-MOD)
+Protein Modifications Ontology (PSIMOD)
 ========================================================================================================================
 
 Overview
 --------
-PSI-MOD is an ontology consisting of terms that describe protein chemical modifications,
+PSI-MOD is an ontology developed by the Proteomics Standards Initiative (PSI) that describes protein chemical modifications,
 logically linked by an is_a relationship in such a way as to form a direct acyclic graph (DAG).
 The PSI-MOD ontology has more than 45 top-level nodes, and provides alternative hierarchical paths
 for classifying protein modifications either by the molecular structure of the modification,
@@ -16,7 +16,7 @@ or by the amino acid residue that is modified.
 :Creator: None
 :License: Creative Commons Attribution 4.0
 :Format: OWL
-:Download: `Proteomics Standards Initiative (PSI) Protein Modifications Ontology (PSI-MOD) Homepage <https://github.com/HUPO-PSI/psi-mod-CV>`_
+:Download: `Protein Modifications Ontology (PSIMOD) Homepage <https://github.com/HUPO-PSI/psi-mod-CV>`_
 
 Graph Metrics
 -------------
