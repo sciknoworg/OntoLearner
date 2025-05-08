@@ -1,4 +1,4 @@
-Virtual Materials Marketplace (VIMMP) Ontologies
+Virtual Materials Marketplace Ontologies (VIMMP)
 ========================================================================================================================
 
 Overview
@@ -17,7 +17,7 @@ of VIMMP and to support the ingest and retrieval of data and metadata at the VIM
 :Creator: Ilian T. Todorov, Martin Thomas Horsch, Michael A. Seaton, Silvia Chiacchiera
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 :Format: OWL
-:Download: `Virtual Materials Marketplace (VIMMP) Ontologies Homepage <https://matportal.org/ontologies/VIMMP_ONTOLOGIES>`_
+:Download: `Virtual Materials Marketplace Ontologies (VIMMP) Homepage <https://matportal.org/ontologies/VIMMP_ONTOLOGIES>`_
 
 Graph Metrics
 -------------

@@ -17,6 +17,14 @@
 
 .. toctree::
    :maxdepth: 1
+   :caption: Developer Guide
+   :hidden:
+
+   developer/adding_ontologies
+
+
+.. toctree::
+   :maxdepth: 1
    :caption: Hugging Face Hub
    :hidden:
 

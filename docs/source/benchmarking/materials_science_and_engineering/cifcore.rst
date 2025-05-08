@@ -1,4 +1,4 @@
-Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)
+Crystallographic Information Framework Core Dictionary (CIFCore)
 ========================================================================================================================
 
 Overview
@@ -14,7 +14,7 @@ some of the more complex types of information that can be handled with this appr
 :Creator: None
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 :Format: TTL
-:Download: `Crystallographic Information Framework (CIF) Core Dictionary (CIFCore) Homepage <https://github.com/emmo-repo/CIF-ontology?tab=readme-ov-file>`_
+:Download: `Crystallographic Information Framework Core Dictionary (CIFCore) Homepage <https://github.com/emmo-repo/CIF-ontology?tab=readme-ov-file>`_
 
 Graph Metrics
 -------------

@@ -1,9 +1,9 @@
-The Description of a Project (DOAP) vocabulary
+The Description of a Project vocabulary (DOAP)
 ========================================================================================================================
 
 Overview
 --------
-The Description of a Project (DOAP) vocabulary, described using W3C RDF Schema and
+The Description of a Project vocabulary (DOAP), described using W3C RDF Schema and
 the Web Ontology Language to describe software projects, and in particular open source projects.
 
 :Domain: Industry
@@ -13,7 +13,7 @@ the Web Ontology Language to describe software projects, and in particular open 
 :Creator: Edd Wilder-James
 :License: Apache License 2.0
 :Format: RDF
-:Download: `The Description of a Project (DOAP) vocabulary Homepage <https://github.com/ewilderj/doap/blob/master/schema/doap.rdf>`_
+:Download: `The Description of a Project vocabulary (DOAP) Homepage <https://github.com/ewilderj/doap/blob/master/schema/doap.rdf>`_
 
 Graph Metrics
 -------------

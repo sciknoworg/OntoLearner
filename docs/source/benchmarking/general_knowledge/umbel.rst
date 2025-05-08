@@ -1,4 +1,4 @@
-Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary
+Upper Mapping and Binding Exchange Layer Vocabulary (UMBEL)
 ========================================================================================================================
 
 Overview
@@ -16,7 +16,7 @@ also designed for interoperation.
 :Creator: None
 :License: None
 :Format: n3
-:Download: `Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary Homepage <https://github.com/structureddynamics/UMBEL/tree/master/Ontology>`_
+:Download: `Upper Mapping and Binding Exchange Layer Vocabulary (UMBEL) Homepage <https://github.com/structureddynamics/UMBEL/tree/master/Ontology>`_
 
 Graph Metrics
 -------------

@@ -1,4 +1,4 @@
-Open Innovation Environment (OIE) domain ontologies, Characterisation module (OIECharacterisation)
+Open Innovation Environment Characterisation (OIECharacterisation)
 ========================================================================================================================
 
 Overview
@@ -12,7 +12,7 @@ EMMO-compliant, domain-level OIE ontology tackling the areas of characterization
 :Creator: Daniele Toti, Gerhard Goldbeck, Pierluigi Del Nostro
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 :Format: TTL
-:Download: `Open Innovation Environment (OIE) domain ontologies, Characterisation module (OIECharacterisation) Homepage <https://github.com/emmo-repo/OIE-Ontologies/>`_
+:Download: `Open Innovation Environment Characterisation (OIECharacterisation) Homepage <https://github.com/emmo-repo/OIE-Ontologies/>`_
 
 Graph Metrics
 -------------

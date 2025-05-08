@@ -1,4 +1,4 @@
-Open Innovation Environment (OIE) domain ontologies, Software module (OIESoftware)
+Open Innovation Environment Software (OIESoftware)
 ========================================================================================================================
 
 Overview
@@ -12,7 +12,7 @@ EMMO-compliant, domain-level OIE ontology tackling the areas of software product
 :Creator: Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 :Format: TTL
-:Download: `Open Innovation Environment (OIE) domain ontologies, Software module (OIESoftware) Homepage <https://github.com/emmo-repo/OIE-Ontologies/>`_
+:Download: `Open Innovation Environment Software (OIESoftware) Homepage <https://github.com/emmo-repo/OIE-Ontologies/>`_
 
 Graph Metrics
 -------------

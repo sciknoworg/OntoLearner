@@ -43,11 +43,11 @@ class DBO(BaseOntology):
 
 class DOAP(BaseOntology):
     """
-    The Description of a Project (DOAP) vocabulary, described using W3C RDF Schema and
+    The Description of a Project vocabulary (DOAP), described using W3C RDF Schema and
     the Web Ontology Language to describe software projects, and in particular open source projects.
     """
     ontology_id = "DOAP"
-    ontology_full_name = "The Description of a Project (DOAP) vocabulary"
+    ontology_full_name = "The Description of a Project vocabulary (DOAP)"
     domain = "Industry"
     category = "Software"
     version = None

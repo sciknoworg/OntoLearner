@@ -1,4 +1,4 @@
-Open Innovation Environment (OIE) domain ontologies, Models module (OIEModels)
+Open Innovation Environment Models (OIEModels)
 ========================================================================================================================
 
 Overview
@@ -13,7 +13,7 @@ in shape or by sharing a similar logical structure.
 :Creator: Adham Hashibon, Daniele Toti, Emanuele Ghedini, Georg J. Schmitz, Gerhard Goldbeck, Jesper Friis, Pierluigi Del Nostro
 :License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 :Format: TTL
-:Download: `Open Innovation Environment (OIE) domain ontologies, Models module (OIEModels) Homepage <https://github.com/emmo-repo/OIE-Ontologies/>`_
+:Download: `Open Innovation Environment Models (OIEModels) Homepage <https://github.com/emmo-repo/OIE-Ontologies/>`_
 
 Graph Metrics
 -------------
