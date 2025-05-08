@@ -17,29 +17,29 @@ Ontologies that describe music, iconography, cultural artifacts, and humanistic 
 .. toctree::
    :maxdepth: 3
 
-   arts_&_humanities/chordontology.rst
-   arts_&_humanities/icon.rst
-   arts_&_humanities/musicontology.rst
-   arts_&_humanities/nomisma.rst
-   arts_&_humanities/timelineontology.rst
+   arts_and_humanities/chordontology.rst
+   arts_and_humanities/icon.rst
+   arts_and_humanities/musicontology.rst
+   arts_and_humanities/nomisma.rst
+   arts_and_humanities/timelineontology.rst
 
 
-Biology & Life Sciences
+Biology and Life Sciences
 =======================
 Ontologies about biological entities, systems, organisms, and molecular biology.
 
 .. toctree::
    :maxdepth: 3
 
-   biology_&_life_sciences/biopax.rst
-   biology_&_life_sciences/efo.rst
-   biology_&_life_sciences/go.rst
-   biology_&_life_sciences/lifo.rst
-   biology_&_life_sciences/marinetlo.rst
-   biology_&_life_sciences/mged.rst
-   biology_&_life_sciences/microscopy.rst
-   biology_&_life_sciences/npo.rst
-   biology_&_life_sciences/pato.rst
+   biology_and_life_sciences/biopax.rst
+   biology_and_life_sciences/efo.rst
+   biology_and_life_sciences/go.rst
+   biology_and_life_sciences/lifo.rst
+   biology_and_life_sciences/marinetlo.rst
+   biology_and_life_sciences/mged.rst
+   biology_and_life_sciences/microscopy.rst
+   biology_and_life_sciences/npo.rst
+   biology_and_life_sciences/pato.rst
 
 
 Chemistry
@@ -66,16 +66,16 @@ Ontologies describing chemical entities, reactions, methods, and computational c
    chemistry/vibso.rst
 
 
-Ecology & Environment
+Ecology and Environment
 =====================
 Ontologies about ecological systems, environments, biomes, and sustainability science.
 
 .. toctree::
    :maxdepth: 3
 
-   ecology_&_environment/envo.rst
-   ecology_&_environment/oeo.rst
-   ecology_&_environment/sweet.rst
+   ecology_and_environment/envo.rst
+   ecology_and_environment/oeo.rst
+   ecology_and_environment/sweet.rst
 
 
 Education
@@ -112,14 +112,14 @@ Ontologies describing economic indicators, e-commerce, trade, and financial inst
    finance/goodrelations.rst
 
 
-Food & Beverage
+Food and Beverage
 =========================
 Ontologies related to food, beverages, ingredients, and culinary products.
 
 .. toctree::
    :maxdepth: 3
 
-   food_&_beverage/wine.rst
+   food_and_beverage/wine.rst
 
 
 General Knowledge
@@ -179,14 +179,14 @@ Ontologies dealing with legal processes, regulations, and rights (e.g., copyrigh
    law/copyrightonto.rst
 
 
-Library & Cultural Heritage
+Library and Cultural Heritage
 ============================
 Ontologies used in cataloging, archiving, and authority control of cultural and scholarly resources. Includes standards for bibliographic metadata, identity disambiguation, and linked data for museums, libraries, and archives.
 
 .. toctree::
    :maxdepth: 3
 
-   library_&_cultural_heritage/gnd.rst
+   library_and_cultural_heritage/gnd.rst
 
 
 Livestock
@@ -199,62 +199,62 @@ Ontologies about traits, breeding, and management of domesticated animals for ag
    livestock/atol.rst
 
 
-Materials Science & Engineering
+Materials Science and Engineering
 ===============================
 Ontologies related to materials, their structure, properties, processing, and engineering applications.
 
 .. toctree::
    :maxdepth: 3
 
-   materials_science_&_engineering/amontology.rst
-   materials_science_&_engineering/asmo.rst
-   materials_science_&_engineering/atomistic.rst
-   materials_science_&_engineering/battinfo.rst
-   materials_science_&_engineering/bmo.rst
-   materials_science_&_engineering/bvco.rst
-   materials_science_&_engineering/cdco.rst
-   materials_science_&_engineering/chameo.rst
-   materials_science_&_engineering/cifcore.rst
-   materials_science_&_engineering/cmso.rst
-   materials_science_&_engineering/diso.rst
-   materials_science_&_engineering/dsim.rst
-   materials_science_&_engineering/emmo.rst
-   materials_science_&_engineering/emmocrystallography.rst
-   materials_science_&_engineering/fso.rst
-   materials_science_&_engineering/gpo.rst
-   materials_science_&_engineering/hpont.rst
-   materials_science_&_engineering/ldo.rst
-   materials_science_&_engineering/lpbfo.rst
-   materials_science_&_engineering/mambo.rst
-   materials_science_&_engineering/mat.rst
-   materials_science_&_engineering/materialinformation.rst
-   materials_science_&_engineering/matonto.rst
-   materials_science_&_engineering/matvoc.rst
-   materials_science_&_engineering/matwerk.rst
-   materials_science_&_engineering/mdo.rst
-   materials_science_&_engineering/mds.rst
-   materials_science_&_engineering/mechanicaltesting.rst
-   materials_science_&_engineering/microstructures.rst
-   materials_science_&_engineering/mmo.rst
-   materials_science_&_engineering/molbrinell.rst
-   materials_science_&_engineering/moltensile.rst
-   materials_science_&_engineering/mseo.rst
-   materials_science_&_engineering/msle.rst
-   materials_science_&_engineering/nanomine.rst
-   materials_science_&_engineering/oiemanufacturing.rst
-   materials_science_&_engineering/oiematerials.rst
-   materials_science_&_engineering/oiemodels.rst
-   materials_science_&_engineering/oiesoftware.rst
-   materials_science_&_engineering/ontocape.rst
-   materials_science_&_engineering/ontorule.rst
-   materials_science_&_engineering/periodictable.rst
-   materials_science_&_engineering/photovoltaics.rst
-   materials_science_&_engineering/pldo.rst
-   materials_science_&_engineering/pmdco.rst
-   materials_science_&_engineering/podo.rst
-   materials_science_&_engineering/ssn.rst
-   materials_science_&_engineering/systemcapabilities.rst
-   materials_science_&_engineering/vimmp.rst
+   materials_science_and_engineering/amontology.rst
+   materials_science_and_engineering/asmo.rst
+   materials_science_and_engineering/atomistic.rst
+   materials_science_and_engineering/battinfo.rst
+   materials_science_and_engineering/bmo.rst
+   materials_science_and_engineering/bvco.rst
+   materials_science_and_engineering/cdco.rst
+   materials_science_and_engineering/chameo.rst
+   materials_science_and_engineering/cifcore.rst
+   materials_science_and_engineering/cmso.rst
+   materials_science_and_engineering/diso.rst
+   materials_science_and_engineering/dsim.rst
+   materials_science_and_engineering/emmo.rst
+   materials_science_and_engineering/emmocrystallography.rst
+   materials_science_and_engineering/fso.rst
+   materials_science_and_engineering/gpo.rst
+   materials_science_and_engineering/hpont.rst
+   materials_science_and_engineering/ldo.rst
+   materials_science_and_engineering/lpbfo.rst
+   materials_science_and_engineering/mambo.rst
+   materials_science_and_engineering/mat.rst
+   materials_science_and_engineering/materialinformation.rst
+   materials_science_and_engineering/matonto.rst
+   materials_science_and_engineering/matvoc.rst
+   materials_science_and_engineering/matwerk.rst
+   materials_science_and_engineering/mdo.rst
+   materials_science_and_engineering/mds.rst
+   materials_science_and_engineering/mechanicaltesting.rst
+   materials_science_and_engineering/microstructures.rst
+   materials_science_and_engineering/mmo.rst
+   materials_science_and_engineering/molbrinell.rst
+   materials_science_and_engineering/moltensile.rst
+   materials_science_and_engineering/mseo.rst
+   materials_science_and_engineering/msle.rst
+   materials_science_and_engineering/nanomine.rst
+   materials_science_and_engineering/oiemanufacturing.rst
+   materials_science_and_engineering/oiematerials.rst
+   materials_science_and_engineering/oiemodels.rst
+   materials_science_and_engineering/oiesoftware.rst
+   materials_science_and_engineering/ontocape.rst
+   materials_science_and_engineering/ontorule.rst
+   materials_science_and_engineering/periodictable.rst
+   materials_science_and_engineering/photovoltaics.rst
+   materials_science_and_engineering/pldo.rst
+   materials_science_and_engineering/pmdco.rst
+   materials_science_and_engineering/podo.rst
+   materials_science_and_engineering/ssn.rst
+   materials_science_and_engineering/systemcapabilities.rst
+   materials_science_and_engineering/vimmp.rst
 
 
 Medicine
@@ -272,25 +272,25 @@ Ontologies covering clinical knowledge, diseases, drugs, treatments, and biomedi
    medicine/obi.rst
 
 
-News & Media
+News and Media
 ============
 Ontologies that model journalism, broadcasting, creative works, and media metadata.
 
 .. toctree::
    :maxdepth: 3
 
-   news_&_media/bbc.rst
-   news_&_media/bbcbusiness.rst
-   news_&_media/bbccms.rst
-   news_&_media/bbccoreconcepts.rst
-   news_&_media/bbccreativework.rst
-   news_&_media/bbcfood.rst
-   news_&_media/bbcpolitics.rst
-   news_&_media/bbcprogrammes.rst
-   news_&_media/bbcprovenance.rst
-   news_&_media/bbcsport.rst
-   news_&_media/bbcstoryline.rst
-   news_&_media/bbcwildlife.rst
+   news_and_media/bbc.rst
+   news_and_media/bbcbusiness.rst
+   news_and_media/bbccms.rst
+   news_and_media/bbccoreconcepts.rst
+   news_and_media/bbccreativework.rst
+   news_and_media/bbcfood.rst
+   news_and_media/bbcpolitics.rst
+   news_and_media/bbcprogrammes.rst
+   news_and_media/bbcprovenance.rst
+   news_and_media/bbcsport.rst
+   news_and_media/bbcstoryline.rst
+   news_and_media/bbcwildlife.rst
 
 
 Scholarly Knowledge
@@ -370,12 +370,12 @@ Foundational ontologies that provide abstract concepts like objects, processes, 
 
 
 
-Web & Internet
+Web and Internet
 ==============
 Ontologies that model web semantics, linked data, APIs, and online communication standards.
 
 .. toctree::
    :maxdepth: 3
 
-   web_&_internet/hydra.rst
-   web_&_internet/saref.rst
+   web_and_internet/hydra.rst
+   web_and_internet/saref.rst
