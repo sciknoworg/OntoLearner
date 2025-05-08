@@ -286,7 +286,7 @@ class CIFCore(BaseOntology):
     some of the more complex types of information that can be handled with this approach.
     """
     ontology_id = "CIFCore"
-    ontology_full_name = "Crystallographic Information Framework (CIF) Core Dictionary (CIFCore)"
+    ontology_full_name = "Crystallographic Information Framework Core Dictionary (CIFCore)"
     domain = "Materials Science and Engineering"
     category = "Materials Science"
     version = "0.1.0"
@@ -844,8 +844,7 @@ class OIECharacterisation(BaseOntology):
     EMMO-compliant, domain-level OIE ontology tackling the areas of characterization methods.
     """
     ontology_id = "OIECharacterisation"
-    ontology_full_name = ("Open Innovation Environment (OIE) domain ontologies, "
-                          "Characterisation module (OIECharacterisation)")
+    ontology_full_name = "Open Innovation Environment Characterisation (OIECharacterisation)"
     domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
@@ -877,7 +876,7 @@ class OIEManufacturing(BaseOntology):
     according to modern applied physical sciences.
     """
     ontology_id = "OIEManufacturing"
-    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Manufacturing module (OIEManufacturing)"
+    ontology_full_name = "Open Innovation Environment Manufacturing (OIEManufacturing)"
     domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
@@ -910,7 +909,7 @@ class OIEMaterials(BaseOntology):
     according to modern applied physical sciences.
     """
     ontology_id = "OIEMaterials"
-    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Materials module (OIEMaterials)"
+    ontology_full_name = "Open Innovation Environment Materials (OIEMaterials)"
     domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
@@ -943,7 +942,7 @@ class OIEModels(BaseOntology):
     in shape or by sharing a similar logical structure.
     """
     ontology_id = "OIEModels"
-    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Models module (OIEModels)"
+    ontology_full_name = "Open Innovation Environment Models (OIEModels)"
     domain = "Materials Science and Engineering"
     category = "Materials"
     version = None
@@ -975,7 +974,7 @@ class OIESoftware(BaseOntology):
     EMMO-compliant, domain-level OIE ontology tackling the areas of software products.
     """
     ontology_id = "OIESoftware"
-    ontology_full_name = "Open Innovation Environment (OIE) domain ontologies, Software module (OIESoftware)"
+    ontology_full_name = "Open Innovation Environment Software (OIESoftware)"
     domain = "Materials Science and Engineering"
     category = "Materials"
     version = "0.1"
@@ -1175,7 +1174,7 @@ class SystemCapabilities(BaseOntology):
     This ontology describes system capabilities, operating ranges, and survival ranges.
     """
     ontology_id = "SystemCapabilities"
-    ontology_full_name = "System capabilities, operating ranges, and survival ranges ontology (SystemCapabilities)"
+    ontology_full_name = "System Capabilities Ontology (SystemCapabilities)"
     domain = "Materials Science and Engineering"
     category = "Materials Science, Engineering, Systems"
     version = None
@@ -1196,7 +1195,7 @@ class VIMMP(BaseOntology):
     of VIMMP and to support the ingest and retrieval of data and metadata at the VIMMP marketplace front-end.
     """
     ontology_id = "VIMMP"
-    ontology_full_name = "Virtual Materials Marketplace (VIMMP) Ontologies"
+    ontology_full_name = "Virtual Materials Marketplace Ontologies (VIMMP)"
     domain = "Materials Science and Engineering"
     category = "Materials Modeling"
     version = None

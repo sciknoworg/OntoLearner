@@ -202,7 +202,7 @@ class UMBEL(BaseOntology):
     also designed for interoperation.
     """
     ontology_id = "UMBEL"
-    ontology_full_name = "Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary"
+    ontology_full_name = "Upper Mapping and Binding Exchange Layer Vocabulary (UMBEL)"
     domain = "General Knowledge"
     category = "Web Development"
     version = "1.50"

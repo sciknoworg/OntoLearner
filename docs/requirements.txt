@@ -9,3 +9,4 @@ sphinx-panels
 sphinx-design
 sphinx-tabs
 sphinx-inline-tabs
+snowballstemmer
