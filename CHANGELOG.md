@@ -1,5 +1,10 @@
 ## Changelog
 
+### v0.5.0 (May 8, 2025)
+- Added text2onto documentations
+- Bug fixes to the ontology module
+- Added HF integration
+
 ### v0.4.0 (May 2, 2025)
 - Added text2onto module
 - Bug fixings to the text2onto new module
