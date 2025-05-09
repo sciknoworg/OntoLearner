@@ -55,7 +55,7 @@ ORGANIZATION = "SciKnowOrg/OntoLearner"
 
 
 DOMAINS_DEFINITIONS = {
-    "agricultural": "Ontologies about farming systems, crops, food production, and agricultural vocabularies.",
+    "agriculture": "Ontologies about farming systems, crops, food production, and agricultural vocabularies.",
     "arts_&_humanities": "Ontologies that describe music, iconography, cultural artifacts, and humanistic content.",
     "biology_&_life_sciences": "Ontologies about biological entities, systems, organisms, and molecular biology.",
     "chemistry": "Ontologies describing chemical entities, reactions, methods, and computational chemistry models.",
@@ -69,7 +69,6 @@ DOMAINS_DEFINITIONS = {
     "industry": "Ontologies describing industrial processes, smart buildings, manufacturing systems, and equipment.",
     "law": "Ontologies dealing with legal processes, regulations, and rights (e.g., copyright).",
     "library_&_cultural_heritage": "Ontologies used in cataloging, archiving, and authority control of cultural and scholarly resources.",
-    "livestock": "Ontologies about traits, breeding, and management of domesticated animals for agriculture.",
     "materials_science_&_engineering": "Ontologies related to materials, their structure, properties, processing, and engineering applications.",
     "medicine": "Ontologies covering clinical knowledge, diseases, drugs, treatments, and biomedical data.",
     "news_&_media": "Ontologies that model journalism, broadcasting, creative works, and media metadata.",

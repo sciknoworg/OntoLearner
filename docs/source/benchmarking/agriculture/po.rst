@@ -6,7 +6,7 @@ Overview
 The Plant Ontology (PO) is a structured vocabulary and database resource that links plant anatomy,
 morphology and growth and development to plant genomics data.
 
-:Domain: Agricultural
+:Domain: Agriculture
 :Category: Plant Anatomy, Morphology, Growth and Development
 :Current Version: None
 :Last Updated: None
@@ -46,7 +46,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 0
-    - **Taxonomic Relations**: 2866
+    - **Taxonomic Relations**: 2863
     - **Non-taxonomic Relations**: 36
     - **Average Terms per Type**: 0.00
 

@@ -5,9 +5,10 @@ Ontologies about farming systems, crops, food production, and agricultural vocab
 .. toctree::
    :maxdepth: 3
 
-   agricultural/agrovoc.rst
-   agricultural/foodon.rst
-   agricultural/po.rst
+   agriculture/agrovoc.rst
+   agriculture/atol.rst
+   agriculture/foodon.rst
+   agriculture/po.rst
 
 
 Arts and Humanities
@@ -188,16 +189,6 @@ Ontologies used in cataloging, archiving, and authority control of cultural and 
    :maxdepth: 3
 
    library_and_cultural_heritage/gnd.rst
-
-
-Livestock
-=========
-Ontologies about traits, breeding, and management of domesticated animals for agriculture.
-
-.. toctree::
-   :maxdepth: 3
-
-   livestock/atol.rst
 
 
 Materials Science and Engineering

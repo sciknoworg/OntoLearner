@@ -13,7 +13,7 @@ semantic analysis and modeling;
 - make the ATOL ontology as operational as possible and closely related to measurement techniques;
 - structure the ontology in relation to animal production.
 
-:Domain: Livestock
+:Domain: Agriculture
 :Category: Animal Science
 :Current Version: 6.0
 :Last Updated: May 11, 2020

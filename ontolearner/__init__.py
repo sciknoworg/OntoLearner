@@ -14,7 +14,6 @@ from .processor import Processor
 
 __all__ = [
     "base",
-
     "ontology",
     "text2onto",
     "learner",

@@ -1,4 +1,4 @@
-from .agricultural import * # NOQA
+from .agriculture import * # NOQA
 from .arts_humanities import * # NOQA
 from .upper_ontologies import * # NOQA
 from .biology import * # NOQA
@@ -14,7 +14,6 @@ from .medicine import * # NOQA
 from .industry import * # NOQA
 from .law import * # NOQA
 from .library_cultural_heritage import * # NOQA
-from .livestock import * # NOQA
 from .material_science_engineering import * # NOQA
 from .news_media import * # NOQA
 from .scholarly_knowledge import * # NOQA

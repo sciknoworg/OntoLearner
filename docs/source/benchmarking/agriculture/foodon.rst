@@ -9,7 +9,7 @@ It provides a neutral and ontology-driven standard for government agencies,
 industry, nonprofits and consumers to name and reference food products and their components
 throughout the food supply chain.
 
-:Domain: Agricultural
+:Domain: Agriculture
 :Category: Diet, Metabolomics, and Nutrition
 :Current Version: None
 :Last Updated: 2025-01-16
@@ -49,7 +49,7 @@ Dataset Statistics
 ------------------
 Generated Benchmarks:
     - **Term Types**: 16
-    - **Taxonomic Relations**: 76235
+    - **Taxonomic Relations**: 76228
     - **Non-taxonomic Relations**: 2072
     - **Average Terms per Type**: 8.00
 
