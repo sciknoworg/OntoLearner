@@ -45,3 +45,10 @@ class AutoLearnerRetriever(ABC):
 
     def retrieve(self, inputs: List[Any], top_k: int):
         pass
+
+class AutoPrompt(ABC):
+    def __init__(self, prompt_template: str):
+        self.prompt_template = prompt_template
+
+    def format(self, **kwargs):
+        pass
