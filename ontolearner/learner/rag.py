@@ -15,22 +15,3 @@ class RAGLearner(AutoLearner):
 
     def predict(self, eval_data: Any, task: str):
         pass
-
-""""
-from ontolearner import RAGLearner, AutoLLM, AutoBERTRetriever
-
-learner_retriever = AutoBERTRetriever()
-learner_llm = AutoLLM()
-
-rag_learner = RAGLearner(learner_retriever=learner_retriever,
-                         learner_llm=learner_llm)
-
-rag_learner.load(retriever_id = "", llm_id="")
-
-data = []
-task = "A"
-
-rag_learner.train(data=data, task=task)
-
-predicts = rag_learner.train(data=data, task=task)
-"""

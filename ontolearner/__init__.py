@@ -11,12 +11,14 @@ logger = logging.getLogger("ontolearner")
 
 from ontolearner import base, data_structure, ontology, text2onto, utils, tools, learner
 from .processor import Processor
+from .learner_pipeline import Learner
 
 __all__ = [
     "base",
     "ontology",
     "text2onto",
     "learner",
+    "Learner",
     "Processor",
     "tools",
     "data_structure",
