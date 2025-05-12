@@ -30,7 +30,7 @@ class AutoLLM(ABC):
     def load(self, model_id: str):
         pass
 
-    def generate(self, inputs: List[Any]):
+    def generate(self, inputs: List[Any]) -> List[Any]:
         pass
 
 
@@ -44,7 +44,7 @@ class AutoRetriever(ABC):
     def index(self, inputs: List[Any]):
         pass
 
-    def retrieve(self, inputs: List[Any], top_k: int):
+    def retrieve(self, inputs: List[Any], top_k: int) -> List[Any]:
         pass
 
 

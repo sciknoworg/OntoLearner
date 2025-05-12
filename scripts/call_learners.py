@@ -7,12 +7,14 @@ from huggingface_hub import login
 
 from ontolearner import Learner
 from ontolearner.data_structure import OntologyData
-from ontolearner.evaluation.metrics import calculate_term_typing_metrics, aggregate_metrics, plot_model_comparison, \
-    plot_type_analysis, plot_precision_recall_distribution
+from ontolearner.evaluation.metrics import calculate_term_typing_metrics
+from ontolearner.evaluation.evaluate import aggregate_metrics
+from ontolearner.evaluation.visualisations import (plot_model_comparison, plot_type_analysis,
+                                                   plot_precision_recall_distribution)
 from ontolearner.learner import BERTRetrieverLearner, AutoLearnerLLM, AutoRAGLearner
 from ontolearner.learner.prompt import StandardizedPrompting
-from ontolearner.ontology import Wine
-
+from ontolearner.ontology import Wine, MGED, AFO, PROCO, VIBSO, ENVO, SWEET
+from ontolearner.utils.train_test_split import ontology_train_test_split
 
 logging.basicConfig(
     level=logging.INFO,
@@ -21,16 +23,23 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 _ = load_dotenv(find_dotenv())
-huggingface_key = os.environ.get('HUGGINGFACE_ACCESS_TOKEN')
-login(token=huggingface_key)
+huggingface_token = os.environ.get('HUGGINGFACE_ACCESS_TOKEN')
+login(token=huggingface_token)
 
 DATA_DIR = Path("../data")
 ONTOLOGIES_DIR = DATA_DIR / "ontologies"
 METRICS_DIR = DATA_DIR / "metrics"
 
-wine = Wine()
-ontology_domain = wine.domain.lower().replace(' ', '_')
-ontology_path = ONTOLOGIES_DIR / ontology_domain / f"{wine.ontology_id.lower()}.{wine.format.lower()}"
+ontologies4learning = [
+    Wine(),
+    MGED(),
+    AFO(),
+    PROCO(),
+    VIBSO(),
+    ENVO(),
+    SWEET()
+]
+
 
 llm_models = [
     "Qwen/Qwen3-0.6B",
@@ -42,22 +51,22 @@ llm_models = [
 
 retriever_models = [
     "sentence-transformers/all-MiniLM-L6-v2",
-    "nomic-ai/nomic-embed-text-v1.5",
     "google/flan-t5-base",
+    # "nomic-ai/nomic-embed-text-v1.5",
     # "ngram-embeddings"
 ]
 
 
-def evaluate_term_typings_model_performance(data, term_typings, llm_id, retriever_id, top_k=1):
+def evaluate_term_typings_model_performance(train_data, test_data, llm_id, retriever_id, top_k=1):
     """Evaluate performance of a specific model configuration"""
     retriever = BERTRetrieverLearner()
-    llm = AutoLearnerLLM()
+    llm = AutoLearnerLLM(token=huggingface_token)
     prompting = StandardizedPrompting(task="term-typing")
     rag_learner = AutoRAGLearner(retriever, llm, prompting)
     learner = Learner(learner=rag_learner, prompting=prompting)
 
     learner.learn(
-        data,
+        train_data,
         task="term-typing",
         retriever_id=retriever_id,
         llm_id=llm_id,
@@ -65,7 +74,7 @@ def evaluate_term_typings_model_performance(data, term_typings, llm_id, retrieve
     )
 
     results = []
-    for typing in term_typings:
+    for typing in test_data.term_typings:
         raw_term = typing.term
         ground_truth = typing.types
         predicted = rag_learner.predict(raw_term, task="term-typing")
@@ -83,7 +92,7 @@ def evaluate_term_typings_model_performance(data, term_typings, llm_id, retrieve
         logger.info(f"Term: {raw_term}")
         logger.info(f"Ground Truth: {ground_truth}")
         logger.info(f"Predicted: {predicted}")
-        logger.info(f"F1 Score: {metrics['f1']:.4f}")
+        logger.info(f"F1 Score: {metrics['f1_score']:.4f}")
         logger.info("-" * 50)
 
     agg_metrics = aggregate_metrics(results, "term-typing")
@@ -106,14 +115,18 @@ def evaluate_term_typings_model_performance(data, term_typings, llm_id, retrieve
 
 def run_model_comparison():
     """Run comparison across multiple models"""
-    wine.load(str(ontology_path))
-    data: OntologyData = wine.extract()
+    ontology = ontologies4learning[0]
+    ontology_domain = ontology.domain.lower().replace(' ', '_')
+    ontology_path = ONTOLOGIES_DIR / ontology_domain / f"{ontology.ontology_id.lower()}.{ontology.format.lower()}"
+    ontology.load(str(ontology_path))
+    data: OntologyData = ontology.extract()
 
     if not data.term_typings:
-        logger.warning(f"No term typings found in the {wine.ontology_id} ontology data!")
+        logger.warning(f"No term typings found in the {ontology.ontology_id} ontology data!")
         return
 
-    eval_terms = data.term_typings[:20]
+    train_data, test_data = ontology_train_test_split(data, test_size=0.2, random_state=42)
+    logger.info(f"Created train/test split: {len(train_data.term_typings)} train, {len(test_data.term_typings)} test")
 
     all_results = []
     for llm_id in llm_models:
@@ -121,8 +134,8 @@ def run_model_comparison():
             logger.info(f"Testing configuration: LLM={llm_id}, Retriever={retriever_id}")
 
             eval_result = evaluate_term_typings_model_performance(
-                data=data,
-                term_typings=eval_terms,
+                train_data=train_data,
+                test_data=test_data,
                 llm_id=llm_id,
                 retriever_id=retriever_id
             )
@@ -142,9 +155,9 @@ def run_model_comparison():
             summary_rows.append({
                 'LLM Model': result['llm'],
                 'Retriever Model': result['retriever'],
-                'Precision': result['metrics']['avg_precision'],
-                'Recall': result['metrics']['avg_recall'],
-                'F1 Score': result['metrics']['avg_f1'],
+                'Precision Score': result['metrics']['avg_precision_score'],
+                'Recall Score': result['metrics']['avg_recall_score'],
+                'F1 Score': result['metrics']['avg_f1_score'],
                 'Exact Match': result['metrics']['avg_exact_match']
             })
 

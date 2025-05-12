@@ -16,3 +16,4 @@ dspy~=2.6.14
 transformers~=4.51.3
 torch~=2.7.0
 sentence-transformers~=4.1.0
+scikit-learn~=1.6.1

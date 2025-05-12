@@ -1,4 +1,4 @@
-Agricultural
+Agriculture
 ============
 Ontologies about farming systems, crops, food production, and agricultural vocabularies.
 
