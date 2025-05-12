@@ -6,7 +6,7 @@ from huggingface_hub import login
 
 from ontolearner import Learner
 from ontolearner.data_structure import OntologyData
-from ontolearner.learner import AutoBERTRetriever, AutoLLM, RAGLearner
+from ontolearner.learner import BERTRetrieverLearner, AutoLearnerLLM, AutoRAGLearner
 from ontolearner.learner.prompt import StandardizedPrompting
 from ontolearner.ontology import Wine
 
@@ -28,11 +28,6 @@ wine = Wine()
 ontology_domain = wine.domain.lower().replace(' ', '_')
 ontology_path = ONTOLOGIES_DIR / ontology_domain / f"{wine.ontology_id.lower()}.{wine.format.lower()}"
 
-LLM_IDS = [
-    "HuggingFaceH4/zephyr-7b-beta",
-    "meta-llama/Llama-2-7b-chat-hf"
-]
-
 
 def use_rag_learner():
     wine.load(str(ontology_path))
@@ -42,14 +37,15 @@ def use_rag_learner():
         logger.warning(f"No term typings found in the {wine.ontology_id} ontology data!")
         return
 
-    retriever = AutoBERTRetriever()
-    llm = AutoLLM()
-    prompting = StandardizedPrompting(task="A")
-    rag_learner = RAGLearner(retriever, llm, prompting)
+    retriever = BERTRetrieverLearner()
+    llm = AutoLearnerLLM()
+    prompting = StandardizedPrompting(task="term-typing")
+    rag_learner = AutoRAGLearner(retriever, llm, prompting)
     learner = Learner(learner=rag_learner, prompting=prompting)
 
     learner.learn(
-        data, task="A",
+        data,
+        task="term-typing",
         retriever_id="sentence-transformers/all-MiniLM-L6-v2",
         llm_id="meta-llama/Llama-3.1-8B-Instruct",
         top_k=1
@@ -59,7 +55,7 @@ def use_rag_learner():
 
     for typing in data.term_typings[:5]:
         raw_term = typing.term
-        predicted = rag_learner.predict(raw_term, task="A")[0]
+        predicted = rag_learner.predict(raw_term, task="term-typing")[0]
         logger.info(f"Term: {raw_term}\n"
                     f"Predicted: {predicted}")
 

@@ -23,21 +23,22 @@ class Learner(ABC):
 
         self.learner.train(train_data=data, task=task)
 
-        if task == "A":
+        if task == "term-typing":
             for term_typing in data.term_typings[:5]:
                 raw_input = term_typing.term
-                prediction = self.learner.predict(raw_input, task=task)
+                prediction = self.learner.predict(raw_input, task=task)[0]
                 logger.info(f"Term: {raw_input}\n"
                             f"Predicted: {prediction}")
-        elif task == "B":
+        elif task == "taxonomy-discovery":
             for tax_rel in data.type_taxonomies.taxonomies[:5]:
                 raw_input = (tax_rel.parent, tax_rel.child)
                 prediction = self.learner.predict(raw_input, task=task)
-        elif task == "C":
+        elif task == "task-non-taxonomic-relations":
             for non_tax_rel in data.type_non_taxonomic_relations.non_taxonomies[:5]:
                 raw_input = (non_tax_rel.head, non_tax_rel.tail)
                 prediction = self.learner.predict(raw_input, task=task)
         else:
-            raise ValueError(f"Task {task} not supported")
+            raise ValueError(f"Task {task} not supported. Supported tasks: term-typing, "
+                             f"taxonomy-discovery, task-non-taxonomic-relations")
 
         return prediction

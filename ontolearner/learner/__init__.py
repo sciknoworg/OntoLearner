@@ -1,3 +1,3 @@
-from .llm import AutoLLM
-from .retriever import AutoBERTRetriever
-from .rag import RAGLearner
+from .llm import AutoLearnerLLM
+from .retriever import BERTRetrieverLearner
+from .rag import AutoRAGLearner

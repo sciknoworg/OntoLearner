@@ -1,10 +1,10 @@
-from ..base import AutoLearnerLLM
+from ..base import AutoLLM
 from typing import List
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
 
-class AutoLLM(AutoLearnerLLM):
+class AutoLearnerLLM(AutoLLM):
     def __init__(self):
         super().__init__()
 

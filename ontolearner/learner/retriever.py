@@ -1,10 +1,10 @@
-from ..base import AutoLearnerRetriever
+from ..base import AutoRetriever
 from typing import Any, List
 import torch.nn.functional as F
 from sentence_transformers import SentenceTransformer
 
 
-class AutoBERTRetriever(AutoLearnerRetriever):
+class BERTRetrieverLearner(AutoRetriever):
 
     def __init__(self):
         super().__init__()

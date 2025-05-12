@@ -5,7 +5,7 @@ from ..base import AutoLearner
 from ..data_structure import OntologyData
 
 
-class RAGLearner(AutoLearner):
+class AutoRAGLearner(AutoLearner):
     def __init__(self, learner_retriever: Any, learner_llm: Any, prompting: Any):
         super().__init__()
         self.retriever = learner_retriever
@@ -20,13 +20,13 @@ class RAGLearner(AutoLearner):
     @staticmethod
     def _prepare_documents(data: OntologyData, task: str) -> List[str]:
         documents = []
-        if task == "A":
+        if task == "term-typing":
             for tt in data.term_typings:
                 documents.append(f"Term: {tt.term}\nTypes: {', '.join(tt.types)}")
-        elif task == "B":
+        elif task == "taxonomy-discovery":
             for tr in data.type_taxonomies.taxonomies:
                 documents.append(f"Parent: {tr.parent}\nChild: {tr.child}\nRelation: is-a")
-        elif task == "C":
+        elif task == "task-non-taxonomic-relations":
             for nr in data.type_non_taxonomic_relations.non_taxonomies:
                 documents.append(f"Head: {nr.head}\nRelation: {nr.relation}\nTail: {nr.tail}")
         return documents
@@ -38,15 +38,15 @@ class RAGLearner(AutoLearner):
         return self
 
     def predict(self, eval_data: Any, task: str) -> List[str]:
-        if task == "A":
+        if task == "term-typing":
             term = eval_data
             query = term
             prompt_data = {"term": term}
-        elif task == "B":
+        elif task == "taxonomy-discovery":
             parent, child = eval_data
             query = f"{parent} {child}"
             prompt_data = {"parent": parent, "child": child}
-        elif task == "C":
+        elif task == "task-non-taxonomic-relations":
             head, tail = eval_data
             query = f"{head} {tail}"
             prompt_data = {"head": head, "tail": tail}

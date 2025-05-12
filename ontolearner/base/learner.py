@@ -22,7 +22,7 @@ class AutoLearner(ABC):
         return predicts
 
 
-class AutoLearnerLLM(ABC):
+class AutoLLM(ABC):
     def __init__(self):
         self.model = None
         self.tokenizer = None
@@ -34,7 +34,7 @@ class AutoLearnerLLM(ABC):
         pass
 
 
-class AutoLearnerRetriever(ABC):
+class AutoRetriever(ABC):
     def __init__(self):
         self.model = None
 
