@@ -7,12 +7,12 @@ class StandardizedPrompting(AutoPrompt):
             if task == "term-typing":
                 prompt_template = """
 Given a list of types as candidates to be assigned to the term, identify the most probable types.
-Return the types only in the form of a list. Do not provide any explanation.
+Return the types only in the form of a list. Do not provide any explanation outside the list.
 
 Term:
 {term}
 
-Candidates:
+Candidates Types:
 {context}
 
 Response:

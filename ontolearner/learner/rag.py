@@ -11,7 +11,6 @@ class AutoRAGLearner(AutoLearner):
         self.retriever = learner_retriever
         self.llm = learner_llm
         self.prompting = prompting
-        self.task = None
 
     def load(self, retriever_id: str, llm_id: str):
         self.retriever.load(retriever_id)
@@ -32,7 +31,6 @@ class AutoRAGLearner(AutoLearner):
         return documents
 
     def train(self, train_data: OntologyData, task: str):
-        self.task = task
         documents = self._prepare_documents(train_data, task)
         self.retriever.index(documents)
         return self
@@ -57,12 +55,9 @@ class AutoRAGLearner(AutoLearner):
 
         prompting = self.prompting.format(term=prompt_data["term"], context=context)
 
-        print("================")
-        print(prompting)
-        print("================")
         raw_response = self.llm.generate([prompting])[0]
 
-        if task == "A":
+        if task == "term-typing":
             match = re.search(r'\[(.*?)\]', raw_response)
             if match:
                 types_str = match.group(1)

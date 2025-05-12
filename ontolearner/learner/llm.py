@@ -24,6 +24,6 @@ class AutoLearnerLLM(AutoLLM):
             **encoded_inputs,
             max_new_tokens=max_new_tokens,
             pad_token_id=self.tokenizer.eos_token_id,
-            temperature=0.3
+            temperature=0.1
         )
         return [self.tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
