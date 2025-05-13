@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+title: "LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models"
+message: If you use this software, please cite it using the metadata from this file.
+type: software
+authors:
+  - given-names: Hamed
+    family-names: Babaei Giglou
+    email: hamed.babaei@tib.eu
+    affiliation: TIB Leibniz Information Centre for Science and Technology
+  - given-names: Jennifer
+    family-names: D'Souza
+    email: Jennifer.DSouza@tib.eu
+    affiliation: TIB Leibniz Information Centre for Science and Technology
+  - given-names: Andrei
+    family-names: Aioanei
+    email: Andrei.Aioanei@tib.eu
+    affiliation: TIB Leibniz Information Centre for Science and Technology
+  - given-names: Nandana
+    family-names: Mihindukulasooriya
+    email: nandana@ibm.com
+    affiliation: IBM Research
+  - given-names: Sören
+    family-names: Auer
+    email: auer@tib.eu
+    affiliation: TIB Leibniz Information Centre for Science and Technology
+url: 'https://github.com/sciknoworg/OntoLearner'
+keywords:
+  - Ontology learning
+  - Toolkit
+  - Generative artificial intelligence
+  - Large Language Models
+  - Text-to-ontology
+license: MIT
+version: 1.0.0
+date-released: '2025'
