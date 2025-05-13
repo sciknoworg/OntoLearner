@@ -8,7 +8,7 @@ from ontolearner.data_structure import OntologyData, TermTyping, TaxonomicRelati
 logger = logging.getLogger(__name__)
 
 
-def stratified_term_typing_split(term_typings: List[TermTyping], test_size: float = 0.2, random_state: int = 42) \
+def term_typing_split(term_typings: List[TermTyping], test_size: float = 0.2, random_state: int = 42) \
         -> Tuple[List[TermTyping], List[TermTyping]]:
     """
     Split term typing data ensuring similar type distribution in train and test
@@ -101,7 +101,7 @@ def taxonomy_split(taxonomies: List[TaxonomicRelation], train_terms: Set[str] = 
     return train_relations, test_relations
 
 
-def non_taxonomy_split(
+def non_taxonomic_re_split(
         non_taxonomies: List[NonTaxonomicRelation],
         train_terms: Set[str] = None,
         test_size: float = 0.2,
@@ -147,13 +147,13 @@ def non_taxonomy_split(
     return train_relations, test_relations
 
 
-def ontology_train_test_split(data: OntologyData, test_size: float = 0.2, random_state: int = 42) \
+def train_test_split(data: OntologyData, test_size: float = 0.2, random_state: int = 42) \
         -> Tuple[OntologyData, OntologyData]:
     """
     Create train/test split of ontology data, ensuring consistent term assignment
     """
     # First split term typing to establish term assignment
-    train_typings, test_typings = stratified_term_typing_split(
+    train_typings, test_typings = term_typing_split(
         data.term_typings, test_size, random_state
     )
 
@@ -176,7 +176,7 @@ def ontology_train_test_split(data: OntologyData, test_size: float = 0.2, random
     test_terms.update({rel.child for rel in test_taxonomies})
 
     # Split non-taxonomic relations considering term assignment
-    train_non_taxonomies, test_non_taxonomies = non_taxonomy_split(
+    train_non_taxonomies, test_non_taxonomies = non_taxonomic_re_split(
         data.type_non_taxonomic_relations.non_taxonomies,
         train_terms,
         test_size,

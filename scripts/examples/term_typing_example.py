@@ -21,7 +21,7 @@ from ontolearner.evaluation.visualisations import plot_precision_recall_distribu
 from ontolearner.learner import BERTRetrieverLearner, AutoLearnerLLM, AutoRAGLearner
 from ontolearner.learner.prompt import StandardizedPrompting
 from ontolearner.ontology import Wine
-from ontolearner.utils.train_test_split import ontology_train_test_split
+from ontolearner.utils.train_test_split import train_test_split
 
 # Set up logging
 logging.basicConfig(
@@ -63,7 +63,7 @@ def main():
 
     # Step 2: Perform train-test split
     logger.info("Step 2: Performing train-test split")
-    train_data, test_data = ontology_train_test_split(data, test_size=0.2, random_state=42)
+    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
     logger.info(f"Split data into {len(train_data.term_typings)} train and {len(test_data.term_typings)} test samples")
 
     # Step 3: Set up the learner with chosen models

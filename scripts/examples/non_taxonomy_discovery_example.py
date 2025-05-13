@@ -17,8 +17,8 @@ from huggingface_hub import login
 from ontolearner import Learner
 from ontolearner.learner import BERTRetrieverLearner, AutoLearnerLLM, AutoRAGLearner
 from ontolearner.learner.prompt import StandardizedPrompting
-from ontolearner.ontology import Wine  # You can import any ontology you want to use
-from ontolearner.utils.train_test_split import ontology_train_test_split
+from ontolearner.ontology import Wine
+from ontolearner.utils.train_test_split import train_test_split
 
 # Set up logging
 logging.basicConfig(
@@ -59,7 +59,7 @@ def main():
 
     # Step 2: Perform train-test split
     logger.info("Step 2: Performing train-test split")
-    train_data, test_data = ontology_train_test_split(data, test_size=0.2, random_state=42)
+    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
     logger.info(f"Split data into {len(train_data.type_non_taxonomic_relations.non_taxonomies)} train and {len(test_data.type_non_taxonomic_relations.non_taxonomies)} test non-taxonomic relations")
 
     # Step 3: Set up the learner with chosen models
@@ -114,7 +114,6 @@ def main():
             'is_correct': is_correct
         })
 
-        # Log results
         logger.info("-" * 50)
         logger.info(f"Head: {head}")
         logger.info(f"Tail: {tail}")
