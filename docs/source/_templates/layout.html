@@ -2,3 +2,8 @@
 {% block extrahead %}
     <link href="{{ pathto("_static/custom.css", True) }}" rel="stylesheet" type="text/css">
 {% endblock %}
+
+{# Override breadcrumbs with our custom template #}
+{% block breadcrumbs %}
+    {% include "breadcrumbs.html" %}
+{% endblock %}
