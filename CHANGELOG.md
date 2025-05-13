@@ -1,4 +1,5 @@
 ## Changelog
+
 ### v1.0.0 (May 13, 2025)
 - Added learner models: LLM, Retrieval, and RAG models.
 - Machine Learning Helpers: train-test-split, evaluation metrics, visualizations.
