@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models"
+title: "OntoLearner: A Modular Python Library for Ontology Learning with LLMs"
 message: If you use this software, please cite it using the metadata from this file.
 type: software
 authors:
