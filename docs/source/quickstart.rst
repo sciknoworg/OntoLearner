@@ -1,4 +1,4 @@
-Quickstart Guide
+Quickstart
 =================
 This guide will walk you through using OntoLearner to perform various ontology learning tasks using machine learning and large language models.
 
