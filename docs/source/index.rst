@@ -18,10 +18,36 @@ and analyzing ontological structures while extracting metrics and relationships.
    installation
    quickstart
    huggingface
-   learners/learner
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
+   :caption: Ontologizer
+   :hidden:
+
+   ontologizer/ontologizer
+   ontologizer/adding_ontologies
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Learning Tasks
+   :hidden:
+
+   learning_tasks/learning_tasks
+   learning_tasks/llms4ol
+   learning_tasks/text2onto
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Learner Models
+   :hidden:
+
+   learners/learner
+   learners/llm
+   learners/retrieval
+   learners/rag
+
+.. toctree::
+   :maxdepth: 4
    :caption: Benchmarking
    :hidden:
 
@@ -30,21 +56,9 @@ and analyzing ontological structures while extracting metrics and relationships.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Text2Onto
+   :caption: Package Reference
    :hidden:
 
-   text2onto/text2onto
-
-.. toctree::
-   :maxdepth: 1
-   :caption: How to contribute?
-   :hidden:
-
-   developer/adding_ontologies
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Quickstart Guide
-   :hidden:
-
-   quickstart
+   package_reference/base
+   package_reference/learner
+   package_reference/ontology
