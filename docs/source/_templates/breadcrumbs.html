@@ -5,7 +5,7 @@
   {% if pagename.startswith('benchmarking/') %}
     {% set domain_path = pagename.split('/') %}
     {% if domain_path|length >= 2 %}
-      <li><a href="{{ pathto('benchmarking/benchmark') }}">{{ _('Ontologies') }}</a> &raquo;</li>
+      <li><a href="{{ pathto('benchmarking/benchmark') }}">{{ _('Benchmarking') }}</a> &raquo;</li>
       {% if domain_path|length >= 3 %}
         {% set domain = domain_path[1] %}
         {% set domain_display_name = '' %}

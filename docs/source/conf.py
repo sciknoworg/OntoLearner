@@ -37,7 +37,7 @@ extensions = [
     "sphinx.ext.linkcode",
     "sphinx_inline_tabs",
     "sphinxcontrib.mermaid",
-    'sphinx_tabs.tabs',
+    "sphinx_toolbox.collapse",
 ]
 
 # autosummary_generate = True  # Turn on sphinx.ext.autosummary
@@ -50,6 +50,7 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 include_patterns = [
     "**",
+    "../../ontolearner/",
     "index.rst",
 ]
 # Ensure exclude_patterns doesn't exclude your master document accidentally
