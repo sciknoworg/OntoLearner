@@ -2,13 +2,13 @@ from pathlib import Path
 from typing import Union, Dict
 import pandas as pd
 from jinja2 import Template
+import time
 
-from . import logger
 from .base import BaseOntology
 from .data_structure import OntologyMetrics, OntologyData
 from .tools import Analyzer
 from .utils import io
-
+from . import logger
 
 class Processor:
     """
@@ -28,28 +28,31 @@ class Processor:
     def process_ontology(self, ontology: BaseOntology, ontology_path: Union[str, Path]) \
             -> OntologyMetrics:
         """Process a single ontology through the complete pipeline."""
+        start_time = time.time()
+
         try:
             logger.info(f"Processing {ontology.ontology_id} ontology...")
 
             if not Path(ontology_path).exists():
                 raise ValueError(f"Ontology file not found: {ontology_path}")
 
-            # ontology.load(str(ontology_path))
-            ontology.load()
+            ontology.load(str(ontology_path))
+            # ontology.load()
 
             data: OntologyData = ontology.extract()
-
             ontology.build_graph()
-
             analyzer = self.analyzer_class()
-
             metrics: OntologyMetrics = analyzer(ontology)
+
+            end_time = time.time()
+            processing_time = end_time - start_time
 
             self.all_metrics[ontology.ontology_id] = {
                 "metrics": metrics,
                 "ontology_id": ontology.ontology_id,
                 "ontology_full_name": ontology.ontology_full_name,
-                "domain": ontology.domain
+                "domain": ontology.domain,
+                "processing_time": processing_time
             }
 
             self._save_datasets(data, ontology)
@@ -154,7 +157,8 @@ class Processor:
                 "Ontology ID": data["ontology_id"],
                 "Ontology Full Name": data["ontology_full_name"],
                 "Domain": data["domain"],
-                "Ontology Name": metrics.name,  # From OntologyMetrics
+                "Ontology Name": metrics.name,
+                "Processing Time (s)": data["processing_time"],
                 **metrics.topology.dict(),
                 **metrics.dataset.dict()
             }
@@ -178,6 +182,14 @@ class Processor:
         else:
             final_df = current_df
             logger.info(f"Created new metrics file with {len(current_rows)} ontologies")
+
+        # Calculate total processing time
+        total_processing_time = sum(data.get("processing_time", 0) for data in self.all_metrics.values())
+        logger.info(f"Total processing time for all ontologies: {total_processing_time:.2f} seconds")
+
+        if not final_df.empty:
+            # Sort the DataFrame by processing time (descending) to see which ontologies took longest
+            final_df = final_df.sort_values("Processing Time (s)", ascending=False).reset_index(drop=True)
 
         # Write to Excel
         final_df.to_excel(excel_path, index=False)

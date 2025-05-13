@@ -8,7 +8,7 @@ access and visibility of data across domains and languages. It offers a structur
 terms, definitions and relationships which are used to unambiguously identify resources, allowing standardized
 indexing processes and making searches more efficient.
 
-:Domain: Agricultural
+:Domain: Agriculture
 :Category: Agricultural Knowledge
 :Current Version: 2024-04
 :Last Updated: August 12, 2024

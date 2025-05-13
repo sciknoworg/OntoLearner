@@ -41,3 +41,10 @@ and analyzing ontological structures while extracting metrics and relationships.
    :hidden:
 
    developer/adding_ontologies
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Quickstart Guide
+   :hidden:
+
+   quickstart

@@ -10,7 +10,7 @@ class AGROVOC(BaseOntology):
     """
     ontology_id = "AGROVOC"
     ontology_full_name = "AGROVOC Multilingual Thesaurus (AGROVOC)"
-    domain = "Agricultural"
+    domain = "Agriculture"
     category = "Agricultural Knowledge"
     version = "2024-04"
     last_updated = "August 12, 2024"
@@ -18,6 +18,30 @@ class AGROVOC(BaseOntology):
     license = "Creative Commons 4.0"
     format = "RDF"
     download_url = "https://agroportal.lirmm.fr/ontologies/AGROVOC"
+
+
+class ATOL(BaseOntology):
+    """
+    ATOL (Animal Trait Ontology for Livestock) is an ontology of characteristics defining phenotypes of livestock
+    in their environment (EOL). ATOL aims to:
+    - provide a reference ontology of phenotypic traits of farm animals for the international scientific and educational
+    - communities, farmers, etc.;
+    - deliver this reference ontology in a language which can be used by computers in order to support database management,
+    semantic analysis and modeling;
+    - represent traits as generic as possible for livestock vertebrates;
+    - make the ATOL ontology as operational as possible and closely related to measurement techniques;
+    - structure the ontology in relation to animal production.
+    """
+    ontology_id = "ATOL"
+    ontology_full_name = "Animal Trait Ontology for Livestock (ATOL)"
+    domain = "Agriculture"
+    category = "Animal Science"
+    version = "6.0"
+    last_updated = "May 11, 2020"
+    creator = "INRAE, France"
+    license = "Creative Commons 4.0"
+    format = "OWL"
+    download_url = "https://bioportal.bioontology.org/ontologies/ATOL"
 
 
 class FoodOn(BaseOntology):
@@ -30,7 +54,7 @@ class FoodOn(BaseOntology):
     """
     ontology_id = "FoodOn"
     ontology_full_name = "Food Ontology (FoodON)"
-    domain = "Agricultural"
+    domain = "Agriculture"
     category = "Diet, Metabolomics, and Nutrition"
     version = None
     last_updated = "2025-01-16"
@@ -47,7 +71,7 @@ class PO(BaseOntology):
     """
     ontology_id = "PO"
     ontology_full_name = "Plant Ontology (PO)"
-    domain = "Agricultural"
+    domain = "Agriculture"
     category = "Plant Anatomy, Morphology, Growth and Development"
     version = None
     last_updated = None
