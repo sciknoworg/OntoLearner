@@ -1,3 +1,3 @@
 from .ontology import BaseOntology
 from .text2onto import BaseText2OntoDataset
-from .learner import AutoLearner, AutoLearnerLLM, AutoLearnerRetriever, AutoPrompt
+from .learner import AutoLearner, AutoLLM, AutoRetriever, AutoPrompt

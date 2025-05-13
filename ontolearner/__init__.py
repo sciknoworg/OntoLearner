@@ -15,7 +15,6 @@ from .learner_pipeline import Learner
 
 __all__ = [
     "base",
-
     "ontology",
     "text2onto",
     "learner",

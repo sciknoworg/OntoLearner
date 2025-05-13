@@ -1,0 +1,81 @@
+{% extends "!breadcrumbs.html" %}
+
+{% block breadcrumbs %}
+  <li><a href="{{ pathto(master_doc) }}">{{ _('Home') }}</a> &raquo;</li>
+  {% if pagename.startswith('benchmarking/') %}
+    {% set domain_path = pagename.split('/') %}
+    {% if domain_path|length >= 2 %}
+      <li><a href="{{ pathto('benchmarking/benchmark') }}">{{ _('Ontologies') }}</a> &raquo;</li>
+      {% if domain_path|length >= 3 %}
+        {% set domain = domain_path[1] %}
+        {% set domain_display_name = '' %}
+        {% if domain == 'agriculture' %}
+          {% set domain_display_name = 'Agriculture' %}
+        {% elif domain == 'arts_and_humanities' %}
+          {% set domain_display_name = 'Arts and Humanities' %}
+        {% elif domain == 'biology_and_life_sciences' %}
+          {% set domain_display_name = 'Biology and Life Sciences' %}
+        {% elif domain == 'chemistry' %}
+          {% set domain_display_name = 'Chemistry' %}
+        {% elif domain == 'ecology_and_environment' %}
+          {% set domain_display_name = 'Ecology and Environment' %}
+        {% elif domain == 'education' %}
+          {% set domain_display_name = 'Education' %}
+        {% elif domain == 'events' %}
+          {% set domain_display_name = 'Events' %}
+        {% elif domain == 'finance' %}
+          {% set domain_display_name = 'Finance' %}
+        {% elif domain == 'food_and_beverage' %}
+          {% set domain_display_name = 'Food and Beverage' %}
+        {% elif domain == 'general_knowledge' %}
+          {% set domain_display_name = 'General Knowledge' %}
+        {% elif domain == 'geography' %}
+          {% set domain_display_name = 'Geography' %}
+        {% elif domain == 'industry' %}
+          {% set domain_display_name = 'Industry' %}
+        {% elif domain == 'law' %}
+          {% set domain_display_name = 'Law' %}
+        {% elif domain == 'library_and_cultural_heritage' %}
+          {% set domain_display_name = 'Library and Cultural Heritage' %}
+        {% elif domain == 'materials_science_and_engineering' %}
+          {% set domain_display_name = 'Materials Science and Engineering' %}
+        {% elif domain == 'medicine' %}
+          {% set domain_display_name = 'Medicine' %}
+        {% elif domain == 'news_and_media' %}
+          {% set domain_display_name = 'News and Media' %}
+        {% elif domain == 'scholarly_knowledge' %}
+          {% set domain_display_name = 'Scholarly Knowledge' %}
+        {% elif domain == 'social_sciences' %}
+          {% set domain_display_name = 'Social Sciences' %}
+        {% elif domain == 'units_and_measurements' %}
+          {% set domain_display_name = 'Units and Measurements' %}
+        {% elif domain == 'upper_ontology' %}
+          {% set domain_display_name = 'Upper Ontology' %}
+        {% elif domain == 'web_and_internet' %}
+          {% set domain_display_name = 'Web and Internet' %}
+        {% else %}
+          {% set domain_display_name = domain|replace('_', ' ')|title %}
+        {% endif %}
+        <li><a href="{{ pathto('benchmarking/benchmark') }}#{{ domain|replace('_', '-') }}">{{ _(domain_display_name) }}</a> &raquo;</li>
+
+        {% set ontology_short_name = title.split('(')[-1]|trim %}
+        {% if ontology_short_name.endswith(')') %}
+          {% set ontology_short_name = ontology_short_name[:-1] %}
+        {% endif %}
+        <li>{{ ontology_short_name }}</li>
+      {% else %}
+        <li>{{ title }}</li>
+      {% endif %}
+    {% else %}
+      <li>{{ title }}</li>
+    {% endif %}
+  {% else %}
+    {% for doc_name, caption in parents %}
+      <li><a href="{{ pathto(doc_name) }}">{{ caption }}</a> &raquo;</li>
+    {% endfor %}
+    <li>{{ title }}</li>
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumbs_aside %}
+{% endblock %}
