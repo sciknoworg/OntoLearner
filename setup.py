@@ -39,7 +39,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.9,<3.13.0",
+    python_requires=">=3.10,<3.14.0",
     project_urls={
         "Documentation": "https://ontolearner.readthedocs.io/",
         "Source": "https://github.com/sciknoworg/OntoLearner",
