@@ -1,5 +1,15 @@
 ## Changelog
 
+### v1.0.1 (May 13, 2025)
+- Fix typo mistake in CITATION.cf
+
+### v1.0.0 (May 13, 2025)
+- Added learner models: LLM, Retrieval, and RAG models.
+- Machine Learning Helpers: train-test-split, evaluation metrics, visualizations.
+- Added examples for learner models.
+- Finalized documentation pages.
+
+
 ### v0.5.0 (May 8, 2025)
 - Added text2onto documentations
 - Bug fixes to the ontology module

@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/main/images/logo.png" alt="OntoLearner Logo"/>
 </div>
 
-<h3 align="center">OntoLearner: Benchmarking Ontology Learning Framework</h3>
+<h3 align="center">OntoLearner: A Modular Python Library for Ontology Learning with LLMs</h3>
 
 <div align="center">
 
