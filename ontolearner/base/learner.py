@@ -10,14 +10,14 @@ class AutoLearner(ABC):
     def load(self, **kwargs):
         pass
 
-    def train(self, train_data: Any, task: str):
+    def fit(self, train_data: Any, task: str):
         pass
 
     def predict(self, eval_data: Any, task: str) -> Any:
         pass
 
-    def train_predict(self, train_data: Any, eval_data: Any, task: str) -> Any:
-        self.train(train_data, task)
+    def fit_predict(self, train_data: Any, eval_data: Any, task: str) -> Any:
+        self.fit(train_data, task)
         predicts = self.predict(eval_data, task)
         return predicts
 
