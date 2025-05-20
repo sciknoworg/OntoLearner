@@ -35,6 +35,23 @@ class BaseOntology(ABC):
         self.language = language
         self.base_dir = base_dir
 
+    def download_from_huggingface(self) -> str:
+        """Download an ontology file from a Hugging Face repository."""
+        if not self.ontology_id or not self.domain or not self.format:
+            raise ValueError("Ontology ID, domain, and format must be defined in the ontology class")
+
+        ontology_domain = self.domain.lower().replace(' ', '_')
+        repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
+        ontology_id = self.ontology_id.lower()
+        filename = f"{ontology_id}/{ontology_id}.{self.format.lower()}"
+
+        try:
+            file_path = hf_hub_download(repo_id=repo_id, filename=filename,repo_type="dataset")
+            return file_path
+        except Exception as e:
+            logger.error(f"Error downloading ontology from Hugging Face: {str(e)}")
+            raise
+
     def load(self, path: Optional[str] = None) -> None:
         """Load an ontology from a file and initialize its namespaces."""
         if path is None:
