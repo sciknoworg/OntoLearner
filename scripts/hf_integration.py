@@ -364,10 +364,11 @@ def main():
     try:
         ontologies: list[BaseOntology] = [
             # # Agricultural Ontologies
-            # FoodOn(),
             # AGROVOC(),
+            # ATOL(),
             # PO(),
-            #
+            # FoodOn(),
+
             # # Arts and Humanities Ontologies
             # ChordOntology(),
             # ICON(),
@@ -456,10 +457,7 @@ def main():
             #
             # # Library & Cultural Heritage
             # GND(),
-            #
-            # # Livestock Ontologies
-            # ATOL(),
-            #
+
             # # Materials Science & Engineering
             # AMOntology(),
             # ASMO(),
