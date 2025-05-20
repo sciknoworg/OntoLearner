@@ -10,7 +10,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class Learner(ABC):
+class LearnerPipeline(ABC):
     """Orchestrates the learning pipeline with retriever, LLM, and prompting."""
     def __init__(self, learner: AutoLearner, prompting: AutoPrompt):
         self.learner = learner
@@ -21,3 +21,6 @@ class Learner(ABC):
             self.learner.load(retriever_id=retriever_id, llm_id=llm_id)
 
         self.learner.train(train_data=data, task=task)
+
+    def predict(self, data, task):
+        pass

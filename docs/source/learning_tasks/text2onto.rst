@@ -3,14 +3,14 @@ Text2Onto
 
 Synthetic data generator from ontologies
 -----------------------------------------
-OntoLearner library can be used to generate synthatic data for evaluating the task of term and type extraction from natural language text. It will generate a text corpus of documents aligned with a given ontology. 
+OntoLearner library can be used to generate synthatic data for evaluating the task of term and type extraction from natural language text. It will generate a text corpus of documents aligned with a given ontology.
 
 The first step is to load the ontology data from the selected ontology.
 
 .. code-block:: python
 
     from ontolearner.ontology import ConferenceOntology
-    
+
     conference = ConferenceOntology()
     conference.load("../data/conference-ontology.owl")
     ontological_data = ontology.extract()
@@ -20,11 +20,11 @@ The first step is to load the ontology data from the selected ontology.
     print(f"non-taxonomic relations: {len(ontological_data.type_non_taxonomic_relations.non_taxonomies)}")
 
 
-As the second step, an LLM is used to generate synthetic text documents. DSPy is used to connect to the LLM and parse the LLM outputs. You can use an LLM from an external provider 
+As the second step, an LLM is used to generate synthetic text documents. DSPy is used to connect to the LLM and parse the LLM outputs. You can use an LLM from an external provider
 or host an LLM locally using tools such as Ollama or vLLM. More details about all provides supported by DSPy (through LiteLLM) can be found `here <https://docs.litellm.ai/docs/providers>`_.
 Information about the LLM is provided in a .env file similar to the following.
 
-.. code-block:: 
+.. code-block::
 
     "LLM_MODEL_ID"={model_id_from_provider}
     "LLM_BASE_URL"={llm_provider_base_url}
@@ -60,7 +60,7 @@ Then you can configure DSPy to use the provided LLM and generate the synthetic t
 
 You can split the generated synthetic data using for training, hyperparameter optimization (validation), and testing purposes.
 
-.. code-block:: python 
+.. code-block:: python
 
     from ontolearner.text2onto import SyntheticDataSplitter
 

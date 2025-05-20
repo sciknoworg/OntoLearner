@@ -10,3 +10,4 @@ sphinx-design
 sphinx-tabs
 sphinx-inline-tabs
 snowballstemmer
+sphinx_toolbox
