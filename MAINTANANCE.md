@@ -1,7 +1,7 @@
 # OntoLearner Maintenance Plan
 
-The OntoLearner library is designed to facilitate ... . To ensure that OntoLearner remains a reliable and relevant tool for the community, we establish this Maintenance Plan to outline the ongoing maintenance efforts, the roles involved, and the strategies for addressing evolving user needs.  This library is released under [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-, a permissive open-source license that allows for community contributions, reuse, and modification. A persistent DOI ... is assigned via Zenodo to ensure permanent referencing of the latest stable release.  Release versions will be tagged on GitHub, with versioning to track major, minor, and patch updates. The release will be pushed to the [OntoLearner at PyPI](https://pypi.org/project/OntoLearner/). The current version of OntoLearner is ![PyPI version](https://badge.fury.io/py/OntoLearner.svg).
+The OntoLearner library is designed to facilitate ontology learning and reuse. To ensure that OntoLearner remains a reliable and relevant tool for the community, we establish this Maintenance Plan to outline the ongoing maintenance efforts, the roles involved, and the strategies for addressing evolving user needs.  This library is released under [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+, a permissive open-source license that allows for community contributions, reuse, and modification. A persistent [![DOI](https://zenodo.org/badge/913867999.svg)](https://doi.org/10.5281/zenodo.15399773) is assigned via Zenodo to ensure permanent referencing of the latest stable release.  Release versions will be tagged on GitHub, with versioning to track major, minor, and patch updates. The release will be pushed to the [OntoLearner at PyPI](https://pypi.org/project/OntoLearner/). The current version of OntoLearner is ![PyPI version](https://badge.fury.io/py/OntoLearner.svg).
 
 ## 1. Objectives & Responsibilities
 
@@ -12,12 +12,12 @@ The primary goals of the OntoLearner maintenance objectives are to:
 - Maintain up-to-date documentation to support ease of use and understanding.
 - Regularly review and update dependencies to maintain compatibility with the latest technology and standards.
 
-A core team will be responsible for the ongoing maintenance of OntoAligner, including:
+A core team will be responsible for the ongoing maintenance of OntoLearner, including:
 - **Lead Maintainers**: Oversee all maintenance activities, ensure the direction aligns with the project's vision, and handle critical issues.
   - [Hamed Babaei Giglou](https://hamedbabaei.github.io/) – Project Lead – Responsible for the overall vision, maintenance activities, and coordination of the library’s development.
-  - Andrei Aionei
+  - [Andrei Aionei](https://www.linkedin.com/in/andreiaioanei/) – Project Senior Software Engineer – Responsible for maintenance activities and the library’s development.
   -  [Dr. Jennifer D'Souza](https://sites.google.com/view/jen-web) and [Prof. Dr. Sören Auer](https://www.tib.eu/en/research-development/research-groups-and-labs/data-science-and-digital-libraries/staff/soeren-auer) – Project Supervisors and Principal Investigators (PI) – Responsible for guiding ideation, refining ideas, and defining the project's high-level direction to align the library's goals with broader academic and research objectives.
- 
+
 ## 2. Current Ongoing Maintenance and Plans
 
 A roadmap for new features and improvements, ensuring the library evolves in response to user needs and feedback is presented as follows. This list will be updated regularly as we explore the variety of works within the ontology alignment field to ensure the diverse methods within the library.

@@ -25,8 +25,8 @@ class BaseOntology(ABC):
     license: str = None
     format: str = None
     download_url = None
-    from_huggingface = False
-    from_local = False
+    loaded_from_huggingface = False
+    loaded_from_local = False
 
     def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
         """Initialize the ontology"""
@@ -35,20 +35,53 @@ class BaseOntology(ABC):
         self.language = language
         self.base_dir = base_dir
 
-    def load(self, path: Optional[str] = None) -> None:
-        """Load an ontology from a file and initialize its namespaces."""
-        if path is None:
-            self.from_huggingface = True
-            self.from_local = False
-            logger.info("Set up for loading from HuggingFace")
-            return
+    @staticmethod
+    def from_huggingface(ontology_id: str, domain: str, format: str) -> str:
+        """Download an ontology file from a Hugging Face repository."""
+        if not ontology_id or not domain or not format:
+            raise ValueError("Ontology ID, domain, and format must be defined")
+
+        ontology_domain = domain.lower().replace(' ', '_')
+        repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
+        ontology_id = ontology_id.lower()
+        filename = f"{ontology_id}/{ontology_id}.{format.lower()}"
 
         try:
-            logger.info(f"Loading ontology from local {path}")
+            file_path = hf_hub_download(repo_id=repo_id, filename=filename, repo_type="dataset")
+            return file_path
+        except Exception as e:
+            logger.error(f"Error downloading ontology from Hugging Face: {str(e)}")
+            raise
+
+    @staticmethod
+    def from_local(path: str) -> str:
+        """Specify a local ontology file path."""
+        if not os.path.exists(path):
+            raise FileNotFoundError(f"Ontology file not found at {path}")
+        return path
+
+    def load(self, path: Optional[str] = None) -> None:
+        """Load an ontology from a local file or Hugging Face repository."""
+        self.loaded_from_huggingface = False
+        self.loaded_from_local = False
+
+        try:
             self.rdf_graph = Graph()
-            self._load(path)
-            self.from_huggingface = False
-            self.from_local = True
+
+            if path:
+                # Use provided path as local file
+                file_path = self.from_local(path)
+                self.loaded_from_local = True
+            else:
+                # Download from HuggingFace
+                file_path = self.from_huggingface(
+                    ontology_id=self.ontology_id,
+                    domain=self.domain,
+                    format=self.format
+                )
+                self.loaded_from_huggingface = True
+
+            self._load(file_path)
             if len(self.rdf_graph) == 0:
                 raise ValueError("Loaded ontology contains no triples")
             logger.info(f"Successfully loaded ontology with {len(self.rdf_graph)} triples")
@@ -127,86 +160,87 @@ class BaseOntology(ABC):
         return None
 
     def extract(self, reinforce_extraction: bool = False) -> OntologyData:
-        """
-        Extract all information from all the three functions below.
-        """
-        if self.from_local:
+        """Extract all information from all the three functions below."""
+        if not (self.loaded_from_local or self.loaded_from_huggingface):
+            raise ValueError("Ontology must be loaded before extraction")
+
+        if self.loaded_from_local:
             logger.info(f"Extracting from local source for {self.ontology_id}")
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                term_typings_future = executor.submit(self.extract_term_typings)
-                taxonomies_future = executor.submit(self.extract_type_taxonomies)
-                non_taxonomic_future = executor.submit(self.extract_type_non_taxonomic_relations)
+            return self._extract_from_local()
+        else:
+            return self._extract_from_huggingface(reinforce_extraction)
 
-                term_typings = term_typings_future.result()
-                types, taxonomies = taxonomies_future.result()
-                types_nt, relations, non_taxonomies = non_taxonomic_future.result()
+    def _extract_from_local(self) -> OntologyData:
+        """Extract data from local ontology source."""
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            term_typings_future = executor.submit(self.extract_term_typings)
+            taxonomies_future = executor.submit(self.extract_type_taxonomies)
+            non_taxonomic_future = executor.submit(self.extract_type_non_taxonomic_relations)
 
-                return OntologyData(
-                    term_typings=term_typings,
-                    type_taxonomies=TypeTaxonomies(
-                        types=types,
-                        taxonomies=taxonomies
-                    ),
-                    type_non_taxonomic_relations=NonTaxonomicRelations(
-                        types=types_nt,
-                        relations=relations,
-                        non_taxonomies=non_taxonomies
-                    )
+            term_typings = term_typings_future.result()
+            types, taxonomies = taxonomies_future.result()
+            types_nt, relations, non_taxonomies = non_taxonomic_future.result()
+
+            return OntologyData(
+                term_typings=term_typings,
+                type_taxonomies=TypeTaxonomies(
+                    types=types,
+                    taxonomies=taxonomies
+                ),
+                type_non_taxonomic_relations=NonTaxonomicRelations(
+                    types=types_nt,
+                    relations=relations,
+                    non_taxonomies=non_taxonomies
                 )
-        elif self.from_huggingface:
-            logger.info("Loading from HuggingFace with reinforce extraction")
-            ontology_domain = self.domain.lower().replace(' ', '_')
-            repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
-            ontology_id = self.ontology_id.lower()
+            )
 
-            if reinforce_extraction:
-                logger.info(f"Attempting reinforced extraction from HuggingFace for {self.ontology_id}")
-                try:
-                    file_path = hf_hub_download(
-                        repo_id=repo_id,
-                        filename=f"{ontology_id}/{ontology_id}.{self.format.lower()}",
-                        repo_type="dataset"
-                    )
+    def _extract_from_huggingface(self, reinforce_extraction: bool) -> Optional[OntologyData]:
+        """Extract data from HuggingFace, with optional reinforcement."""
+        ontology_domain = self.domain.lower().replace(' ', '_')
+        repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
+        ontology_id = self.ontology_id.lower()
+        original_huggingface = self.loaded_from_huggingface
+        original_local = self.loaded_from_local
 
-                    self.load(file_path)
-
-                    result = self.extract(reinforce_extraction=False)  # Safe now as from_local=True
-
-                    return result
-                except Exception as e:
-                    logger.error(f"Reinforced extraction failed for {self.ontology_id}: {str(e)}")
-                    # Fall through to try pre-extracted data
-
-            logger.info(f"Loading pre-extracted data from HuggingFace for {self.ontology_id}")
-
+        if reinforce_extraction:
+            logger.info(f"Attempting reinforced extraction from HuggingFace for {self.ontology_id}")
             try:
-                term_typings_path = hf_hub_download(repo_id=repo_id,
-                                                    filename=f"{ontology_id}/term_typings.json",
-                                                    repo_type="dataset")
-                taxonomies_path = hf_hub_download(repo_id=repo_id,
-                                                  filename=f"{ontology_id}/type_taxonomies.json",
-                                                  repo_type="dataset")
-                non_taxonomic_path = hf_hub_download(repo_id=repo_id,
-                                                     filename=f"{ontology_id}/type_non_taxonomic_relations.json",
-                                                     repo_type="dataset")
-
-                with open(term_typings_path, 'r') as f:
-                    term_typings = json.load(f)
-                with open(taxonomies_path, 'r') as f:
-                    type_taxonomies = json.load(f)
-                with open(non_taxonomic_path, 'r') as f:
-                    type_non_taxonomic_relations = json.load(f)
-
-                return OntologyData(
-                    term_typings=term_typings,
-                    type_taxonomies=type_taxonomies,
-                    type_non_taxonomic_relations=type_non_taxonomic_relations
-                )
+                self.loaded_from_huggingface = False
+                self.loaded_from_local = True
+                result = self.extract(reinforce_extraction=False)
+                return result
             except Exception as e:
-                logger.error(f"Failed to load dataset files for {self.ontology_id}: {str(e)}")
-                return None
+                logger.error(f"Reinforced extraction failed for {self.ontology_id}: {str(e)}")
+            finally:
+                self.loaded_from_huggingface = original_huggingface
+                self.loaded_from_local = original_local
 
-        return None
+        logger.info(f"Loading pre-extracted data from HuggingFace for {self.ontology_id}")
+        try:
+            term_typings_path = hf_hub_download(repo_id=repo_id,
+                                                filename=f"{ontology_id}/term_typings.json",
+                                                repo_type="dataset")
+            taxonomies_path = hf_hub_download(repo_id=repo_id,
+                                              filename=f"{ontology_id}/type_taxonomies.json",
+                                              repo_type="dataset")
+            non_taxonomic_path = hf_hub_download(repo_id=repo_id,
+                                                 filename=f"{ontology_id}/type_non_taxonomic_relations.json",
+                                                 repo_type="dataset")
+
+            with open(term_typings_path, 'r') as f:
+                term_typings = json.load(f)
+            with open(taxonomies_path, 'r') as f:
+                type_taxonomies = json.load(f)
+            with open(non_taxonomic_path, 'r') as f:
+                type_non_taxonomic_relations = json.load(f)
+
+            return OntologyData(
+                term_typings=term_typings,
+                type_taxonomies=type_taxonomies,
+                type_non_taxonomic_relations=type_non_taxonomic_relations
+            )
+        except Exception as e:
+            raise ValueError(f"Failed to extract ontology data from HuggingFace: {str(e)}") from e
 
     @staticmethod
     def is_valid_label(label: str) -> Any:

@@ -30,7 +30,7 @@ class AutoRAGLearner(AutoLearner):
                 documents.append(f"Head: {nr.head}\nRelation: {nr.relation}\nTail: {nr.tail}")
         return documents
 
-    def train(self, train_data: OntologyData, task: str):
+    def fit(self, train_data: OntologyData, task: str):
         documents = self._prepare_documents(train_data, task)
         self.retriever.index(documents)
         return self

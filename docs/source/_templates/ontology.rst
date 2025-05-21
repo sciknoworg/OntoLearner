@@ -55,9 +55,13 @@ Usage Example
 
     from ontolearner.ontology import {{ class_name }}
 
-    # Initialize and load ontology
+    # Initialize and load ontology from local file
     ontology = {{ class_name }}()
     ontology.load("path/to/ontology.{{ format }}")
+
+    # Or load from a Hugging Face repository
+    ontology = {{ class_name }}()
+    ontology.load()
 
     # Extract datasets
     data = ontology.extract()
