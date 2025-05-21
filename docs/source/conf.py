@@ -16,6 +16,10 @@ import os
 #     print("English stemmer not found, using fallback.")
 #     IndexBuilder.stemmer = None  # Fallback if stemmer fails
 
+from sphinx.application import Sphinx
+from sphinx.writers.html5 import HTML5Translator
+import posixpath
+
 year = str(datetime.datetime.now().year)
 project = 'OntoLearner'
 copyright = year + ' SciKnowOrg'
@@ -131,3 +135,28 @@ def linkcode_resolve(domain, info):
     relative_path = os.path.relpath(file_path, start=os.path.dirname(__file__))
     end_line = start_line + len(source_lines) - 1
     return f"{repo_url}/blob/{branch}/{relative_path}#L{start_line}-L{end_line}"
+
+def visit_download_reference(self, node):
+    root = "https://github.com/sciknoworg/OntoLearner/tree/main"
+    atts = {"class": "reference download", "download": ""}
+
+    if not self.builder.download_support:
+        self.context.append("")
+    elif "refuri" in node:
+        atts["class"] += " external"
+        atts["href"] = node["refuri"]
+        self.body.append(self.starttag(node, "a", "", **atts))
+        self.context.append("</a>")
+    elif "reftarget" in node and "refdoc" in node:
+        atts["class"] += " external"
+        atts["href"] = posixpath.join(root, os.path.dirname(node["refdoc"]), node["reftarget"])
+        self.body.append(self.starttag(node, "a", "", **atts))
+        self.context.append("</a>")
+    else:
+        self.context.append("")
+
+
+HTML5Translator.visit_download_reference = visit_download_reference
+
+def setup(app: Sphinx):
+    pass
