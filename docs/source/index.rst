@@ -61,15 +61,14 @@ Working with OntoLearner s straightforward:
 
       from ontolearner.ontology import Wine
 
-      # 1. Init Ontologizers from OntoLearner
+      # 1. Initialize an ontologizer from OntoLearner
       ontology = Wine()
 
-      # 2. Load a ontology automatically from HuggingFace
+      # 2. Load the ontology automatically from Hugging Face
       ontology.load()
 
-      # 3. Load  the learning tasks datasets from HuggingFace
+      # 3. Extract the learning task dataset
       data = ontology.extract()
-
 
 
 .. tab:: Learner Module
@@ -78,34 +77,37 @@ Working with OntoLearner s straightforward:
 
       from ontolearner import ontology, utils, learner
 
-      # 1. Load an ontology
+      # 1. Load the ontology and extract training data
       onto = ontology.Wine()
       data = onto.extract()
 
-      # 2. train test split.
-      train_data, test_data = utils.train_test_split(data,
-                                                      test_size=0.2,
-                                                      random_state=42)
+      # 2. Split into train and test sets
+      train_data, test_data = utils.train_test_split(
+            data, test_size=0.2, random_state=42
+      )
 
-      # 3. Init a RAG learner model
-      # we are using BERT retriever for RAG
-      retriever=learner.BERTRetrieverLearner()
-      llm=learner.AutoLearnerLLM()
-      # A standardized prompting for term-typing task is initiated.
+      # 3. Initialize a Retrieval-Augmented Generation (RAG) learner
+      retriever = learner.BERTRetrieverLearner()
+      llm = learner.AutoLearnerLLM()
       prompt = learner.StandardizedPrompting(task="term-typing")
 
-      learner = learner.AutoRAGLearner(learner_retriever=retriever,
-                                       learner_llm=llm,
-                                       prompting=prompt)
-      # loading the rag learner.
-      learner.load(retriever_id="mistralai/Mistral-7B-Instruct-v0.1",
-                   llm_id="sentence-transformers/all-MiniLM-L6-v2")
+      rag_learner = learner.AutoRAGLearner(
+            learner_retriever=retriever,
+            learner_llm=llm,
+            prompting=prompt
+      )
 
-      # 4. Fit the model over train data -- to create retriever embeddings and neccesary learnings
-      learner.fit(train_data=train_data, task="term-typing")
+      # 4. Load pretrained components
+      rag_learner.load(
+            retriever_id="sentence-transformers/all-MiniLM-L6-v2",
+            llm_id="mistralai/Mistral-7B-Instruct-v0.1"
+      )
 
-      # 5. Make prediction over test split.
-      predicted = learner.predict(test_data, task="term-typing")
+      # 5. Fit the model to training data
+      rag_learner.fit(train_data=train_data, task="term-typing")
+
+      # 6. Predict on test data
+      predicted = rag_learner.predict(test_data, task="term-typing")
 
 
 
