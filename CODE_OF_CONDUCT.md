@@ -40,7 +40,7 @@ This Code of Conduct applies to all spaces related to the OntoLearner project, i
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project maintainers at **[Andrei C. Aioanei (andrei.aioanei@tib.eu)](mailto:andrei.aioanei@tib.eu) | **[Hamed Babaei Giglou (hamed.babaei@tib.eu)](mailto:hamed.babaei@tib.eu)** with **[OntoLearner Enforcement]** title. All complaints will be reviewed and investigated and will result in a response that is deemed appropriate to the circumstances.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project maintainers at **[Andrei C. Aioanei (andrei.aioanei@tib.eu)](mailto:andrei.aioanei@tib.eu)** | **[Hamed Babaei Giglou (hamed.babaei@tib.eu)](mailto:hamed.babaei@tib.eu)** with **[OntoLearner Enforcement]** title. All complaints will be reviewed and investigated and will result in a response that is deemed appropriate to the circumstances.
 
 In cases of serious breaches of the Code of Conduct, the project maintainers may take further action, which could include banning the offender from contributing to the project permanently.
 
