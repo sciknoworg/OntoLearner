@@ -136,5 +136,6 @@ or:
 }
 ```
 
+---
 
 This software is archived in Zenodo under the DOI [![DOI](https://zenodo.org/badge/913867999.svg)](https://doi.org/10.5281/zenodo.15399773) and is licensed under [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT).
