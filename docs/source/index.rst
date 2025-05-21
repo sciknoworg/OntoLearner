@@ -35,7 +35,7 @@ Unlike general-purpose NLP or embedding libraries, OntoLearner is designed speci
      <li>🔧 Modular APIs and extensible architecture that seamlessly integrate with existing ontology development environments.</li>
    </ul>
 
-A wide selection of over `200 ontologies <https://huggingface.co/collections/SciKnowOrg/>`_ are available for immediate use on 🤗 Hugging Face. Additionally, it is easy to train your own `learner <docs/learners/learners.html>`_ using OntoLearner, enabling you to create custom models for your specific use cases.
+A wide selection of over `200 ontologies <https://huggingface.co/collections/SciKnowOrg/>`_ are available for immediate use on 🤗 Hugging Face. Additionally, it is easy to train your own `learner <docs/learners/learner.html>`_ using OntoLearner, enabling you to create custom models for your specific use cases.
 
 OntoLearner was created by `Scientific Knowledge Organization (SciKnowOrg group) <https://github.com/sciknoworg/>`_ at `Technische Informationsbibliothek (TIB) <https://www.tib.eu/de/>`_. Don't hesitate to open an issue on the `OntoLearner repository <https://github.com/sciknoworg/OntoLearner>`_ if something is broken or if you have further questions.
 
