@@ -5,7 +5,6 @@ from ontolearner import Processor
 from ontolearner.data_structure import OntologyMetrics
 from ontolearner.ontology import *  # noqa
 
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -39,16 +38,17 @@ def main():
         ontologies = [
             # # Agricultural Ontologies
             # AGROVOC(),
+            # ATOL(),
             # FoodOn(),
             # PO(),
-
+            #
             # # Arts and Humanities Ontologies
             # ChordOntology(),
             # ICON(),
             # MusicOntology(),
             # Nomisma(),
             # TimelineOntology(),
-
+            #
             # # Biology & Life Sciences Ontologies
             # BioPAX(),
             # EFO(),
@@ -59,7 +59,7 @@ def main():
             # MO(),
             # NPO(),
             # PATO(),
-
+            #
             # # Chemistry Ontologies
             # AFO(),
             # ChEBI(),
@@ -76,28 +76,28 @@ def main():
             # REX(),
             # RXNO(),
             # VIBSO(),
-
+            #
             # # Ecology & Environment Ontologies
             # ENVO(),
             # OEO(),
             # SWEET(),
-
+            #
             # # Education Ontologies
             # BIBFRAME(),
             # Common(),
             # DoCO(),
-
+            #
             # # Event Ontologies
             # ConferenceOntology(),
             # iCalendar(),
             # LODE(),
-
+            #
             # # Finance Ontologies
             # GoodRelations(),
-
+            #
             # # Food & Beverage Ontologies
             # Wine(),
-
+            #
             # # General Knowledge Ontologies
             # CCO(),
             # DBpedia(),
@@ -110,13 +110,13 @@ def main():
             # SchemaOrg(),
             # UMBEL(),
             # # (YAGO(),  # large
-
+            #
             # # Geography Ontologies
             # GEO(),
             # GeoNames(),
             # GTS(),
             # Juso(),
-
+            #
             # # Industry
             # AUTO(),
             # DBO(),
@@ -124,16 +124,13 @@ def main():
             # IOF(),
             # PTO(),
             # TUBES(),
-
+            #
             # # Law Ontologies
             # CopyrightOnto(),
-
+            #
             # # Library & Cultural Heritage
             # GND(),
-
-            # # Livestock Ontologies
-            # ATOL(),
-
+            #
             # # Materials Science & Engineering
             # AMOntology(),
             # ASMO(),
@@ -186,7 +183,7 @@ def main():
             # SSN(),
             # SystemCapabilities(),
             # VIMMP(),
-
+            #
             # # Medicine Ontologies
             # BTO(),
             # DEB(),
@@ -196,7 +193,7 @@ def main():
             # # (NCIt(),  #large
             # OBI(),
             # # (PRotein(),  #large
-
+            #
             # # News & Media Ontologies
             # BBC(),
             # BBCBusiness(),
@@ -210,7 +207,7 @@ def main():
             # BBCSport(),
             # BBCStoryline(),
             # BBCWildlife(),
-
+            #
             # # Scholarly Knowledge Ontologies
             # AIISO(),
             # CiTO(),
@@ -236,21 +233,21 @@ def main():
             # TribAIn(),
             # VOAF(),
             # WiLD(),
-
+            #
             # # Social Sciences
             # AS2(),
             # BIO(),
             # Contact(),
             # FOAF(),
             # SIOC(),
-
+            #
             # # Units and Measurements
             # OM(),
             # OWLTime(),
             # QUDT(),
             # QUDV(),
             # UO(),
-
+            #
             # # Upper Ontologies
             # BFO(),
             # DOLCE(),
@@ -258,13 +255,12 @@ def main():
             # GFO(),
             # SIO(),
             # SUMO(),
-
+            #
             # # Web Ontologies
             # Hydra(),
             # SAREF(),
         ]
 
-        # Process each ontology
         for ontology in ontologies:
             ontology_path = ONTOLOGIES_DIR / ontology.domain.lower().replace(' ', '_') / f"{ontology.ontology_id.lower()}.{ontology.format.lower()}"
 
