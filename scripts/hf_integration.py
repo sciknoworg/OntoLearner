@@ -56,27 +56,27 @@ ORGANIZATION = "SciKnowOrg/OntoLearner"
 
 DOMAINS_DEFINITIONS = {
     "agriculture": "Ontologies about farming systems, crops, food production, and agricultural vocabularies.",
-    "arts_&_humanities": "Ontologies that describe music, iconography, cultural artifacts, and humanistic content.",
-    "biology_&_life_sciences": "Ontologies about biological entities, systems, organisms, and molecular biology.",
+    "arts_and_humanities": "Ontologies that describe music, iconography, cultural artifacts, and humanistic content.",
+    "biology_and_life_sciences": "Ontologies about biological entities, systems, organisms, and molecular biology.",
     "chemistry": "Ontologies describing chemical entities, reactions, methods, and computational chemistry models.",
-    "ecology_&_environment": "Ontologies about ecological systems, environments, biomes, and sustainability science.",
+    "ecology_and_environment": "Ontologies about ecological systems, environments, biomes, and sustainability science.",
     "education": "Ontologies describing learning content, educational programs, competencies, and teaching resources.",
     "events": "Ontologies for representing events, time, schedules, and calendar-based occurrences.",
     "finance": "Ontologies describing economic indicators, e-commerce, trade, and financial instruments.",
-    "food_&_beverage": "Ontologies related to food, beverages, ingredients, and culinary products.",
+    "food_and_beverage": "Ontologies related to food, beverages, ingredients, and culinary products.",
     "general_knowledge": "Broad-scope ontologies and upper vocabularies used across disciplines for general-purpose semantic modeling.",
     "geography": "Ontologies for modeling spatial and geopolitical entities, locations, and place names.",
     "industry": "Ontologies describing industrial processes, smart buildings, manufacturing systems, and equipment.",
     "law": "Ontologies dealing with legal processes, regulations, and rights (e.g., copyright).",
-    "library_&_cultural_heritage": "Ontologies used in cataloging, archiving, and authority control of cultural and scholarly resources.",
-    "materials_science_&_engineering": "Ontologies related to materials, their structure, properties, processing, and engineering applications.",
+    "library_and_cultural_heritage": "Ontologies used in cataloging, archiving, and authority control of cultural and scholarly resources.",
+    "materials_science_and_engineering": "Ontologies related to materials, their structure, properties, processing, and engineering applications.",
     "medicine": "Ontologies covering clinical knowledge, diseases, drugs, treatments, and biomedical data.",
-    "news_&_media": "Ontologies that model journalism, broadcasting, creative works, and media metadata.",
+    "news_and_media": "Ontologies that model journalism, broadcasting, creative works, and media metadata.",
     "scholarly_knowledge": "Ontologies modeling the structure, process, and administration of scholarly research, publications, and infrastructure.",
     "social_sciences": "Ontologies for modeling societal structures, behavior, identity, and social interaction.",
     "units_and_measurements": "Ontologies defining scientific units, quantities, dimensions, and observational models.",
     "upper_ontology": "Foundational ontologies that provide abstract concepts like objects, processes, and relations.",
-    "web_&_internet": "Ontologies that model web semantics, linked data, APIs, and online communication standards.",
+    "web_and_internet": "Ontologies that model web semantics, linked data, APIs, and online communication standards.",
 }
 
 SYSTEM_PROMPT = """
@@ -169,12 +169,20 @@ tags:
 - OntoLearner
 - ontology-learning
 - {domain}
-pretty_name: Agricultural
+pretty_name: {domain_title}
 ---
 <div>
   <img  src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/main/images/logo.png"  alt="OntoLearner"
     style="display: block; margin: 0 auto; width: 500px; height: auto;">
   <h1 style="text-align: center; margin-top: 1em;">{domain_title} Domain Ontologies</h1>
+</div>
+
+<div align="center">
+
+[![GitHub](https://img.shields.io/badge/GitHub-OntoLearner-blue?logo=github)](https://github.com/sciknoworg/OntoLearner)
+[![PyPI](https://img.shields.io/badge/PyPI-OntoLearner-blue?logo=pypi)](https://pypi.org/project/OntoLearner/)
+[![Documentation](https://img.shields.io/badge/Docs-ReadTheDocs-blue)](https://ontolearner.readthedocs.io/benchmarking/benchmark.html)
+
 </div>
 
 ## Overview
@@ -207,7 +215,40 @@ Each ontology directory contains the following files:
 5. `<ontology_id>.rst` - Documentation describing the ontology
 
 ## Usage
-These datasets are intended for ontology learning research and applications.
+These datasets are intended for ontology learning research and applications. Here's how to use them with OntoLearner:
+
+```python
+from ontolearner.ontology import Wine
+from ontolearner.utils.train_test_split import train_test_split
+from ontolearner.learner_pipeline import LearnerPipeline
+
+ontology = Wine()
+ontology.load()  # Automatically downloads from Hugging Face
+
+# Extract the dataset
+data = ontology.extract()
+
+# Split into train and test sets
+train_data, test_data = train_test_split(data, test_size=0.2)
+
+# Create a learning pipeline (for RAG-based learning)
+pipeline = LearnerPipeline(
+    task="term-typing",  # Other options: "taxonomy-discovery" or "non-taxonomy-discovery"
+    retriever_id="sentence-transformers/all-MiniLM-L6-v2",
+    llm_id="mistralai/Mistral-7B-Instruct-v0.1",
+    hf_token="your_huggingface_token"  # Only needed for gated models
+)
+
+# Train and evaluate
+results, metrics = pipeline.fit_predict_evaluate(
+    train_data=train_data,
+    test_data=test_data,
+    top_k=3,
+    test_limit=10
+)
+```
+
+For more detailed examples, see the [OntoLearner documentation](https://ontolearner.readthedocs.io/).
     """
 
     return readme
@@ -368,7 +409,7 @@ def main():
             # ATOL(),
             # PO(),
             # FoodOn(),
-
+            #
             # # Arts and Humanities Ontologies
             # ChordOntology(),
             # ICON(),
@@ -457,7 +498,7 @@ def main():
             #
             # # Library & Cultural Heritage
             # GND(),
-
+            #
             # # Materials Science & Engineering
             # AMOntology(),
             # ASMO(),

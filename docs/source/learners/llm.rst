@@ -10,8 +10,16 @@ LLM-only learners operate by:
 1. **Prompting**: Formulating a task-specific prompt that describes the ontology learning task
 2. **Generation**: Using the LLM to generate a response based on the prompt and its pre-trained knowledge
 
+The methodology behind LLM-only learners relies on the model's ability to understand and interpret
+ontological concepts through prompt engineering. These prompts encode domain knowledge and task requirements,
+guiding the model to generate structured ontological elements such as taxonomies, relations,
+and concept classifications. The approach leverages the fact that pre-trained LLMs
+have internalized substantial background knowledge about various domains during their training,
+which can be accessed and systematically organized through appropriate prompting strategies
+without explicitly retrieving external knowledge.
+
 Setting Up an LLM-only Learner
------------------------------
+------------------------------
 Here's how to set up an LLM-only learner using the OntoLearner pipeline:
 
 .. code-block:: python
@@ -38,7 +46,7 @@ Here's how to set up an LLM-only learner using the OntoLearner pipeline:
     )
 
 Supported Models
----------------
+----------------
 OntoLearner supports various LLM models, including:
 
 - Mistral models (e.g., "mistralai/Mistral-7B-Instruct-v0.1")
@@ -47,7 +55,7 @@ OntoLearner supports various LLM models, including:
 - DeepSeek models (e.g., "deepseek-ai/deepseek-llm-7b-base")
 
 Supported Tasks
---------------
+---------------
 LLM-only learners support all three main ontology learning tasks:
 
 1. **Term Typing**: Predicting the type(s) of a given term
@@ -61,3 +69,7 @@ For a complete example of using an LLM-only learner, see the example script:
 .. code-block:: bash
 
     python scripts/examples/learner_example_llm.py
+
+.. note::
+
+   The code is available at `OntoLearner GitHub repository <https://github.com/sciknoworg/OntoLearner/blob/dev/scripts/examples/learner_example_llm.py>`_
