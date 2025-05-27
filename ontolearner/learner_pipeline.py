@@ -1,3 +1,17 @@
+# Copyright (c) 2025 SciKnowOrg
+#
+# Licensed under the MIT License (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://opensource.org/licenses/MIT
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import logging
 from pathlib import Path
 from typing import Dict, List, Optional, Union, Tuple, Any
@@ -16,7 +30,23 @@ class LearnerPipeline:
     """
     Orchestrates the ontology learning pipeline with configuration for
     retriever-only, LLM-only, or combined learning approaches.
+
+    This class provides a unified interface for different types of learners and handles
+    the complete workflow from training to evaluation. It supports three main configurations:
+
+    1. RAG (Retrieval Augmented Generation): Uses both retriever and LLM components
+    2. LLM-only: Uses only large language models for learning
+    3. Retriever-only: Uses only retrieval models for learning
+
+    Attributes:
+        task (str): The ontology learning task (e.g., "term-typing", "taxonomy-discovery")
+        learner (AutoLearner): The configured learner instance
+        prompting (AutoPrompt): The prompting strategy
+        results (List[Dict]): Results from the last prediction run
+        metrics (Dict): Aggregated metrics from the last evaluation
+        model_info (Dict): Information about the configured models
     """
+
     def __init__(self,
                  task: str,
                  learner: Optional[AutoLearner] = None,
@@ -28,6 +58,22 @@ class LearnerPipeline:
                  hf_token: Optional[str] = None):
         """
         Initialize the learning pipeline with flexible configuration.
+
+        Args:
+            task (str): The ontology learning task to perform. Supported tasks:
+                - "term-typing": Predict types for given terms
+                - "taxonomy-discovery": Identify hierarchical relationships
+                - "task-non-taxonomic-relations": Identify non-hierarchical relationships
+            learner (Optional[AutoLearner]): Pre-configured learner instance
+            prompting (Optional[AutoPrompt]): Prompting strategy instance
+            retriever (Optional[Any]): Retriever component instance
+            llm (Optional[Any]): LLM component instance
+            retriever_id (Optional[str]): Hugging Face model ID for retriever
+            llm_id (Optional[str]): Hugging Face model ID for LLM
+            hf_token (Optional[str]): Hugging Face authentication token
+
+        Raises:
+            ValueError: If no learner components are provided
         """
         self.task = task
         self.results = []
@@ -77,12 +123,30 @@ class LearnerPipeline:
             raise ValueError("At least one of learner, retriever, or llm must be provided")
 
     def fit(self, train_data, top_k: int = 5) -> 'LearnerPipeline':
-        """Train the learner on the given data"""
+        """
+        Train the learner on the given training data.
+
+        Args:
+            train_data: Training data containing ontology information
+            top_k (int): Number of top examples to retrieve (for retrieval-based learners)
+
+        Returns:
+            LearnerPipeline: Self for method chaining
+        """
         self.learner.fit(train_data=train_data, task=self.task)
         return self
 
     def predict(self, test_data, limit: int = 10) -> List[Dict]:
-        """Predict on test data and return results with metrics"""
+        """
+        Make predictions on test data and return results with metrics.
+
+        Args:
+            test_data: Test data containing ontology information
+            limit (int): Maximum number of test examples to process
+
+        Returns:
+            List[Dict]: List of prediction results with metrics for each example
+        """
         results = []
         if self.task == "term-typing":
             test_subset = test_data.term_typings[:limit]
@@ -132,7 +196,15 @@ class LearnerPipeline:
         return results
 
     def evaluate(self, output_dir: Optional[Union[str, Path]] = None) -> Dict:
-        """Evaluate results and generate metrics"""
+        """
+        Evaluate prediction results and generate aggregated metrics.
+
+        Args:
+            output_dir (Optional[Union[str, Path]]): Directory to save evaluation results and visualizations
+
+        Returns:
+            Dict: Aggregated metrics for the predictions
+        """
         if not self.results:
             logger.warning("No prediction results available for evaluation")
             return {}
@@ -159,7 +231,18 @@ class LearnerPipeline:
                     test_data,
                     top_k: int = 5,
                     test_limit: int = 10) -> List[Dict]:
-        """Run fit and predict steps (sklearn-style)"""
+        """
+        Run fit and predict steps in sequence (sklearn-style).
+
+        Args:
+            train_data: Training data containing ontology information
+            test_data: Test data containing ontology information
+            top_k (int): Number of top examples to retrieve (for retrieval-based learners)
+            test_limit (int): Maximum number of test examples to process
+
+        Returns:
+            List[Dict]: List of prediction results with metrics for each example
+        """
         self.fit(train_data, top_k)
         return self.predict(test_data, limit=test_limit)
 
@@ -169,7 +252,21 @@ class LearnerPipeline:
                              top_k: int = 5,
                              test_limit: int = 10,
                              output_dir: Optional[Union[str, Path]] = None) -> Tuple[List[Dict], Dict]:
-        """Run fit, predict and evaluate steps in one call"""
+        """
+        Run fit, predict and evaluate steps in one call.
+
+        This is the most convenient method for running a complete pipeline workflow.
+
+        Args:
+            train_data: Training data containing ontology information
+            test_data: Test data containing ontology information
+            top_k (int): Number of top examples to retrieve (for retrieval-based learners)
+            test_limit (int): Maximum number of test examples to process
+            output_dir (Optional[Union[str, Path]]): Directory to save evaluation results
+
+        Returns:
+            Tuple[List[Dict], Dict]: Tuple of (prediction results, aggregated metrics)
+        """
         self.fit(train_data, top_k)
         results = self.predict(test_data, limit=test_limit)
         metrics = self.evaluate(output_dir)

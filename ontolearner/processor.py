@@ -1,3 +1,17 @@
+# Copyright (c) 2025 SciKnowOrg
+#
+# Licensed under the MIT License (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://opensource.org/licenses/MIT
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from pathlib import Path
 from typing import Union, Dict
 import pandas as pd
@@ -10,12 +24,39 @@ from .tools import Analyzer
 from .utils import io
 from . import logger
 
+
 class Processor:
     """
-    Handles the complete ontology processing pipeline including:
-    loading, extraction, analysis, and saving of results.
+    Handles the complete ontology processing pipeline.
+
+    This class orchestrates the entire ontology processing workflow including:
+    - Loading ontologies from files
+    - Extracting data and building graphs
+    - Analyzing ontology metrics
+    - Generating documentation
+    - Saving datasets and metrics
+
+    Attributes:
+        datasets_dir (Path): Directory to save extracted datasets
+        templates_dir (Path): Directory containing documentation templates
+        benchmark_dir (Path): Directory to save generated documentation
+        metrics_dir (Path): Directory to save metrics files
+        analyzer_class (type): Class to use for ontology analysis
+        all_metrics (Dict[str, dict]): Collected metrics for all processed ontologies
+        doc_template (Template): Jinja2 template for documentation generation
     """
+
     def __init__(self, datasets_dir: Path, templates_dir: Path, benchmark_dir: Path,  metrics_dir: Path, analyzer_class: type[Analyzer] = Analyzer):
+        """
+        Initialize the Processor with directory paths and configuration.
+
+        Args:
+            datasets_dir (Path): Directory to save extracted datasets
+            templates_dir (Path): Directory containing documentation templates
+            benchmark_dir (Path): Directory to save generated documentation
+            metrics_dir (Path): Directory to save metrics files
+            analyzer_class (type, optional): Class to use for ontology analysis. Defaults to Analyzer.
+        """
         self.datasets_dir = datasets_dir
         self.templates_dir = templates_dir
         self.benchmark_dir = benchmark_dir
@@ -27,7 +68,28 @@ class Processor:
 
     def process_ontology(self, ontology: BaseOntology, ontology_path: Union[str, Path]) \
             -> OntologyMetrics:
-        """Process a single ontology through the complete pipeline."""
+        """
+        Process a single ontology through the complete pipeline.
+
+        This method performs the complete processing workflow for an ontology:
+        1. Loads the ontology from the specified path
+        2. Extracts data and builds the graph representation
+        3. Analyzes the ontology to compute metrics
+        4. Saves extracted datasets to files
+        5. Generates documentation
+        6. Records processing time and metrics
+
+        Args:
+            ontology (BaseOntology): The ontology instance to process
+            ontology_path (Union[str, Path]): Path to the ontology file
+
+        Returns:
+            OntologyMetrics: Computed metrics for the ontology
+
+        Raises:
+            ValueError: If the ontology file is not found
+            Exception: If any step in the processing pipeline fails
+        """
         start_time = time.time()
 
         try:
@@ -66,7 +128,18 @@ class Processor:
             raise
 
     def _save_datasets(self, data: OntologyData, ontology: BaseOntology) -> None:
-        """Save extracted datasets to files"""
+        """
+        Save extracted datasets to JSON files.
+
+        Creates domain-specific directories and saves the three main dataset types:
+        - term_typings.json: Term to type mappings
+        - type_taxonomies.json: Taxonomic relations
+        - type_non_taxonomic_relations.json: Non-taxonomic relations
+
+        Args:
+            data (OntologyData): Extracted ontology data
+            ontology (BaseOntology): The ontology instance
+        """
         for dataset_type in ['term_typings', 'type_taxonomies', 'type_non_taxonomic_relations']:
             domain_dir = self.datasets_dir / f"{ontology.domain.lower().replace(' ', '_')}"
             domain_dir.mkdir(parents=True, exist_ok=True)
@@ -75,7 +148,20 @@ class Processor:
             io.save_json(data.model_dump()[dataset_type], save_path)
 
     def _generate_documentation(self, ontology: BaseOntology, metrics: OntologyMetrics):
-        """Generate RST documentation from template"""
+        """
+        Generate RST documentation from Jinja2 template.
+
+        Creates comprehensive documentation for the ontology including:
+        - Metadata (name, domain, version, etc.)
+        - Graph metrics (nodes, edges, depth, breadth)
+        - Knowledge coverage (classes, individuals, properties)
+        - Dataset statistics
+        - Usage examples
+
+        Args:
+            ontology (BaseOntology): The ontology instance
+            metrics (OntologyMetrics): Computed metrics for the ontology
+        """
         context = {
             # Class metadata
             'ontology_name': ontology.ontology_full_name,

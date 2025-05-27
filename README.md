@@ -47,7 +47,7 @@ print(ontolearner.__version__)
 ## 🚀 Quick Tour
 Get started with OntoLearner in just a few lines of code. This guide demonstrates how to initialize ontologies, load datasets, and train an LLM-assisted learner for ontology engineering tasks.
 
-**Basic Usage**:
+**Basic Usage - Automatic Download from Hugging Face**:
 ```python
 from ontolearner.ontology import Wine
 
@@ -59,6 +59,17 @@ ontology.load()
 
 # 3. Extract the learning task dataset
 data = ontology.extract()
+```
+
+**Basic Usage - Manual Download from Hugging Face**:
+```python
+from ontolearner.ontology import Wine
+
+# 1. Initialize an ontologizer from OntoLearner
+ontology = Wine()
+
+# 2. Download the ontology from Hugging Face
+file_path = ontology.from_huggingface()
 ```
 
 **LLM-Based Learning Pipeline**:
@@ -98,11 +109,9 @@ rag_learner.fit(train_data=train_data, task="term-typing")
 predicted = rag_learner.predict(test_data, task="term-typing")
 ```
 
-
-
 ## ⭐ Contribution
 
-We welcome contributions to enhance OntoLearner and make it even better! Please review our contribution guidelines in [CONTRIBUTING.md](CONTRIBUTING.md) before getting started.You are also welcome to assist with the ongoing maintenance by referring to [MAINTENANCE.md](MAINTENANCE.md). Your support is greatly appreciated.
+We welcome contributions to enhance OntoLearner and make it even better! Please review our contribution guidelines in [CONTRIBUTING.md](CONTRIBUTING.md) before getting started. You are also welcome to assist with the ongoing maintenance by referring to [MAINTENANCE.md](MAINTENANCE.md). Your support is greatly appreciated.
 
 
 If you encounter any issues or have questions, please submit them in the [GitHub issues tracker](https://github.com/sciknoworg/OntoLearner/issues).
