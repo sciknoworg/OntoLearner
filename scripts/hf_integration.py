@@ -171,18 +171,12 @@ tags:
 - {domain}
 pretty_name: {domain_title}
 ---
-<div>
+
+<div align="center">
   <img  src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/main/images/logo.png"  alt="OntoLearner"
     style="display: block; margin: 0 auto; width: 500px; height: auto;">
   <h1 style="text-align: center; margin-top: 1em;">{domain_title} Domain Ontologies</h1>
-</div>
-
-<div align="center">
-
-[![GitHub](https://img.shields.io/badge/GitHub-OntoLearner-blue?logo=github)](https://github.com/sciknoworg/OntoLearner)
-[![PyPI](https://img.shields.io/badge/PyPI-OntoLearner-blue?logo=pypi)](https://pypi.org/project/OntoLearner/)
-[![Documentation](https://img.shields.io/badge/Docs-ReadTheDocs-blue)](https://ontolearner.readthedocs.io/benchmarking/benchmark.html)
-
+  <a href="https://github.com/sciknoworg/OntoLearner"><img src="https://img.shields.io/badge/GitHub-OntoLearner-blue?logo=github" /></a>
 </div>
 
 ## Overview
