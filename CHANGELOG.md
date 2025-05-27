@@ -1,5 +1,18 @@
 ## Changelog
 
+### v1.1.1 (May 27, 2025)
+- add HF documentation
+- add license headers
+- refactor documentations
+- improve hf layout
+- add examples
+
+### v1.1.0 (May 13, 2025)
+- Version changes
+- Refactor documentations
+- Add Readme
+- Fix learner model and pipelines
+
 ### v1.0.1 (May 13, 2025)
 - Fix typo mistake in CITATION.cf
 
