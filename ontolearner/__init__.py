@@ -16,8 +16,11 @@ __version__ = "1.0.0"
 
 import logging
 from ontolearner import base, data_structure, ontology, text2onto, utils, tools, learner
-from .processor import Processor
+from .learner import AutoLearnerLLM, BERTRetrieverLearner
 from .learner_pipeline import LearnerPipeline
+from .processor import Processor
+from .utils.train_test_split import train_test_split
+from .ontology import * # noqa
 
 logging.basicConfig(
     level=logging.INFO,
@@ -25,15 +28,3 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger("ontolearner")
-
-__all__ = [
-    "base",
-    "ontology",
-    "text2onto",
-    "learner",
-    "LearnerPipeline",
-    "Processor",
-    "tools",
-    "data_structure",
-    "utils",
-]

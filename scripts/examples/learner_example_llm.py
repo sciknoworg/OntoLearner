@@ -1,8 +1,5 @@
 from pathlib import Path
-from ontolearner.learner_pipeline import LearnerPipeline
-from ontolearner.learner import AutoLearnerLLM
-from ontolearner.ontology import Wine
-from ontolearner.utils.train_test_split import train_test_split
+from ontolearner import LearnerPipeline, AutoLearnerLLM, Wine, train_test_split
 
 token = ""
 
