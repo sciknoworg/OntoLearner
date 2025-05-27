@@ -1,15 +1,7 @@
-import os
 from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
-from huggingface_hub import login
+from ontolearner import LearnerPipeline, Wine, train_test_split
 
-from ontolearner.learner_pipeline import LearnerPipeline
-from ontolearner.ontology import Wine
-from ontolearner.utils.train_test_split import train_test_split
-
-_ = load_dotenv(find_dotenv())
-if token := os.environ.get("HUGGINGFACE_ACCESS_TOKEN"):
-    login(token=token)
+token = ""
 
 ontology = Wine()
 ontology.load()
