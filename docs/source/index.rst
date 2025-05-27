@@ -24,14 +24,13 @@
 OntoLearner is a modular, open-source Python framework purpose-built for modern ontology learning (OL)—the semi-automatic construction and enrichment of ontologies from unstructured sources—powered by Large Language Models (LLMs). Rooted in decades of research in semantic web and NLP, OntoLearner integrates the breadth of existing ontology repositories with the reasoning and generative capabilities of state-of-the-art foundation models. Traditional OL systems often struggled with inconsistency, poor vocabulary alignment, and domain fragmentation. OntoLearner addresses these challenges by combining structured access to curated ontologies with LLM-driven enrichment workflows—enabling scalable, cross-domain ontology development grounded in best practices and FAIR principles.
 
 Unlike general-purpose NLP or embedding libraries, OntoLearner is designed specifically for ontology engineering and OL research. It offers:
-
 - ✅ **Cross-domain coverage** with leading repositories like BioPortal, OBO Foundry, OLS, LOV, and FAIRsharing.
 - 🤖 **LLM-assisted modeling** for tasks such as term suggestion, concept typing, taxonomy induction, relation extraction, and ontology enrichment.
 - 🧠 **Benchmarking tools** to evaluate, compare, and validate LLM-based methods for OL using standardized datasets and metrics.
 - 🔁 **Machine-readable ontologies** hosted on Hugging Face, optimized for integration into generative AI pipelines with full support for versioning, streaming, and metadata inspection.
 - 🔧 **Modular and extensible architecture** that seamlessly integrate with existing ontology development environments.
 
-A wide selection of over `200 ontologies <https://huggingface.co/collections/SciKnowOrg/>`_ are available for immediate use on 🤗 Hugging Face. Additionally, it is easy to train your own `learner <docs/learners/learners.html>`_ using OntoLearner, enabling you to create custom models for your specific use cases.
+A wide selection of over `200 ontologies <https://huggingface.co/collections/SciKnowOrg/>`_ are available for immediate use on 🤗 Hugging Face. Additionally, it is easy to train your own `learner <docs/learners/learner.html>`_ using OntoLearner, enabling you to create custom models for your specific use cases.
 
 OntoLearner was created by `Scientific Knowledge Organization (SciKnowOrg group) <https://github.com/sciknoworg/>`_ at `Technische Informationsbibliothek (TIB) <https://www.tib.eu/de/>`_. Don't hesitate to open an issue on the `OntoLearner repository <https://github.com/sciknoworg/OntoLearner>`_ if something is broken or if you have further questions.
 
