@@ -93,8 +93,6 @@ class Processor:
         start_time = time.time()
 
         try:
-            logger.info(f"Processing {ontology.ontology_id} ontology...")
-
             if not Path(ontology_path).exists():
                 raise ValueError(f"Ontology file not found: {ontology_path}")
 
@@ -116,18 +114,14 @@ class Processor:
                 "domain": ontology.domain,
                 "processing_time": processing_time
             }
-
-            self._save_datasets(data, ontology)
-
-            self._generate_documentation(ontology, metrics)
-
-            logger.info(f"Successfully processed {ontology.ontology_id} ontology")
+            self.save_datasets(data, ontology)
+            self.build_documentation(ontology, metrics)
             return metrics
         except Exception as e:
             logger.error(f"Error processing {ontology.ontology_id} ontology: {e}")
             raise
 
-    def _save_datasets(self, data: OntologyData, ontology: BaseOntology) -> None:
+    def save_datasets(self, data: OntologyData, ontology: BaseOntology) -> None:
         """
         Save extracted datasets to JSON files.
 
@@ -147,7 +141,7 @@ class Processor:
             save_path = domain_dir / f"{ontology.ontology_id.lower().replace(' ', '_')}/{dataset_type}.json"
             io.save_json(data.model_dump()[dataset_type], save_path)
 
-    def _generate_documentation(self, ontology: BaseOntology, metrics: OntologyMetrics):
+    def build_documentation(self, ontology: BaseOntology, metrics: OntologyMetrics):
         """
         Generate RST documentation from Jinja2 template.
 
@@ -210,9 +204,13 @@ class Processor:
         domain_dir = self.benchmark_dir / f"{ontology.domain.lower().replace(' ', '_')}"
         domain_dir.mkdir(parents=True, exist_ok=True)
         doc_path = domain_dir / f"{ontology.ontology_id.lower()}.rst"
+
         with open(doc_path, "w", encoding="utf-8") as f:
             f.write(content)
+
         logger.info(f"Generated documentation at {doc_path}")
+
+        return doc_path
 
     def export_metrics_to_excel(self):
         """

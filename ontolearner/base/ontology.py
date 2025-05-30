@@ -15,16 +15,22 @@
 import os
 import re
 import json
+import shutil
+import tempfile
+from pathlib import Path
 from abc import ABC
 import concurrent.futures
-from typing import List, Tuple, Any, Set, Optional
+from typing import List, Tuple, Any, Set, Optional, Dict
+
+from huggingface_hub.errors import RepositoryNotFoundError
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
+import pandas as pd
 import networkx as nx
-from huggingface_hub import hf_hub_download
+from huggingface_hub import HfApi, Repository, hf_hub_download
 
 from ..data_structure import (OntologyData, TermTyping, TaxonomicRelation, NonTaxonomicRelation,
-                              TypeTaxonomies, NonTaxonomicRelations)
-from .. import logger
+                              TypeTaxonomies, NonTaxonomicRelations, OntologyMetrics)
+from .. import logger, Processor
 
 
 class BaseOntology(ABC):
@@ -255,6 +261,154 @@ class BaseOntology(ABC):
             )
         except Exception as e:
             raise ValueError(f"Failed to extract ontology data from HuggingFace: {str(e)}") from e
+
+    def push_to_hub(self) -> Dict[str, Any]:
+        """
+        Push ontology and its extracted datasets to HuggingFace hub.
+        """
+        api = HfApi()
+        hf_token = os.environ['HUGGINGFACE_ACCESS_TOKEN']
+        api.token = hf_token
+
+        if not all([self.ontology_id, self.domain, self.format]):
+            raise ValueError("Ontology must have id, domain, and format defined")
+
+        domain_normalized = self.domain.lower().replace(' ', '_')
+
+        ontology_file_path = (os.environ['ONTOLOGIES_DIR'] / domain_normalized
+                              / f"{self.ontology_id.lower()}.{self.format.lower()}")
+
+        processor = Processor(
+            datasets_dir=os.environ['DATASETS_DIR'],
+            templates_dir=os.environ['TEMPLATES_DIR'],
+            benchmark_dir=os.environ['BENCHMARK_DIR'],
+            metrics_dir=os.environ['METRICS_DIR']
+        )
+
+        metrics: OntologyMetrics = processor.process_ontology(self,ontology_file_path)
+
+        processor.export_metrics_to_excel()
+
+        repo_id = f"SciKnowOrg/ontolearner-{domain_normalized}"
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+
+            # Clone or create repository
+            try:
+                api.repo_info(repo_id=repo_id, repo_type="dataset")
+                logger.info(f"Repository {repo_id} exists. Cloning...")
+                repo = Repository(local_dir=tmp_path, clone_from=repo_id, repo_type="dataset", token=hf_token)
+                repo.git_pull()
+            except RepositoryNotFoundError:
+                logger.info(f"Creating new repository {repo_id}")
+                api.create_repo(repo_id=repo_id, repo_type="dataset", private=False, token=hf_token)
+                repo = Repository(local_dir=tmp_path, clone_from=repo_id, repo_type="dataset", token=hf_token)
+
+            # Create ontology directory
+            ontology_dir = tmp_path / self.ontology_id.lower()
+            ontology_dir.mkdir(exist_ok=True)
+
+            # Copy ontology file
+            shutil.copy2(ontology_file_path, ontology_dir / f"{self.ontology_id.lower()}.{self.format.lower()}")
+
+            # Copy dataset files
+            dataset_path = os.environ['DATASETS_DIR'] / domain_normalized / self.ontology_id.lower()
+            if dataset_path.is_dir():
+                for file in dataset_path.glob("*.json"):
+                    shutil.copy2(file, ontology_dir)
+            else:
+                logger.warning(f"Dataset path not found at {dataset_path}. Skipping.")
+
+            # Copy documentation file
+            doc_file = os.environ['BENCHMARK_DIR'] / domain_normalized / f"{self.ontology_id.lower()}.rst"
+            if doc_file.exists():
+                shutil.copy2(doc_file, ontology_dir / f"{self.ontology_id.lower()}.rst")
+            else:
+                logger.warning(f"Documentation file not found at {doc_file}. Skipping.")
+
+            # Commit and push
+            repo.git_add(auto_lfs_track=True)
+            commit_message = f"Add/Update {self.ontology_id} ontology"
+            repo.git_commit(commit_message)
+            repo.git_push()
+
+            try:
+                self._update_metrics_space(metrics, hf_token)
+            except Exception as e:
+                logger.error(f"Failed to update metrics: {e}")
+
+            result = {
+                "status": "success",
+                "repository": repo_id,
+                "ontology_id": self.ontology_id,
+                "url": f"https://huggingface.co/datasets/{repo_id}"
+            }
+
+            return result
+
+    def _update_metrics_space(self, metrics: 'OntologyMetrics', hf_token: str) -> None:
+        """Update the metrics file in the OntoLearner metrics space."""
+        metrics_repo_id = "SciKnowOrg/OntoLearner-Benchmark-Metrics"
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+
+            # Clone metrics space
+            repo = Repository(local_dir=tmp_path, clone_from=metrics_repo_id, repo_type="space", token=hf_token)
+            repo.git_pull()
+
+            metrics_file = tmp_path / "metrics.xlsx"
+
+            # Load existing metrics or create new DataFrame
+            if metrics_file.exists():
+                df = pd.read_excel(metrics_file)
+            else:
+                df = pd.DataFrame()
+
+            # Create metrics row
+            new_row = {
+                "Ontology ID": self.ontology_id,
+                "Ontology Name": self.ontology_full_name,
+                "Domain": self.domain,
+                "Last Updated": self.last_updated or "N/A",
+                "total_nodes": metrics.topology.total_nodes,
+                "total_edges": metrics.topology.total_edges,
+                "num_classes": metrics.topology.num_classes,
+                "num_properties": metrics.topology.num_properties,
+                "num_individuals": metrics.topology.num_individuals,
+                "max_depth": metrics.topology.max_depth,
+                "min_depth": metrics.topology.min_depth,
+                "avg_depth": metrics.topology.avg_depth,
+                "depth_variance": metrics.topology.depth_variance,
+                "max_breadth": metrics.topology.max_breadth,
+                "min_breadth": metrics.topology.min_breadth,
+                "avg_breadth": metrics.topology.avg_breadth,
+                "breadth_variance": metrics.topology.breadth_variance,
+                "num_root_nodes": metrics.topology.num_root_nodes,
+                "num_leaf_nodes": metrics.topology.num_leaf_nodes,
+                "num_term_types": metrics.dataset.num_term_types,
+                "num_taxonomic_relations": metrics.dataset.num_taxonomic_relations,
+                "num_non_taxonomic_relations": metrics.dataset.num_non_taxonomic_relations,
+                "avg_terms": metrics.dataset.avg_terms
+            }
+
+            # Update or append row
+            if self.ontology_id in df["Ontology ID"].values:
+                df.loc[df["Ontology ID"] == self.ontology_id] = pd.Series(new_row)
+            else:
+                df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+
+            # Save updated metrics
+            df.to_excel(metrics_file, index=False)
+
+            # Commit and push
+            repo.git_add(auto_lfs_track=True)
+            repo.git_commit(f"Update metrics for {self.ontology_id}")
+            repo.git_push()
+
+            logger.info(f"Updated metrics for {self.ontology_id} in metrics space")
+
 
     @staticmethod
     def is_valid_label(label: str) -> Any:

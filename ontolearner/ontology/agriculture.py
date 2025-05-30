@@ -15,6 +15,36 @@
 from ..base.ontology import BaseOntology
 
 
+class AgrO(BaseOntology):
+    """
+    An ontology is a formal representation of a disciplinary domain, representing a semantic standard
+    that can be employed to annotate data where key concepts are defined, as well as the relationships
+    that exist between those concepts (Gruber, 2009). Ontologies provide a common language for different kinds of data
+    to be easily interpretable and interoperable allowing easier aggregation and analysis. The Agronomy Ontology (AgrO)
+    provides terms from the agronomy domain that are semantically organized and can facilitate the collection,
+    storage and use of agronomic data, enabling easy interpretation and reuse of the data by humans and machines alike.
+    To fully understand the implications of varying practices within cropping systems and derive insights,
+    it is often necessary to pull together information from data in different disciplinary domains.
+    For example, data on field management, soil, weather and crop phenotypes may need to be aggregated
+    to assess performance of particular crop under different management interventions. However,
+    agronomic data are often collected, described, and stored in inconsistent ways, impeding data comparison, mining,
+    interpretation reuse. The use of standards for metadata and data annotation play a key role
+    in addressing these challenges. While the CG Core Metadata Schema provides a metadata standard
+    to describe agricultural datasets, the Agronomy Ontology enables the description
+    of agronomic data variables using standard terms.
+    """
+    ontology_id = "AgrO"
+    ontology_full_name = "Agronomy Ontology (AgrO)"
+    domain = "Agriculture"
+    category = "Agronomy"
+    version = "1.0"
+    last_updated = "2022-11-02"
+    creator = "The Crop Ontology Consortium"
+    license = "Creative Commons 4.0"
+    format = "RDF"
+    download_url = "https://agroportal.lirmm.fr/ontologies/AGRO?p=summary"
+
+
 class AGROVOC(BaseOntology):
     """
     AGROVOC is a relevant Linked Open Data set about agriculture available for public use and facilitates
