@@ -5,6 +5,7 @@ Ontologies about farming systems, crops, food production, and agricultural vocab
 .. toctree::
    :maxdepth: 3
 
+   agriculture/agro.rst
    agriculture/agrovoc.rst
    agriculture/atol.rst
    agriculture/foodon.rst
