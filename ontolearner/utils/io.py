@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 from pathlib import Path
 import json
 from typing import Any, Dict, Union
 
-from .. import logger
+
+logger = logging.getLogger(__name__)
+
 
 def save_json(data: Dict[str, Any], output_path: Union[str, Path],) -> None:
     """

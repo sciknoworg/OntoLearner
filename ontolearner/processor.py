@@ -12,17 +12,70 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# pip install langchain
+
+import logging
+import os
 from pathlib import Path
-from typing import Union, Dict
-import pandas as pd
+from typing import Union, Dict, List
 from jinja2 import Template
 import time
+import pandas as pd
 
 from .base import BaseOntology
-from .data_structure import OntologyMetrics, OntologyData
+from .data_structure import OntologyMetrics, OntologyData, DatasetMetrics, TopologyMetrics
 from .tools import Analyzer
 from .utils import io
-from . import logger
+
+from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
+from langchain.prompts import PromptTemplate
+
+
+logger = logging.getLogger(__name__)
+
+# Domain definitions for README generation
+DOMAIN_DEFINITIONS = {
+    "agriculture": "Ontologies about farming systems, crops, food production, and agricultural vocabularies.",
+    "arts_and_humanities": "Ontologies that describe music, iconography, cultural artifacts, and humanistic content.",
+    "biology_and_life_sciences": "Ontologies about biological entities, systems, organisms, and molecular biology.",
+    "chemistry": "Ontologies describing chemical entities, reactions, methods, and computational chemistry models.",
+    "ecology_and_environment": "Ontologies about ecological systems, environments, biomes, and sustainability science.",
+    "education": "Ontologies describing learning content, educational programs, competencies, and teaching resources.",
+    "events": "Ontologies for representing events, time, schedules, and calendar-based occurrences.",
+    "finance": "Ontologies describing economic indicators, e-commerce, trade, and financial instruments.",
+    "food_and_beverage": "Ontologies related to food, beverages, ingredients, and culinary products.",
+    "general_knowledge": "Broad-scope ontologies and upper vocabularies used across disciplines for general-purpose semantic modeling.",
+    "geography": "Ontologies for modeling spatial and geopolitical entities, locations, and place names.",
+    "industry": "Ontologies describing industrial processes, smart buildings, manufacturing systems, and equipment.",
+    "law": "Ontologies dealing with legal processes, regulations, and rights (e.g., copyright).",
+    "library_and_cultural_heritage": "Ontologies used in cataloging, archiving, and authority control of cultural and scholarly resources.",
+    "materials_science_and_engineering": "Ontologies related to materials, their structure, properties, processing, and engineering applications.",
+    "medicine": "Ontologies covering clinical knowledge, diseases, drugs, treatments, and biomedical data.",
+    "news_and_media": "Ontologies that model journalism, broadcasting, creative works, and media metadata.",
+    "scholarly_knowledge": "Ontologies modeling the structure, process, and administration of scholarly research, publications, and infrastructure.",
+    "social_sciences": "Ontologies for modeling societal structures, behavior, identity, and social interaction.",
+    "units_and_measurements": "Ontologies defining scientific units, quantities, dimensions, and observational models.",
+    "upper_ontology": "Foundational ontologies that provide abstract concepts like objects, processes, and relations.",
+    "web_and_internet": "Ontologies that model web semantics, linked data, APIs, and online communication standards."
+}
+
+SYSTEM_PROMPT = """
+As an ontology domain expert, enhance this domain definition with precision and academic clarity.
+
+Domain: {domain}
+Current definition: {domain_definition}
+
+The OntoLearner library includes these ontologies in this domain (for context only):
+{ontologies}
+
+Create a concise, enhanced domain definition (2-3 sentences) that:
+- Accurately describes the domain's scope and technical focus
+- Highlights its significance in knowledge representation
+- Avoids any reference to specific ontologies in the definition
+
+Enhanced definition:
+"""
 
 
 class Processor:
@@ -117,8 +170,7 @@ class Processor:
             self.save_datasets(data, ontology)
             self.build_documentation(ontology, metrics)
             return metrics
-        except Exception as e:
-            logger.error(f"Error processing {ontology.ontology_id} ontology: {e}")
+        except Exception:
             raise
 
     def save_datasets(self, data: OntologyData, ontology: BaseOntology) -> None:
@@ -208,35 +260,237 @@ class Processor:
         with open(doc_path, "w", encoding="utf-8") as f:
             f.write(content)
 
-        logger.info(f"Generated documentation at {doc_path}")
-
         return doc_path
 
-    def export_metrics_to_excel(self):
+
+
+    @staticmethod
+    def create_domain_readme(domain: str,
+                             domain_definition: str,
+                             metrics: dict[str, dict] = None) -> str:
+        """
+        Create README.md content for a domain repository.
+        """
+        domain_title = domain.replace('_', ' ').title()
+
+        readme = f"""
+---
+license: mit
+language:
+- en
+tags:
+- OntoLearner
+- ontology-learning
+- {domain}
+pretty_name: {domain_title}
+---
+
+<div align="center">
+    <img  src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/main/images/logo.png"  alt="OntoLearner"
+        style="display: block; margin: 0 auto; width: 500px; height: auto;">
+    <h1 style="text-align: center; margin-top: 1em;">{domain_title} Domain Ontologies</h1>
+    <a href="https://github.com/sciknoworg/OntoLearner"><img src="https://img.shields.io/badge/GitHub-OntoLearner-blue?logo=github" /></a>
+</div>
+
+## Overview
+{domain_definition}
+"""
+
+        readme += """
+| Ontology ID | Full Name | Classes | Properties | Individuals |
+|-------------|-----------|---------|------------|-------------|
+"""
+        for metrics_data in metrics.values():
+            metrics_data_domain = metrics_data.get("domain", "").lower().replace(' ', '_')
+
+            if metrics_data_domain == domain:
+                ontology_id = metrics_data["ontology_id"]
+                ontology_full_name = metrics_data["ontology_full_name"]
+                num_classes = metrics_data["metrics"].topology.num_classes
+                num_properties = metrics_data["metrics"].topology.num_properties
+                num_individuals = metrics_data["metrics"].topology.num_individuals
+
+                readme += f"| {ontology_id} | {ontology_full_name} | {num_classes} | {num_properties} | {num_individuals}|\n"
+
+        readme += """
+## Dataset Files
+Each ontology directory contains the following files:
+1. `<ontology_id>.<format>` - The original ontology file
+2. `term_typings.json` - Dataset of term to type mappings
+3. `taxonomies.json` - Dataset of taxonomic relations
+4. `non_taxonomic_relations.json` - Dataset of non-taxonomic relations
+5. `<ontology_id>.rst` - Documentation describing the ontology
+
+## Usage
+These datasets are intended for ontology learning research and applications. Here's how to use them with OntoLearner:
+
+```python
+from ontolearner import LearnerPipeline, AutoLearnerLLM, Wine, train_test_split
+
+# Load ontology (automatically downloads from Hugging Face)
+ontology = Wine()
+ontology.load()
+
+# Extract the dataset
+data = ontology.extract()
+
+# Split into train and test sets
+train_data, test_data = train_test_split(data, test_size=0.2)
+
+# Create a learning pipeline (for RAG-based learning)
+pipeline = LearnerPipeline(
+    task="term-typing",  # Other options: "taxonomy-discovery" or "non-taxonomy-discovery"
+    retriever_id="sentence-transformers/all-MiniLM-L6-v2",
+    llm_id="mistralai/Mistral-7B-Instruct-v0.1",
+    hf_token="your_huggingface_token"  # Only needed for gated models
+)
+
+# Train and evaluate
+results, metrics = pipeline.fit_predict_evaluate(
+    train_data=train_data,
+    test_data=test_data,
+    top_k=3,
+    test_limit=10
+)
+```
+
+For more detailed examples, see the [OntoLearner documentation](https://ontolearner.readthedocs.io/).
+
+## Citation
+If you use these ontologies in your research, please cite:
+
+```bibtex
+@software{babaei_giglou_2025,
+  author       = {Babaei Giglou, Hamed and D'Souza, Jennifer and Aioanei, Andrei and Mihindukulasooriya, Nandana and Auer, Sören},
+  title        = {OntoLearner: A Modular Python Library for Ontology Learning with LLMs},
+  month        = may,
+  year         = 2025,
+  publisher    = {Zenodo},
+  version      = {v1.0.1},
+  doi          = {10.5281/zenodo.15399783},
+  url          = {https://doi.org/10.5281/zenodo.15399783},
+}
+```
+"""
+
+        return readme
+
+    def update_domain_readme(self,
+                             repo_path: Path,
+                             metrics_file_path: Path,
+                             domain: str,
+                             domain_definition: str = None) -> None:
+        """
+        Update the README.md file in a domain repository by discovering existing ontologies.
+        """
+        metrics = self.load_metrics_from_excel(metrics_file_path) if metrics_file_path.exists() else {}
+
+        # Use default domain definition if not provided
+        if domain_definition is None:
+            domain_definition = self.improve_domain_definition(
+                domain,
+                DOMAIN_DEFINITIONS[domain],
+                []
+            )
+
+        # Create README content
+        readme_content = self.create_domain_readme(
+            domain=domain,
+            domain_definition=domain_definition,
+            metrics=metrics
+        )
+
+        # Write README.md file
+        readme_path = repo_path / "README.md"
+        with open(readme_path, "w", encoding="utf-8") as f:
+            f.write(readme_content)
+
+
+    @staticmethod
+    def load_metrics_from_excel(metrics_file: Path) -> Dict[str, dict]:
+        """Load metrics for all ontologies from the Excel file generated by processor."""
+        if not metrics_file.exists():
+            logger.warning(f"Metrics file not found: {metrics_file}")
+            return {}
+
+        metrics = {}
+        try:
+            df = pd.read_excel(metrics_file)
+            for _, row in df.iterrows():
+                # Create topology metrics
+                topology_metrics = TopologyMetrics(
+                    total_nodes=row.get("total_nodes", 0),
+                    total_edges=row.get("total_edges", 0),
+                    num_classes=row.get("num_classes", 0),
+                    num_properties=row.get("num_properties", 0),
+                    num_individuals=row.get("num_individuals", 0),
+                    max_depth=row.get("max_depth", 0),
+                    min_depth=row.get("min_depth", 0),
+                    avg_depth=row.get("avg_depth", 0),
+                    depth_variance=row.get("depth_variance", 0),
+                    max_breadth=row.get("max_breadth", 0),
+                    min_breadth=row.get("min_breadth", 0),
+                    avg_breadth=row.get("avg_breadth", 0),
+                    breadth_variance=row.get("breadth_variance", 0),
+                    num_root_nodes=row.get("num_root_nodes", 0),
+                    num_leaf_nodes=row.get("num_leaf_nodes", 0)
+                )
+
+                # Create dataset metrics
+                dataset_metrics = DatasetMetrics(
+                    num_term_types=row.get("num_term_types", 0),
+                    num_taxonomic_relations=row.get("num_taxonomic_relations", 0),
+                    num_non_taxonomic_relations=row.get("num_non_taxonomic_relations", 0),
+                    avg_terms=row.get("avg_terms", 0)
+                )
+
+                # Create ontology metrics
+                ontology_metrics = OntologyMetrics(
+                    name=row.get("Ontology Name", ""),
+                    topology=topology_metrics,
+                    dataset=dataset_metrics
+                )
+
+                # Store with additional metadata to match export format
+                ontology_id = row.get("Ontology ID", "")
+                metrics[ontology_id] = {
+                    "metrics": ontology_metrics,
+                    "ontology_id": ontology_id,
+                    "ontology_full_name": row.get("Ontology Full Name", ""),
+                    "domain": row.get("Domain", ""),
+                    "processing_time": row.get("Processing Time (s)", 0)
+                }
+
+            logger.info(f"Loaded metrics for {len(metrics)} ontologies from Excel file")
+            return metrics
+        except Exception as e:
+            logger.error(f"Error loading metrics from Excel file: {e}")
+            return {}
+
+    def export_metrics_to_excel(self, metrics_file_path: Path = None):
         """
         Export all collected metrics to an Excel file.
         If the Excel file already exists, read it, update with new metrics, and write it back.
         This preserves metrics for ontologies not processed in the current run.
         """
         if not self.all_metrics:
-            logger.warning("No metrics to export. Process at least one ontology first.")
             return
 
-        excel_path = self.metrics_dir / "metrics.xlsx"
+        excel_path = metrics_file_path if metrics_file_path else self.metrics_dir / "metrics.xlsx"
 
         # Try to read existing Excel file if it exists
         existing_df = None
         if excel_path.exists():
             try:
                 existing_df = pd.read_excel(excel_path)
-                logger.info(f"Read existing metrics from {excel_path}")
             except Exception as e:
                 logger.warning(f"Could not read existing metrics file: {e}. Creating a new file.")
+                pass
 
         # Create DataFrame from current metrics
         current_rows = []
         for ontology_id, data in self.all_metrics.items():
-            metrics = data["metrics"]
+            metrics: OntologyMetrics = data["metrics"]
             row = {
                 "Ontology ID": data["ontology_id"],
                 "Ontology Full Name": data["ontology_full_name"],
@@ -261,15 +515,8 @@ class Processor:
 
             # Sort by Ontology ID for consistency
             final_df = final_df.sort_values("Ontology ID").reset_index(drop=True)
-
-            logger.info(f"Updated metrics for {len(current_ontology_ids)} ontologies, preserved metrics for {len(existing_df)} ontologies")
         else:
             final_df = current_df
-            logger.info(f"Created new metrics file with {len(current_rows)} ontologies")
-
-        # Calculate total processing time
-        total_processing_time = sum(data.get("processing_time", 0) for data in self.all_metrics.values())
-        logger.info(f"Total processing time for all ontologies: {total_processing_time:.2f} seconds")
 
         if not final_df.empty:
             # Sort the DataFrame by processing time (descending) to see which ontologies took longest
@@ -277,4 +524,29 @@ class Processor:
 
         # Write to Excel
         final_df.to_excel(excel_path, index=False)
-        logger.info(f"Exported metrics to Excel file: {excel_path}")
+
+    @staticmethod
+    def improve_domain_definition(domain: str,
+                                  domain_definition: str,
+                                  ontologies: List[BaseOntology]) -> str:
+        """Improve the domain definition using GPT-4o"""
+        try:
+            gpt_4o_llm = ChatOpenAI(
+                api_key = os.environ['OPENAI_API_KEY'],
+                model = "gpt-4o",
+                temperature = 0,
+            )
+            prompt = PromptTemplate(input_variables=["domain", "domain_definition", "ontologies"], template=SYSTEM_PROMPT)
+            chain = prompt | gpt_4o_llm | StrOutputParser()
+
+            result = chain.invoke(
+                {
+                    "domain": domain,
+                    "domain_definition": domain_definition,
+                    "ontologies": "\n".join([f"- {ontology.ontology_full_name}" for ontology in ontologies])
+                }
+            )
+            return result
+        except Exception as e:
+            logger.error(f"Failed to improve domain definition: {str(e)}", exc_info=True)
+            return domain_definition

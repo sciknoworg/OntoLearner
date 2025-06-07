@@ -30,9 +30,12 @@ Unlike general-purpose NLP or embedding libraries, OntoLearner is designed speci
 - 🔁 **Machine-readable ontologies** hosted on Hugging Face, optimized for integration into generative AI pipelines with full support for versioning, streaming, and metadata inspection.
 - 🔧 **Modular and extensible architecture** that seamlessly integrate with existing ontology development environments.
 
-A wide selection of over `200 ontologies <https://huggingface.co/collections/SciKnowOrg/>`_ are available for immediate use on 🤗 Hugging Face. Additionally, it is easy to train your own `learner <docs/learners/learner.html>`_ using OntoLearner, enabling you to create custom models for your specific use cases.
+A wide selection of over `200 ontologies <https://huggingface.co/collections/SciKnowOrg/>`_
+are available for immediate use on 🤗 Hugging Face.
 
-OntoLearner was created by `Scientific Knowledge Organization (SciKnowOrg group) <https://github.com/sciknoworg/>`_ at `Technische Informationsbibliothek (TIB) <https://www.tib.eu/de/>`_. Don't hesitate to open an issue on the `OntoLearner repository <https://github.com/sciknoworg/OntoLearner>`_ if something is broken or if you have further questions.
+OntoLearner was created by `Scientific Knowledge Organization (SciKnowOrg group) <https://github.com/sciknoworg/>`_
+at `Technische Informationsbibliothek (TIB) <https://www.tib.eu/de/>`_. Don't hesitate to open an issue
+on the `OntoLearner repository <https://github.com/sciknoworg/OntoLearner>`_ if something is broken or if you have further questions.
 
 Usage
 =====
@@ -142,7 +145,6 @@ or GitHub repository:
     }
 
 
-
 .. toctree::
    :maxdepth: 1
    :caption: Getting Started
@@ -157,7 +159,6 @@ or GitHub repository:
    :caption: Ontologizer
    :hidden:
 
-   ontologizer/ontologizer
    ontologizer/adding_ontologies
 
 .. toctree::
@@ -174,7 +175,7 @@ or GitHub repository:
    :caption: Learner Models
    :hidden:
 
-   learners/learner
+   learners/authentication
    learners/llm
    learners/retrieval
    learners/rag
@@ -185,7 +186,6 @@ or GitHub repository:
    :hidden:
 
    benchmarking/benchmark
-
 
 .. toctree::
    :maxdepth: 1

@@ -1,7 +1,6 @@
-# pip install langchain
+
 import time
 from pathlib import Path
-import pandas as pd
 from dotenv import find_dotenv, load_dotenv
 import logging
 import shutil
@@ -10,11 +9,9 @@ import os
 from huggingface_hub import HfApi, Repository, login
 from huggingface_hub.errors import RepositoryNotFoundError
 
-from langchain_core.output_parsers import StrOutputParser
-from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
 
-from ontolearner.data_structure import OntologyMetrics, TopologyMetrics, DatasetMetrics
+
+from ontolearner import Processor
 from ontolearner.ontology import *  # noqa
 from ontolearner.base import BaseOntology
 
@@ -53,7 +50,6 @@ METRICS_FILE = DATA_DIR / "metrics" / "metrics.xlsx"
 TMP_DIR = Path("./tmp")
 ORGANIZATION = "SciKnowOrg/OntoLearner"
 
-
 DOMAINS_DEFINITIONS = {
     "agriculture": "Ontologies about farming systems, crops, food production, and agricultural vocabularies.",
     "arts_and_humanities": "Ontologies that describe music, iconography, cultural artifacts, and humanistic content.",
@@ -79,46 +75,6 @@ DOMAINS_DEFINITIONS = {
     "web_and_internet": "Ontologies that model web semantics, linked data, APIs, and online communication standards.",
 }
 
-SYSTEM_PROMPT = """
-As an ontology domain expert, enhance this domain definition with precision and academic clarity.
-
-Domain: {domain}
-Current definition: {domain_definition}
-
-The OntoLearner library includes these ontologies in this domain (for context only):
-{ontologies}
-
-Create a concise, enhanced domain definition (2-3 sentences) that:
-- Accurately describes the domain's scope and technical focus
-- Highlights its significance in knowledge representation
-- Avoids any reference to specific ontologies in the definition
-
-Enhanced definition:
-"""
-gpt_4o_llm = ChatOpenAI(
-    api_key = os.environ['OPENAI_API_KEY'],
-    model = "gpt-4o",
-    temperature = 0,
-)
-prompt = PromptTemplate(input_variables=["domain", "domain_definition", "ontologies"], template=SYSTEM_PROMPT)
-chain = prompt | gpt_4o_llm | StrOutputParser()
-
-
-def improve_domain_definition(domain: str, domain_definition: str, ontologies: List[BaseOntology]) -> str:
-    """Improve the domain definition using GPT-4o"""
-    try:
-        result = chain.invoke(
-            {
-                "domain": domain,
-                "domain_definition": domain_definition,
-                "ontologies": "\n".join([f"- {ontology.ontology_full_name}" for ontology in ontologies])
-            }
-        )
-        return result
-    except Exception as e:
-        logger.error(f"Failed to improve domain definition: {str(e)}", exc_info=True)
-        return domain_definition
-
 
 def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
     """
@@ -132,7 +88,6 @@ def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
     source_file = ONTOLOGIES_DIR / ontology.domain.lower().replace(' ', '_') / f"{ontology.ontology_id.lower()}.{format}"
     if source_file.exists():
         shutil.copy2(source_file, ontology_dir / f"{ontology.ontology_id.lower()}.{format}")
-        logger.info(f"Copied ontology file: {source_file}")
     else:
         logger.warning(f"Ontology file not found at {source_file}. Skipping.")
 
@@ -154,103 +109,9 @@ def copy_ontology_files(ontology: BaseOntology, domain_dir: Path, format: str):
         logger.warning(f"Dataset path not found at {dataset_path}. Skipping.")
 
 
-def create_domain_readme(domain: str,
-                         domain_definition: str,
-                         ontologies: List[BaseOntology],
-                         metrics: Dict[str, OntologyMetrics]) -> str:
-    """Generate a README file for a domain with a table of ontologies and their metrics."""
-    domain_title = domain.replace('_', ' ').title()
-    readme = f"""
----
-license: mit
-language:
-- en
-tags:
-- OntoLearner
-- ontology-learning
-- {domain}
-pretty_name: {domain_title}
----
-
-<div align="center">
-  <img  src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/main/images/logo.png"  alt="OntoLearner"
-    style="display: block; margin: 0 auto; width: 500px; height: auto;">
-  <h1 style="text-align: center; margin-top: 1em;">{domain_title} Domain Ontologies</h1>
-  <a href="https://github.com/sciknoworg/OntoLearner"><img src="https://img.shields.io/badge/GitHub-OntoLearner-blue?logo=github" /></a>
-</div>
-
-## Overview
-{domain_definition}
-
-## Ontologies
-| Ontology ID | Full Name | Classes | Properties | Last Updated |
-|-------------|-----------|---------|------------|--------------|
-"""
-
-    # Add a row for each ontology
-    for ontology in ontologies:
-        metrics_data = metrics.get(ontology.ontology_id)
-        if metrics_data:
-            num_classes = metrics_data.topology.num_classes
-            num_properties = metrics_data.topology.num_properties
-        else:
-            num_classes = "N/A"
-            num_properties = "N/A"
-
-        readme += f"| {ontology.ontology_id} | {ontology.ontology_full_name} | {num_classes} | {num_properties} | {ontology.last_updated}|\n"
-
-    readme += """
-## Dataset Files
-Each ontology directory contains the following files:
-1. `<ontology_id>.<format>` - The original ontology file
-2. `term_typings.json` - Dataset of term to type mappings
-3. `taxonomies.json` - Dataset of taxonomic relations
-4. `non_taxonomic_relations.json` - Dataset of non-taxonomic relations
-5. `<ontology_id>.rst` - Documentation describing the ontology
-
-## Usage
-These datasets are intended for ontology learning research and applications. Here's how to use them with OntoLearner:
-
-```python
-from ontolearner.ontology import Wine
-from ontolearner.utils.train_test_split import train_test_split
-from ontolearner.learner_pipeline import LearnerPipeline
-
-ontology = Wine()
-ontology.load()  # Automatically downloads from Hugging Face
-
-# Extract the dataset
-data = ontology.extract()
-
-# Split into train and test sets
-train_data, test_data = train_test_split(data, test_size=0.2)
-
-# Create a learning pipeline (for RAG-based learning)
-pipeline = LearnerPipeline(
-    task="term-typing",  # Other options: "taxonomy-discovery" or "non-taxonomy-discovery"
-    retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-    llm_id="mistralai/Mistral-7B-Instruct-v0.1",
-    hf_token="your_huggingface_token"  # Only needed for gated models
-)
-
-# Train and evaluate
-results, metrics = pipeline.fit_predict_evaluate(
-    train_data=train_data,
-    test_data=test_data,
-    top_k=3,
-    test_limit=10
-)
-```
-
-For more detailed examples, see the [OntoLearner documentation](https://ontolearner.readthedocs.io/).
-    """
-
-    return readme
-
-
 def push_domain_to_huggingface(domain: str, domain_definition: str,
                                ontologies: List[BaseOntology],
-                               metrics: Dict[str, OntologyMetrics]) -> Tuple[bool, str]:
+                               metrics: dict[str, dict]) -> Tuple[bool, str]:
     """
     Push a domain with all its ontologies to Hugging Face as a single repository
     """
@@ -287,7 +148,8 @@ def push_domain_to_huggingface(domain: str, domain_definition: str,
             )
 
         # Create domain README
-        readme_content = create_domain_readme(domain, domain_definition, ontologies, metrics)
+        readme_content = Processor.create_domain_readme(domain, domain_definition, metrics)
+
         (local_dir / "README.md").write_text(readme_content)
 
         # Create dataset card (metadata.json)
@@ -339,60 +201,6 @@ def group_ontologies_by_domain(ontologies: List[BaseOntology]) -> Dict[str, List
         domain_groups[domain].append(ontology)
 
     return domain_groups
-
-
-def load_metrics_from_excel(metrics_file: Path) -> Dict[str, OntologyMetrics]:
-    """Load metrics for all ontologies from the Excel file generated by processor."""
-    if not metrics_file.exists():
-        logger.warning(f"Metrics file not found: {metrics_file}")
-        return {}
-
-    metrics = {}
-    try:
-        df = pd.read_excel(metrics_file)
-        for _, row in df.iterrows():
-            # Create topology metrics
-            topology_metrics = TopologyMetrics(
-                total_nodes=row.get("total_nodes", 0),
-                total_edges=row.get("total_edges", 0),
-                num_classes=row.get("num_classes", 0),
-                num_properties=row.get("num_properties", 0),
-                num_individuals=row.get("num_individuals", 0),
-                max_depth=row.get("max_depth", 0),
-                min_depth=row.get("min_depth", 0),
-                avg_depth=row.get("avg_depth", 0),
-                depth_variance=row.get("depth_variance", 0),
-                max_breadth=row.get("max_breadth", 0),
-                min_breadth=row.get("min_breadth", 0),
-                avg_breadth=row.get("avg_breadth", 0),
-                breadth_variance=row.get("breadth_variance", 0),
-                num_root_nodes=row.get("num_root_nodes", 0),
-                num_leaf_nodes=row.get("num_leaf_nodes", 0)
-            )
-
-            # Create dataset metrics
-            dataset_metrics = DatasetMetrics(
-                num_term_types=row.get("num_term_types", 0),
-                num_taxonomic_relations=row.get("num_taxonomic_relations", 0),
-                num_non_taxonomic_relations=row.get("num_non_taxonomic_relations", 0),
-                avg_terms=row.get("avg_terms", 0)
-            )
-
-            # Create ontology metrics
-            ontology_metrics = OntologyMetrics(
-                name=row.get("Ontology Name", ""),
-                topology=topology_metrics,
-                dataset=dataset_metrics
-            )
-
-            # Add to metrics dictionary
-            metrics[row.get("Ontology ID")] = ontology_metrics
-
-        logger.info(f"Loaded metrics for {len(metrics)} ontologies from Excel file")
-        return metrics
-    except Exception as e:
-        logger.error(f"Error loading metrics from Excel file: {e}")
-        return {}
 
 
 def main():
@@ -626,7 +434,7 @@ def main():
         domain_groups = group_ontologies_by_domain(ontologies)
 
         # Load metrics for all ontologies
-        metrics = load_metrics_from_excel(METRICS_FILE)
+        metrics = Processor.load_metrics_from_excel(METRICS_FILE)
 
         # Push each domain as a separate repository
         successes = 0
@@ -635,7 +443,11 @@ def main():
         for domain, domain_ontologies in domain_groups.items():
             logger.info(f"Processing {domain} domain with {len(domain_ontologies)} ontologies")
 
-            extended_definition = improve_domain_definition(domain, DOMAINS_DEFINITIONS[domain], domain_ontologies)
+            extended_definition = Processor.improve_domain_definition(
+                domain,
+                DOMAINS_DEFINITIONS[domain],
+                domain_ontologies
+            )
 
             logger.info(f"Extended domain definition: {extended_definition}")
 

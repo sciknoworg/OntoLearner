@@ -83,13 +83,37 @@ class IOF(BaseOntology):
     ontology_id = "IOF"
     ontology_full_name = "Industrial Ontology Foundry (IOF)"
     domain = "Industry"
-    category = "Scholarly Knowledge"
+    category = "Manufacturing"
     version = "1.0"
     last_updated = "2020"
     creator = "IOF Core Working Group"
     license = "MIT"
     format = "RDF"
     download_url = "https://oagi.org/pages/Released-Ontologies"
+
+
+class PKO(BaseOntology):
+    """
+    Procedural Knowledge (PK) is knowing how to perform some tasks,
+    as opposed to descriptive/declarative knowledge, which is knowing
+    what in terms of facts and notions. In industry, PK refers in general
+    to structured processes to be followed, and can be related
+    to both production (e.g., procedure on the production line in a plant)
+    and services (e.g., procedure for troubleshooting during customer support);
+    to specific technical expertise (e.g., procedure to set up a specific machine)
+    and general regulations and best practices (e.g., safety procedures,
+    activities to minimise environmental impact).
+    """
+    ontology_id = "PKO"
+    ontology_full_name = "Provenance Knowledge Ontology (PKO)"
+    domain = "Industry"
+    category = "Provenance"
+    version = "1.0.0"
+    last_updated = "2025-03-01"
+    creator = "Mario Scrocca (Cefriel), Valentina Carriero (Cefriel)"
+    license = "Creative Commons 4.0"
+    format = "RDF"
+    download_url = "https://github.com/perks-project/pk-ontology/tree/master"
 
 
 class PTO(BaseOntology):
