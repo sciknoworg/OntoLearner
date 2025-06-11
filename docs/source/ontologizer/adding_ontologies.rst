@@ -7,12 +7,16 @@ and using the ``add_new_ontology.py`` script to process and benchmark the ontolo
 
 Prerequisites
 ---------------
-
 Before adding a new ontology, make sure you have:
 
-1. The ontology file in a supported format (OWL, RDF, TTL, etc.)
-2. Basic information about the ontology (ID, name, domain, etc.)
-3. The OntoLearner framework installed and set up
+1. The OntoLearner framework installed and set up
+2. The ontology file in a supported format (OWL, RDF, TTL, etc.)
+
+What are Ontology Classes?
+--------------------------
+In OntoLearner, **ontology classes** are Python classes that represent specific ontologies
+and provide a standardized interface for loading, processing, and extracting data
+from ontological knowledge bases. These classes serve as the foundation for ontology learning tasks by:
 
 Step 1: Create an Ontology Class
 -----------------------------------
@@ -57,6 +61,12 @@ For example, if you're adding a medical ontology, you would add it to ``ontolear
 
             return False
 
+Each ontology class inherits from ``BaseOntology`` and defines:
+
+- **Metadata attributes**: ``ontology_id``, ``domain``, ``version``, ``creator``, etc.
+- **Format specification**: File format and download location
+- **Custom extraction logic**: Domain-specific processing rules (optional)
+- **Import handling**: Support for ontologies with external dependencies
 
 Step 2: Place the Ontology File
 ----------------------------------
