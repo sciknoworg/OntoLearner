@@ -12,14 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 import time
 from abc import ABC
 from rdflib import RDF, RDFS, OWL
 from collections import defaultdict
 
-from .. import logger
 from ..base import BaseOntology
 from ..data_structure import OntologyData, TopologyMetrics, DatasetMetrics, OntologyMetrics
+
+logger = logging.getLogger(__name__)
 
 
 class Analyzer(ABC):

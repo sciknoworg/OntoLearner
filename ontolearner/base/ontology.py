@@ -12,19 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 import os
 import re
 import json
+import shutil
+import tempfile
+from pathlib import Path
 from abc import ABC
 import concurrent.futures
-from typing import List, Tuple, Any, Set, Optional
+from typing import List, Tuple, Any, Set, Optional, Dict
+
+from huggingface_hub.errors import RepositoryNotFoundError
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
+import pandas as pd
 import networkx as nx
-from huggingface_hub import hf_hub_download
+from huggingface_hub import HfApi, Repository, hf_hub_download
 
 from ..data_structure import (OntologyData, TermTyping, TaxonomicRelation, NonTaxonomicRelation,
-                              TypeTaxonomies, NonTaxonomicRelations)
-from .. import logger
+                              TypeTaxonomies, NonTaxonomicRelations, OntologyMetrics)
+# from ..processor import Processor
+
+logger = logging.getLogger(__name__)
 
 
 class BaseOntology(ABC):
@@ -63,8 +72,7 @@ class BaseOntology(ABC):
         try:
             file_path = hf_hub_download(repo_id=repo_id, filename=filename, repo_type="dataset")
             return file_path
-        except Exception as e:
-            logger.error(f"Error downloading ontology from Hugging Face: {str(e)}")
+        except Exception:
             raise
 
     @staticmethod
@@ -98,9 +106,7 @@ class BaseOntology(ABC):
             self._load(file_path)
             if len(self.rdf_graph) == 0:
                 raise ValueError("Loaded ontology contains no triples")
-            logger.info(f"Successfully loaded ontology with {len(self.rdf_graph)} triples")
-        except Exception as e:
-            logger.error(f"Error loading ontology: {str(e)}")
+        except Exception:
             raise
 
     def _load(self, path: str, visited: Optional[set] = None) -> None:
@@ -125,8 +131,10 @@ class BaseOntology(ABC):
                         self._load(import_uri, visited)
                     except Exception as e:
                         logger.error(f"Failed to load import {import_uri}: {str(e)}")
+                        pass
                 else:
                     logger.warning(f"Could not resolve import: {import_def}")
+                    pass
 
 
     def contains_imports(self) -> bool:
@@ -145,11 +153,9 @@ class BaseOntology(ABC):
                 if os.path.exists(local_path):
                     return local_path
             # Fallback to HTTP if local file not found
-            logger.info(f"Fetching import from HTTP: {uri_str}")
             return uri_str
         # Handle other HTTP URIs
         elif uri_str.startswith("http://") or uri_str.startswith("https://"):
-            logger.info(f"Fetching import from HTTP: {uri_str}")
             return uri_str
         # Handle file:// URIs
         elif uri_str.startswith("file:///"):
@@ -179,7 +185,6 @@ class BaseOntology(ABC):
             raise ValueError("Ontology must be loaded before extraction")
 
         if self.loaded_from_local:
-            logger.info(f"Extracting from local source for {self.ontology_id}")
             return self._extract_from_local()
         else:
             return self._extract_from_huggingface(reinforce_extraction)
@@ -217,19 +222,17 @@ class BaseOntology(ABC):
         original_local = self.loaded_from_local
 
         if reinforce_extraction:
-            logger.info(f"Attempting reinforced extraction from HuggingFace for {self.ontology_id}")
             try:
                 self.loaded_from_huggingface = False
                 self.loaded_from_local = True
                 result = self.extract(reinforce_extraction=False)
                 return result
-            except Exception as e:
-                logger.error(f"Reinforced extraction failed for {self.ontology_id}: {str(e)}")
+            except Exception:
+                pass
             finally:
                 self.loaded_from_huggingface = original_huggingface
                 self.loaded_from_local = original_local
 
-        logger.info(f"Loading pre-extracted data from HuggingFace for {self.ontology_id}")
         try:
             term_typings_path = hf_hub_download(repo_id=repo_id,
                                                 filename=f"{ontology_id}/term_typings.json",
@@ -255,6 +258,137 @@ class BaseOntology(ABC):
             )
         except Exception as e:
             raise ValueError(f"Failed to extract ontology data from HuggingFace: {str(e)}") from e
+
+    def push_to_hub(self) -> Dict[str, Any]:
+        """
+        Push ontology and its extracted datasets to HuggingFace hub.
+        """
+        # Import locally to avoid circular import
+        from ..processor import Processor
+
+        api = HfApi()
+        hf_token = os.environ['HUGGINGFACE_ACCESS_TOKEN']
+        api.token = hf_token
+
+        if not all([self.ontology_id, self.domain, self.format]):
+            raise ValueError("Ontology must have id, domain, and format defined")
+
+        domain_normalized = self.domain.lower().replace(' ', '_')
+
+        ontology_file_path = (Path(os.environ['ONTOLOGIES_DIR']) / domain_normalized
+                              / f"{self.ontology_id.lower()}.{self.format.lower()}")
+
+        processor = Processor(
+            datasets_dir=Path(os.environ['DATASETS_DIR']),
+            templates_dir=Path(os.environ['TEMPLATES_DIR']),
+            benchmark_dir=Path(os.environ['BENCHMARK_DIR']),
+            metrics_dir=Path(os.environ['METRICS_DIR'])
+        )
+
+        processor.process_ontology(self, ontology_file_path)
+
+        repo_id = f"SciKnowOrg/ontolearner-{domain_normalized}"
+        metrics_repo_id = "SciKnowOrg/OntoLearner-Benchmark-Metrics"
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            ontology_repo_path = tmp_path / "ontology_repo"
+            metrics_repo_path = tmp_path / "metrics_repo"
+
+            # Clone ontology repository
+            try:
+                api.repo_info(repo_id=repo_id, repo_type="dataset")
+                repo = Repository(local_dir=ontology_repo_path, clone_from=repo_id, repo_type="dataset", token=hf_token)
+                repo.git_pull()
+            except RepositoryNotFoundError:
+                api.create_repo(repo_id=repo_id, repo_type="dataset", private=False, token=hf_token)
+                repo = Repository(local_dir=ontology_repo_path, clone_from=repo_id, repo_type="dataset", token=hf_token)
+
+            # Clone metrics space repository
+            try:
+                api.repo_info(repo_id=metrics_repo_id, repo_type="space")
+                metrics_repo = Repository(local_dir=metrics_repo_path, clone_from=metrics_repo_id, repo_type="space", token=hf_token)
+                metrics_repo.git_pull()
+            except RepositoryNotFoundError:
+                # If metrics repo doesn't exist, create it (though it should exist)
+                api.create_repo(repo_id=metrics_repo_id, repo_type="space", private=False, token=hf_token)
+                metrics_repo = Repository(local_dir=metrics_repo_path, clone_from=metrics_repo_id, repo_type="space", token=hf_token)
+
+            # Create ontology directory in the ontology repo
+            ontology_dir = ontology_repo_path / self.ontology_id.lower()
+            ontology_dir.mkdir(exist_ok=True)
+
+            # Copy ontology file
+            shutil.copy2(ontology_file_path, ontology_dir / f"{self.ontology_id.lower()}.{self.format.lower()}")
+
+            # Copy dataset files
+            dataset_path = Path(os.environ['DATASETS_DIR']) / domain_normalized / self.ontology_id.lower()
+            if dataset_path.is_dir():
+                for file in dataset_path.glob("*.json"):
+                    shutil.copy2(file, ontology_dir)
+
+            # Copy documentation file
+            doc_file = Path(os.environ['BENCHMARK_DIR']) / domain_normalized / f"{self.ontology_id.lower()}.rst"
+            if doc_file.exists():
+                shutil.copy2(doc_file, ontology_dir / f"{self.ontology_id.lower()}.rst")
+
+            # Update metrics in the metrics repository
+            metrics_file_path = metrics_repo_path / "metrics.xlsx"
+            processor.export_metrics_to_excel(metrics_file_path)
+
+            # Update domain README.md in the ontology repository
+            processor.update_domain_readme(ontology_repo_path, metrics_file_path, domain_normalized)
+
+            # Commit and push ontology repository
+            repo.git_add(auto_lfs_track=True)
+            commit_message = f"Add/Update {self.ontology_id} ontology"
+            repo.git_commit(commit_message)
+            repo.git_push()
+
+            # Commit and push metrics repository
+            metrics_repo.git_add(auto_lfs_track=True)
+            metrics_commit_message = f"Update metrics for {self.ontology_id}"
+            metrics_repo.git_commit(metrics_commit_message)
+            metrics_repo.git_push()
+
+            result = {
+                "status": "success",
+                "repository": repo_id,
+                "metrics_repository": metrics_repo_id,
+                "ontology_id": self.ontology_id,
+                "url": f"https://huggingface.co/datasets/{repo_id}",
+                "metrics_url": f"https://huggingface.co/spaces/{metrics_repo_id}"
+            }
+
+            return result
+
+    def _update_metrics_space(self, metrics_file_path: Path, metrics: OntologyMetrics) -> None:
+        """Update the metrics file in the OntoLearner metrics space."""
+
+        # Load existing metrics or create new DataFrame
+        if metrics_file_path.exists():
+            df = pd.read_excel(metrics_file_path)
+        else:
+            df = pd.DataFrame()
+
+        new_row = {
+            "Ontology ID": self.ontology_id,
+            "Ontology Full Name": self.ontology_full_name,
+            "Domain": self.domain,
+            "Ontology Name": metrics.name,
+            "Processing Time (s)": 0,  # TODO: Add processing time
+            **metrics.topology.dict(),
+            **metrics.dataset.dict()
+        }
+
+        # Update or append row
+        if len(df) > 0 and self.ontology_id in df["Ontology ID"].values:
+            df.loc[df["Ontology ID"] == self.ontology_id] = pd.Series(new_row)
+        else:
+            df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+
+        # Save updated metrics
+        df.to_excel(metrics_file_path, index=False)
 
     @staticmethod
     def is_valid_label(label: str) -> Any:
@@ -284,8 +418,6 @@ class BaseOntology(ABC):
         else:
             local_name = uri
         label = self.is_valid_label(local_name)
-        if not label:
-            logger.warning(f"No valid label for URI: {uri}")
         return label
 
     def build_graph(self) -> None:
@@ -298,7 +430,6 @@ class BaseOntology(ABC):
         self.nx_graph = nx.DiGraph()
 
         if not self.rdf_graph:
-            logger.info("Loading from HuggingFace")
             ontology_domain = self.domain.lower().replace(' ', '_')
             repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
             ontology_id = self.ontology_id.lower()
@@ -334,7 +465,6 @@ class BaseOntology(ABC):
                         not self._is_anonymous_id(term) and
                         not self._is_anonymous_id(types)):
                     term_typings.append(TermTyping(term=term, types=[types]))
-        logger.debug(f"Extracted {len(term_typings)} term typings for the Ontology.")
         return term_typings
 
     def _get_relevant_classes(self) -> Set[URIRef]:
@@ -365,7 +495,6 @@ class BaseOntology(ABC):
                     types.append(parent_label)
                     taxonomies.append(TaxonomicRelation(parent=parent_label, child=subclass_label))
         types = list(set(types))
-        logger.debug(f"Extracted {len(taxonomies)} taxonomic relations for the Ontology.")
         return types, taxonomies
 
     # ------------------- Non-Taxonomic Relations -------------------
@@ -395,7 +524,6 @@ class BaseOntology(ABC):
 
         types = sorted(types_set)
         relations = sorted(relations_set)
-        logger.debug(f"Extracted {len(non_taxonomic_pairs)} non-taxonomic relations for the Ontology.")
         return types, relations, non_taxonomic_pairs
 
     def _is_valid_non_taxonomic_triple(self, s: URIRef, p: URIRef, o: URIRef) -> bool:
