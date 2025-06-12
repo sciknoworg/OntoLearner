@@ -31,13 +31,18 @@ from huggingface_hub import HfApi, Repository, hf_hub_download
 
 from ..data_structure import (OntologyData, TermTyping, TaxonomicRelation, NonTaxonomicRelation,
                               TypeTaxonomies, NonTaxonomicRelations, OntologyMetrics)
-# from ..processor import Processor
 
 logger = logging.getLogger(__name__)
 
 
 class BaseOntology(ABC):
-    """Base class for ontology processing"""
+    """
+    Abstract base class for ontology processing and data extraction.
+
+    This class provides a standardized interface for loading, processing, and extracting
+    structured data from ontologies across different domains. It supports both local
+    file loading and automatic downloading from Hugging Face repositories.
+    """
     ontology_id: str = None
     ontology_full_name: str = None
     domain: str = None
@@ -51,16 +56,43 @@ class BaseOntology(ABC):
     loaded_from_huggingface = False
     loaded_from_local = False
 
-    def __init__(self, language: str = 'en', base_dir: Optional[str] = None):
-        """Initialize the ontology"""
-        self.rdf_graph = None
-        self.nx_graph = None
+    def __init__(self, language: str = 'en', base_dir: Optional[str] = None) -> None:
+        """
+        Initialize the ontology instance.
+
+        Args:
+            language: Language code for label extraction (default: 'en').
+                     Used when multiple language labels are available.
+            base_dir: Base directory for resolving relative import paths.
+                     Useful when ontology imports other local files.
+        """
+        self.rdf_graph: Optional[Graph] = None
+        self.nx_graph: Optional[nx.DiGraph] = None
         self.language = language
         self.base_dir = base_dir
 
     @staticmethod
     def from_huggingface(ontology_id: str, domain: str, format: str) -> str:
-        """Download an ontology file from a Hugging Face repository."""
+        """
+        Download an ontology file from a Hugging Face repository.
+
+        This method constructs the appropriate repository ID and filename based on
+        the OntoLearner naming conventions and downloads the ontology file to a
+        local cache directory.
+
+        Args:
+            ontology_id: Unique identifier for the ontology (e.g., "wine").
+            domain: Domain category (e.g., "Food & Beverage").
+            format: File format extension (e.g., "owl", "rdf").
+
+        Returns:
+            Local file path to the downloaded ontology file.
+
+        Raises:
+            ValueError: If any required parameter is missing or empty.
+            Exception: If download fails due to network issues, authentication,
+                      or file not found in repository.
+        """
         if not ontology_id or not domain or not format:
             raise ValueError("Ontology ID, domain, and format must be defined")
 
@@ -77,13 +109,43 @@ class BaseOntology(ABC):
 
     @staticmethod
     def from_local(path: str) -> str:
-        """Specify a local ontology file path."""
+        """
+        Validate and return a local ontology file path.
+
+        This method checks if the specified local file exists and returns the
+        path if valid. It serves as a validation step for local file loading.
+
+        Args:
+            path: File system path to the local ontology file.
+
+        Returns:
+            The same path if the file exists and is accessible.
+
+        Raises:
+            FileNotFoundError: If the specified file does not exist.
+        """
         if not os.path.exists(path):
             raise FileNotFoundError(f"Ontology file not found at {path}")
         return path
 
     def load(self, path: Optional[str] = None) -> None:
-        """Load an ontology from a local file or Hugging Face repository."""
+        """
+        Load an ontology from a local file or Hugging Face repository.
+
+        This method is the main entry point for loading ontologies. It automatically
+        determines the source (local vs. Hugging Face) based on whether a path is
+        provided, handles RDF parsing, and processes any owl:imports statements.
+
+        Args:
+            path: Optional local file path. If provided, loads from local file.
+                 If None, downloads from Hugging Face using class attributes
+                 (ontology_id, domain, format).
+
+        Raises:
+            ValueError: If the loaded ontology contains no RDF triples.
+            FileNotFoundError: If local file path is invalid.
+            Exception: If download from Hugging Face fails or RDF parsing fails.
+        """
         self.loaded_from_huggingface = False
         self.loaded_from_local = False
 
@@ -180,7 +242,33 @@ class BaseOntology(ABC):
         return None
 
     def extract(self, reinforce_extraction: bool = False) -> OntologyData:
-        """Extract all information from all the three functions below."""
+        """
+        Extract structured learning data from the loaded ontology.
+
+        This method extracts three types of ontological information needed for
+        machine learning tasks: term typings, taxonomic relations, and non-taxonomic
+        relations. The extraction strategy depends on the data source.
+
+        For local ontologies, it performs live extraction from the RDF graph.
+        For Hugging Face ontologies, it downloads pre-processed JSON files for
+        efficiency, with an option to force live extraction.
+
+        Args:
+            reinforce_extraction: If True and loaded from Hugging Face, forces
+                                 live extraction from RDF instead of using
+                                 pre-processed JSON files. Useful for debugging
+                                 or when pre-processed data is outdated.
+
+        Returns:
+            OntologyData object containing:
+            - term_typings: List of term-to-type mappings
+            - type_taxonomies: Hierarchical relationships between types
+            - type_non_taxonomic_relations: Non-hierarchical relationships
+
+        Raises:
+            ValueError: If ontology has not been loaded yet.
+            Exception: If extraction fails due to malformed data or network issues.
+        """
         if not (self.loaded_from_local or self.loaded_from_huggingface):
             raise ValueError("Ontology must be loaded before extraction")
 
@@ -261,7 +349,33 @@ class BaseOntology(ABC):
 
     def push_to_hub(self) -> Dict[str, Any]:
         """
-        Push ontology and its extracted datasets to HuggingFace hub.
+        Push ontology and its extracted datasets to Hugging Face Hub.
+
+        This method processes the ontology, extracts learning datasets, and uploads
+        everything to the appropriate Hugging Face repositories. It handles both
+        the domain-specific ontology repository and the global metrics repository.
+
+        The method performs the following steps:
+        1. Process the ontology and extract metrics using the Processor
+        2. Clone or create the domain-specific Hugging Face repository
+        3. Clone or create the global metrics repository
+        4. Copy ontology files, datasets, and documentation
+        5. Update metrics and domain README files
+        6. Commit and push changes to both repositories
+
+        Returns:
+            Dictionary containing upload results with keys:
+            - status: "success" if upload completed successfully
+            - repository: Domain-specific repository ID
+            - metrics_repository: Global metrics repository ID
+            - ontology_id: The ontology identifier
+            - url: URL to the domain repository
+            - metrics_url: URL to the metrics repository
+
+        Raises:
+            ValueError: If required ontology attributes are missing.
+            KeyError: If required environment variables are not set.
+            Exception: If repository operations or file uploads fail.
         """
         # Import locally to avoid circular import
         from ..processor import Processor

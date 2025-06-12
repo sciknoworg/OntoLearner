@@ -303,6 +303,7 @@ Ontologies modeling the structure, process, and administration of scholarly rese
    scholarly_knowledge/duo.rst
    scholarly_knowledge/eurio.rst
    scholarly_knowledge/expo.rst
+   scholarly_knowledge/framester.rst
    scholarly_knowledge/frapo.rst
    scholarly_knowledge/frbroo.rst
    scholarly_knowledge/lexinfo.rst

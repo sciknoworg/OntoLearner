@@ -27,7 +27,12 @@ def main():
         BENCHMARK_DIR.mkdir(parents=True, exist_ok=True)
         METRICS_DIR.mkdir(parents=True, exist_ok=True)
 
-        processor = Processor(datasets_dir=DATASET_DIR, templates_dir=TEMPLATES_DIR, benchmark_dir=BENCHMARK_DIR, metrics_dir=METRICS_DIR)
+        processor = Processor(
+            datasets_dir=DATASET_DIR,
+            templates_dir=TEMPLATES_DIR,
+            benchmark_dir=BENCHMARK_DIR,
+            metrics_dir=METRICS_DIR
+        )
 
         # todo_ontologies = [
         #     # YAGO(),
@@ -37,6 +42,7 @@ def main():
 
         ontologies = [
             # # Agricultural Ontologies
+            # AgrO(),
             # AGROVOC(),
             # ATOL(),
             # FoodOn(),
@@ -122,6 +128,7 @@ def main():
             # DBO(),
             # DOAP(),
             # IOF(),
+            # PKO(),
             # PTO(),
             # TUBES(),
             #
@@ -217,6 +224,7 @@ def main():
             # DUO(),
             # EURIO(),
             # EXPO(),
+            # Framester(),
             # FRAPO(),
             # FRBRoo(),
             # LexInfo(),

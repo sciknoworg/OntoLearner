@@ -28,25 +28,13 @@ logger = logging.getLogger(__name__)
 
 class LearnerPipeline:
     """
-    Orchestrates the ontology learning pipeline with configuration for
-    retriever-only, LLM-only, or combined learning approaches.
+    Unified pipeline for ontology learning with flexible model configurations.
 
-    This class provides a unified interface for different types of learners and handles
-    the complete workflow from training to evaluation. It supports three main configurations:
-
-    1. RAG (Retrieval Augmented Generation): Uses both retriever and LLM components
-    2. LLM-only: Uses only large language models for learning
-    3. Retriever-only: Uses only retrieval models for learning
-
-    Attributes:
-        task (str): The ontology learning task (e.g., "term-typing", "taxonomy-discovery")
-        learner (AutoLearner): The configured learner instance
-        prompting (AutoPrompt): The prompting strategy
-        results (List[Dict]): Results from the last prediction run
-        metrics (Dict): Aggregated metrics from the last evaluation
-        model_info (Dict): Information about the configured models
+    This class provides a high-level interface for ontology learning tasks, supporting
+    multiple learning paradigms and handling the complete machine learning workflow
+    from training to evaluation. It abstracts away the complexity of different learner
+    types while providing fine-grained control over the learning process.
     """
-
     def __init__(self,
                  task: str,
                  learner: Optional[AutoLearner] = None,
@@ -57,23 +45,35 @@ class LearnerPipeline:
                  llm_id: Optional[str] = None,
                  hf_token: Optional[str] = None):
         """
-        Initialize the learning pipeline with flexible configuration.
+        Initialize the learning pipeline with flexible configuration options.
+
+        This constructor supports multiple initialization patterns to accommodate
+        different use cases, from simple model ID specification to complex custom
+        component configuration. The pipeline automatically determines the learning
+        paradigm based on the provided components.
 
         Args:
-            task (str): The ontology learning task to perform. Supported tasks:
-                - "term-typing": Predict types for given terms
-                - "taxonomy-discovery": Identify hierarchical relationships
-                - "task-non-taxonomic-relations": Identify non-hierarchical relationships
-            learner (Optional[AutoLearner]): Pre-configured learner instance
-            prompting (Optional[AutoPrompt]): Prompting strategy instance
-            retriever (Optional[Any]): Retriever component instance
-            llm (Optional[Any]): LLM component instance
-            retriever_id (Optional[str]): Hugging Face model ID for retriever
-            llm_id (Optional[str]): Hugging Face model ID for LLM
-            hf_token (Optional[str]): Hugging Face authentication token
+            task: The ontology learning task to perform. Supported values:
+                 - "term-typing": Predict semantic types for terms
+                 - "taxonomy-discovery": Identify hierarchical relationships
+                 - "non-taxonomy-discovery": Identify semantic associations
+            learner: Pre-configured learner instance. If provided, other
+                    component parameters are ignored.
+            prompting: Custom prompting strategy. If None, uses StandardizedPrompting
+                      with task-appropriate templates.
+            retriever: Pre-configured retriever instance. Used for RAG or
+                      retrieval-only approaches.
+            llm: Pre-configured LLM instance. Used for RAG or LLM-only approaches.
+            retriever_id: Hugging Face model ID for automatic retriever loading.
+                         Common options: "sentence-transformers/all-MiniLM-L6-v2"
+            llm_id: Hugging Face model ID for automatic LLM loading.
+                   Common options: "mistralai/Mistral-7B-Instruct-v0.1"
+            hf_token: Hugging Face authentication token for accessing gated models.
+                     Required for some commercial or restricted models.
 
         Raises:
-            ValueError: If no learner components are provided
+            ValueError: If no learner components are provided (all learner-related
+                       parameters are None).
         """
         self.task = task
         self.results = []

@@ -17,7 +17,20 @@ from typing import Dict
 
 
 class TopologyMetrics(BaseModel):
-    """Metrics describing the structural properties of the ontology graph"""
+    """
+    Comprehensive metrics describing the structural properties of an ontology graph.
+
+    This class captures quantitative measures of an ontology's topological structure,
+    including graph connectivity, hierarchical organization, and knowledge coverage.
+    These metrics are essential for understanding ontology complexity, quality, and
+    suitability for different learning tasks.
+
+    The metrics are organized into four categories:
+    1. Basic graph structure (nodes, edges, roots, leaves)
+    2. Knowledge coverage (classes, properties, individuals)
+    3. Hierarchical depth characteristics
+    4. Hierarchical breadth characteristics
+    """
     # Basic graph metrics
     total_nodes: int = Field(..., description="Total number of nodes (concepts) in the ontology", ge=0)
     total_edges: int = Field(..., description="Total number of edges (relationships) between nodes", ge=0)
@@ -43,7 +56,24 @@ class TopologyMetrics(BaseModel):
 
 
 class DatasetMetrics(BaseModel):
-    """Metrics for evaluating the quality and characteristics of generated datasets"""
+    """
+    Metrics for evaluating the quality and characteristics of extracted learning datasets.
+
+    This class captures quantitative measures of the machine learning datasets
+    extracted from ontologies, focusing on the three fundamental ontology learning
+    tasks. These metrics help assess dataset quality, balance, and suitability
+    for training and evaluation.
+
+    Attributes:
+        num_term_types: Number of term-to-type mappings extracted for Task 1.
+                       Higher values indicate richer type assignment data.
+        num_taxonomic_relations: Number of hierarchical "is-a" relationships
+                               extracted for Task 2. Indicates taxonomy richness.
+        num_non_taxonomic_relations: Number of semantic associations extracted
+                                   for Task 3. Shows relationship diversity.
+        avg_terms: Average number of terms assigned to each type, indicating
+                  the distribution balance of the term typing dataset.
+    """
     num_term_types: int = Field(..., description="Number of term-type pairs in the dataset", ge=0)
     num_taxonomic_relations: int = Field(..., description="Number of taxonomic relations", ge=0)
     num_non_taxonomic_relations: int = Field(..., description="Number of non-taxonomic relations", ge=0)
@@ -51,14 +81,55 @@ class DatasetMetrics(BaseModel):
 
 
 class OntologyMetrics(BaseModel):
-    """Complete metrics collection for an ontology"""
+    """
+    Complete metrics collection for a single ontology.
+
+    This class aggregates all quantitative measures for an ontology, combining
+    structural topology metrics with dataset extraction metrics. It provides
+    a comprehensive view of an ontology's characteristics for analysis,
+    comparison, and quality assessment.
+
+    Used by the Processor class to collect and export metrics to Excel files
+    for benchmarking and analysis across multiple ontologies.
+
+    Attributes:
+        name: Human-readable name of the ontology for identification.
+        topology: Structural metrics describing the ontology's graph properties.
+        dataset: Dataset metrics describing the extracted learning data quality.
+    """
     name: str = Field(..., description="Name of the ontology")
     topology: TopologyMetrics = Field(..., description="Structural topology metrics")
     dataset: DatasetMetrics = Field(..., description="Dataset metrics")
 
 
 class BenchmarkMetrics(BaseModel):
-    """Aggregate metrics across multiple ontologies"""
+    """
+    Aggregate metrics across multiple ontologies for benchmarking and analysis.
+
+    This class provides comprehensive statistical analysis across a collection
+    of ontologies, enabling comparative studies, quality assessment, and
+    benchmarking of ontology learning approaches. It aggregates individual
+    ontology metrics and computes statistical summaries.
+
+    Used for generating benchmark reports, identifying outliers, and understanding
+    the distribution of characteristics across ontology collections. Essential
+    for research comparing ontology learning methods across diverse domains.
+
+    Attributes:
+        total_ontologies: Total number of ontologies included in the benchmark.
+        ontology_metrics: Dictionary mapping ontology IDs to their individual
+                         metrics, preserving detailed information for each.
+        avg_topology: Average topology metrics computed across all ontologies,
+                     showing typical structural characteristics.
+        avg_dataset: Average dataset metrics across all ontologies, indicating
+                    typical learning data characteristics.
+        topology_std: Standard deviations of topology metrics, showing structural
+                     variability across the ontology collection.
+        relationship_std: Standard deviations of relationship metrics, indicating
+                         diversity in relationship patterns.
+        dataset_std: Standard deviations of dataset metrics, showing variability
+                    in learning data quality and quantity.
+    """
     # Overview
     total_ontologies: int = Field(..., description="Number of ontologies analyzed")
     ontology_metrics: Dict[str, OntologyMetrics] = Field(..., description="Individual metrics for each ontology")
