@@ -25,12 +25,47 @@ logger = logging.getLogger(__name__)
 
 
 class Analyzer(ABC):
-    """Base class for ontology analysis"""
-    def __init__(self):
+    """
+    Base class for comprehensive ontology analysis and metrics computation.
+
+    This class provides a unified interface for analyzing ontologies and computing
+    both structural topology metrics and dataset quality metrics. It serves as
+    the foundation for ontology benchmarking, quality assessment, and comparative
+    analysis across different domains and ontology types.
+
+    The analyzer computes two main categories of metrics:
+    1. **Topology Metrics**: Structural properties of the ontology graph including
+       depth, breadth, connectivity, and knowledge coverage statistics.
+    2. **Dataset Metrics**: Quality and characteristics of extracted learning
+       datasets for the three fundamental ontology learning tasks.
+
+    Used by the Processor class to generate comprehensive metrics for ontology
+    repositories and benchmark studies.
+    """
+
+    def __init__(self) -> None:
+        """
+        Initialize the analyzer.
+
+        The analyzer is stateless and can be reused across multiple ontologies.
+        """
         pass
 
     def __call__(self, ontology: BaseOntology) -> OntologyMetrics:
-        """Perform complete analysis of ontology"""
+        """
+        Perform complete analysis of an ontology and return comprehensive metrics.
+
+        This method orchestrates the full analysis workflow, computing both
+        topology and dataset metrics for the given ontology. It provides a
+        convenient callable interface for the analyzer.
+
+        Args:
+            ontology: Loaded ontology instance to analyze. Must have both
+                     RDF graph and NetworkX graph representations available.
+
+        Returns:
+            Complete metrics object containing topology and dataset metrics.
+        """
         return OntologyMetrics(
             name=ontology.__class__.__name__,
             topology=self.compute_topology_metrics(ontology),
@@ -39,7 +74,28 @@ class Analyzer(ABC):
 
     @staticmethod
     def compute_topology_metrics(ontology: BaseOntology) -> TopologyMetrics:
-        """Compute comprehensive topology metrics for the ontology."""
+        """
+        Compute comprehensive structural topology metrics for an ontology.
+
+        This method analyzes the NetworkX graph representation of an ontology
+        to extract detailed structural characteristics including graph connectivity,
+        hierarchical organization, and knowledge coverage. The metrics provide
+        insights into ontology complexity, quality, and design patterns.
+
+        The computation includes:
+        - Basic graph structure (nodes, edges, roots, leaves)
+        - Hierarchical depth analysis with multi-root support
+        - Breadth distribution across hierarchy levels
+        - Knowledge coverage (classes, properties, individuals)
+
+        Args:
+            ontology: Loaded ontology with NetworkX graph representation.
+                     Must have both rdf_graph and nx_graph attributes populated.
+
+        Returns:
+            Comprehensive topology metrics including all structural measures.
+            Returns zero-valued metrics for empty ontologies.
+        """
         logger.info("Starting topology metrics computation")
         start_time = time.time()
         graph = ontology.nx_graph
@@ -132,7 +188,28 @@ class Analyzer(ABC):
 
     @staticmethod
     def compute_dataset_metrics(ontology: BaseOntology) -> DatasetMetrics:
-        """Compute metrics for generated datasets"""
+        """
+        Compute quality and characteristics metrics for extracted learning datasets.
+
+        This method analyzes the machine learning datasets extracted from an ontology
+        to assess their quality, balance, and suitability for the three fundamental
+        ontology learning tasks. The metrics help evaluate dataset richness and
+        identify potential issues like class imbalance or sparse relationships.
+
+        The computation analyzes:
+        - Term typing dataset: Number and distribution of term-type mappings
+        - Taxonomic relations: Count of hierarchical relationships
+        - Non-taxonomic relations: Count of semantic associations
+        - Class balance: Average terms per type for distribution analysis
+
+        Args:
+            ontology: Loaded ontology instance. The extract() method will be
+                     called to obtain the learning datasets for analysis.
+
+        Returns:
+            Dataset metrics including counts and distribution measures for
+            all three ontology learning tasks.
+        """
         data: OntologyData = ontology.extract()
 
         term_typings = data.term_typings

@@ -25,7 +25,20 @@ logger = logging.getLogger(__name__)
 def term_typing_split(term_typings: List[TermTyping], test_size: float = 0.2, random_state: int = 42) \
         -> Tuple[List[TermTyping], List[TermTyping]]:
     """
-    Split term typing data ensuring similar type distribution in train and test
+    Split term typing data with stratified sampling to ensure balanced type distribution.
+
+    This function performs intelligent splitting of term typing data by grouping terms
+    by their primary (least common) type and ensuring proportional representation in
+    both training and test sets. This prevents type distribution skew that could
+    negatively impact model training and evaluation.
+
+    Args:
+        term_typings: List of term typing instances to split.
+        test_size: Proportion of data to include in test set (0.0-1.0).
+        random_state: Random seed for reproducible splits.
+
+    Returns:
+        Tuple of (train_typings, test_typings) with balanced type distributions.
     """
     # Get type frequencies
     type_counter = {}
@@ -75,7 +88,22 @@ def taxonomy_split(taxonomies: List[TaxonomicRelation], train_terms: Set[str] = 
                    test_size: float = 0.2, random_state: int = 42) \
         -> Tuple[List[TaxonomicRelation], List[TaxonomicRelation]]:
     """
-    Split taxonomy relations ensuring no term leakage from train to test
+    Split taxonomic relations while preventing data leakage between train and test sets.
+
+    This function ensures that terms appearing in training data don't appear in test
+    data, which is crucial for valid evaluation of ontology learning models. It
+    prioritizes relations involving training terms for the training set and carefully
+    splits remaining relations to maintain the desired test set size.
+
+    Args:
+        taxonomies: List of taxonomic relations to split.
+        train_terms: Set of terms already assigned to training (from term typing).
+                    If None, performs random split without leakage prevention.
+        test_size: Target proportion of relations for test set (0.0-1.0).
+        random_state: Random seed for reproducible splits.
+
+    Returns:
+        Tuple of (train_relations, test_relations) with no term overlap.
     """
     train_terms = train_terms or set()
     test_candidate_relations = []
@@ -164,7 +192,24 @@ def non_taxonomic_re_split(
 def train_test_split(data: OntologyData, test_size: float = 0.2, random_state: int = 42) \
         -> Tuple[OntologyData, OntologyData]:
     """
-    Create train/test split of ontology data, ensuring consistent term assignment
+    Create comprehensive train/test split of ontology data with data leakage prevention.
+    This is the main function for splitting ontology learning datasets. It performs
+    coordinated splitting across all three ontology learning tasks while ensuring
+    no data leakage between training and test sets. The function maintains consistency
+    in term assignments and preserves the integrity of the ontological structure.
+
+    Args:
+        data: Complete ontology data containing all three learning task datasets.
+        test_size: Proportion of data for test set (0.0-1.0). Applied consistently
+                  across all tasks with intelligent adjustments for small datasets.
+        random_state: Random seed for reproducible splits across all tasks.
+
+    Returns:
+        Tuple of (train_data, test_data) as complete OntologyData objects ready
+        for use in machine learning pipelines.
+
+    Raises:
+        ValueError: If test_size is not in valid range [0.0, 1.0].
     """
     # First split term typing to establish term assignment
     train_typings, test_typings = term_typing_split(

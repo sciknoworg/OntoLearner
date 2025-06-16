@@ -231,6 +231,27 @@ class EXPO(BaseOntology):
     download_url = "https://expo.sourceforge.net/"
 
 
+class Framester(BaseOntology):
+    """
+    Framester is a a frame-based ontological resource acting as a hub
+    between linguistic resources such as FrameNet, WordNet, VerbNet, BabelNet,
+    DBpedia, Yago, DOLCE-Zero, and leveraging this wealth of links to create
+    an interoperable predicate space formalized according to frame semantics and semiotics.
+    Framester uses WordNet and FrameNet at its core, expands it to other resources
+    transitively, and represents them in a formal version of frame semantics.
+    """
+    ontology_id = "Framester"
+    ontology_full_name = "Framester Ontology (Framester)"
+    domain = "Scholarly Knowledge"
+    category = "Linguistics"
+    version = "1.0"
+    last_updated = "19-04-2016"
+    creator = "Aldo Gangemi"
+    license = "Creative Commons 4.0"
+    format = "RDF"
+    download_url = "http://150.146.207.114/lode/extract?url=http://ontologydesignpatterns.org/ont/framester/framester.owl"
+
+
 class FRAPO(BaseOntology):
     """
     The Funding, Research Administration and Projects Ontology (FRAPO) is an ontology
