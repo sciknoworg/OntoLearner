@@ -1,5 +1,10 @@
 ## Changelog
 
+### v1.1.2 (June 11, 2025)
+- add PKO ontology
+- add push-to-hub interface
+- refactor documentation.
+
 ### v1.1.1 (May 27, 2025)
 - add HF documentation
 - add license headers
