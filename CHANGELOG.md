@@ -1,5 +1,14 @@
 ## Changelog
 
+### v1.2.0 (June 20, 2025)
+- adding new ontology (Framester)
+- enhance documentation
+- add test CI/CD
+- update automatic push-to-hub functionality
+- update dependencies.
+- upgrade ontology load functionality
+- update maintenance plan
+
 ### v1.1.2 (June 11, 2025)
 - add PKO ontology
 - add push-to-hub interface

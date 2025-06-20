@@ -5,7 +5,7 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="OntoLearner",
-    version="1.1.2",
+    version="1.2.0",
     author="Hamed Babaei Giglou, Andrei C. Aioanei",
     author_email="hamedbabaeigiglou@gmail.com, andrei.c.aioanei@gmail.com",
     description="OntoLearner: A Modular Python Library for Ontology Learning with LLMs.",
@@ -40,7 +40,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.10,<3.13.0",
+    python_requires=">=3.10,<3.14.0",
     project_urls={
         "Documentation": "https://ontolearner.readthedocs.io/",
         "Source": "https://github.com/sciknoworg/OntoLearner",
