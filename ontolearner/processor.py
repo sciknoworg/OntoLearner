@@ -15,9 +15,8 @@
 # pip install langchain
 
 import logging
-import os
 from pathlib import Path
-from typing import Union, Dict, List
+from typing import Union, Dict
 from jinja2 import Template
 import time
 import pandas as pd
@@ -26,11 +25,6 @@ from .base import BaseOntology
 from .data_structure import OntologyMetrics, OntologyData, DatasetMetrics, TopologyMetrics
 from .tools import Analyzer
 from .utils import io
-
-from langchain_core.output_parsers import StrOutputParser
-from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
-
 
 logger = logging.getLogger(__name__)
 
@@ -58,6 +52,31 @@ DOMAIN_DEFINITIONS = {
     "units_and_measurements": "Ontologies defining scientific units, quantities, dimensions, and observational models.",
     "upper_ontology": "Foundational ontologies that provide abstract concepts like objects, processes, and relations.",
     "web_and_internet": "Ontologies that model web semantics, linked data, APIs, and online communication standards."
+}
+
+DOMAIN_DESCRIPTIONS = {
+    "agriculture": "The agriculture domain encompasses the structured representation and systematic study of farming systems, crop cultivation, livestock management, and food production processes. It focuses on the development and utilization of comprehensive agricultural vocabularies and taxonomies to facilitate precise knowledge representation and interoperability across diverse agricultural practices and technologies. This domain is pivotal in advancing sustainable agricultural practices, enhancing food security, and supporting decision-making through the integration of scientific, economic, and environmental data.",
+    "arts_and_humanities": "The arts and humanities domain encompasses ontologies that systematically represent and categorize the diverse aspects of human cultural expression, including music, visual arts, historical artifacts, and broader humanistic studies. This domain plays a crucial role in knowledge representation by providing structured frameworks that facilitate the organization, retrieval, and analysis of cultural and artistic information, thereby enhancing interdisciplinary research and digital scholarship. Through precise modeling of complex cultural phenomena, these ontologies contribute to the preservation and dissemination of human heritage in the digital age.",
+    "biology_and_life_sciences": "The biology and life sciences domain encompasses the structured representation and categorization of knowledge related to biological entities, processes, and systems, ranging from molecular and cellular levels to complex organisms and ecosystems. This domain plays a critical role in facilitating data interoperability, integration, and retrieval across diverse biological disciplines, thereby advancing research and discovery. By providing a formalized framework for understanding biological concepts and their interrelations, it supports the development of computational models and enhances the precision of scientific communication.",
+    "chemistry": "The chemistry domain encompasses the structured representation and formalization of chemical knowledge, including entities, reactions, processes, and methodologies. It plays a critical role in knowledge representation by enabling the integration, sharing, and computational analysis of chemical data across diverse subfields such as organic, inorganic, physical, and computational chemistry. This domain facilitates the advancement of scientific research and innovation by providing a standardized framework for the precise and interoperable exchange of chemical information.",
+    "ecology_and_environment": "The ecology and environment domain encompasses the structured representation of knowledge pertaining to ecological systems, diverse environmental contexts, biomes, and the principles of sustainability science. This domain is pivotal in facilitating the integration, sharing, and analysis of complex environmental data, thereby advancing our understanding of ecological interactions and promoting informed decision-making for sustainable development. By providing a formalized framework, it supports interdisciplinary research and policy-making aimed at addressing global environmental challenges.",
+    "education": "The education domain encompasses ontologies that systematically represent and organize knowledge related to learning content, educational programs, competencies, and teaching resources. This domain plays a critical role in facilitating semantic interoperability and enhancing the precision of information retrieval and management within educational contexts. By providing a structured framework for the representation of educational concepts and relationships, it supports the development of intelligent systems that can effectively process and utilize educational data.",
+    "events": "The events domain encompasses the structured representation and semantic modeling of occurrences in time, including their temporal, spatial, and contextual attributes. This domain is pivotal in knowledge representation as it facilitates the interoperability and integration of event-related data across diverse systems, enabling precise scheduling, planning, and historical analysis. By providing a framework for understanding and linking events, this domain supports advanced applications in areas such as artificial intelligence, information retrieval, and decision support systems.",
+    "finance": "The finance domain encompasses the structured representation of concepts and relationships pertaining to economic indicators, financial markets, investment vehicles, and monetary transactions. It focuses on the precise modeling of financial instruments, trade mechanisms, and e-commerce processes to facilitate interoperability and data exchange across diverse financial systems. This domain is crucial for advancing knowledge representation, enabling sophisticated analysis, decision-making, and automation in financial services.",
+    "food_and_beverage": "The food and beverage domain ontologies encompasses the structured representation and categorization of knowledge related to food items, beverages, their ingredients, and culinary processes. This domain plays a critical role in facilitating semantic interoperability, data integration, and advanced information retrieval across diverse applications, including gastronomy, nutrition, and food science. By providing a formalized framework, it enables precise communication and analysis within and across disciplines, enhancing both academic research and practical applications in the food and beverage industry.",
+    "general_knowledge": "The general knowledge domain ontologies encompasses broad-scope ontologies and upper vocabularies designed for cross-disciplinary semantic modeling and knowledge representation. This domain is pivotal in facilitating interoperability and data integration across diverse fields by providing a foundational framework for organizing and linking information. Its significance lies in enabling the seamless exchange and understanding of knowledge across varied contexts, thereby supporting advanced data analysis, information retrieval, and decision-making processes.",
+    "geography": "The geography domain encompasses the structured representation and analysis of spatial, environmental, and geopolitical phenomena, focusing on the precise modeling of physical locations, territorial boundaries, and place names. This domain is pivotal in knowledge representation as it facilitates the integration and interoperability of geographic information across diverse systems, enabling advanced spatial reasoning and decision-making. By providing a formal framework for understanding the complex relationships between geographic entities, this domain supports a wide range of applications, from urban planning to environmental monitoring.",
+    "industry": "The industry domain encompasses ontologies that systematically represent and model the complex structures, processes, and interactions within industrial settings, including manufacturing systems, smart buildings, and equipment. This domain is pivotal in advancing knowledge representation by enabling the integration, interoperability, and automation of industrial processes, thereby facilitating improved efficiency, innovation, and decision-making. Through precise semantic frameworks, it supports the digital transformation and intelligent management of industrial operations.",
+    "law": "The law domain encompasses ontologies that systematically represent the complex structures and interrelations of legal concepts, processes, regulations, and rights. This domain is pivotal in knowledge representation as it facilitates the formalization and interoperability of legal information, enabling precise reasoning and decision-making across diverse legal systems. By capturing the intricacies of legal language and practice, these ontologies support the automation and enhancement of legal services and research.",
+    "library_and_cultural_heritage": "The library and cultural heritage domain encompasses ontologies that facilitate the systematic organization, cataloging, and preservation of cultural and scholarly resources. This domain plays a critical role in knowledge representation by ensuring consistent metadata standards, enabling interoperability across diverse information systems, and supporting the discovery and retrieval of cultural assets. It is integral to maintaining the integrity and accessibility of cultural heritage and scholarly communication in both digital and physical environments.",
+    "materials_science_and_engineering": "Materials Science and Engineering is a multidisciplinary domain that focuses on the study and application of materials, emphasizing their structure, properties, processing, and performance in engineering contexts. This field is pivotal for advancing knowledge representation, as it integrates principles from physics, chemistry, and engineering to innovate and optimize materials for diverse technological applications. By systematically categorizing and modeling material-related data, this domain facilitates the development of new materials and enhances the understanding of their behavior under various conditions.",
+    "medicine": "The domain of medicine encompasses the structured representation and systematic organization of clinical knowledge, including the classification and interrelation of diseases, pharmacological agents, therapeutic interventions, and biomedical data. This domain is pivotal for advancing healthcare research, facilitating interoperability among medical information systems, and enhancing decision-making processes through precise and comprehensive knowledge representation. By employing ontologies, this domain ensures a standardized and semantically rich framework that supports the integration and analysis of complex biomedical information.",
+    "news_and_media": "The news and media domain encompasses ontologies that systematically represent the structures, processes, and metadata associated with journalism, broadcasting, and creative media works. This domain is pivotal in knowledge representation as it facilitates the organization, retrieval, and analysis of media content, enabling interoperability and semantic understanding across diverse platforms and formats. By providing a structured framework, these ontologies enhance the precision and efficiency of information dissemination and consumption in the digital age.",
+    "scholarly_knowledge": "The scholarly knowledge domain encompasses ontologies that systematically represent the intricate structures, processes, and governance mechanisms inherent in scholarly research, academic publications, and the supporting infrastructure. This domain is pivotal in facilitating the organization, retrieval, and dissemination of academic knowledge, thereby enhancing the efficiency and transparency of scholarly communication. By providing a formalized framework for knowledge representation, it supports interoperability and integration across diverse research disciplines and platforms.",
+    "social_sciences": "The social sciences domain encompasses ontologies that systematically represent and model the complex structures, behaviors, identities, and interactions inherent in human societies. This domain is pivotal for advancing knowledge representation by providing a structured framework to analyze and interpret social phenomena, facilitating interdisciplinary research and enabling the integration of diverse data sources. Through precise semantic modeling, it enhances our understanding of social dynamics and supports the development of applications that address societal challenges.",
+    "units_and_measurements": "The units and measurements domain ontologies encompasses the formal representation and standardization of scientific units, quantities, dimensions, and the models used for their observation and analysis. This domain is crucial for ensuring consistency and interoperability in scientific data exchange, enabling precise communication and computation across diverse fields. By providing a structured framework for understanding and utilizing measurement concepts, it plays a vital role in advancing research, technology, and data-driven decision-making.",
+    "upper_ontology": "Upper ontology, also known as a foundational ontology, encompasses a set of highly abstract, domain-independent concepts that serve as the building blocks for more specialized ontologies. These ontologies provide a structured framework for representing fundamental entities such as objects, processes, and relations, facilitating interoperability and semantic integration across diverse domains. By establishing a common vocabulary and set of principles, upper ontologies play a crucial role in enhancing the consistency and coherence of knowledge representation systems.",
+    "web_and_internet": "The web and internet domain encompasses ontologies that articulate the structure and semantics of web technologies, including the intricate relationships and protocols that underpin linked data, web services, and online communication standards. This domain is pivotal in advancing knowledge representation by enabling the seamless integration and interoperability of diverse data sources, thereby facilitating more intelligent and dynamic web interactions. Through precise modeling of web semantics, it supports the development of robust frameworks for data exchange and enhances the semantic web's capacity to deliver contextually relevant information."
 }
 
 SYSTEM_PROMPT = """
@@ -107,8 +126,8 @@ class Processor:
         self.metrics_dir = metrics_dir
         self.analyzer_class = analyzer_class
         self.all_metrics: Dict[str, dict] = {}
-        self.doc_template_path = templates_dir / "ontology.rst"
-        self.doc_template = Template(self.doc_template_path.read_text())
+        doc_template_path = templates_dir / "ontology.rst"
+        self.doc_template = Template(doc_template_path.read_text())
 
     def process_ontology(self, ontology: BaseOntology, ontology_path: Union[str, Path]) \
             -> OntologyMetrics:
@@ -311,19 +330,23 @@ pretty_name: {domain_title}
 | Ontology ID | Full Name | Classes | Properties | Individuals |
 |-------------|-----------|---------|------------|-------------|
 """
+        usage_example_ontology = ""
         for metrics_data in metrics.values():
             metrics_data_domain = metrics_data.get("domain", "").lower().replace(' ', '_')
 
             if metrics_data_domain == domain:
+
                 ontology_id = metrics_data["ontology_id"]
                 ontology_full_name = metrics_data["ontology_full_name"]
                 num_classes = metrics_data["metrics"].topology.num_classes
                 num_properties = metrics_data["metrics"].topology.num_properties
                 num_individuals = metrics_data["metrics"].topology.num_individuals
+                if usage_example_ontology == "":
+                    usage_example_ontology = ontology_id
 
                 readme += f"| {ontology_id} | {ontology_full_name} | {num_classes} | {num_properties} | {num_individuals}|\n"
 
-        readme += """
+        readme += f"""
 ## Dataset Files
 Each ontology directory contains the following files:
 1. `<ontology_id>.<format>` - The original ontology file
@@ -332,17 +355,36 @@ Each ontology directory contains the following files:
 4. `non_taxonomic_relations.json` - Dataset of non-taxonomic relations
 5. `<ontology_id>.rst` - Documentation describing the ontology
 
+
+
 ## Usage
 These datasets are intended for ontology learning research and applications. Here's how to use them with OntoLearner:
 
-```python
-from ontolearner import LearnerPipeline, AutoLearnerLLM, Wine, train_test_split
+First of all, install the `OntoLearner` library via PiP:
 
-# Load ontology (automatically downloads from Hugging Face)
-ontology = Wine()
+```bash
+pip install ontolearner
+```
+
+**How to load an ontology or LLM4OL Paradigm tasks datasets?**
+``` python
+from ontolearner import {usage_example_ontology}
+
+ontology = {usage_example_ontology}()
+
+# Load an ontology.
 ontology.load()
 
-# Extract the dataset
+# Load (or extract) LLMs4OL Paradigm tasks datasets
+data = ontology.extract()
+```
+
+**How use the loaded dataset for LLM4OL Paradigm task settings?**
+``` python
+from ontolearner import {usage_example_ontology}, LearnerPipeline, train_test_split
+
+ontology = {usage_example_ontology}()
+ontology.load()
 data = ontology.extract()
 
 # Split into train and test sets
@@ -350,10 +392,10 @@ train_data, test_data = train_test_split(data, test_size=0.2)
 
 # Create a learning pipeline (for RAG-based learning)
 pipeline = LearnerPipeline(
-    task="term-typing",  # Other options: "taxonomy-discovery" or "non-taxonomy-discovery"
-    retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-    llm_id="mistralai/Mistral-7B-Instruct-v0.1",
-    hf_token="your_huggingface_token"  # Only needed for gated models
+    task = "term-typing",  # Other options: "taxonomy-discovery" or "non-taxonomy-discovery"
+    retriever_id = "sentence-transformers/all-MiniLM-L6-v2",
+    llm_id = "mistralai/Mistral-7B-Instruct-v0.1",
+    hf_token = "your_huggingface_token"  # Only needed for gated models
 )
 
 # Train and evaluate
@@ -365,25 +407,24 @@ results, metrics = pipeline.fit_predict_evaluate(
 )
 ```
 
-For more detailed examples, see the [OntoLearner documentation](https://ontolearner.readthedocs.io/).
+For more detailed documentation, see the [![Documentation](https://img.shields.io/badge/Documentation-ontolearner.readthedocs.io-blue)](https://ontolearner.readthedocs.io)
 
-## Citation
-If you use these ontologies in your research, please cite:
+"""
+        readme +="""## Citation
+
+If you find our work helpful, feel free to give us a cite.
 
 ```bibtex
-@software{babaei_giglou_2025,
-  author       = {Babaei Giglou, Hamed and D'Souza, Jennifer and Aioanei, Andrei and Mihindukulasooriya, Nandana and Auer, Sören},
-  title        = {OntoLearner: A Modular Python Library for Ontology Learning with LLMs},
-  month        = may,
-  year         = 2025,
-  publisher    = {Zenodo},
-  version      = {v1.0.1},
-  doi          = {10.5281/zenodo.15399783},
-  url          = {https://doi.org/10.5281/zenodo.15399783},
+@inproceedings{babaei2023llms4ol,
+  title={LLMs4OL: Large language models for ontology learning},
+  author={Babaei Giglou, Hamed and D’Souza, Jennifer and Auer, S{\"o}ren},
+  booktitle={International Semantic Web Conference},
+  pages={408--427},
+  year={2023},
+  organization={Springer}
 }
 ```
 """
-
         return readme
 
     def update_domain_readme(self,
@@ -417,12 +458,7 @@ If you use these ontologies in your research, please cite:
         metrics = self.load_metrics_from_excel(metrics_file_path) if metrics_file_path.exists() else {}
 
         # Use default domain definition if not provided
-        if domain_definition is None:
-            domain_definition = self.improve_domain_definition(
-                domain,
-                DOMAIN_DEFINITIONS[domain],
-                []
-            )
+        domain_definition = DOMAIN_DESCRIPTIONS.get(domain, None)
 
         # Create README content
         readme_content = self.create_domain_readme(
@@ -582,50 +618,3 @@ If you use these ontologies in your research, please cite:
 
         # Write to Excel
         final_df.to_excel(excel_path, index=False)
-
-    @staticmethod
-    def improve_domain_definition(domain: str,
-                                  domain_definition: str,
-                                  ontologies: List[BaseOntology]) -> str:
-        """
-        Improve domain definition using GPT-4o for enhanced clarity and precision.
-
-        This method leverages OpenAI's GPT-4o model to enhance domain definitions
-        with academic precision and technical clarity. It provides context about
-        the ontologies in the domain while ensuring the definition remains general
-        and doesn't reference specific ontologies.
-
-        Args:
-            domain: Domain identifier (e.g., "food_and_beverage").
-            domain_definition: Current definition text to be improved.
-            ontologies: List of ontology instances in the domain for context.
-                       Used to inform the improvement but not referenced directly
-                       in the output definition.
-
-        Returns:
-            Enhanced domain definition (2-3 sentences) with improved:
-            - Technical accuracy and precision
-            - Academic clarity and professionalism
-            - Scope description and significance
-            - Knowledge representation focus
-        """
-        try:
-            gpt_4o_llm = ChatOpenAI(
-                api_key = os.environ['OPENAI_API_KEY'],
-                model = "gpt-4o",
-                temperature = 0,
-            )
-            prompt = PromptTemplate(input_variables=["domain", "domain_definition", "ontologies"], template=SYSTEM_PROMPT)
-            chain = prompt | gpt_4o_llm | StrOutputParser()
-
-            result = chain.invoke(
-                {
-                    "domain": domain,
-                    "domain_definition": domain_definition,
-                    "ontologies": "\n".join([f"- {ontology.ontology_full_name}" for ontology in ontologies])
-                }
-            )
-            return result
-        except Exception as e:
-            logger.error(f"Failed to improve domain definition: {str(e)}", exc_info=True)
-            return domain_definition
