@@ -1,4 +1,4 @@
-<div align="center">
+from scripts.text2onto import ontology<div align="center">
   <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/main/images/logo.png" alt="OntoLearner Logo"/>
 </div>
 
@@ -38,10 +38,11 @@ print(ontolearner.__version__)
 
 ## 🔗 Essential Resources
 
-| Resource                                                                | Info |
-|:------------------------------------------------------------------------|:-----|
-| **[📚 OntoLearner Documentation](https://ontolearner.readthedocs.io/)** | Dive into OntoLearner's extensive documentation to explore its modular architecture, including Ontologizers, Learning Tasks, and Learner Models. The documentation provides detailed guides, references, and tutorials to help you get started and make the most of OntoLearner's capabilities.  |
-|**[🤗 Datasets on Hugging Face](https://huggingface.co/collections/SciKnowOrg/ontolearner-benchmarking-6823bcd051300c210b7ef68a)**| You can access the curated colloctions of machine-readable ontologies across diverse domains such as agriculture, medicine, social sciences, and more. OntoLearner Benchmarking datasets are optimized for integration into generative AI pipelines, supporting versioning, streaming, and metadata inspection.|
+| Resource                                                                                                                                                                                          | Info |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----|
+| **[📚 OntoLearner Documentation](https://ontolearner.readthedocs.io/)**                                                                                                                           | Dive into OntoLearner's extensive documentation to explore its modular architecture, including Ontologizers, Learning Tasks, and Learner Models. The documentation provides detailed guides, references, and tutorials to help you get started and make the most of OntoLearner's capabilities.  |
+| **[🤗 Datasets on Hugging Face](https://huggingface.co/collections/SciKnowOrg/ontolearner-benchmarking-6823bcd051300c210b7ef68a)**                                                                | You can access the curated colloctions of machine-readable ontologies across diverse domains such as agriculture, medicine, social sciences, and more. OntoLearner Benchmarking datasets are optimized for integration into generative AI pipelines, supporting versioning, streaming, and metadata inspection.|
+| **Quick Tour on OntoLearner** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1DuElAyEFzd1vtqTjDEXWcc0zCbiV2Yee?usp=sharing) | Follow this hands-on Colab tutorial to explore the complete OntoLearner workflow—from loading ontologies and extracting structured data, to training RAG models and evaluating performance on benchmark tasks. Ideal for researchers, developers, and educators getting started with ontology-centric machine learning. |
 
 
 ## 🚀 Quick Tour
@@ -61,6 +62,11 @@ ontology.load()
 data = ontology.extract()
 ```
 
+To see the ontology metadata you can print the ontology:
+```python
+print(ontology)
+```
+
 **Basic Usage - Manual Download from Hugging Face**:
 ```python
 from ontolearner.ontology import Wine
@@ -69,12 +75,13 @@ from ontolearner.ontology import Wine
 ontology = Wine()
 
 # 2. Download the ontology from Hugging Face
-file_path = ontology.from_huggingface()
+ontology.from_huggingface()
 ```
 
 **LLM-Based Learning Pipeline**:
 ```python
 from ontolearner import ontology, utils, learner
+from ontolearner.evaluation import calculate_term_typing_metrics
 
 # 1. Load the ontology and extract training data
 onto = ontology.Wine()
@@ -87,7 +94,7 @@ train_data, test_data = utils.train_test_split(
 
 # 3. Initialize a Retrieval-Augmented Generation (RAG) learner
 retriever = learner.BERTRetrieverLearner()
-llm = learner.AutoLearnerLLM()
+llm = learner.AutoLearnerLLM(token="...") # a token required for LLMs with an access
 prompt = learner.StandardizedPrompting(task="term-typing")
 
 rag_learner = learner.AutoRAGLearner(
@@ -99,14 +106,60 @@ rag_learner = learner.AutoRAGLearner(
 # 4. Load pretrained components
 rag_learner.load(
     retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-    llm_id="mistralai/Mistral-7B-Instruct-v0.1"
+    llm_id="Qwen/Qwen2.5-0.5B-Instruct"
 )
 
 # 5. Fit the model to training data
 rag_learner.fit(train_data=train_data, task="term-typing")
 
 # 6. Predict on test data
-predicted = rag_learner.predict(test_data, task="term-typing")
+results = []
+for typing in test_data.term_typings:
+    term = typing.term
+    ground_truth = typing.types
+    predicted = rag_learner.predict(term, task="term-typing")
+    metrics = calculate_term_typing_metrics(predicted, ground_truth)
+    results.append({
+        'term': term,
+        'ground_truth': ground_truth,
+        'predicted': predicted,
+        **metrics
+    })
+```
+
+**LearnerPipeline**:
+```python
+from ontolearner import LearnerPipeline
+from ontolearner import ontology, utils
+
+# 1. Load the ontology and extract training data
+onto = ontology.Wine()
+data = onto.extract()
+
+# 2. Split into train and test sets
+train_data, test_data = utils.train_test_split(
+    data, test_size=0.2, random_state=42
+)
+
+# 3. Specify learner pipeline and models
+pipeline = LearnerPipeline(
+    task="term-typing",
+    retriever_id="sentence-transformers/all-MiniLM-L6-v2",
+    llm_id="Qwen/Qwen2.5-0.5B-Instruct",
+    hf_token="your_huggingface_token"
+)
+
+# 4. fit, predict, and evaluate
+results, metrics = pipeline.fit_predict_evaluate(
+    train_data=train_data,
+    test_data=test_data,
+    top_k=3,  # Retrieve top-3 similar examples
+    test_limit=-1 # on all samples
+)
+
+# 5. printing the results
+print(f"RAG F1-Score: {metrics['avg_f1_score']:.3f}")
+print(f"RAG Exact Match: {metrics['avg_exact_match']:.3f}")
 ```
 
 ## ⭐ Contribution
