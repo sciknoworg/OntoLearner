@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "OntoLearner"
 
-version = "1.2.0"
+version = "1.2.1"
 
 description = "OntoLearner: A Modular Python Library for Ontology Learning with LLMs."
 authors = ["Hamed Babaei Giglou <hamedbabaeigiglou@gmail.com>", "Andrei C. Aioanei <andrei.c.aioanei@gmail.com>"]

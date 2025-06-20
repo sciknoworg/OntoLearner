@@ -1,5 +1,9 @@
 ## Changelog
 
+### v1.2.1 (June 20, 2025)
+- fix toml packages reference
+- add print functionality to ontologizer
+
 ### v1.2.0 (June 20, 2025)
 - adding new ontology (Framester)
 - enhance documentation
