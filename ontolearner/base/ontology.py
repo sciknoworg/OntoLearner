@@ -71,8 +71,7 @@ class BaseOntology(ABC):
         self.language = language
         self.base_dir = base_dir
 
-    @staticmethod
-    def from_huggingface(ontology_id: str, domain: str, format: str) -> str:
+    def from_huggingface(self):
         """
         Download an ontology file from a Hugging Face repository.
 
@@ -93,22 +92,17 @@ class BaseOntology(ABC):
             Exception: If download fails due to network issues, authentication,
                       or file not found in repository.
         """
-        if not ontology_id or not domain or not format:
-            raise ValueError("Ontology ID, domain, and format must be defined")
-
-        ontology_domain = domain.lower().replace(' ', '_')
+        ontology_domain = self.domain.lower().replace(' ', '_')
         repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
-        ontology_id = ontology_id.lower()
-        filename = f"{ontology_id}/{ontology_id}.{format.lower()}"
-
+        filename = f"{self.ontology_id.lower()}/{self.ontology_id.lower()}.{self.format.lower()}"
         try:
             file_path = hf_hub_download(repo_id=repo_id, filename=filename, repo_type="dataset")
-            return file_path
+            self.rdf_graph = Graph()
+            self._load(file_path)
         except Exception:
             raise
 
-    @staticmethod
-    def from_local(path: str) -> str:
+    def from_local(self, path: str):
         """
         Validate and return a local ontology file path.
 
@@ -126,7 +120,8 @@ class BaseOntology(ABC):
         """
         if not os.path.exists(path):
             raise FileNotFoundError(f"Ontology file not found at {path}")
-        return path
+        self.rdf_graph = Graph()
+        self._load(path)
 
     def load(self, path: Optional[str] = None) -> None:
         """
@@ -148,24 +143,15 @@ class BaseOntology(ABC):
         """
         self.loaded_from_huggingface = False
         self.loaded_from_local = False
-
         try:
-            self.rdf_graph = Graph()
-
             if path:
                 # Use provided path as local file
-                file_path = self.from_local(path)
+                self.from_local(path)
                 self.loaded_from_local = True
             else:
                 # Download from HuggingFace
-                file_path = self.from_huggingface(
-                    ontology_id=self.ontology_id,
-                    domain=self.domain,
-                    format=self.format
-                )
+                self.from_huggingface()
                 self.loaded_from_huggingface = True
-
-            self._load(file_path)
             if len(self.rdf_graph) == 0:
                 raise ValueError("Loaded ontology contains no triples")
         except Exception:
@@ -301,7 +287,7 @@ class BaseOntology(ABC):
                 )
             )
 
-    def _extract_from_huggingface(self, reinforce_extraction: bool) -> Optional[OntologyData]:
+    def _extract_from_huggingface(self, reinforce_extraction: bool=False) -> Optional[OntologyData]:
         """Extract data from HuggingFace, with optional reinforcement."""
         ontology_domain = self.domain.lower().replace(' ', '_')
         repo_id = f"SciKnowOrg/ontolearner-{ontology_domain}"
@@ -320,7 +306,6 @@ class BaseOntology(ABC):
             finally:
                 self.loaded_from_huggingface = original_huggingface
                 self.loaded_from_local = original_local
-
         try:
             term_typings_path = hf_hub_download(repo_id=repo_id,
                                                 filename=f"{ontology_id}/term_typings.json",
