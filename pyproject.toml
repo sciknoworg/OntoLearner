@@ -36,6 +36,7 @@ pre-commit = "*"
 setuptools = "*"
 wheel = "*"
 twine = "*"
+pytest = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
