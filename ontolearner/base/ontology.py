@@ -71,6 +71,20 @@ class BaseOntology(ABC):
         self.language = language
         self.base_dir = base_dir
 
+    def __str__(self):
+        return (
+            f"ontology_id: {self.ontology_id}\n"
+            f"ontology_full_name: {self.ontology_full_name}\n"
+            f"domain: {self.domain}\n"
+            f"category: {self.category}\n"
+            f"version: {self.version}\n"
+            f"last_updated: {self.last_updated}\n"
+            f"creator: {self.creator}\n"
+            f"license: {self.license}\n"
+            f"format: {self.format}\n"
+            f"download_url: {self.download_url}\n"
+        )
+
     def from_huggingface(self):
         """
         Download an ontology file from a Hugging Face repository.
