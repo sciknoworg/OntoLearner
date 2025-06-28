@@ -39,7 +39,7 @@ class AutoRAGLearner(AutoLearner):
         elif task == "taxonomy-discovery":
             for tr in data.type_taxonomies.taxonomies:
                 documents.append(f"Parent: {tr.parent}\nChild: {tr.child}\nRelation: is-a")
-        elif task == "task-non-taxonomic-relations":
+        elif task == "non-taxonomic-re":
             for nr in data.type_non_taxonomic_relations.non_taxonomies:
                 documents.append(f"Head: {nr.head}\nRelation: {nr.relation}\nTail: {nr.tail}")
         return documents
@@ -58,7 +58,7 @@ class AutoRAGLearner(AutoLearner):
             parent, child = eval_data
             query = f"{parent} {child}"
             prompt_data = {"parent": parent, "child": child}
-        elif task == "task-non-taxonomic-relations":
+        elif task == "non-taxonomic-re":
             head, tail = eval_data
             query = f"{head} {tail}"
             prompt_data = {"head": head, "tail": tail}

@@ -176,7 +176,7 @@ class LearnerPipeline:
                     'predicted': predicted[0],
                     **metrics
                 })
-        elif self.task == "task-non-taxonomic-relations":
+        elif self.task == "non-taxonomic-re":
             test_subset = test_data.type_non_taxonomic_relations.non_taxonomies[:limit]
             for relation in test_subset:
                 head = relation.head
