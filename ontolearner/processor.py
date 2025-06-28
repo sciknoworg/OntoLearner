@@ -20,7 +20,8 @@ from typing import Union, Dict
 from jinja2 import Template
 import time
 import pandas as pd
-
+import inspect
+import ontolearner.ontology as ontology_module
 from .base import BaseOntology
 from .data_structure import OntologyMetrics, OntologyData, DatasetMetrics, TopologyMetrics
 from .tools import Analyzer
@@ -618,3 +619,14 @@ If you find our work helpful, feel free to give us a cite.
 
         # Write to Excel
         final_df.to_excel(excel_path, index=False)
+
+
+class AutoOntology:
+    def __new__(self, ontology_id) -> BaseOntology:
+        for name, obj in inspect.getmembers(ontology_module):
+            if inspect.isclass(obj):
+                if hasattr(obj, 'load') and callable(getattr(obj, 'load')) and hasattr(obj, 'ontology_id'):
+                    instance = obj()
+                    if str(obj).split("'")[-2].split(".")[-1].lower() == ontology_id.lower():
+                        return instance
+        return BaseOntology()

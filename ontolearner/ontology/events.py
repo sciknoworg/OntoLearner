@@ -15,7 +15,7 @@
 from ..base import BaseOntology
 
 
-class ConferenceOntology(BaseOntology):
+class Conference(BaseOntology):
     """
     The conference-ontology is a new self-contained ontology for modeling knowledge about conferences.
     The conference-ontology adopts the best ontology design practices (e.g., Ontology Design Patterns,

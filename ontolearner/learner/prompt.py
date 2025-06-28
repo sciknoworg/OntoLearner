@@ -36,7 +36,7 @@ Response:
 Is {parent} a parent of {child}?
 Answer yes/no. Do not explain.
 """
-            elif task == "task-non-taxonomic-relations":
+            elif task == "non-taxonomic-re":
                 prompt_template = """
 What is the relation between {head} and {tail}? Return only the relation type.
 """
