@@ -56,10 +56,10 @@ Usage Example
 -------------
 .. code-block:: python
 
-    from ontolearner.ontology import ConferenceOntology
+    from ontolearner.ontology import Conference
 
     # Initialize and load ontology
-    ontology = ConferenceOntology()
+    ontology = Conference()
     ontology.load("path/to/ontology.OWL")
 
     # Extract datasets
