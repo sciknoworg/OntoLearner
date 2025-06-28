@@ -1,4 +1,4 @@
-from scripts.text2onto import ontology<div align="center">
+<div align="center">
   <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/main/images/logo.png" alt="OntoLearner Logo"/>
 </div>
 
