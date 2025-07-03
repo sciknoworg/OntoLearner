@@ -22,8 +22,10 @@ from ontolearner.data_structure import OntologyData, TermTyping, TaxonomicRelati
 logger = logging.getLogger(__name__)
 
 
-def term_typing_split(term_typings: List[TermTyping], test_size: float = 0.2, random_state: int = 42) \
-        -> Tuple[List[TermTyping], List[TermTyping]]:
+def term_typing_split(term_typings: List[TermTyping],
+                      test_size: float = 0.2,
+                      random_state: int = 42,
+                      verbose: bool=False) -> Tuple[List[TermTyping], List[TermTyping]]:
     """
     Split term typing data with stratified sampling to ensure balanced type distribution.
 
@@ -79,14 +81,16 @@ def term_typing_split(term_typings: List[TermTyping], test_size: float = 0.2, ra
     # Create the final train/test lists
     train_typings = [tt for tt in term_typings if tt.term in train_terms]
     test_typings = [tt for tt in term_typings if tt.term in test_terms]
-
-    logger.info(f"Term typing split: {len(train_typings)} train, {len(test_typings)} test")
+    if verbose:
+        logger.info(f"Term typing split: {len(train_typings)} train, {len(test_typings)} test")
     return train_typings, test_typings
 
 
-def taxonomy_split(taxonomies: List[TaxonomicRelation], train_terms: Set[str] = None,
-                   test_size: float = 0.2, random_state: int = 42) \
-        -> Tuple[List[TaxonomicRelation], List[TaxonomicRelation]]:
+def taxonomy_split(taxonomies: List[TaxonomicRelation],
+                   train_terms: Set[str] = None,
+                   test_size: float = 0.2,
+                   random_state: int = 42,
+                   verbose: bool=False) -> Tuple[List[TaxonomicRelation], List[TaxonomicRelation]]:
     """
     Split taxonomic relations while preventing data leakage between train and test sets.
 
@@ -138,17 +142,16 @@ def taxonomy_split(taxonomies: List[TaxonomicRelation], train_terms: Set[str] = 
         random.Random(random_state).shuffle(train_relations)
         test_relations = train_relations[-n_test:]
         train_relations = train_relations[:-n_test]
-
-    logger.info(f"Taxonomy split: {len(train_relations)} train, {len(test_relations)} test")
+    if verbose:
+        logger.info(f"Taxonomy split: {len(train_relations)} train, {len(test_relations)} test")
     return train_relations, test_relations
 
 
-def non_taxonomic_re_split(
-        non_taxonomies: List[NonTaxonomicRelation],
-        train_terms: Set[str] = None,
-        test_size: float = 0.2,
-        random_state: int = 42
-) -> Tuple[List[NonTaxonomicRelation], List[NonTaxonomicRelation]]:
+def non_taxonomic_re_split(non_taxonomies: List[NonTaxonomicRelation],
+                           train_terms: Set[str] = None,
+                           test_size: float = 0.2,
+                           random_state: int = 42,
+                           verbose: bool=False) -> Tuple[List[NonTaxonomicRelation], List[NonTaxonomicRelation]]:
     """
     Split non-taxonomy relations ensuring no term leakage from train to test
     """
@@ -184,13 +187,15 @@ def non_taxonomic_re_split(
 
     # Add remaining candidates to train
     train_relations.extend(test_candidate_relations)
-
-    logger.info(f"Non-taxonomy split: {len(train_relations)} train, {len(test_relations)} test")
+    if verbose:
+        logger.info(f"Non-taxonomy split: {len(train_relations)} train, {len(test_relations)} test")
     return train_relations, test_relations
 
 
-def train_test_split(data: OntologyData, test_size: float = 0.2, random_state: int = 42) \
-        -> Tuple[OntologyData, OntologyData]:
+def train_test_split(data: OntologyData,
+                     test_size: float = 0.2,
+                     random_state: int = 42,
+                     verbose: bool = False) -> Tuple[OntologyData, OntologyData]:
     """
     Create comprehensive train/test split of ontology data with data leakage prevention.
     This is the main function for splitting ontology learning datasets. It performs
@@ -270,9 +275,10 @@ def train_test_split(data: OntologyData, test_size: float = 0.2, random_state: i
     )
 
     # Log the split summary
-    logger.info("Ontology data split complete:")
-    logger.info(f"  Term typing: {len(train_typings)} train, {len(test_typings)} test")
-    logger.info(f"  Taxonomy: {len(train_taxonomies)} train, {len(test_taxonomies)} test")
-    logger.info(f"  Non-taxonomy: {len(train_non_taxonomies)} train, {len(test_non_taxonomies)} test")
+    if verbose:
+        logger.info("Ontology data split complete:")
+        logger.info(f"  Term typing: {len(train_typings)} train, {len(test_typings)} test")
+        logger.info(f"  Taxonomy: {len(train_taxonomies)} train, {len(test_taxonomies)} test")
+        logger.info(f"  Non-taxonomy: {len(train_non_taxonomies)} train, {len(test_non_taxonomies)} test")
 
     return train_data, test_data
