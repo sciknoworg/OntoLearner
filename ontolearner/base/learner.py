@@ -295,50 +295,44 @@ class AutoRetriever(ABC):
         self.documents = inputs
         self.embeddings = self.embedding_model.encode(inputs, convert_to_tensor=True)
 
-    def retrieve(self, query: Any, top_k: int = 5) -> List[Any]:
+    def retrieve(self, query: List[str], top_k: int = 5) -> List[List[str]]:
         """
-        Retrieve the most similar examples for a given query.
-
-        This method finds and returns the top-k most similar examples from
-        the indexed training data based on semantic similarity.
+        Retrieve the top-k most similar examples for each query in a list of queries.
 
         Args:
-            query: Query example to find similar items for.
-                  Format depends on the specific task and implementation.
-            top_k: Number of most similar examples to retrieve.
+            query: List of query examples.
+            top_k: Number of most similar examples to retrieve per query.
 
         Returns:
-            List of the top-k most similar examples from the indexed data.
-
-        Raises:
-            NotImplementedError: If not implemented by concrete class.
+            A list of lists, where each sublist contains the top-k most similar examples for the corresponding query.
         """
-
         if self.embeddings is None:
-            return []
+            raise RuntimeError("Retriever model must index documents before prediction.")
 
-        query_embedding = self.embedding_model.encode(query, convert_to_tensor=True)
+        # Encode all queries at once
+        query_embeddings = self.embedding_model.encode(query, convert_to_tensor=True)  # shape: [num_queries, dim]
 
-        if query_embedding.shape[-1] != self.embeddings.shape[-1]:
+        if query_embeddings.shape[-1] != self.embeddings.shape[-1]:
             raise ValueError(
-                f"Embedding dimension mismatch: query embedding dim={query_embedding.shape[-1]}, "
+                f"Embedding dimension mismatch: query embedding dim={query_embeddings.shape[-1]}, "
                 f"document embedding dim={self.embeddings.shape[-1]}"
             )
-        query_embedding = self.embedding_model.encode(query, convert_to_tensor=True)  # shape [10, 384]
 
-        # Average across the sequence
-        # query_embedding = query_embedding.mean(dim=0)  # shape [384]
-        #
-        # query_expanded = query_embedding.unsqueeze(0).expand(self.embeddings.size(0), -1)
-        similarities = F.cosine_similarity(query_embedding, self.embeddings, dim=1)
+        # Normalize embeddings for cosine similarity
+        query_norm = F.normalize(query_embeddings, p=2, dim=1)
+        doc_norm = F.normalize(self.embeddings, p=2, dim=1)
+
+        # Compute cosine similarity: [num_queries, num_docs]
+        similarity_matrix = torch.matmul(query_norm, doc_norm.T)
+
+        # Get top-k indices for each query
         top_k = min(top_k, len(self.documents))
-        indices = similarities.topk(top_k).indices.tolist()
-        #
-        # top_k = min(top_k, len(self.documents))
-        #
-        # indices = similarities.topk(top_k).indices.tolist()
+        topk_similarities, topk_indices = torch.topk(similarity_matrix, k=top_k, dim=1)
 
-        return [self.documents[i] for i in indices]
+        # Retrieve documents for each query
+        results = [[self.documents[i] for i in indices] for indices in topk_indices]
+
+        return results
 
 
 class AutoPrompt(ABC):
