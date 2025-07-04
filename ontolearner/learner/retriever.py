@@ -74,10 +74,7 @@ class AutoRetrieverLearner(AutoLearner):
         if test:
             if self._is_term_typing_fit:
                 types = self._retriever_predict(data=data, top_k=self.top_k)
-                term_typings = []
-                for term, type in zip(data, types):
-                    term_typings.append({"term": term, "types": type})
-                return term_typings
+                return [{"term": term, "types": type} for term, type in zip(data, types)]
             else:
                 raise RuntimeError("Term typing model must be fit before prediction.")
         else:
@@ -90,19 +87,14 @@ class AutoRetrieverLearner(AutoLearner):
         during testing (same data): data= ['type-1', ...]
         """
         if test:
-            if self._is_taxonomy_discovery_fit:
-                candidates_lst =  self._retriever_predict(data=data, top_k=self.top_k + 1)
-                taxonomic_pairs = []
-                for query, candidates in zip(data, candidates_lst):
-                    for candidate in candidates:
-                        if candidate != query:
-                            taxonomic_pairs.append({"parent": query, "child":candidate})
-                return taxonomic_pairs
-            else:
-                raise RuntimeError("Taxonomy discovery model must be fit before prediction.")
-        else:
             self._retriever_fit(data=data)
-            self._is_taxonomy_discovery_fit = True
+            candidates_lst =  self._retriever_predict(data=data, top_k=self.top_k + 1)
+            taxonomic_pairs = [{"parent": query, "child": candidate}
+                               for query, candidates in zip(data, candidates_lst)
+                               for candidate in candidates if candidate != query]
+            return taxonomic_pairs
+        else:
+            warnings.warn("No requirement for fiting the taxonomy discovery model, the predict module will use the input data to do the fit as well.")
 
     def _non_taxonomic_re(self, data: Any, test: bool = False) -> Optional[Any]:
         """
@@ -127,10 +119,9 @@ class AutoRetrieverLearner(AutoLearner):
                         taxonomic_pairs_query.append(f"Head: {query} \n Tail: {candidate}")
             self._retriever_fit(data=data['relations'])
             candidate_relations_lst = self._retriever_predict(data=taxonomic_pairs_query, top_k=self.top_k)
-            non_taxonomic_re = []
-            for (head, tail), candidate_relations in zip(taxonomic_pairs, candidate_relations_lst):
-                for relation in candidate_relations:
-                    non_taxonomic_re.append({"head": head, "tail": tail, "relation": relation})
+            non_taxonomic_re = [{"head": head, "tail": tail, "relation": relation}
+                                for (head, tail), candidate_relations in zip(taxonomic_pairs, candidate_relations_lst)
+                                for relation in candidate_relations]
             return non_taxonomic_re
         else:
             warnings.warn("No requirement for fiting the non-taxonomic RE model, the predict module will use the input data to do the fit as well..")
