@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import Any, List, Optional
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
@@ -163,7 +163,7 @@ class AutoLLM(ABC):
         tokenizer: The tokenizer associated with the model.
     """
 
-    def __init__(self, token: str="") -> None:
+    def __init__(self, label_mapper: Any, device: str='cpu', token: str="") -> None:
         """
         Initialize the LLM component.
 
@@ -171,6 +171,8 @@ class AutoLLM(ABC):
         that will be populated when load() is called.
         """
         self.token = token
+        self.label_mapper = label_mapper
+        self.device=device
         self.model: Optional[Any] = None
         self.tokenizer: Optional[Any] = None
 
@@ -193,14 +195,15 @@ class AutoLLM(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id, token=self.token)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_id, padding_side='left', token=self.token)
         self.tokenizer.pad_token = self.tokenizer.eos_token
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id,
-            device_map="auto",
+            # device_map="auto",
             torch_dtype=torch.bfloat16,
             token=self.token
         )
+        self.label_mapper.fit()
 
     def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
         """
@@ -225,16 +228,26 @@ class AutoLLM(ABC):
             List of generated text responses, one for each input prompt.
             Responses include the original input plus generated continuation.
         """
-        encoded_inputs = self.tokenizer(inputs, return_tensors="pt",
-                                        padding=True).to(self.model.device)
+        # Tokenize inputs and move to device
+        encoded_inputs = self.tokenizer(inputs, return_tensors="pt", padding=True).to(self.model.device)
+        input_ids = encoded_inputs["input_ids"]
+        input_length = input_ids.shape[1]
+
+        # Generate output
         outputs = self.model.generate(
             **encoded_inputs,
             max_new_tokens=max_new_tokens,
-            pad_token_id=self.tokenizer.eos_token_id,
-            temperature=0.1
+            pad_token_id=self.tokenizer.eos_token_id
         )
-        return [self.tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
 
+        # Extract only the newly generated tokens (excluding prompt)
+        generated_tokens = outputs[:, input_length:]
+
+        # Decode only the generated part
+        decoded_outputs = [self.tokenizer.decode(g, skip_special_tokens=True).strip() for g in generated_tokens]
+
+        # Map the decoded text to labels
+        return self.label_mapper.predict(decoded_outputs)
 
 class AutoRetriever(ABC):
     """
@@ -357,7 +370,6 @@ class AutoPrompt(ABC):
         """
         self.prompt_template = prompt_template
 
-    @abstractmethod
     def format(self, **kwargs: Any) -> str:
         """
         Format the prompt template with the provided arguments.
@@ -379,4 +391,7 @@ class AutoPrompt(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        pass
+        try:
+            return self.prompt_template.format(**kwargs)
+        except KeyError as e:
+            raise KeyError(f"{e} is not a valid keyword argument")

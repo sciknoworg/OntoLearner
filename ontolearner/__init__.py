@@ -16,16 +16,18 @@ __version__ = "1.2.1"
 
 import logging
 from ontolearner import base, data_structure, ontology, text2onto, utils, tools, learner
-from .learner import AutoLearnerLLM, BERTRetrieverLearner
+from .learner import AutoLLMLearner, AutoRetrieverLearner, LLMPrompting, LabelMapper
 from .learner_pipeline import LearnerPipeline
 from .processor import Processor, AutoOntology
 from .utils.train_test_split import train_test_split
 from .ontology import * # noqa
 
 __all__ = [
-    "AutoLearnerLLM",
+    "AutoLLMLearner",
     "AutoOntology",
-    "BERTRetrieverLearner",
+    "AutoRetrieverLearner",
+    "LLMPrompting",
+    "LabelMapper",
     "LearnerPipeline",
     "Processor",
     "data_structure",

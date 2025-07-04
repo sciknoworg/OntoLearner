@@ -12,96 +12,142 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ..base import AutoLLM
-from typing import List, Optional
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
+from ..base import AutoLLM, AutoLearner
+from typing import Any
+import warnings
+from tqdm import tqdm
+from torch.utils.data import DataLoader
 
 
-class AutoLearnerLLM(AutoLLM):
-    """
-    Large Language Model component for ontology learning tasks.
+class AutoLLMLearner(AutoLearner):
 
-    This class provides a concrete implementation of the AutoLLM interface using
-    Hugging Face Transformers. It supports loading and using various instruction-tuned
-    language models for ontology learning tasks, with optimized configurations for
-    structured text generation.
-
-    Attributes:
-        token: Hugging Face authentication token for gated models.
-        model: Loaded causal language model instance.
-        tokenizer: Associated tokenizer for text processing.
-    """
-
-    def __init__(self, token: str = "") -> None:
-        """
-        Initialize the LLM component.
-
-        Args:
-            token: Hugging Face authentication token. Required for gated models
-                  like Llama or other restricted models.
-        """
+    def __init__(self,
+                 prompting,
+                 label_mapper,
+                 token: str = "",
+                 max_new_tokens: int = 5,
+                 batch_size: int = 10) -> None:
         super().__init__()
-        self.token = token
+        self.llm = AutoLLM(token=token, label_mapper=label_mapper)
+        self.prompting = prompting
+        self.batch_size = batch_size
+        self.max_new_tokens = max_new_tokens
+        self._is_term_typing_fit = False
+        self._is_taxonomic_re_fit = False
 
-    def load(self, model_id: str = "mistralai/Mistral-7B-Instruct-v0.1", token: Optional[str] = None) -> None:
+    def load(self, model_id: str = "mistralai/Mistral-7B-Instruct-v0.1", **kwargs: Any) -> None:
+        self.llm.load(model_id=model_id)
+
+    def _tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
+        formatted_data = []
+        if task == "term-typing":
+            for typing in data.term_typings:
+                if test:
+                    formatted_data.append(typing.term)
+                else:
+                    formatted_data += typing.types
+            formatted_data = list(set(formatted_data))
+        if task == "taxonomy-discovery":
+            for taxonomic_pairs in data.type_taxonomies.taxonomies:
+                formatted_data.append(taxonomic_pairs.parent)
+                formatted_data.append(taxonomic_pairs.child)
+            formatted_data = list(set(formatted_data))
+        if task == "non-taxonomic-re":
+            non_taxonomic_types = []
+            non_taxonomic_res = []
+            for non_taxonomic_triplets in data.type_non_taxonomic_relations.non_taxonomies:
+                non_taxonomic_types.append(non_taxonomic_triplets.head)
+                non_taxonomic_types.append(non_taxonomic_triplets.tail)
+                non_taxonomic_res.append(non_taxonomic_triplets.relation)
+            non_taxonomic_types = list(set(non_taxonomic_types))
+            non_taxonomic_res = list(set(non_taxonomic_res))
+            formatted_data = {"types": non_taxonomic_types, "relations": non_taxonomic_res}
+        return formatted_data
+
+    def _term_typing(self, data: Any, test: bool = False) -> Any:
         """
-        Load a language model and tokenizer from Hugging Face.
-
-        This method downloads and initializes the specified model with optimized
-        settings for ontology learning tasks. It configures automatic device
-        placement, memory-efficient data types, and proper tokenization.
-
-        Args:
-            model_id: Hugging Face model identifier. Should be an instruction-tuned
-                     model for best results with ontology learning tasks.
-            token: Authentication token for this specific load operation.
-                  If None, uses the token provided during initialization.
-
-        Raises:
-            OSError: If model cannot be downloaded or loaded.
-            ValueError: If authentication fails for gated models.
+        during training: data = ["type-1", .... ],
+        during testing: data = ['term-1', ...]
         """
-        auth_token = token if token is not None else self.token
+        if not isinstance(data, list) and not all(isinstance(item, str) for item in data):
+            raise TypeError("Expected a list of strings (types) for llm  at term-typing task.")
+        if test:
+            if self._is_term_typing_fit:
+                prompting = self.prompting(task='term-typing')
+                dataset = [{"term": term, "type": type, "prompt": prompting.format(term=term, type=type)}
+                           for term in data for type in self.candidate_types]
+                dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
+                predicts_dict = {}
+                for batch in tqdm(dataloader):
+                    prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
+                    for term, type, predict in zip(batch['term'], batch['type'], prediction):
+                        if term not in predicts_dict:
+                            predicts_dict[term] = []
+                        if predict == 'yes':
+                            predicts_dict[term].append(type)
+                predicts = [{"term": term, "types": types} for term, types in predicts_dict.items()]
+                return predicts
+            else:
+                raise RuntimeError("Term typing model must be fit before prediction.")
+        else:
+            self.candidate_types = data
+            self._is_term_typing_fit = True
 
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id, token=auth_token)
-        self.tokenizer.pad_token = self.tokenizer.eos_token
-        self.model = AutoModelForCausalLM.from_pretrained(
-            model_id,
-            device_map="auto",
-            torch_dtype=torch.bfloat16,
-            token=auth_token
-        )
-
-    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
+    def _taxonomy_discovery(self, data: Any, test: bool = False) -> Any:
         """
-        Generate text responses for the given input prompts.
-
-        This method processes a batch of input prompts and generates corresponding
-        text responses using the loaded language model. It uses optimized settings
-        for consistent, high-quality generation suitable for ontology learning tasks.
-
-        Generation Settings:
-        - Temperature: 0.1 (low randomness for consistent outputs)
-        - Padding: Automatic handling for batch processing
-        - Device placement: Automatic GPU/CPU selection
-
-        Args:
-            inputs: List of input prompts to generate responses for.
-                   Each prompt should be a complete, well-formatted string.
-            max_new_tokens: Maximum number of new tokens to generate per input.
-                          Shorter values encourage concise responses.
-
-        Returns:
-            List of generated text responses, one for each input prompt.
-            Responses include the original input plus generated continuation.
+        during training: data = ['type-1', ...],
+        during testing (same data): data= ['type-1', ...]
         """
-        encoded_inputs = self.tokenizer(inputs, return_tensors="pt",
-                                        padding=True).to(self.model.device)
-        outputs = self.model.generate(
-            **encoded_inputs,
-            max_new_tokens=max_new_tokens,
-            pad_token_id=self.tokenizer.eos_token_id,
-            temperature=0.1
-        )
-        return [self.tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
+        if test:
+            if not isinstance(data, list) and not all(isinstance(item, str) for item in data):
+                raise TypeError("Expected a list of strings (types) for llm  at term-typing task.")
+            prompting = self.prompting(task='taxonomy-discovery')
+            dataset = [{"parent": type_i, "child": type_j, "prompt": prompting.format(parent=type_i, child=type_j)}
+                       for idx, type_i in enumerate(data) for jdx, type_j in enumerate(data) if idx < jdx]
+            dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
+            predicts_lst = []
+            for batch in tqdm(dataloader):
+                prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
+                predicts_lst.extend({"parent": parent, "child": child}
+                                    for parent, child, predict in zip(batch['parent'], batch['child'], prediction)
+                                    if predict == 'yes')
+            return predicts_lst
+        else:
+            warnings.warn("No requirement for fiting the taxonomy-discovery model, the predict module will use the input data to do the 'is-a' relationship detection")
+
+    def _non_taxonomic_re(self, data: Any, test: bool = False) -> Any:
+        """
+        during training: data = ['type-1', ...],
+        during testing: {'types': [...], 'relations': [... ]}
+        """
+        if test:
+            if 'types' not in data or 'relations' not in data:
+                raise ValueError("The non-taxonomic re predict should take {'types': [...], 'relations': [... ]}")
+            if len(data['types']) == 0:
+                warnings.warn("No `types` avaliable to do the non-taxonomic re-prediction.")
+                return None
+            prompting = self.prompting(task='taxonomy-discovery')
+            dataset = [{"parent": type_i, "child": type_j, "prompt": prompting.format(parent=type_i, child=type_j)}
+                       for idx, type_i in enumerate(data['types']) for jdx, type_j in enumerate(data['types']) if idx < jdx]
+            dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
+            predicts_lst = []
+            for batch in tqdm(dataloader):
+                prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
+                predicts_lst.extend((parent, child)
+                                    for parent, child, predict in zip(batch['parent'], batch['child'], prediction)
+                                    if predict == 'yes')
+
+            prompting = self.prompting(task='non-taxonomic-re')
+            dataset = [{"head": head, "tail": tail, "relation": relation,
+                        "prompt": prompting.format(head=head, tail=tail, relation=relation)}
+                       for head, tail in predicts_lst for relation in data['relations']]
+            dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
+            predicts_lst = []
+            for batch in tqdm(dataloader):
+                prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
+                predicts_lst.extend({"head": head, "tail": tail, "relation": relation}
+                                    for head, tail, relation, predict in zip(batch['head'], batch['tail'], batch['relation'], prediction)
+                                    if predict == 'yes')
+            return predicts_lst
+        else:
+            warnings.warn("No requirement for fiting the non-taxonomic-re model, the predict module will use the input data to do the task.")
