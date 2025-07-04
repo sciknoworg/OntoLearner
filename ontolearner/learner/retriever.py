@@ -57,7 +57,7 @@ class AutoRetrieverLearner(AutoLearner):
         if isinstance(data, list) and all(isinstance(item, str) for item in data):
             self.retriever.index(inputs=data)
         else:
-            raise TypeError("Expected a list of strings for for retriever at term-typing task.")
+            raise TypeError("Expected a list of strings for retriever at term-typing task.")
 
     def _retriever_predict(self, data:Any, top_k: int) -> Any:
         if isinstance(data, list):
