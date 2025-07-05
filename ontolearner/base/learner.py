@@ -148,7 +148,30 @@ class AutoLearner(ABC):
         pass
 
     def _tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
-        pass
+        formatted_data = []
+        if task == "term-typing":
+            for typing in data.term_typings:
+                if test:
+                    formatted_data.append(typing.term)
+                else:
+                    formatted_data += typing.types
+            formatted_data = list(set(formatted_data))
+        if task == "taxonomy-discovery":
+            for taxonomic_pairs in data.type_taxonomies.taxonomies:
+                formatted_data.append(taxonomic_pairs.parent)
+                formatted_data.append(taxonomic_pairs.child)
+            formatted_data = list(set(formatted_data))
+        if task == "non-taxonomic-re":
+            non_taxonomic_types = []
+            non_taxonomic_res = []
+            for non_taxonomic_triplets in data.type_non_taxonomic_relations.non_taxonomies:
+                non_taxonomic_types.append(non_taxonomic_triplets.head)
+                non_taxonomic_types.append(non_taxonomic_triplets.tail)
+                non_taxonomic_res.append(non_taxonomic_triplets.relation)
+            non_taxonomic_types = list(set(non_taxonomic_types))
+            non_taxonomic_res = list(set(non_taxonomic_res))
+            formatted_data = {"types": non_taxonomic_types, "relations": non_taxonomic_res}
+        return formatted_data
 
 class AutoLLM(ABC):
     """

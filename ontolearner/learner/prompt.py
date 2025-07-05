@@ -16,7 +16,7 @@ from ..base import AutoPrompt
 
 
 class StandardizedPrompting(AutoPrompt):
-    def __init__(self,  task: str = None):
+    def __init__(self, task: str = None):
         if task == "term-typing":
             prompt_template = """Given a list of types as candidates to be assigned to the term, identify the most probable types.
 Return the types only in the form of a list. Do not provide any explanation outside the list.
@@ -37,7 +37,6 @@ Answer yes/no. Do not explain.
             prompt_template = """What is the relation between {head} and {tail}? Return only the relation type."""
         else:
             raise ValueError("Unknown task! Current tasks are: 'term-typing', 'taxonomy-discovery', 'non-taxonomic-re'")
-
         super().__init__(prompt_template)
 
 

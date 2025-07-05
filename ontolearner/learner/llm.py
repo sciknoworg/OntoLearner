@@ -33,36 +33,22 @@ class AutoLLMLearner(AutoLearner):
         self.batch_size = batch_size
         self.max_new_tokens = max_new_tokens
         self._is_term_typing_fit = False
-        self._is_taxonomic_re_fit = False
 
-    def load(self, model_id: str = "mistralai/Mistral-7B-Instruct-v0.1", **kwargs: Any) -> None:
+    def load(self, model_id: str = "mistralai/Mistral-7B-Instruct-v0.1", **kwargs: Any):
         self.llm.load(model_id=model_id)
 
-    def _tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
-        formatted_data = []
-        if task == "term-typing":
-            for typing in data.term_typings:
-                if test:
-                    formatted_data.append(typing.term)
-                else:
-                    formatted_data += typing.types
-            formatted_data = list(set(formatted_data))
-        if task == "taxonomy-discovery":
-            for taxonomic_pairs in data.type_taxonomies.taxonomies:
-                formatted_data.append(taxonomic_pairs.parent)
-                formatted_data.append(taxonomic_pairs.child)
-            formatted_data = list(set(formatted_data))
-        if task == "non-taxonomic-re":
-            non_taxonomic_types = []
-            non_taxonomic_res = []
-            for non_taxonomic_triplets in data.type_non_taxonomic_relations.non_taxonomies:
-                non_taxonomic_types.append(non_taxonomic_triplets.head)
-                non_taxonomic_types.append(non_taxonomic_triplets.tail)
-                non_taxonomic_res.append(non_taxonomic_triplets.relation)
-            non_taxonomic_types = list(set(non_taxonomic_types))
-            non_taxonomic_res = list(set(non_taxonomic_res))
-            formatted_data = {"types": non_taxonomic_types, "relations": non_taxonomic_res}
-        return formatted_data
+    def _term_typing_predict(self, dataset):
+        dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
+        predictions = {}
+        for batch in tqdm(dataloader):
+            prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
+            for term, type, predict in zip(batch['term'], batch['type'], prediction):
+                if term not in predictions:
+                    predictions[term] = []
+                if predict == 'yes':
+                    predictions[term].append(type)
+        predicts = [{"term": term, "types": types} for term, types in predictions.items()]
+        return predicts
 
     def _term_typing(self, data: Any, test: bool = False) -> Any:
         """
@@ -76,22 +62,23 @@ class AutoLLMLearner(AutoLearner):
                 prompting = self.prompting(task='term-typing')
                 dataset = [{"term": term, "type": type, "prompt": prompting.format(term=term, type=type)}
                            for term in data for type in self.candidate_types]
-                dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
-                predicts_dict = {}
-                for batch in tqdm(dataloader):
-                    prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
-                    for term, type, predict in zip(batch['term'], batch['type'], prediction):
-                        if term not in predicts_dict:
-                            predicts_dict[term] = []
-                        if predict == 'yes':
-                            predicts_dict[term].append(type)
-                predicts = [{"term": term, "types": types} for term, types in predicts_dict.items()]
-                return predicts
+                predictions = self._term_typing_predict(dataset=dataset)
+                return predictions
             else:
                 raise RuntimeError("Term typing model must be fit before prediction.")
         else:
             self.candidate_types = data
             self._is_term_typing_fit = True
+
+    def _taxonomy_discovery_predict(self, dataset):
+        dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
+        predictions = []
+        for batch in tqdm(dataloader):
+            prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
+            predictions.extend({"parent": parent, "child": child}
+                                for parent, child, predict in zip(batch['parent'], batch['child'], prediction)
+                                if predict == 'yes')
+        return predictions
 
     def _taxonomy_discovery(self, data: Any, test: bool = False) -> Any:
         """
@@ -104,16 +91,20 @@ class AutoLLMLearner(AutoLearner):
             prompting = self.prompting(task='taxonomy-discovery')
             dataset = [{"parent": type_i, "child": type_j, "prompt": prompting.format(parent=type_i, child=type_j)}
                        for idx, type_i in enumerate(data) for jdx, type_j in enumerate(data) if idx < jdx]
-            dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
-            predicts_lst = []
-            for batch in tqdm(dataloader):
-                prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
-                predicts_lst.extend({"parent": parent, "child": child}
-                                    for parent, child, predict in zip(batch['parent'], batch['child'], prediction)
-                                    if predict == 'yes')
-            return predicts_lst
+            return self._taxonomy_discovery_predict(dataset=dataset)
         else:
             warnings.warn("No requirement for fiting the taxonomy-discovery model, the predict module will use the input data to do the 'is-a' relationship detection")
+
+    def _non_taxonomic_re_predict(self, dataset):
+        dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
+        predictions = []
+        for batch in tqdm(dataloader):
+            prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
+            predictions.extend({"head": head, "tail": tail, "relation": relation}
+                                for head, tail, relation, predict in
+                                zip(batch['head'], batch['tail'], batch['relation'], prediction)
+                                if predict == 'yes')
+        return predictions
 
     def _non_taxonomic_re(self, data: Any, test: bool = False) -> Any:
         """
@@ -126,6 +117,7 @@ class AutoLLMLearner(AutoLearner):
             if len(data['types']) == 0:
                 warnings.warn("No `types` avaliable to do the non-taxonomic re-prediction.")
                 return None
+            # paring and finding paris that can have a relationship
             prompting = self.prompting(task='taxonomy-discovery')
             dataset = [{"parent": type_i, "child": type_j, "prompt": prompting.format(parent=type_i, child=type_j)}
                        for idx, type_i in enumerate(data['types']) for jdx, type_j in enumerate(data['types']) if idx < jdx]
@@ -136,18 +128,11 @@ class AutoLLMLearner(AutoLearner):
                 predicts_lst.extend((parent, child)
                                     for parent, child, predict in zip(batch['parent'], batch['child'], prediction)
                                     if predict == 'yes')
-
+            # finding relationships
             prompting = self.prompting(task='non-taxonomic-re')
             dataset = [{"head": head, "tail": tail, "relation": relation,
                         "prompt": prompting.format(head=head, tail=tail, relation=relation)}
                        for head, tail in predicts_lst for relation in data['relations']]
-            dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False)
-            predicts_lst = []
-            for batch in tqdm(dataloader):
-                prediction = self.llm.generate(inputs=batch['prompt'], max_new_tokens=self.max_new_tokens)
-                predicts_lst.extend({"head": head, "tail": tail, "relation": relation}
-                                    for head, tail, relation, predict in zip(batch['head'], batch['tail'], batch['relation'], prediction)
-                                    if predict == 'yes')
-            return predicts_lst
+            return self._non_taxonomic_re_predict(dataset=dataset)
         else:
             warnings.warn("No requirement for fiting the non-taxonomic-re model, the predict module will use the input data to do the task.")
