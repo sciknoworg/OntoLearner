@@ -11,7 +11,8 @@ train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 pipeline = LearnerPipeline(
     task="term-typing",
     retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-    llm_id="mistralai/Mistral-7B-Instruct-v0.1",
+    # llm_id="mistralai/Mistral-7B-Instruct-v0.1",
+    llm_id = "Qwen/Qwen2.5-0.5B",
     hf_token=token
 )
 

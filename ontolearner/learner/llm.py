@@ -62,8 +62,7 @@ class AutoLLMLearner(AutoLearner):
                 prompting = self.prompting(task='term-typing')
                 dataset = [{"term": term, "type": type, "prompt": prompting.format(term=term, type=type)}
                            for term in data for type in self.candidate_types]
-                predictions = self._term_typing_predict(dataset=dataset)
-                return predictions
+                return self._term_typing_predict(dataset=dataset)
             else:
                 raise RuntimeError("Term typing model must be fit before prediction.")
         else:

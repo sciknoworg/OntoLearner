@@ -16,7 +16,7 @@ __version__ = "1.2.1"
 
 import logging
 from ontolearner import base, data_structure, ontology, text2onto, utils, tools, learner
-from .learner import AutoLLMLearner, AutoRetrieverLearner, LLMPrompting, LabelMapper
+from .learner import AutoLLMLearner, AutoRetrieverLearner, AutoRAGLearner, StandardizedPrompting, LabelMapper
 from .learner_pipeline import LearnerPipeline
 from .processor import Processor, AutoOntology
 from .utils.train_test_split import train_test_split

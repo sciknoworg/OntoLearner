@@ -9,7 +9,7 @@ ontology.load()  # Load the ontology from OntoLearner huggingface repository
 train_data, test_data = train_test_split(ontology.extract(), test_size=0.2, random_state=42)
 
 # Initialize a retriever-style learner for relation extraction tasks
-ret_learner = AutoRetrieverLearner()
+ret_learner = AutoRetrieverLearner(top_k=5)
 
 # Load a pre-trained retriever model using its identifier
 ret_learner.load(model_id='sentence-transformers/all-MiniLM-L6-v2')

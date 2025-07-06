@@ -1,5 +1,5 @@
 # Import necessary modules from the ontolearner package
-from ontolearner import AutoLLMLearner, AgrO, train_test_split, LabelMapper, LLMPrompting
+from ontolearner import AutoLLMLearner, AgrO, train_test_split, LabelMapper, StandardizedPrompting
 
 # Load the AgrO ontology (Agricultural Ontology)
 ontology = AgrO()
@@ -20,7 +20,7 @@ token = '...'
 
 # Initialize the LLM-based learner with appropriate prompting and label mapping strategies
 llm_learner = AutoLLMLearner(
-    prompting=LLMPrompting,        # Prompting strategy to guide the LLM behavior
+    prompting=StandardizedPrompting,        # Prompting strategy to guide the LLM behavior
     label_mapper=LabelMapper(),    # Maps labels to natural language or model-friendly representations
     token=token                    # Token for authentication (e.g., Hugging Face or other providers)
 )

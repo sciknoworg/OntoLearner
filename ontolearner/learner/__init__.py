@@ -15,5 +15,5 @@
 from .llm import AutoLLMLearner
 from .retriever import AutoRetrieverLearner
 from .rag import AutoRAGLearner
-from .prompt import StandardizedPrompting, LLMPrompting
+from .prompt import StandardizedPrompting
 from .label_mapper import LabelMapper

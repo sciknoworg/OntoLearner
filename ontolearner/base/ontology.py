@@ -346,7 +346,7 @@ class BaseOntology(ABC):
         except Exception as e:
             raise ValueError(f"Failed to extract ontology data from HuggingFace: {str(e)}") from e
 
-    def push_to_hub(self) -> Dict[str, Any]:
+    def push_to_hub(self, hf_token: str) -> Dict[str, Any]:
         """
         Push ontology and its extracted datasets to Hugging Face Hub.
 
@@ -380,7 +380,6 @@ class BaseOntology(ABC):
         from ..processor import Processor
 
         api = HfApi()
-        hf_token = os.environ['HUGGINGFACE_ACCESS_TOKEN']
         api.token = hf_token
 
         if not all([self.ontology_id, self.domain, self.format]):
