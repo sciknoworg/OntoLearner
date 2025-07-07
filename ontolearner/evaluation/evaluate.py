@@ -11,12 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Dict
 from .metrics import text2onto_metrics, term_typing_metrics, taxonomy_discovery_metrics, non_taxonomic_re_metrics
-from .evaluate import evaluation_report
 
-__all__ = [
-    'evaluation_report',
-    'term_typing_metrics',
-    'taxonomy_discovery_metrics',
-    'non_taxonomic_re_metrics'
-]
+def evaluation_report(y_true, y_pred, task: str) -> Dict:
+    if task == "text2onto":
+        return text2onto_metrics(y_true, y_pred)
+    elif task == "term-typing":
+        return term_typing_metrics(y_true, y_pred)
+    elif task == "taxonomy-discovery":
+        return taxonomy_discovery_metrics(y_true, y_pred)
+    elif task == "non-taxonomic-re":
+        return non_taxonomic_re_metrics(y_true, y_pred)
+    else:
+        raise ValueError(f"unknown task: {task}")
