@@ -26,9 +26,10 @@ class AutoLLMLearner(AutoLearner):
                  label_mapper,
                  token: str = "",
                  max_new_tokens: int = 5,
-                 batch_size: int = 10) -> None:
+                 batch_size: int = 10,
+                 device='cpu') -> None:
         super().__init__()
-        self.llm = AutoLLM(token=token, label_mapper=label_mapper)
+        self.llm = AutoLLM(token=token, label_mapper=label_mapper, device=device)
         self.prompting = prompting
         self.batch_size = batch_size
         self.max_new_tokens = max_new_tokens

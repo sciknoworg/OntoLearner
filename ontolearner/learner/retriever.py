@@ -17,9 +17,9 @@ from typing import Any, Optional
 import warnings
 
 class AutoRetrieverLearner(AutoLearner):
-    def __init__(self, top_k: int = 5):
+    def __init__(self, base_retriever: Any = AutoRetriever(), top_k: int = 5):
         super().__init__()
-        self.retriever = AutoRetriever()
+        self.retriever = base_retriever
         self.top_k = top_k
         self._is_term_typing_fit = False
         self._is_taxonomy_discovery_fit = False

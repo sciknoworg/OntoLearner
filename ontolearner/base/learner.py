@@ -74,7 +74,7 @@ class AutoLearner(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        train_data = self._tasks_data_former(data=train_data, task=task, test=False) if ontologizer else train_data
+        train_data = self.tasks_data_former(data=train_data, task=task, test=False) if ontologizer else train_data
         if task == 'term-typing':
             self._term_typing(train_data, test=False)
         elif task == 'taxonomy-discovery':
@@ -107,7 +107,7 @@ class AutoLearner(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        eval_data = self._tasks_data_former(data=eval_data, task=task, test=False) if ontologizer else eval_data
+        eval_data = self.tasks_data_former(data=eval_data, task=task, test=False) if ontologizer else eval_data
 
         if task == 'term-typing':
             return self._term_typing(eval_data, test=True)
@@ -147,7 +147,7 @@ class AutoLearner(ABC):
     def _non_taxonomic_re(self, data: Any, test: bool = False) -> Optional[Any]:
         pass
 
-    def _tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
+    def tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
         formatted_data = []
         if task == "term-typing":
             for typing in data.term_typings:
@@ -220,9 +220,13 @@ class AutoLLM(ABC):
         """
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, padding_side='left', token=self.token)
         self.tokenizer.pad_token = self.tokenizer.eos_token
+        if self.device == "cpu":
+            device_map = "cpu"
+        else:
+            device_map = "auto"
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id,
-            # device_map="auto",
+            device_map=device_map,
             torch_dtype=torch.bfloat16,
             token=self.token
         )
