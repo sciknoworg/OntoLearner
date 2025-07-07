@@ -13,14 +13,16 @@
 # limitations under the License.
 
 import logging
-from pathlib import Path
-from typing import Dict, List, Optional, Union, Tuple, Any
+import time
+from typing import Dict, Optional, Any
 
-from .base import AutoLearner, AutoPrompt
-from .evaluation import calculate_term_typing_metrics, aggregate_metrics, calculate_taxonomy_metrics, \
-    calculate_non_taxonomy_metrics
-from .evaluation.visualisations import plot_precision_recall_distribution
-from .learner import BERTRetrieverLearner, AutoLearnerLLM, AutoRAGLearner, StandardizedPrompting
+from .base import AutoPrompt
+from .evaluation import evaluation_report
+from .learner import (AutoRetrieverLearner,
+                      AutoLLMLearner,
+                      AutoRAGLearner,
+                      StandardizedPrompting,
+                      LabelMapper)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -28,246 +30,84 @@ logger = logging.getLogger(__name__)
 
 class LearnerPipeline:
     """
-    Unified pipeline for ontology learning with flexible model configurations.
-
-    This class provides a high-level interface for ontology learning tasks, supporting
-    multiple learning paradigms and handling the complete machine learning workflow
-    from training to evaluation. It abstracts away the complexity of different learner
-    types while providing fine-grained control over the learning process.
+    Unified pipeline for ontology learning using LLMs, retrievers, or RAG-based models.
+    Supports end-to-end training, prediction, and evaluation in a scikit-learn-like interface.
     """
+
     def __init__(self,
-                 task: str,
-                 learner: Optional[AutoLearner] = None,
-                 prompting: Optional[AutoPrompt] = None,
                  retriever: Optional[Any] = None,
                  llm: Optional[Any] = None,
                  retriever_id: Optional[str] = None,
                  llm_id: Optional[str] = None,
-                 hf_token: Optional[str] = None):
+                 prompting: Optional[AutoPrompt] = StandardizedPrompting,
+                 label_mapper: Optional[LabelMapper] = LabelMapper(),
+                 hf_token: Optional[str] = None,
+                 ontologizer_data: bool = True,
+                 top_k: int = 5,
+                 device: str = 'cpu'):
         """
-        Initialize the learning pipeline with flexible configuration options.
-
-        This constructor supports multiple initialization patterns to accommodate
-        different use cases, from simple model ID specification to complex custom
-        component configuration. The pipeline automatically determines the learning
-        paradigm based on the provided components.
+        Initialize the pipeline for a specific ontology learning task.
 
         Args:
-            task: The ontology learning task to perform. Supported values:
-                 - "term-typing": Predict semantic types for terms
-                 - "taxonomy-discovery": Identify hierarchical relationships
-                 - "non-taxonomy-discovery": Identify semantic associations
-            learner: Pre-configured learner instance. If provided, other
-                    component parameters are ignored.
-            prompting: Custom prompting strategy. If None, uses StandardizedPrompting
-                      with task-appropriate templates.
-            retriever: Pre-configured retriever instance. Used for RAG or
-                      retrieval-only approaches.
-            llm: Pre-configured LLM instance. Used for RAG or LLM-only approaches.
-            retriever_id: Hugging Face model ID for automatic retriever loading.
-                         Common options: "sentence-transformers/all-MiniLM-L6-v2"
-            llm_id: Hugging Face model ID for automatic LLM loading.
-                   Common options: "mistralai/Mistral-7B-Instruct-v0.1"
-            hf_token: Hugging Face authentication token for accessing gated models.
-                     Required for some commercial or restricted models.
-
-        Raises:
-            ValueError: If no learner components are provided (all learner-related
-                       parameters are None).
+            task: One of ["term-typing", "taxonomy-discovery", "non-taxonomic-re"]
+            prompting: Optional prompting strategy (defaults to StandardizedPrompting)
+            retriever: Pre-initialized retriever learner (if any)
+            llm: Pre-initialized LLM learner (if any)
+            retriever_id: HF model ID for retriever (if not provided explicitly)
+            llm_id: HF model ID for LLM (if not provided explicitly)
+            hf_token: Hugging Face token (for gated LLM access)
+            ontologizer_data: If True, uses Ontologizer-style datasets
+            top_k: Number of top examples to retrieve for RAG or Retriever
         """
-        self.task = task
-        self.results = []
-        self.metrics = {}
-        self.model_info = {"task": task}
-
-        if retriever_id:
-            self.model_info["retriever"] = retriever_id
-        if llm_id:
-            self.model_info["llm"] = llm_id
-
-        # Case 1: Use pre-configured learner if provided
-        if learner is not None:
-            self.learner = learner
-            if prompting is not None:
-                self.prompting = prompting
-            return
-
-        # Case 2: Configure components based on what's provided
-        if prompting is None:
-            self.prompting = StandardizedPrompting(task=task)
-        else:
-            self.prompting = prompting
-
-        # Case 3: Create retriever if needed
+        self.ontologizer_data = ontologizer_data
+        # Instantiate retriever
         if retriever is None and retriever_id is not None:
-            retriever = BERTRetrieverLearner()
-            if retriever_id:
-                retriever.load(retriever_id)
-
-        # Case 4: Create LLM if needed
+            retriever = AutoRetrieverLearner(top_k=top_k)
+            self.retriever_id = retriever_id
+        retriever_id = retriever_id if retriever_id is not None else 'sentence-transformers/all-MiniLM-L6-v2'
+        # Instantiate LLM
         if llm is None and llm_id is not None:
-            llm = AutoLearnerLLM(token=hf_token)
-            if llm_id:
-                llm.load(llm_id)
-
-        if retriever is not None and llm is not None:
-            # RAG-based learner (retriever + LLM)
-            self.learner = AutoRAGLearner(retriever, llm, self.prompting)
-        elif retriever is not None:
-            # Retriever-only learner
+            llm = AutoLLMLearner(prompting=prompting, label_mapper=label_mapper, token=hf_token, device=device)
+        llm_id = llm_id if llm_id is not None else 'Qwen/Qwen2.5-0.5B-Instruct'
+        # Determine pipeline strategy
+        if retriever and llm:
+            self.learner = AutoRAGLearner(retriever=retriever, llm=llm)
+            self.learner.load(retriever_id=retriever_id, llm_id=llm_id)
+            self.model_type = "rag"
+        elif retriever:
             self.learner = retriever
-        elif llm is not None:
-            # LLM-only learner
+            self.learner.load(model_id=retriever_id)
+            self.model_type = "retriever"
+        elif llm:
             self.learner = llm
+            self.learner.load(model_id=llm_id)
+            self.model_type = "llm"
         else:
-            raise ValueError("At least one of learner, retriever, or llm must be provided")
+            raise ValueError("At least one of [retriever, llm, retriever_id, llm_id] must be specified.")
 
-    def fit(self, train_data, top_k: int = 5) -> 'LearnerPipeline':
-        """
-        Train the learner on the given training data.
-
-        Args:
-            train_data: Training data containing ontology information
-            top_k (int): Number of top examples to retrieve (for retrieval-based learners)
-
-        Returns:
-            LearnerPipeline: Self for method chaining
-        """
-        self.learner.fit(train_data=train_data, task=self.task)
-        return self
-
-    def predict(self, test_data, limit: int = 10) -> List[Dict]:
-        """
-        Make predictions on test data and return results with metrics.
-
-        Args:
-            test_data: Test data containing ontology information
-            limit (int): Maximum number of test examples to process
-
-        Returns:
-            List[Dict]: List of prediction results with metrics for each example
-        """
-        results = []
-        if self.task == "term-typing":
-            test_subset = test_data.term_typings[:limit]
-            for typing in test_subset:
-                term = typing.term
-                ground_truth = typing.types
-                predicted = self.learner.predict(term, task=self.task)
-                metrics = calculate_term_typing_metrics(predicted, ground_truth)
-                results.append({
-                    'term': term,
-                    'ground_truth': ground_truth,
-                    'predicted': predicted,
-                    **metrics
-                })
-        elif self.task == "taxonomy-discovery":
-            test_subset = test_data.type_taxonomies.taxonomies[:limit]
-            for relation in test_subset:
-                parent = relation.parent
-                child = relation.child
-                ground_truth = "is-a"  # Always "is-a" for taxonomic relations
-                predicted = self.learner.predict((parent, child), task=self.task)
-                metrics = calculate_taxonomy_metrics(predicted, ground_truth)
-                results.append({
-                    'parent': parent,
-                    'child': child,
-                    'ground_truth': ground_truth,
-                    'predicted': predicted[0],
-                    **metrics
-                })
-        elif self.task == "non-taxonomic-re":
-            test_subset = test_data.type_non_taxonomic_relations.non_taxonomies[:limit]
-            for relation in test_subset:
-                head = relation.head
-                tail = relation.tail
-                ground_truth = relation.relation
-                predicted = self.learner.predict((head, tail), task=self.task)
-                metrics = calculate_non_taxonomy_metrics(predicted, ground_truth)
-                results.append({
-                    'head': head,
-                    'tail': tail,
-                    'ground_truth': ground_truth,
-                    'predicted': predicted[0],
-                    **metrics
-                })
-
-        self.results = results
-        return results
-
-    def evaluate(self, output_dir: Optional[Union[str, Path]] = None) -> Dict:
-        """
-        Evaluate prediction results and generate aggregated metrics.
-
-        Args:
-            output_dir (Optional[Union[str, Path]]): Directory to save evaluation results and visualizations
-
-        Returns:
-            Dict: Aggregated metrics for the predictions
-        """
-        if not self.results:
-            logger.warning("No prediction results available for evaluation")
-            return {}
-
-        self.metrics = aggregate_metrics(self.results, self.task)
-
-        if output_dir:
-            output_dir = Path(output_dir)
-            output_dir.mkdir(exist_ok=True, parents=True)
-
-            all_results = [{
-                **self.model_info,
-                'metrics': self.metrics,
-                'detailed_results': self.results
-            }]
-
-            plot_precision_recall_distribution(all_results, output_dir)
-            logger.info(f"Results visualization saved to {output_dir}")
-
-        return self.metrics
-
-    def fit_predict(self,
-                    train_data,
-                    test_data,
-                    top_k: int = 5,
-                    test_limit: int = 10) -> List[Dict]:
-        """
-        Run fit and predict steps in sequence (sklearn-style).
-
-        Args:
-            train_data: Training data containing ontology information
-            test_data: Test data containing ontology information
-            top_k (int): Number of top examples to retrieve (for retrieval-based learners)
-            test_limit (int): Maximum number of test examples to process
-
-        Returns:
-            List[Dict]: List of prediction results with metrics for each example
-        """
-        self.fit(train_data, top_k)
-        return self.predict(test_data, limit=test_limit)
-
-    def fit_predict_evaluate(self,
-                             train_data,
-                             test_data,
-                             top_k: int = 5,
-                             test_limit: int = 10,
-                             output_dir: Optional[Union[str, Path]] = None) -> Tuple[List[Dict], Dict]:
-        """
-        Run fit, predict and evaluate steps in one call.
-
-        This is the most convenient method for running a complete pipeline workflow.
-
-        Args:
-            train_data: Training data containing ontology information
-            test_data: Test data containing ontology information
-            top_k (int): Number of top examples to retrieve (for retrieval-based learners)
-            test_limit (int): Maximum number of test examples to process
-            output_dir (Optional[Union[str, Path]]): Directory to save evaluation results
-
-        Returns:
-            Tuple[List[Dict], Dict]: Tuple of (prediction results, aggregated metrics)
-        """
-        self.fit(train_data, top_k)
-        results = self.predict(test_data, limit=test_limit)
-        metrics = self.evaluate(output_dir)
-        return results, metrics
+    def __call__(self,
+                 train_data: Any,
+                 task: str,
+                 test_data: Any = None,
+                 evaluate: bool=False,
+                 return_dict: bool=False,
+                 ontologizer_data: bool=True) -> Dict[str, Any]:
+        run_report = {}
+        start_time = time.time()
+        self.learner.fit(train_data, task=task, ontologizer=ontologizer_data)
+        predictions = None
+        if test_data:
+            predictions = self.learner.predict(test_data, task=task, ontologizer=ontologizer_data)
+            run_report['predictions'] = predictions
+        if evaluate:
+            if not test_data:
+                raise ValueError("Testing data is required for evaluation.")
+            else:
+                if predictions:
+                    y_true = self.learner.tasks_ground_truth_former(data=test_data, task=task)
+                    metrics = evaluation_report(y_true=y_true, y_pred=predictions, task=task)
+                    run_report['metrics'] = metrics
+                else:
+                    raise ValueError("Predictions is required for evaluation.")
+        run_report['elapsed_time'] = time.time() - start_time
+        return run_report
