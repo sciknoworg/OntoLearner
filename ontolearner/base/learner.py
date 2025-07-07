@@ -173,6 +173,21 @@ class AutoLearner(ABC):
             formatted_data = {"types": non_taxonomic_types, "relations": non_taxonomic_res}
         return formatted_data
 
+    def tasks_ground_truth_former(self, data: Any, task: str) -> Any:
+        formatted_data = []
+        if task == "term-typing":
+            for typing in data.term_typings:
+                formatted_data.append({"term": typing.term, "types": typing.types})
+        if task == "taxonomy-discovery":
+            for taxonomic_pairs in data.type_taxonomies.taxonomies:
+                formatted_data.append({"parent": taxonomic_pairs.parent, "child": taxonomic_pairs.child})
+        if task == "non-taxonomic-re":
+            for non_taxonomic_triplets in data.type_non_taxonomic_relations.non_taxonomies:
+                formatted_data.append({"head": non_taxonomic_triplets.head,
+                                       "tail": non_taxonomic_triplets.tail,
+                                       "relation": non_taxonomic_triplets.relation})
+        return formatted_data
+
 class AutoLLM(ABC):
     """
     Abstract base class for Large Language Model components.
