@@ -44,7 +44,9 @@ class LearnerPipeline:
                  hf_token: Optional[str] = None,
                  ontologizer_data: bool = True,
                  top_k: int = 5,
-                 device: str = 'cpu'):
+                 batch_size: int = 10,
+                 device: str = 'cpu',
+                 max_new_tokens: int=10):
         """
         Initialize the pipeline for a specific ontology learning task.
 
@@ -62,12 +64,17 @@ class LearnerPipeline:
         self.ontologizer_data = ontologizer_data
         # Instantiate retriever
         if retriever is None and retriever_id is not None:
-            retriever = AutoRetrieverLearner(top_k=top_k)
+            retriever = AutoRetrieverLearner(top_k=top_k) # ToDO consider also `base_retriever`
             self.retriever_id = retriever_id
         retriever_id = retriever_id if retriever_id is not None else 'sentence-transformers/all-MiniLM-L6-v2'
         # Instantiate LLM
         if llm is None and llm_id is not None:
-            llm = AutoLLMLearner(prompting=prompting, label_mapper=label_mapper, token=hf_token, device=device)
+            llm = AutoLLMLearner(prompting=prompting,
+                                 label_mapper=label_mapper,
+                                 token=hf_token,
+                                 device=device,
+                                 batch_size=batch_size,
+                                 max_new_tokens=max_new_tokens)
         llm_id = llm_id if llm_id is not None else 'Qwen/Qwen2.5-0.5B-Instruct'
         # Determine pipeline strategy
         if retriever and llm:
@@ -90,9 +97,8 @@ class LearnerPipeline:
                  task: str,
                  test_data: Any = None,
                  evaluate: bool=False,
-                 return_dict: bool=False,
                  ontologizer_data: bool=True) -> Dict[str, Any]:
-        run_report = {}
+        run_report = {"model": self.model_type}
         start_time = time.time()
         self.learner.fit(train_data, task=task, ontologizer=ontologizer_data)
         predictions = None
