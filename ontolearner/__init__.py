@@ -15,12 +15,25 @@
 __version__ = "1.2.1"
 
 import logging
-from ontolearner import base, data_structure, ontology, text2onto, utils, tools, learner
-from .learner import AutoLLMLearner, AutoRetrieverLearner, AutoRAGLearner, StandardizedPrompting, LabelMapper
-from .learner_pipeline import LearnerPipeline
-from .processor import Processor, AutoOntology
-from .utils.train_test_split import train_test_split
+from ontolearner import (ontology,
+                         text2onto,
+                         learner,
+                         utils,
+                         tools,
+                         data_structure)
 from .ontology import * # noqa
+from ._ontology import AutoOntology
+from .learner import (AutoLLMLearner,
+                      AutoRetrieverLearner,
+                      AutoRAGLearner,
+                      StandardizedPrompting,
+                      LabelMapper)
+from ._learner import LearnerPipeline
+
+from .processor import Processor
+from .utils import train_test_split
+
+
 
 __all__ = [
     "AutoLLMLearner",
@@ -37,7 +50,6 @@ __all__ = [
     "utils",
     "tools",
     "learner",
-    "base",
     "train_test_split"
 ]
 
