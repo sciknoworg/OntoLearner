@@ -16,18 +16,16 @@ import logging
 import os
 import re
 import json
-import shutil
-import tempfile
 from pathlib import Path
 from abc import ABC
 import concurrent.futures
-from typing import List, Tuple, Any, Set, Optional, Dict
+from typing import List, Tuple, Any, Set, Optional
 
-from huggingface_hub.errors import RepositoryNotFoundError
+
 from rdflib import Graph, OWL, URIRef, RDFS, RDF
 import pandas as pd
 import networkx as nx
-from huggingface_hub import HfApi, Repository, hf_hub_download
+from huggingface_hub import hf_hub_download
 
 from ..data_structure import (OntologyData, TermTyping, TaxonomicRelation, NonTaxonomicRelation,
                               TypeTaxonomies, NonTaxonomicRelations, OntologyMetrics)
@@ -345,134 +343,6 @@ class BaseOntology(ABC):
             )
         except Exception as e:
             raise ValueError(f"Failed to extract ontology data from HuggingFace: {str(e)}") from e
-
-    def push_to_hub(self, hf_token: str) -> Dict[str, Any]:
-        """
-        Push ontology and its extracted datasets to Hugging Face Hub.
-
-        This method processes the ontology, extracts learning datasets, and uploads
-        everything to the appropriate Hugging Face repositories. It handles both
-        the domain-specific ontology repository and the global metrics repository.
-
-        The method performs the following steps:
-        1. Process the ontology and extract metrics using the Processor
-        2. Clone or create the domain-specific Hugging Face repository
-        3. Clone or create the global metrics repository
-        4. Copy ontology files, datasets, and documentation
-        5. Update metrics and domain README files
-        6. Commit and push changes to both repositories
-
-        Returns:
-            Dictionary containing upload results with keys:
-            - status: "success" if upload completed successfully
-            - repository: Domain-specific repository ID
-            - metrics_repository: Global metrics repository ID
-            - ontology_id: The ontology identifier
-            - url: URL to the domain repository
-            - metrics_url: URL to the metrics repository
-
-        Raises:
-            ValueError: If required ontology attributes are missing.
-            KeyError: If required environment variables are not set.
-            Exception: If repository operations or file uploads fail.
-        """
-        # Import locally to avoid circular import
-        from ..processor import Processor
-
-        api = HfApi()
-        api.token = hf_token
-
-        if not all([self.ontology_id, self.domain, self.format]):
-            raise ValueError("Ontology must have id, domain, and format defined")
-
-        domain_normalized = self.domain.lower().replace(' ', '_')
-
-        ontology_file_path = (Path(os.environ['ONTOLOGIES_DIR']) / domain_normalized
-                              / f"{self.ontology_id.lower()}.{self.format.lower()}")
-
-        processor = Processor(
-            datasets_dir=Path(os.environ['DATASETS_DIR']),
-            templates_dir=Path(os.environ['TEMPLATES_DIR']),
-            benchmark_dir=Path(os.environ['BENCHMARK_DIR']),
-            metrics_dir=Path(os.environ['METRICS_DIR'])
-        )
-
-        processor.process_ontology(self, ontology_file_path)
-
-        repo_id = f"SciKnowOrg/ontolearner-{domain_normalized}"
-        metrics_repo_id = "SciKnowOrg/OntoLearner-Benchmark-Metrics"
-
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            tmp_path = Path(tmp_dir)
-            ontology_repo_path = tmp_path / "ontology_repo"
-            metrics_repo_path = tmp_path / "metrics_repo"
-
-            # Clone ontology repository
-            try:
-                api.repo_info(repo_id=repo_id, repo_type="dataset")
-                repo = Repository(local_dir=ontology_repo_path, clone_from=repo_id, repo_type="dataset", token=hf_token)
-                repo.git_pull()
-            except RepositoryNotFoundError:
-                api.create_repo(repo_id=repo_id, repo_type="dataset", private=False, token=hf_token)
-                repo = Repository(local_dir=ontology_repo_path, clone_from=repo_id, repo_type="dataset", token=hf_token)
-
-            # Clone metrics space repository
-            try:
-                api.repo_info(repo_id=metrics_repo_id, repo_type="space")
-                metrics_repo = Repository(local_dir=metrics_repo_path, clone_from=metrics_repo_id, repo_type="space", token=hf_token)
-                metrics_repo.git_pull()
-            except RepositoryNotFoundError:
-                # If metrics repo doesn't exist, create it (though it should exist)
-                api.create_repo(repo_id=metrics_repo_id, repo_type="space", private=False, token=hf_token)
-                metrics_repo = Repository(local_dir=metrics_repo_path, clone_from=metrics_repo_id, repo_type="space", token=hf_token)
-
-            # Create ontology directory in the ontology repo
-            ontology_dir = ontology_repo_path / self.ontology_id.lower()
-            ontology_dir.mkdir(exist_ok=True)
-
-            # Copy ontology file
-            shutil.copy2(ontology_file_path, ontology_dir / f"{self.ontology_id.lower()}.{self.format.lower()}")
-
-            # Copy dataset files
-            dataset_path = Path(os.environ['DATASETS_DIR']) / domain_normalized / self.ontology_id.lower()
-            if dataset_path.is_dir():
-                for file in dataset_path.glob("*.json"):
-                    shutil.copy2(file, ontology_dir)
-
-            # Copy documentation file
-            doc_file = Path(os.environ['BENCHMARK_DIR']) / domain_normalized / f"{self.ontology_id.lower()}.rst"
-            if doc_file.exists():
-                shutil.copy2(doc_file, ontology_dir / f"{self.ontology_id.lower()}.rst")
-
-            # Update metrics in the metrics repository
-            metrics_file_path = metrics_repo_path / "metrics.xlsx"
-            processor.export_metrics_to_excel(metrics_file_path)
-
-            # Update domain README.md in the ontology repository
-            processor.update_domain_readme(ontology_repo_path, metrics_file_path, domain_normalized)
-
-            # Commit and push ontology repository
-            repo.git_add(auto_lfs_track=True)
-            commit_message = f"Add/Update {self.ontology_id} ontology"
-            repo.git_commit(commit_message)
-            repo.git_push()
-
-            # Commit and push metrics repository
-            metrics_repo.git_add(auto_lfs_track=True)
-            metrics_commit_message = f"Update metrics for {self.ontology_id}"
-            metrics_repo.git_commit(metrics_commit_message)
-            metrics_repo.git_push()
-
-            result = {
-                "status": "success",
-                "repository": repo_id,
-                "metrics_repository": metrics_repo_id,
-                "ontology_id": self.ontology_id,
-                "url": f"https://huggingface.co/datasets/{repo_id}",
-                "metrics_url": f"https://huggingface.co/spaces/{metrics_repo_id}"
-            }
-
-            return result
 
     def _update_metrics_space(self, metrics_file_path: Path, metrics: OntologyMetrics) -> None:
         """Update the metrics file in the OntoLearner metrics space."""
