@@ -50,34 +50,33 @@ def text2onto_metrics(y_true, y_pred, similarity_threshold: float = 0.8) -> Dict
     }
 
 def term_typing_metrics(y_true, y_pred) -> Dict:
-    total_correct = 0
-    total_predicted = 0
-    total_ground_truth = 0
+    """
+    Compute precision, recall, and F1-score for term typing
+    using (term, type) pair-level matching instead of ID-based lookups.
 
-    # Convert to dictionary for quick lookup by ID
-    ground_truth_dict = {item["term"]: [tps.lower() for tps in item["types"]] for item in y_true}
-    predictions_dict = {item["term"]: [tps.lower() for tps in item["types"]] for item in y_pred}
+    Args:
+        y_true: List of ground truth dicts, each with keys {"term": str, "types": List[str]}
+        y_pred: List of predicted dicts, same format as y_true
 
-    for ID in predictions_dict:
-        if ID in ground_truth_dict:
-            predicted_types = set(predictions_dict[ID])
-            true_types = set(ground_truth_dict[ID])
-            # Correctly predicted types (intersection)
-            correct_predictions = predicted_types.intersection(true_types)
-            total_correct += len(correct_predictions)
-            # Total predicted types
-            total_predicted += len(predicted_types)
-            # Total ground truth types
-            total_ground_truth += len(true_types)
-
-    precision = total_correct / total_predicted if total_predicted > 0 else 0
-    recall = total_correct / total_ground_truth if total_ground_truth > 0 else 0
-
-    # Calculate F1-score
-    if precision + recall > 0:
-        f1_score = 2 * (precision * recall) / (precision + recall)
-    else:
-        f1_score = 0
+    Returns:
+        Dict: Containing precision, recall, and F1-score
+    """
+    # Flatten all (term, type) pairs from both y_true and y_pred
+    true_pairs = set(
+        (item["term"].strip().lower(), t.strip().lower())
+        for item in y_true for t in item["types"]
+    )
+    pred_pairs = set(
+        (item["term"].strip().lower(), t.strip().lower())
+        for item in y_pred for t in item["types"]
+    )
+    correct_pairs = true_pairs.intersection(pred_pairs)
+    total_correct = len(correct_pairs)
+    total_predicted = len(pred_pairs)
+    total_ground_truth = len(true_pairs)
+    precision = total_correct / total_predicted if total_predicted > 0 else 0.0
+    recall = total_correct / total_ground_truth if total_ground_truth > 0 else 0.0
+    f1_score = (2 * precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
     return {
         "f1_score": f1_score,
         "precision": precision,
