@@ -25,11 +25,15 @@ OntoLearner is a modular, open-source Python framework purpose-built for modern 
 
 Unlike general-purpose NLP or embedding libraries, OntoLearner is designed specifically for ontology engineering and OL research. It offers:
 
-- ✅ **Cross-domain coverage** with leading repositories like BioPortal, OBO Foundry, OLS, LOV, and FAIRsharing.
-- 🤖 **LLM-assisted modeling** for tasks such as term suggestion, concept typing, taxonomy induction, relation extraction, and ontology enrichment.
-- 🧠 **Benchmarking tools** to evaluate, compare, and validate LLM-based methods for OL using standardized datasets and metrics.
-- 🔁 **Machine-readable ontologies** hosted on Hugging Face, optimized for integration into generative AI pipelines with full support for versioning, streaming, and metadata inspection.
-- 🔧 **Modular and extensible architecture** that seamlessly integrate with existing ontology development environments.
+.. raw:: html
+
+    <ul>
+      <li>✅ <strong>Cross-domain coverage</strong> with leading repositories like BioPortal, OBO Foundry, OLS, LOV, and FAIRsharing.</li>
+      <li>🤖 <strong>LLM-assisted modeling</strong> for tasks such as term suggestion, concept typing, taxonomy induction, relation extraction, and ontology enrichment.</li>
+      <li>🧠 <strong>Benchmarking tools</strong> to evaluate, compare, and validate LLM-based methods for OL using standardized datasets and metrics.</li>
+      <li>🔁 <strong>Machine-readable ontologies</strong> hosted on Hugging Face, optimized for integration into generative AI pipelines with full support for versioning, streaming, and metadata inspection.</li>
+      <li>🔧 <strong>Modular and extensible architecture</strong> that seamlessly integrate with existing ontology development environments.</li>
+    </ul>
 
 A wide selection of over `200 ontologies <https://huggingface.co/collections/SciKnowOrg/>`_
 are available for immediate use on 🤗 Hugging Face.
@@ -62,56 +66,75 @@ Working with OntoLearner s straightforward:
 
    .. code-block:: python
 
-      from ontolearner.ontology import Wine
+        from ontolearner import AgrO
 
-      # 1. Initialize an ontologizer from OntoLearner
-      ontology = Wine()
+        # 1. Initialize an ontologizer from OntoLearner
+        ontology = AgrO()
 
-      # 2. Load the ontology automatically from Hugging Face
-      ontology.load()
+        # 2. Load the ontology automatically from Hugging Face
+        ontology.load()
 
-      # 3. Extract the learning task dataset
-      data = ontology.extract()
+        # 3. Extract the learning task dataset
+        data = ontology.extract()
+
+        print(data)
+        # outputs:
+        # ontology_id: AgrO
+        # ontology_full_name: Agronomy Ontology (AgrO)
+        # domain: Agriculture
+        # category: Agronomy
+        # version: 1.0
+        # last_updated: 2022-11-02
+        # creator: The Crop Ontology Consortium
+        # license: Creative Commons 4.0
+        # format: RDF
+        # download_url: https://agroportal.lirmm.fr/ontologies/AGRO?p=summary
+
 
 
 .. tab:: Learner Module
 
    .. code-block:: python
 
-      from ontolearner import ontology, utils, learner
+        from ontolearner import LearnerPipeline, AgrO, train_test_split
 
-      # 1. Load the ontology and extract training data
-      onto = ontology.Wine()
-      data = onto.extract()
+        # Load the AgrO ontology
+        ontology = AgrO()
+        ontology.load()
 
-      # 2. Split into train and test sets
-      train_data, test_data = utils.train_test_split(
-            data, test_size=0.2, random_state=42
-      )
+        # Extract term-typing instances and split into train and test sets
+        train_data, test_data = train_test_split(
+            ontology.extract(),
+            test_size=0.2,
+            random_state=42
+        )
 
-      # 3. Initialize a Retrieval-Augmented Generation (RAG) learner
-      retriever = learner.BERTRetrieverLearner()
-      llm = learner.AutoLearnerLLM()
-      prompt = learner.StandardizedPrompting(task="term-typing")
+        # Initialize a multi-component learning pipeline (retriever + LLM)
+        # This configuration enables a Retrieval-Augmented Generation (RAG) setup
+        pipeline = LearnerPipeline(
+            retriever_id='sentence-transformers/all-MiniLM-L6-v2',
+            llm_id='Qwen/Qwen2.5-0.5B-Instruct',
+            hf_token='...',
+            batch_size=32,
+            top_k=5
+        )
 
-      rag_learner = learner.AutoRAGLearner(
-            learner_retriever=retriever,
-            learner_llm=llm,
-            prompting=prompt
-      )
+        # Run the pipeline: training, prediction, and evaluation in one call
+        outputs = pipeline(
+            train_data=train_data,
+            test_data=test_data,
+            evaluate=True,              # Compute metrics like precision, recall, and F1
+            task='term-typing'          # Specifies the task
+        )
 
-      # 4. Load pretrained components
-      rag_learner.load(
-            retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-            llm_id="mistralai/Mistral-7B-Instruct-v0.1"
-      )
+        # Print final evaluation metrics
+        print("Metrics:", outputs['metrics'])
 
-      # 5. Fit the model to training data
-      rag_learner.fit(train_data=train_data, task="term-typing")
+        # Print the total time taken for the full pipeline execution
+        print("Elapsed time:", outputs['elapsed_time'])
 
-      # 6. Predict on test data
-      predicted = rag_learner.predict(test_data, task="term-typing")
-
+        # Print all outputs
+        print(outputs)
 
 
 Citing
@@ -159,7 +182,7 @@ or GitHub repository:
    :maxdepth: 1
    :caption: Ontologizer
    :hidden:
-
+   ontologizer/ontologizer
    ontologizer/adding_ontologies
 
 .. toctree::

@@ -32,9 +32,9 @@ release = '0.1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "myst_parser",
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
-    "myst_parser",
     "sphinx_markdown_tables",
     "sphinx_copybutton",
     "sphinx.ext.intersphinx",
@@ -76,7 +76,8 @@ html_theme_options = {
           ("Github", "https://github.com/sciknoworg/OntoLearner"),
     ],
     "navigation_depth": 4,
-    "collapse_navigation": True
+    "collapse_navigation": True,
+    "logo_only": True,
 }
 
 html_static_path = ["_static"]
@@ -87,7 +88,7 @@ html_js_files = [
 ]
 
 html_css_files = [
-    # 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css',
     'custom.css',
 ]
 
