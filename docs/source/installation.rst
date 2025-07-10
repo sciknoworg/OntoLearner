@@ -1,7 +1,7 @@
 Installation
 =============
 
-We recommend **Python 3.10+**,`PyTorch 1.4.0+ <https://pytorch.org/get-started/locally/>`_, and `transformers v4.41.0+ <https://github.com/huggingface/transformers>`_.
+We recommend **Python 3.10+** with `PyTorch 1.4.0+ <https://pytorch.org/get-started/locally/>`_  and `transformers v4.41.0+ <https://github.com/huggingface/transformers>`_ .
 
 
 Install with pip

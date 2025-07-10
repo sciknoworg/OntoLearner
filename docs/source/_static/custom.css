@@ -1,0 +1,123 @@
+.wy-nav-content {
+    max-width: 1280px;
+}
+
+a.icon-home {
+    font-size: 1.4em;
+}
+
+dl.class > dt {
+    width: 100%;
+}
+
+dd > dl {
+    width: 100%;
+}
+
+.toctree-l1  > ul {
+    margin-top: 0px !important;
+}
+
+.wy-side-nav-search .wy-dropdown>a:hover, .wy-side-nav-search>a:hover {
+    background: none;
+}
+
+.project-name {
+    font-size: 1.4em;
+}
+
+.wy-side-nav-search {
+    padding-top: 0px;
+}
+
+.components {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem; /* Use gap for consistent spacing */
+}
+
+.components > .box {
+    flex: 0 0 auto; /* Don't grow or shrink, use natural size */
+    margin: 0; /* Remove margin since we're using gap */
+    padding: 1rem;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5rem;
+    border-color: rgb(55 65 81);
+    background-color: #e3e3e3;
+    color: #404040;
+    width: 11.3rem;
+    box-sizing: border-box;
+}
+
+.components > .box:nth-child(1) > .header {
+    background-image: linear-gradient(to bottom right, #60a5fa, #3b82f6);
+}
+
+.components > .box:nth-child(2) > .header {
+    background-image: linear-gradient(to bottom right, #fb923c, #f97316);
+}
+
+.components > .box:nth-child(3) > .header {
+    background-image: linear-gradient(to bottom right, #f472b6, #ec4899);
+}
+
+.components > .box:nth-child(4) > .header {
+    background-image: linear-gradient(to bottom right, #a78bfa, #8b5cf6);
+}
+
+.components > .box:nth-child(5) > .header {
+    background-image: linear-gradient(to bottom right, #34d399, #10b981);
+}
+
+.components > .box:nth-child(6) > .header {
+    background-image: linear-gradient(to bottom right, #fbbf24, #f59e0b);
+}
+
+
+.components > .optional {
+    background: repeating-linear-gradient(
+        135deg,
+        #f1f1f1,
+        #f1f1f1 25px,
+        #e3e3e3 25px,
+        #e3e3e3 50px
+    );
+}
+
+.components > .box > .header {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5rem;
+    border-color: rgb(55 65 81);
+    padding: 0.5rem 0.2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.sidebar p {
+    font-size: 100% !important;
+}
+
+.training-arguments {
+    background-color: #f3f6f6;
+    border: 1px solid #e1e4e5;
+}
+
+.training-arguments > .header {
+    font-weight: 700;
+    padding: 6px 12px;
+    background: #e1e4e5;
+}
+
+.training-arguments > .table {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+}
+
+.training-arguments > .table > a {
+    padding: 0.5rem;
+    border: 1px solid #e1e4e5;
+}

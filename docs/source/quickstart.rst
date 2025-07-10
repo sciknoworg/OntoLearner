@@ -1,137 +1,226 @@
-Quickstart Guide
+Quickstart
 ================
 
-Welcome to OntoLearner! This hands-on guide will get you performing ontology learning with large language models in under 5 minutes.
+Ontologizer
+--------------------
+
+In OntoLearner, Ontologizers provide a programmatic interface for working with ontologies directly in Python. They offer a standardized way to load, process, and extract structured knowledge from ontological sources for a variety of applications, including ontology learning tasks and other Semantic Web use cases. OntoLearner includes built-in access to several standard ontologies. Below is an example using the `Agronomy Ontology <https://ontolearner.readthedocs.io/benchmarking/agriculture/agro.html#agronomy-ontology-agro>`_  (``ArgO``), which is automatically retrieved from our `🤗 HuggingFace repository <https://huggingface.co/collections/SciKnowOrg/>`_ upon loading.
+
+.. sidebar:: 📰 See Also
+
+    - `Documentation for existing ontologies <https://ontolearner.readthedocs.io/benchmarking/benchmark.html>`_
+    - `How to work with Ontologizers <https://ontolearner.readthedocs.io/ontologizer/ontologizer.html>`_
+
+.. code-block:: python
+
+   from ontolearner import AgrO
+
+   ontology = AgrO() # Initialize the ontology
+
+   ontology.load() # Load the ontology (from HuggingFace by default)
+   # To load from a local file, pass the path as an argument:
+   # ontology.load(path="path/to/file.owl")
+
+   print(ontology) # Print metadata
+   # Sample output:
+   # ontology_id: AgrO
+   # ontology_full_name: Agronomy Ontology (AgrO)
+   # domain: Agriculture
+   # category: Agronomy
+   # version: 1.0
+   # last_updated: 2022-11-02
+   # creator: The Crop Ontology Consortium
+   # license: Creative Commons 4.0
+   # format: RDF
+   # download_url: https://agroportal.lirmm.fr/ontologies/AGRO?p=summary
 
 .. note::
-   **New to OntoLearner?** Make sure you've installed the library first. See the :doc:`installation` guide for setup instructions.
 
-Your First Ontology Learning Task
-------------------------------------
-Here's a complete example that predicts wine types using AI:
+    - ``AgrO()``  is a built-in Ontologizer class in OntoLearner.
+    - ``.load()`` fetches and parses the ontology into a structured internal format.
 
-.. code-block:: python
+Ontology Learning Tasks
+------------------------
 
-    from ontolearner import LearnerPipeline, Wine, train_test_split
+Ontology Learning plays a crucial role in dynamically building and maintaining ontologies, which are essential for intelligent applications in knowledge graphs, information retrieval, question answering, and more. OntoLearner uses a LLMs4OL paradigm tasks to provide the capability to use LLMs for ontology learning tasks. The goal is to transition from raw text or structured corpora to formal knowledge representations such as classes, properties, and axioms.
 
-    # 1. Load a pre-built ontology (downloads automatically)
-    ontology = Wine()
-    ontology.load()
-    data = ontology.extract()
+.. raw:: html
 
-    # 2. Split data for training and testing
-    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
-
-    # 3. Create an AI learning pipeline
-    pipeline = LearnerPipeline(
-        task="term-typing",  # Predict: "What type of wine is Chardonnay?"
-        retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-        llm_id="mistralai/Mistral-7B-Instruct-v0.1"
-    )
-
-    # 4. Train and evaluate the AI model
-    results, metrics = pipeline.fit_predict_evaluate(
-        train_data=train_data,
-        test_data=test_data,
-        top_k=3,
-        test_limit=5
-    )
-
-    # 5. See how well it performed
-    print(f"F1-Score: {metrics['avg_f1_score']:.3f}")
-    print(f"Exact Match: {metrics['avg_exact_match']:.3f}")
+   <div align="center">
+     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/dev/docs/source/images/LLMs4OL.png" alt="OntoLearner Logo" width="100%"/>
+   </div>
 
 
-Try Different AI Approaches
-------------------------------
-Want to experiment? OntoLearner offers three AI approaches:
+As a presented in the above figure, core ontology learning tasks within OntoLearner are:
 
-.. code-block:: python
+.. list-table::
+   :widths: 20 80
+   :header-rows: 1
 
-    # RAG (Best Results) - Combines retrieval + LLM
-    pipeline = LearnerPipeline(
-        task="term-typing",
-        retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-        llm_id="mistralai/Mistral-7B-Instruct-v0.1"
-    )
+   * - Task
+     - Description
+   * - **Term Typing**
+     - Associate each lexical entry with its appropriate conceptual type or class.
 
-    # LLM-Only - Pure language model reasoning
-    from ontolearner import AutoLearnerLLM
-    pipeline = LearnerPipeline(
-        task="taxonomy-discovery",
-        llm=AutoLearnerLLM(),
-        llm_id="mistralai/Mistral-7B-Instruct-v0.1"
-    )
+       **Example**: Assign the type ``"disease"`` to the term ``"myocardial infarction"``.
+   * - **Taxonomy Discovery**
+     - Construct a taxonomic hierarchy by identifying subclass-superclass relationships between types.
 
-    # Retrieval-Only - Fast semantic similarity
-    from ontolearner import BERTRetrieverLearner
-    pipeline = LearnerPipeline(
-        task="non-taxonomy-discovery",
-        retriever=BERTRetrieverLearner(),
-        retriever_id="sentence-transformers/all-MiniLM-L6-v2"
-    )
+       **Example**: Recognize that ``"lung cancer"`` is a subclass of ``"cancer"``, which is a subclass of ``"disease"``.
+   * - **Non-Taxonomic Relation Extraction**
+     - Discover non-hierarchical semantic relations between types or terms.
 
-Three Types of AI Learning Tasks
----------------------------------
-OntoLearner can teach AI to understand three types of knowledge:
+       **Example**: Identify that *"virus"* ``causes`` *"infection"* or *"aspirin"* ``treats`` *headache*.
+
+Additionally, we introduced a new task to address the **terminology extraction** phase.
+
+.. list-table::
+   :widths: 20 80
+   :header-rows: 1
+
+   * - Task
+     - Description
+   * - **Text2Onto**
+     - Extract ontological terminologies and conceptual types from raw text.
+
+       **Example**: Extract terms like ``"heart attack"`` and assign preliminary types such as ``"medical event"`` or ``"disease"``.
+
+These tasks can be performed sequentially or in parallel, depending on the learning strategy. The outputs of earlier stages (e.g., term extraction and typing) often serve as inputs for later stages (e.g., hierarchy induction).
+
+OntoLearner supports automatic dataset extraction for the ontology learning tasks described above. Once an ontology is loaded, simply calling the ``.extract()`` method will generate the corresponding datasets.
 
 .. code-block:: python
 
-    # Task 1: Term Typing - "What type is Chardonnay?"
-    pipeline = LearnerPipeline(task="term-typing", ...)
-    # → Answer: "WhiteWine"
+   from ontolearner import AgrO
 
-    # Task 2: Taxonomy Discovery - "Is Wine a parent of RedWine?"
-    pipeline = LearnerPipeline(task="taxonomy-discovery", ...)
-    # → Answer: True
+   ontology = AgrO()
 
-    # Task 3: Relation Discovery - "What's the relationship between Wine and Grape?"
-    pipeline = LearnerPipeline(task="non-taxonomy-discovery", ...)
-    # → Answer: "madeFrom"
+   ontology.load()
 
-**Want to try all three?** Just change the ``task`` parameter and run the same code from our first example!
+   ontological_data = ontology.extract()
 
 
-Explore 100+ Ready-to-Use Ontologies
----------------------------------------
-Swap out ``Wine()`` for any domain that interests you:
+Learner Models
+------------------
+
+OntoLearner supports three fundamental ontology learning tasks that enable automated knowledge extraction and ontology construction from existing ontological data. The tasks are defined as follows:
+
+- Term Typing: Discover the generalized type for a lexical term
+Once domain-relevant terms and types are extracted (as we explored in Task A - Text2Onto), the next step is to assign a generalized type to each lexical term. This process involves mapping lexical items to their most appropriate semantic categories or ontological classes. For example, in the biomedical domain, the term “aspirin” should be classified under “Pharmaceutical Drug”. This task is crucial for organizing extracted terms into structured ontologies and improving knowledge reuse.
+
+
+These tasks form the core of the library’s machine learning capabilities and are designed to work with various learner models including retrieval-based, LLM-based, and Retrieval-Augmented Generation (RAG) approaches.
+To alighn with machine learning follow, once the ontology is loaded, we can extract the learning examples and split them into training and testing subsets for further learning procedures.
+
+Benchmarking
+----------------
+
+
+3. Extract and Split the Data
+-----------------------------
+
 
 .. code-block:: python
 
-    from ontolearner import ENVO, ChEBI, MGED, AFO
+   from ontolearner import train_test_split
 
-    # 🌱 Environmental science
-    ontology = ENVO()
+   train_data, test_data = train_test_split(
+       ontology.extract(),
+       test_size=0.2,
+       random_state=42
+   )
 
-    # ⚗️ Chemistry
-    ontology = ChEBI()
+Explanation:
 
-    # 🧬 Gene expression
-    ontology = MGED()
+- `.extract()` retrieves candidate triples or axioms for a selected learning task.
+- `train_test_split()` is a utility function for random shuffling and splitting (80/20 here).
 
-    # 🚜 Agriculture
-    ontology = AFO()
+4. Configure the Learning Pipeline
+----------------------------------
 
-**Available domains:** Biology • Chemistry • Medicine • Agriculture • Environment • Geography • Industry • Materials Science • Law • Finance • and more!
-
-
-Quick Customizations
-----------------------
-**Try different AI models:**
+We now configure the learner pipeline using a small instruction-tuned model (`Qwen`) and a retriever model:
 
 .. code-block:: python
 
-    # Swap in different models
-    pipeline = LearnerPipeline(
-        task="term-typing",
-        llm_id="meta-llama/Llama-3.1-8B-Instruct",  # Different LLM
-        retriever_id="sentence-transformers/all-mpnet-base-v2"  # Different retriever
-    )
+   from ontolearner import LearnerPipeline
 
-What's Next?
----------------
-→ :doc:`learning_tasks/learning_tasks` - Deep dive into all three tasks
-→ :doc:`learning_tasks/llms4ol` - Advanced LLM techniques
-→ :doc:`ontologizer/adding_ontologies` - Add your own ontologies
+   pipeline = LearnerPipeline(
+       retriever_id='sentence-transformers/all-MiniLM-L6-v2',
+       llm_id='Qwen/Qwen2.5-0.5B-Instruct',
+       hf_token='<YOUR_HF_TOKEN>',
+       batch_size=16,
+       top_k=3
+   )
 
-**Congratulations!** 🎉 You've just trained AI to understand ontological knowledge. Welcome to the future of knowledge engineering!
+Explanation:
+
+- `retriever_id`: Semantic retriever that retrieves relevant context from ontology fragments.
+- `llm_id`: The instruction-following language model used to generate candidate outputs.
+- `top_k`: Number of retrieved examples passed to the LLM (used in RAG setup).
+- `hf_token`: Required for loading gated models from Hugging Face.
+
+5. Run the Pipeline
+-------------------
+
+Once configured, the pipeline is executed on the training and test data:
+
+.. code-block:: python
+
+   outputs = pipeline(
+       train_data=train_data,
+       test_data=test_data,
+       evaluate=True,
+       task='non-taxonomic-re'
+   )
+
+Explanation:
+
+- `task`: One of `term-typing`, `taxonomy-discovery`, or `non-taxonomic-re`.
+- `evaluate=True`: Computes performance metrics like precision, recall, and F1-score.
+- Returns a dictionary with predictions, metrics, logs, and timing.
+
+6. Evaluate the Results
+------------------------
+
+You can inspect the metrics and runtime performance:
+
+.. code-block:: python
+
+   print("Metrics:", outputs['metrics'])
+   print("Elapsed time:", outputs['elapsed_time'])
+
+Explanation:
+
+- Useful to monitor model accuracy and speed.
+- Helps compare different LLM/retriever configurations across tasks.
+
+7. Explore Predictions
+-----------------------
+
+You can examine a few sample predictions for inspection:
+
+.. code-block:: python
+
+   import pandas as pd
+
+   pd.DataFrame(outputs['predictions'][:5])
+
+Explanation:
+
+- Displays the first 5 predictions in a readable format.
+- Each row may include the input, predicted output, true label (if available), and confidence scores.
+
+8. Run in Google Colab
+-----------------------
+
+To interactively run this tutorial, use the Colab notebook provided here:
+
+`Open in Colab <https://colab.research.google.com/drive/1DuElAyEFzd1vtqTjDEXWcc0zCbiV2Yee?usp=sharing>`_
+
+.. note::
+
+   Ensure your Hugging Face token has access to gated models like `Qwen2.5-0.5B-Instruct`. You can get one at https://huggingface.co/settings/tokens.
+
+---
+
+This quickstart guide should help you get started with `OntoLearner` in minutes. For more complex tasks or datasets, refer to the full documentation and examples.

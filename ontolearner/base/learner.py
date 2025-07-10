@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import Any, List, Optional
-
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+import torch.nn.functional as F
+from sentence_transformers import SentenceTransformer
 
 class AutoLearner(ABC):
     """
@@ -25,7 +28,7 @@ class AutoLearner(ABC):
     implementations must inherit from this class and implement the required methods.
     """
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, **kwargs: Any):
         """
         Initialize the learner with optional configuration parameters.
 
@@ -35,8 +38,7 @@ class AutoLearner(ABC):
         """
         pass
 
-    @abstractmethod
-    def load(self, **kwargs: Any) -> None:
+    def load(self, **kwargs: Any):
         """
         Load pre-trained models, embeddings, or other required components.
 
@@ -53,8 +55,7 @@ class AutoLearner(ABC):
         """
         pass
 
-    @abstractmethod
-    def fit(self, train_data: Any, task: str) -> None:
+    def fit(self, train_data: Any, task: str, ontologizer: bool=True):
         """
         Train the learner on the provided training data for a specific task.
 
@@ -73,10 +74,18 @@ class AutoLearner(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        pass
+        train_data = self.tasks_data_former(data=train_data, task=task, test=False) if ontologizer else train_data
+        if task == 'term-typing':
+            self._term_typing(train_data, test=False)
+        elif task == 'taxonomy-discovery':
+            self._taxonomy_discovery(train_data, test=False)
+        elif task == 'non-taxonomic-re':
+            self._non_taxonomic_re(train_data, test=False)
+        else:
+            raise ValueError(f"{task} is not a valid task.")
 
-    @abstractmethod
-    def predict(self, eval_data: Any, task: str) -> Any:
+
+    def predict(self, eval_data: Any, task: str, ontologizer: bool=True) -> Any:
         """
         Make predictions on evaluation data for a specific task.
 
@@ -98,7 +107,16 @@ class AutoLearner(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        pass
+        eval_data = self.tasks_data_former(data=eval_data, task=task, test=False) if ontologizer else eval_data
+
+        if task == 'term-typing':
+            return self._term_typing(eval_data, test=True)
+        elif task == 'taxonomy-discovery':
+            return self._taxonomy_discovery(eval_data, test=True)
+        elif task == 'non-taxonomic-re':
+            return self._non_taxonomic_re(eval_data, test=True)
+        else:
+            raise ValueError(f"{task} is not a valid task.")
 
     def fit_predict(self, train_data: Any, eval_data: Any, task: str) -> Any:
         """
@@ -120,6 +138,55 @@ class AutoLearner(ABC):
         predictions = self.predict(eval_data, task)
         return predictions
 
+    def _term_typing(self, data: Any, test: bool = False) -> Optional[Any]:
+        pass
+
+    def _taxonomy_discovery(self, data: Any, test: bool = False) -> Optional[Any]:
+        pass
+
+    def _non_taxonomic_re(self, data: Any, test: bool = False) -> Optional[Any]:
+        pass
+
+    def tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
+        formatted_data = []
+        if task == "term-typing":
+            for typing in data.term_typings:
+                if test:
+                    formatted_data.append(typing.term)
+                else:
+                    formatted_data += typing.types
+            formatted_data = list(set(formatted_data))
+        if task == "taxonomy-discovery":
+            for taxonomic_pairs in data.type_taxonomies.taxonomies:
+                formatted_data.append(taxonomic_pairs.parent)
+                formatted_data.append(taxonomic_pairs.child)
+            formatted_data = list(set(formatted_data))
+        if task == "non-taxonomic-re":
+            non_taxonomic_types = []
+            non_taxonomic_res = []
+            for non_taxonomic_triplets in data.type_non_taxonomic_relations.non_taxonomies:
+                non_taxonomic_types.append(non_taxonomic_triplets.head)
+                non_taxonomic_types.append(non_taxonomic_triplets.tail)
+                non_taxonomic_res.append(non_taxonomic_triplets.relation)
+            non_taxonomic_types = list(set(non_taxonomic_types))
+            non_taxonomic_res = list(set(non_taxonomic_res))
+            formatted_data = {"types": non_taxonomic_types, "relations": non_taxonomic_res}
+        return formatted_data
+
+    def tasks_ground_truth_former(self, data: Any, task: str) -> Any:
+        formatted_data = []
+        if task == "term-typing":
+            for typing in data.term_typings:
+                formatted_data.append({"term": typing.term, "types": typing.types})
+        if task == "taxonomy-discovery":
+            for taxonomic_pairs in data.type_taxonomies.taxonomies:
+                formatted_data.append({"parent": taxonomic_pairs.parent, "child": taxonomic_pairs.child})
+        if task == "non-taxonomic-re":
+            for non_taxonomic_triplets in data.type_non_taxonomic_relations.non_taxonomies:
+                formatted_data.append({"head": non_taxonomic_triplets.head,
+                                       "tail": non_taxonomic_triplets.tail,
+                                       "relation": non_taxonomic_triplets.relation})
+        return formatted_data
 
 class AutoLLM(ABC):
     """
@@ -134,18 +201,21 @@ class AutoLLM(ABC):
         tokenizer: The tokenizer associated with the model.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, label_mapper: Any, device: str='cpu', token: str="") -> None:
         """
         Initialize the LLM component.
 
         Sets up the basic structure with model and tokenizer attributes
         that will be populated when load() is called.
         """
+        self.token = token
+        self.label_mapper = label_mapper
+        self.device=device
         self.model: Optional[Any] = None
         self.tokenizer: Optional[Any] = None
 
-    @abstractmethod
-    def load(self, model_id: str, **kwargs: Any) -> None:
+
+    def load(self, model_id: str) -> None:
         """
         Load a language model and its associated tokenizer.
 
@@ -163,31 +233,63 @@ class AutoLLM(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        pass
+        self.tokenizer = AutoTokenizer.from_pretrained(model_id, padding_side='left', token=self.token)
+        self.tokenizer.pad_token = self.tokenizer.eos_token
+        if self.device == "cpu":
+            device_map = "cpu"
+        else:
+            device_map = "auto"
+        self.model = AutoModelForCausalLM.from_pretrained(
+            model_id,
+            device_map=device_map,
+            torch_dtype=torch.bfloat16,
+            token=self.token
+        )
+        self.label_mapper.fit()
 
-    @abstractmethod
-    def generate(self, inputs: List[str], **kwargs: Any) -> List[str]:
+    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
         """
         Generate text responses for the given input prompts.
 
-        This method takes a list of input prompts and generates corresponding
-        text responses using the loaded language model.
+        This method processes a batch of input prompts and generates corresponding
+        text responses using the loaded language model. It uses optimized settings
+        for consistent, high-quality generation suitable for ontology learning tasks.
+
+        Generation Settings:
+        - Temperature: 0.1 (low randomness for consistent outputs)
+        - Padding: Automatic handling for batch processing
+        - Device placement: Automatic GPU/CPU selection
 
         Args:
-            inputs: List of input prompts/texts to generate responses for.
-            **kwargs: Generation parameters such as:
-                     - max_new_tokens: Maximum number of tokens to generate
-                     - temperature: Sampling temperature for generation
-                     - top_k: Top-k sampling parameter
+            inputs: List of input prompts to generate responses for.
+                   Each prompt should be a complete, well-formatted string.
+            max_new_tokens: Maximum number of new tokens to generate per input.
+                          Shorter values encourage concise responses.
 
         Returns:
             List of generated text responses, one for each input prompt.
-
-        Raises:
-            NotImplementedError: If not implemented by concrete class.
+            Responses include the original input plus generated continuation.
         """
-        pass
+        # Tokenize inputs and move to device
+        encoded_inputs = self.tokenizer(inputs, return_tensors="pt", padding=True).to(self.model.device)
+        input_ids = encoded_inputs["input_ids"]
+        input_length = input_ids.shape[1]
 
+        # Generate output
+        outputs = self.model.generate(
+            **encoded_inputs,
+            max_new_tokens=max_new_tokens,
+            pad_token_id=self.tokenizer.eos_token_id
+        )
+
+        # Extract only the newly generated tokens (excluding prompt)
+        generated_tokens = outputs[:, input_length:]
+
+        # Decode only the generated part
+        decoded_outputs = [self.tokenizer.decode(g, skip_special_tokens=True).strip() for g in generated_tokens]
+
+        # Map the decoded text to labels
+        return self.label_mapper.predict(decoded_outputs)
 
 class AutoRetriever(ABC):
     """
@@ -209,9 +311,11 @@ class AutoRetriever(ABC):
         populated when load() is called.
         """
         self.model: Optional[Any] = None
+        self.embedding_model = None
+        self.documents = []
+        self.embeddings = None
 
-    @abstractmethod
-    def load(self, model_id: str, **kwargs: Any) -> None:
+    def load(self, model_id: str) -> None:
         """
         Load a retrieval/embedding model.
 
@@ -227,10 +331,9 @@ class AutoRetriever(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        pass
+        self.embedding_model = SentenceTransformer(model_id)
 
-    @abstractmethod
-    def index(self, inputs: List[Any]) -> None:
+    def index(self, inputs: List[str]):
         """
         Index the provided inputs for efficient retrieval.
 
@@ -244,28 +347,47 @@ class AutoRetriever(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        pass
+        self.documents = inputs
+        self.embeddings = self.embedding_model.encode(inputs, convert_to_tensor=True)
 
-    @abstractmethod
-    def retrieve(self, query: Any, top_k: int = 5) -> List[Any]:
+    def retrieve(self, query: List[str], top_k: int = 5) -> List[List[str]]:
         """
-        Retrieve the most similar examples for a given query.
-
-        This method finds and returns the top-k most similar examples from
-        the indexed training data based on semantic similarity.
+        Retrieve the top-k most similar examples for each query in a list of queries.
 
         Args:
-            query: Query example to find similar items for.
-                  Format depends on the specific task and implementation.
-            top_k: Number of most similar examples to retrieve.
+            query: List of query examples.
+            top_k: Number of most similar examples to retrieve per query.
 
         Returns:
-            List of the top-k most similar examples from the indexed data.
-
-        Raises:
-            NotImplementedError: If not implemented by concrete class.
+            A list of lists, where each sublist contains the top-k most similar examples for the corresponding query.
         """
-        pass
+        if self.embeddings is None:
+            raise RuntimeError("Retriever model must index documents before prediction.")
+
+        # Encode all queries at once
+        query_embeddings = self.embedding_model.encode(query, convert_to_tensor=True)  # shape: [num_queries, dim]
+
+        if query_embeddings.shape[-1] != self.embeddings.shape[-1]:
+            raise ValueError(
+                f"Embedding dimension mismatch: query embedding dim={query_embeddings.shape[-1]}, "
+                f"document embedding dim={self.embeddings.shape[-1]}"
+            )
+
+        # Normalize embeddings for cosine similarity
+        query_norm = F.normalize(query_embeddings, p=2, dim=1)
+        doc_norm = F.normalize(self.embeddings, p=2, dim=1)
+
+        # Compute cosine similarity: [num_queries, num_docs]
+        similarity_matrix = torch.matmul(query_norm, doc_norm.T)
+
+        # Get top-k indices for each query
+        top_k = min(top_k, len(self.documents))
+        topk_similarities, topk_indices = torch.topk(similarity_matrix, k=top_k, dim=1)
+
+        # Retrieve documents for each query
+        results = [[self.documents[i] for i in indices] for indices in topk_indices]
+
+        return results
 
 
 class AutoPrompt(ABC):
@@ -290,7 +412,6 @@ class AutoPrompt(ABC):
         """
         self.prompt_template = prompt_template
 
-    @abstractmethod
     def format(self, **kwargs: Any) -> str:
         """
         Format the prompt template with the provided arguments.
@@ -312,4 +433,7 @@ class AutoPrompt(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        pass
+        try:
+            return self.prompt_template.format(**kwargs)
+        except KeyError as e:
+            raise KeyError(f"{e} is not a valid keyword argument")

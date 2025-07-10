@@ -12,71 +12,78 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import re
-from typing import Any, List
-
+import warnings
+from typing import Any
 from ..base import AutoLearner
-from ..data_structure import OntologyData
 
 
 class AutoRAGLearner(AutoLearner):
-    def __init__(self, learner_retriever: Any, learner_llm: Any, prompting: Any):
+    def __init__(self,
+                 retriever: Any,
+                 llm: Any):
         super().__init__()
-        self.retriever = learner_retriever
-        self.llm = learner_llm
-        self.prompting = prompting
+        self.retriever = retriever
+        self.llm = llm
+        self._is_term_typing_fit = False
 
-    def load(self, retriever_id: str, llm_id: str):
+    def load(self,
+             retriever_id: str = 'sentence-transformers/all-MiniLM-L6-v2',
+             llm_id: str="mistralai/Mistral-7B-Instruct-v0.1"):
         self.retriever.load(retriever_id)
         self.llm.load(llm_id)
 
-    @staticmethod
-    def _prepare_documents(data: OntologyData, task: str) -> List[str]:
-        documents = []
-        if task == "term-typing":
-            for tt in data.term_typings:
-                documents.append(f"Term: {tt.term}\nTypes: {', '.join(tt.types)}")
-        elif task == "taxonomy-discovery":
-            for tr in data.type_taxonomies.taxonomies:
-                documents.append(f"Parent: {tr.parent}\nChild: {tr.child}\nRelation: is-a")
-        elif task == "non-taxonomic-re":
-            for nr in data.type_non_taxonomic_relations.non_taxonomies:
-                documents.append(f"Head: {nr.head}\nRelation: {nr.relation}\nTail: {nr.tail}")
-        return documents
-
-    def fit(self, train_data: OntologyData, task: str):
-        documents = self._prepare_documents(train_data, task)
-        self.retriever.index(documents)
-        return self
-
-    def predict(self, eval_data: Any, task: str) -> List[str]:
-        if task == "term-typing":
-            term = eval_data
-            query = term
-            prompt_data = {"term": term}
-        elif task == "taxonomy-discovery":
-            parent, child = eval_data
-            query = f"{parent} {child}"
-            prompt_data = {"parent": parent, "child": child}
-        elif task == "non-taxonomic-re":
-            head, tail = eval_data
-            query = f"{head} {tail}"
-            prompt_data = {"head": head, "tail": tail}
+    def _term_typing(self, data: Any, test: bool = False) -> Any:
+        """
+        during training: data = ["type-1", .... ],
+        during testing: data = ['term-1', ...]
+        """
+        task = 'term-typing'
+        if test:
+            if self._is_term_typing_fit:
+                retriever_predictions = self.retriever.predict(data, task=task, ontologizer=False)
+                prompting = self.llm.prompting(task=task)
+                dataset = [{"term": retriever_prediction['term'], "type": type,
+                            "prompt": prompting.format(term=retriever_prediction['term'], type=type)}
+                           for retriever_prediction in retriever_predictions for type in retriever_prediction['types']]
+                return self.llm._term_typing_predict(dataset=dataset)
+            else:
+                raise RuntimeError("Term typing model must be fit before prediction.")
         else:
-            raise ValueError(f"Task {task} not supported")
+            self.retriever.fit(data, task=task, ontologizer=False)
+            self._is_term_typing_fit = True
 
-        context = "\n".join(self.retriever.retrieve(query, top_k=5))
+    def _taxonomy_discovery(self, data: Any, test: bool = False) -> Any:
+        """
+        during training: data = ['type-1', ...],
+        during testing (same data): data= ['type-1', ...]
+        """
+        task = 'taxonomy-discovery'
+        if test:
+            retriever_predictions = self.retriever.predict(data, task=task, ontologizer=False)
+            prompting = self.llm.prompting(task=task)
+            dataset = [{"parent": retriever_prediction['parent'], "child": retriever_prediction['child'],
+                        "prompt": prompting.format(parent=retriever_prediction['parent'], child=retriever_prediction['child'])}
+                       for retriever_prediction in retriever_predictions]
+            return self.llm._taxonomy_discovery_predict(dataset=dataset)
+        else:
+            warnings.warn("No requirement for fiting the taxonomy discovery model, the predict module will use the input data to do the fit as well.")
 
-        prompting = self.prompting.format(term=prompt_data["term"], context=context)
-
-        raw_response = self.llm.generate([prompting])[0]
-
-        if task == "term-typing":
-            match = re.search(r'\[(.*?)\]', raw_response)
-            if match:
-                types_str = match.group(1)
-                types = [t.strip().strip("'\"") for t in types_str.split(',')]
-                return types
-            return [raw_response.strip()]
-
-        return [raw_response]
+    def _non_taxonomic_re(self, data: Any, test: bool = False) -> Any:
+        """
+        during training: data = ['type-1', ...],
+        during testing: {'types': [...], 'relations': [... ]}
+        """
+        task = "non-taxonomic-re"
+        if test:
+            retriever_predictions = self.retriever.predict(data, task=task, ontologizer=False)
+            prompting = self.llm.prompting(task='non-taxonomic-re')
+            dataset = [{"head": retriever_prediction['head'],
+                        "tail": retriever_prediction['tail'],
+                        "relation": retriever_prediction['relation'],
+                        "prompt": prompting.format(head=retriever_prediction['head'],
+                                                   tail=retriever_prediction['tail'],
+                                                   relation=retriever_prediction['relation'])}
+                       for retriever_prediction in retriever_predictions]
+            return self.llm._non_taxonomic_re_predict(dataset=dataset)
+        else:
+            warnings.warn("No requirement for fiting the non-taxonomic-re model, the predict module will use the input data to do the fit as well.")

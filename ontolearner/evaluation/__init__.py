@@ -11,17 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from .evaluate import aggregate_metrics
-from .metrics import calculate_term_typing_metrics, calculate_taxonomy_metrics, calculate_non_taxonomy_metrics
-from .visualisations import plot_model_comparison, plot_type_analysis, plot_precision_recall_distribution
+from .metrics import text2onto_metrics, term_typing_metrics, taxonomy_discovery_metrics, non_taxonomic_re_metrics
+from .evaluate import evaluation_report
 
 __all__ = [
-    'aggregate_metrics',
-    'calculate_term_typing_metrics',
-    'calculate_taxonomy_metrics',
-    'calculate_non_taxonomy_metrics',
-    'plot_model_comparison',
-    'plot_type_analysis',
-    'plot_precision_recall_distribution'
+    'evaluation_report',
+    'term_typing_metrics',
+    'taxonomy_discovery_metrics',
+    'non_taxonomic_re_metrics'
 ]

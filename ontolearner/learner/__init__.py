@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .llm import AutoLearnerLLM
-from .retriever import BERTRetrieverLearner
+from .llm import AutoLLMLearner
+from .retriever import AutoRetrieverLearner
 from .rag import AutoRAGLearner
 from .prompt import StandardizedPrompting
+from .label_mapper import LabelMapper
