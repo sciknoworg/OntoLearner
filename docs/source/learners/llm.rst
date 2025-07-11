@@ -32,7 +32,7 @@ We start by importing necessary components from the ontolearner package, loading
 .. note::
 
     * ``AutoLLMLearner``: A wrapper class to easily configure and run LLM-based learners.
-    * ``LabelMapper``: Encodes/decodes relation or class labels for more effective learning.
+    * ``LabelMapper``: Maps generated outputs to specified clases.
     * ``StandardizedPrompting``: A default prompting strategy for prompting LLMs in a consistent way.
     * ``evaluation_report``: A evaluation method for LLMs4OL tasks.
 
@@ -96,17 +96,25 @@ Pipeline Usage
 
 .. code-block:: python
 
+    # Import the main components from the OntoLearner library
     from ontolearner import LearnerPipeline, AgrO, train_test_split
 
+    # Load the AgrO ontology, which contains agricultural concepts and relationships
     ontology = AgrO()
-    ontology.load()
-    ontological_data = ontology.extract()
-    train_data, test_data = train_test_split(ontological_data, test_size=0.2, random_state=42)
+    ontology.load()  # Parse and initialize internal ontology structures, including term-type pairs
 
+    # Extract annotated examples (terms and their types), and split into train/test sets
+    train_data, test_data = train_test_split(
+        ontology.extract(),     # Extract raw (term, types) instances from the ontology
+        test_size=0.2,          # 20% of the data is reserved for evaluation
+        random_state=42         # Ensure reproducibility by setting a fixed seed
+    )
+
+    # Set up the learner pipeline using a lightweight instruction-tuned LLM
     pipeline = LearnerPipeline(
-        llm_id='Qwen/Qwen2.5-0.5B-Instruct',
-        hf_token='...',
-        batch_size=32
+        llm_id='Qwen/Qwen2.5-0.5B-Instruct',   # Small-scale LLM for reasoning over term-type assignments
+        hf_token='...',                        # Hugging Face access token for loading gated models
+        batch_size=32                          # Batch size for parallel inference (if applicable)
     )
 
     # Run the full learning pipeline on the term-typing task
@@ -118,8 +126,7 @@ Pipeline Usage
     )
 
     # Display the evaluation results
-    # Prints {'precision': ..., 'recall': ..., 'f1_score': ...}
-    print("Metrics:", outputs['metrics'])
+    print("Metrics:", outputs['metrics'])          # Shows {'precision': ..., 'recall': ..., 'f1_score': ...}
 
     # Display total elapsed time for training + prediction + evaluation
     print("Elapsed time:", outputs['elapsed_time'])
