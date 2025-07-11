@@ -10,7 +10,14 @@ We aim to extract:
 
 By identifying and extracting these elements, the task helps bridge the gap between unstructured natural language and structured ontological knowledge. This process is critical for building knowledge representations that support reasoning, semantic integration, and advanced information retrieval.
 
-To construct datasets for this task, OntoLearner leverages a **Synthetic Data Generator** module.
+To construct datasets for this task, OntoLearner leverages a **Synthetic Data Generator** module. This module is implemented with respect to the following algorithm.
+
+.. raw:: html
+
+   <div align="center">
+     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/main/docs/source/images/text2onto.png" width="90%"/>
+   </div>
+   <br>
 
 
 Data Generator
@@ -75,7 +82,7 @@ Then you can configure DSPy to use the provided LLM and generate the synthetic t
     synthetic_data = text2onto_synthetic_generator.generate(ontological_data=ontological_data,
                                                                     topic=ontology.domain)
 
-Synthetic Data Splitter
+Data Splitter
 ------------------------
 
 You can split the generated synthetic data using for training, hyperparameter optimization (validation), and testing purposes.
