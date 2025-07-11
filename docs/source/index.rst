@@ -77,7 +77,7 @@ Working with OntoLearner s straightforward:
         # 3. Extract the learning task dataset
         data = ontology.extract()
 
-        print(data)
+        print(ontology)
         # outputs:
         # ontology_id: AgrO
         # ontology_full_name: Agronomy Ontology (AgrO)
@@ -176,13 +176,14 @@ or GitHub repository:
 
    installation
    quickstart
-   huggingface
 
 .. toctree::
    :maxdepth: 1
    :caption: Ontologizer
    :hidden:
-   ontologizer/ontologizer
+
+   ontologizer/ontology_modularization
+   ontologizer/ontology_hosting
    ontologizer/adding_ontologies
 
 .. toctree::
