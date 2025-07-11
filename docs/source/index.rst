@@ -200,7 +200,6 @@ or GitHub repository:
    :caption: Learner Models
    :hidden:
 
-   learners/authentication
    learners/llm
    learners/retrieval
    learners/rag
