@@ -73,6 +73,8 @@ You will see a evaluations results.
 Pipeline Usage
 -----------------------
 
+Similar to LLM learner, Retrieval Learner is also callable via streamlined ``LearnerPipeline`` class that simplifies the entire process learning.
+
 .. code-block:: python
 
     # Import core components from the OntoLearner library
@@ -114,3 +116,6 @@ Pipeline Usage
 
     # Print the full output dictionary (includes predictions)
     print(outputs)
+
+.. hint::
+    See `Learning Tasks <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_ for possible tasks within Learners.

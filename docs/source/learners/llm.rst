@@ -93,6 +93,7 @@ You will see a evaluations results.
 
 Pipeline Usage
 -----------------------
+The OntoLearner package also offers a streamlined ``LearnerPipeline`` class that simplifies the entire process of initializing, training, predicting, and evaluating a RAG setup into a single call. This is particularly useful for rapid experimentation and deployment.
 
 .. code-block:: python
 
@@ -133,3 +134,6 @@ Pipeline Usage
 
     # Print all returned outputs (include predictions)
     print(outputs)
+
+.. hint::
+    See `Learning Tasks <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_ for possible tasks within Learners.
