@@ -32,7 +32,7 @@ from ._learner import LearnerPipeline
 
 # from .processor import Processor
 from .utils import train_test_split
-
+from .evaluation import evaluation_report
 
 
 __all__ = [
@@ -50,7 +50,8 @@ __all__ = [
     "utils",
     "tools",
     "learner",
-    "train_test_split"
+    "train_test_split",
+    "evaluation_report"
 ]
 
 logging.basicConfig(
