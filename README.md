@@ -35,27 +35,32 @@ import ontolearner
 print(ontolearner.__version__)
 ```
 
+Please refer to [Installation](https://ontolearner.readthedocs.io/installation.html) page for further options.
 
 ## 🔗 Essential Resources
 
-| Resource                                                                                                                                                                                          | Info |
-|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----|
-| **[📚 OntoLearner Documentation](https://ontolearner.readthedocs.io/)**                                                                                                                           | Dive into OntoLearner's extensive documentation to explore its modular architecture, including Ontologizers, Learning Tasks, and Learner Models. The documentation provides detailed guides, references, and tutorials to help you get started and make the most of OntoLearner's capabilities.  |
-| **[🤗 Datasets on Hugging Face](https://huggingface.co/collections/SciKnowOrg/ontolearner-benchmarking-6823bcd051300c210b7ef68a)**                                                                | You can access the curated colloctions of machine-readable ontologies across diverse domains such as agriculture, medicine, social sciences, and more. OntoLearner Benchmarking datasets are optimized for integration into generative AI pipelines, supporting versioning, streaming, and metadata inspection.|
-| **Quick Tour on OntoLearner** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1DuElAyEFzd1vtqTjDEXWcc0zCbiV2Yee?usp=sharing) | Follow this hands-on Colab tutorial to explore the complete OntoLearner workflow—from loading ontologies and extracting structured data, to training RAG models and evaluating performance on benchmark tasks. Ideal for researchers, developers, and educators getting started with ontology-centric machine learning. |
-
+| Resource                                                                                                                                                                                                            | Info                                                                                                                                                                                                                                                                                                                     |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **[📚 OntoLearner Documentation](https://ontolearner.readthedocs.io/)**                                                                                                                                             | OntoLearner's extensive documentation website.                                                                                                                                                                                                                                                                           |
+| **[🤗 Datasets on Hugging Face](https://huggingface.co/collections/SciKnowOrg/ontolearner-benchmarking-6823bcd051300c210b7ef68a)**                                                                                  | Access curated, machine-readable ontologies.                                                                                                                                                                                                                                                                             |
+| **Quick Tour on OntoLearner** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1DuElAyEFzd1vtqTjDEXWcc0zCbiV2Yee?usp=sharing) ``version=1.2.1`` | OntoLearner hands-on Colab tutorials. |
+| **[🚀 Quickstart](https://ontolearner.readthedocs.io/quickstart.html)**                                                                                                                                             | Get started quickly with OntoLearner’s main features and workflow.                                                                                                                                                                                                                                                       |
+| **[🕸️ Learning Tasks](https://ontolearner.readthedocs.io/learning_tasks/learning_tasks.html)**                                                                                                                     | Explore supported ontology learning tasks like LLMs4OL Paradigm tasks and Text2Onto.                                                                                                                                                                                                                                     |                                                                                                                                                                                                                                    |
+| **[🧠 Learner Models](https://ontolearner.readthedocs.io/learners/llm.html)**                                                                                                                                       | Browse and configure various learner models, including LLMs, Retrieval, or RAG approaches.                                                                                                                                                                                                                               |
+| **[📚 Ontologies Documentations](https://ontolearner.readthedocs.io/benchmarking/benchmark.html)**                                                                                                                  | Review benchmark ontologies and datasets used for evaluation and training.                                                                                                                                                                                                                                               |
+| **[🧩 How to work with Ontologizer?](https://ontolearner.readthedocs.io/ontologizer/ontology_modularization.html)**                                                                                                 | Learn how to modularize and preprocess ontologies using the Ontologizer module.                                                                                                                                                                                                                                          |
 
 ## 🚀 Quick Tour
 Get started with OntoLearner in just a few lines of code. This guide demonstrates how to initialize ontologies, load datasets, and train an LLM-assisted learner for ontology engineering tasks.
 
 **Basic Usage - Automatic Download from Hugging Face**:
 ```python
-from ontolearner.ontology import Wine
+from ontolearner import Wine
 
 # 1. Initialize an ontologizer from OntoLearner
 ontology = Wine()
 
-# 2. Load the ontology automatically from Hugging Face
+# 2. Load the ontology automatically from HuggingFace
 ontology.load()
 
 # 3. Extract the learning task dataset
@@ -67,99 +72,84 @@ To see the ontology metadata you can print the ontology:
 print(ontology)
 ```
 
-**Basic Usage - Manual Download from Hugging Face**:
+Now, explore [150+ ready-to-use ontologies](https://ontolearner.readthedocs.io/benchmarking/benchmark.html) or read on [how to work with ontologizers](https://ontolearner.readthedocs.io/ontologizer/ontology_modularization.html).
+
+**Learner Models**:
+
 ```python
-from ontolearner.ontology import Wine
+from ontolearner import AutoRetrieverLearner, AgrO, train_test_split, evaluation_report
 
-# 1. Initialize an ontologizer from OntoLearner
-ontology = Wine()
+# 1. Programmatic import of an ontology
+ontology = AgrO()
+ontology.load()
 
-# 2. Download the ontology from Hugging Face
-ontology.from_huggingface()
+# 2. Load tasks datasets
+ontological_data = ontology.extract()
+
+# 3. Split into train and test sets
+train_data, test_data = train_test_split(ontological_data, test_size=0.2, random_state=42)
+
+# 4. Initialize Learner
+task = 'non-taxonomic-re'
+ret_learner = AutoRetrieverLearner(top_k=5)
+ret_learner.load(model_id='sentence-transformers/all-MiniLM-L6-v2')
+
+# 5. Fit the model to training data and do the predict
+ret_learner.fit(train_data, task=task)
+predicts = ret_learner.predict(test_data, task=task)
+
+# 6. Evaluation
+truth = ret_learner.tasks_ground_truth_former(data=test_data, task=task)
+metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
+print(metrics)
 ```
+Other learners:
+* [LLM-Based Learner](https://ontolearner.readthedocs.io/learners/llm.html)
+* [RAG-Based Learner](https://ontolearner.readthedocs.io/learners/rag.html)
 
-**LLM-Based Learning Pipeline**:
+**LearnerPipeline**: The OntoLearner also offers a streamlined `LearnerPipeline` class that simplifies the entire process of initializing, training, predicting, and evaluating a RAG setup into a single call.
+
+
+
 ```python
-from ontolearner import ontology, utils, learner
-from ontolearner.evaluation import calculate_term_typing_metrics
+# Import core components from the OntoLearner library
+from ontolearner import LearnerPipeline, AgrO, train_test_split
 
-# 1. Load the ontology and extract training data
-onto = ontology.Wine()
-data = onto.extract()
+# Load the AgrO ontology, which includes structured agricultural knowledge
+ontology = AgrO()
+ontology.load()  # Load ontology data (e.g., entities, relations, metadata)
 
-# 2. Split into train and test sets
-train_data, test_data = utils.train_test_split(
-    data, test_size=0.2, random_state=42
+# Extract relation instances from the ontology and split them into training and test sets
+train_data, test_data = train_test_split(
+    ontology.extract(),      # Extract annotated (head, tail, relation) triples
+    test_size=0.2,           # 20% for evaluation
+    random_state=42          # Ensures reproducible splits
 )
 
-# 3. Initialize a Retrieval-Augmented Generation (RAG) learner
-retriever = learner.BERTRetrieverLearner()
-llm = learner.AutoLearnerLLM(token="...") # a token required for LLMs with an access
-prompt = learner.StandardizedPrompting(task="term-typing")
-
-rag_learner = learner.AutoRAGLearner(
-    learner_retriever=retriever,
-    learner_llm=llm,
-    prompting=prompt
-)
-
-# 4. Load pretrained components
-rag_learner.load(
-    retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-    llm_id="Qwen/Qwen2.5-0.5B-Instruct"
-)
-
-# 5. Fit the model to training data
-rag_learner.fit(train_data=train_data, task="term-typing")
-
-# 6. Predict on test data
-results = []
-for typing in test_data.term_typings:
-    term = typing.term
-    ground_truth = typing.types
-    predicted = rag_learner.predict(term, task="term-typing")
-    metrics = calculate_term_typing_metrics(predicted, ground_truth)
-    results.append({
-        'term': term,
-        'ground_truth': ground_truth,
-        'predicted': predicted,
-        **metrics
-    })
-```
-
-**LearnerPipeline**:
-```python
-from ontolearner import LearnerPipeline
-from ontolearner import ontology, utils
-
-# 1. Load the ontology and extract training data
-onto = ontology.Wine()
-data = onto.extract()
-
-# 2. Split into train and test sets
-train_data, test_data = utils.train_test_split(
-    data, test_size=0.2, random_state=42
-)
-
-# 3. Specify learner pipeline and models
+# Initialize the learning pipeline using a dense retriever
 pipeline = LearnerPipeline(
-    task="term-typing",
-    retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-    llm_id="Qwen/Qwen2.5-0.5B-Instruct",
-    hf_token="your_huggingface_token"
+    retriever_id='sentence-transformers/all-MiniLM-L6-v2',  # Hugging Face model ID for retrieval
+    batch_size=10,       # Number of samples to process per batch (if batching is enabled internally)
+    top_k=5              # Retrieve top-5 most relevant support instance per query
 )
 
-# 4. fit, predict, and evaluate
-results, metrics = pipeline.fit_predict_evaluate(
+# Run the pipeline on the training and test data
+# The pipeline performs: fit() → predict() → evaluate() in sequence
+outputs = pipeline(
     train_data=train_data,
     test_data=test_data,
-    top_k=3,  # Retrieve top-3 similar examples
-    test_limit=-1 # on all samples
+    evaluate=True,           # If True, computes precision, recall, and F1-score
+    task='non-taxonomic-re'  # Specifies that we are doing non-taxonomic relation prediction
 )
 
-# 5. printing the results
-print(f"RAG F1-Score: {metrics['avg_f1_score']:.3f}")
-print(f"RAG Exact Match: {metrics['avg_exact_match']:.3f}")
+# Print the evaluation metrics (precision, recall, F1)
+print("Metrics:", outputs['metrics'])
+
+# Print the total elapsed time for training and evaluation
+print("Elapsed time:", outputs['elapsed_time'])
+
+# Print the full output dictionary (includes predictions)
+print(outputs)
 ```
 
 ## ⭐ Contribution
