@@ -182,7 +182,7 @@ or:
   month        = may,
   year         = 2025,
   publisher    = {Zenodo},
-  version      = {v1.0.1},
+  version      = {v1.3.0},
   doi          = {10.5281/zenodo.15399783},
   url          = {https://doi.org/10.5281/zenodo.15399783},
 }

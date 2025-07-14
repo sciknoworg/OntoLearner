@@ -1,5 +1,19 @@
 ## Changelog
 
+### v1.3.0 (July 14, 2025)
+- Add verbose for logging at train-test splits
+- High-level encapsulation of learners: LLM, retriever, and rag
+- Update pipeline to a newer version
+- Optimize code
+- Refactor examples
+- Delete dummy scripts from the script dir
+- Parameter custimization
+- Add AutoOntology feature
+- Extensive update on documentation
+- Update Readme
+- Add Unittest
+- Add package references in the documentation website
+
 ### v1.2.1 (June 20, 2025)
 - fix toml packages reference
 - add print functionality to ontologizer
