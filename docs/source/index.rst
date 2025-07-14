@@ -224,3 +224,4 @@ or GitHub repository:
    package_reference/evaluation
    package_reference/tools
    package_reference/utils
+   package_reference/pipeline
