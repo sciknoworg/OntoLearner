@@ -1,25 +1,6 @@
 Text2Onto
 ==================================
 
-The Text2Onto task aims for **extracting ontological terminologies and types from a raw text**. So, for given an unstructured text corpus/documents, the goal is to identify foundational elements for ontology construction by recognizing domain-relevant vocabulary and categorizing it appropriately.
-
-We aim to extract:
-
-* **Terms (or Entities)**: These are specific terms that form the basis of an ontology. They populate the ontology by instantiating the defined classes. For instance, COVID-19 is a term of the type Disease, and Paris is a term of the type City.
-* **Types (or Classes)**: These are abstract categories or groupings that represent general concepts within a domain. They form the backbone of an ontology's structure. Examples include Disease, Vehicle, or City.
-
-By identifying and extracting these elements, the task helps bridge the gap between unstructured natural language and structured ontological knowledge. This process is critical for building knowledge representations that support reasoning, semantic integration, and advanced information retrieval.
-
-To construct datasets for this task, OntoLearner leverages a **Synthetic Data Generator** module. This module is implemented with respect to the following algorithm.
-
-.. raw:: html
-
-   <div align="center">
-     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/main/docs/source/images/text2onto.png" width="90%"/>
-   </div>
-   <br>
-
-
 Data Generator
 -----------------------------------------
 OntoLearner library can be used to generate synthatic data for evaluating the task of term and type extraction from natural language text. It will generate a text corpus of documents aligned with a given ontology.

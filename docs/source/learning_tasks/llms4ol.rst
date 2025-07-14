@@ -1,21 +1,6 @@
 LLMs4OL Paradigm
 ====================================================
 
-.. raw:: html
-
-   <div align="center">
-     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/dev/docs/source/images/LLMs4OL.png" alt="OntoLearner Logo" width="100%"/>
-   </div>
-   <br>
-
-The LLMs4OL (Large Language Models for Ontology Learning) paradigm represents
-a transformative approach to automated ontology construction and enrichment. OntoLearner implements state-of-the-art LLM-based methodologies that leverage the vast knowledge encoded in pre-trained language models to perform sophisticated ontological reasoning and knowledge extraction.
-
-.. hint::
-
-    The LLMs4OL paper is available online and can be accessed via `this link <https://doi.org/10.1007/978-3-031-47240-4_22>`_.
-
-
 Learning Tasks
 ------------------------
 
