@@ -52,7 +52,7 @@ Next, initiate the learner by specifying ``top_k`` parameter and load the desire
     # Index the model on the training data for LLMs4OL task
     ret_learner.fit(train_data, task=task)
 
-    predict = ret_learner.predict(test_data, task=task)
+    predicts = ret_learner.predict(test_data, task=task)
 
     truth = ret_learner.tasks_ground_truth_former(data=test_data, task=task)
 

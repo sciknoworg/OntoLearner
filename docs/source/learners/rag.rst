@@ -87,7 +87,10 @@ To build a RAG model, you first initialize its constituent parts: an LLM learner
     rag_learner.fit(train_data, task=task)
 
     # Predict the output on the test set using the trained RAG model
-    truth = rag_learner.predict(test_data, task=task)
+    predicts = rag_learner.predict(test_data, task=task)
+
+    # reform the ground truth for evaluation
+    truth = rag_learner.tasks_ground_truth_former(data=test_data, task=task)
 
     # do the evaluation.
     metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
