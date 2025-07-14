@@ -217,6 +217,10 @@ or GitHub repository:
    :glob:
    :hidden:
 
-   package_reference/base
+   package_reference/ontologizer
+   package_reference/text2onto
    package_reference/learner
-   package_reference/ontology
+   package_reference/data_structure
+   package_reference/evaluation
+   package_reference/tools
+   package_reference/utils
