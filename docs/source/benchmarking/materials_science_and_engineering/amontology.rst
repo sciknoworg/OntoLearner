@@ -1,68 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Materials Science and Engineering
+       * - **Category**
+         - Manufacturing
+       * - **Current Version**
+         - 1.0
+       * - **Last Updated**
+         - 2023-05-10
+       * - **Creator**
+         - Iassou Souroko, Ali Riza Durmaz
+       * - **License**
+         - Creative Commons Attribution 4.0 International (CC BY 4.0)
+       * - **Format**
+         - ttl
+       * - **Download**
+         - `Download Additive Manufacturing Ontology (AMOntology) <https://github.com/iassouroko/AMontology>`_
+
 Additive Manufacturing Ontology (AMOntology)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-The AM ontology has been developed following two major milestones. The ontology developed within the first milestone
-includes AMProcessOntology, ModelOntology and AMOntology files. AMProcessOntology contains the set of entities
-used to capture knowledge about additive manufacturing processes. ModelOntology contains the set of entities
-used to capture knowledge about modeling concepts that represent (possibly) multi-physics multi-scale processes.
-AMOntology uses AMProcessOntology and ModelOntology files to describe entities that capture knowledge
-about characteristics of computational models for AM processes.
+The AM ontology has been developed following two major milestones. The ontology developed within the first milestone     includes AMProcessOntology, ModelOntology and AMOntology files. AMProcessOntology contains the set of entities     used to capture knowledge about additive manufacturing processes. ModelOntology contains the set of entities     used to capture knowledge about modeling concepts that represent (possibly) multi-physics multi-scale processes.     AMOntology uses AMProcessOntology and ModelOntology files to describe entities that capture knowledge     about characteristics of computational models for AM processes.
 
-:Domain: Materials Science and Engineering
-:Category: Manufacturing
-:Current Version: 1.0
-:Last Updated: 2023-05-10
-:Creator: Iassou Souroko, Ali Riza Durmaz
-:License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: TTL
-:Download: `Additive Manufacturing Ontology (AMOntology) Homepage <https://github.com/iassouroko/AMontology>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 900
-    - **Total Edges**: 2299
-    - **Root Nodes**: 71
-    - **Leaf Nodes**: 99
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 328
-    - Individuals: 56
-    - Properties: 21
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 15
-    - **Minimum Depth**: 0
-    - **Average Depth**: 4.66
-    - **Depth Variance**: 11.25
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 116
-    - **Minimum Breadth**: 1
-    - **Average Breadth**: 55.50
-    - **Breadth Variance**: 1339.25
+        * - **Total Nodes**
+          - 900
+        * - **Total Edges**
+          - 2299
+        * - **Root Nodes**
+          - 71
+        * - **Leaf Nodes**
+          - 99
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 59
-    - **Taxonomic Relations**: 657
-    - **Non-taxonomic Relations**: 5
-    - **Average Terms per Type**: 1.26
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 328
+        * - **Individuals**
+          - 56
+        * - **Properties**
+          - 21
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 15
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 4.66
+        * - **Depth Variance**
+          - 11.25
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 116
+        * - **Minimum Breadth**
+          - 1
+        * - **Average Breadth**
+          - 55.50
+        * - **Breadth Variance**
+          - 1339.25
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 59
+        * - **Taxonomic Relations**
+          - 657
+        * - **Non-taxonomic Relations**
+          - 5
+        * - **Average Terms per Type**
+          - 1.26
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import AMOntology
 
-    # Initialize and load ontology
     ontology = AMOntology()
-    ontology.load("path/to/ontology.TTL")
+    ontology.load("path/to/AMOntology-ontology.ttl")
 
     # Extract datasets
     data = ontology.extract()

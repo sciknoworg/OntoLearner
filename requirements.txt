@@ -1,6 +1,7 @@
 seaborn
 numpy
 pandas
+openpyxl
 matplotlib
 tqdm
 python-dotenv

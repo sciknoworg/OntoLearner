@@ -1,66 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Industry
+       * - **Category**
+         - Building Services
+       * - **Current Version**
+         - 0.3.0
+       * - **Last Updated**
+         - 2022-02-01
+       * - **Creator**
+         - Nicolas Pauen
+       * - **License**
+         - Creative Commons 4.0
+       * - **Format**
+         - rdf
+       * - **Download**
+         - `Download TUBES System Ontology (TUBES) <https://rwth-e3d.github.io/tso/>`_
+
 TUBES System Ontology (TUBES)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-The scope of the TUBES System Ontology is to explicitly define interconnected building service system
-in the AECO industry, their hierarchical subdivisions, structural and functional aspects,
-and links to spatial entities. As such, TSO supports the effort to represent linkable information
-in a future semantic web of building data. It has a strong alignment to other ontologies within the W3C community.
+The scope of the TUBES System Ontology is to explicitly define interconnected building service system     in the AECO industry, their hierarchical subdivisions, structural and functional aspects,     and links to spatial entities. As such, TSO supports the effort to represent linkable information     in a future semantic web of building data. It has a strong alignment to other ontologies within the W3C community.
 
-:Domain: Industry
-:Category: Building Services
-:Current Version: 0.3.0
-:Last Updated: 2022-02-01
-:Creator: Nicolas Pauen
-:License: Creative Commons 4.0
-:Format: RDF
-:Download: `TUBES System Ontology (TUBES) Homepage <https://rwth-e3d.github.io/tso/>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 610
-    - **Total Edges**: 1122
-    - **Root Nodes**: 9
-    - **Leaf Nodes**: 412
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 52
-    - Individuals: 0
-    - Properties: 101
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 1
-    - **Minimum Depth**: 0
-    - **Average Depth**: 0.10
-    - **Depth Variance**: 0.09
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 9
-    - **Minimum Breadth**: 1
-    - **Average Breadth**: 5.00
-    - **Breadth Variance**: 16.00
+        * - **Total Nodes**
+          - 610
+        * - **Total Edges**
+          - 1122
+        * - **Root Nodes**
+          - 9
+        * - **Leaf Nodes**
+          - 412
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 0
-    - **Taxonomic Relations**: 31
-    - **Non-taxonomic Relations**: 3
-    - **Average Terms per Type**: 0.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 52
+        * - **Individuals**
+          - 0
+        * - **Properties**
+          - 101
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 1
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 0.10
+        * - **Depth Variance**
+          - 0.09
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 9
+        * - **Minimum Breadth**
+          - 1
+        * - **Average Breadth**
+          - 5.00
+        * - **Breadth Variance**
+          - 16.00
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 0
+        * - **Taxonomic Relations**
+          - 31
+        * - **Non-taxonomic Relations**
+          - 3
+        * - **Average Terms per Type**
+          - 0.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import TUBES
 
-    # Initialize and load ontology
     ontology = TUBES()
-    ontology.load("path/to/ontology.RDF")
+    ontology.load("path/to/TUBES-ontology.rdf")
 
     # Extract datasets
     data = ontology.extract()

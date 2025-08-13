@@ -1,67 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Materials Science and Engineering
+       * - **Category**
+         - Materials Science
+       * - **Current Version**
+         - 3.0.0-alpha1
+       * - **Last Updated**
+         - 2025-03-20
+       * - **Creator**
+         - Jannis Grundmann
+       * - **License**
+         - Creative Commons Attribution 4.0 International (CC BY 4.0)
+       * - **Format**
+         - owl
+       * - **Download**
+         - `Download The Platform MaterialDigital core ontology (PMDco) <https://github.com/materialdigital/core-ontology?tab=readme-ov-file>`_
+
 The Platform MaterialDigital core ontology (PMDco)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-The PMD Core Ontology (PMDco) is a comprehensive framework for representing knowledge that encompasses
-fundamental concepts from the domains of materials science and engineering (MSE). The PMDco
-has been designed as a mid-level ontology to establish a connection between specific MSE application ontologies
-and the domain neutral concepts found in established top-level ontologies. The primary goal of the PMDco
-is to promote interoperability between diverse domains.
+The PMD Core Ontology (PMDco) is a comprehensive framework for representing knowledge that encompasses     fundamental concepts from the domains of materials science and engineering (MSE). The PMDco     has been designed as a mid-level ontology to establish a connection between specific MSE application ontologies     and the domain neutral concepts found in established top-level ontologies. The primary goal of the PMDco     is to promote interoperability between diverse domains.
 
-:Domain: Materials Science and Engineering
-:Category: Materials Science
-:Current Version: 3.0.0-alpha1
-:Last Updated: 2025-03-20
-:Creator: Jannis Grundmann
-:License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-:Format: OWL
-:Download: `The Platform MaterialDigital core ontology (PMDco) Homepage <https://github.com/materialdigital/core-ontology?tab=readme-ov-file>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 4207
-    - **Total Edges**: 8103
-    - **Root Nodes**: 85
-    - **Leaf Nodes**: 2365
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 1002
-    - Individuals: 0
-    - Properties: 66
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 19
-    - **Minimum Depth**: 0
-    - **Average Depth**: 3.90
-    - **Depth Variance**: 11.78
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 161
-    - **Minimum Breadth**: 1
-    - **Average Breadth**: 40.45
-    - **Breadth Variance**: 2084.25
+        * - **Total Nodes**
+          - 4207
+        * - **Total Edges**
+          - 8103
+        * - **Root Nodes**
+          - 85
+        * - **Leaf Nodes**
+          - 2365
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 0
-    - **Taxonomic Relations**: 903
-    - **Non-taxonomic Relations**: 19
-    - **Average Terms per Type**: 0.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 1002
+        * - **Individuals**
+          - 0
+        * - **Properties**
+          - 66
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 19
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 3.90
+        * - **Depth Variance**
+          - 11.78
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 161
+        * - **Minimum Breadth**
+          - 1
+        * - **Average Breadth**
+          - 40.45
+        * - **Breadth Variance**
+          - 2084.25
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 0
+        * - **Taxonomic Relations**
+          - 903
+        * - **Non-taxonomic Relations**
+          - 19
+        * - **Average Terms per Type**
+          - 0.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import PMDco
 
-    # Initialize and load ontology
     ontology = PMDco()
-    ontology.load("path/to/ontology.OWL")
+    ontology.load("path/to/PMDco-ontology.owl")
 
     # Extract datasets
     data = ontology.extract()

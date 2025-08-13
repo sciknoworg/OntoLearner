@@ -1,67 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Finance
+       * - **Category**
+         - E-commerce
+       * - **Current Version**
+         - 1.0
+       * - **Last Updated**
+         - 2011-10-01
+       * - **Creator**
+         - Martin Hepp
+       * - **License**
+         - Creative Commons 3.0
+       * - **Format**
+         - owl
+       * - **Download**
+         - `Download Good Relations Language Reference (GoodRelations) <https://www.heppnetz.de/ontologies/goodrelations/v1>`_
+
 Good Relations Language Reference (GoodRelations)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-GoodRelations is a standardized vocabulary (also known as "schema", "data dictionary",
-or "ontology") for product, price, store, and company data that can (1) be embedded
-into existing static and dynamic Web pages and that (2) can be processed by other computers.
-This increases the visibility of your products and services in the latest generation
-of search engines, recommender systems, and other novel applications.
+GoodRelations is a standardized vocabulary (also known as "schema", "data dictionary",     or "ontology") for product, price, store, and company data that can (1) be embedded     into existing static and dynamic Web pages and that (2) can be processed by other computers.     This increases the visibility of your products and services in the latest generation     of search engines, recommender systems, and other novel applications.
 
-:Domain: Finance
-:Category: E-commerce
-:Current Version: 1.0
-:Last Updated: 2011-10-01
-:Creator: Martin Hepp
-:License: Creative Commons 3.0
-:Format: OWL
-:Download: `Good Relations Language Reference (GoodRelations) Homepage <https://www.heppnetz.de/ontologies/goodrelations/v1>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 677
-    - **Total Edges**: 1816
-    - **Root Nodes**: 18
-    - **Leaf Nodes**: 206
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 98
-    - Individuals: 47
-    - Properties: 102
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 30
-    - **Minimum Depth**: 0
-    - **Average Depth**: 7.81
-    - **Depth Variance**: 73.22
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 33
-    - **Minimum Breadth**: 2
-    - **Average Breadth**: 5.77
-    - **Breadth Variance**: 55.21
+        * - **Total Nodes**
+          - 677
+        * - **Total Edges**
+          - 1816
+        * - **Root Nodes**
+          - 18
+        * - **Leaf Nodes**
+          - 206
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 46
-    - **Taxonomic Relations**: 25
-    - **Non-taxonomic Relations**: 264
-    - **Average Terms per Type**: 5.75
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 98
+        * - **Individuals**
+          - 47
+        * - **Properties**
+          - 102
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 30
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 7.81
+        * - **Depth Variance**
+          - 73.22
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 33
+        * - **Minimum Breadth**
+          - 2
+        * - **Average Breadth**
+          - 5.77
+        * - **Breadth Variance**
+          - 55.21
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 46
+        * - **Taxonomic Relations**
+          - 25
+        * - **Non-taxonomic Relations**
+          - 264
+        * - **Average Terms per Type**
+          - 5.75
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import GoodRelations
 
-    # Initialize and load ontology
     ontology = GoodRelations()
-    ontology.load("path/to/ontology.OWL")
+    ontology.load("path/to/GoodRelations-ontology.owl")
 
     # Extract datasets
     data = ontology.extract()

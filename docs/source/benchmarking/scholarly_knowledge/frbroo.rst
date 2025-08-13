@@ -1,67 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Scholarly Knowledge
+       * - **Category**
+         - Bibliographic Records
+       * - **Current Version**
+         - 2.4
+       * - **Last Updated**
+         - November 2015
+       * - **Creator**
+         - None
+       * - **License**
+         - Creative Commons 4.0
+       * - **Format**
+         - rdf
+       * - **Download**
+         - `Download Functional Requirements for Bibliographic Records - object-oriented (FRBRoo) <https://ontome.net/namespace/6#summary>`_
+
 Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-The FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) initiative
-is a joint effort of the CIDOC Conceptual Reference Model
-and Functional Requirements for Bibliographic Records international working groups to establish
-a formal ontology intended to capture and represent the underlying semantics of bibliographic information
-and to facilitate the integration, mediation, and interchange of bibliographic and museum information.
+The FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) initiative     is a joint effort of the CIDOC Conceptual Reference Model     and Functional Requirements for Bibliographic Records international working groups to establish     a formal ontology intended to capture and represent the underlying semantics of bibliographic information     and to facilitate the integration, mediation, and interchange of bibliographic and museum information.
 
-:Domain: Scholarly Knowledge
-:Category: Bibliographic Records
-:Current Version: 2.4
-:Last Updated: November 2015
-:Creator: None
-:License: Creative Commons 4.0
-:Format: RDF
-:Download: `Functional Requirements for Bibliographic Records - object-oriented (FRBRoo) Homepage <https://ontome.net/namespace/6#summary>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 491
-    - **Total Edges**: 886
-    - **Root Nodes**: 0
-    - **Leaf Nodes**: 344
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 83
-    - Individuals: 0
-    - Properties: 0
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 0
-    - **Minimum Depth**: 0
-    - **Average Depth**: 0.00
-    - **Depth Variance**: 0.00
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 0
-    - **Minimum Breadth**: 0
-    - **Average Breadth**: 0.00
-    - **Breadth Variance**: 0.00
+        * - **Total Nodes**
+          - 491
+        * - **Total Edges**
+          - 886
+        * - **Root Nodes**
+          - 0
+        * - **Leaf Nodes**
+          - 344
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 0
-    - **Taxonomic Relations**: 83
-    - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 83
+        * - **Individuals**
+          - 0
+        * - **Properties**
+          - 0
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 0
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 0.00
+        * - **Depth Variance**
+          - 0.00
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 0
+        * - **Minimum Breadth**
+          - 0
+        * - **Average Breadth**
+          - 0.00
+        * - **Breadth Variance**
+          - 0.00
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 0
+        * - **Taxonomic Relations**
+          - 83
+        * - **Non-taxonomic Relations**
+          - 0
+        * - **Average Terms per Type**
+          - 0.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import FRBRoo
 
-    # Initialize and load ontology
     ontology = FRBRoo()
-    ontology.load("path/to/ontology.RDF")
+    ontology.load("path/to/FRBRoo-ontology.rdf")
 
     # Extract datasets
     data = ontology.extract()

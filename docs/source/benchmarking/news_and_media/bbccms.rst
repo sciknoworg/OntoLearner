@@ -1,65 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - News and Media
+       * - **Category**
+         - Content Management Systems
+       * - **Current Version**
+         - 3.7
+       * - **Last Updated**
+         - 2012-12-01
+       * - **Creator**
+         - LinkedData@bbc.co.uk
+       * - **License**
+         - Creative Commons 4.0
+       * - **Format**
+         - ttl
+       * - **Download**
+         - `Download BBC CMS Ontology (BBCCMS) <https://www.bbc.co.uk/ontologies/cms-ontology>`_
+
 BBC CMS Ontology (BBCCMS)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-The Content Management Systems ontology defines the terms that LDP needs to interact with systems that produce content.
-The linked data platform contain semantic metadata for the creative content and also the things the BBC produces content about.
-The CMS ontology defines how these things and content are associated with other BBC instances of the same thing.
+The Content Management Systems ontology defines the terms that LDP needs to interact with systems that produce content.     The linked data platform contain semantic metadata for the creative content and also the things the BBC produces content about.     The CMS ontology defines how these things and content are associated with other BBC instances of the same thing.
 
-:Domain: News and Media
-:Category: Content Management Systems
-:Current Version: 3.7
-:Last Updated: 2012-12-01
-:Creator: LinkedData@bbc.co.uk
-:License: Creative Commons 4.0
-:Format: TTL
-:Download: `BBC CMS Ontology (BBCCMS) Homepage <https://www.bbc.co.uk/ontologies/cms-ontology>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 68
-    - **Total Edges**: 137
-    - **Root Nodes**: 0
-    - **Leaf Nodes**: 41
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 20
-    - Individuals: 4
-    - Properties: 2
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 0
-    - **Minimum Depth**: 0
-    - **Average Depth**: 0.00
-    - **Depth Variance**: 0.00
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 0
-    - **Minimum Breadth**: 0
-    - **Average Breadth**: 0.00
-    - **Breadth Variance**: 0.00
+        * - **Total Nodes**
+          - 68
+        * - **Total Edges**
+          - 137
+        * - **Root Nodes**
+          - 0
+        * - **Leaf Nodes**
+          - 41
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 4
-    - **Taxonomic Relations**: 17
-    - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 4.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 20
+        * - **Individuals**
+          - 4
+        * - **Properties**
+          - 2
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 0
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 0.00
+        * - **Depth Variance**
+          - 0.00
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 0
+        * - **Minimum Breadth**
+          - 0
+        * - **Average Breadth**
+          - 0.00
+        * - **Breadth Variance**
+          - 0.00
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 4
+        * - **Taxonomic Relations**
+          - 17
+        * - **Non-taxonomic Relations**
+          - 0
+        * - **Average Terms per Type**
+          - 4.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import BBCCMS
 
-    # Initialize and load ontology
     ontology = BBCCMS()
-    ontology.load("path/to/ontology.TTL")
+    ontology.load("path/to/BBCCMS-ontology.ttl")
 
     # Extract datasets
     data = ontology.extract()
