@@ -16,6 +16,7 @@ setup(
     install_requires=[
         "seaborn",
         "numpy",
+        "openpyxl",
         "pandas",
         "matplotlib",
         "tqdm",
