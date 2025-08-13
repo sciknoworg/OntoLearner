@@ -16,7 +16,6 @@
 
 import logging
 import time
-import os
 import pandas as pd
 
 import shutil
@@ -99,28 +98,19 @@ class Processor:
     - Saving datasets and metrics
     """
 
-    def __init__(self, datasets_dir: Path, templates_dir: Path, benchmark_dir: Path,  metrics_dir: Path, analyzer_class: type[Analyzer] = Analyzer):
+    def __init__(self):
         """
         Initialize the Processor with directory paths and configuration.
-
-        Args:
-            datasets_dir (Path): Directory to save extracted datasets
-            templates_dir (Path): Directory containing documentation templates
-            benchmark_dir (Path): Directory to save generated documentation
-            metrics_dir (Path): Directory to save metrics files
-            analyzer_class (type, optional): Class to use for ontology analysis. Defaults to Analyzer.
         """
-        self.datasets_dir = datasets_dir
-        self.templates_dir = templates_dir
-        self.benchmark_dir = benchmark_dir
-        self.metrics_dir = metrics_dir
-        self.analyzer_class = analyzer_class
-        self.all_metrics: Dict[str, dict] = {}
-        doc_template_path = templates_dir / "ontology.rst"
-        self.doc_template = Template(doc_template_path.read_text())
+        self.analyzer = Analyzer()
+        self.processed_ontology = None
 
-    def process_ontology(self, ontology: BaseOntology, ontology_path: Union[str, Path]) \
-            -> OntologyMetrics:
+    def __call__(self, ontology: BaseOntology, ontology_path: Union[str, Path], output_dir: str) -> Dict[str, Any]:
+        self.process(ontology, ontology_path)
+        self.save_resource(output_dir)
+        return self.get_processed_ontology()
+
+    def process(self, ontology: BaseOntology, ontology_path: Union[str, Path]) -> None:
         """
         Process a single ontology through the complete pipeline.
 
@@ -144,36 +134,39 @@ class Processor:
             Exception: If any step in the processing pipeline fails
         """
         start_time = time.time()
+        if not Path(ontology_path).exists():
+            raise ValueError(f"Ontology file not found: {ontology_path}")
 
-        try:
-            if not Path(ontology_path).exists():
-                raise ValueError(f"Ontology file not found: {ontology_path}")
+        ontology.load(str(ontology_path))
+        # ontology.load()
 
-            ontology.load(str(ontology_path))
-            # ontology.load()
+        data: OntologyData = ontology.extract()
+        ontology.build_graph()
 
-            data: OntologyData = ontology.extract()
-            ontology.build_graph()
-            analyzer = self.analyzer_class()
-            metrics: OntologyMetrics = analyzer(ontology)
+        metrics = self.analyzer(ontology)
 
-            end_time = time.time()
-            processing_time = end_time - start_time
+        end_time = time.time()
+        processing_time = end_time - start_time
 
-            self.all_metrics[ontology.ontology_id] = {
-                "metrics": metrics,
-                "ontology_id": ontology.ontology_id,
-                "ontology_full_name": ontology.ontology_full_name,
-                "domain": ontology.domain,
-                "processing_time": processing_time
-            }
-            self.save_datasets(data, ontology)
-            self.build_documentation(ontology, metrics)
-            return metrics
-        except Exception:
-            raise
+        self.processed_ontology = {
+            "ontology": ontology,
+            "metrics": metrics,
+            "ontology_id": ontology.ontology_id,
+            "ontology_full_name": ontology.ontology_full_name,
+            "domain": ontology.domain,
+            "format": ontology.format.lower(),
+            "processing_time": processing_time,
+            "last_updated": ontology.last_updated,
+            "ontology_path": ontology_path,
+            "ontology_data": data,
+            "documentation": self.build_documentation(ontology, metrics)
+        }
+        logger.log(level=20, msg=f"Processing {ontology.ontology_id} ontology is done!")
 
-    def save_datasets(self, data: OntologyData, ontology: BaseOntology) -> None:
+    def get_processed_ontology(self):
+        return self.processed_ontology
+
+    def save_resource(self, output_dir: str, show_logs: bool=False, processed_ontology: Dict[str, Any] = None) -> None:
         """
         Save extracted datasets to JSON files.
 
@@ -186,12 +179,39 @@ class Processor:
             data (OntologyData): Extracted ontology data
             ontology (BaseOntology): The ontology instance
         """
-        for dataset_type in ['term_typings', 'type_taxonomies', 'type_non_taxonomic_relations']:
-            domain_dir = self.datasets_dir / f"{ontology.domain.lower().replace(' ', '_')}"
-            domain_dir.mkdir(parents=True, exist_ok=True)
+        if processed_ontology is None:
+            processed_ontology = self.processed_ontology
+        ontology_dir = Path(f"{output_dir}/{processed_ontology['ontology_id'].lower()}")
+        ontology_dir.mkdir(parents=True, exist_ok=True)
 
-            save_path = domain_dir / f"{ontology.ontology_id.lower().replace(' ', '_')}/{dataset_type}.json"
-            io.save_json(data.model_dump()[dataset_type], save_path)
+        # Store the read-the-doc page in documentation page and output dir path!
+        # domain_dir = Path(f"docs/source/benchmarking/{processed_ontology['domain'].lower().replace(' ', '_')}")
+        #
+        # with open(domain_dir / f"{processed_ontology['ontology_id'].lower()}.rst", "w", encoding="utf-8") as f:
+        #     f.write(processed_ontology['documentation'])
+        #
+        # if show_logs:
+        #     logger.log(level=20, msg=f"The read-the-doc page in documentation is created for ontology!")
+
+        with open(ontology_dir / f"{processed_ontology['ontology_id'].lower()}.rst", "w", encoding="utf-8") as f:
+            f.write(processed_ontology['documentation'])
+
+        if show_logs:
+            logger.log(level=20, msg="The documentation page is added to the output dir!")
+
+        # Store the ontology in given dir!
+        shutil.copy2(processed_ontology['ontology_path'], ontology_dir/f"{processed_ontology['ontology_id'].lower()}.{processed_ontology['ontology_path'].split('.')[-1]}")
+
+        if show_logs:
+            logger.log(level=20, msg="The raw ontology itself added to the output dir!")
+
+        # Store the ontological data
+        for dataset_type in ['term_typings', 'type_taxonomies', 'type_non_taxonomic_relations']:
+            save_path = ontology_dir / f"{dataset_type}.json"
+            io.save_json(processed_ontology['ontology_data'].model_dump()[dataset_type], save_path)
+        if show_logs:
+            logger.log(level=20, msg="The ontological data added to the output dir!")
+            logger.log(level=20, msg=f"The {ontology_dir} is created and data is stored!")
 
     def build_documentation(self, ontology: BaseOntology, metrics: OntologyMetrics):
         """
@@ -208,6 +228,142 @@ class Processor:
             ontology (BaseOntology): The ontology instance
             metrics (OntologyMetrics): Computed metrics for the ontology
         """
+        documentation_template = Template("""{{ ontology_name }}
+==============================================================================
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - {{ domain }}
+       * - **Category**
+         - {{ category }}
+       * - **Current Version**
+         - {{ version }}
+       * - **Last Updated**
+         - {{ last_updated }}
+       * - **Creator**
+         - {{ creator }}
+       * - **License**
+         - {{ license }}
+       * - **Format**
+         - {{ format }}
+       * - **Download**
+         - `Download {{ ontology_name }} <{{ download_url }}>`_
+
+{{ description }}
+
+Metrics & Statistics
+--------------------------
+
+.. tab:: Graph
+
+
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Total Nodes**
+          - {{ total_nodes }}
+        * - **Total Edges**
+          - {{ total_edges }}
+        * - **Root Nodes**
+          - {{ root_nodes }}
+        * - **Leaf Nodes**
+          - {{ leaf_nodes }}
+    ::
+
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - {{ num_classes }}
+        * - **Individuals**
+          - {{ num_individuals }}
+        * - **Properties**
+          - {{ num_properties }}
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - {{ max_depth }}
+        * - **Minimum Depth**
+          - {{ min_depth }}
+        * - **Average Depth**
+          - {{ avg_depth }}
+        * - **Depth Variance**
+          - {{ depth_variance }}
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - {{ max_breadth }}
+        * - **Minimum Breadth**
+          - {{ min_breadth }}
+        * - **Average Breadth**
+          - {{ avg_breadth }}
+        * - **Breadth Variance**
+          - {{ breadth_variance }}
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - {{ num_term_types }}
+        * - **Taxonomic Relations**
+          - {{ num_taxonomic_relations }}
+        * - **Non-taxonomic Relations**
+          - {{ num_non_taxonomic_relations }}
+        * - **Average Terms per Type**
+          - {{ avg_terms_per_type }}
+    ::
+
+Usage Example
+-------------
+Use the following code to import this ontology programmatically:
+
+.. code-block:: python
+
+    from ontolearner.ontology import {{ class_name }}
+
+    ontology = {{ class_name }}()
+    ontology.load("path/to/{{ class_name }}-ontology.{{ format }}")
+
+    # Extract datasets
+    data = ontology.extract()
+
+    # Access specific relations
+    term_types = data.term_typings
+    taxonomic_relations = data.type_taxonomies
+    non_taxonomic_relations = data.type_non_taxonomic_relations
+""")
+
         context = {
             # Class metadata
             'ontology_name': ontology.ontology_full_name,
@@ -218,7 +374,7 @@ class Processor:
             'last_updated': ontology.last_updated,
             'creator': ontology.creator,
             'license': ontology.license,
-            'format': ontology.format,
+            'format': ontology.format.lower(),
             'download_url': ontology.download_url,
             'class_name': ontology.__class__.__name__,
 
@@ -252,17 +408,8 @@ class Processor:
             'avg_terms_per_type': f"{metrics.dataset.avg_terms:.2f}"
         }
 
-        content = self.doc_template.render(context)
-        domain_dir = self.benchmark_dir / f"{ontology.domain.lower().replace(' ', '_')}"
-        domain_dir.mkdir(parents=True, exist_ok=True)
-        doc_path = domain_dir / f"{ontology.ontology_id.lower()}.rst"
-
-        with open(doc_path, "w", encoding="utf-8") as f:
-            f.write(content)
-
-        return doc_path
-
-
+        content = documentation_template.render(context)
+        return content
 
     @staticmethod
     def create_domain_readme(domain: str,
@@ -300,8 +447,9 @@ language:
 - en
 tags:
 - OntoLearner
-- ontology-learning
-- {domain}
+- Ontology-Learning
+- {domain_title.replace(' ','-')}
+- Benchmark-Ontologies
 pretty_name: {domain_title}
 ---
 
@@ -314,27 +462,27 @@ pretty_name: {domain_title}
 
 ## Overview
 {domain_definition}
+
 """
 
         readme += """
-| Ontology ID | Full Name | Classes | Properties | Individuals |
+| Ontology ID | Full Name | Classes | Properties | Last Updated |
 |-------------|-----------|---------|------------|-------------|
 """
         usage_example_ontology = ""
         for metrics_data in metrics.values():
             metrics_data_domain = metrics_data.get("domain", "").lower().replace(' ', '_')
-
             if metrics_data_domain == domain:
-
                 ontology_id = metrics_data["ontology_id"]
                 ontology_full_name = metrics_data["ontology_full_name"]
                 num_classes = metrics_data["metrics"].topology.num_classes
                 num_properties = metrics_data["metrics"].topology.num_properties
-                num_individuals = metrics_data["metrics"].topology.num_individuals
+                # num_individuals = metrics_data["metrics"].topology.num_individuals
+                last_updated = metrics_data['last_updated']
                 if usage_example_ontology == "":
                     usage_example_ontology = ontology_id
 
-                readme += f"| {ontology_id} | {ontology_full_name} | {num_classes} | {num_properties} | {num_individuals}|\n"
+                readme += f"| {ontology_id} | {ontology_full_name} | {num_classes} | {num_properties} | {last_updated}|\n"
 
         readme += f"""
 ## Dataset Files
@@ -344,8 +492,6 @@ Each ontology directory contains the following files:
 3. `taxonomies.json` - Dataset of taxonomic relations
 4. `non_taxonomic_relations.json` - Dataset of non-taxonomic relations
 5. `<ontology_id>.rst` - Documentation describing the ontology
-
-
 
 ## Usage
 These datasets are intended for ontology learning research and applications. Here's how to use them with OntoLearner:
@@ -371,36 +517,49 @@ data = ontology.extract()
 
 **How use the loaded dataset for LLM4OL Paradigm task settings?**
 ``` python
+# Import core modules from the OntoLearner library
 from ontolearner import {usage_example_ontology}, LearnerPipeline, train_test_split
 
+# Load the {usage_example_ontology} ontology, which contains concepts related to wines, their properties, and categories
 ontology = {usage_example_ontology}()
-ontology.load()
-data = ontology.extract()
+ontology.load()  # Load entities, types, and structured term annotations from the ontology
+ontological_data = ontology.extract()
 
-# Split into train and test sets
-train_data, test_data = train_test_split(data, test_size=0.2)
+# Split instances into train and test sets
+train_data, test_data = train_test_split(ontological_data, test_size=0.2, random_state=42)
 
-# Create a learning pipeline (for RAG-based learning)
+# Initialize a multi-component learning pipeline (retriever + LLM)
+# This configuration enables a Retrieval-Augmented Generation (RAG) setup
 pipeline = LearnerPipeline(
-    task = "term-typing",  # Other options: "taxonomy-discovery" or "non-taxonomy-discovery"
-    retriever_id = "sentence-transformers/all-MiniLM-L6-v2",
-    llm_id = "mistralai/Mistral-7B-Instruct-v0.1",
-    hf_token = "your_huggingface_token"  # Only needed for gated models
+    retriever_id='sentence-transformers/all-MiniLM-L6-v2',      # Dense retriever model for nearest neighbor search
+    llm_id='Qwen/Qwen2.5-0.5B-Instruct',                        # Lightweight instruction-tuned LLM for reasoning
+    hf_token='...',                                             # Hugging Face token for accessing gated models
+    batch_size=32,                                              # Batch size for training/prediction if supported
+    top_k=5                                                     # Number of top retrievals to include in RAG prompting
 )
 
-# Train and evaluate
-results, metrics = pipeline.fit_predict_evaluate(
+# Run the pipeline: training, prediction, and evaluation in one call
+outputs = pipeline(
     train_data=train_data,
     test_data=test_data,
-    top_k=3,
-    test_limit=10
+    evaluate=True,              # Compute metrics like precision, recall, and F1
+    task='term-typing'          # Specifies the task
+                                # Other options: "taxonomy-discovery" or "non-taxonomy-discovery"
 )
+
+# Print final evaluation metrics
+print("Metrics:", outputs['metrics'])
+
+# Print the total time taken for the full pipeline execution
+print("Elapsed time:", outputs['elapsed_time'])
+
+# Print all outputs (including predictions)
+print(outputs)
 ```
 
 For more detailed documentation, see the [![Documentation](https://img.shields.io/badge/Documentation-ontolearner.readthedocs.io-blue)](https://ontolearner.readthedocs.io)
 
-"""
-        readme +="""## Citation
+""" + """## Citation
 
 If you find our work helpful, feel free to give us a cite.
 
@@ -420,8 +579,7 @@ If you find our work helpful, feel free to give us a cite.
     def update_domain_readme(self,
                              repo_path: Path,
                              metrics_file_path: Path,
-                             domain: str,
-                             domain_definition: str = None) -> None:
+                             domain: str):
         """
         Update the README.md file in a domain repository.
 
@@ -447,8 +605,11 @@ If you find our work helpful, feel free to give us a cite.
         """
         metrics = self.load_metrics_from_excel(metrics_file_path) if metrics_file_path.exists() else {}
 
+        if len(metrics) == 0:
+             raise FileNotFoundError(f"No metrics found in {metrics_file_path}")
+
         # Use default domain definition if not provided
-        domain_definition = DOMAIN_DESCRIPTIONS.get(domain, None)
+        domain_definition = DOMAIN_DESCRIPTIONS[domain]
 
         # Create README content
         readme_content = self.create_domain_readme(
@@ -456,12 +617,10 @@ If you find our work helpful, feel free to give us a cite.
             domain_definition=domain_definition,
             metrics=metrics
         )
-
         # Write README.md file
         readme_path = repo_path / "README.md"
         with open(readme_path, "w", encoding="utf-8") as f:
             f.write(readme_content)
-
 
     @staticmethod
     def load_metrics_from_excel(metrics_file: Path) -> Dict[str, dict]:
@@ -486,46 +645,47 @@ If you find our work helpful, feel free to give us a cite.
             for _, row in df.iterrows():
                 # Create topology metrics
                 topology_metrics = TopologyMetrics(
-                    total_nodes=row.get("total_nodes", 0),
-                    total_edges=row.get("total_edges", 0),
-                    num_classes=row.get("num_classes", 0),
-                    num_properties=row.get("num_properties", 0),
-                    num_individuals=row.get("num_individuals", 0),
-                    max_depth=row.get("max_depth", 0),
-                    min_depth=row.get("min_depth", 0),
-                    avg_depth=row.get("avg_depth", 0),
-                    depth_variance=row.get("depth_variance", 0),
-                    max_breadth=row.get("max_breadth", 0),
-                    min_breadth=row.get("min_breadth", 0),
-                    avg_breadth=row.get("avg_breadth", 0),
-                    breadth_variance=row.get("breadth_variance", 0),
-                    num_root_nodes=row.get("num_root_nodes", 0),
-                    num_leaf_nodes=row.get("num_leaf_nodes", 0)
+                    total_nodes=row["total_nodes"],
+                    total_edges=row["total_edges"],
+                    num_classes=row["num_classes"],
+                    num_properties=row["num_properties"],
+                    num_individuals=row["num_individuals"],
+                    max_depth=row["max_depth"],
+                    min_depth=row["min_depth"],
+                    avg_depth=row["avg_depth"],
+                    depth_variance=row["depth_variance"],
+                    max_breadth=row["max_breadth"],
+                    min_breadth=row["min_breadth"],
+                    avg_breadth=row["avg_breadth"],
+                    breadth_variance=row["breadth_variance"],
+                    num_root_nodes=row["num_root_nodes"],
+                    num_leaf_nodes=row["num_leaf_nodes"],
                 )
 
                 # Create dataset metrics
                 dataset_metrics = DatasetMetrics(
-                    num_term_types=row.get("num_term_types", 0),
-                    num_taxonomic_relations=row.get("num_taxonomic_relations", 0),
-                    num_non_taxonomic_relations=row.get("num_non_taxonomic_relations", 0),
-                    avg_terms=row.get("avg_terms", 0)
+                    num_term_types=row["num_term_types"],
+                    num_taxonomic_relations=row["num_taxonomic_relations"],
+                    num_non_taxonomic_relations=row["num_non_taxonomic_relations"],
+                    avg_terms=row["avg_terms"]
                 )
 
                 # Create ontology metrics
                 ontology_metrics = OntologyMetrics(
-                    name=row.get("Ontology Name", ""),
+                    name=row["Ontology Name"],
                     topology=topology_metrics,
                     dataset=dataset_metrics
                 )
 
                 # Store with additional metadata to match export format
-                ontology_id = row.get("Ontology ID", "")
+                ontology_id = row["Ontology ID"]
                 metrics[ontology_id] = {
                     "metrics": ontology_metrics,
                     "ontology_id": ontology_id,
-                    "ontology_full_name": row.get("Ontology Full Name", ""),
-                    "domain": row.get("Domain", ""),
-                    "processing_time": row.get("Processing Time (s)", 0)
+                    "ontology_full_name": row["Ontology Full Name"],
+                    "domain": row["Domain"],
+                    "processing_time": row["Processing Time (s)"],
+                    "last_updated": row["Last Updated"]
                 }
 
             logger.info(f"Loaded metrics for {len(metrics)} ontologies from Excel file")
@@ -557,10 +717,10 @@ If you find our work helpful, feel free to give us a cite.
             - Creates or updates Excel file at specified path
             - Logs warnings if existing file cannot be read
         """
-        if not self.all_metrics:
-            return
 
-        excel_path = metrics_file_path if metrics_file_path else self.metrics_dir / "metrics.xlsx"
+        if not metrics_file_path:
+            raise ValueError(f"The {metrics_file_path} directory must exist!")
+        excel_path = metrics_file_path
 
         # Try to read existing Excel file if it exists
         existing_df = None
@@ -573,19 +733,19 @@ If you find our work helpful, feel free to give us a cite.
 
         # Create DataFrame from current metrics
         current_rows = []
-        for ontology_id, data in self.all_metrics.items():
-            metrics: OntologyMetrics = data["metrics"]
-            row = {
-                "Ontology ID": data["ontology_id"],
-                "Ontology Full Name": data["ontology_full_name"],
-                "Domain": data["domain"],
-                "Ontology Name": metrics.name,
-                "Processing Time (s)": data["processing_time"],
-                **metrics.topology.dict(),
-                **metrics.dataset.dict()
-            }
-            current_rows.append(row)
 
+        metrics: OntologyMetrics = self.processed_ontology['metrics']
+        row = {
+            "Ontology ID": self.processed_ontology["ontology_id"],
+            "Ontology Full Name": self.processed_ontology["ontology_full_name"],
+            "Domain": self.processed_ontology["domain"],
+            "Ontology Name": metrics.name,
+            "Processing Time (s)": self.processed_ontology["processing_time"],
+            **metrics.topology.dict(),
+            **metrics.dataset.dict(),
+            "Last Updated": self.processed_ontology["last_updated"],
+        }
+        current_rows.append(row)
         current_df = pd.DataFrame(current_rows)
 
         # Merge existing and current metrics
@@ -639,29 +799,18 @@ If you find our work helpful, feel free to give us a cite.
             KeyError: If required environment variables are not set.
             Exception: If repository operations or file uploads fail.
         """
-        # Import locally to avoid circular import
-        from ..processor import Processor
-
         api = HfApi()
         api.token = hf_token
 
-        if not all([self.ontology_id, self.domain, self.format]):
+        if self.processed_ontology is None:
+            raise ValueError("The ontology is not processed!")
+
+        if not all([self.processed_ontology['ontology_id'],
+                    self.processed_ontology['domain'],
+                    self.processed_ontology['format']]):
             raise ValueError("Ontology must have id, domain, and format defined")
 
-        domain_normalized = self.domain.lower().replace(' ', '_')
-
-        ontology_file_path = (Path(os.environ['ONTOLOGIES_DIR']) / domain_normalized
-                              / f"{self.ontology_id.lower()}.{self.format.lower()}")
-
-        processor = Processor(
-            datasets_dir=Path(os.environ['DATASETS_DIR']),
-            templates_dir=Path(os.environ['TEMPLATES_DIR']),
-            benchmark_dir=Path(os.environ['BENCHMARK_DIR']),
-            metrics_dir=Path(os.environ['METRICS_DIR'])
-        )
-
-        processor.process_ontology(self, ontology_file_path)
-
+        domain_normalized = self.processed_ontology['domain'].lower().replace(' ', '_')
         repo_id = f"SciKnowOrg/ontolearner-{domain_normalized}"
         metrics_repo_id = "SciKnowOrg/OntoLearner-Benchmark-Metrics"
 
@@ -690,39 +839,24 @@ If you find our work helpful, feel free to give us a cite.
                 metrics_repo = Repository(local_dir=metrics_repo_path, clone_from=metrics_repo_id, repo_type="space", token=hf_token)
 
             # Create ontology directory in the ontology repo
-            ontology_dir = ontology_repo_path / self.ontology_id.lower()
-            ontology_dir.mkdir(exist_ok=True)
-
-            # Copy ontology file
-            shutil.copy2(ontology_file_path, ontology_dir / f"{self.ontology_id.lower()}.{self.format.lower()}")
-
-            # Copy dataset files
-            dataset_path = Path(os.environ['DATASETS_DIR']) / domain_normalized / self.ontology_id.lower()
-            if dataset_path.is_dir():
-                for file in dataset_path.glob("*.json"):
-                    shutil.copy2(file, ontology_dir)
-
-            # Copy documentation file
-            doc_file = Path(os.environ['BENCHMARK_DIR']) / domain_normalized / f"{self.ontology_id.lower()}.rst"
-            if doc_file.exists():
-                shutil.copy2(doc_file, ontology_dir / f"{self.ontology_id.lower()}.rst")
+            self.save_resource(output_dir=str(ontology_repo_path), processed_ontology=self.processed_ontology)
 
             # Update metrics in the metrics repository
             metrics_file_path = metrics_repo_path / "metrics.xlsx"
-            processor.export_metrics_to_excel(metrics_file_path)
+            self.export_metrics_to_excel(metrics_file_path)
 
             # Update domain README.md in the ontology repository
-            processor.update_domain_readme(ontology_repo_path, metrics_file_path, domain_normalized)
+            self.update_domain_readme(ontology_repo_path, metrics_file_path, domain_normalized)
 
             # Commit and push ontology repository
             repo.git_add(auto_lfs_track=True)
-            commit_message = f"Add/Update {self.ontology_id} ontology"
+            commit_message = f":sparkles: Added {self.ontology_id} ontology!"
             repo.git_commit(commit_message)
             repo.git_push()
 
             # Commit and push metrics repository
             metrics_repo.git_add(auto_lfs_track=True)
-            metrics_commit_message = f"Update metrics for {self.ontology_id}"
+            metrics_commit_message = f":memo: Update metrics for {self.ontology_id}"
             metrics_repo.git_commit(metrics_commit_message)
             metrics_repo.git_push()
 

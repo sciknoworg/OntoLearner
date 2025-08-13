@@ -30,7 +30,7 @@ from .learner import (AutoLLMLearner,
                       LabelMapper)
 from ._learner import LearnerPipeline
 
-# from .processor import Processor
+from .processor import Processor
 from .utils import train_test_split
 
 
@@ -43,7 +43,7 @@ __all__ = [
     "StandardizedPrompting",
     "LabelMapper",
     "LearnerPipeline",
-    # "Processor",
+    "Processor",
     "data_structure",
     "text2onto",
     "ontology",
