@@ -15,8 +15,11 @@ The primary goals of the OntoLearner maintenance objectives are to:
 A core team will be responsible for the ongoing maintenance of OntoLearner, including:
 - **Lead Maintainers**: Oversee all maintenance activities, ensure the direction aligns with the project's vision, and handle critical issues.
   - [Dr. Jennifer D'Souza](https://sites.google.com/view/jen-web) and [Hamed Babaei Giglou](https://hamedbabaei.github.io/) – Project Lead – Responsible for the overall vision, maintenance activities, and coordination of the library’s development.
-  - [Andrei Aionei](https://www.linkedin.com/in/andreiaioanei/) – Project Senior Software Engineer – Responsible for maintenance activities and the library’s development.
   - [Prof. Dr. Sören Auer](https://www.tib.eu/en/research-development/research-groups-and-labs/data-science-and-digital-libraries/staff/soeren-auer) – Project Supervisors and Principal Investigators (PI) – Responsible for guiding ideation, refining ideas, and defining the project's high-level direction to align the library's goals with broader academic and research objectives.
+- **Assistants**:
+  - [Krishna Rani](www.linkedin.com/in/krishna-rani-thakur-5b77b9150) - Assists with activities such as maintaining the codebase for the smooth operation of the project.
+- **Alumni**:
+  - [Andrei Aionei](https://www.linkedin.com/in/andreiaioanei/) – Andrei was project Senior Software Engineer – Responsible for maintenance activities and the library’s development.
 
 ## 2. Current Ongoing Maintenance and Plans
 
