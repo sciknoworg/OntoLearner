@@ -15,22 +15,17 @@ This guide explains how to add new ontologies to the OntoLearner. Adding a new o
 Create Ontologizer
 ----------------------
 
+In OntoLearner, **Ontologizers** are Python classes that represent specific ontologies and provide a standardized interface for loading, processing, and extracting data from ontological knowledge bases. These classes serve as the foundation for ontology learning tasks and use-cases. To create Ontologizer, first, you need to create a class for your ontology that inherits from ``BaseOntology``. This class should be added to the appropriate domain-specific file in the `ontolearner/ontology/ <https://github.com/sciknoworg/OntoLearner/tree/main/ontolearner/ontology>`_ directory.
 
-
-.. sidebar:: Example Ontologizers
+.. hint:: Example Ontologizers
 
     - From medicine domain  `Human Disease Ontology (DOID) <https://github.com/sciknoworg/OntoLearner/blob/main/ontolearner/ontology/medicine.py#L69>`_
     - From biology domain: `Marine Taxonomy and Life Ontology (MarineTLO) <https://github.com/sciknoworg/OntoLearner/blob/main/ontolearner/ontology/biology.py#L106>`_
 
 
-In OntoLearner, **Ontologizers** are Python classes that represent specific ontologies
-and provide a standardized interface for loading, processing, and extracting data
-from ontological knowledge bases. These classes serve as the foundation for ontology learning tasks and use-cases.
-
-
-To create Ontologizer, first, you need to create a class for your ontology that inherits from ``BaseOntology``. This class should be added to the appropriate domain-specific file in the `ontolearner/ontology/ <https://github.com/sciknoworg/OntoLearner/tree/main/ontolearner/ontology>`_ directory.
-
 Here are how to add such a class:
+
+
 
 .. code-block:: python
 
