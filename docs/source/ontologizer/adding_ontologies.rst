@@ -1,29 +1,33 @@
-Adding New Ontologies
+New Ontologies
 ======================
 
-This guide explains how to add new ontologies to the OntoLearner framework.
-Adding a new ontology involves creating a class for the ontology, implementing the necessary methods,
-and using the ``add_new_ontology.py`` script to process and benchmark the ontology.
+This guide explains how to add new ontologies to the OntoLearner. Adding a new ontology involves creating a class for the ontology, implementing the necessary methods,
+and to process and benchmark the ontology.
 
-Prerequisites
----------------
-Before adding a new ontology, make sure you have:
+.. hint::
 
-1. The OntoLearner framework installed and set up
-2. The ontology file in a supported format (OWL, RDF, TTL, etc.)
+    **Add New Ontology Script**: Use `add_new_ontology.py <https://github.com/sciknoworg/OntoLearner/blob/main/scripts/add_new_ontology.py>`_ script for processing and benchmarking your ontology.
 
-What are Ontology Classes?
+.. note::
+
+    Before adding a new ontology, make sure you have OntoLearner `installed <https://ontolearner.readthedocs.io/installation.html>`_, and the ontology file is in a supported format (OWL, RDF, TTL, etc.)
+
+Step 1: Create Ontologizer
 --------------------------
-In OntoLearner, **ontology classes** are Python classes that represent specific ontologies
+.. sidebar:: Example Ontologizers
+
+    - From medicine domain  `Human Disease Ontology (DOID) <https://github.com/sciknoworg/OntoLearner/blob/main/ontolearner/ontology/medicine.py#L69>`_
+    - From biology domain: `Marine Taxonomy and Life Ontology (MarineTLO) <https://github.com/sciknoworg/OntoLearner/blob/main/ontolearner/ontology/biology.py#L106>`_
+
+
+In OntoLearner, **Ontologizers** are Python classes that represent specific ontologies
 and provide a standardized interface for loading, processing, and extracting data
-from ontological knowledge bases. These classes serve as the foundation for ontology learning tasks by:
+from ontological knowledge bases. These classes serve as the foundation for ontology learning tasks and use-cases.
 
-Step 1: Create an Ontology Class
------------------------------------
-First, you need to create a class for your ontology that inherits from ``BaseOntology``.
-This class should be added to the appropriate domain-specific file in the ``ontolearner/ontology/`` directory.
 
-For example, if you're adding a medical ontology, you would add it to ``ontolearner/ontology/medicine.py``:
+To create Ontologizer, first, you need to create a class for your ontology that inherits from ``BaseOntology``. This class should be added to the appropriate domain-specific file in the `ontolearner/ontology/ <https://github.com/sciknoworg/OntoLearner/tree/main/ontolearner/ontology>`_ directory.
+
+Here are how to add such a class:
 
 .. code-block:: python
 
@@ -54,11 +58,9 @@ For example, if you're adding a medical ontology, you would add it to ``ontolear
             # Check the general patterns from the parent class
             if BaseOntology._is_anonymous_id(label):
                 return True
-
             # Add ontology-specific patterns
             if re.match(r'^MY_[0-9]+$', label):  # Example pattern
                 return True
-
             return False
 
 Each ontology class inherits from ``BaseOntology`` and defines:

@@ -1,174 +1,56 @@
-Learning Tasks
-================
-OntoLearner supports three fundamental ontology learning tasks
-that enable automated knowledge extraction and ontology construction
-from existing ontological data. These tasks form the core of the library's
-machine learning capabilities and are designed to work with various learner models
-including retrieval-based, LLM-based, and hybrid RAG (Retrieval-Augmented Generation) approaches.
+Ontology Learning Tasks
+==========================
 
-Overview
---------
-The learning tasks in OntoLearner follow a standard machine learning workflow:
+.. raw:: html
 
-1. **Data Loading**: Extract structured data from existing ontologies
-2. **Train-Test Split**: Divide data to prevent overfitting and enable evaluation
-3. **Model Training**: Train learners using various approaches (retrieval, LLM, RAG)
-4. **Prediction**: Apply trained models to new data
-5. **Evaluation**: Assess performance using task-specific metrics
+   <div align="center">
+     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/main/docs/source/images/learning_tasks.jpg" alt="OntoLearner Logo" width="90%"/>
+   </div>
+   <br>
 
-All tasks operate on the ``OntologyData`` structure, which contains three main components:
+.. sidebar:: Tasks
 
-- ``term_typings``: List of term-to-type mappings
-- ``type_taxonomies``: Hierarchical relationships between types
-- ``type_non_taxonomic_relations``: Non-hierarchical relationships between types
+    * `LLMs4OL Paradigm Tasks <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_
+    * `Text2Onto <https://ontolearner.readthedocs.io/learning_tasks/text2onto.html>`_.
 
-Supported Tasks
----------------
+Within the OntoLearner framework, the modularized ontologies are extended with OL capabilities to effectively support ontology engineering tasks. This extension is guided by the **LLMs4OL paradigm** tasks, which leverages LLMs to automate the key ontology learning process. The LLMs4OL paradigm is structured around three primary tasks essential for developing a primitive ontology: 1) Term Typing, 2) Taxonomy Discovery, and 3) Non-Taxonomic Relationship Extraction.  By incorporating these tasks, OntoLearner ensures that its modularized ontologies through Ontologizer are not only structured and reusable but also capable of continuous learning and enhancement through automated ontology learning techniques.
 
-Task 1: Term Typing
-~~~~~~~~~~~~~~~~~~~
-**Objective**: Predict the semantic type(s) of a given term.
+Additionally, OntoLearner incorporates a **Text2Onto**, which focuses on extracting ontological terms and types directly from raw text. Notably, Text2Onto is designed to function independently of the LLMs4OL pipeline, and Ontologizer. Users can import or load LLMs4OL tasks as inputs to Text2Onto, enabling flexible and extensible data extraction workflows for OL.
 
-**Description**: Term typing involves determining what category or class a specific term belongs to within an ontological framework. For example, predicting that "ChardonnayGrape" is a "WineGrape" in the context of a wine ontology.
+LLMs4OL Paradigm
+-------------------
 
-**Example Usage**:
+.. raw:: html
 
-.. code-block:: python
+   <div align="center">
+     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/dev/docs/source/images/LLMs4OL.png" alt="OntoLearner Logo" width="100%"/>
+   </div>
+   <br>
 
-    from ontolearner import LearnerPipeline, Wine, train_test_split
+The LLMs4OL (Large Language Models for Ontology Learning) paradigm represents
+a transformative approach to automated ontology construction and enrichment. OntoLearner implements state-of-the-art LLM-based methodologies that leverage the vast knowledge encoded in pre-trained language models to perform sophisticated ontological reasoning and knowledge extraction.
 
-    # Load ontology and extract data
-    ontology = Wine()
-    ontology.load()
-    data = ontology.extract()
+.. hint::
 
-    # Split data
-    train_data, test_data = train_test_split(data, test_size=0.2)
+    The LLMs4OL paper is available online and can be accessed via `this link <https://doi.org/10.1007/978-3-031-47240-4_22>`_.
 
-    # Create pipeline for term typing
-    pipeline = LearnerPipeline(
-        task="term-typing",
-        retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-        llm_id="mistralai/Mistral-7B-Instruct-v0.1",
-        hf_token="your_huggingface_token"
-    )
+Text2Onto
+----------------
 
-    # Train and evaluate
-    results, metrics = pipeline.fit_predict_evaluate(
-        train_data=train_data,
-        test_data=test_data,
-        top_k=3,
-        test_limit=10
-    )
+The Text2Onto task aims for **extracting ontological terminologies and types from a raw text**. So, for given an unstructured text corpus/documents, the goal is to identify foundational elements for ontology construction by recognizing domain-relevant vocabulary and categorizing it appropriately.
 
-    print(f"Average F1-Score: {metrics['avg_f1_score']:.3f}")
-    print(f"Average Exact Match: {metrics['avg_exact_match']:.3f}")
+We aim to extract:
 
+* **Terms (or Entities)**: These are specific terms that form the basis of an ontology. They populate the ontology by instantiating the defined classes. For instance, COVID-19 is a term of the type Disease, and Paris is a term of the type City.
+* **Types (or Classes)**: These are abstract categories or groupings that represent general concepts within a domain. They form the backbone of an ontology's structure. Examples include Disease, Vehicle, or City.
 
-Task 2: Taxonomy Discovery
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-**Objective**: Identify hierarchical "is-a" relationships between types.
+By identifying and extracting these elements, the task helps bridge the gap between unstructured natural language and structured ontological knowledge. This process is critical for building knowledge representations that support reasoning, semantic integration, and advanced information retrieval.
 
-**Description**: Taxonomy discovery involves determining whether one concept is a subclass or specialization of another. This task builds the hierarchical backbone of ontologies by identifying parent-child relationships.
+To construct datasets for this task, OntoLearner leverages a **Synthetic Data Generator** module. This module is implemented with respect to the following algorithm.
 
-**Example Usage**:
+.. raw:: html
 
-.. code-block:: python
-
-    from ontolearner import LearnerPipeline, AutoLearnerLLM, Wine, train_test_split
-
-    # Load and prepare data
-    ontology = Wine()
-    ontology.load()
-    train_data, test_data = train_test_split(ontology.extract(), test_size=0.2)
-
-    # Create pipeline for taxonomy discovery
-    pipeline = LearnerPipeline(
-        task="taxonomy-discovery",
-        llm=AutoLearnerLLM(token="your_huggingface_token"),
-        llm_id="mistralai/Mistral-7B-Instruct-v0.1"
-    )
-
-    # Train and evaluate
-    results, metrics = pipeline.fit_predict_evaluate(
-        train_data=train_data,
-        test_data=test_data,
-        test_limit=10
-    )
-
-    print(f"Average Accuracy: {metrics['avg_accuracy']:.3f}")
-
-Task 3: Non-Taxonomic Relation Discovery
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**Objective**: Identify non-hierarchical relationships between concepts.
-
-**Description**: Non-taxonomic relation discovery involves predicting semantic relationships that are not "is-a" relationships. These include relationships like "hasColor", "locatedIn", "producedBy", etc.
-
-**Example Usage**:
-
-.. code-block:: python
-
-    from ontolearner import LearnerPipeline, BERTRetrieverLearner, Wine, train_test_split
-
-    # Load and prepare data
-    ontology = Wine()
-    ontology.load()
-    train_data, test_data = train_test_split(ontology.extract(), test_size=0.2)
-
-    # Create pipeline for non-taxonomic relation discovery
-    pipeline = LearnerPipeline(
-        task="non-taxonomy-discovery",
-        retriever=BERTRetrieverLearner(),
-        retriever_id="sentence-transformers/all-MiniLM-L6-v2"
-    )
-
-    # Train and evaluate
-    results, metrics = pipeline.fit_predict_evaluate(
-        train_data=train_data,
-        test_data=test_data,
-        top_k=5,
-        test_limit=10
-    )
-
-    print(f"Average Exact Match: {metrics['avg_exact_match']:.3f}")
-    print(f"Average Similarity: {metrics['avg_similarity']:.3f}")
-
-
-Data Structures
----------------
-**OntologyData**: Main container for all ontological information
-
-.. code-block:: python
-
-    class OntologyData(BaseModel):
-        term_typings: List[TermTyping]
-        type_taxonomies: TypeTaxonomies
-        type_non_taxonomic_relations: NonTaxonomicRelations
-
-**TermTyping**: Represents term-to-type mappings
-
-.. code-block:: python
-
-    class TermTyping(BaseModel):
-        ID: str  # Unique identifier
-        term: str  # The term being typed
-        types: List[str]  # List of types assigned to the term
-
-**TaxonomicRelation**: Represents hierarchical relationships
-
-.. code-block:: python
-
-    class TaxonomicRelation(BaseModel):
-        ID: str  # Unique identifier
-        parent: str  # Parent concept in hierarchy
-        child: str  # Child concept in hierarchy
-
-**NonTaxonomicRelation**: Represents non-hierarchical relationships
-
-.. code-block:: python
-
-    class NonTaxonomicRelation(BaseModel):
-        ID: str  # Unique identifier
-        head: str  # Head entity in relation
-        tail: str  # Tail entity in relation
-        relation: str  # Type of relation
+   <div align="center">
+     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/main/docs/source/images/text2onto.png" width="90%"/>
+   </div>
+   <br>

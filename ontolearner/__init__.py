@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-__version__ = "1.2.1"
+__version__ = "1.3.0"
 
 import logging
 from ontolearner import (ontology,
@@ -32,7 +32,7 @@ from ._learner import LearnerPipeline
 
 from .processor import Processor
 from .utils import train_test_split
-
+from .evaluation import evaluation_report
 
 
 __all__ = [
@@ -50,7 +50,8 @@ __all__ = [
     "utils",
     "tools",
     "learner",
-    "train_test_split"
+    "train_test_split",
+    "evaluation_report"
 ]
 
 logging.basicConfig(

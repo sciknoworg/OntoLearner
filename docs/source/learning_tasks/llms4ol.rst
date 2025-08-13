@@ -1,267 +1,136 @@
-LLMs4OL: Large Language Models for Ontology Learning
+LLMs4OL Paradigm
 ====================================================
-The LLMs4OL (Large Language Models for Ontology Learning) paradigm represents
-a transformative approach to automated ontology construction and enrichment.
-OntoLearner implements state-of-the-art LLM-based methodologies that leverage
-the vast knowledge encoded in pre-trained language models to perform
-sophisticated ontological reasoning and knowledge extraction.
 
-Introduction to LLMs4OL
------------------------
-Traditional ontology learning approaches relied heavily on statistical methods,
-rule-based systems, and classical machine learning techniques. The emergence
-of large language models has revolutionized this field by providing models that:
+Learning Tasks
+------------------------
 
-- **Encode vast world knowledge** from diverse textual sources during pre-training
-- **Understand semantic relationships** between concepts across multiple domains
-- **Perform complex reasoning** about hierarchical and non-hierarchical relationships
-- **Generate structured outputs** through carefully designed prompting strategies
+OntoLearner's supports LLMs4OL three distinct paradigms for applying LLMs to ontology learning tasks, including:
 
-OntoLearner's LLMs4OL implementation supports three distinct paradigms
-for applying LLMs to ontology learning tasks.
+.. list-table::
+   :widths: 20 80
+   :header-rows: 1
 
-LLMs4OL Paradigms
------------------
+   * - **Task**
+     - **Description**
+   * - **Term Typing**
+     - Discover the generalized type for a lexical term.
 
-Paradigm 1: Pure LLM-Based Learning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**Approach**: Direct application of LLMs without external knowledge retrieval.
+       **ID**: ``term-typing``
 
-**Methodology**: This paradigm relies entirely on the model's internalized knowledge from pre-training.
-The LLM receives task-specific prompts that encode ontological requirements and generates structured
-responses based on its learned representations.
+       **Info**: The process of assigning a generalized type to each lexical term involves mapping lexical items to their most appropriate semantic categories or ontological classes. For example, in the biomedical domain, the term ``aspirin`` should be classified under ``Pharmaceutical Drug``. This task is crucial for organizing extracted terms into structured ontologies and improving knowledge reuse.
 
-**Advantages**:
-- No dependency on external knowledge bases
-- Fast inference without retrieval overhead
-- Leverages comprehensive world knowledge from pre-training
-- Effective for well-known domains covered in training data
+       **Example**: Assign the type ``"disease"`` to the term ``"myocardial infarction"``.
+   * - **Taxonomy Discovery**
+     - Discover the taxonomic hierarchy between type pairs.
 
-**Limitations**:
-- May hallucinate relationships not present in training data
-- Limited by the model's training cutoff date
-- Potential inconsistency across related predictions
+       **ID**: ``taxonomy-discovery``
 
-**Implementation**:
+       **Info**: Taxonomy discovery focuses on identifying hierarchical relationships between types, enabling the construction of taxonomic structures (i.e., ``is-a`` relationships). Given a pair of terms or types, the task determines whether one is a subclass of the other. For example, discovering that ``Sedan is a subclass of Car`` contributes to structuring domain knowledge in a way that supports reasoning and inferencing in ontology-driven applications.
 
-.. code-block:: python
+       **Example**: Recognize that ``"lung cancer"`` is a subclass of ``"cancer"``, which is a subclass of ``"disease"``.
+   * - **Non-Taxonomic Relation Extraction**
+     - Identify non-taxonomic, semantic relations between types.
 
-    from ontolearner import LearnerPipeline, AutoLearnerLLM, Wine, train_test_split
+       **ID**: ``non-taxonomic-re``
 
-    # Load ontology data
+       **Info**: This task aims to extract non-hierarchical (non-taxonomic) semantic relations between concepts in an ontology. Unlike taxonomy discovery, which deals with is-a relationships, this task focuses on other meaningful associations such as part-whole (part-of), causal (causes), functional (used-for), and associative (related-to) relationships. For example, in a medical ontology, discovering that ``Aspirin treats Headache`` adds valuable relational knowledge that enhances the utility of an ontology.
+
+       **Example**: Identify that *"virus"* ``causes`` *"infection"* or *"aspirin"* ``treats`` *"headache"*.
+
+.. note::
+
+    The ``ID`` field is essential for performing train-test splits and referencing specific instances during model training or evaluation.
+
+
+
+For your own use-case, follow the best practices such as:
+
+1. **Choose the Right Paradigm**: Selecting the appropriate learning paradigm is essential for effective ontology-related tasks. Pure LLM approaches work well for general or well-known domains where pre-trained models already have sufficient coverage. In contrast, RAG is better suited for specialized domains or when domain-specific training data is available. For high-stakes applications that demand higher reliability and robustness, ensemble methods combining LLMs with symbolic systems or multiple model outputs can offer the best performance.
+
+2. **Optimize Prompting**: Prompt engineering plays a crucial role in guiding LLMs effectively. Clear and unambiguous instructions help reduce hallucinations and inconsistencies. When using RAG, it is important to provide relevant context alongside the prompt to ground the model's reasoning. Structured output formats (e.g., JSON, bullet points) make downstream processing easier. Experimenting with different prompt phrasings can further optimize task performance for your specific domain.
+
+3. **Model Selection**: Choosing the right model involves balancing task complexity with available compute resources. Instruction-tuned models are a strong starting point, as they are trained to follow human-like instructions. Depending on the task, you should evaluate different models to identify which ones perform best in your domain. Larger models are often more capable of complex reasoning, but may not be feasible in constrained environments, so model size should be chosen accordingly.
+
+4. **Evaluation Strategy**: A rigorous evaluation strategy ensures meaningful comparisons and prevents overfitting. Always use held-out test sets that are representative of your target distribution. Evaluation should go beyond a single metric — include standard (e.g., precision, recall, and F1) and domain-specific criteria (e.g., coverage, coherence of ontological axioms). It's also helpful to benchmark against classical ontology learning methods to measure the true added value of LLM-based approaches.
+
+5. **Data Quality**: The effectiveness of RAG and fine-tuned models is heavily dependent on data quality. Training data should be clean, domain-relevant, and accurately labeled. Ontological relationships must be validated to avoid propagating structural errors. Inconsistencies in ground truth labels should be handled carefully to avoid misleading the model during training. For low-resource scenarios, thoughtful data augmentation can help expand coverage without compromising quality.
+
+Tasks Datasets
+-------------------------
+
+The code below demonstrates how to load an ontology and use the .extract() method to retrieve datasets for LLMs4OL tasks.
+
+.. code-block::
+
+    from ontolearner import Wine
+
     ontology = Wine()
+
     ontology.load()
-    train_data, test_data = train_test_split(ontology.extract(), test_size=0.2)
 
-    # Create pure LLM pipeline
-    pipeline = LearnerPipeline(
-        task="taxonomy-discovery",
-        llm=AutoLearnerLLM(token="your_huggingface_token"),
-        llm_id="mistralai/Mistral-7B-Instruct-v0.1"
-    )
+    data = ontology.extract()
 
-    # Evaluate without retrieval
-    results, metrics = pipeline.fit_predict_evaluate(
-        train_data=train_data,
-        test_data=test_data,
-        test_limit=10
-    )
+    print(data)
 
-    print(f"Pure LLM Accuracy: {metrics['avg_accuracy']:.3f}")
+The extracted ``data`` conforms to the ``OntologyData`` structure, which encapsulates the following data components:
 
-Paradigm 2: Retrieval-Augmented Generation (RAG)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**Approach**: Combines semantic retrieval with LLM generation for grounded ontological reasoning.
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
 
-**Methodology**: RAG systems first retrieve relevant ontological examples from the training data
-using semantic similarity, then provide these examples as context to guide the LLM's generation.
-This approach grounds the model's responses in actual ontological structures.
+   * - **Class**
+     - **Description**
+   * - ``OntologyData``
+     - Main container for all ontological information.
 
-**Advantages**:
-- Grounded in domain-specific training examples
-- Reduces hallucination through contextual evidence
-- Adapts to specialized domains not well-covered in pre-training
-- Maintains consistency with existing ontological patterns
+       .. code-block:: python
 
-**Limitations**:
-- Requires high-quality training data for retrieval
-- Additional computational overhead from retrieval step
-- Performance depends on retrieval quality
+           class OntologyData(BaseModel):
+               term_typings: List[TermTyping]
+               type_taxonomies: TypeTaxonomies
+               type_non_taxonomic_relations: NonTaxonomicRelations
+   * - ``TermTyping``
+     - Represents term-to-type mappings.
 
-**Implementation**:
+       .. code-block:: python
 
-.. code-block:: python
+           class TermTyping(BaseModel):
+               ID: str         # Unique identifier
+               term: str       # The term being typed
+               types: List[str]  # List of types assigned to the term
+   * - ``TaxonomicRelation``
+     - Represents hierarchical (is-a) relationships between concepts.
 
-    from ontolearner import LearnerPipeline, Wine, train_test_split
+       .. code-block:: python
 
-    # Load ontology data
-    ontology = Wine()
-    ontology.load()
-    train_data, test_data = train_test_split(ontology.extract(), test_size=0.2)
+           class TaxonomicRelation(BaseModel):
+               ID: str       # Unique identifier
+               parent: str   # Parent concept in hierarchy
+               child: str    # Child concept in hierarchy
+   * - ``NonTaxonomicRelation``
+     - Represents non-hierarchical (semantic) relationships between concepts.
 
-    # Create RAG pipeline
-    pipeline = LearnerPipeline(
-        task="term-typing",
-        retriever_id="sentence-transformers/all-MiniLM-L6-v2",
-        llm_id="mistralai/Mistral-7B-Instruct-v0.1",
-        hf_token="your_huggingface_token"
-    )
+       .. code-block:: python
 
-    # Evaluate with retrieval augmentation
-    results, metrics = pipeline.fit_predict_evaluate(
-        train_data=train_data,
-        test_data=test_data,
-        top_k=3,  # Retrieve top-3 similar examples
-        test_limit=10
-    )
+           class NonTaxonomicRelation(BaseModel):
+               ID: str        # Unique identifier
+               head: str      # Head entity in relation
+               tail: str      # Tail entity in relation
+               relation: str  # Type of relation
 
-    print(f"RAG F1-Score: {metrics['avg_f1_score']:.3f}")
-    print(f"RAG Exact Match: {metrics['avg_exact_match']:.3f}")
 
-Paradigm 3: Hybrid Ensemble Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**Approach**: Combines multiple LLM-based approaches for robust ontological predictions.
-
-**Methodology**: This paradigm leverages the strengths of different LLM architectures,
-prompting strategies, and retrieval methods. Ensemble techniques aggregate predictions
-from multiple models to improve accuracy and reduce individual model biases.
-
-**Advantages**:
-- Improved robustness through model diversity
-- Reduced impact of individual model limitations
-- Better handling of edge cases and ambiguous relationships
-- Higher overall accuracy through consensus
-
-**Limitations**:
-- Increased computational requirements
-- More complex implementation and maintenance
-- Potential for conflicting predictions requiring resolution strategies
-
-**Implementation**:
-
-.. code-block:: python
-
-    from ontolearner import LearnerPipeline, AutoLearnerLLM, BERTRetrieverLearner
-    from ontolearner.learner import AutoRAGLearner, StandardizedPrompting
-    from ontolearner.ontology import Wine
-    from ontolearner.utils.train_test_split import train_test_split
-
-    # Load data
-    ontology = Wine()
-    ontology.load()
-    train_data, test_data = train_test_split(ontology.extract(), test_size=0.2)
-
-    # Create multiple learners
-    llm_learner = AutoLearnerLLM(token="your_token")
-    llm_learner.load("mistralai/Mistral-7B-Instruct-v0.1")
-
-    retriever = BERTRetrieverLearner()
-    retriever.load("sentence-transformers/all-MiniLM-L6-v2")
-
-    prompting = StandardizedPrompting(task="term-typing")
-    rag_learner = AutoRAGLearner(retriever, llm_learner, prompting)
-
-    # Ensemble evaluation (simplified example)
-    learners = [llm_learner, rag_learner]
-    ensemble_results = []
-
-    for learner in learners:
-        pipeline = LearnerPipeline(task="term-typing", learner=learner)
-        results, metrics = pipeline.fit_predict_evaluate(
-            train_data=train_data,
-            test_data=test_data,
-            test_limit=5
-        )
-        ensemble_results.append(metrics)
-
-    # Aggregate ensemble performance
-    avg_f1 = sum(r['avg_f1_score'] for r in ensemble_results) / len(ensemble_results)
-    print(f"Ensemble Average F1-Score: {avg_f1:.3f}")
-
-Prompting Strategies for Ontology Learning
-------------------------------------------
-Effective prompting is crucial for LLMs4OL success. OntoLearner implements
-standardized prompting strategies optimized for each ontology learning task:
-
-**Term Typing Prompts**:
-
-.. code-block:: text
-
-    Given a list of types as candidates to be assigned to the term,
-    identify the most probable types.
-    Return the types only in the form of a list.
-    Do not provide any explanation outside the list.
-
-    Term: {term}
-    Candidates Types: {context}
-    Response:
-
-**Taxonomy Discovery Prompts**:
-
-.. code-block:: text
-
-    Is {parent} a parent of {child}?
-    Answer yes/no. Do not explain.
-
-**Non-Taxonomic Relation Discovery Prompts**:
-
-.. code-block:: text
-
-    What is the relation between {head} and {tail}?
-    Return only the relation type.
-
-These prompts are designed to:
-- **Minimize ambiguity** through clear, specific instructions
-- **Enforce structured outputs** that can be parsed programmatically
-- **Reduce hallucination** by constraining response formats
-- **Optimize for consistency** across similar ontological contexts
-
-Evaluation Framework
--------------------
-OntoLearner provides comprehensive evaluation metrics tailored for LLMs4OL:
-
-**Term Typing Metrics**:
-- **Precision**: Fraction of predicted types that are correct
-- **Recall**: Fraction of actual types that were predicted
-- **F1-Score**: Harmonic mean of precision and recall
-- **Exact Match**: Whether predicted types exactly match ground truth
-
-**Taxonomy Discovery Metrics**:
-- **Accuracy**: Fraction of correctly predicted hierarchical relationships
-- **F1-Score**: Balanced measure for binary classification
-
-**Non-Taxonomic Relation Discovery Metrics**:
-- **Exact Match**: Whether predicted relation exactly matches ground truth
-- **Similarity Score**: String similarity between predicted and actual relations
-
-Best Practices for LLMs4OL
+Train Test Splits
 --------------------------
-1. **Choose the Right Paradigm**:
-   - Use **Pure LLM** for well-known domains with good pre-training coverage
-   - Use **RAG** for specialized domains or when training data is available
-   - Use **Ensemble** methods for critical applications requiring high accuracy
 
-2. **Optimize Prompting**:
-   - Use clear, unambiguous instructions
-   - Enforce structured output formats
-   - Include relevant context when using RAG
-   - Test different prompt variations for your domain
+To perform machine learning tasks, the first step after extracting the dataset is to split it into training and testing sets. The following code demonstrates how to create these splits based on a specified ratio, with the resulting outputs formatted as ``OntologyData`` instances.
 
-3. **Model Selection**:
-   - Start with instruction-tuned models
-   - Consider computational constraints
-   - Evaluate multiple models for your specific use case
-   - Use larger models for complex reasoning tasks
+.. code-block:: python
 
-4. **Evaluation Strategy**:
-   - Use held-out test sets to prevent overfitting
-   - Evaluate on multiple metrics appropriate for your task
-   - Consider domain-specific evaluation criteria
-   - Compare against traditional ontology learning baselines
+    from ontolearner import Wine, train_test_split
 
-5. **Data Quality**:
-   - Ensure high-quality training data for RAG systems
-   - Clean and validate ontological relationships
-   - Handle inconsistencies in ground truth data
-   - Consider data augmentation for small datasets
+    ontology = Wine()
+
+    ontology.load()
+    data = ontology.extract()
+
+    train_data, test_data = train_test_split(data test_size=0.2, random_state=42)

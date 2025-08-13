@@ -4,12 +4,21 @@ Quickstart
 Ontologizer
 --------------------
 
-In OntoLearner, Ontologizers provide a programmatic interface for working with ontologies directly in Python. They offer a standardized way to load, process, and extract structured knowledge from ontological sources for a variety of applications, including ontology learning tasks and other Semantic Web use cases. OntoLearner includes built-in access to several standard ontologies. Below is an example using the `Agronomy Ontology <https://ontolearner.readthedocs.io/benchmarking/agriculture/agro.html#agronomy-ontology-agro>`_  (``ArgO``), which is automatically retrieved from our `🤗 HuggingFace repository <https://huggingface.co/collections/SciKnowOrg/>`_ upon loading.
+
+In OntoLearner, Ontologizers provide a programmatic interface for working with ontologies directly in Python. They offer a standardized way to load, process, and extract structured knowledge from ontological sources for a variety of applications, including ontology learning tasks and other Semantic Web use cases.
+OntoLearner includes built-in access to several standard ontologies.
+
+
+Below is an example using the `Agronomy Ontology <https://ontolearner.readthedocs.io/benchmarking/agriculture/agro.html#agronomy-ontology-agro>`_  (``ArgO``), which is automatically retrieved from our `🤗 HuggingFace repository <https://huggingface.co/collections/SciKnowOrg/>`_ upon loading.
+
+.. hint::
+     **Available domains**: Biology, Chemistry, Medicine, Agriculture, Environment, Geography, Industry, Materials Science, Law, Finance • and more!
 
 .. sidebar:: 📰 See Also
 
-    - `Documentation for existing ontologies <https://ontolearner.readthedocs.io/benchmarking/benchmark.html>`_
-    - `How to work with Ontologizers <https://ontolearner.readthedocs.io/ontologizer/ontologizer.html>`_
+    - `Explore 150+ Ready-to-Use Ontologies <https://ontolearner.readthedocs.io/benchmarking/benchmark.html>`_
+    - `How to work with Ontologizers <https://ontolearner.readthedocs.io/ontologizer/ontology_modularization.html>`_
+
 
 .. code-block:: python
 
@@ -38,6 +47,9 @@ In OntoLearner, Ontologizers provide a programmatic interface for working with o
 
     - ``AgrO()``  is a built-in Ontologizer class in OntoLearner.
     - ``.load()`` fetches and parses the ontology into a structured internal format.
+
+
+
 
 Ontology Learning Tasks
 ------------------------
@@ -99,46 +111,41 @@ OntoLearner supports automatic dataset extraction for the ontology learning task
 
    ontological_data = ontology.extract()
 
+The ``.extract()`` retrieves candidate triples or axioms for a selected learning task. The extracted data follows ``OntologyData`` schema. This is the main data container that aggregates all three types of ontological information needed for machine learning tasks. It represents the complete structured knowledge extracted from an ontology file.
+
+.. hint:: ``OntologyData`` Schema:
+
+    - `term_typings`: All term-to-type mappings for learning type prediction.
+    - `type_taxonomies`: All hierarchical relationships and involved types.
+    - `type_non_taxonomic_relations`: All semantic associations and relation types.
+
 
 Learner Models
 ------------------
 
-OntoLearner supports three fundamental ontology learning tasks that enable automated knowledge extraction and ontology construction from existing ontological data. The tasks are defined as follows:
-
-- Term Typing: Discover the generalized type for a lexical term
-Once domain-relevant terms and types are extracted (as we explored in Task A - Text2Onto), the next step is to assign a generalized type to each lexical term. This process involves mapping lexical items to their most appropriate semantic categories or ontological classes. For example, in the biomedical domain, the term “aspirin” should be classified under “Pharmaceutical Drug”. This task is crucial for organizing extracted terms into structured ontologies and improving knowledge reuse.
-
-
-These tasks form the core of the library’s machine learning capabilities and are designed to work with various learner models including retrieval-based, LLM-based, and Retrieval-Augmented Generation (RAG) approaches.
-To alighn with machine learning follow, once the ontology is loaded, we can extract the learning examples and split them into training and testing subsets for further learning procedures.
-
-Benchmarking
-----------------
-
-
-3. Extract and Split the Data
------------------------------
-
+To alighn with machine learning follow, once the ontology is loaded, and ontological data extracted, we can split them into training and testing subsets for further learning procedures.
 
 .. code-block:: python
 
    from ontolearner import train_test_split
 
+   # A utility function for random shuffling and splitting (80/20 here).
    train_data, test_data = train_test_split(
        ontology.extract(),
        test_size=0.2,
        random_state=42
    )
 
-Explanation:
 
-- `.extract()` retrieves candidate triples or axioms for a selected learning task.
-- `train_test_split()` is a utility function for random shuffling and splitting (80/20 here).
+Once the data is split into training and testing sets, you can apply learning models to the ontology learning tasks. OntoLearner supports multiple modeling approaches, including retrieval-based methods, Large Language Model (LLM)-based techniques, and Retrieval-Augmented Generation (RAG) strategies. The ``LearnerPipeline`` within OntoLearner is designed for ease of use, abstracting away the complexities of loading models and preparing datasets or data loaders. You can configure the pipeline with your choice of LLMs, retrievers, or RAG components.
 
-4. Configure the Learning Pipeline
-----------------------------------
+In the example below, we configure a RAG-based learner by specifying the Qwen LLM (`Qwen/Qwen2.5-0.5B-Instruct <https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct>`_) and a retriever based on a sentence-transformer model (`all-MiniLM-L6-v2 <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>`_):
 
-We now configure the learner pipeline using a small instruction-tuned model (`Qwen`) and a retriever model:
+.. sidebar:: Other Learners
+
+    To experiment with an LLM-based learner, simply provide the ``llm_id`` and leave the ``retriever_id`` unset.
+    Likewise, for a retriever-only learner, specify the ``retriever_id`` and omit the ``llm_id``.
+
 
 .. code-block:: python
 
@@ -152,15 +159,12 @@ We now configure the learner pipeline using a small instruction-tuned model (`Qw
        top_k=3
    )
 
-Explanation:
+.. note::
 
-- `retriever_id`: Semantic retriever that retrieves relevant context from ontology fragments.
-- `llm_id`: The instruction-following language model used to generate candidate outputs.
-- `top_k`: Number of retrieved examples passed to the LLM (used in RAG setup).
-- `hf_token`: Required for loading gated models from Hugging Face.
-
-5. Run the Pipeline
--------------------
+    - ``retriever_id``: Semantic retriever that retrieves relevant context from ontology fragments.
+    - ``llm_id``: The instruction-following language model used to generate candidate outputs.
+    - ``top_k``: Number of retrieved examples passed to the LLM (used in RAG setup).
+    - ``hf_token``: Required for loading gated models from Hugging Face.
 
 Once configured, the pipeline is executed on the training and test data:
 
@@ -173,54 +177,22 @@ Once configured, the pipeline is executed on the training and test data:
        task='non-taxonomic-re'
    )
 
-Explanation:
-
-- `task`: One of `term-typing`, `taxonomy-discovery`, or `non-taxonomic-re`.
-- `evaluate=True`: Computes performance metrics like precision, recall, and F1-score.
-- Returns a dictionary with predictions, metrics, logs, and timing.
-
-6. Evaluate the Results
-------------------------
-
-You can inspect the metrics and runtime performance:
-
-.. code-block:: python
-
    print("Metrics:", outputs['metrics'])
    print("Elapsed time:", outputs['elapsed_time'])
+   print(outputs['predictions'][:5])
 
-Explanation:
 
-- Useful to monitor model accuracy and speed.
-- Helps compare different LLM/retriever configurations across tasks.
+Once the execution is done, it returns a dictionary with predictions, evaluation metrics, and timing. Here ``task`` variable can be one of `term-typing`, `taxonomy-discovery`, or `non-taxonomic-re`. The ``evaluate=True``, results in computation of performance metrics like precision, recall, and F1-score.
 
-7. Explore Predictions
------------------------
+.. warning::
 
-You can examine a few sample predictions for inspection:
+   Ensure your Hugging Face token has access to gated models. You can get one at https://huggingface.co/settings/tokens.
 
-.. code-block:: python
 
-   import pandas as pd
+What's Next?
+---------------
 
-   pd.DataFrame(outputs['predictions'][:5])
-
-Explanation:
-
-- Displays the first 5 predictions in a readable format.
-- Each row may include the input, predicted output, true label (if available), and confidence scores.
-
-8. Run in Google Colab
------------------------
-
-To interactively run this tutorial, use the Colab notebook provided here:
-
-`Open in Colab <https://colab.research.google.com/drive/1DuElAyEFzd1vtqTjDEXWcc0zCbiV2Yee?usp=sharing>`_
-
-.. note::
-
-   Ensure your Hugging Face token has access to gated models like `Qwen2.5-0.5B-Instruct`. You can get one at https://huggingface.co/settings/tokens.
-
----
-
-This quickstart guide should help you get started with `OntoLearner` in minutes. For more complex tasks or datasets, refer to the full documentation and examples.
+* :doc:`ontologizer/ontology_modularization` - How Ontologizer works.
+* :doc:`ontologizer/ontology_hosting` - Checkout avaiable domains and their repositories.
+* :doc:`learning_tasks/learning_tasks` - Deep dive into all three tasks
+* :doc:`learning_tasks/text2onto` - How Text2Onto works?

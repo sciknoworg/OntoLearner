@@ -6,7 +6,8 @@ from ontolearner import (
     AgrO,                   # Example agricultural ontology
     train_test_split,       # Helper function for data splitting
     LabelMapper,            # Maps ontology labels to/from textual representations
-    StandardizedPrompting   # Standard prompting strategy across tasks
+    StandardizedPrompting,   # Standard prompting strategy across tasks
+    evaluation_report
 )
 
 # Load the AgrO ontology (an agricultural domain ontology)
@@ -53,7 +54,12 @@ rag_learner.load(
 rag_learner.fit(train_data, task=task)
 
 # Predict the output on the test set using the trained RAG model
-preds = rag_learner.predict(test_data, task=task)
+predicts = rag_learner.predict(test_data, task=task)
 
 # Print prediction results
-print(preds)
+print(predicts)
+
+# Do the evaluation
+truth = llm_learner.tasks_ground_truth_former(data=test_data, task=task)
+metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
+print(metrics)

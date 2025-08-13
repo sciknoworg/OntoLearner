@@ -1,5 +1,5 @@
 # Import necessary modules from the ontolearner package
-from ontolearner import AutoLLMLearner, AgrO, train_test_split, LabelMapper, StandardizedPrompting
+from ontolearner import AutoLLMLearner, AgrO, train_test_split, LabelMapper, StandardizedPrompting, evaluation_report
 
 # Load the AgrO ontology (Agricultural Ontology)
 ontology = AgrO()
@@ -32,7 +32,12 @@ llm_learner.load(model_id='Qwen/Qwen2.5-0.5B-Instruct')
 llm_learner.fit(train_data, task=task)
 
 # Use the trained LLM to make predictions on the test set
-preds = llm_learner.predict(test_data, task=task)
+predicts = llm_learner.predict(test_data, task=task)
 
 # Print the prediction results
-print(preds)
+print(predicts)
+
+# Do the evaluation
+truth = llm_learner.tasks_ground_truth_former(data=test_data, task=task)
+metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
+print(metrics)

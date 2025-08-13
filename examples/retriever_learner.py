@@ -1,5 +1,5 @@
 # Import necessary modules from the ontolearner library
-from ontolearner import AutoRetrieverLearner, AgrO, train_test_split
+from ontolearner import AutoRetrieverLearner, AgrO, train_test_split, evaluation_report
 
 # Load the AgrO ontology, which is a domain-specific ontology used in agronomy
 ontology = AgrO()
@@ -20,4 +20,9 @@ ret_learner.load(model_id='sentence-transformers/all-MiniLM-L6-v2')
 ret_learner.fit(train_data, task="non-taxonomic-re")
 
 # Use the trained model to predict relations on the test data
-predict = ret_learner.predict(test_data, task="non-taxonomic-re")
+predicts = ret_learner.predict(test_data, task="non-taxonomic-re")
+
+# Do the evaluation
+truth = ret_learner.tasks_ground_truth_former(data=test_data, task="non-taxonomic-re")
+metrics = evaluation_report(y_true=truth, y_pred=predicts, task="non-taxonomic-re")
+print(metrics)
