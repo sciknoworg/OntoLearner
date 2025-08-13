@@ -367,7 +367,7 @@ Use the following code to import this ontology programmatically:
         context = {
             # Class metadata
             'ontology_name': ontology.ontology_full_name,
-            'description': ontology.__doc__.strip() if ontology.__doc__ else "No description available",
+            'description': ontology.__doc__.replace("\n"," ").strip() if ontology.__doc__ else "No description available",
             'domain': ontology.domain,
             'category': ontology.category,
             'version': ontology.version,
