@@ -1,66 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Medicine
+       * - **Category**
+         - Human Diseases
+       * - **Current Version**
+         - None
+       * - **Last Updated**
+         - 2024-12-18
+       * - **Creator**
+         - The Open Biological and Biomedical Ontology Foundry
+       * - **License**
+         - Creative Commons 1.0
+       * - **Format**
+         - owl
+       * - **Download**
+         - `Download Human Disease Ontology (DOID) <http://purl.obolibrary.org/obo/doid/releases/2024-12-18/doid.owl>`_
+
 Human Disease Ontology (DOID)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-The Disease Ontology has been developed as a standardized ontology for human disease
-with the purpose of providing the biomedical community with consistent,
-reusable and sustainable descriptions of human disease terms,
-phenotype characteristics and related medical vocabulary disease concepts.
+The Disease Ontology has been developed as a standardized ontology for human disease     with the purpose of providing the biomedical community with consistent,     reusable and sustainable descriptions of human disease terms,     phenotype characteristics and related medical vocabulary disease concepts.
 
-:Domain: Medicine
-:Category: Human Diseases
-:Current Version: None
-:Last Updated: 2024-12-18
-:Creator: The Open Biological and Biomedical Ontology Foundry
-:License: Creative Commons 1.0
-:Format: OWL
-:Download: `Human Disease Ontology (DOID) Homepage <http://purl.obolibrary.org/obo/doid/releases/2024-12-18/doid.owl>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 136876
-    - **Total Edges**: 288142
-    - **Root Nodes**: 14035
-    - **Leaf Nodes**: 95185
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 15343
-    - Individuals: 0
-    - Properties: 2
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 26
-    - **Minimum Depth**: 0
-    - **Average Depth**: 1.59
-    - **Depth Variance**: 1.07
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 61852
-    - **Minimum Breadth**: 1
-    - **Average Breadth**: 4291.67
-    - **Breadth Variance**: 172233228.89
+        * - **Total Nodes**
+          - 136876
+        * - **Total Edges**
+          - 288142
+        * - **Root Nodes**
+          - 14035
+        * - **Leaf Nodes**
+          - 95185
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 0
-    - **Taxonomic Relations**: 41569
-    - **Non-taxonomic Relations**: 25
-    - **Average Terms per Type**: 0.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 15343
+        * - **Individuals**
+          - 0
+        * - **Properties**
+          - 2
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 26
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 1.59
+        * - **Depth Variance**
+          - 1.07
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 61852
+        * - **Minimum Breadth**
+          - 1
+        * - **Average Breadth**
+          - 4291.67
+        * - **Breadth Variance**
+          - 172233228.89
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 0
+        * - **Taxonomic Relations**
+          - 41569
+        * - **Non-taxonomic Relations**
+          - 25
+        * - **Average Terms per Type**
+          - 0.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import DOID
 
-    # Initialize and load ontology
     ontology = DOID()
-    ontology.load("path/to/ontology.OWL")
+    ontology.load("path/to/DOID-ontology.owl")
 
     # Extract datasets
     data = ontology.extract()

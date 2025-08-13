@@ -1,64 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Chemistry
+       * - **Category**
+         - Chemistry
+       * - **Current Version**
+         - None
+       * - **Last Updated**
+         - 2021-12-16
+       * - **Creator**
+         - None
+       * - **License**
+         - Creative Commons 4.0
+       * - **Format**
+         - owl
+       * - **Download**
+         - `Download Reaction Ontology (RXNO) <https://github.com/rsc-ontologies/rxno>`_
+
 Reaction Ontology (RXNO)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-RXNO is the name reaction ontology. It contains more than 500 classes representing organic reactions
-such as the Diels–Alder cyclization.
+RXNO is the name reaction ontology. It contains more than 500 classes representing organic reactions     such as the Diels–Alder cyclization.
 
-:Domain: Chemistry
-:Category: Chemistry
-:Current Version: None
-:Last Updated: 2021-12-16
-:Creator: None
-:License: Creative Commons 4.0
-:Format: OWL
-:Download: `Reaction Ontology (RXNO) Homepage <https://github.com/rsc-ontologies/rxno>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 5676
-    - **Total Edges**: 14841
-    - **Root Nodes**: 845
-    - **Leaf Nodes**: 2924
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 1109
-    - Individuals: 0
-    - Properties: 14
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 8
-    - **Minimum Depth**: 0
-    - **Average Depth**: 1.71
-    - **Depth Variance**: 1.67
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 2230
-    - **Minimum Breadth**: 12
-    - **Average Breadth**: 623.00
-    - **Breadth Variance**: 588146.89
+        * - **Total Nodes**
+          - 5676
+        * - **Total Edges**
+          - 14841
+        * - **Root Nodes**
+          - 845
+        * - **Leaf Nodes**
+          - 2924
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 0
-    - **Taxonomic Relations**: 1990
-    - **Non-taxonomic Relations**: 2
-    - **Average Terms per Type**: 0.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 1109
+        * - **Individuals**
+          - 0
+        * - **Properties**
+          - 14
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 8
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 1.71
+        * - **Depth Variance**
+          - 1.67
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 2230
+        * - **Minimum Breadth**
+          - 12
+        * - **Average Breadth**
+          - 623.00
+        * - **Breadth Variance**
+          - 588146.89
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 0
+        * - **Taxonomic Relations**
+          - 1990
+        * - **Non-taxonomic Relations**
+          - 2
+        * - **Average Terms per Type**
+          - 0.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import RXNO
 
-    # Initialize and load ontology
     ontology = RXNO()
-    ontology.load("path/to/ontology.OWL")
+    ontology.load("path/to/RXNO-ontology.owl")
 
     # Extract datasets
     data = ontology.extract()

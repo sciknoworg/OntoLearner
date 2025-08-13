@@ -1,65 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Social Sciences
+       * - **Category**
+         - Social Networks
+       * - **Current Version**
+         - 1.36
+       * - **Last Updated**
+         - 2018/02/28
+       * - **Creator**
+         - Data Science Institute, NUI Galway
+       * - **License**
+         - Creative Commons 3.0
+       * - **Format**
+         - rdf
+       * - **Download**
+         - `Download Semantically-Interlinked Online Communities (SIOC) <http://rdfs.org/sioc/spec/>`_
+
 Semantically-Interlinked Online Communities (SIOC)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-The SIOC (Semantically-Interlinked Online Communities) Ontology is an ontology for describing the
-information in online communities. This includes sites that support online discussions, blogging,
-file sharing, photo sharing, social networking, etc.
+The SIOC (Semantically-Interlinked Online Communities) Ontology is an ontology for describing the     information in online communities. This includes sites that support online discussions, blogging,     file sharing, photo sharing, social networking, etc.
 
-:Domain: Social Sciences
-:Category: Social Networks
-:Current Version: 1.36
-:Last Updated: 2018/02/28
-:Creator: Data Science Institute, NUI Galway
-:License: Creative Commons 3.0
-:Format: RDF
-:Download: `Semantically-Interlinked Online Communities (SIOC) Homepage <http://rdfs.org/sioc/spec/>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 230
-    - **Total Edges**: 551
-    - **Root Nodes**: 0
-    - **Leaf Nodes**: 123
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 14
-    - Individuals: 0
-    - Properties: 91
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 0
-    - **Minimum Depth**: 0
-    - **Average Depth**: 0.00
-    - **Depth Variance**: 0.00
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 0
-    - **Minimum Breadth**: 0
-    - **Average Breadth**: 0.00
-    - **Breadth Variance**: 0.00
+        * - **Total Nodes**
+          - 230
+        * - **Total Edges**
+          - 551
+        * - **Root Nodes**
+          - 0
+        * - **Leaf Nodes**
+          - 123
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 0
-    - **Taxonomic Relations**: 9
-    - **Non-taxonomic Relations**: 31
-    - **Average Terms per Type**: 0.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 14
+        * - **Individuals**
+          - 0
+        * - **Properties**
+          - 91
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 0
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 0.00
+        * - **Depth Variance**
+          - 0.00
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 0
+        * - **Minimum Breadth**
+          - 0
+        * - **Average Breadth**
+          - 0.00
+        * - **Breadth Variance**
+          - 0.00
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 0
+        * - **Taxonomic Relations**
+          - 9
+        * - **Non-taxonomic Relations**
+          - 31
+        * - **Average Terms per Type**
+          - 0.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import SIOC
 
-    # Initialize and load ontology
     ontology = SIOC()
-    ontology.load("path/to/ontology.RDF")
+    ontology.load("path/to/SIOC-ontology.rdf")
 
     # Extract datasets
     data = ontology.extract()

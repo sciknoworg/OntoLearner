@@ -1,63 +1,131 @@
-Workflows in Linked Data (WiLD)
-========================================================================================================================
 
-Overview
---------
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Scholarly Knowledge
+       * - **Category**
+         - Materials Science
+       * - **Current Version**
+         - None
+       * - **Last Updated**
+         - 2020-06-10
+       * - **Creator**
+         - Tobias Käfer
+       * - **License**
+         - DBpedia License
+       * - **Format**
+         - ttl
+       * - **Download**
+         - `Download Workflows in Linked Data (WiLD) <https://databus.dbpedia.org/ontologies/purl.org/wild--vocab/2020.06.10-210552>`_
+
+Workflows in Linked Data (WiLD)
+========================================================================================================
+
 Ontology to describe Workflows in Linked Data.
 
-:Domain: Scholarly Knowledge
-:Category: Materials Science
-:Current Version: None
-:Last Updated: 2020-06-10
-:Creator: Tobias Käfer
-:License: DBpedia License
-:Format: TTL
-:Download: `Workflows in Linked Data (WiLD) Homepage <https://databus.dbpedia.org/ontologies/purl.org/wild--vocab/2020.06.10-210552>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 50
-    - **Total Edges**: 91
-    - **Root Nodes**: 21
-    - **Leaf Nodes**: 9
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 16
-    - Individuals: 4
-    - Properties: 0
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 2
-    - **Minimum Depth**: 0
-    - **Average Depth**: 0.58
-    - **Depth Variance**: 0.33
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 22
-    - **Minimum Breadth**: 2
-    - **Average Breadth**: 15.00
-    - **Breadth Variance**: 84.67
+        * - **Total Nodes**
+          - 50
+        * - **Total Edges**
+          - 91
+        * - **Root Nodes**
+          - 21
+        * - **Leaf Nodes**
+          - 9
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 4
-    - **Taxonomic Relations**: 9
-    - **Non-taxonomic Relations**: 4
-    - **Average Terms per Type**: 2.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 16
+        * - **Individuals**
+          - 4
+        * - **Properties**
+          - 0
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 2
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 0.58
+        * - **Depth Variance**
+          - 0.33
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 22
+        * - **Minimum Breadth**
+          - 2
+        * - **Average Breadth**
+          - 15.00
+        * - **Breadth Variance**
+          - 84.67
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 4
+        * - **Taxonomic Relations**
+          - 9
+        * - **Non-taxonomic Relations**
+          - 4
+        * - **Average Terms per Type**
+          - 2.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import WiLD
 
-    # Initialize and load ontology
     ontology = WiLD()
-    ontology.load("path/to/ontology.TTL")
+    ontology.load("path/to/WiLD-ontology.ttl")
 
     # Extract datasets
     data = ontology.extract()

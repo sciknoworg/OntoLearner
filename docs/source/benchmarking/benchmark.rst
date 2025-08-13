@@ -1,5 +1,5 @@
 Agriculture
-============
+=====================
 Ontologies about farming systems, crops, food production, and agricultural vocabularies.
 
 .. toctree::
@@ -13,7 +13,7 @@ Ontologies about farming systems, crops, food production, and agricultural vocab
 
 
 Arts and Humanities
-===================
+============================
 Ontologies that describe music, iconography, cultural artifacts, and humanistic content.
 
 .. toctree::
@@ -27,7 +27,7 @@ Ontologies that describe music, iconography, cultural artifacts, and humanistic 
 
 
 Biology and Life Sciences
-=======================
+================================
 Ontologies about biological entities, systems, organisms, and molecular biology.
 
 .. toctree::
@@ -39,14 +39,13 @@ Ontologies about biological entities, systems, organisms, and molecular biology.
    biology_and_life_sciences/lifo.rst
    biology_and_life_sciences/marinetlo.rst
    biology_and_life_sciences/mged.rst
-   biology_and_life_sciences/microscopy.rst
    biology_and_life_sciences/npo.rst
    biology_and_life_sciences/pato.rst
    biology_and_life_sciences/mo.rst
 
 
 Chemistry
-=========
+==================
 Ontologies describing chemical entities, reactions, methods, and computational chemistry models.
 
 .. toctree::
@@ -70,7 +69,7 @@ Ontologies describing chemical entities, reactions, methods, and computational c
 
 
 Ecology and Environment
-=====================
+==============================
 Ontologies about ecological systems, environments, biomes, and sustainability science.
 
 .. toctree::
@@ -82,7 +81,7 @@ Ontologies about ecological systems, environments, biomes, and sustainability sc
 
 
 Education
-=========
+==================
 Ontologies describing learning content, educational programs, competencies, and teaching resources.
 
 .. toctree::
@@ -94,7 +93,7 @@ Ontologies describing learning content, educational programs, competencies, and 
 
 
 Events
-======
+===============
 Ontologies for representing events, time, schedules, and calendar-based occurrences.
 
 .. toctree::
@@ -106,7 +105,7 @@ Ontologies for representing events, time, schedules, and calendar-based occurren
 
 
 Finance
-=======
+================
 Ontologies describing economic indicators, e-commerce, trade, and financial instruments.
 
 .. toctree::
@@ -126,7 +125,7 @@ Ontologies related to food, beverages, ingredients, and culinary products.
 
 
 General Knowledge
-=================
+==========================
 Broad-scope ontologies and upper vocabularies used across disciplines for general-purpose semantic modeling.
 
 .. toctree::
@@ -145,7 +144,7 @@ Broad-scope ontologies and upper vocabularies used across disciplines for genera
 
 
 Geography
-=========
+==================
 Ontologies for modeling spatial and geopolitical entities, locations, and place names.
 
 .. toctree::
@@ -158,7 +157,7 @@ Ontologies for modeling spatial and geopolitical entities, locations, and place 
 
 
 Industry
-========
+=================
 Ontologies describing industrial processes, smart buildings, manufacturing systems, and equipment.
 
 .. toctree::
@@ -174,7 +173,7 @@ Ontologies describing industrial processes, smart buildings, manufacturing syste
 
 
 Law
-===
+============
 Ontologies dealing with legal processes, regulations, and rights (e.g., copyright).
 
 .. toctree::
@@ -184,7 +183,7 @@ Ontologies dealing with legal processes, regulations, and rights (e.g., copyrigh
 
 
 Library and Cultural Heritage
-============================
+=====================================
 Ontologies used in cataloging, archiving, and authority control of cultural and scholarly resources. Includes standards for bibliographic metadata, identity disambiguation, and linked data for museums, libraries, and archives.
 
 .. toctree::
@@ -194,7 +193,7 @@ Ontologies used in cataloging, archiving, and authority control of cultural and 
 
 
 Materials Science and Engineering
-===============================
+========================================
 Ontologies related to materials, their structure, properties, processing, and engineering applications.
 
 .. toctree::
@@ -268,7 +267,7 @@ Ontologies covering clinical knowledge, diseases, drugs, treatments, and biomedi
 
 
 News and Media
-============
+=====================
 Ontologies that model journalism, broadcasting, creative works, and media metadata.
 
 .. toctree::
@@ -289,7 +288,7 @@ Ontologies that model journalism, broadcasting, creative works, and media metada
 
 
 Scholarly Knowledge
-===================
+============================
 Ontologies modeling the structure, process, and administration of scholarly research, publications, and infrastructure.
 
 .. toctree::
@@ -323,7 +322,7 @@ Ontologies modeling the structure, process, and administration of scholarly rese
 
 
 Social Sciences
-===============
+========================
 Ontologies for modeling societal structures, behavior, identity, and social interaction.
 
 .. toctree::
@@ -337,7 +336,7 @@ Ontologies for modeling societal structures, behavior, identity, and social inte
 
 
 Units and Measurements
-======================
+===============================
 Ontologies defining scientific units, quantities, dimensions, and observational models.
 
 .. toctree::
@@ -351,7 +350,7 @@ Ontologies defining scientific units, quantities, dimensions, and observational 
 
 
 Upper Ontologies
-================
+=========================
 Foundational ontologies that provide abstract concepts like objects, processes, and relations.
 
 .. toctree::
@@ -367,7 +366,7 @@ Foundational ontologies that provide abstract concepts like objects, processes, 
 
 
 Web and Internet
-==============
+=======================
 Ontologies that model web semantics, linked data, APIs, and online communication standards.
 
 .. toctree::

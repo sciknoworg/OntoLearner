@@ -1,64 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Chemistry
+       * - **Category**
+         - Chemistry, Molecular Biology
+       * - **Current Version**
+         - 2022-05-11
+       * - **Last Updated**
+         - 2022-05-11
+       * - **Creator**
+         - None
+       * - **License**
+         - Creative Commons 4.0
+       * - **Format**
+         - owl
+       * - **Download**
+         - `Download Molecular Process Ontology (MOP) <https://terminology.tib.eu/ts/ontologies/MOP>`_
+
 Molecular Process Ontology (MOP)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-MOP is the molecular process ontology. It contains the molecular processes that underlie
-the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
+MOP is the molecular process ontology. It contains the molecular processes that underlie     the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
 
-:Domain: Chemistry
-:Category: Chemistry, Molecular Biology
-:Current Version: 2022-05-11
-:Last Updated: 2022-05-11
-:Creator: None
-:License: Creative Commons 4.0
-:Format: OWL
-:Download: `Molecular Process Ontology (MOP) Homepage <https://terminology.tib.eu/ts/ontologies/MOP>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 15794
-    - **Total Edges**: 41157
-    - **Root Nodes**: 3693
-    - **Leaf Nodes**: 8182
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 3717
-    - Individuals: 0
-    - Properties: 11
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 6
-    - **Minimum Depth**: 0
-    - **Average Depth**: 1.09
-    - **Depth Variance**: 0.63
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 7300
-    - **Minimum Breadth**: 3
-    - **Average Breadth**: 2253.14
-    - **Breadth Variance**: 7474153.55
+        * - **Total Nodes**
+          - 15794
+        * - **Total Edges**
+          - 41157
+        * - **Root Nodes**
+          - 3693
+        * - **Leaf Nodes**
+          - 8182
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 0
-    - **Taxonomic Relations**: 3840
-    - **Non-taxonomic Relations**: 0
-    - **Average Terms per Type**: 0.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 3717
+        * - **Individuals**
+          - 0
+        * - **Properties**
+          - 11
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 6
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 1.09
+        * - **Depth Variance**
+          - 0.63
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 7300
+        * - **Minimum Breadth**
+          - 3
+        * - **Average Breadth**
+          - 2253.14
+        * - **Breadth Variance**
+          - 7474153.55
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 0
+        * - **Taxonomic Relations**
+          - 3840
+        * - **Non-taxonomic Relations**
+          - 0
+        * - **Average Terms per Type**
+          - 0.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import MOP
 
-    # Initialize and load ontology
     ontology = MOP()
-    ontology.load("path/to/ontology.OWL")
+    ontology.load("path/to/MOP-ontology.owl")
 
     # Extract datasets
     data = ontology.extract()

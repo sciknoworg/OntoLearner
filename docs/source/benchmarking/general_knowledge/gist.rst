@@ -1,65 +1,131 @@
+
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - General Knowledge
+       * - **Category**
+         - Upper Ontology
+       * - **Current Version**
+         - 12.1.0
+       * - **Last Updated**
+         - 2024-Feb-27
+       * - **Creator**
+         - Semantic Arts
+       * - **License**
+         - Creative Commons 4.0
+       * - **Format**
+         - rdf
+       * - **Download**
+         - `Download GIST Upper Ontology (GIST) <https://semanticarts.com/gist>`_
+
 GIST Upper Ontology (GIST)
-========================================================================================================================
+========================================================================================================
 
-Overview
---------
-Gist is Semantic Arts' minimalist upper ontology for the enterprise.
-It is designed to have the maximum coverage of typical business ontology concepts
-with the fewest number of primitives and the least amount of ambiguity.
+Gist is Semantic Arts' minimalist upper ontology for the enterprise.     It is designed to have the maximum coverage of typical business ontology concepts     with the fewest number of primitives and the least amount of ambiguity.
 
-:Domain: General Knowledge
-:Category: Upper Ontology
-:Current Version: 12.1.0
-:Last Updated: 2024-Feb-27
-:Creator: Semantic Arts
-:License: Creative Commons 4.0
-:Format: RDF
-:Download: `GIST Upper Ontology (GIST) Homepage <https://semanticarts.com/gist>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 1352
-    - **Total Edges**: 2543
-    - **Root Nodes**: 77
-    - **Leaf Nodes**: 633
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 199
-    - Individuals: 8
-    - Properties: 113
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 27
-    - **Minimum Depth**: 0
-    - **Average Depth**: 4.14
-    - **Depth Variance**: 21.06
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 298
-    - **Minimum Breadth**: 1
-    - **Average Breadth**: 34.86
-    - **Breadth Variance**: 3571.91
+        * - **Total Nodes**
+          - 1352
+        * - **Total Edges**
+          - 2543
+        * - **Root Nodes**
+          - 77
+        * - **Leaf Nodes**
+          - 633
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 8
-    - **Taxonomic Relations**: 39
-    - **Non-taxonomic Relations**: 56
-    - **Average Terms per Type**: 8.00
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 199
+        * - **Individuals**
+          - 8
+        * - **Properties**
+          - 113
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 27
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 4.14
+        * - **Depth Variance**
+          - 21.06
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 298
+        * - **Minimum Breadth**
+          - 1
+        * - **Average Breadth**
+          - 34.86
+        * - **Breadth Variance**
+          - 3571.91
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 8
+        * - **Taxonomic Relations**
+          - 39
+        * - **Non-taxonomic Relations**
+          - 56
+        * - **Average Terms per Type**
+          - 8.00
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import GIST
 
-    # Initialize and load ontology
     ontology = GIST()
-    ontology.load("path/to/ontology.RDF")
+    ontology.load("path/to/GIST-ontology.rdf")
 
     # Extract datasets
     data = ontology.extract()

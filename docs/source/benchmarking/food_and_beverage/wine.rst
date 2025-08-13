@@ -1,63 +1,131 @@
-Wine Ontology (Wine)
-========================================================================================================================
 
-Overview
---------
+
+.. sidebar::
+
+    .. list-table:: **Ontology Card**
+       :header-rows: 0
+
+       * - **Domain**
+         - Food and Beverage
+       * - **Category**
+         - Wine
+       * - **Current Version**
+         - None
+       * - **Last Updated**
+         - None
+       * - **Creator**
+         - None
+       * - **License**
+         - None
+       * - **Format**
+         - rdf
+       * - **Download**
+         - `Download Wine Ontology (Wine) <https://github.com/UCDavisLibrary/wine-ontology>`_
+
+Wine Ontology (Wine)
+========================================================================================================
+
 A project to define an RDF style ontology for wines and the wine-industry
 
-:Domain: Food and Beverage
-:Category: Wine
-:Current Version: None
-:Last Updated: None
-:Creator: None
-:License: None
-:Format: RDF
-:Download: `Wine Ontology (Wine) Homepage <https://github.com/UCDavisLibrary/wine-ontology>`_
+Metrics & Statistics
+--------------------------
 
-Graph Metrics
--------------
-    - **Total Nodes**: 729
-    - **Total Edges**: 1816
-    - **Root Nodes**: 84
-    - **Leaf Nodes**: 22
+.. tab:: Graph
 
-Knowledge coverage
-------------------
-    - Classes: 101
-    - Individuals: 161
-    - Properties: 13
 
-Hierarchical metrics
---------------------
-    - **Maximum Depth**: 41
-    - **Minimum Depth**: 0
-    - **Average Depth**: 3.51
-    - **Depth Variance**: 29.20
+    .. list-table:: Graph Statistics
+        :widths: 50 50
+        :header-rows: 0
 
-Breadth metrics
-------------------
-    - **Maximum Breadth**: 164
-    - **Minimum Breadth**: 1
-    - **Average Breadth**: 17.19
-    - **Breadth Variance**: 1612.73
+        * - **Total Nodes**
+          - 729
+        * - **Total Edges**
+          - 1816
+        * - **Root Nodes**
+          - 84
+        * - **Leaf Nodes**
+          - 22
+    ::
 
-Dataset Statistics
-------------------
-Generated Benchmarks:
-    - **Term Types**: 161
-    - **Taxonomic Relations**: 47
-    - **Non-taxonomic Relations**: 1
-    - **Average Terms per Type**: 4.13
+
+.. tab:: Coverage
+
+
+    .. list-table:: Knowledge Coverage Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Classes**
+          - 101
+        * - **Individuals**
+          - 161
+        * - **Properties**
+          - 13
+
+    ::
+
+.. tab:: Hierarchy
+
+
+    .. list-table:: Hierarchical Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Depth**
+          - 41
+        * - **Minimum Depth**
+          - 0
+        * - **Average Depth**
+          - 3.51
+        * - **Depth Variance**
+          - 29.20
+    ::
+
+
+.. tab:: Breadth
+
+
+    .. list-table:: Breadth Metrics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Maximum Breadth**
+          - 164
+        * - **Minimum Breadth**
+          - 1
+        * - **Average Breadth**
+          - 17.19
+        * - **Breadth Variance**
+          - 1612.73
+    ::
+
+.. tab:: LLMs4OL
+
+
+    .. list-table:: LLMs4OL Dataset Statistics
+        :widths: 50 50
+        :header-rows: 0
+
+        * - **Term Types**
+          - 161
+        * - **Taxonomic Relations**
+          - 47
+        * - **Non-taxonomic Relations**
+          - 1
+        * - **Average Terms per Type**
+          - 4.13
+    ::
 
 Usage Example
--------------
+----------------
+Use the following code to import this ontology programmatically:
+
 .. code-block:: python
 
     from ontolearner.ontology import Wine
 
-    # Initialize and load ontology
     ontology = Wine()
-    ontology.load("path/to/ontology.RDF")
+    ontology.load("path/to/Wine-ontology.rdf")
 
     # Extract datasets
     data = ontology.extract()
