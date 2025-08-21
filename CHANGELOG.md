@@ -1,5 +1,13 @@
 ## Changelog
 
+### v1.3.1 (August 13, 2025)
+- `Processor` module is operational. Fixed with ease of use principles.
+- The huggingface readme files template are updated.
+- Documentation website benchmark pages are updated.
+- Cosmetic fixes.
+- Remove static methods feature from Ontologizer for smooth development.
+- add `openpyxl` dependency for xlsx load.
+
 ### v1.3.0 (July 14, 2025)
 - Add verbose for logging at train-test splits
 - High-level encapsulation of learners: LLM, retriever, and rag
@@ -7,7 +15,7 @@
 - Optimize code
 - Refactor examples
 - Delete dummy scripts from the script dir
-- Parameter custimization
+- Parameter custmization
 - Add AutoOntology feature
 - Extensive update on documentation
 - Update Readme
