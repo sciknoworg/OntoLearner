@@ -77,6 +77,14 @@ jobs:
           labels: automated
           update-branch: true  # ensures the PR is updated if it already exists
 
+      # Automatically merge the PR if possible
+      - name: Auto-merge PR
+        uses: peter-evans/merge-pull-request@v3
+        with:
+          token: ${{ secrets.REPO_PUSH_TOKEN }}
+          pull-request: auto  # merges the PR created/updated above
+          merge-method: squash  # options: squash, merge, rebase
+
       - name: Configure Poetry for PyPI
         run: |
           poetry config pypi-token.pypi ${{ secrets.TWINE_API_TOKEN }}
