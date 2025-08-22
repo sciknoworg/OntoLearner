@@ -37,3 +37,18 @@ jobs:
       - name: Publish to PyPI
         run: |
           poetry publish --no-interaction --no-ansi
+
+      # 🔹 NEW STEP: Generate metadata after publishing
+      - name: Generate Dublin Core metadata
+        run: |
+          mkdir -p metadata
+          poetry run python -c "from ontolearner import OntoLearnerMetadataExporter; OntoLearnerMetadataExporter().export('metadata/ontolearner-metadata.rdf')"
+
+      # 🔹 Commit metadata back to repo
+      - name: Commit and push metadata
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add metadata/
+          git commit -m ":bookmark: Update metadata after release"
+          git push origin HEAD:main
