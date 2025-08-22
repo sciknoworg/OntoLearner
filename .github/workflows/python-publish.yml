@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # important to use PAT for pushing
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -39,7 +41,7 @@ jobs:
           mkdir -p metadata
           poetry run python -c "from ontolearner import OntoLearnerMetadataExporter; OntoLearnerMetadataExporter().export('metadata/ontolearner-metadata.rdf')"
 
-      # Commit metadata back to repo
+      # Commit metadata back via a branch + PR
       - name: Commit and push metadata
         env:
           REPO_PUSH_TOKEN: ${{ secrets.REPO_PUSH_TOKEN }}
@@ -47,9 +49,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "actions@github.com"
 
-          # Fetch and switch to main branch
-          git fetch origin main
-          git checkout main
+          # Create/update temporary branch for metadata
+          git checkout -B auto-update
 
           # Add metadata files
           git add metadata/
@@ -58,10 +59,23 @@ jobs:
           if ! git diff --cached --quiet; then
               git commit -m ":bookmark: Update metadata after release"
               git remote set-url origin https://x-access-token:${REPO_PUSH_TOKEN}@github.com/sciknoworg/OntoLearner.git
-              git push origin main
+              git push origin auto-update --force
           else
               echo "No changes to commit"
           fi
+
+      # Create or update PR for metadata
+      - name: Create or update Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.REPO_PUSH_TOKEN }}
+          commit-message: ":bookmark: Update metadata after release"
+          branch: auto-update
+          base: main
+          title: "🤖 Automated metadata update"
+          body: "This PR updates Dublin Core metadata automatically after package release."
+          labels: automated
+          update-branch: true  # ensures the PR is updated if it already exists
 
       - name: Configure Poetry for PyPI
         run: |
