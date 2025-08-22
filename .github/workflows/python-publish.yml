@@ -42,21 +42,23 @@ jobs:
       # Commit metadata back to repo
       - name: Commit and push metadata
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_PUSH_TOKEN: ${{ secrets.REPO_PUSH_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Fetch and switch to main branch
           git fetch origin main
           git checkout main
 
-          # Re-authenticate remote with GITHUB_TOKEN explicitly
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-
+          # Add metadata files
           git add metadata/
+
+          # Commit only if changes exist
           if ! git diff --cached --quiet; then
               git commit -m ":bookmark: Update metadata after release"
-              git push origin main
+              # Push using the PAT token
+              git push https://x-access-token:${REPO_PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git main
           else
               echo "No changes to commit"
           fi
