@@ -33,14 +33,24 @@ jobs:
       - name: Build the package
         run: poetry build
 
-      # 🔹 Commit metadata back to repo
+      # Commit metadata back to repo
       - name: Commit and push metadata
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Switch to main branch
+          git fetch origin main
+          git checkout main
+
+          # Add metadata and commit only if changes exist
           git add metadata/
-          git commit -m ":bookmark: Update metadata after release"
-          git push origin HEAD:main
+          if ! git diff --cached --quiet; then
+              git commit -m ":bookmark: Update metadata after release"
+              git push origin main
+          else
+              echo "No changes to commit"
+          fi
 
       - name: Configure Poetry for PyPI
         run: |
