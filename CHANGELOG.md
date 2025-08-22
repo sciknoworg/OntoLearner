@@ -1,5 +1,11 @@
 ## Changelog
 
+### v1.4.0 (August 22, 2025)
+- added dublin core metadata exporter
+- added ontolearner metadata documentation
+- added `VERSION` file for versioning
+- added ontolearner-metadata CI/CD based build.
+
 ### v1.3.1 (August 13, 2025)
 - `Processor` module is operational. Fixed with ease of use principles.
 - The huggingface readme files template are updated.
