@@ -66,6 +66,7 @@ jobs:
 
       # Create or update PR for metadata
       - name: Create or update Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.REPO_PUSH_TOKEN }}
@@ -78,6 +79,7 @@ jobs:
 
       # Automatically merge the PR if possible
       - name: Auto-merge PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.REPO_PUSH_TOKEN }}
