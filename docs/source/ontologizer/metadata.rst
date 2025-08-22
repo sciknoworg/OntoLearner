@@ -3,7 +3,7 @@ Metadata
 
 .. note::
 
-	OntoLearner Metadata will be created automatically at Github under `metadata/ <https://github.com/sciknoworg/OntoLearner/tree/main/metadata>`_ directory, and it is available for download after ``ontolearner > 1.3.1`` also at `Releases <https://github.com/sciknoworg/OntoLearner/releases>`_ per release.
+	OntoLearner Metadata will be created automatically at Github under `metadata/ <https://github.com/sciknoworg/OntoLearner/tree/main/metadata>`_ directory, and it is available for download after ``ontolearner > 1.4.0`` also at `Releases <https://github.com/sciknoworg/OntoLearner/releases>`_ per release.
 
 .. hint::
 
