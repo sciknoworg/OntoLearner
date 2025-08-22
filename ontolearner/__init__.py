@@ -11,8 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from pathlib import Path
 
-__version__ = "1.3.1"
+# Load version from VERSION file
+__version__ = (Path(__file__).parent / "VERSION").read_text().strip()
 
 import logging
 from ontolearner import (ontology,
