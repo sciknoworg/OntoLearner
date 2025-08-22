@@ -2,12 +2,17 @@ name: Test OntoLearner Package
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - '!auto-update'
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build-and-test:
+    if: github.head_ref != 'auto-update'
+
     runs-on: ubuntu-latest
 
     strategy:
