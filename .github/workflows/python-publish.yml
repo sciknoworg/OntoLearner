@@ -57,12 +57,10 @@ jobs:
           # Commit only if changes exist
           if ! git diff --cached --quiet; then
               git commit -m ":bookmark: Update metadata after release"
-              # Push using the PAT token
-              git push https://x-access-token:${REPO_PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git main
+              git push https://x-access-token:${REPO_PUSH_TOKEN}@github.com/sciknoworg/OntoLearner.git main
           else
               echo "No changes to commit"
           fi
-
 
       - name: Configure Poetry for PyPI
         run: |
