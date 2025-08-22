@@ -24,7 +24,7 @@ from ontolearner import (ontology,
                          tools,
                          data_structure)
 from .ontology import * # noqa
-from ._ontology import AutoOntology
+from ._ontology import AutoOntology, OntoLearnerMetadataExporter
 from .learner import (AutoLLMLearner,
                       AutoRetrieverLearner,
                       AutoRAGLearner,
@@ -40,6 +40,7 @@ from .evaluation import evaluation_report
 __all__ = [
     "AutoLLMLearner",
     "AutoOntology",
+    "OntoLearnerMetadataExporter",
     "AutoRetrieverLearner",
     "AutoRAGLearner",
     "StandardizedPrompting",
