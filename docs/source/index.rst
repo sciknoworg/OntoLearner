@@ -185,6 +185,7 @@ or GitHub repository:
    ontologizer/ontology_modularization
    ontologizer/ontology_hosting
    ontologizer/new_ontologies
+   ontologizer/metadata
 
 .. toctree::
    :maxdepth: 1

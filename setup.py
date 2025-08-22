@@ -1,11 +1,12 @@
 from setuptools import setup, find_packages
+import os
 
 with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
     name="OntoLearner",
-    version="1.3.1",
+    version=open(os.path.join(os.path.dirname(__file__), 'ontolearner/VERSION')).read().strip(),
     author="Hamed Babaei Giglou, Andrei C. Aioanei",
     author_email="hamedbabaeigiglou@gmail.com, andrei.c.aioanei@gmail.com",
     description="OntoLearner: A Modular Python Library for Ontology Learning with LLMs.",
