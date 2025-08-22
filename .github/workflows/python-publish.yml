@@ -42,11 +42,17 @@ jobs:
       # Commit metadata back to repo
       - name: Commit and push metadata
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_PUSH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/sciknoworg/OntoLearner.git
+
+          git fetch origin main
+          git checkout main
+
+          # Re-authenticate remote with GITHUB_TOKEN explicitly
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+
           git add metadata/
           if ! git diff --cached --quiet; then
               git commit -m ":bookmark: Update metadata after release"
@@ -54,6 +60,7 @@ jobs:
           else
               echo "No changes to commit"
           fi
+
 
       - name: Configure Poetry for PyPI
         run: |
