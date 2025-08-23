@@ -71,15 +71,13 @@ jobs:
       # Create or update PR for metadata
       - name: Create or update Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.REPO_PUSH_TOKEN }}
           commit-message: ":bookmark: Update metadata after release"
+          title: "🤖 Automated metadata update"
           branch: auto-update
           base: main
-          title: "🤖 Automated metadata update"
-          body: "This PR updates Dublin Core metadata automatically after package release."
-          labels: automated
+
 
       # Automatically merge the PR if possible
       - name: Auto-merge PR
