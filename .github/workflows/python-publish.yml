@@ -54,15 +54,16 @@ jobs:
 
           # Create/update temporary branch for metadata
           git checkout -B auto-update
-
+          ls -a
+          ls metadata/
           # Add metadata files
-          git add metadata/
+          git add metadata/ontolearner-metadata.rdf
 
           # Commit only if changes exist
           if ! git diff --cached --quiet; then
               git commit -m ":bookmark: Update metadata after release"
               git remote set-url origin https://x-access-token:${REPO_PUSH_TOKEN}@github.com/sciknoworg/OntoLearner.git
-              git push origin auto-update --force
+              git push origin auto-update
           else
               echo "No changes to commit"
           fi
