@@ -68,9 +68,9 @@ jobs:
 
       - name: Delete auto-update branch
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        run: git push origin --delete auto-update
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_PUSH_TOKEN }}
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.REPO_PUSH_TOKEN }}@github.com/${{ github.repository }}
+          git push origin --delete auto-update
 
       - name: Configure Poetry for PyPI
         run: |
