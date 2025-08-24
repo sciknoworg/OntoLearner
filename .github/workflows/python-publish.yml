@@ -44,40 +44,18 @@ jobs:
           mkdir -p metadata
           poetry run python -c "from ontolearner import OntoLearnerMetadataExporter; OntoLearnerMetadataExporter().export('metadata/ontolearner-metadata.rdf')"
 
-      # Commit metadata back via a branch + PR
-      - name: Commit and push metadata
-        env:
-          REPO_PUSH_TOKEN: ${{ secrets.REPO_PUSH_TOKEN }}
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "actions@github.com"
-
-          # Create/update temporary branch for metadata
-          git checkout -B auto-update
-          ls -a
-          ls metadata/
-          # Add metadata files
-          git add metadata/ontolearner-metadata.rdf
-
-          # Commit only if changes exist
-          if ! git diff --cached --quiet; then
-              git commit -m ":bookmark: Update metadata after release"
-              git remote set-url origin https://x-access-token:${REPO_PUSH_TOKEN}@github.com/sciknoworg/OntoLearner.git
-              git push origin auto-update
-          else
-              echo "No changes to commit"
-          fi
-
-      # Create or update PR for metadata
-      - name: Create or update Pull Request
+      - name: Create and update Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: ":bookmark: Update metadata after release"
-          title: "🤖 Automated metadata update"
+          token: ${{ secrets.REPO_PUSH_TOKEN }}
           branch: auto-update
           base: main
-
+          commit-message: ":bookmark: Update metadata after release"
+          title: "🤖 Automated metadata update"
+          body: "This PR updates the Dublin Core metadata after release."
+          add-paths: |
+            metadata/ontolearner-metadata.rdf
 
       # Automatically merge the PR if possible
       - name: Auto-merge PR
@@ -87,6 +65,12 @@ jobs:
           token: ${{ secrets.REPO_PUSH_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Delete auto-update branch
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: git push origin --delete auto-update
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_PUSH_TOKEN }}
 
       - name: Configure Poetry for PyPI
         run: |
