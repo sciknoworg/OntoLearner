@@ -79,7 +79,7 @@ class OntoLearnerMetadataExporter:
         g_head.bind("dcterms", DCTERMS)
         g_head.bind("ontologizer", ONTOLOGIZER)
 
-        collection_uri = URIRef("https://ontolearner.readthedocs.io/benchmarking/")
+        collection_uri = URIRef("https://ontolearner.readthedocs.io/benchmarking/benchmark.html")
         g_head.add((collection_uri, RDF.type, ONTOLOGIZER.Collection))
         g_head.add((collection_uri, DC.title, Literal("OntoLearner Benchmark Ontologies")))
         g_head.add((collection_uri, DC.description, Literal(
