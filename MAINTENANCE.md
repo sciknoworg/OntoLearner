@@ -25,16 +25,17 @@ A core team will be responsible for the ongoing maintenance of OntoLearner, incl
 
 A roadmap for new features and improvements, ensuring the library evolves in response to user needs and feedback is presented as follows. This list will be updated regularly as we explore the variety of works within the ontology alignment field to ensure the diverse methods within the library.
 
-| Category   | Description                                                                                                                                                                                                 |                          Status                           |
-|:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------:|
-|Ontologizer| Adding more ontologies to the OntoLearner                                                                                                                                                                   | InProgress|
-| Reasoning  | Integration of reasoning-oriented prompt evaluation tasks to test LLM capabilities in generating consistent and logically valid ontological structures (e.g., subclass chains, disjointness, transitivity). |                          TODO                             |
-| Agentic    | Support for agent-based extensions using platforms like [CrewAI](https://github.com/crewAIInc/crewAI) to enable autonomous, multi-step ontology engineering workflows coordinated through modular agents.   |                          TODO                             |
-|Documentation| Adding more documentation and tutorials                                                                                                                                                                     | InProgress|
-|Testing| Adding unittest to support different stages of modularization                                                                                                                                               | InProgress|
-|Learner| Incorporating more learner models. Including those from LLMs4OL challenge                                                                                                                                   | InProgress|
-|Reasoning| Adding reasoning techniques                                                                                                                                                                                 | To-Do|
-|...| ...                                                                                                                                                                                                         |...|
+| Category        | Description                                                                                                                                                                                                 | Status       |
+|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Ontologizer     | Adding more ontologies to the OntoLearner                                                                                                                                                                   | In Progress  |
+| Reasoning       | Integration of reasoning-oriented prompt evaluation tasks to test LLM capabilities in generating consistent and logically valid ontological structures (e.g., subclass chains, disjointness, transitivity). | TODO         |
+| Ontology Search | Enabling search across relations, individuals, and axioms for enhanced exploration and debugging of ontologies.                                                                                             | TODO         |
+| Agentic         | Support for agent-based extensions using platforms like [CrewAI](https://github.com/crewAIInc/crewAI) to enable autonomous, multi-step ontology engineering workflows coordinated through modular agents.   | TODO         |
+| Documentation   | Adding more documentation and tutorials                                                                                                                                                                     | In Progress  |
+| Testing         | Adding unittest to support different stages of modularization                                                                                                                                               | In Progress  |
+| Learner         | Incorporating more learner models, including those from the LLMs4OL 2024 challenge (to be put into action) and 2025 challenge (to be integrated).                                                           | In Progress  |
+| UI / Visualization | Developing user interfaces for interactive exploration and visualization of ontologies.                                                                                                                 | TODO         |
+| ...| ....|...|
 
 > **If you are willing to have your Ontology Learning model or feature within OntoLearner don't hesitate to contact us via [GitHub Issues](https://github.com/sciknoworg/ontolearner/issues) or via email to [hamed.babaei@tib.eu](mailto:hamed.babaei@tib.eu)**.
 
