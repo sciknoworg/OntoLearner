@@ -27,7 +27,7 @@ setup(
         "pydantic==2.11.3",
         "pathlib==1.0.1",
         "dspy==2.6.14",
-        "huggingface-hub==0.31.1",
+        "huggingface-hub==0.34.4",
         "transformers==4.56.0",
         "torch==2.8.0",
         "sentence-transformers==5.1.0",
