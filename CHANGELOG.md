@@ -1,7 +1,10 @@
 ## Changelog
 
+### v1.4.2 (September 1, 2025)
+- fix dependency issue for torch and transformers.
+- update maintenance plan
 
-### v1.4.0 (August 22, 2025)
+### v1.4.1 (August 22, 2025)
 - added ontolearner-metadata CI/CD based build.
 
 ### v1.4.0 (August 22, 2025)
