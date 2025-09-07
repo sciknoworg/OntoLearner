@@ -11,8 +11,6 @@ include = ["images/logo.png"]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14.0"
-
-# Core deps
 rdflib = "7.1.1"
 networkx = "3.2.1"
 numpy = "*"
@@ -26,19 +24,11 @@ matplotlib = "*"
 seaborn = "*"
 scikit-learn = "*"
 huggingface-hub = "^0.34.4"
-# LLM stack (CPU by default)
-torch = { version = "^2.8.0", source = "pytorch-cpu" }
-transformers = { version = "^4.56.0", extras = ["torch"] }
+torch = "^2.8.0"
+transformers = "^4.56.0"
 sentence-transformers = "^5.1.0"
 dspy = "^2.6.14"
-
-[tool.poetry.extras]
-# GPU-only extras
-gpu = [
-    "torch",
-    "transformer",
-    "bitsandbytes"
-]
+bitsandbytes="^0.45.1"
 
 [tool.poetry.dev-dependencies]
 ruff = "*"
@@ -57,8 +47,3 @@ attr = "ontolearner.__version__"
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.4.0"]
 build-backend = "poetry_dynamic_versioning.backend"
-
-[[tool.poetry.source]]
-name = "pytorch-cpu"
-url = "https://download.pytorch.org/whl/cpu"
-default = false
