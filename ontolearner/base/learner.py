@@ -107,7 +107,7 @@ class AutoLearner(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        eval_data = self.tasks_data_former(data=eval_data, task=task, test=False) if ontologizer else eval_data
+        eval_data = self.tasks_data_former(data=eval_data, task=task, test=True) if ontologizer else eval_data
 
         if task == 'term-typing':
             return self._term_typing(eval_data, test=True)
