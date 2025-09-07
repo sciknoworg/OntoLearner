@@ -32,7 +32,7 @@ We start by importing necessary components from the ontolearner package, loading
     # Load the AgrO ontology (an agricultural domain ontology)
     ontology = AgrO()
     ontology.load()
-    ontological_data = ontology.extract(),
+    ontological_data = ontology.extract()
 
     # Extract structured data from the ontology and split into train/test sets
     train_data, test_data = train_test_split(
@@ -111,7 +111,7 @@ You initialize the ``LearnerPipeline`` by directly providing the ``retriever_id`
     # Load the AgrO ontology, which contains concepts related to wines, their properties, and categories
     ontology = AgrO()
     ontology.load()  # Load entities, types, and structured term annotations from the ontology
-    ontological_data = ontology.extract(),
+    ontological_data = ontology.extract()
     # Extract term-typing instances and split into train and test sets
     train_data, test_data = train_test_split(
         ontological_data,
