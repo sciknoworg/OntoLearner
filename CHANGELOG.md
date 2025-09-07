@@ -1,5 +1,10 @@
 ## Changelog
 
+### v1.4.3 (September 7, 2025)
+- Update dependencies
+- fix bug in learner
+- cosmetic fix to the docs
+
 ### v1.4.2 (September 1, 2025)
 - fix dependency issue for torch and transformers.
 - update maintenance plan
