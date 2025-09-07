@@ -57,8 +57,8 @@ attr = "ontolearner.__version__"
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.4.0"]
 build-backend = "poetry_dynamic_versioning.backend"
-default = false
 
 [[tool.poetry.source]]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
+default = false
