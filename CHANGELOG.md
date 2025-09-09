@@ -1,5 +1,8 @@
 ## Changelog
 
+### v1.4.4 (September 9, 2025)
+- add `trust_remote_code=True` for retrievers like Nomic-AI
+
 ### v1.4.3 (September 7, 2025)
 - Update dependencies
 - fix bug in learner
