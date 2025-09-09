@@ -331,7 +331,7 @@ class AutoRetriever(ABC):
         Raises:
             NotImplementedError: If not implemented by concrete class.
         """
-        self.embedding_model = SentenceTransformer(model_id)
+        self.embedding_model = SentenceTransformer(model_id, trust_remote_code=True)
 
     def index(self, inputs: List[str]):
         """
