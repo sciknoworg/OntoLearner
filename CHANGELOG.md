@@ -1,5 +1,9 @@
 ## Changelog
 
+### v1.4.5 (September 16, 2025)
+- add batch retriever feature to `AutoRetrieverLearner`
+
+
 ### v1.4.4 (September 9, 2025)
 - add `trust_remote_code=True` for retrievers like Nomic-AI
 
