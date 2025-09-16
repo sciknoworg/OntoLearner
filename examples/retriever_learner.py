@@ -9,6 +9,7 @@ ontology.load()  # Load the ontology from OntoLearner huggingface repository
 train_data, test_data = train_test_split(ontology.extract(), test_size=0.2, random_state=42)
 
 # Initialize a retriever-style learner for relation extraction tasks
+# batch_size is being used inside the AutoRetrieverLearner to allow for larger KB retrieval!
 ret_learner = AutoRetrieverLearner(top_k=5)
 
 # Load a pre-trained retriever model using its identifier
