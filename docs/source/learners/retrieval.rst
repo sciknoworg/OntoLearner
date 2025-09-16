@@ -70,6 +70,14 @@ You will see a evaluations results.
     * T5 models (e.g., "google/flan-t5-base")
     * Nomic-AI models
 
+When working with large contexts, the retriever model may encounter memory issues. To address this, OntoLearner’s ``AutoRetrieverLearner`` provides a ``batch_size`` argument. By setting this, the retriever computes similarities in smaller batches instead of calculating the full cosine similarity across all stored knowledge embeddings at once, reducing memory usage and improving efficiency. To use this, simply:
+
+.. code-block:: python
+
+    ret_learner = AutoRetrieverLearner(top_k=5, batch_size=1024)
+
+
+
 Pipeline Usage
 -----------------------
 
