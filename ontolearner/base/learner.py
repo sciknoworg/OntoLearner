@@ -350,7 +350,7 @@ class AutoRetriever(ABC):
         self.documents = inputs
         self.embeddings = self.embedding_model.encode(inputs, convert_to_tensor=True)
 
-    def retrieve(self, query: List[str], top_k: int = 5) -> List[List[str]]:
+    def retrieve(self, query: List[str], top_k: int = 5, batch_size: int = -1) -> List[List[str]]:
         """
         Retrieve the top-k most similar examples for each query in a list of queries.
 
@@ -363,32 +363,36 @@ class AutoRetriever(ABC):
         """
         if self.embeddings is None:
             raise RuntimeError("Retriever model must index documents before prediction.")
-
-        # Encode all queries at once
         query_embeddings = self.embedding_model.encode(query, convert_to_tensor=True)  # shape: [num_queries, dim]
-
         if query_embeddings.shape[-1] != self.embeddings.shape[-1]:
             raise ValueError(
                 f"Embedding dimension mismatch: query embedding dim={query_embeddings.shape[-1]}, "
                 f"document embedding dim={self.embeddings.shape[-1]}"
             )
-
-        # Normalize embeddings for cosine similarity
-        query_norm = F.normalize(query_embeddings, p=2, dim=1)
         doc_norm = F.normalize(self.embeddings, p=2, dim=1)
-
-        # Compute cosine similarity: [num_queries, num_docs]
-        similarity_matrix = torch.matmul(query_norm, doc_norm.T)
-
-        # Get top-k indices for each query
-        top_k = min(top_k, len(self.documents))
-        topk_similarities, topk_indices = torch.topk(similarity_matrix, k=top_k, dim=1)
-
-        # Retrieve documents for each query
-        results = [[self.documents[i] for i in indices] for indices in topk_indices]
-
+        if batch_size == -1:
+            results = self._retrieve(query_embeddings=query_embeddings, doc_norm=doc_norm, top_k=top_k)
+        else:
+            results = self._batch_retrieve(query_embeddings=query_embeddings, doc_norm=doc_norm, top_k=top_k, batch_size=batch_size)
         return results
 
+
+    def _retrieve(self, query_embeddings, doc_norm, top_k: int = 5) -> List[List[str]]:
+        query_norm = F.normalize(query_embeddings, p=2, dim=1)
+        similarity_matrix = torch.matmul(query_norm, doc_norm.T)
+        current_top_k = min(top_k, len(self.documents))
+        topk_similarities, topk_indices = torch.topk(similarity_matrix, k=current_top_k, dim=1)
+        results = [[self.documents[i] for i in indices] for indices in topk_indices]
+        return results
+
+
+    def _batch_retrieve(self, query_embeddings, doc_norm, top_k: int = 5, batch_size: int = 1024) -> List[List[str]]:
+        results = []
+        for i in range(0, query_embeddings.size(0), batch_size):
+            batch_queries = query_embeddings[i:i + batch_size]
+            batch_results = self._retrieve(batch_queries, doc_norm, top_k=top_k)
+            results.extend(batch_results)
+        return results
 
 class AutoPrompt(ABC):
     """
