@@ -3,7 +3,7 @@ Metadata
 
 .. note::
 
-	OntoLearner Metadata will be created automatically at Github under `metadata/ <https://github.com/sciknoworg/OntoLearner/tree/main/metadata>`_ directory, and it is available for download after ``ontolearner > 1.3.1`` also at `Releases <https://github.com/sciknoworg/OntoLearner/releases>`_ per release.
+	OntoLearner Metadata will be created automatically at Github under `metadata/ <https://github.com/sciknoworg/OntoLearner/tree/main/metadata>`_ directory, and it is available for download after ``ontolearner > 1.4.0`` also at `Releases <https://github.com/sciknoworg/OntoLearner/releases>`_ per release.
 
 .. hint::
 
@@ -31,7 +31,7 @@ The ``OntoLearnerMetadataExporter`` is a utility class for generating **Dublin C
       xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 
       <!-- Top-level collection -->
-      <ontologizer:Collection rdf:about="https://ontolearner.readthedocs.io/benchmarking/">
+      <ontologizer:Collection rdf:about="https://ontolearner.readthedocs.io/benchmarking/benchmark.html">
         <dc:title>OntoLearner Benchmark Ontologies</dc:title>
         <dc:description>This Dublin Core metadata collection describes ontologies benchmarked in OntoLearner. It includes information such as title, creator, format, license, and version.</dc:description>
         <dc:creator>OntoLearner Team</dc:creator>
@@ -74,7 +74,7 @@ The following table summarizes the key **Dublin Core metadata properties** captu
      - NCI Thesaurus (NCIt)
      - Ontology full name
    * - ``dcterms:description``
-     - See above example RDF structure
+     - NCI Thesaurus (NCIt) is a reference terminology that includes broad coverage of the cancer domain...
      - Detailed ontology description
    * - ``dcterms:creator``
      - NCI
@@ -89,7 +89,7 @@ The following table summarizes the key **Dublin Core metadata properties** captu
      - Creative Commons 4.0
      - License information
    * - ``dcterms:source``
-     - URL
+     - `https://terminology.tib.eu/ts/ontologies/NCIT <https://terminology.tib.eu/ts/ontologies/NCIT>`_
      - Download or reference URL
    * - ``dcterms:subject``
      - Medicine
@@ -102,13 +102,13 @@ The following represents the benchmark collection info. The `dcterms:hasVersion`
 
 .. code-block:: xml
 
-	<ontologizer:Collection rdf:about="https://ontolearner.readthedocs.io/benchmarking/">
-        <dc:title>OntoLearner Benchmark Ontologies</dc:title>
-        <dc:description>This Dublin Core metadata collection describes ontologies benchmarked in OntoLearner. It includes information such as title, creator, format, license, and version.</dc:description>
-        <dc:creator>OntoLearner Team</dc:creator>
-        <dcterms:license>MIT License</dcterms:license>
-        <dcterms:hasVersion>1.4.0</dcterms:hasVersion>
-      </ontologizer:Collection>
+	<ontologizer:Collection rdf:about="https://ontolearner.readthedocs.io/benchmarking/benchmark.html">
+		<dc:title>OntoLearner Benchmark Ontologies</dc:title>
+		<dc:description>This Dublin Core metadata collection describes ontologies benchmarked in OntoLearner. It includes information such as title, creator, format, license, and version.</dc:description>
+		<dc:creator>OntoLearner Team</dc:creator>
+		<dcterms:license>MIT License</dcterms:license>
+		<dcterms:hasVersion>1.4.0</dcterms:hasVersion>
+	</ontologizer:Collection>
 
 Exporter
 --------------------

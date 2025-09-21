@@ -1,5 +1,29 @@
 ## Changelog
 
+### v1.4.5 (September 16, 2025)
+- add batch retriever feature to `AutoRetrieverLearner`
+
+
+### v1.4.4 (September 9, 2025)
+- add `trust_remote_code=True` for retrievers like Nomic-AI
+
+### v1.4.3 (September 7, 2025)
+- Update dependencies
+- fix bug in learner
+- cosmetic fix to the docs
+
+### v1.4.2 (September 1, 2025)
+- fix dependency issue for torch and transformers.
+- update maintenance plan
+
+### v1.4.1 (August 22, 2025)
+- added ontolearner-metadata CI/CD based build.
+
+### v1.4.0 (August 22, 2025)
+- added dublin core metadata exporter
+- added ontolearner metadata documentation
+- added `VERSION` file for versioning
+
 ### v1.3.1 (August 13, 2025)
 - `Processor` module is operational. Fixed with ease of use principles.
 - The huggingface readme files template are updated.

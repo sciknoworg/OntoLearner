@@ -17,12 +17,13 @@ from typing import Any, Optional
 import warnings
 
 class AutoRetrieverLearner(AutoLearner):
-    def __init__(self, base_retriever: Any = AutoRetriever(), top_k: int = 5):
+    def __init__(self, base_retriever: Any = AutoRetriever(), top_k: int = 5, batch_size: int = -1):
         super().__init__()
         self.retriever = base_retriever
         self.top_k = top_k
         self._is_term_typing_fit = False
         self._is_taxonomy_discovery_fit = False
+        self._batch_size = batch_size
 
     def load(self, model_id: str = "sentence-transformers/all-MiniLM-L6-v2"):
         self.retriever.load(model_id=model_id)
@@ -35,7 +36,7 @@ class AutoRetrieverLearner(AutoLearner):
 
     def _retriever_predict(self, data:Any, top_k: int) -> Any:
         if isinstance(data, list):
-            return self.retriever.retrieve(query=data, top_k=top_k)
+            return self.retriever.retrieve(query=data, top_k=top_k, batch_size=self._batch_size)
         if isinstance(data, str):
             return self.retriever.retrieve(query=[data], top_k=top_k)
         raise TypeError(f"Unsupported data type {type(data)}. You should pass a List[str] or a str.")

@@ -1,4 +1,7 @@
 name: Publish Python Package
+permissions:
+  contents: write
+  pull-requests: write
 
 on:
   push:
@@ -13,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # important to use PAT for pushing
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -24,11 +29,48 @@ jobs:
           curl -sSL https://install.python-poetry.org | python3 -
           echo "export PATH=\"$HOME/.local/bin:$PATH\"" >> $GITHUB_ENV
 
+      - name: Install poetry-dynamic-versioning plugin
+        run: poetry self add "poetry-dynamic-versioning[plugin]"
+
       - name: Install dependencies
         run: poetry install --no-interaction --no-ansi
 
       - name: Build the package
         run: poetry build
+
+      # Generate metadata after publishing
+      - name: Generate Dublin Core metadata
+        run: |
+          mkdir -p metadata
+          poetry run python -c "from ontolearner import OntoLearnerMetadataExporter; OntoLearnerMetadataExporter().export('metadata/ontolearner-metadata.rdf')"
+
+      - name: Create and update Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.REPO_PUSH_TOKEN }}
+          branch: auto-update
+          base: main
+          commit-message: ":bookmark: Update metadata after release"
+          title: "🤖 Automated metadata update"
+          body: "This PR updates the Dublin Core metadata after release."
+          add-paths: |
+            metadata/ontolearner-metadata.rdf
+
+      # Automatically merge the PR if possible
+      - name: Auto-merge PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.REPO_PUSH_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
+      - name: Delete auto-update branch
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.REPO_PUSH_TOKEN }}@github.com/${{ github.repository }}
+          git push origin --delete auto-update
 
       - name: Configure Poetry for PyPI
         run: |
@@ -37,18 +79,3 @@ jobs:
       - name: Publish to PyPI
         run: |
           poetry publish --no-interaction --no-ansi
-
-      # 🔹 NEW STEP: Generate metadata after publishing
-      - name: Generate Dublin Core metadata
-        run: |
-          mkdir -p metadata
-          poetry run python -c "from ontolearner import OntoLearnerMetadataExporter; OntoLearnerMetadataExporter().export('metadata/ontolearner-metadata.rdf')"
-
-      # 🔹 Commit metadata back to repo
-      - name: Commit and push metadata
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add metadata/
-          git commit -m ":bookmark: Update metadata after release"
-          git push origin HEAD:main

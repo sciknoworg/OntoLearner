@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "OntoLearner"
-version = "0.0.0"  # placeholder, will be replaced automatically
+version = "0.0.0"
 description = "OntoLearner: A Modular Python Library for Ontology Learning with LLMs."
 authors = ["Hamed Babaei Giglou <hamedbabaeigiglou@gmail.com>", "Andrei C. Aioanei <andrei.c.aioanei@gmail.com>"]
 license = "MIT License"
@@ -10,25 +10,25 @@ repository = "https://github.com/sciknoworg/OntoLearner/"
 include = ["images/logo.png"]
 
 [tool.poetry.dependencies]
-python=">=3.10,<3.14.0"
-rdflib="7.1.1"
-networkx ="3.2.1"
-seaborn="*"
-numpy="*"
-pandas="*"
-openpyxl="*"
-matplotlib="*"
-tqdm="*"
-pydantic="2.11.3"
-pathlib="1.0.1"
-dspy="2.6.14"
-python-dotenv="*"
-huggingface-hub="0.31.1"
-transformers="4.51.3"
-torch="2.6.0"
-sentence-transformers="4.1.0"
-scikit-learn="1.6.1"
-bitsandbytes="0.45.1"
+python = ">=3.10,<3.14.0"
+rdflib = "7.1.1"
+networkx = "3.2.1"
+numpy = "*"
+pandas = "*"
+openpyxl = "*"
+tqdm = "*"
+pydantic = "2.11.3"
+pathlib = "1.0.1"
+python-dotenv = "*"
+matplotlib = "*"
+seaborn = "*"
+scikit-learn = "*"
+huggingface-hub = "^0.34.4"
+torch = "^2.8.0"
+transformers = "^4.56.0"
+sentence-transformers = "^5.1.0"
+dspy = "^2.6.14"
+bitsandbytes="^0.45.1"
 
 [tool.poetry.dev-dependencies]
 ruff = "*"
@@ -40,9 +40,9 @@ pytest = "*"
 
 [tool.poetry-dynamic-versioning]
 enable = true
-vcs = "git"
 style = "semver"
-pattern = "tag"
+source = "attr"
+attr = "ontolearner.__version__"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.4.0"]
