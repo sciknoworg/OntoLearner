@@ -22,7 +22,6 @@ class AutoRetrieverLearner(AutoLearner):
         self.retriever = base_retriever
         self.top_k = top_k
         self._is_term_typing_fit = False
-        self._is_taxonomy_discovery_fit = False
         self._batch_size = batch_size
 
     def load(self, model_id: str = "sentence-transformers/all-MiniLM-L6-v2"):
@@ -64,9 +63,9 @@ class AutoRetrieverLearner(AutoLearner):
         if test:
             self._retriever_fit(data=data)
             candidates_lst =  self._retriever_predict(data=data, top_k=self.top_k + 1)
-            taxonomic_pairs = [{"parent": query, "child": candidate}
+            taxonomic_pairs = [{"parent": candidate, "child": query}
                                for query, candidates in zip(data, candidates_lst)
-                               for candidate in candidates if candidate != query]
+                               for candidate in candidates if candidate.lower() != query.lower()]
             return taxonomic_pairs
         else:
             warnings.warn("No requirement for fiting the taxonomy discovery model, the predict module will use the input data to do the fit as well.")
