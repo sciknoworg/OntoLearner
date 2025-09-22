@@ -1,5 +1,10 @@
 ## Changelog
 
+### v1.4.6 (September 22, 2025)
+- add type annotation to metrics
+- add minor fix to retriever taxonomy discovery
+- add count metrics in evaluation.
+
 ### v1.4.5 (September 16, 2025)
 - add batch retriever feature to `AutoRetrieverLearner`
 
