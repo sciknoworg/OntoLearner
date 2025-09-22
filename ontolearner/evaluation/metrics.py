@@ -11,13 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from typing import Dict
+from typing import List, Dict, Tuple, Set
 
 SYMMETRIC_RELATIONS = {"equivalentclass", "sameas", "disjointwith"}
 
-def text2onto_metrics(y_true, y_pred, similarity_threshold: float = 0.8) -> Dict:
-    def jaccard_similarity(a, b):
+def text2onto_metrics(y_true: List[str], y_pred: List[str], similarity_threshold: float = 0.8) -> Dict[str, float | int]:
+    def jaccard_similarity(a: str, b: str) -> float:
         set_a = set(a.lower().split())
         set_b = set(b.lower().split())
         if not set_a and not set_b:
@@ -46,10 +45,13 @@ def text2onto_metrics(y_true, y_pred, similarity_threshold: float = 0.8) -> Dict
     return {
         "f1_score": f1_score,
         "precision": precision,
-        "recall": recall
+        "recall": recall,
+        "total_correct": total_correct,
+        "total_predicted": total_predicted,
+        "total_ground_truth": total_ground_truth
     }
 
-def term_typing_metrics(y_true, y_pred) -> Dict:
+def term_typing_metrics(y_true: List[Dict[str, List[str]]], y_pred: List[Dict[str, List[str]]]) -> Dict[str, float | int]:
     """
     Compute precision, recall, and F1-score for term typing
     using (term, type) pair-level matching instead of ID-based lookups.
@@ -77,13 +79,17 @@ def term_typing_metrics(y_true, y_pred) -> Dict:
     precision = total_correct / total_predicted if total_predicted > 0 else 0.0
     recall = total_correct / total_ground_truth if total_ground_truth > 0 else 0.0
     f1_score = (2 * precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
+
     return {
         "f1_score": f1_score,
         "precision": precision,
-        "recall": recall
+        "recall": recall,
+        "total_correct": total_correct,
+        "total_predicted": total_predicted,
+        "total_ground_truth": total_ground_truth
     }
 
-def taxonomy_discovery_metrics(y_true, y_pred) -> Dict:
+def taxonomy_discovery_metrics(y_true: List[Dict[str, str]], y_pred: List[Dict[str, str]]) -> Dict[str, float | int]:
     total_predicted = len(y_pred)
     total_ground_truth = len(y_true)
     # Convert ground truth and predictions to sets of tuples for easy comparison
@@ -102,18 +108,22 @@ def taxonomy_discovery_metrics(y_true, y_pred) -> Dict:
     return {
         "f1_score": f1_score,
         "precision": precision,
-        "recall": recall
+        "recall": recall,
+        "total_correct": total_correct,
+        "total_predicted": total_predicted,
+        "total_ground_truth": total_ground_truth
     }
 
-def non_taxonomic_re_metrics(y_true, y_pred) -> Dict:
-    def normalize_triple(item):
+
+def non_taxonomic_re_metrics(y_true: List[Dict[str, str]], y_pred: List[Dict[str, str]]) -> Dict[str, float | int]:
+    def normalize_triple(item: Dict[str, str]) -> Tuple[str, str, str]:
         return (
             item["head"].strip().lower(),
             item["relation"].strip().lower(),
             item["tail"].strip().lower()
         )
 
-    def expand_symmetric(triples):
+    def expand_symmetric(triples: Set[Tuple[str, str, str]]) -> Set[Tuple[str, str, str]]:
         expanded = set()
         for h, r, t in triples:
             expanded.add((h, r, t))
@@ -136,5 +146,8 @@ def non_taxonomic_re_metrics(y_true, y_pred) -> Dict:
     return {
         "f1_score": f1_score,
         "precision": precision,
-        "recall": recall
+        "recall": recall,
+        "total_correct": total_correct,
+        "total_predicted": total_predicted,
+        "total_ground_truth": total_ground_truth
     }
