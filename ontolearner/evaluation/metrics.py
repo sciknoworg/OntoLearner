@@ -45,7 +45,10 @@ def text2onto_metrics(y_true: List[str], y_pred: List[str], similarity_threshold
     return {
         "f1_score": f1_score,
         "precision": precision,
-        "recall": recall
+        "recall": recall,
+        "total_correct": total_correct,
+        "total_predicted": total_predicted,
+        "total_ground_truth": total_ground_truth
     }
 
 def term_typing_metrics(y_true: List[Dict[str, List[str]]], y_pred: List[Dict[str, List[str]]]) -> Dict[str, float | int]:
@@ -80,7 +83,10 @@ def term_typing_metrics(y_true: List[Dict[str, List[str]]], y_pred: List[Dict[st
     return {
         "f1_score": f1_score,
         "precision": precision,
-        "recall": recall
+        "recall": recall,
+        "total_correct": total_correct,
+        "total_predicted": total_predicted,
+        "total_ground_truth": total_ground_truth
     }
 
 def taxonomy_discovery_metrics(y_true: List[Dict[str, str]], y_pred: List[Dict[str, str]]) -> Dict[str, float | int]:
@@ -102,7 +108,10 @@ def taxonomy_discovery_metrics(y_true: List[Dict[str, str]], y_pred: List[Dict[s
     return {
         "f1_score": f1_score,
         "precision": precision,
-        "recall": recall
+        "recall": recall,
+        "total_correct": total_correct,
+        "total_predicted": total_predicted,
+        "total_ground_truth": total_ground_truth
     }
 
 
@@ -137,5 +146,8 @@ def non_taxonomic_re_metrics(y_true: List[Dict[str, str]], y_pred: List[Dict[str
     return {
         "f1_score": f1_score,
         "precision": precision,
-        "recall": recall
+        "recall": recall,
+        "total_correct": total_correct,
+        "total_predicted": total_predicted,
+        "total_ground_truth": total_ground_truth
     }
