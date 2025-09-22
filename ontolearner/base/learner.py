@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Dict
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import torch.nn.functional as F
@@ -147,7 +147,7 @@ class AutoLearner(ABC):
     def _non_taxonomic_re(self, data: Any, test: bool = False) -> Optional[Any]:
         pass
 
-    def tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
+    def tasks_data_former(self, data: Any, task: str, test: bool = False) -> List[str | Dict[str, str]]:
         formatted_data = []
         if task == "term-typing":
             for typing in data.term_typings:
@@ -173,7 +173,7 @@ class AutoLearner(ABC):
             formatted_data = {"types": non_taxonomic_types, "relations": non_taxonomic_res}
         return formatted_data
 
-    def tasks_ground_truth_former(self, data: Any, task: str) -> Any:
+    def tasks_ground_truth_former(self, data: Any, task: str) -> List[Dict[str, str]]:
         formatted_data = []
         if task == "term-typing":
             for typing in data.term_typings:
