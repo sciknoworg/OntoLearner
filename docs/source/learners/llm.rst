@@ -149,7 +149,7 @@ For this, you can extend the ``AutoLLM`` class and implement the required
 3. Implement ``generate(inputs, max_new_tokens)`` to encodes prompts, performs generation, decodes outputs, and maps them to labels.
 
 
-.. tab::
+.. tab:: Falcon-H
 
 	The following example shows how to build a Falcon integration:
 
@@ -186,7 +186,7 @@ For this, you can extend the ``AutoLLM`` class and implement the required
 
 	            return self.label_mapper.predict(decoded_outputs)
 
-.. tab::
+.. tab:: Mistral-Small
 
 	For Mistral, you can integrate the official ``mistral-common`` tokenizer and chat completion interface:
 
@@ -277,8 +277,8 @@ Once your custom class is defined, you can pass it into ``AutoLLMLearner``:
 
 The following models are specialized within the OntoLearner:
 
-- To use `mistralai/Mistral-Small-3.2-24B-Instruct-2506 <https://huggingface.co/mistralai/Mistral-Small-3.2-24B-Instruct-2506>`_ you can use ``MistralLLM`` instead of ``AutoLLM`
-- To use `Falcon-H` series of LLMs (e.g. `tiiuae/Falcon-H1-1.5B-Deep-Instruct <https://huggingface.co/tiiuae/Falcon-H1-1.5B-Deep-Instruct>`_ you can ``FalconLLM`` instead of ``AutoLLM`.
+- To use `mistralai/Mistral-Small-3.2-24B-Instruct-2506 <https://huggingface.co/mistralai/Mistral-Small-3.2-24B-Instruct-2506>`_ you can use ``MistralLLM`` instead of ``AutoLLM``.
+- To use `Falcon-H` series of LLMs (e.g. `tiiuae/Falcon-H1-1.5B-Deep-Instruct <https://huggingface.co/tiiuae/Falcon-H1-1.5B-Deep-Instruct>`_ you can ``FalconLLM`` instead of ``AutoLLM``.
 
 .. note::
 
