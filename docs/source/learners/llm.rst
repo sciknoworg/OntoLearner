@@ -267,7 +267,7 @@ Once your custom class is defined, you can pass it into ``AutoLLMLearner``:
         device="cuda"
     )
 
-    falcon_learner.llm.load(model_id="tiiuae/falcon-7b-instruct")
+    falcon_learner.llm.load(model_id="tiiuae/Falcon-H1-1.5B-Deep-Instruct")
 
     # Train and evaluate
     falcon_learner.fit(train_data, task="term-typing")
