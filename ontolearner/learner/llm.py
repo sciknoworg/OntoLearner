@@ -13,23 +13,27 @@
 # limitations under the License.
 
 from ..base import AutoLLM, AutoLearner
-from typing import Any
+from typing import Any, List
 import warnings
 from tqdm import tqdm
 from torch.utils.data import DataLoader
-
+import torch
+from transformers import Mistral3ForConditionalGeneration
+from mistral_common.protocol.instruct.request import ChatCompletionRequest
+from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
 
 class AutoLLMLearner(AutoLearner):
 
     def __init__(self,
                  prompting,
                  label_mapper,
+                 llm: AutoLLM = AutoLLM,
                  token: str = "",
                  max_new_tokens: int = 5,
                  batch_size: int = 10,
                  device='cpu') -> None:
         super().__init__()
-        self.llm = AutoLLM(token=token, label_mapper=label_mapper, device=device)
+        self.llm = llm(token=token, label_mapper=label_mapper, device=device)
         self.prompting = prompting
         self.batch_size = batch_size
         self.max_new_tokens = max_new_tokens
@@ -136,3 +140,69 @@ class AutoLLMLearner(AutoLearner):
             return self._non_taxonomic_re_predict(dataset=dataset)
         else:
             warnings.warn("No requirement for fiting the non-taxonomic-re model, the predict module will use the input data to do the task.")
+
+
+class FalconLLM(AutoLLM):
+
+    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
+        encoded_inputs = self.tokenizer(inputs,
+                                        return_tensors="pt",
+                                        padding=True,
+                                        truncation=True).to(self.model.device)
+        input_ids = encoded_inputs["input_ids"]
+        input_length = input_ids.shape[1]
+        outputs = self.model.generate(
+            input_ids,
+            max_new_tokens=max_new_tokens,
+            pad_token_id=self.tokenizer.eos_token_id
+        )
+        generated_tokens = outputs[:, input_length:]
+        decoded_outputs = [self.tokenizer.decode(g, skip_special_tokens=True).strip() for g in generated_tokens]
+        return self.label_mapper.predict(decoded_outputs)
+
+class MistralLLM(AutoLLM):
+
+    def load(self, model_id: str) -> None:
+        self.tokenizer = MistralTokenizer.from_hf_hub(model_id)
+        if self.device == "cpu":
+            device_map = "cpu"
+        else:
+            device_map = "balanced"
+        self.model = Mistral3ForConditionalGeneration.from_pretrained(
+            model_id,
+            device_map=device_map,
+            torch_dtype=torch.bfloat16,
+            token=self.token
+        )
+        if not hasattr(self.tokenizer, "pad_token_id") or self.tokenizer.pad_token_id is None:
+            self.tokenizer.pad_token_id = self.model.generation_config.eos_token_id
+        self.label_mapper.fit()
+
+    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
+        tokenized_list = []
+        for prompt in inputs:
+            messages = [{"role": "user", "content": [{"type": "text", "text": prompt}]}]
+            tokenized = self.tokenizer.encode_chat_completion(ChatCompletionRequest(messages=messages))
+            tokenized_list.append(tokenized.tokens)
+        max_len = max(len(tokens) for tokens in tokenized_list)
+        input_ids, attention_masks = [], []
+        for tokens in tokenized_list:
+            pad_length = max_len - len(tokens)
+            input_ids.append(tokens + [self.tokenizer.pad_token_id] * pad_length)
+            attention_masks.append([1] * len(tokens) + [0] * pad_length)
+
+        input_ids = torch.tensor(input_ids).to(self.model.device)
+        attention_masks = torch.tensor(attention_masks).to(self.model.device)
+
+        outputs =self.model.generate(
+            input_ids=input_ids,
+            attention_mask=attention_masks,
+            eos_token_id=self.model.generation_config.eos_token_id,
+            pad_token_id=self.tokenizer.pad_token_id,
+            max_new_tokens=max_new_tokens,
+        )
+        decoded_outputs = []
+        for i, tokens in enumerate(outputs):
+            output_text = self.tokenizer.decode(tokens[len(tokenized_list[i]):])
+            decoded_outputs.append(output_text)
+        return self.label_mapper.predict(decoded_outputs)

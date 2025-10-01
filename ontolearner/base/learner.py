@@ -238,7 +238,7 @@ class AutoLLM(ABC):
         if self.device == "cpu":
             device_map = "cpu"
         else:
-            device_map = "auto"
+            device_map = "balanced"
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id,
             device_map=device_map,
@@ -271,7 +271,10 @@ class AutoLLM(ABC):
             Responses include the original input plus generated continuation.
         """
         # Tokenize inputs and move to device
-        encoded_inputs = self.tokenizer(inputs, return_tensors="pt", padding=True).to(self.model.device)
+        encoded_inputs = self.tokenizer(inputs,
+                                        return_tensors="pt",
+                                        padding=True,
+                                        truncation=True).to(self.model.device)
         input_ids = encoded_inputs["input_ids"]
         input_length = input_ids.shape[1]
 
