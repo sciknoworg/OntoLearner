@@ -29,6 +29,8 @@ transformers = "^4.56.0"
 sentence-transformers = "^5.1.0"
 dspy = "^2.6.14"
 bitsandbytes="^0.45.1"
+mistral-common="^1.8.5"
+mistral-common = { version = "^1.8.5", extras = ["sentencepiece"] }
 
 [tool.poetry.dev-dependencies]
 ruff = "*"
