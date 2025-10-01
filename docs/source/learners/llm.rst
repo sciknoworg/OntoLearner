@@ -192,65 +192,65 @@ For this, you can extend the ``AutoLLM`` class and implement the required
 
 	::
 
-    from ontolearner import AutoLLM
-    from typing import List
-    import torch
+		from ontolearner import AutoLLM
+		from typing import List
+		import torch
 
-    class MistralLLM(AutoLLM):
+		class MistralLLM(AutoLLM):
 
-        def load(self, model_id: str) -> None:
-            from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
-            from mistral_common.models.modeling_mistral import Mistral3ForConditionalGeneration
+		    def load(self, model_id: str) -> None:
+		        from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
+		        from mistral_common.models.modeling_mistral import Mistral3ForConditionalGeneration
 
-            self.tokenizer = MistralTokenizer.from_hf_hub(model_id)
+		        self.tokenizer = MistralTokenizer.from_hf_hub(model_id)
 
-            device_map = "cpu" if self.device == "cpu" else "balanced"
-            self.model = Mistral3ForConditionalGeneration.from_pretrained(
-                model_id,
-                device_map=device_map,
-                torch_dtype=torch.bfloat16,
-                token=self.token
-            )
+		        device_map = "cpu" if self.device == "cpu" else "balanced"
+		        self.model = Mistral3ForConditionalGeneration.from_pretrained(
+		            model_id,
+		            device_map=device_map,
+		            torch_dtype=torch.bfloat16,
+		            token=self.token
+		        )
 
-            if not hasattr(self.tokenizer, "pad_token_id") or self.tokenizer.pad_token_id is None:
-                self.tokenizer.pad_token_id = self.model.generation_config.eos_token_id
+		        if not hasattr(self.tokenizer, "pad_token_id") or self.tokenizer.pad_token_id is None:
+		            self.tokenizer.pad_token_id = self.model.generation_config.eos_token_id
 
-            self.label_mapper.fit()
+		        self.label_mapper.fit()
 
-        def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
-            from mistral_common.protocol.instruct.messages import ChatCompletionRequest
+		    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
+		        from mistral_common.protocol.instruct.messages import ChatCompletionRequest
 
-            tokenized_list = []
-            for prompt in inputs:
-                messages = [{"role": "user", "content": [{"type": "text", "text": prompt}]}]
-                tokenized = self.tokenizer.encode_chat_completion(ChatCompletionRequest(messages=messages))
-                tokenized_list.append(tokenized.tokens)
+		        tokenized_list = []
+		        for prompt in inputs:
+		            messages = [{"role": "user", "content": [{"type": "text", "text": prompt}]}]
+		            tokenized = self.tokenizer.encode_chat_completion(ChatCompletionRequest(messages=messages))
+		            tokenized_list.append(tokenized.tokens)
 
-            # Pad inputs and create attention masks
-            max_len = max(len(tokens) for tokens in tokenized_list)
-            input_ids, attention_masks = [], []
-            for tokens in tokenized_list:
-                pad_length = max_len - len(tokens)
-                input_ids.append(tokens + [self.tokenizer.pad_token_id] * pad_length)
-                attention_masks.append([1] * len(tokens) + [0] * pad_length)
+		        # Pad inputs and create attention masks
+		        max_len = max(len(tokens) for tokens in tokenized_list)
+		        input_ids, attention_masks = [], []
+		        for tokens in tokenized_list:
+		            pad_length = max_len - len(tokens)
+		            input_ids.append(tokens + [self.tokenizer.pad_token_id] * pad_length)
+		            attention_masks.append([1] * len(tokens) + [0] * pad_length)
 
-            input_ids = torch.tensor(input_ids).to(self.model.device)
-            attention_masks = torch.tensor(attention_masks).to(self.model.device)
+		        input_ids = torch.tensor(input_ids).to(self.model.device)
+		        attention_masks = torch.tensor(attention_masks).to(self.model.device)
 
-            outputs = self.model.generate(
-                input_ids=input_ids,
-                attention_mask=attention_masks,
-                eos_token_id=self.model.generation_config.eos_token_id,
-                pad_token_id=self.tokenizer.pad_token_id,
-                max_new_tokens=max_new_tokens,
-            )
+		        outputs = self.model.generate(
+		            input_ids=input_ids,
+		            attention_mask=attention_masks,
+		            eos_token_id=self.model.generation_config.eos_token_id,
+		            pad_token_id=self.tokenizer.pad_token_id,
+		            max_new_tokens=max_new_tokens,
+		        )
 
-            decoded_outputs = []
-            for i, tokens in enumerate(outputs):
-                output_text = self.tokenizer.decode(tokens[len(tokenized_list[i]):])
-                decoded_outputs.append(output_text)
+		        decoded_outputs = []
+		        for i, tokens in enumerate(outputs):
+		            output_text = self.tokenizer.decode(tokens[len(tokenized_list[i]):])
+		            decoded_outputs.append(output_text)
 
-            return self.label_mapper.predict(decoded_outputs)
+		        return self.label_mapper.predict(decoded_outputs)
 
 
 Once your custom class is defined, you can pass it into ``AutoLLMLearner``:
