@@ -1,5 +1,11 @@
 ## Changelog
 
+### v1.4.7 (October 1, 2025)
+- add custom LLM based learner
+- add Falcon-H and Mistral-Small custom AutoLLMs.
+- Add custom LLm documentations.
+- Minor bug fix and improvements in documentation and code.
+
 ### v1.4.6 (September 22, 2025)
 - add type annotation to metrics
 - add minor fix to retriever taxonomy discovery
