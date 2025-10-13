@@ -19,3 +19,4 @@ torch~=2.8.0
 sentence-transformers~=5.1.0
 scikit-learn~=1.6.1
 bitsandbytes~=0.45.1
+mistral-common[sentencepiece]~=1.8.5

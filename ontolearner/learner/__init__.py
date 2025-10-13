@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .llm import AutoLLMLearner
+from .llm import AutoLLMLearner, FalconLLM, MistralLLM
 from .retriever import AutoRetrieverLearner
 from .rag import AutoRAGLearner
 from .prompt import StandardizedPrompting
