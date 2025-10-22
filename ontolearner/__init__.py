@@ -29,7 +29,9 @@ from .learner import (AutoLLMLearner,
                       AutoRetrieverLearner,
                       AutoRAGLearner,
                       StandardizedPrompting,
-                      LabelMapper)
+                      LabelMapper,
+                      RWTHDBISTaxonomyLearner,
+                      RWTHDBISTermTypingLearner)
 from ._learner import LearnerPipeline
 
 from .processor import Processor
@@ -47,6 +49,8 @@ __all__ = [
     "LabelMapper",
     "LearnerPipeline",
     "Processor",
+    "RWTHDBISTaxonomyLearner",
+    "RWTHDBISTermTypingLearner",
     "data_structure",
     "text2onto",
     "ontology",
