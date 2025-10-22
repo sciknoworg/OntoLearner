@@ -85,6 +85,6 @@ class LabelMapper:
         Returns:
             List[str]: Predicted labels.
         """
-        predictions = list(self.model.predict(X))
+        predictions = self.model.predict(X).tolist()
         self.validate_predicts(predictions)
         return predictions
