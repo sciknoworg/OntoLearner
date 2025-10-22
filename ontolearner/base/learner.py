@@ -236,15 +236,21 @@ class AutoLLM(ABC):
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, padding_side='left', token=self.token)
         self.tokenizer.pad_token = self.tokenizer.eos_token
         if self.device == "cpu":
-            device_map = "cpu"
+            # device_map = "cpu"
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_id,
+                # device_map=device_map,
+                torch_dtype=torch.bfloat16,
+                token=self.token
+            )
         else:
             device_map = "balanced"
-        self.model = AutoModelForCausalLM.from_pretrained(
-            model_id,
-            device_map=device_map,
-            torch_dtype=torch.bfloat16,
-            token=self.token
-        )
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_id,
+                device_map=device_map,
+                torch_dtype=torch.bfloat16,
+                token=self.token
+            )
         self.label_mapper.fit()
 
     def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
@@ -290,7 +296,8 @@ class AutoLLM(ABC):
 
         # Decode only the generated part
         decoded_outputs = [self.tokenizer.decode(g, skip_special_tokens=True).strip() for g in generated_tokens]
-
+        print(decoded_outputs)
+        print(self.label_mapper.predict(decoded_outputs))
         # Map the decoded text to labels
         return self.label_mapper.predict(decoded_outputs)
 
@@ -301,9 +308,6 @@ class AutoRetriever(ABC):
     This class defines the interface for retrieval components used in ontology learning.
     Retrievers are responsible for finding semantically similar examples from training
     data to provide context for language models or to make direct predictions.
-
-    Attributes:
-        model: The loaded retrieval/embedding model instance.
     """
 
     def __init__(self) -> None:
@@ -313,7 +317,6 @@ class AutoRetriever(ABC):
         Sets up the basic structure with a model attribute that will be
         populated when load() is called.
         """
-        self.model: Optional[Any] = None
         self.embedding_model = None
         self.documents = []
         self.embeddings = None

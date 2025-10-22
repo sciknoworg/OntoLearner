@@ -66,7 +66,16 @@ class AutoRetrieverLearner(AutoLearner):
             taxonomic_pairs = [{"parent": candidate, "child": query}
                                for query, candidates in zip(data, candidates_lst)
                                for candidate in candidates if candidate.lower() != query.lower()]
-            return taxonomic_pairs
+            taxonomic_pairs += [{"parent": query, "child": candidate}
+                               for query, candidates in zip(data, candidates_lst)
+                               for candidate in candidates if candidate.lower() != query.lower()]
+            unique_taxonomic_pairs, seen = [], set()
+            for pair in taxonomic_pairs:
+                key = (pair["parent"].lower(), pair["child"].lower()) # Directional key (parent, child)
+                if key not in seen:
+                    seen.add(key)
+                    unique_taxonomic_pairs.append(pair)
+            return unique_taxonomic_pairs
         else:
             warnings.warn("No requirement for fiting the taxonomy discovery model, the predict module will use the input data to do the fit as well.")
 
@@ -86,11 +95,23 @@ class AutoRetrieverLearner(AutoLearner):
             candidates_lst = self._retriever_predict(data=data['types'], top_k=self.top_k + 1)
             taxonomic_pairs = []
             taxonomic_pairs_query = []
+            seen = set()
             for query, candidates in zip(data['types'], candidates_lst):
                 for candidate in candidates:
                     if candidate != query:
-                        taxonomic_pairs.append((query, candidate))
-                        taxonomic_pairs_query.append(f"Head: {query} \n Tail: {candidate}")
+                        # Directional pair 1: query -> candidate
+                        key1 = (query.lower(), candidate.lower())
+                        if key1 not in seen:
+                            seen.add(key1)
+                            taxonomic_pairs.append((query, candidate))
+                            taxonomic_pairs_query.append(f"Head: {query}\nTail: {candidate}")
+                        # Directional pair 2: candidate -> query
+                        key2 = (candidate.lower(), query.lower())
+                        if key2 not in seen:
+                            seen.add(key2)
+                            taxonomic_pairs.append((candidate, query))
+                            taxonomic_pairs_query.append(f"Head: {candidate}\nTail: {query}")
+
             self._retriever_fit(data=data['relations'])
             candidate_relations_lst = self._retriever_predict(data=taxonomic_pairs_query, top_k=self.top_k)
             non_taxonomic_re = [{"head": head, "tail": tail, "relation": relation}
