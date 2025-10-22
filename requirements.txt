@@ -20,3 +20,7 @@ sentence-transformers~=5.1.0
 scikit-learn~=1.6.1
 bitsandbytes~=0.45.1
 mistral-common[sentencepiece]~=1.8.5
+accelerate>=0.26.0 
+safetensors
+g4f
+protobuf>=3.20.3,<5
