@@ -20,3 +20,6 @@ from .label_mapper import LabelMapper
 from .taxonomy_discovery.rwthdbis import RWTHDBISSFTLearner as RWTHDBISTaxonomyLearner
 from .term_typing.rwthdbis        import RWTHDBISSFTLearner as RWTHDBISTermTypingLearner
 from .taxonomy_discovery.skhnlp import SKHNLPSequentialFTLearner, SKHNLPZSLearner
+from .taxonomy_discovery.sbunlp import SBUNLPFewShotLearner
+from .term_typing.sbunlp import SBUNLPZSLearner
+from .text2onto import SBUNLPFewShotLearner as SBUNLPText2OntoLearner

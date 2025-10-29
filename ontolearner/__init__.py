@@ -31,9 +31,12 @@ from .learner import (AutoLLMLearner,
                       StandardizedPrompting,
                       LabelMapper,
                       RWTHDBISTaxonomyLearner,
-                      RWTHDBISTermTypingLearner
+                      RWTHDBISTermTypingLearner,
                       SKHNLPZSLearner,
-                      SKHNLPSequentialFTLearner)
+                      SKHNLPSequentialFTLearner,
+                      SBUNLPFewShotLearner,
+                      SBUNLPZSLearner,
+                      SBUNLPText2OntoLearner)
 from ._learner import LearnerPipeline
 
 from .processor import Processor
@@ -55,6 +58,9 @@ __all__ = [
     "RWTHDBISTermTypingLearner",
     "SKHNLPZSLearner",
     "SKHNLPSequentialFTLearner",
+    "SBUNLPFewShotLearner",
+    "SBUNLPZSLearner",
+    "SBUNLPText2OntoLearner",
     "data_structure",
     "text2onto",
     "ontology",
