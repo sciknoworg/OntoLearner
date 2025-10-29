@@ -19,3 +19,4 @@ from .prompt import StandardizedPrompting
 from .label_mapper import LabelMapper
 from .taxonomy_discovery.rwthdbis import RWTHDBISSFTLearner as RWTHDBISTaxonomyLearner
 from .term_typing.rwthdbis        import RWTHDBISSFTLearner as RWTHDBISTermTypingLearner
+from .taxonomy_discovery.skhnlp import SKHNLPSequentialFTLearner, SKHNLPZSLearner

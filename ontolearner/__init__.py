@@ -31,7 +31,9 @@ from .learner import (AutoLLMLearner,
                       StandardizedPrompting,
                       LabelMapper,
                       RWTHDBISTaxonomyLearner,
-                      RWTHDBISTermTypingLearner)
+                      RWTHDBISTermTypingLearner
+                      SKHNLPZSLearner,
+                      SKHNLPSequentialFTLearner)
 from ._learner import LearnerPipeline
 
 from .processor import Processor
@@ -51,6 +53,8 @@ __all__ = [
     "Processor",
     "RWTHDBISTaxonomyLearner",
     "RWTHDBISTermTypingLearner",
+    "SKHNLPZSLearner",
+    "SKHNLPSequentialFTLearner",
     "data_structure",
     "text2onto",
     "ontology",

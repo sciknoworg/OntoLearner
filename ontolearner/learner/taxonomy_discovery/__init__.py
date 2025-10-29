@@ -13,3 +13,4 @@
 # limitations under the License.
 
 from .rwthdbis import RWTHDBISSFTLearner
+from .skhnlp import SKHNLPSequentialFTLearner, SKHNLPZSLearner
