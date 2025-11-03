@@ -13,3 +13,4 @@
 # limitations under the License.
 
 from .sbunlp import SBUNLPFewShotLearner
+from .alexbek import AlexbekFewShotLearner

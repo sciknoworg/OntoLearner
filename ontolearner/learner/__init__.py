@@ -23,3 +23,6 @@ from .taxonomy_discovery.skhnlp import SKHNLPSequentialFTLearner, SKHNLPZSLearne
 from .taxonomy_discovery.sbunlp import SBUNLPFewShotLearner
 from .term_typing.sbunlp import SBUNLPZSLearner
 from .text2onto import SBUNLPFewShotLearner as SBUNLPText2OntoLearner
+from .taxonomy_discovery.alexbek import AlexbekCrossAttnLearner
+from .term_typing.alexbek import AlexbekRFLearner, AlexbekRAGLearner
+from .text2onto.alexbek import AlexbekFewShotLearner

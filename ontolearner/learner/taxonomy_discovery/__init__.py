@@ -15,3 +15,4 @@
 from .rwthdbis import RWTHDBISSFTLearner
 from .skhnlp import SKHNLPSequentialFTLearner, SKHNLPZSLearner
 from .sbunlp import SBUNLPFewShotLearner
+from .alexbek import AlexbekCrossAttnLearner

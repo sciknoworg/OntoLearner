@@ -36,7 +36,11 @@ from .learner import (AutoLLMLearner,
                       SKHNLPSequentialFTLearner,
                       SBUNLPFewShotLearner,
                       SBUNLPZSLearner,
-                      SBUNLPText2OntoLearner)
+                      SBUNLPText2OntoLearner,
+                      AlexbekCrossAttnLearner,
+                      AlexbekRFLearner,
+                      AlexbekRAGLearner,
+                      AlexbekFewShotLearner)
 from ._learner import LearnerPipeline
 
 from .processor import Processor
@@ -61,6 +65,10 @@ __all__ = [
     "SBUNLPFewShotLearner",
     "SBUNLPZSLearner",
     "SBUNLPText2OntoLearner",
+    "AlexbekCrossAttnLearner",
+    "AlexbekRFLearner",
+    "AlexbekRAGLearner",
+    "AlexbekFewShotLearner",
     "data_structure",
     "text2onto",
     "ontology",
