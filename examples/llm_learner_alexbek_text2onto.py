@@ -9,14 +9,22 @@ from ontolearner.learner.text2onto.alexbek import LocalAutoLLM, AlexbekFewShotLe
 DATA_DIR = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology"
 
 # Input paths (already saved)
-TRAIN_DOCS_PATH        = os.path.join(DATA_DIR, "train", "documents.jsonl")
-TRAIN_TERMS2DOCS_PATH  = os.path.join(DATA_DIR, "train", "terms2docs.json")
-TEST_DOCS_FULL_PATH    = os.path.join(DATA_DIR, "test", "text2onto_ecology_test_documents.jsonl")
+TRAIN_DOCS_PATH = os.path.join(DATA_DIR, "train", "documents.jsonl")
+TRAIN_TERMS2DOCS_PATH = os.path.join(DATA_DIR, "train", "terms2docs.json")
+TEST_DOCS_FULL_PATH = os.path.join(
+    DATA_DIR, "test", "text2onto_ecology_test_documents.jsonl"
+)
 
 # Output paths
-DOC_TERMS_OUT_PATH     = os.path.join(DATA_DIR, "test", "extracted_terms_ecology.fast.jsonl")
-TERMS2TYPES_OUT_PATH   = os.path.join(DATA_DIR, "test", "terms2types_pred_ecology.fast.json")
-TYPES2DOCS_OUT_PATH    = os.path.join(DATA_DIR, "test", "types2docs_pred_ecology.fast.json")
+DOC_TERMS_OUT_PATH = os.path.join(
+    DATA_DIR, "test", "extracted_terms_ecology.fast.jsonl"
+)
+TERMS2TYPES_OUT_PATH = os.path.join(
+    DATA_DIR, "test", "terms2types_pred_ecology.fast.json"
+)
+TYPES2DOCS_OUT_PATH = os.path.join(
+    DATA_DIR, "test", "types2docs_pred_ecology.fast.json"
+)
 
 # Device selection
 DEVICE = (
@@ -27,7 +35,7 @@ DEVICE = (
 
 # Model config
 MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
-LOAD_IN_4BIT = (DEVICE == "cuda")  # 4-bit helps on GPU
+LOAD_IN_4BIT = DEVICE == "cuda"  # 4-bit helps on GPU
 
 # 1) Load LLM
 llm = LocalAutoLLM(device=DEVICE)
@@ -52,15 +60,17 @@ print(f"[terms] wrote {num_written_doc_terms} lines → {DOC_TERMS_OUT_PATH}")
 
 # 4) Predict types for extracted terms, using the JSONL we just wrote
 typing_summary = learner.predict_types_from_terms(
-    doc_terms_jsonl=DOC_TERMS_OUT_PATH,   # read the predictions directly
-    doc_terms_list=None,                  # (not needed when doc_terms_jsonl is provided)
-    model_id=MODEL_ID,                    # reuse the same small model
+    doc_terms_jsonl=DOC_TERMS_OUT_PATH,  # read the predictions directly
+    doc_terms_list=None,  # (not needed when doc_terms_jsonl is provided)
+    model_id=MODEL_ID,  # reuse the same small model
     out_terms2types=TERMS2TYPES_OUT_PATH,
     out_types2docs=TYPES2DOCS_OUT_PATH,
     # use defaults for everything else
 )
 
-print(f"[types] {typing_summary['unique_terms']} unique terms | {typing_summary['types_count']} types")
+print(
+    f"[types] {typing_summary['unique_terms']} unique terms | {typing_summary['types_count']} types"
+)
 print(f"[saved] {TERMS2TYPES_OUT_PATH}")
 print(f"[saved] {TYPES2DOCS_OUT_PATH}")
 

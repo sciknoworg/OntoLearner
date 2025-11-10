@@ -1,6 +1,7 @@
 import os
 import torch
-#Import all the required classes
+
+# Import all the required classes
 from ontolearner import SBUNLPText2OntoLearner
 from ontolearner.learner.text2onto.sbunlp import LocalAutoLLM
 
@@ -11,8 +12,8 @@ LOCAL_DATA_DIR = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology"
 
 # Ensure the base directories exist
 # Creates the train and test subdirectories if they don't already exist.
-os.makedirs(os.path.join(LOCAL_DATA_DIR, 'train'), exist_ok=True)
-os.makedirs(os.path.join(LOCAL_DATA_DIR, 'test'), exist_ok=True)
+os.makedirs(os.path.join(LOCAL_DATA_DIR, "train"), exist_ok=True)
+os.makedirs(os.path.join(LOCAL_DATA_DIR, "test"), exist_ok=True)
 
 # Define local file paths: POINTING TO ALREADY SAVED FILES
 # These files are used as input for the Fit and Predict phases.
@@ -22,10 +23,14 @@ DOCS_TEST_PATH = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/test/text2onto_
 
 # Output files for predictions (saved directly under LOCAL_DATA_DIR/test)
 # These files will be created by the predict_terms/types methods.
-TERMS_PRED_OUT = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/test/extracted_terms_ecology.jsonl"
-TYPES_PRED_OUT = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/test/extracted_types_ecology.jsonl"
+TERMS_PRED_OUT = (
+    "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/test/extracted_terms_ecology.jsonl"
+)
+TYPES_PRED_OUT = (
+    "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/test/extracted_types_ecology.jsonl"
+)
 
-#Initialize and Load Learner ---
+# Initialize and Load Learner ---
 MODEL_ID = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 # Determine the device for inference (GPU or CPU)
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -47,7 +52,7 @@ learner.fit(
     train_docs_jsonl=DOCS_ALL_PATH,
     terms2doc_json=TERMS2DOC_PATH,
     sample_size=28,
-    seed=123 # Seed for stratified random sampling stability
+    seed=123,  # Seed for stratified random sampling stability
 )
 
 MAX_NEW_TOKENS = 100
@@ -55,7 +60,7 @@ MAX_NEW_TOKENS = 100
 terms_written = learner.predict_terms(
     docs_test_jsonl=DOCS_TEST_PATH,
     out_jsonl=TERMS_PRED_OUT,
-    max_new_tokens=MAX_NEW_TOKENS
+    max_new_tokens=MAX_NEW_TOKENS,
 )
 print(f"✅ Term Extraction Complete. Wrote {terms_written} prediction lines.")
 
@@ -63,7 +68,7 @@ print(f"✅ Term Extraction Complete. Wrote {terms_written} prediction lines.")
 types_written = learner.predict_types(
     docs_test_jsonl=DOCS_TEST_PATH,
     out_jsonl=TYPES_PRED_OUT,
-    max_new_tokens=MAX_NEW_TOKENS
+    max_new_tokens=MAX_NEW_TOKENS,
 )
 print(f"✅ Type Extraction Complete. Wrote {types_written} prediction lines.")
 
@@ -77,5 +82,7 @@ try:
     print(f"Final Type Extraction F1: {f1_type:.4f}")
 
 except Exception as e:
-     # Catches errors like missing sklearn (ImportError) or missing prediction files (FileNotFoundError)
-     print(f"❌ Evaluation Error: {e}. Ensure sklearn is installed and prediction files were created.")
+    # Catches errors like missing sklearn (ImportError) or missing prediction files (FileNotFoundError)
+    print(
+        f"❌ Evaluation Error: {e}. Ensure sklearn is installed and prediction files were created."
+    )

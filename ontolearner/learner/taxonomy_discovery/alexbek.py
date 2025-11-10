@@ -24,33 +24,70 @@ from sentence_transformers import SentenceTransformer
 
 from ...base import AutoLearner
 
+
 class RMSNorm(nn.Module):
     """Root Mean Square normalization with learnable scale.
 
-    Computes:  y = weight * x / sqrt(mean(x^2) + eps)
+    Computes per-position normalization:
+        y = weight * x / sqrt(mean(x^2) + eps)
+
+    This variant normalizes over the last dimension and keeps scale as a
+    learnable parameter, similar to RMSNorm used in modern transformer stacks.
     """
 
     def __init__(self, dim: int, eps: float = 1e-6):
+        """Initialize the RMSNorm layer.
+
+        Args:
+            dim: Size of the last (feature) dimension to normalize over.
+            eps: Small constant added inside the square root for numerical
+                stability.
+        """
         super().__init__()
         self.eps = eps
         self.weight = nn.Parameter(torch.ones(dim))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Apply RMS normalization.
+
+        Args:
+            x: Input tensor of shape (..., dim).
+
+        Returns:
+            Tensor of the same shape as `x`, RMS-normalized over the last axis.
+        """
         rms_inv = torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps)
         return self.weight * (x * rms_inv)
+
 
 class CrossAttentionHead(nn.Module):
     """Minimal multi-head *pair* scorer using cross-attention-style projections.
 
-    Given child vector c and parent vector p:
-      q = Wq * c, k = Wk * p
-      per-head score = (q_h · k_h) / sqrt(d_head)
-      aggregate by mean across heads, then sigmoid to get probability.
+    Given child vector `c` and parent vector `p`:
+        q = W_q * c,  k = W_k * p
+        score_head = (q_h · k_h) / sqrt(d_head)
+
+    We average the per-head scores and apply a sigmoid to produce a probability.
+    This is not a full attention block—just a learnable similarity function.
     """
 
-    def __init__(self, hidden_size: int, num_heads: int = 8, rms_norm_eps: float = 1e-6):
+    def __init__(
+        self, hidden_size: int, num_heads: int = 8, rms_norm_eps: float = 1e-6
+    ):
+        """Initialize projections and per-stream normalizers.
+
+        Args:
+            hidden_size: Dimensionality of input embeddings (child/parent).
+            num_heads: Number of subspaces to split the projection into.
+            rms_norm_eps: Epsilon for RMSNorm stability.
+
+        Raises:
+            AssertionError: If `hidden_size` is not divisible by `num_heads`.
+        """
         super().__init__()
-        assert hidden_size % num_heads == 0, "hidden_size must be divisible by num_heads"
+        assert hidden_size % num_heads == 0, (
+            "hidden_size must be divisible by num_heads"
+        )
         self.hidden_size = hidden_size
         self.num_heads = num_heads
         self.dim_per_head = hidden_size // num_heads
@@ -67,14 +104,17 @@ class CrossAttentionHead(nn.Module):
         nn.init.xavier_uniform_(self.query_projection.weight)
         nn.init.xavier_uniform_(self.key_projection.weight)
 
-    def forward(self, child_embeddings: torch.Tensor, parent_embeddings: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, child_embeddings: torch.Tensor, parent_embeddings: torch.Tensor
+    ) -> torch.Tensor:
         """Score (child, parent) pairs.
 
         Args:
-            child_embeddings:  Tensor of shape (batch, hidden_size)
-            parent_embeddings: Tensor of shape (batch, hidden_size)
+            child_embeddings: Tensor of shape (batch, hidden_size).
+            parent_embeddings: Tensor of shape (batch, hidden_size).
+
         Returns:
-            Tensor of probabilities with shape (batch,)
+            Tensor of probabilities with shape (batch,), each in [0, 1].
         """
         batch_size, _ = child_embeddings.shape
 
@@ -95,14 +135,17 @@ class CrossAttentionHead(nn.Module):
         # Map to probability
         return torch.sigmoid(mean_score)
 
+
 class AlexbekCrossAttnLearner(AutoLearner):
     """Cross-Attention Taxonomy Learner (inherits AutoLearner).
 
-    - Encodes type strings with a SentenceTransformer.
-    - Trains a small cross-attention head to score (parent, child) edges.
-    - Predicts probabilities for provided pairs.
+    Workflow
+    - Encode terms with a SentenceTransformer.
+    - Train a compact cross-attention head on (parent, child) pairs
+      (positives + sampled negatives) using BCE loss.
+    - Inference returns probabilities per pair; edges with prob >= 0.5 are
+      labeled as positive.
 
-    Helper functions live in this same module (below), *not* as class methods.
     """
 
     def __init__(
@@ -122,11 +165,26 @@ class AlexbekCrossAttnLearner(AutoLearner):
     ):
         """Configure the learner.
 
-        All configuration is kept directly on the learner (no separate Config class).
+        Args:
+            embedding_model: SentenceTransformer model id/path for term encoding.
+            device: 'cuda' or 'cpu'. If 'cuda' is requested but unavailable, CPU
+                is used.
+            num_heads: Number of heads in the cross-attention scorer.
+            lr: Learning rate for AdamW.
+            weight_decay: Weight decay for AdamW.
+            num_epochs: Number of epochs to train the head.
+            batch_size: Minibatch size for training and scoring loops.
+            neg_ratio: Number of sampled negatives per positive during training.
+            output_dir: Directory to store artifacts (reserved for future use).
+            seed: Random seed for reproducibility.
+            **kwargs: Passed through to `AutoLearner` base init.
+
+        Side Effects:
+            Creates `output_dir` if missing and seeds Python/Torch RNGs.
         """
         super().__init__(**kwargs)
 
-        # ----- hyperparameters / settings -----
+        # hyperparameters / settings
         self.embedding_model_id = embedding_model
         self.requested_device = device
         self.num_heads = num_heads
@@ -157,25 +215,62 @@ class AlexbekCrossAttnLearner(AutoLearner):
         torch.manual_seed(self.seed)
 
     def load(self, **kwargs: Any):
-        """Load the sentence embedding model and initialize the cross-attention head."""
+        """Load the sentence embedding model and initialize the cross-attention head.
+
+        Args:
+            **kwargs: Optional override, supports `embedding_model`.
+
+        Side Effects:
+            - Initializes `self.embedder` on the configured device.
+            - Probes and stores `self.embedding_dim`.
+            - Constructs `self.cross_attn_head` with the probed dimensionality.
+        """
         model_id = kwargs.get("embedding_model", self.embedding_model_id)
-        self.embedder = SentenceTransformer(model_id, trust_remote_code=True, device=str(self.device))
+        self.embedder = SentenceTransformer(
+            model_id, trust_remote_code=True, device=str(self.device)
+        )
 
         # Probe output dimensionality using a dummy encode
-        probe_embedding = self.embedder.encode(["_dim_probe_"], convert_to_tensor=True, normalize_embeddings=False)
+        probe_embedding = self.embedder.encode(
+            ["_dim_probe_"], convert_to_tensor=True, normalize_embeddings=False
+        )
         self.embedding_dim = int(probe_embedding.shape[-1])
 
         # Initialize the cross-attention head
-        self.cross_attn_head = CrossAttentionHead(hidden_size=self.embedding_dim, num_heads=self.num_heads).to(
-            self.device
-        )
+        self.cross_attn_head = CrossAttentionHead(
+            hidden_size=self.embedding_dim, num_heads=self.num_heads
+        ).to(self.device)
 
     def _taxonomy_discovery(self, data: Any, test: bool = False) -> Optional[Any]:
+        """Train or infer taxonomy edges according to the AutoLearner contract.
+
+        Training (`test=False`)
+            - Extract positives (parent, child) and the unique term set from `data`.
+            - Build/extend the term embedding cache.
+            - Sample negatives at ratio `self.negative_ratio`.
+            - Train the cross-attention head with BCE loss.
+
+        Inference (`test=True`)
+            - Ensure embeddings exist for all terms.
+            - Score candidate pairs and return per-pair probabilities and labels.
+
+        Args:
+            data: Ontology-like object exposing `type_taxonomies.taxonomies`,
+                where each item has `.parent` and `.child` string-like fields.
+            test: If True, perform inference instead of training.
+
+        Returns:
+            - `None` on training.
+            - On inference: List of dicts
+              `{"parent": str, "child": str, "score": float, "label": int}`.
+        """
         if self.embedder is None or self.cross_attn_head is None:
             self.load()
 
         if not test:
-            positive_pairs, unique_terms = self._extract_parent_child_pairs_and_terms(data)
+            positive_pairs, unique_terms = self._extract_parent_child_pairs_and_terms(
+                data
+            )
             self._ensure_term_embeddings(unique_terms)
             negative_pairs = self._sample_negative_pairs(
                 positive_pairs, unique_terms, ratio=self.negative_ratio, seed=self.seed
@@ -183,27 +278,42 @@ class AlexbekCrossAttnLearner(AutoLearner):
             self._train_cross_attn_head(positive_pairs, negative_pairs)
             return None
         else:
-            candidate_pairs, unique_terms = self._extract_parent_child_pairs_and_terms(data)
+            candidate_pairs, unique_terms = self._extract_parent_child_pairs_and_terms(
+                data
+            )
             self._ensure_term_embeddings(unique_terms, append_only=True)
             probabilities = self._score_parent_child_pairs(candidate_pairs)
 
             predictions = [
-                {"parent": parent, "child": child, "score": float(prob), "label": int(prob >= 0.5)}
+                {
+                    "parent": parent,
+                    "child": child,
+                    "score": float(prob),
+                    "label": int(prob >= 0.5),
+                }
                 for (parent, child), prob in zip(candidate_pairs, probabilities)
             ]
             return predictions
 
-    def _ensure_term_embeddings(self, terms: List[str], append_only: bool = False) -> None:
+    def _ensure_term_embeddings(
+        self, terms: List[str], append_only: bool = False
+    ) -> None:
         """Encode terms with the sentence embedder and store in cache.
 
         Args:
-            terms: list of unique strings to embed
-            append_only: if True, only embed terms missing from cache
+            terms: List of unique term strings to embed.
+            append_only: If True, only embed terms missing from the cache;
+                otherwise (re)encode all provided terms.
+
+        Raises:
+            RuntimeError: If called before `load()`.
         """
         if self.embedder is None:
             raise RuntimeError("Call load() before building term embeddings")
 
-        terms_to_encode = [t for t in terms if t not in self.term_to_vector] if append_only else terms
+        terms_to_encode = (
+            [t for t in terms if t not in self.term_to_vector] if append_only else terms
+        )
         if not terms_to_encode:
             return
 
@@ -217,38 +327,78 @@ class AlexbekCrossAttnLearner(AutoLearner):
         for term, embedding in zip(terms_to_encode, embeddings):
             self.term_to_vector[term] = embedding.detach().to(self.device)
 
-    def _pairs_as_tensors(self, pairs: List[Tuple[str, str]]) -> Tuple[torch.Tensor, torch.Tensor]:
-        """Turn list of (parent, child) strings into two aligned tensors on device."""
+    def _pairs_as_tensors(
+        self, pairs: List[Tuple[str, str]]
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        """Convert string pairs into aligned embedding tensors on the correct device.
+
+        Args:
+            pairs: List of (parent, child) term strings.
+
+        Returns:
+            Tuple `(child_tensor, parent_tensor)` where each tensor has shape
+            `(batch, embedding_dim)` and is located on `self.device`.
+
+        Notes:
+            This function assumes that all terms in `pairs` are present in
+            `self.term_to_vector`. Use `_ensure_term_embeddings` beforehand.
+        """
         # child embeddings tensor of shape (batch, dim)
-        child_tensor = torch.stack([self.term_to_vector[child] for (_, child) in pairs], dim=0).to(self.device)
+        child_tensor = torch.stack(
+            [self.term_to_vector[child] for (_, child) in pairs], dim=0
+        ).to(self.device)
         # parent embeddings tensor of shape (batch, dim)
-        parent_tensor = torch.stack([self.term_to_vector[parent] for (parent, _) in pairs], dim=0).to(self.device)
+        parent_tensor = torch.stack(
+            [self.term_to_vector[parent] for (parent, _) in pairs], dim=0
+        ).to(self.device)
         return child_tensor, parent_tensor
 
-    def _train_cross_attn_head(self, positive_pairs: List[Tuple[str, str]], negative_pairs: List[Tuple[str, str]]) -> None:
-        """Train the cross-attention head with BCE loss on labeled pairs."""
+    def _train_cross_attn_head(
+        self,
+        positive_pairs: List[Tuple[str, str]],
+        negative_pairs: List[Tuple[str, str]],
+    ) -> None:
+        """Train the cross-attention head with BCE loss on labeled pairs.
+
+        The dataset is a concatenation of positives (label 1) and sampled
+        negatives (label 0). The head is optimized with AdamW.
+
+        Args:
+            positive_pairs: List of ground-truth (parent, child) edges.
+            negative_pairs: List of sampled non-edges.
+
+        Raises:
+            RuntimeError: If the head has not been initialized (call `load()`).
+        """
         if self.cross_attn_head is None:
             raise RuntimeError("Head not initialized. Call load().")
 
         self.cross_attn_head.train()
         optimizer = torch.optim.AdamW(
-            self.cross_attn_head.parameters(), lr=self.learning_rate, weight_decay=self.weight_decay
+            self.cross_attn_head.parameters(),
+            lr=self.learning_rate,
+            weight_decay=self.weight_decay,
         )
 
         # Build a simple supervised dataset: 1 for positive, 0 for negative
-        labeled_pairs: List[Tuple[int, Tuple[str, str]]] = [(1, pc) for pc in positive_pairs] + [
-            (0, nc) for nc in negative_pairs
-        ]
+        labeled_pairs: List[Tuple[int, Tuple[str, str]]] = [
+            (1, pc) for pc in positive_pairs
+        ] + [(0, nc) for nc in negative_pairs]
         random.shuffle(labeled_pairs)
 
-        def iterate_minibatches(items: List[Tuple[int, Tuple[str, str]]], batch_size: int):
+        def iterate_minibatches(
+            items: List[Tuple[int, Tuple[str, str]]], batch_size: int
+        ):
+            """Yield contiguous minibatches of size `batch_size` from `items`."""
             for start in range(0, len(items), batch_size):
                 yield items[start : start + batch_size]
 
         for epoch in range(self.num_epochs):
             epoch_loss_sum = 0.0
             for minibatch in iterate_minibatches(labeled_pairs, self.batch_size):
-                labels = torch.tensor([y for y, _ in minibatch], dtype=torch.float32, device=self.device)
+                labels = torch.tensor(
+                    [y for y, _ in minibatch], dtype=torch.float32, device=self.device
+                )
                 string_pairs = [pc for _, pc in minibatch]
                 child_tensor, parent_tensor = self._pairs_as_tensors(string_pairs)
 
@@ -261,9 +411,18 @@ class AlexbekCrossAttnLearner(AutoLearner):
 
                 epoch_loss_sum += float(loss.item()) * len(minibatch)
 
-
     def _score_parent_child_pairs(self, pairs: List[Tuple[str, str]]) -> List[float]:
-        """Compute probability scores for (parent, child) pairs."""
+        """Compute probability scores for (parent, child) pairs.
+
+        Args:
+            pairs: List of candidate (parent, child) edges to score.
+
+        Returns:
+            List of floats in [0, 1] corresponding to the input order.
+
+        Raises:
+            RuntimeError: If the head has not been initialized (call `load()`).
+        """
         if self.cross_attn_head is None:
             raise RuntimeError("Head not initialized. Call load().")
 
@@ -277,8 +436,23 @@ class AlexbekCrossAttnLearner(AutoLearner):
                 scores.extend(prob.detach().cpu().tolist())
         return scores
 
-    def _extract_parent_child_pairs_and_terms(self, data):
-        parent_child_pairs = []
+    def _extract_parent_child_pairs_and_terms(
+        self, data: Any
+    ) -> Tuple[List[Tuple[str, str]], List[str]]:
+        """Extract (parent, child) edges and the set of unique terms from an ontology-like object.
+
+        The function expects `data.type_taxonomies.taxonomies` to be an iterable
+        of objects with `.parent` and `.child` string-like attributes.
+
+        Args:
+            data: Ontology-like container.
+
+        Returns:
+            A tuple `(pairs, terms)` where:
+                - `pairs` is a list of (parent, child) strings,
+                - `terms` is a sorted list of unique term strings (parents ∪ children).
+        """
+        parent_child_pairs: List[Tuple[str, str]] = []
         unique_terms = set()
         for edge in getattr(data, "type_taxonomies").taxonomies:
             parent, child = str(edge.parent), str(edge.child)
@@ -287,11 +461,32 @@ class AlexbekCrossAttnLearner(AutoLearner):
             unique_terms.add(child)
         return parent_child_pairs, sorted(unique_terms)
 
-    def _sample_negative_pairs(self, positive_pairs, terms, ratio: float = 1.0, seed: int = 42):
+    def _sample_negative_pairs(
+        self,
+        positive_pairs: List[Tuple[str, str]],
+        terms: List[str],
+        ratio: float = 1.0,
+        seed: int = 42,
+    ) -> List[Tuple[str, str]]:
+        """Sample random negative (parent, child) pairs not present in positives.
+
+        Sampling is uniform over the Cartesian product of `terms` excluding
+        (x, x) self-pairs and any pair found in `positive_pairs`.
+
+        Args:
+            positive_pairs: Known positive edges to exclude.
+            terms: Candidate vocabulary (parents ∪ children).
+            ratio: Number of negatives per positive to draw.
+            seed: RNG seed used for reproducible sampling.
+
+        Returns:
+            A list of sampled negative pairs of approximate length
+            `int(len(positive_pairs) * ratio)`.
+        """
         random.seed(seed)
         term_list = list(terms)
         positive_set = set(positive_pairs)
-        negatives = []
+        negatives: List[Tuple[str, str]] = []
         target_negative_count = int(len(positive_pairs) * ratio)
         while len(negatives) < target_negative_count:
             parent = random.choice(term_list)

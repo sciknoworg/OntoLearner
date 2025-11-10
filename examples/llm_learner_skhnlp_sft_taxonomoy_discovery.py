@@ -1,6 +1,6 @@
 # Import core modules from the OntoLearner library
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
-from ontolearner import SKHNLPSequentialFTLearner
+from ontolearner.learner.taxonomy_discovery.skhnlp import SKHNLPSequentialFTLearner
 
 # Load ontology and split
 # Load the GeoNames ontology for taxonomy discovery.
@@ -10,11 +10,7 @@ ontology.load()
 data = ontology.extract()
 
 # Split the taxonomic relationships into train and test sets
-train_data, test_data = train_test_split(
-    data,
-    test_size=0.2,
-    random_state=42
-)
+train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 
 # Configure the learner with user-defined training args + device
 # Configure the supervised BERT SFT Learner for taxonomy discovery.
@@ -23,7 +19,7 @@ bert_learner = SKHNLPSequentialFTLearner(
     model_name="bert-large-uncased",
     n_prompts=2,
     random_state=1403,
-    device="cpu", # Note: CPU training for BERT-Large is very slow.
+    device="cpu",  # Note: CPU training for BERT-Large is very slow.
     output_dir="./results/",
     num_train_epochs=1,
     per_device_train_batch_size=8,

@@ -1,30 +1,30 @@
 # Import core modules from the OntoLearner library
 from ontolearner import AgrO, train_test_split, LearnerPipeline
+
 # Import the specific Zero-Shot Learner implementation for Term Typing
-from ontolearner import SBUNLPZSLearner
+from ontolearner.learner.term_typing.sbunlp import SBUNLPZSLearner
 
 # Load ontology and split
 # Load the AgrO ontology for type inventory and test data.
 ontology = AgrO()
 ontology.load()
-data = ontology.extract() # Extract the full set of relationships/terms
+data = ontology.extract()  # Extract the full set of relationships/terms
 
 # Split the data into train (to learn type inventory) and test (terms to predict)
 train_data, test_data = train_test_split(
     data,
-    test_size=0.6, # 60% of data used for testing
+    test_size=0.6,  # 60% of data used for testing
     random_state=42,
 )
 
 # Configure the Qwen Zero-Shot learner (inference-only)
 # This learner's 'fit' phase learns the vocabulary of allowed type labels.
 llm_learner = SBUNLPZSLearner(
-    # Model / decoding
-    model_id="Qwen/Qwen2.5-0.5B-Instruct", # The Qwen model to load
-    # device= is auto-detected
-    max_new_tokens=64,         # Sufficient length for JSON list of types
-    temperature=0.0,           # Ensures deterministic (greedy) output
-    # token= None,             # Assuming public model access
+    device="cpu",
+    max_new_tokens=64,
+    temperature=0.0,
+    model_id="Qwen/Qwen2.5-0.5B-Instruct",
+    token=None,
 )
 
 # Build pipeline and run
@@ -33,7 +33,7 @@ pipe = LearnerPipeline(
     llm=llm_learner,
     llm_id=llm_learner.model_id,
     ontologizer_data=False,
-    device="cpu",             #  select CUDA or CPU
+    device="cpu",  #  select CUDA or CPU
 )
 
 # Run the full learning pipeline on the Term-Typing task

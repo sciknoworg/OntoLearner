@@ -12,6 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Learners for supervised and retrieval-augmented *term typing*.
+
+This module implements two learners:
+
+- **AlexbekRFLearner** (retriever/classifier):
+  Encodes terms with a Hugging Face encoder, optionally augments with simple
+  graph features, and trains a One-vs-Rest RandomForest for multi-label typing.
+
+- **AlexbekRAGLearner** (retrieval-augmented generation):
+  Builds an in-memory example index with sentence embeddings, retrieves
+  nearest examples for each query term, then prompts an instruction-tuned
+  causal LLM to produce types, parsing the JSON response.
+
+Both learners conform to the `AutoLearner` / `AutoRetriever` APIs used in
+the outer pipeline.
+"""
+
 import gc
 import json
 import re
@@ -31,22 +48,19 @@ from sentence_transformers import SentenceTransformer
 
 from ...base import AutoLearner, AutoRetriever
 
+
 class AlexbekRFLearner(AutoRetriever):
     """
     Embedding-based multi-label classifier for *term typing*.
 
-    Pipeline overview:
-      1) Load a Hugging Face encoder (tokenizer + model).
-      2) Encode input terms into sentence embeddings.
-      3) Optionally augment with simple graph (co-occurrence) features.
-      4) Train a One-vs-Rest RandomForest on the concatenated features.
-      5) Predict multi-label types with a probability threshold (fallback to top-1).
+    Pipeline
+    1) Load a Hugging Face encoder (tokenizer + model).
+    2) Encode input terms into sentence embeddings.
+    3) Optionally augment with simple graph (co-occurrence) features.
+    4) Train a One-vs-Rest RandomForest on the concatenated features.
+    5) Predict multi-label types with a probability threshold (fallback to top-1).
 
-    API expected by LearnerPipeline:
-      - load(model_id)
-      - fit(data, task, ontologizer=True)
-      - predict(data, task, ontologizer=True)
-      - tasks_ground_truth_former(data, task)
+    Implements the `AutoRetriever` interface used by the outer pipeline.
     """
 
     def __init__(
@@ -58,6 +72,23 @@ class AlexbekRFLearner(AutoRetriever):
         use_graph_features: bool = True,
         rf_kwargs: Optional[Dict[str, Any]] = None,
     ):
+        """Configure the RF-based multi-label learner.
+
+        Parameters
+        device:
+            Torch device spec ('cpu' or 'cuda').
+        batch_size:
+            Encoding mini-batch size for the transformer.
+        max_length:
+            Maximum input token length for the encoder tokenizer.
+        threshold:
+            Per-label probability threshold at prediction time.
+        use_graph_features:
+            If True, add simple graph features to embeddings.
+        rf_kwargs:
+            Optional RandomForest hyperparameters dictionary.
+
+        """
         # Runtime / inference settings
         self.device = torch.device(device)
         self.batch_size = batch_size
@@ -81,21 +112,50 @@ class AlexbekRFLearner(AutoRetriever):
         self.term_graph: Optional[nx.Graph] = None
 
     def load(self, model_id: str, **_: Any) -> None:
-        """Load a Hugging Face encoder by model id (tokenizer + base model)."""
+        """Load a Hugging Face encoder by model id (tokenizer + base model).
+
+        Parameters
+        model_id:
+            HF model identifier or local path for an encoder backbone.
+
+        Side Effects
+        - Sets `self.model_name`, `self.tokenizer`, `self.embedding_model`.
+        - Puts the model in eval mode and moves it to `self.device`.
+        """
         self.model_name = model_id
         self.tokenizer = AutoTokenizer.from_pretrained(model_id)
         self.embedding_model = AutoModel.from_pretrained(model_id)
         self.embedding_model.eval().to(self.device)
 
     def fit(self, data: Any, task: str, ontologizer: bool = True, **_: Any) -> None:
-        """Train the One-vs-Rest RandomForest on term embeddings (+ optional graph features)."""
+        """Train the One-vs-Rest RandomForest on term embeddings (+ optional graph features).
+
+        Parameters
+        data:
+            Training payload; supported formats are routed via `_as_term_types_dicts`.
+            Each example must contain at least `{"term": str, "types": List[str]}`.
+        task:
+            Must be `'term-typing'`.
+        ontologizer:
+            Unused here; accepted for API compatibility.
+        **_:
+            Ignored extra arguments.
+
+        Raises
+        ValueError
+            If `task` is not `'term-typing'` or if no valid examples are found.
+        """
         if task != "term-typing":
-            raise ValueError("OntologyTypeRFClassifier supports only task='term-typing'.")
+            raise ValueError(
+                "OntologyTypeRFClassifier supports only task='term-typing'."
+            )
 
         # Normalize incoming training data into a list of dicts: {term, types, RAG}
         training_rows = self._as_term_types_dicts(data)
         if not training_rows:
-            raise ValueError("No valid training examples found (need 'term' and 'types').")
+            raise ValueError(
+                "No valid training examples found (need 'term' and 'types')."
+            )
 
         # Split out terms and raw labels
         training_terms: List[str] = [row["term"] for row in training_rows]
@@ -110,7 +170,9 @@ class AlexbekRFLearner(AutoRetriever):
         # Optionally build a light-weight co-occurrence graph and extract features
         if self.use_graph_features:
             self.term_graph = self._create_term_graph(training_rows)
-            graph_features_train = self._extract_graph_features(self.term_graph, training_terms)
+            graph_features_train = self._extract_graph_features(
+                self.term_graph, training_terms
+            )
             X_train = np.hstack([term_embeddings_train, graph_features_train])
         else:
             self.term_graph = None
@@ -120,18 +182,48 @@ class AlexbekRFLearner(AutoRetriever):
         Y_train = self.label_binarizer.transform(raw_label_lists)
 
         # One-vs-Rest RandomForest (one binary RF per label)
-        self.ovr_random_forest = OneVsRestClassifier(RandomForestClassifier(**self.rf_kwargs))
+        self.ovr_random_forest = OneVsRestClassifier(
+            RandomForestClassifier(**self.rf_kwargs)
+        )
         self.ovr_random_forest.fit(X_train, Y_train)
 
-
-    def predict(self, data: Any, task: str, ontologizer: bool = True, **_: Any) -> List[Dict[str, Any]]:
+    def predict(
+        self, data: Any, task: str, ontologizer: bool = True, **_: Any
+    ) -> List[Dict[str, Any]]:
         """Predict multi-label types for input terms.
 
-        Returns a list of dicts with keys: {id, term, types}.
+        Parameters
+        data:
+            Evaluation payload; formats normalized by `_as_predict_terms_ids`.
+        task:
+            Must be `'term-typing'`.
+        ontologizer:
+            Unused here; accepted for API compatibility.
+        **_:
+            Ignored extra arguments.
+
+        Returns
+        List[Dict[str, Any]]
+            A list of dictionaries with keys:
+            - `id`: Original example id (if provided).
+            - `term`: Input term string.
+            - `types`: List of predicted label strings (selected by threshold or top-1).
+
+        Raises
+        ValueError
+            If `task` is not `'term-typing'`.
+        RuntimeError
+            If `load()` and `fit()` have not been called.
         """
         if task != "term-typing":
-            raise ValueError("OntologyTypeRFClassifier supports only task='term-typing'.")
-        if self.ovr_random_forest is None or self.tokenizer is None or self.embedding_model is None:
+            raise ValueError(
+                "OntologyTypeRFClassifier supports only task='term-typing'."
+            )
+        if (
+            self.ovr_random_forest is None
+            or self.tokenizer is None
+            or self.embedding_model is None
+        ):
             raise RuntimeError("Call load() and fit() before predict().")
 
         # Normalize prediction input into parallel lists of terms and example ids
@@ -142,7 +234,9 @@ class AlexbekRFLearner(AutoRetriever):
 
         # Match feature layout used during training
         if self.use_graph_features and self.term_graph is not None:
-            graph_features_test = self._extract_graph_features(self.term_graph, test_terms)
+            graph_features_test = self._extract_graph_features(
+                self.term_graph, test_terms
+            )
             X_test = np.hstack([term_embeddings_test, graph_features_test])
         else:
             X_test = term_embeddings_test
@@ -160,7 +254,9 @@ class AlexbekRFLearner(AutoRetriever):
             if len(selected_label_indices) == 0:
                 selected_label_indices = [int(np.argmax(label_probabilities))]
 
-            predicted_types = [label_names[label_idx] for label_idx in selected_label_indices]
+            predicted_types = [
+                label_names[label_idx] for label_idx in selected_label_indices
+            ]
 
             predictions.append(
                 {
@@ -172,20 +268,49 @@ class AlexbekRFLearner(AutoRetriever):
         return predictions
 
     def tasks_ground_truth_former(self, data: Any, task: str) -> List[Dict[str, Any]]:
-        """Normalize ground-truth into a list of {id, term, types} dicts for evaluation."""
+        """Normalize ground-truth into a list of {id, term, types} dicts for evaluation.
+
+        Parameters
+        data:
+            Ground-truth payload; supported formats include objects exposing
+            `.term_typings`, a list of dicts, or a list of tuples/lists.
+        task:
+            Must be `'term-typing'`.
+
+        Returns
+        List[Dict[str, Any]]
+            A list of dictionaries with keys `id`, `term`, `types` (list of str).
+
+        Raises
+        ValueError
+            If `task` is not `'term-typing'`.
+        """
         if task != "term-typing":
-            raise ValueError("OntologyTypeRFClassifier supports only task='term-typing'.")
+            raise ValueError(
+                "OntologyTypeRFClassifier supports only task='term-typing'."
+            )
         return self._as_gold_id_term_types(data)
 
     def _encode(self, texts: List[str]) -> np.ndarray:
-        """Encode a list of strings into L2-normalized sentence embeddings (NumPy array).
+        """Encode a list of strings into L2-normalized sentence embeddings.
 
-        If no texts are provided, returns an empty array with width equal to the model hidden size.
+        Parameters
+        texts:
+            List of input texts/terms.
+
+        Returns
+        np.ndarray
+            Array of shape `(len(texts), hidden_size)` with L2-normalized
+            embeddings. If `texts` is empty, returns a `(0, hidden_size)` array.
         """
-        assert self.tokenizer is not None and self.embedding_model is not None, "Call load(model_id) first."
+        assert self.tokenizer is not None and self.embedding_model is not None, (
+            "Call load(model_id) first."
+        )
 
         if not texts:
-            hidden_size = getattr(getattr(self.embedding_model, "config", None), "hidden_size", 768)
+            hidden_size = getattr(
+                getattr(self.embedding_model, "config", None), "hidden_size", 768
+            )
             return np.zeros((0, hidden_size), dtype=np.float32)
 
         batch_embeddings: List[torch.Tensor] = []
@@ -208,11 +333,15 @@ class AlexbekRFLearner(AutoRetriever):
                 model_output = self.embedding_model(**tokenized_batch)
 
                 # Prefer dedicated pooler if provided; otherwise pool by last valid token
-                if hasattr(model_output, "pooler_output") and model_output.pooler_output is not None:
+                if (
+                    hasattr(model_output, "pooler_output")
+                    and model_output.pooler_output is not None
+                ):
                     sentence_embeddings = model_output.pooler_output
                 else:
                     sentence_embeddings = self._last_token_pool(
-                        model_output.last_hidden_state, tokenized_batch["attention_mask"]
+                        model_output.last_hidden_state,
+                        tokenized_batch["attention_mask"],
                     )
 
                 # L2-normalize embeddings for stability
@@ -230,18 +359,44 @@ class AlexbekRFLearner(AutoRetriever):
         # Concatenate all batches and convert to NumPy
         return torch.cat(batch_embeddings, dim=0).numpy()
 
-    def _last_token_pool(self, last_hidden_states: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
-        """Select the last *non-padding* token embedding for each sequence in the batch."""
+    def _last_token_pool(
+        self, last_hidden_states: torch.Tensor, attention_mask: torch.Tensor
+    ) -> torch.Tensor:
+        """Select the last *non-padding* token embedding for each sequence.
+
+        Parameters
+        last_hidden_states:
+            Tensor of shape `(batch, seq_len, hidden)`.
+        attention_mask:
+            Tensor of shape `(batch, seq_len)` with 1 for real tokens.
+
+        Returns
+        torch.Tensor
+            Tensor of shape `(batch, hidden)` with per-sequence pooled embeddings.
+        """
         last_valid_token_idx = attention_mask.sum(dim=1) - 1  # (batch,)
-        batch_row_idx = torch.arange(last_hidden_states.size(0), device=last_hidden_states.device)
+        batch_row_idx = torch.arange(
+            last_hidden_states.size(0), device=last_hidden_states.device
+        )
         return last_hidden_states[batch_row_idx, last_valid_token_idx]
 
     def _create_term_graph(self, training_rows: List[Dict[str, Any]]) -> nx.Graph:
         """Create a simple undirected co-occurrence graph from training rows.
 
-        Nodes: terms (with node attribute 'types').
-        Edges: between a term and each neighbor from its optional RAG list.
-               Edge weight = number of shared types (or 0.1 if none shared).
+        Graph Structure
+        Nodes
+            Terms (node attribute `'types'` is stored per term).
+        Edges
+            Between a term and each neighbor from its optional RAG list.
+            Edge weight = number of shared types (or 0.1 if none shared).
+
+        Parameters
+        training_rows:
+            Normalized rows with keys: `'term'`, `'types'`, optional `'RAG'`.
+
+        Returns
+        networkx.Graph
+            The constructed undirected graph.
         """
         graph = nx.Graph()
 
@@ -251,7 +406,7 @@ class AlexbekRFLearner(AutoRetriever):
             graph.add_node(term, types=term_types)
 
             # RAG may be a list of neighbor dicts like {"term": ..., "types": [...]}
-            for neighbor in (row.get("RAG", []) or []):
+            for neighbor in row.get("RAG", []) or []:
                 neighbor_term = neighbor.get("term")
                 neighbor_types = neighbor.get("types", [])
 
@@ -263,12 +418,24 @@ class AlexbekRFLearner(AutoRetriever):
 
         return graph
 
-    def _extract_graph_features(self, term_graph: nx.Graph, terms: List[str]) -> np.ndarray:
+    def _extract_graph_features(
+        self, term_graph: nx.Graph, terms: List[str]
+    ) -> np.ndarray:
         """Compute simple per-term graph features.
 
+        Feature Vector
         For each term we compute a 4-dim vector:
-          [degree, clustering_coefficient, degree_centrality, pagerank_score]
-        Returns an array of shape [len(terms), 4].
+        `[degree, clustering_coefficient, degree_centrality, pagerank_score]`
+
+        Parameters
+        term_graph:
+            Graph built over training terms.
+        terms:
+            List of term strings to extract features for.
+
+        Returns
+        np.ndarray
+            Array of shape `(len(terms), 4)` (dtype float32).
         """
         if len(term_graph):
             degree_centrality = nx.degree_centrality(term_graph)
@@ -293,7 +460,26 @@ class AlexbekRFLearner(AutoRetriever):
         return np.asarray(feature_rows, dtype=np.float32)
 
     def _as_term_types_dicts(self, data: Any) -> List[Dict[str, Any]]:
-        """Normalize diverse training data formats to a list of dicts: {term, types, RAG}."""
+        """Normalize diverse training data formats to a list of dicts: {term, types, RAG}.
+
+        Supported Inputs
+        - Object with attribute `.term_typings` (iterable of items exposing
+          `.term`, `.types`, optional `.RAG`).
+        - List of dicts with keys `term`, `types`, optional `RAG`.
+        - List/tuple of `(term, types[, RAG])`.
+
+        Parameters
+        data:
+            Training payload.
+
+        Returns
+        List[Dict[str, Any]]
+            Normalized dictionaries ready for training.
+
+        Raises
+        ValueError
+            If `data` is neither a list/tuple nor exposes `.term_typings`.
+        """
         normalized_rows: List[Dict[str, Any]] = []
 
         # Case 1: object with attribute `.term_typings`
@@ -308,13 +494,19 @@ class AlexbekRFLearner(AutoRetriever):
                 if not isinstance(type_list, list):
                     type_list = [type_list]
                 normalized_rows.append(
-                    {"term": str(term_text), "types": [str(x) for x in type_list], "RAG": rag_neighbors}
+                    {
+                        "term": str(term_text),
+                        "types": [str(x) for x in type_list],
+                        "RAG": rag_neighbors,
+                    }
                 )
             return normalized_rows
 
         # Otherwise: must be a list/tuple-like container
         if not isinstance(data, (list, tuple)):
-            raise ValueError("Training data must be a list/tuple or expose .term_typings")
+            raise ValueError(
+                "Training data must be a list/tuple or expose .term_typings"
+            )
 
         if not data:
             return normalized_rows
@@ -330,7 +522,11 @@ class AlexbekRFLearner(AutoRetriever):
                 if not isinstance(type_list, list):
                     type_list = [type_list]
                 normalized_rows.append(
-                    {"term": str(term_text), "types": [str(x) for x in type_list], "RAG": rag_neighbors}
+                    {
+                        "term": str(term_text),
+                        "types": [str(x) for x in type_list],
+                        "RAG": rag_neighbors,
+                    }
                 )
             return normalized_rows
 
@@ -345,13 +541,36 @@ class AlexbekRFLearner(AutoRetriever):
             if not isinstance(type_list, list):
                 type_list = [type_list]
             normalized_rows.append(
-                {"term": str(term_text), "types": [str(x) for x in type_list], "RAG": rag_neighbors}
+                {
+                    "term": str(term_text),
+                    "types": [str(x) for x in type_list],
+                    "RAG": rag_neighbors,
+                }
             )
 
         return normalized_rows
 
     def _as_predict_terms_ids(self, data: Any) -> Tuple[List[str], List[Any]]:
-        """Normalize prediction input into parallel lists: (terms, ids)."""
+        """Normalize prediction input into parallel lists: (terms, ids).
+
+        Supported Inputs
+        - Object with `.term_typings`.
+        - List of dicts with `term` and optional `id`.
+        - List of tuples/lists `(term, id[, ...])`.
+        - List of plain term strings.
+
+        Parameters
+        data:
+            Evaluation payload.
+
+        Returns
+        Tuple[List[str], List[Any]]
+            `(terms, example_ids)` lists aligned by index.
+
+        Raises
+        ValueError
+            If the input format is unsupported.
+        """
         terms: List[str] = []
         example_ids: List[Any] = []
 
@@ -392,7 +611,20 @@ class AlexbekRFLearner(AutoRetriever):
         raise ValueError("Unsupported predict() input format.")
 
     def _as_gold_id_term_types(self, data: Any) -> List[Dict[str, Any]]:
-        """Normalize gold labels into a list of dicts: {id, term, types}."""
+        """Normalize gold labels into a list of dicts: {id, term, types}.
+
+        Supported Inputs
+        Mirrors `_as_term_types_dicts`, but ensures an `id` is set.
+
+        Parameters
+        data:
+            Ground-truth payload.
+
+        Returns
+        List[Dict[str, Any]]
+            `{'id': Any, 'term': str, 'types': List[str]}` entries.
+
+        """
         gold_rows: List[Dict[str, Any]] = []
 
         # Case 1: object with attribute `.term_typings`
@@ -404,7 +636,13 @@ class AlexbekRFLearner(AutoRetriever):
                 type_list = getattr(item, "types", [])
                 if not isinstance(type_list, list):
                     type_list = [type_list]
-                gold_rows.append({"id": gold_id, "term": term_text, "types": [str(t) for t in type_list]})
+                gold_rows.append(
+                    {
+                        "id": gold_id,
+                        "term": term_text,
+                        "types": [str(t) for t in type_list],
+                    }
+                )
             return gold_rows
 
         # Case 2: list/tuple container
@@ -419,7 +657,13 @@ class AlexbekRFLearner(AutoRetriever):
                     type_list = row.get("types", [])
                     if not isinstance(type_list, list):
                         type_list = [type_list]
-                    gold_rows.append({"id": gold_id, "term": term_text, "types": [str(t) for t in type_list]})
+                    gold_rows.append(
+                        {
+                            "id": gold_id,
+                            "term": term_text,
+                            "types": [str(t) for t in type_list],
+                        }
+                    )
                 return gold_rows
 
             # 2b) list of tuples/lists: (term, types[, id])
@@ -432,35 +676,68 @@ class AlexbekRFLearner(AutoRetriever):
                     gold_id = tuple_row[2] if len(tuple_row) > 2 else i
                     if not isinstance(type_list, list):
                         type_list = [type_list]
-                    gold_rows.append({"id": gold_id, "term": term_text, "types": [str(t) for t in type_list]})
+                    gold_rows.append(
+                        {
+                            "id": gold_id,
+                            "term": term_text,
+                            "types": [str(t) for t in type_list],
+                        }
+                    )
                 return gold_rows
 
-        raise ValueError("Unsupported ground-truth input format for tasks_ground_truth_former().")
+        raise ValueError(
+            "Unsupported ground-truth input format for tasks_ground_truth_former()."
+        )
+
 
 class AlexbekRAGLearner(AutoLearner):
     """Retrieval-Augmented Term Typing learner (single task: term-typing).
 
-    Flow:
-      1) fit: collect (term -> [types]) examples, build an in-memory index
-         using a sentence-embedding model.
-      2) predict: for each new term, retrieve top-k similar examples, compose a
-         structured prompt, query an instruction-tuned causal LLM, and parse types.
+    Flow
+    1) `fit`: collect (term -> [types]) examples, build an in-memory index
+       using a sentence-embedding model.
+    2) `predict`: for each new term, retrieve top-k similar examples, compose a
+       structured prompt, query an instruction-tuned causal LLM, and parse types.
 
-    Returns a list of dicts: {"term": str, "types": List[str], "id": Optional[str]}.
+    Returns
+    List[Dict[str, Any]]
+        `{"term": str, "types": List[str], "id": Optional[str]}` rows.
     """
 
     def __init__(
         self,
         llm_model_id: str = "Qwen/Qwen2.5-0.5B-Instruct",
         retriever_model_id: str = "sentence-transformers/all-MiniLM-L6-v2",
-        device: str = "auto",      # "auto" | "cuda" | "cpu"
-        token: str = "",           # HF token if needed
+        device: str = "auto",  # "auto" | "cuda" | "cpu"
+        token: str = "",  # HF token if needed
         top_k: int = 3,
         max_new_tokens: int = 256,
-        gen_batch_size: int = 4,   # generation batch size
+        gen_batch_size: int = 4,  # generation batch size
         enc_batch_size: int = 64,  # embedding batch size
-        **kwargs: Any,             # absorb extra pipeline-style args
+        **kwargs: Any,  # absorb extra pipeline-style args
     ) -> None:
+        """Configure the RAG learner.
+
+        Parameters
+        llm_model_id:
+            HF model id/path for the instruction-tuned causal LLM.
+        retriever_model_id:
+            Sentence-embedding model id for retrieval.
+        device:
+            Device policy ('auto'|'cuda'|'cpu') for the LLM.
+        token:
+            Optional HF token for gated models.
+        top_k:
+            Number of nearest examples to retrieve per query term.
+        max_new_tokens:
+            Decoding budget for the LLM.
+        gen_batch_size:
+            Number of prompts per generation batch.
+        enc_batch_size:
+            Number of texts per embedding batch.
+        **kwargs:
+            Extra configuration captured for downstream use.
+        """
         super().__init__()
 
         # Consolidated configuration for simple serialization
@@ -482,7 +759,7 @@ class AlexbekRAGLearner(AutoLearner):
 
         # Retriever components
         self.embedder: Optional[SentenceTransformer] = None
-        self.indexed_corpus: List[str] = []                  # items: "<term> || [<types>...]"
+        self.indexed_corpus: List[str] = []  # items: "<term> || [<types>...]"
         self.corpus_embeddings: Optional[torch.Tensor] = None
 
         # Training cache of (term, [types]) tuples
@@ -497,15 +774,13 @@ class AlexbekRAGLearner(AutoLearner):
             "2) Be concise. Respond ONLY in JSON using double quotes.\n"
             'Format: {"term":"...", "reasoning":"<<=100 words>>", "types":["...", "..."]}\n'
         )
-        self._user_prompt_template: str = (
-            """{examples}
+        self._user_prompt_template: str = """{examples}
 
             TERM: {term}
 
             TASK: Determine semantic types for the given term based on the domain ontology.
             Remember: types are generalizing categories, not the term itself. Respond in JSON.
             """
-        )
 
     def load(
         self,
@@ -515,7 +790,21 @@ class AlexbekRAGLearner(AutoLearner):
         token: Optional[str] = None,
         **kwargs: Any,
     ) -> None:
-        """Load the LLM and the embedding retriever. Overrides constructor values if provided."""
+        """Load the LLM and the embedding retriever. Overrides constructor values if provided.
+
+        Parameters
+        model_id:
+            Optional override for the LLM model id.
+        retriever_id:
+            Optional override for the embedding model id.
+        device:
+            Optional override for device selection policy.
+        token:
+            Optional override for HF token.
+        **kwargs:
+            Extra values to store in `extra_cfg`.
+
+        """
         if model_id is not None:
             self.cfg["llm_model_id"] = model_id
         if retriever_id is not None:
@@ -556,10 +845,26 @@ class AlexbekRAGLearner(AutoLearner):
         generation_cfg.num_beams = 1
 
         # Retriever
-        self.embedder = SentenceTransformer(self.cfg["retriever_model_id"], trust_remote_code=True)
+        self.embedder = SentenceTransformer(
+            self.cfg["retriever_model_id"], trust_remote_code=True
+        )
 
     def fit(self, train_data: Any, task: str, ontologizer: bool = True) -> None:
-        """Prepare the retrieval index from training examples."""
+        """Prepare the retrieval index from training examples.
+
+        Parameters
+        train_data:
+            Training payload containing terms and their types.
+        task:
+            Must be `'term-typing'`; other tasks are forwarded to base.
+        ontologizer:
+            Unused flag for API compatibility.
+
+        Side Effects
+        - Normalizes to a list of `(term, [types])`.
+        - Builds an indexable text corpus and (if embedder is loaded)
+          computes embeddings for retrieval.
+        """
         if task != "term-typing":
             return super().fit(train_data, task, ontologizer)
 
@@ -568,7 +873,8 @@ class AlexbekRAGLearner(AutoLearner):
 
         # Build the textual corpus to index
         self.indexed_corpus = [
-            f"{term} || {json.dumps(types, ensure_ascii=False)}" for term, types in self.train_term_types
+            f"{term} || {json.dumps(types, ensure_ascii=False)}"
+            for term, types in self.train_term_types
         ]
 
         # Embed the corpus if available; else fall back to zero-shot prompting
@@ -578,7 +884,23 @@ class AlexbekRAGLearner(AutoLearner):
             self.corpus_embeddings = None
 
     def predict(self, eval_data: Any, task: str, ontologizer: bool = True) -> Any:
-        """Predict types for evaluation items; returns a list of {term, types, id?}."""
+        """Predict types for evaluation items; returns a list of {term, types, id?}.
+
+        Parameters
+        eval_data:
+            Evaluation payload to type (terms + optional ids).
+        task:
+            Must be `'term-typing'`; other tasks are forwarded to base.
+        ontologizer:
+            Unused flag for API compatibility.
+
+        Returns
+        List[Dict[str, Any]]
+            For each input term, a dictionary with keys:
+            - `term`: The input term.
+            - `types`: A (unique, sorted) list of predicted types.
+            - `id`: Optional example id (if provided in input).
+        """
         if task != "term-typing":
             return super().predict(eval_data, task, ontologizer)
 
@@ -588,11 +910,15 @@ class AlexbekRAGLearner(AutoLearner):
 
         # Use RAG if we have an indexed corpus & embeddings; otherwise zero-shot
         rag_available = (
-            self.corpus_embeddings is not None and self.embedder is not None and len(self.indexed_corpus) > 0
+            self.corpus_embeddings is not None
+            and self.embedder is not None
+            and len(self.indexed_corpus) > 0
         )
 
         if rag_available:
-            neighbor_docs_per_query = self._retrieve_batch(eval_terms, top_k=int(self.cfg["top_k"]))
+            neighbor_docs_per_query = self._retrieve_batch(
+                eval_terms, top_k=int(self.cfg["top_k"])
+            )
         else:
             neighbor_docs_per_query = [[] for _ in eval_terms]
 
@@ -608,7 +934,9 @@ class AlexbekRAGLearner(AutoLearner):
 
         # Build standardized results
         results: List[Dict[str, Any]] = []
-        for term, example_id, predicted_types in zip(eval_terms, eval_ids, predicted_types_lists):
+        for term, example_id, predicted_types in zip(
+            eval_terms, eval_ids, predicted_types_lists
+        ):
             result_row: Dict[str, Any] = {
                 "term": term,
                 "types": sorted({t for t in predicted_types}),  # unique + sorted
@@ -617,11 +945,28 @@ class AlexbekRAGLearner(AutoLearner):
                 result_row["id"] = example_id
             results.append(result_row)
 
-        assert all(("term" in row and "types" in row) for row in results), "predict() must return term + types"
+        assert all(("term" in row and "types" in row) for row in results), (
+            "predict() must return term + types"
+        )
         return results
 
     def _unpack_train(self, data: Any) -> List[Tuple[str, List[str]]]:
-        """Extract (term, [types]) tuples from supported training payloads."""
+        """Extract `(term, [types])` tuples from supported training payloads.
+
+        Supported Inputs
+        - `data.term_typings` (objects exposing `.term` & `.types`)
+        - `list[dict]` with keys `'term'` and `'types'`
+        - `list[str]` → returns empty (nothing to index)
+        - other formats → empty
+
+        Parameters
+        data:
+            Training payload.
+
+        Returns
+        List[Tuple[str, List[str]]]
+            (term, types) tuples (types kept as strings).
+        """
         term_typings = getattr(data, "term_typings", None)
         if term_typings is not None:
             parsed_pairs: List[Tuple[str, List[str]]] = []
@@ -629,7 +974,9 @@ class AlexbekRAGLearner(AutoLearner):
                 term = getattr(item, "term", None)
                 types = list(getattr(item, "types", []) or [])
                 if term and types:
-                    parsed_pairs.append((term, [t for t in types if isinstance(t, str)]))
+                    parsed_pairs.append(
+                        (term, [t for t in types if isinstance(t, str)])
+                    )
             return parsed_pairs
 
         if isinstance(data, list) and data and isinstance(data[0], dict):
@@ -638,17 +985,35 @@ class AlexbekRAGLearner(AutoLearner):
                 term = row.get("term")
                 types = row.get("types") or []
                 if term and isinstance(types, list) and types:
-                    parsed_pairs.append((term, [t for t in types if isinstance(t, str)]))
+                    parsed_pairs.append(
+                        (term, [t for t in types if isinstance(t, str)])
+                    )
             return parsed_pairs
 
         # If only a list of strings is provided, there's nothing to index for RAG
-        if isinstance(data, (list, set, tuple)) and all(isinstance(x, str) for x in data):
+        if isinstance(data, (list, set, tuple)) and all(
+            isinstance(x, str) for x in data
+        ):
             return []
 
         return []
 
     def _unpack_eval(self, data: Any) -> Tuple[List[str], List[Optional[str]]]:
-        """Extract (terms, ids) from supported evaluation payloads."""
+        """Extract `(terms, ids)` from supported evaluation payloads.
+
+        Supported Inputs
+        - `data.term_typings` (objects exposing `.term` & optional `.id`)
+        - `list[str]`
+        - `list[dict]` with `term` and optional `id`
+
+        Parameters
+        data:
+            Evaluation payload.
+
+        Returns
+        Tuple[List[str], List[Optional[str]]]
+            Two lists aligned by index: terms and ids (ids may contain `None`).
+        """
         term_typings = getattr(data, "term_typings", None)
         if term_typings is not None:
             terms: List[str] = []
@@ -672,24 +1037,50 @@ class AlexbekRAGLearner(AutoLearner):
         return [], []
 
     def _encode_texts(self, texts: List[str]) -> torch.Tensor:
-        """Encode a batch of texts with the sentence-embedding model."""
+        """Encode a batch of texts with the sentence-embedding model.
+
+        Parameters
+        texts:
+            List of strings to embed.
+
+        Returns
+        torch.Tensor
+            Tensor of shape `(len(texts), hidden_dim)`. If `texts` is empty,
+            returns an empty tensor with 0 rows.
+        """
         batch_size = int(self.cfg["enc_batch_size"])
         batch_embeddings: List[torch.Tensor] = []
 
         for batch_start in range(0, len(texts), batch_size):
             batch_texts = texts[batch_start : batch_start + batch_size]
-            embeddings = self.embedder.encode(batch_texts, convert_to_tensor=True, show_progress_bar=False)
+            embeddings = self.embedder.encode(
+                batch_texts, convert_to_tensor=True, show_progress_bar=False
+            )
             batch_embeddings.append(embeddings)
 
-        return torch.cat(batch_embeddings, dim=0) if batch_embeddings else torch.empty(0)
+        return (
+            torch.cat(batch_embeddings, dim=0) if batch_embeddings else torch.empty(0)
+        )
 
     def _retrieve_batch(self, queries: List[str], top_k: int) -> List[List[str]]:
-        """Return for each query the top-k most similar corpus entries (as raw text rows)."""
+        """Return for each query the top-k most similar corpus entries.
+
+        Parameters
+        queries:
+            List of query terms.
+        top_k:
+            Number of neighbors to retrieve for each query.
+
+        Returns
+        List[List[str]]
+            For each query, a list of raw corpus strings formatted as
+            `"<term> || [\\"type1\\", ...]"`.
+        """
         if self.corpus_embeddings is None or not self.indexed_corpus:
             return [[] for _ in queries]
 
-        query_embeddings = self._encode_texts(queries)   # [Q, D]
-        doc_embeddings = self.corpus_embeddings          # [N, D]
+        query_embeddings = self._encode_texts(queries)  # [Q, D]
+        doc_embeddings = self.corpus_embeddings  # [N, D]
         if query_embeddings.shape[-1] != doc_embeddings.shape[-1]:
             raise ValueError(
                 f"Embedding dim mismatch: {query_embeddings.shape[-1]} vs {doc_embeddings.shape[-1]}"
@@ -705,7 +1096,16 @@ class AlexbekRAGLearner(AutoLearner):
         return [[self.indexed_corpus[j] for j in row.tolist()] for row in top_indices]
 
     def _decode_examples(self, docs: List[str]) -> List[Tuple[str, List[str]]]:
-        """Parse raw corpus rows ('term || [types]') into (term, [types]) pairs."""
+        """Parse raw corpus rows ('term || [types]') into `(term, [types])` pairs.
+
+        Parameters
+        docs:
+            Raw strings from the index/corpus.
+
+        Returns
+        List[Tuple[str, List[str]]]
+            Parsed (term, types) pairs; malformed rows are skipped.
+        """
         example_pairs: List[Tuple[str, List[str]]] = []
         for raw_row in docs:
             try:
@@ -713,13 +1113,24 @@ class AlexbekRAGLearner(AutoLearner):
                 term = term_raw.strip()
                 types_list = json.loads(types_json.strip())
                 if isinstance(types_list, list):
-                    example_pairs.append((term, [t for t in types_list if isinstance(t, str)]))
+                    example_pairs.append(
+                        (term, [t for t in types_list if isinstance(t, str)])
+                    )
             except Exception:
                 continue
         return example_pairs
 
     def _format_examples(self, pairs: List[Tuple[str, List[str]]]) -> str:
-        """Format retrieved example pairs into a compact block for the prompt."""
+        """Format retrieved example pairs into a compact block for the prompt.
+
+        Parameters
+        pairs:
+            Retrieved `(term, [types])` examples.
+
+        Returns
+        str
+            Human-readable lines to provide *light* guidance to the LLM.
+        """
         if not pairs:
             return "EXAMPLES: (none provided)"
         lines: List[str] = ["CLASSIFICATION EXAMPLES:"]
@@ -730,12 +1141,34 @@ class AlexbekRAGLearner(AutoLearner):
         return "\n".join(lines)
 
     def _compose_prompt(self, examples_block: str, term: str) -> str:
-        """Compose the final prompt from system + user blocks."""
-        user_block = self._user_prompt_template.format(examples=examples_block, term=term)
+        """Compose the final prompt from system + user blocks.
+
+        Parameters
+        examples_block:
+            Text block with retrieved examples.
+        term:
+            The query term to classify.
+
+        Returns
+        str
+            Full prompt string passed to the LLM.
+        """
+        user_block = self._user_prompt_template.format(
+            examples=examples_block, term=term
+        )
         return f"{self._system_prompt}\n\n{user_block}\n"
 
     def _generate_and_parse(self, prompts: List[str]) -> List[List[str]]:
-        """Run generation for a batch of prompts and parse the JSON 'types' from outputs."""
+        """Run generation for a batch of prompts and parse the JSON `'types'` from outputs.
+
+        Parameters
+        prompts:
+            Finalized prompts for the LLM.
+
+        Returns
+        List[List[str]]
+            For each prompt, a list of predicted type strings.
+        """
         batch_size = int(self.cfg["gen_batch_size"])
         all_predicted_types: List[List[str]] = []
 
@@ -744,7 +1177,9 @@ class AlexbekRAGLearner(AutoLearner):
 
             # Tokenize and move to the LLM's device
             model_device = getattr(self.generation_model, "device", None)
-            encodings = self.tokenizer(prompt_batch, return_tensors="pt", padding=True).to(model_device)
+            encodings = self.tokenizer(
+                prompt_batch, return_tensors="pt", padding=True
+            ).to(model_device)
             input_token_length = encodings["input_ids"].shape[1]
 
             # Deterministic decoding (greedy)
@@ -762,9 +1197,14 @@ class AlexbekRAGLearner(AutoLearner):
 
             # Slice off the prompt tokens and decode only newly generated tokens
             new_token_span = generated_tokens[:, input_token_length:]
-            decoded_texts = [self.tokenizer.decode(seq, skip_special_tokens=True) for seq in new_token_span]
+            decoded_texts = [
+                self.tokenizer.decode(seq, skip_special_tokens=True)
+                for seq in new_token_span
+            ]
 
-            parsed_types_per_prompt = [self._parse_types(text) for text in decoded_texts]
+            parsed_types_per_prompt = [
+                self._parse_types(text) for text in decoded_texts
+            ]
             all_predicted_types.extend(parsed_types_per_prompt)
 
         return all_predicted_types
@@ -772,11 +1212,19 @@ class AlexbekRAGLearner(AutoLearner):
     def _parse_types(self, text: str) -> List[str]:
         """Extract a list of type strings from LLM output.
 
-        Attempts (in order):
-          1) Strict JSON object with "types".
-          2) Regex-extract JSON object containing "types".
-          3) Regex-extract first bracketed list.
-          4) Comma-split fallback.
+        Parsing Strategy (in order)
+        1) Strict JSON object with `"types"`.
+        2) Regex-extract JSON object containing `"types"`.
+        3) Regex-extract first bracketed list.
+        4) Comma-split fallback.
+
+        Parameters
+        text:
+            Raw LLM output to parse.
+
+        Returns
+        List[str]
+            Parsed list of type strings (possibly empty if parsing fails).
         """
         try:
             obj = json.loads(text)
@@ -786,7 +1234,9 @@ class AlexbekRAGLearner(AutoLearner):
             pass
 
         try:
-            obj_match = re.search(r'\{[^{}]*"types"\s*:\s*\[[^\]]*\][^{}]*\}', text, re.S)
+            obj_match = re.search(
+                r'\{[^{}]*"types"\s*:\s*\[[^\]]*\][^{}]*\}', text, re.S
+            )
             if obj_match:
                 obj = json.loads(obj_match.group(0))
                 types = obj.get("types", [])
@@ -795,9 +1245,12 @@ class AlexbekRAGLearner(AutoLearner):
             pass
 
         try:
-            list_match = re.search(r'\[([^\]]+)\]', text)
+            list_match = re.search(r"\[([^\]]+)\]", text)
             if list_match:
-                items = [x.strip().strip('"').strip("'") for x in list_match.group(1).split(",")]
+                items = [
+                    x.strip().strip('"').strip("'")
+                    for x in list_match.group(1).split(",")
+                ]
                 return [t for t in items if t]
         except Exception:
             pass

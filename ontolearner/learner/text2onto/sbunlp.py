@@ -25,6 +25,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 from ...base import AutoLearner, AutoLLM
 
+
 # -----------------------------------------------------------------------------
 # Concrete AutoLLM: local HF wrapper that follows the AutoLLM interface
 # -----------------------------------------------------------------------------
@@ -34,19 +35,29 @@ class LocalAutoLLM(AutoLLM):
     Uses 4-bit quantization for efficiency and greedy decoding by default.
     """
 
-    def __init__(self, label_mapper: Any = None, device: str = "cpu", token: str = "") -> None:
+    def __init__(
+        self, label_mapper: Any = None, device: str = "cpu", token: str = ""
+    ) -> None:
         super().__init__(label_mapper=label_mapper, device=device, token=token)
         self.model = None
         self.tokenizer = None
 
-    def load(self, model_id: str, load_in_4bit: bool = False, dtype: str = "auto", trust_remote_code: bool = True):
+    def load(
+        self,
+        model_id: str,
+        load_in_4bit: bool = False,
+        dtype: str = "auto",
+        trust_remote_code: bool = True,
+    ):
         """Load tokenizer + model, applying 4-bit quantization if specified and possible."""
 
         # Determine the target data type (default to float32 for CPU, float16 for GPU)
-        torch_dtype_val = (torch.float16 if torch.cuda.is_available() else torch.float32)
+        torch_dtype_val = torch.float16 if torch.cuda.is_available() else torch.float32
 
         # Load the tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=trust_remote_code)
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            model_id, trust_remote_code=trust_remote_code
+        )
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
 
@@ -78,7 +89,13 @@ class LocalAutoLLM(AutoLLM):
         if self.device == "cpu":
             self.model.to("cpu")
 
-    def generate(self, inputs: List[str], max_new_tokens: int = 64, temperature: float = 0.0, top_p: float = 1.0) -> List[str]:
+    def generate(
+        self,
+        inputs: List[str],
+        max_new_tokens: int = 64,
+        temperature: float = 0.0,
+        top_p: float = 1.0,
+    ) -> List[str]:
         """Generate continuations for a list of prompts, returning only the generated part."""
         if self.model is None or self.tokenizer is None:
             raise RuntimeError("Model/tokenizer not loaded. Call .load() first.")
@@ -100,7 +117,9 @@ class LocalAutoLLM(AutoLLM):
                 input_ids=input_ids,
                 attention_mask=attention_mask,
                 max_new_tokens=max_new_tokens,
-                do_sample=(temperature > 0.0), # Use greedy decoding if temperature is 0.0
+                do_sample=(
+                    temperature > 0.0
+                ),  # Use greedy decoding if temperature is 0.0
                 temperature=temperature,
                 top_p=top_p,
                 pad_token_id=self.tokenizer.eos_token_id,
@@ -109,19 +128,24 @@ class LocalAutoLLM(AutoLLM):
         # --- Post-processing: Extract only the generated tail ---
         decoded_outputs: List[str] = []
         for i, output_ids in enumerate(outputs):
-            full_decoded_text = self.tokenizer.decode(output_ids, skip_special_tokens=True)
+            full_decoded_text = self.tokenizer.decode(
+                output_ids, skip_special_tokens=True
+            )
             prompt_text = self.tokenizer.decode(input_ids[i], skip_special_tokens=True)
 
             # Safely strip the prompt text from the full output
             if full_decoded_text.startswith(prompt_text):
-                generated_tail = full_decoded_text[len(prompt_text):].strip()
+                generated_tail = full_decoded_text[len(prompt_text) :].strip()
             else:
                 # Fallback extraction (less robust if padding affects token indices)
                 prompt_len = input_ids.shape[1]
-                generated_tail = self.tokenizer.decode(output_ids[prompt_len:], skip_special_tokens=True).strip()
+                generated_tail = self.tokenizer.decode(
+                    output_ids[prompt_len:], skip_special_tokens=True
+                ).strip()
             decoded_outputs.append(generated_tail)
 
         return decoded_outputs
+
 
 # -----------------------------------------------------------------------------
 # Main Learner: SBUNLPFewShotLearner (Task A Text2Onto)
@@ -195,7 +219,11 @@ class SBUNLPFewShotLearner(AutoLearner):
             num_to_sample_from_stratum = int(num_sample_docs * proportion)
 
             if num_to_sample_from_stratum > 0:
-                sampled_documents.extend(random.sample(stratum_docs, min(num_to_sample_from_stratum, num_stratum_docs)))
+                sampled_documents.extend(
+                    random.sample(
+                        stratum_docs, min(num_to_sample_from_stratum, num_stratum_docs)
+                    )
+                )
 
         # Deduplicate sampled documents by ID and adjust count to exactly 'sample_size'
         unique_docs_by_id = {}
@@ -207,8 +235,12 @@ class SBUNLPFewShotLearner(AutoLearner):
         if len(final_sample_docs) > num_sample_docs:
             final_sample_docs = random.sample(final_sample_docs, num_sample_docs)
         elif len(final_sample_docs) < num_sample_docs:
-            remaining_docs = [d for d in corpus_documents if d.get("id", "") not in unique_docs_by_id]
-            needed_count = min(num_sample_docs - len(final_sample_docs), len(remaining_docs))
+            remaining_docs = [
+                d for d in corpus_documents if d.get("id", "") not in unique_docs_by_id
+            ]
+            needed_count = min(
+                num_sample_docs - len(final_sample_docs), len(remaining_docs)
+            )
             final_sample_docs.extend(random.sample(remaining_docs, needed_count))
 
         # Format the few-shot exemplar text block
@@ -299,21 +331,31 @@ class SBUNLPFewShotLearner(AutoLearner):
                     picked_count += 1
 
                     if picked_count >= sample_per_term:
-                        break # Move to the next term
+                        break  # Move to the next term
 
         prompt_block = "\n".join(prompt_lines)
         self.fewshot_types_block = prompt_block
         return prompt_block
 
-    def fit(self, train_docs_jsonl: str, terms2doc_json: str, sample_size: int = 28, seed: int = 123) -> None:
+    def fit(
+        self,
+        train_docs_jsonl: str,
+        terms2doc_json: str,
+        sample_size: int = 28,
+        seed: int = 123,
+    ) -> None:
         """
         Fit phase: Builds and caches the few-shot prompt blocks from the training files.
         No model training occurs (Few-Shot/In-Context Learning).
         """
         # Build prompt block for Term extraction
-        _ = self.build_stratified_fewshot_prompt(train_docs_jsonl, terms2doc_json, sample_size=sample_size, seed=seed)
+        _ = self.build_stratified_fewshot_prompt(
+            train_docs_jsonl, terms2doc_json, sample_size=sample_size, seed=seed
+        )
         # Build prompt block for Type extraction
-        _ = self.build_types_fewshot_block(train_docs_jsonl, terms2doc_json, sample_per_term=1)
+        _ = self.build_types_fewshot_block(
+            train_docs_jsonl, terms2doc_json, sample_per_term=1
+        )
 
     # -------------------------
     # Inference helpers (prompt construction and output parsing)
@@ -376,10 +418,18 @@ class SBUNLPFewShotLearner(AutoLearner):
     def _call_model_one(self, prompt: str, max_new_tokens: int = 120) -> str:
         """Calls the underlying LocalAutoLLM for a single prompt. Returns the raw tail output."""
         # self.model is an instance of LocalAutoLLM
-        model_output = self.model.generate([prompt], max_new_tokens=max_new_tokens, temperature=0.0, top_p=1.0)
+        model_output = self.model.generate(
+            [prompt], max_new_tokens=max_new_tokens, temperature=0.0, top_p=1.0
+        )
         return model_output[0] if model_output else ""
 
-    def predict_terms(self, docs_test_jsonl: str, out_jsonl: str, max_lines: int = -1, max_new_tokens: int = 120) -> int:
+    def predict_terms(
+        self,
+        docs_test_jsonl: str,
+        out_jsonl: str,
+        max_lines: int = -1,
+        max_new_tokens: int = 120,
+    ) -> int:
         """
         Runs Term Extraction on the test documents and saves results to a JSONL file.
         Returns: The count of individual terms written.
@@ -388,7 +438,10 @@ class SBUNLPFewShotLearner(AutoLearner):
             raise RuntimeError("Few-shot block for terms is empty. Call fit() first.")
 
         num_written_terms = 0
-        with open(docs_test_jsonl, "r", encoding="utf-8") as file_in, open(out_jsonl, "w", encoding="utf-8") as file_out:
+        with (
+            open(docs_test_jsonl, "r", encoding="utf-8") as file_in,
+            open(out_jsonl, "w", encoding="utf-8") as file_out,
+        ):
             for line_index, line in enumerate(file_in, start=1):
                 if 0 < max_lines < line_index:
                     break
@@ -396,7 +449,7 @@ class SBUNLPFewShotLearner(AutoLearner):
                 try:
                     document = json.loads(line.strip())
                 except Exception:
-                    continue # Skip malformed JSON lines
+                    continue  # Skip malformed JSON lines
 
                 doc_id = document.get("id", "unknown")
                 title = document.get("title", "")
@@ -410,7 +463,10 @@ class SBUNLPFewShotLearner(AutoLearner):
                 # Write extracted terms
                 for term_or_type in predicted_terms:
                     if isinstance(term_or_type, str) and term_or_type.strip():
-                        file_out.write(json.dumps({"doc_id": doc_id, "term": term_or_type.strip()}) + "\n")
+                        file_out.write(
+                            json.dumps({"doc_id": doc_id, "term": term_or_type.strip()})
+                            + "\n"
+                        )
                         num_written_terms += 1
 
                 # Lightweight memory management for long runs
@@ -421,7 +477,13 @@ class SBUNLPFewShotLearner(AutoLearner):
 
         return num_written_terms
 
-    def predict_types(self, docs_test_jsonl: str, out_jsonl: str, max_lines: int = -1, max_new_tokens: int = 120) -> int:
+    def predict_types(
+        self,
+        docs_test_jsonl: str,
+        out_jsonl: str,
+        max_lines: int = -1,
+        max_new_tokens: int = 120,
+    ) -> int:
         """
         Runs Type Extraction on the test documents and saves results to a JSONL file.
         Returns: The count of individual types written.
@@ -430,7 +492,10 @@ class SBUNLPFewShotLearner(AutoLearner):
             raise RuntimeError("Few-shot block for types is empty. Call fit() first.")
 
         num_written_types = 0
-        with open(docs_test_jsonl, "r", encoding="utf-8") as file_in, open(out_jsonl, "w", encoding="utf-8") as file_out:
+        with (
+            open(docs_test_jsonl, "r", encoding="utf-8") as file_in,
+            open(out_jsonl, "w", encoding="utf-8") as file_out,
+        ):
             for line_index, line in enumerate(file_in, start=1):
                 if 0 < max_lines < line_index:
                     break
@@ -438,7 +503,7 @@ class SBUNLPFewShotLearner(AutoLearner):
                 try:
                     document = json.loads(line.strip())
                 except Exception:
-                    continue # Skip malformed JSON lines
+                    continue  # Skip malformed JSON lines
 
                 doc_id = document.get("id", "unknown")
                 title = document.get("title", "")
@@ -452,7 +517,10 @@ class SBUNLPFewShotLearner(AutoLearner):
                 # Write extracted types
                 for term_or_type in predicted_types:
                     if isinstance(term_or_type, str) and term_or_type.strip():
-                        file_out.write(json.dumps({"doc_id": doc_id, "type": term_or_type.strip()}) + "\n")
+                        file_out.write(
+                            json.dumps({"doc_id": doc_id, "type": term_or_type.strip()})
+                            + "\n"
+                        )
                         num_written_types += 1
 
                 if line_index % 50 == 0:
@@ -475,7 +543,9 @@ class SBUNLPFewShotLearner(AutoLearner):
                 gold_pairs.add((doc_id, clean_term))
         return gold_pairs
 
-    def load_predicted_pairs(self, predicted_jsonl_path: str, key: str = "term") -> Set[Tuple[str, str]]:
+    def load_predicted_pairs(
+        self, predicted_jsonl_path: str, key: str = "term"
+    ) -> Set[Tuple[str, str]]:
         """Load predicted (doc_id, term/type) pairs from a JSONL file, lowercased."""
         predicted_pairs = set()
         with open(predicted_jsonl_path, "r", encoding="utf-8") as file_handle:
@@ -490,7 +560,9 @@ class SBUNLPFewShotLearner(AutoLearner):
                     predicted_pairs.add((doc_id, value.strip().lower()))
         return predicted_pairs
 
-    def evaluate_extraction_f1(self, terms2doc_path: str, predicted_jsonl: str, key: str = "term") -> float:
+    def evaluate_extraction_f1(
+        self, terms2doc_path: str, predicted_jsonl: str, key: str = "term"
+    ) -> float:
         """
         Computes set-based binary Precision, Recall, and F1 score against the gold pairs.
         """
@@ -507,6 +579,7 @@ class SBUNLPFewShotLearner(AutoLearner):
 
         # Use scikit-learn for metric calculation
         from sklearn.metrics import precision_recall_fscore_support
+
         precision, recall, f1, _ = precision_recall_fscore_support(
             y_true, y_pred, average="binary", zero_division=0
         )

@@ -31,6 +31,7 @@ try:
 
     class _PredictedTypesSchema(BaseModel):
         """Schema used when generating structured JSON { "types": [...] }."""
+
         types: List[str]
 
     OUTLINES_AVAILABLE: bool = True
@@ -40,6 +41,7 @@ except Exception:
     _PredictedTypesSchema = None
     OutlinesTFModel = None
     outlines_generate_json = None
+
 
 class LocalAutoLLM(AutoLLM):
     """
@@ -101,11 +103,15 @@ class LocalAutoLLM(AutoLLM):
                 token=self.token,
             )
         else:
-            device_map = "auto" if (self.device != "cpu" and torch.cuda.is_available()) else None
+            device_map = (
+                "auto" if (self.device != "cpu" and torch.cuda.is_available()) else None
+            )
             self.model = AutoModelForCausalLM.from_pretrained(
                 model_id,
                 device_map=device_map,
-                torch_dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float32,
+                torch_dtype=torch.bfloat16
+                if torch.cuda.is_available()
+                else torch.float32,
                 token=self.token,
             )
 
@@ -134,11 +140,17 @@ class LocalAutoLLM(AutoLLM):
             Decoded new-token texts (no special tokens, stripped).
         """
         if self.model is None or self.tokenizer is None:
-            raise RuntimeError("Call .load(model_id) on LocalAutoLLM before generate().")
+            raise RuntimeError(
+                "Call .load(model_id) on LocalAutoLLM before generate()."
+            )
 
-        tokenized_batch = self.tokenizer(prompts, return_tensors="pt", padding=True, truncation=True)
+        tokenized_batch = self.tokenizer(
+            prompts, return_tensors="pt", padding=True, truncation=True
+        )
         input_seq_len = tokenized_batch["input_ids"].shape[1]
-        tokenized_batch = {k: v.to(self.model.device) for k, v in tokenized_batch.items()}
+        tokenized_batch = {
+            k: v.to(self.model.device) for k, v in tokenized_batch.items()
+        }
 
         with torch.no_grad():
             outputs = self.model.generate(
@@ -151,7 +163,11 @@ class LocalAutoLLM(AutoLLM):
 
         # Only return the newly generated part for each row in the batch
         continuation_token_ids = outputs[:, input_seq_len:]
-        return [self.tokenizer.decode(row, skip_special_tokens=True).strip() for row in continuation_token_ids]
+        return [
+            self.tokenizer.decode(row, skip_special_tokens=True).strip()
+            for row in continuation_token_ids
+        ]
+
 
 class AlexbekFewShotLearner(AutoLearner):
     """
@@ -168,6 +184,7 @@ class AlexbekFewShotLearner(AutoLearner):
         Reads your A1 results (docs→terms), predicts types for each term, and
         writes two files: terms2types_pred.json + types2docs_pred.json
     """
+
     def __init__(self, model: LocalAutoLLM, device: str = "cpu", **_: Any) -> None:
         """
         Initialize learner state and canned prompts.
@@ -243,7 +260,9 @@ class AlexbekFewShotLearner(AutoLearner):
         # Load item -> [doc_ids]
         item_to_docs_map = self._load_json(terms2doc_json)
         if not isinstance(item_to_docs_map, dict):
-            raise ValueError(f"{terms2doc_json} must be a JSON dict mapping item -> [doc_ids]")
+            raise ValueError(
+                f"{terms2doc_json} must be a JSON dict mapping item -> [doc_ids]"
+            )
 
         # Reverse mapping: doc_id -> [items]
         doc_id_to_items_map: Dict[str, List[str]] = {}
@@ -258,17 +277,25 @@ class AlexbekFewShotLearner(AutoLearner):
             if not doc_row:
                 continue
             doc_title = str(doc_row.get("title", ""))  # be defensive (may be None)
-            doc_text = self._to_text(doc_row.get("text", ""))  # string-ify list if needed
+            doc_text = self._to_text(
+                doc_row.get("text", "")
+            )  # string-ify list if needed
             if not doc_text:
                 continue
-            gold_items = self._unique_preserve([s for s in labeled_items if isinstance(s, str)])
+            gold_items = self._unique_preserve(
+                [s for s in labeled_items if isinstance(s, str)]
+            )
             if gold_items:
                 exemplar_candidates.append((doc_title, doc_text, gold_items))
 
         if not exemplar_candidates:
-            raise RuntimeError("No candidate docs with items found to build few-shot exemplars.")
+            raise RuntimeError(
+                "No candidate docs with items found to build few-shot exemplars."
+            )
 
-        chosen_exemplars = rng.sample(exemplar_candidates, k=min(sample_size, len(exemplar_candidates)))
+        chosen_exemplars = rng.sample(
+            exemplar_candidates, k=min(sample_size, len(exemplar_candidates))
+        )
         # Reuse exemplars for both docs→terms and docs→types prompting
         self._fewshot_terms_docs = chosen_exemplars
         self._fewshot_types_docs = chosen_exemplars
@@ -315,7 +342,10 @@ class AlexbekFewShotLearner(AutoLearner):
             text = self._to_text(document_row.get("text", ""))
 
             fewshot_block = self._format_fewshot_block(
-                self._system_prompt_terms, self._fewshot_terms_docs, key="terms", k=few_shot_k
+                self._system_prompt_terms,
+                self._fewshot_terms_docs,
+                key="terms",
+                k=few_shot_k,
             )
             user_block = self._format_user_block(title, text)
 
@@ -323,7 +353,9 @@ class AlexbekFewShotLearner(AutoLearner):
             document_order.append(document_id)
 
         generations = self.model.generate(prompts, max_new_tokens=max_new_tokens)
-        parsed_term_lists = [self._parse_json_list(generated, key="terms") for generated in generations]
+        parsed_term_lists = [
+            self._parse_json_list(generated, key="terms") for generated in generations
+        ]
 
         os.makedirs(os.path.dirname(out_jsonl) or ".", exist_ok=True)
         lines_written = 0
@@ -333,7 +365,6 @@ class AlexbekFewShotLearner(AutoLearner):
                 fp_out.write(json.dumps(payload, ensure_ascii=False) + "\n")
                 lines_written += 1
         return lines_written
-
 
     def predict_types(
         self,
@@ -377,7 +408,10 @@ class AlexbekFewShotLearner(AutoLearner):
             text = self._to_text(document_row.get("text", ""))
 
             fewshot_block = self._format_fewshot_block(
-                self._system_prompt_types, self._fewshot_types_docs, key="types", k=few_shot_k
+                self._system_prompt_types,
+                self._fewshot_types_docs,
+                key="types",
+                k=few_shot_k,
             )
             user_block = self._format_user_block(title, text)
 
@@ -385,7 +419,9 @@ class AlexbekFewShotLearner(AutoLearner):
             document_order.append(document_id)
 
         generations = self.model.generate(prompts, max_new_tokens=max_new_tokens)
-        parsed_type_lists = [self._parse_json_list(generated, key="types") for generated in generations]
+        parsed_type_lists = [
+            self._parse_json_list(generated, key="types") for generated in generations
+        ]
 
         os.makedirs(os.path.dirname(out_jsonl) or ".", exist_ok=True)
         lines_written = 0
@@ -426,7 +462,9 @@ class AlexbekFewShotLearner(AutoLearner):
         gold_doc_to_items: Dict[str, set] = {}
         for item_label, doc_id_list in item_to_doc_ids.items():
             for document_id in doc_id_list:
-                gold_doc_to_items.setdefault(document_id, set()).add(self._norm(item_label))
+                gold_doc_to_items.setdefault(document_id, set()).add(
+                    self._norm(item_label)
+                )
 
         # Build predictions: doc_id -> set(items)
         pred_doc_to_items: Dict[str, set] = {}
@@ -435,7 +473,9 @@ class AlexbekFewShotLearner(AutoLearner):
                 row = json.loads(line.strip())
                 document_id = str(row.get("id", ""))
                 items_list = row.get("terms" if key == "term" else "types", [])
-                pred_doc_to_items[document_id] = {self._norm(x) for x in items_list if isinstance(x, str)}
+                pred_doc_to_items[document_id] = {
+                    self._norm(x) for x in items_list if isinstance(x, str)
+                }
 
         # Micro counts
         true_positive = false_positive = false_negative = 0
@@ -447,18 +487,34 @@ class AlexbekFewShotLearner(AutoLearner):
             false_positive += len(pred_set - gold_set)
             false_negative += len(gold_set - pred_set)
 
-        precision = true_positive / (true_positive + false_positive) if (true_positive + false_positive) else 0.0
-        recall = true_positive / (true_positive + false_negative) if (true_positive + false_negative) else 0.0
-        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
+        precision = (
+            true_positive / (true_positive + false_positive)
+            if (true_positive + false_positive)
+            else 0.0
+        )
+        recall = (
+            true_positive / (true_positive + false_negative)
+            if (true_positive + false_negative)
+            else 0.0
+        )
+        f1 = (
+            2 * precision * recall / (precision + recall)
+            if (precision + recall)
+            else 0.0
+        )
         return f1
 
     def predict_types_from_terms(
         self,
         *,
-        doc_terms_jsonl: Optional[str] = None,            # formerly a1_results_jsonl
-        doc_terms_list: Optional[List[Dict]] = None,      # formerly a1_results_list
-        few_shot_jsonl: Optional[str] = None,             # JSONL lines: {"term":"...", "types":[...]}
-        rag_terms_json: Optional[str] = None,             # JSON list; items may contain "term" and "RAG":[...]
+        doc_terms_jsonl: Optional[str] = None,  # formerly a1_results_jsonl
+        doc_terms_list: Optional[List[Dict]] = None,  # formerly a1_results_list
+        few_shot_jsonl: Optional[
+            str
+        ] = None,  # JSONL lines: {"term":"...", "types":[...]}
+        rag_terms_json: Optional[
+            str
+        ] = None,  # JSON list; items may contain "term" and "RAG":[...]
         random_few_shot: Optional[int] = 3,
         model_id: str = "Qwen/Qwen2.5-1.5B-Instruct",
         use_structured_output: bool = True,
@@ -507,7 +563,9 @@ class AlexbekFewShotLearner(AutoLearner):
             in_memory_results=doc_terms_list,
         )
         if not doc_term_extractions:
-            raise ValueError("No document→terms results provided (doc_terms_jsonl/doc_terms_list).")
+            raise ValueError(
+                "No document→terms results provided (doc_terms_jsonl/doc_terms_list)."
+            )
 
         # Prepare unique term list and term→doc occurrences
         unique_terms = self._collect_unique_terms_from_extractions(doc_term_extractions)
@@ -525,7 +583,11 @@ class AlexbekFewShotLearner(AutoLearner):
                         json_obj = json.loads(raw_line)
                     except Exception:
                         continue
-                    if isinstance(json_obj, dict) and "term" in json_obj and "types" in json_obj:
+                    if (
+                        isinstance(json_obj, dict)
+                        and "term" in json_obj
+                        and "types" in json_obj
+                    ):
                         global_few_shot_examples.append(json_obj)
 
         # Optional per-term RAG examples: {normalized_term -> [examples]}
@@ -536,8 +598,12 @@ class AlexbekFewShotLearner(AutoLearner):
                 if isinstance(rag_payload, list):
                     for rag_item in rag_payload:
                         if isinstance(rag_item, dict):
-                            normalized_term = self._normalize_term(rag_item.get("term", ""))
-                            rag_examples_lookup[normalized_term] = rag_item.get("RAG", [])
+                            normalized_term = self._normalize_term(
+                                rag_item.get("term", "")
+                            )
+                            rag_examples_lookup[normalized_term] = rag_item.get(
+                                "RAG", []
+                            )
             except Exception:
                 pass
 
@@ -550,7 +616,10 @@ class AlexbekFewShotLearner(AutoLearner):
             normalized_term = self._normalize_term(term_text)
 
             # Prefer per-term RAG for this term, else use global few-shot
-            few_shot_examples_for_term = rag_examples_lookup.get(normalized_term, None) or global_few_shot_examples
+            few_shot_examples_for_term = (
+                rag_examples_lookup.get(normalized_term, None)
+                or global_few_shot_examples
+            )
 
             # Build conversation and prompt
             conversation_messages = self._build_conv_for_type_infer(
@@ -558,28 +627,51 @@ class AlexbekFewShotLearner(AutoLearner):
                 few_shot_examples=few_shot_examples_for_term,
                 random_k=random_few_shot,
             )
-            typing_prompt_string = self._apply_chat_template_safe_types(typing_tokenizer, conversation_messages)
+            typing_prompt_string = self._apply_chat_template_safe_types(
+                typing_tokenizer, conversation_messages
+            )
 
             predicted_types: List[str] = []
             raw_generation_text: str = ""
 
             # Structured JSON path (if requested and available)
-            if use_structured_output and OUTLINES_AVAILABLE and _PredictedTypesSchema is not None:
+            if (
+                use_structured_output
+                and OUTLINES_AVAILABLE
+                and _PredictedTypesSchema is not None
+            ):
                 try:
                     outlines_model = OutlinesTFModel(typing_model, typing_tokenizer)  # type: ignore
-                    generator = outlines_generate_json(outlines_model, _PredictedTypesSchema)  # type: ignore
+                    generator = outlines_generate_json(
+                        outlines_model, _PredictedTypesSchema
+                    )  # type: ignore
                     structured = generator(typing_prompt_string, max_tokens=512)
-                    predicted_types = [label for label in structured.types if isinstance(label, str)]
-                    raw_generation_text = json.dumps({"types": predicted_types}, ensure_ascii=False)
+                    predicted_types = [
+                        label for label in structured.types if isinstance(label, str)
+                    ]
+                    raw_generation_text = json.dumps(
+                        {"types": predicted_types}, ensure_ascii=False
+                    )
                 except Exception:
                     # Fall back to greedy decoding
                     use_structured_output = False
 
             # Greedy decode fallback
-            if not use_structured_output or not OUTLINES_AVAILABLE or _PredictedTypesSchema is None:
-                tokenized_prompt = typing_tokenizer(typing_prompt_string, return_tensors="pt", truncation=True, max_length=2048)
+            if (
+                not use_structured_output
+                or not OUTLINES_AVAILABLE
+                or _PredictedTypesSchema is None
+            ):
+                tokenized_prompt = typing_tokenizer(
+                    typing_prompt_string,
+                    return_tensors="pt",
+                    truncation=True,
+                    max_length=2048,
+                )
                 if torch.cuda.is_available():
-                    tokenized_prompt = {name: tensor.cuda() for name, tensor in tokenized_prompt.items()}
+                    tokenized_prompt = {
+                        name: tensor.cuda() for name, tensor in tokenized_prompt.items()
+                    }
                 with torch.no_grad():
                     output_ids = typing_model.generate(
                         **tokenized_prompt,
@@ -588,14 +680,18 @@ class AlexbekFewShotLearner(AutoLearner):
                         num_beams=1,
                         pad_token_id=typing_tokenizer.eos_token_id,
                     )
-                new_token_span = output_ids[0][tokenized_prompt["input_ids"].shape[1]:]
-                raw_generation_text = typing_tokenizer.decode(new_token_span, skip_special_tokens=True)
+                new_token_span = output_ids[0][tokenized_prompt["input_ids"].shape[1] :]
+                raw_generation_text = typing_tokenizer.decode(
+                    new_token_span, skip_special_tokens=True
+                )
                 predicted_types = self._extract_types_from_text(raw_generation_text)
 
-            term_to_predicted_types_list.append({
-                "term": term_text,
-                "predicted_types": sorted(set(predicted_types)),
-            })
+            term_to_predicted_types_list.append(
+                {
+                    "term": term_text,
+                    "predicted_types": sorted(set(predicted_types)),
+                }
+            )
 
         # 7) Build types→docs from (term→types) and (term→docs)
         types_to_doc_id_set: Dict[str, set] = {}
@@ -603,16 +699,24 @@ class AlexbekFewShotLearner(AutoLearner):
             normalized_term = self._normalize_term(term_prediction["term"])
             doc_ids_for_term = term_to_doc_ids_map.get(normalized_term, [])
             for type_label in term_prediction.get("predicted_types", []):
-                types_to_doc_id_set.setdefault(type_label, set()).update(doc_ids_for_term)
+                types_to_doc_id_set.setdefault(type_label, set()).update(
+                    doc_ids_for_term
+                )
 
         types_to_doc_ids: Dict[str, List[str]] = {
-            type_label: sorted(doc_id_set) for type_label, doc_id_set in types_to_doc_id_set.items()
+            type_label: sorted(doc_id_set)
+            for type_label, doc_id_set in types_to_doc_id_set.items()
         }
 
         # 8) Save outputs
         os.makedirs(os.path.dirname(out_terms2types) or ".", exist_ok=True)
         with open(out_terms2types, "w", encoding="utf-8") as fp_terms2types:
-            json.dump(term_to_predicted_types_list, fp_terms2types, ensure_ascii=False, indent=2)
+            json.dump(
+                term_to_predicted_types_list,
+                fp_terms2types,
+                ensure_ascii=False,
+                indent=2,
+            )
 
         os.makedirs(os.path.dirname(out_types2docs) or ".", exist_ok=True)
         with open(out_types2docs, "w", encoding="utf-8") as fp_types2docs:
@@ -634,7 +738,6 @@ class AlexbekFewShotLearner(AutoLearner):
         """Load a JSON file from disk and return its parsed object."""
         with open(path, "r", encoding="utf-8") as file_obj:
             return json.load(file_obj)
-
 
     def _iter_json_objects(self, blob: str) -> Iterable[Dict[str, Any]]:
         """
@@ -668,7 +771,6 @@ class AlexbekFewShotLearner(AutoLearner):
                 break
             yield json_obj
             cursor_index = end_index
-
 
     def _load_documents_jsonl(self, path: str) -> Dict[str, Dict[str, Any]]:
         """
@@ -727,7 +829,6 @@ class AlexbekFewShotLearner(AutoLearner):
 
         return documents_by_id
 
-
     def _to_text(self, text_field: Any) -> str:
         """
         Convert a 'text' field into a single string (handles list-of-strings).
@@ -747,7 +848,6 @@ class AlexbekFewShotLearner(AutoLearner):
         if isinstance(text_field, list):
             return " ".join(str(part) for part in text_field)
         return str(text_field) if text_field is not None else ""
-
 
     def _unique_preserve(self, values: List[str]) -> List[str]:
         """
@@ -771,7 +871,6 @@ class AlexbekFewShotLearner(AutoLearner):
                 ordered_values.append(candidate)
         return ordered_values
 
-
     def _norm(self, text: str) -> str:
         """
         Lowercased, single-spaced normalization (for comparisons).
@@ -788,7 +887,6 @@ class AlexbekFewShotLearner(AutoLearner):
         """
         return " ".join(text.lower().split())
 
-
     def _normalize_term(self, term: str) -> str:
         """
         Normalization tailored for term keys / lookups.
@@ -804,7 +902,6 @@ class AlexbekFewShotLearner(AutoLearner):
             Lowercased, trimmed and single-spaced term.
         """
         return " ".join(str(term).strip().split()).lower()
-
 
     def _format_fewshot_block(
         self,
@@ -846,9 +943,12 @@ class AlexbekFewShotLearner(AutoLearner):
         for example_title, example_text, gold_list in fewshot_examples[:k]:
             lines.append("### Example")
             lines.append(f"User:\nTitle: {example_title}\n{example_text}")
-            lines.append(f'Assistant:\n{{"{key}": ' + json.dumps(gold_list, ensure_ascii=False) + "}")
+            lines.append(
+                f'Assistant:\n{{"{key}": '
+                + json.dumps(gold_list, ensure_ascii=False)
+                + "}"
+            )
         return "\n".join(lines)
-
 
     def _format_user_block(self, title: str, text: str) -> str:
         """
@@ -867,7 +967,6 @@ class AlexbekFewShotLearner(AutoLearner):
             Formatted user block.
         """
         return f"### Task\nUser:\nTitle: {title}\n{text}"
-
 
     def _parse_json_list(self, generated_text: str, *, key: str) -> List[str]:
         """
@@ -911,22 +1010,33 @@ class AlexbekFewShotLearner(AutoLearner):
 
         # 3) Fallback: comma-split (last resort)
         if "," in generated_text:
-            return [part.strip().strip('"').strip("'") for part in generated_text.split(",") if part.strip()]
+            return [
+                part.strip().strip('"').strip("'")
+                for part in generated_text.split(",")
+                if part.strip()
+            ]
         return []
 
-
-    def _apply_chat_template_safe_types(self, tokenizer: AutoTokenizer, messages: List[Dict[str, str]]) -> str:
+    def _apply_chat_template_safe_types(
+        self, tokenizer: AutoTokenizer, messages: List[Dict[str, str]]
+    ) -> str:
         """
         Safely build a prompt string for chat models. Uses the model's chat template
         when available; otherwise falls back to a simple concatenation.
         """
         try:
-            return tokenizer.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
+            return tokenizer.apply_chat_template(
+                messages, add_generation_prompt=True, tokenize=False
+            )
         except Exception:
-            system_text = next((m["content"] for m in messages if m.get("role") == "system"), "")
-            last_user_text = next((m["content"] for m in reversed(messages) if m.get("role") == "user"), "")
+            system_text = next(
+                (m["content"] for m in messages if m.get("role") == "system"), ""
+            )
+            last_user_text = next(
+                (m["content"] for m in reversed(messages) if m.get("role") == "user"),
+                "",
+            )
             return f"{system_text}\n\nUser:\n{last_user_text}\n\nAssistant:"
-
 
     def _build_conv_for_type_infer(
         self,
@@ -938,19 +1048,26 @@ class AlexbekFewShotLearner(AutoLearner):
         Create a chat-style conversation for a single term→types query,
         optionally prepending few-shot examples.
         """
-        messages: List[Dict[str, str]] = [{"role": "system", "content": self._system_prompt_term_to_types}]
+        messages: List[Dict[str, str]] = [
+            {"role": "system", "content": self._system_prompt_term_to_types}
+        ]
         examples = list(few_shot_examples or [])
         if random_k and len(examples) > random_k:
             import random as _rnd
+
             examples = _rnd.sample(examples, random_k)
         for exemplar in examples:
             example_term = exemplar.get("term", "")
             example_types = exemplar.get("types", [])
             messages.append({"role": "user", "content": f"Term: {example_term}"})
-            messages.append({"role": "assistant", "content": json.dumps({"types": example_types}, ensure_ascii=False)})
+            messages.append(
+                {
+                    "role": "assistant",
+                    "content": json.dumps({"types": example_types}, ensure_ascii=False),
+                }
+            )
         messages.append({"role": "user", "content": f"Term: {term}"})
         return messages
-
 
     def _extract_types_from_text(self, generated_text: str) -> List[str]:
         """
@@ -961,13 +1078,18 @@ class AlexbekFewShotLearner(AutoLearner):
             if object_match:
                 json_obj = json.loads(object_match.group(0))
                 types_array = json_obj.get("types", [])
-                return [type_label for type_label in types_array if isinstance(type_label, str)]
+                return [
+                    type_label
+                    for type_label in types_array
+                    if isinstance(type_label, str)
+                ]
         except Exception:
             pass
         return []
 
-
-    def _load_llm_for_types(self, model_id: str) -> Tuple[AutoModelForCausalLM, AutoTokenizer]:
+    def _load_llm_for_types(
+        self, model_id: str
+    ) -> Tuple[AutoModelForCausalLM, AutoTokenizer]:
         """
         Load a *separate* small chat model for Term→Types (keeps LocalAutoLLM untouched).
         """
@@ -980,7 +1102,6 @@ class AlexbekFewShotLearner(AutoLearner):
             device_map="auto" if torch.cuda.is_available() else None,
         )
         return model, tokenizer
-
 
     def _load_doc_term_extractions(
         self,
@@ -1002,17 +1123,26 @@ class AlexbekFewShotLearner(AutoLearner):
         normalized_records: List[Dict] = []
 
         def _coerce_to_record(source_row: Dict) -> Optional[Dict]:
-            document_id = str(source_row.get("id", "")) or str(source_row.get("doc_id", ""))
+            document_id = str(source_row.get("id", "")) or str(
+                source_row.get("doc_id", "")
+            )
             if not document_id:
                 return None
             terms = source_row.get("extracted_terms")
             if terms is None:
                 terms = source_row.get("terms")
-            if terms is None and "payload" in source_row and isinstance(source_row["payload"], dict):
+            if (
+                terms is None
+                and "payload" in source_row
+                and isinstance(source_row["payload"], dict)
+            ):
                 terms = source_row["payload"].get("terms")
             if not isinstance(terms, list):
                 terms = []
-            return {"id": document_id, "extracted_terms": [t for t in terms if isinstance(t, str)]}
+            return {
+                "id": document_id,
+                "extracted_terms": [t for t in terms if isinstance(t, str)],
+            }
 
         if in_memory_results is not None:
             for source_row in in_memory_results:
@@ -1053,8 +1183,9 @@ class AlexbekFewShotLearner(AutoLearner):
 
         return normalized_records
 
-
-    def _collect_unique_terms_from_extractions(self, doc_term_extractions: List[Dict]) -> List[str]:
+    def _collect_unique_terms_from_extractions(
+        self, doc_term_extractions: List[Dict]
+    ) -> List[str]:
         """
         Collect unique terms (original casing) from normalized document→terms results.
         """
@@ -1068,8 +1199,9 @@ class AlexbekFewShotLearner(AutoLearner):
                     ordered_unique_terms.append(term_text.strip())
         return ordered_unique_terms
 
-
-    def _build_term_to_doc_ids(self, doc_term_extractions: List[Dict]) -> Dict[str, List[str]]:
+    def _build_term_to_doc_ids(
+        self, doc_term_extractions: List[Dict]
+    ) -> Dict[str, List[str]]:
         """
         Build lookup: normalized_term -> sorted unique list of doc_ids.
         """
@@ -1081,4 +1213,7 @@ class AlexbekFewShotLearner(AutoLearner):
                 if not normalized or not document_id:
                     continue
                 term_to_doc_set.setdefault(normalized, set()).add(document_id)
-        return {normalized_term: sorted(doc_ids) for normalized_term, doc_ids in term_to_doc_set.items()}
+        return {
+            normalized_term: sorted(doc_ids)
+            for normalized_term, doc_ids in term_to_doc_set.items()
+        }

@@ -1,13 +1,15 @@
 # Import core modules from the OntoLearner library
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
-from ontolearner import AlexbekRAGLearner
+from ontolearner.learner.term_typing.alexbek import AlexbekRAGLearner
 
 # Load the GeoNames ontology.
 ontology = GeoNames()
 ontology.load()
 
 # Extract labeled items and split into train/test sets for evaluation
-train_data, test_data = train_test_split(ontology.extract(), test_size=0.2, random_state=42)
+train_data, test_data = train_test_split(
+    ontology.extract(), test_size=0.2, random_state=42
+)
 
 # Configure a Retrieval-Augmented Generation (RAG) term-typing classifier.
 # - llm_model_id: generator used to predict types from the prompt + retrieved examples
@@ -46,5 +48,7 @@ outputs = pipe(
 )
 
 # Display the evaluation results and runtime
-print("Metrics:", outputs.get("metrics"))          # e.g., {'precision': ..., 'recall': ..., 'f1_micro': ..., ...}
+print(
+    "Metrics:", outputs.get("metrics")
+)  # e.g., {'precision': ..., 'recall': ..., 'f1_micro': ..., ...}
 print("Elapsed time (s):", outputs.get("elapsed_time"))

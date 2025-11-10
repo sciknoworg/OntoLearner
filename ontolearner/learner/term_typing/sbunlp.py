@@ -20,123 +20,152 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from ...base import AutoLearner
 
+
 class SBUNLPZSLearner(AutoLearner):
     """
     Qwen-based blind term typing learner (Task B), implemented as an AutoLearner.
 
-    This class reproduces the notebook logic:
-      - Fit phase learns the *allowed type inventory* from training data.
-      - Predict phase performs blind prompting per term using the learned type list.
-      - Outputs are restricted to the allowed types and returned as [{"id", "types"}].
-
-    Expected I/O (recommended):
-      - fit(train_data, task="term-typing", ontologizer=True):
-          The framework's AutoLearner.tasks_data_former() provides a unique list of
-          type labels; we store it to `self.allowed_types`.
-      - predict(eval_data, task="term-typing", ontologizer=False):
-          Pass a list of dicts with keys {"id": str, "term": str} so IDs are preserved.
-          Returns a list of dicts [{"id": ..., "types": [...] }].
+    Lifecycle:
+      • `fit(...)` learns/records the allowed type inventory from the training payload.
+      • `load(...)` explicitly loads the tokenizer/model (pass `model_id`/`token` here).
+      • `predict(...)` prompts the model per term and returns normalized types limited
+        to the learned inventory.
     """
 
     def __init__(
         self,
-        model_id: str = "Qwen/Qwen2.5-0.5B-Instruct",
-        device: Optional[str] = None,
+        device: str = "cpu",
         max_new_tokens: int = 64,
         temperature: float = 0.0,
+        model_id: str = "Qwen/Qwen2.5-0.5B-Instruct",
         token: Optional[str] = None,
     ) -> None:
         """
+        Configure runtime knobs. Model identity and auth are provided to `load(...)`.
+
         Args:
-            model_id: HF model id for Qwen.
-            device: "cuda", "mps", or "cpu". Auto-detected if None.
-            max_new_tokens: Generation cap per prompt.
-            temperature: Not used for greedy decoding (kept for future).
-            token: HF token if the model is gated.
+            device: Torch device policy ("cuda", "mps", or "cpu").
+            max_new_tokens: Max tokens to generate per prompt (greedy decoding).
+            temperature: Reserved for future sampling; generation is greedy here.
+            model_id: Fallback model id/path used if `load()` is called without args.
+            token: Fallback HF token used if `load()` is called without args.
+
+        Side Effects:
+            Initializes runtime configuration, instance defaults for `load()`,
+            and placeholders for `tokenizer`, `model`, and `allowed_types`.
         """
         super().__init__()
-
-        # Basic configuration
-        self.model_id = model_id
-        # default device detection: prefer CUDA if available
-        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = device
         self.max_new_tokens = max_new_tokens
         self.temperature = temperature
+
+        # Defaults that load() may use when its args are None
+        self.model_id = model_id
         self.token = token
 
-        # Model/tokenizer placeholders (populated by load())
+        # Placeholders populated by load()
         self.tokenizer: Optional[AutoTokenizer] = None
         self.model: Optional[AutoModelForCausalLM] = None
 
-        # Learned inventory of allowed type labels (populated by fit())
+        # Learned inventory
         self.allowed_types: List[str] = []
 
-        # Regex used to extract quoted strings from model output (e.g. "type")
+        # Regex used to extract quoted strings from model output (e.g., "type")
         self._quoted_re = re.compile(r'"([^"]+)"')
 
-    def load(self, **kwargs: Any):
+    def load(
+        self,
+        model_id: Optional[str] = None,
+        token: Optional[str] = None,
+        dtype: Optional[torch.dtype] = None,
+    ):
         """
-        Load Qwen model and tokenizer.
+        Load tokenizer and model weights explicitly.
 
-        NOTE:
-          - The HF arguments used here mirror your original code (`token=...`).
-            You may see a deprecation warning for `torch_dtype` (older transformers);
-            switching to `dtype=` is recommended but I did not change behavior here.
+        Argument precedence:
+          1) Use `model_id` / `token` passed to this method (if provided).
+          2) Else fall back to `self.model_id` / `self.token`.
+
+        Device & dtype:
+          • If `dtype` is None, the default is float16 on CUDA/MPS and float32 on CPU.
+          • `device_map` is `"auto"` for non-CPU devices, `"cpu"` otherwise.
+
+        Args:
+            model_id: HF model id/path to load. If None, uses `self.model_id`.
+            token: HF token if the model is gated. If None, uses `self.token`.
+            dtype: Optional torch dtype override (e.g., `torch.float16`).
+
+        Returns:
+            self
         """
-        # Respect overrides from kwargs if provided
-        model_id = kwargs.get("model_id", self.model_id)
-        token = kwargs.get("token", self.token)
+        resolved_model_id = model_id or self.model_id
+        resolved_token = token if token is not None else self.token
 
-        # Load tokenizer. If the model is gated, pass token (original code uses `token`).
-        # If your environment requires `use_auth_token=` replace here.
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id, token=token)
-
-        # Ensure tokenizer has a pad token (some models omit it)
+        # Tokenizer
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            resolved_model_id, token=resolved_token
+        )
         if self.tokenizer.pad_token is None:
+            # Prefer EOS as pad if available
             self.tokenizer.pad_token = self.tokenizer.eos_token
 
-        # Device mapping for from_pretrained -> keep same behavior as original code
-        device_map = "auto" if self.device != "cpu" else "cpu"
-        # original code used torch_dtype; left as-is to avoid behavioral change
-        torch_dtype = torch.float16 if self.device != "cpu" else torch.float32
+        # Device & dtype
+        if dtype is None:
+            if self.device == "cpu":
+                resolved_dtype = torch.float32
+            else:
+                # Works for CUDA and Apple MPS
+                resolved_dtype = torch.float16
+        else:
+            resolved_dtype = dtype
 
-        # Load the model weights. This can be heavy; keep same params as original.
+        device_map = "auto" if self.device != "cpu" else "cpu"
+
         self.model = AutoModelForCausalLM.from_pretrained(
-            model_id,
+            resolved_model_id,
             device_map=device_map,
-            torch_dtype=torch_dtype,
-            token=token,
+            torch_dtype=resolved_dtype,  # keep torch_dtype for broad Transformers compatibility
+            token=resolved_token,
         )
         return self
 
-    # -------------------------------------------------------------------------
-    # Fit / Predict interface
-    # -------------------------------------------------------------------------
     def fit(self, train_data: Any, task: str, ontologizer: bool = True):
         """
         Learn the allowed type inventory from the training data.
 
-        Expected behavior:
-          - If `tasks_data_former(..., test=False)` returns a list of strings,
-            set allowed_types to that list (deduped & sorted).
-          - If it returns a list of dicts (relationships), extract unique 'parent'
-            fields and use those as the allowed type inventory.
+        Normalization rules:
+          • If `ontologizer=True`, the framework's `tasks_data_former(..., test=False)`
+            is used to normalize `train_data`.
+          • If a container exposes `.term_typings`, types are collected from there.
+          • If the normalized data is a list of dicts with `"parent"`, unique parents
+            become the allowed types.
+          • If it's a list of strings, that unique set becomes the allowed types.
 
-        This method contains a tolerant branch for the framework's custom container:
-          If the returned `train_fmt` is not a list but has a `.term_typings` attribute
-          (e.g., OntologyData object used by the framework), iterate that attribute
-          and collect any `types` values found.
+        Args:
+            train_data: Training payload provided by the pipeline.
+            task: Must be `"term-typing"`.
+            ontologizer: If True, normalize via `tasks_data_former()` first.
+
+        Returns:
+            self
+
+        Raises:
+            ValueError: If `task` is not `"term-typing"`.
+            TypeError: If the training data cannot be normalized to a list of
+                strings or relationship dicts.
         """
-        train_fmt = self.tasks_data_former(data=train_data, task=task, test=False) if ontologizer else train_data
+        train_fmt = (
+            self.tasks_data_former(data=train_data, task=task, test=False)
+            if ontologizer
+            else train_data
+        )
         if task != "term-typing":
             raise ValueError("SBUNLPZSLearner only implements 'term-typing'.")
 
         # If framework passed a container with `.term_typings`, extract types from there
         if not isinstance(train_fmt, list):
-            # handle OntologyData-like object with attribute 'term_typings'
             if hasattr(train_fmt, "term_typings"):
                 try:
-                    # term_typings is expected to be an iterable of objects with attribute `types`
                     collected = set()
                     for tt in getattr(train_fmt, "term_typings") or []:
                         # tt.types could be list[str] or a single str
@@ -147,7 +176,6 @@ class SBUNLPZSLearner(AutoLearner):
                         else:
                             tvals = None
 
-                        # Normalize both list and single-string cases
                         if isinstance(tvals, (list, tuple, set)):
                             for x in tvals:
                                 if isinstance(x, str):
@@ -155,145 +183,180 @@ class SBUNLPZSLearner(AutoLearner):
                         elif isinstance(tvals, str):
                             collected.add(tvals)
 
-                    # If we successfully collected types, set allowed_types and return
                     if collected:
                         self.allowed_types = sorted(collected)
                         return self
-                    # else fall through to error below (no types found)
                 except Exception:
-                    # If anything unexpected occurs while iterating term_typings,
-                    # gracefully fall through and raise the original TypeError below.
+                    # Fall through to error below if unexpected issues occur.
                     pass
 
-            # not a supported non-list type -> keep original behavior (raise)
             raise TypeError("For term-typing, expected a list of type labels at fit().")
 
         # At this point train_fmt is a list (original logic preserved)
         if train_fmt and isinstance(train_fmt[0], dict) and "parent" in train_fmt[0]:
             # Case A: Received raw relationships/pairs (e.g., from train_test_split).
-            # Extract unique parent types from the relationship records.
             unique_types = set(r.get("parent") for r in train_fmt if r.get("parent"))
             self.allowed_types = sorted(unique_types)
         elif all(isinstance(x, str) for x in train_fmt):
             # Case B: Received a clean list of type labels (List[str]).
             self.allowed_types = sorted(set(train_fmt))
         else:
-            # The input is a list but not in either expected format -> raise
-            raise TypeError("For term-typing, input data format for fit() is invalid. Expected list of strings (types) or list of relationships (dicts).")
+            raise TypeError(
+                "For term-typing, input data format for fit() is invalid. "
+                "Expected list of strings (types) or list of relationships (dicts)."
+            )
 
         return self
 
     def predict(self, eval_data: Any, task: str, ontologizer: bool = True) -> Any:
         """
-        Predict types for each term.
+        Predict types for each term and return standardized rows.
 
         Expected inputs:
-          - With ontologizer=True: a list[str] of term strings (IDs are autogenerated).
-          - With ontologizer=False: a list[dict] where each dict has keys {'id','term'}.
+          • With `ontologizer=True`: a `list[str]` of terms (IDs are auto-generated),
+            or a container exposing `.term_typings` from which `{'id','term'}` pairs
+            can be extracted.
+          • With `ontologizer=False`: a `list[dict]` of `{'id','term'}` to preserve IDs.
 
-        This method tolerantly converts common framework containers (e.g., an
-        OntologyData object exposing `.term_typings`) into the expected list[dict]
-        shape so that the internal _term_typing() can run unchanged.
+        Args:
+            eval_data: Evaluation payload as described above.
+            task: Must be `"term-typing"`.
+            ontologizer: If True, normalize through the pipeline’s data former.
+
+        Returns:
+            A list of dictionaries:
+                `{"id": str, "term": str, "types": List[str]}`.
         """
         if task != "term-typing":
             # Delegate to base for other tasks (not implemented here)
             return super().predict(eval_data, task, ontologizer=ontologizer)
 
-        def _extract_list_of_dicts_from_term_typings(obj) -> Optional[List[Dict[str, str]]]:
-            """
-            Helper: try to produce a list of {"id","term"} dicts from objects
-            exposing a `term_typings` iterable. Supports either object-like
-            TermTyping (attributes) or dict-style entries.
-            """
+        def _extract_list_of_dicts_from_term_typings(
+            obj,
+        ) -> Optional[List[Dict[str, str]]]:
+            """Try to derive `[{id, term}, ...]` from an object with `.term_typings`."""
             tts = getattr(obj, "term_typings", None)
             if tts is None:
                 return None
             out = []
             for tt in tts:
-                # support object-style TermTyping (attributes) and dict-style
                 if isinstance(tt, dict):
-                    # try several common key names for ID
                     tid = tt.get("ID") or tt.get("id") or tt.get("Id") or tt.get("ID_")
                     tterm = tt.get("term") or tt.get("label") or tt.get("name")
                 else:
-                    # object-style access
-                    tid = getattr(tt, "ID", None) or getattr(tt, "id", None) or getattr(tt, "Id", None)
-                    tterm = getattr(tt, "term", None) or getattr(tt, "label", None) or getattr(tt, "name", None)
+                    tid = (
+                        getattr(tt, "ID", None)
+                        or getattr(tt, "id", None)
+                        or getattr(tt, "Id", None)
+                    )
+                    tterm = (
+                        getattr(tt, "term", None)
+                        or getattr(tt, "label", None)
+                        or getattr(tt, "name", None)
+                    )
                 if tid is None or tterm is None:
-                    # skip malformed entry - this is defensive so downstream code has valid inputs
                     continue
                 out.append({"id": str(tid), "term": str(tterm)})
             return out if out else None
 
         # Case A: ontologizer=True -> framework often provides list[str]
         if ontologizer:
-            if isinstance(eval_data, list) and all(isinstance(x, str) for x in eval_data):
-                # Simple case: convert list of terms to list of dicts with generated IDs
-                eval_pack = [{"id": f"TT_{i:06d}", "term": t} for i, t in enumerate(eval_data)]
+            if isinstance(eval_data, list) and all(
+                isinstance(x, str) for x in eval_data
+            ):
+                eval_pack = [
+                    {"id": f"TT_{i:06d}", "term": t} for i, t in enumerate(eval_data)
+                ]
             else:
-                # Try to extract from a framework container (e.g., OntologyData)
                 maybe = _extract_list_of_dicts_from_term_typings(eval_data)
                 if maybe is not None:
                     eval_pack = maybe
                 else:
-                    # Last resort: if eval_data is some iterable of strings, convert it
-                    try:
-                        if hasattr(eval_data, "__iter__") and not isinstance(eval_data, (str, bytes)):
-                            lst = list(eval_data)
-                            if all(isinstance(x, str) for x in lst):
-                                eval_pack = [{"id": f"TT_{i:06d}", "term": t} for i, t in enumerate(lst)]
-                            else:
-                                raise TypeError("With ontologizer=True, eval_data must be list[str] of terms.")
+                    # Last resort: attempt to coerce iterables of str
+                    if hasattr(eval_data, "__iter__") and not isinstance(
+                        eval_data, (str, bytes)
+                    ):
+                        lst = list(eval_data)
+                        if all(isinstance(x, str) for x in lst):
+                            eval_pack = [
+                                {"id": f"TT_{i:06d}", "term": t}
+                                for i, t in enumerate(lst)
+                            ]
                         else:
-                            raise TypeError("With ontologizer=True, eval_data must be list[str] of terms.")
-                    except TypeError:
-                        # re-raise to preserve original error semantics
-                        raise
-            # Delegate to internal inference routine
+                            raise TypeError(
+                                "With ontologizer=True, eval_data must be list[str] of terms."
+                            )
+                    else:
+                        raise TypeError(
+                            "With ontologizer=True, eval_data must be list[str] of terms."
+                        )
             return self._term_typing(eval_pack, test=True)
 
-        # Case B: ontologizer=False -> we expect list[dict], but tolerate common containers
+        # Case B: ontologizer=False -> expect list[dict], but tolerate containers
         else:
-            if isinstance(eval_data, list) and all(isinstance(x, dict) for x in eval_data):
+            if isinstance(eval_data, list) and all(
+                isinstance(x, dict) for x in eval_data
+            ):
                 eval_pack = eval_data
             else:
-                # Try to extract from framework container (term_typings)
                 maybe = _extract_list_of_dicts_from_term_typings(eval_data)
                 if maybe is not None:
                     eval_pack = maybe
                 else:
-                    # As a final attempt, allow eval_data to be a dict with a list under some known keys
                     if isinstance(eval_data, dict):
                         for key in ("term_typings", "terms", "items"):
-                            if key in eval_data and isinstance(eval_data[key], (list, tuple)):
+                            if key in eval_data and isinstance(
+                                eval_data[key], (list, tuple)
+                            ):
                                 converted = []
                                 for x in eval_data[key]:
-                                    # Accept dict-style entries that include id and term/name
-                                    if isinstance(x, dict) and ("id" in x or "ID" in x) and ("term" in x or "name" in x):
+                                    if (
+                                        isinstance(x, dict)
+                                        and ("id" in x or "ID" in x)
+                                        and ("term" in x or "name" in x)
+                                    ):
                                         tid = x.get("ID") or x.get("id")
                                         tterm = x.get("term") or x.get("name")
-                                        converted.append({"id": str(tid), "term": str(tterm)})
+                                        converted.append(
+                                            {"id": str(tid), "term": str(tterm)}
+                                        )
                                 if converted:
                                     eval_pack = converted
                                     break
                         else:
-                            # Could not convert; raise same TypeError as before
-                            raise TypeError("With ontologizer=False, eval_data must be a list of dicts with keys {'id','term'}.")
+                            raise TypeError(
+                                "With ontologizer=False, eval_data must be a list of dicts with keys {'id','term'}."
+                            )
                     else:
-                        # Not a supported container -> raise
-                        raise TypeError("With ontologizer=False, eval_data must be a list of dicts with keys {'id','term'}.")
-            # Delegate to internal inference routine
+                        raise TypeError(
+                            "With ontologizer=False, eval_data must be a list of dicts with keys {'id','term'}."
+                        )
             return self._term_typing(eval_pack, test=True)
 
-
-    # -------------------------------------------------------------------------
-    # Internal task implementations (AutoLearner hooks)
-    # -------------------------------------------------------------------------
     def _term_typing(self, data: Any, test: bool = False) -> Optional[Any]:
         """
-        Core implementation:
-         - training mode (test=False): `data` is a list of allowed type labels -> store them.
-         - inference mode (test=True): `data` is a list of {"id","term"} -> produce [{"id","types"}].
+        Internal implementation of the *term-typing* task.
+
+        Training mode (`test=False`):
+          • Expects a `list[str]` of allowed types. Stores a sorted unique copy.
+
+        Inference mode (`test=True`):
+          • Expects a `list[dict]` of `{"id","term"}` items.
+          • Requires `load()` to have been called (model/tokenizer available).
+          • Builds a blind prompt per item, generates text, parses quoted
+            candidates, and filters them to `self.allowed_types`.
+
+        Args:
+            data: See the mode-specific expectations above.
+            test: Set `True` to run inference; `False` to store the type inventory.
+
+        Returns:
+            • `None` in training mode.
+            • `list[dict]` with `{"id","term","types":[...]}` in inference mode.
+
+        Raises:
+            TypeError: If `data` is not in the expected shape for the mode.
+            RuntimeError: If model/tokenizer are not loaded at inference time.
         """
         if not test:
             # training: expect a list of strings (type labels)
@@ -304,49 +367,58 @@ class SBUNLPZSLearner(AutoLearner):
 
         # Inference path
         if not isinstance(data, list) or not all(isinstance(x, dict) for x in data):
-            raise TypeError("At prediction time, expected a list of {'id','term'} dicts.")
+            raise TypeError(
+                "At prediction time, expected a list of {'id','term'} dicts."
+            )
 
-        # Ensure model and tokenizer are loaded
         if self.model is None or self.tokenizer is None:
-            raise RuntimeError("Model/tokenizer not loaded. Call .load() before predict().")
+            raise RuntimeError(
+                "Model/tokenizer not loaded. Call .load() before predict()."
+            )
 
         results = []
         for item in data:
-            # preserve incoming IDs and terms
             term_id = item["id"]
             term_text = item["term"]
-
-            # build the blind JSON-prompt that instructs the model to output types
             prompt = self._build_blind_prompt(term_id, term_text, self.allowed_types)
-
-            # generate and parse model output into allowed types
             types = self._generate_and_parse_types(prompt)
-
-            # append result for this term (keep original id)
-            # include the original term so downstream evaluation (and any consumers) can match by term
             results.append({"id": term_id, "term": term_text, "types": types})
 
         return results
 
-    # -------------------------------------------------------------------------
-    # Prompting + parsing
-    # -------------------------------------------------------------------------
-
-    def _format_types_inline(allowed: List[str]) -> str:
+    def _format_types_inline(self, allowed: List[str]) -> str:
         """
-        Format allowed types as comma-separated quoted strings for insertion into the prompt.
-        Example: '"type1", "type2", "type3"'
-        """
-        return ", ".join(f'"{t}"' for t in allowed)
+        Format the allowed types for inline inclusion in prompts.
 
-    def _build_blind_prompt(self, term_id: str, term: str, allowed_types: List[str]) -> str:
-        """
-        Construct the prompt given a single term. The prompt:
-          - Instructs the model to produce a JSON array of {id, types} objects.
-          - Provides the allowed types list (so the model should only use those).
-          - Includes the single input item for which the model must decide types.
+        Args:
+            allowed: List of allowed type labels.
 
-        Note: This is the same blind-prompting approach used in the original notebook.
+        Returns:
+            A comma-separated string of quoted types, e.g.:
+            `"type1", "type2", "type3"`. Returns an empty string for an empty list.
+        """
+        if not allowed:
+            return ""
+        return ", ".join(f'"{t}"' for t in allowed if isinstance(t, str) and t.strip())
+
+    def _build_blind_prompt(
+        self, term_id: str, term: str, allowed_types: List[str]
+    ) -> str:
+        """
+        Construct the blind JSON prompt for a single term.
+
+        The prompt:
+          • Instructs the model to produce ONLY a JSON array of `{id, types}` objects.
+          • Provides the allowed types list so the model should only use those.
+          • Includes the single input item for which the model must decide types.
+
+        Args:
+            term_id: Identifier to carry through to the output JSON.
+            term: The input term string to classify.
+            allowed_types: Inventory used to constrain outputs.
+
+        Returns:
+            The full prompt string to feed to the LLM.
         """
         allowed_str = self._format_types_inline(allowed_types)
         return (
@@ -367,14 +439,22 @@ class SBUNLPZSLearner(AutoLearner):
 
     def _generate_and_parse_types(self, prompt: str) -> List[str]:
         """
-        Greedy generate, then extract quoted strings and filter by allowed types.
+        Greedy-generate text, extract candidate types, and filter to the inventory.
 
-        Important details:
-          - We assert model/tokenizer presence before calling.
-          - Tokenized inputs are moved to the model device (original code uses .to(self.model.device)).
-          - The decoded text is scanned for quoted substrings using self._quoted_re.
-          - Only quoted strings that are present in self.allowed_types are kept.
-          - Returned list is unique & sorted for deterministic ordering.
+        Workflow:
+          1) Tokenize the prompt and generate deterministically (greedy).
+          2) Decode and extract quoted substrings via regex (e.g., `"type"`).
+          3) Keep only those candidates that exist in `self.allowed_types`.
+          4) Return a unique, sorted list (stable across runs).
+
+        Args:
+            prompt: Fully formatted prompt string.
+
+        Returns:
+            List of predicted type labels (possibly empty if none found).
+
+        Raises:
+            AssertionError: If `model` or `tokenizer` are unexpectedly `None`.
         """
         assert self.model is not None and self.tokenizer is not None
 
@@ -393,8 +473,6 @@ class SBUNLPZSLearner(AutoLearner):
         text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         candidates = self._quoted_re.findall(text)
 
-        # Filter candidates to the allowed inventory
+        # Filter candidates to the allowed inventory and stabilize order.
         filtered = [c for c in candidates if c in self.allowed_types]
-
-        # Return unique & sorted for stability across runs
         return sorted(set(filtered))

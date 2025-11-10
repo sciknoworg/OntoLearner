@@ -1,7 +1,8 @@
 # Import core modules from the OntoLearner library
-from ontolearner import GeoNames, train_test_split, LearnerPipeline, SKHNLPZSLearner
+from ontolearner import GeoNames, train_test_split, LearnerPipeline
+from ontolearner.learner.taxonomy_discovery.skhnlp import SKHNLPZSLearner
 
-#Load ontology and split data
+# Load ontology and split data
 # The GeoNames ontology provides geographic term types and relationships.
 ontology = GeoNames()
 ontology.load()
@@ -16,11 +17,11 @@ train_data, test_data = train_test_split(
 # This model uses a fixed prompt and string normalization (Levenshtein) to classify terms.
 llm_learner = SKHNLPZSLearner(
     model_name="Qwen/Qwen2.5-0.5B-Instruct",
-    device="cpu",               # use "cuda" if you have a GPU
+    device="cpu",  # use "cuda" if you have a GPU
     max_new_tokens=16,
-    save_path="./outputs/",     # directory or full file path for CSV
+    save_path="./outputs/",  # directory or full file path for CSV
     verbose=True,
-    normalize_mode="levenshtein",      # "none" | "substring" | "levenshtein" | "auto"
+    normalize_mode="levenshtein",  # "none" | "substring" | "levenshtein" | "auto"
 )
 
 # Build pipeline and run
@@ -33,7 +34,7 @@ pipe = LearnerPipeline(
 
 # Run the full learning pipeline on the taxonomy-discovery task
 outputs = pipe(
-    train_data=train_data,        # zero-shot; ignored by the LLM learner
+    train_data=train_data,  # zero-shot; ignored by the LLM learner
     test_data=test_data,
     task="taxonomy-discovery",
     evaluate=True,

@@ -1,5 +1,6 @@
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
-from ontolearner import AlexbekCrossAttnLearner
+from ontolearner.learner.taxonomy_discovery.alexbek import AlexbekCrossAttnLearner
+
 # 1) Load & split
 ontology = GeoNames()
 ontology.load()
@@ -22,9 +23,9 @@ cross_learner = AlexbekCrossAttnLearner(
 
 # 3) Build pipeline
 pipeline = LearnerPipeline(
-    llm=cross_learner,     # <- our learner
-    llm_id="cross-attn",   # label for bookkeeping
-    ontologizer_data=False # pass raw ontology objects as in your example
+    llm=cross_learner,  # <- our learner
+    llm_id="cross-attn",  # label for bookkeeping
+    ontologizer_data=False,  # pass raw ontology objects as in your example
 )
 
 # 4) Train + predict + evaluate
