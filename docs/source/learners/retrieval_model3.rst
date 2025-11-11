@@ -1,4 +1,4 @@
-Alexbek learners
+Alexbek Team
 ================
 
 Description
@@ -9,25 +9,17 @@ Description
     * Alexbek Learner Text2Onto Example: `llm_learner_alexbek_text2onto.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_text2onto.py>`_
     * Alexbek Learner Term Typing Example: `llm_learner_alexbek_rf_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_rf_term_typing.py>`_
     * Alexbek Learner Taxonomy Discovery Example: `llm_learner_alexbek_self_attn_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_self_attn_taxonomy_discovery.py>`_
-   
 
-Prior systems for Ontology Learning (OL) often rely on heavy fine-tuning or manually designed prompts, and typically lack a unified, efficient pipeline that works across different tasks and domains.
+The team presented a comprehensive system for addressing Tasks A, B, and C of the LLMs4OL 2025 challenge, which together span the full ontology construction pipeline: term  extraction, typing, and taxonomy discovery.  Their approach combines retrieval augmented prompting, zero-shot classification, and attention-based graph modeling — each tailored to the demands of the respective task.
 
-The primary aim was to design a **modular, lightweight, and scalable system** that tackles all three core OL tasks of the LLMs4OL 2025 benchmark:
-* **Task A (Text2Onto):** Joint extraction of terms (A1) and their types (A2) from raw domain documents.
-* **Task B (Term Typing):** Assigning types to given terms, evaluated in both few-shot (B1–B3) and zero-shot (B4–B6) settings.
-* **Task C (Taxonomy Discovery):** Inducing *is-a* relationships between types to construct hierarchical taxonomies (C1–C8).
+For Task A (Text2Onto), they jointly extract domain-specific terms and their ontological types using a retrieval-augmented generation (RAG) pipeline. Training data was reformulated into a document to terms and types correspondence, while test-time inference leverages semantically similar training examples. This single-pass method requires no model fine-tuning and improves overall performance through lexical augmentation.
 
-The system targets a single unified framework that avoids full encoder fine-tuning, yet remains competitive.
+For Task B (Term Typing), which involves assigning types to given terms, is handled via a dual strategy. In the few-shot setting (for domains with labeled training data), they reuse the RAG scheme with few-shot prompting. In the zero-shot setting (for previously unseen domains), they use a zero-shot classifier that combines cosine similarity scores from multiple embedding models using confidence-based weighting.
 
-The work makes three main contributions:
-1.  **Unified, Modular System:** Presenting a modular LLM-based system for ontology learning, covering term extraction, term typing, and taxonomy induction across Tasks A, B, and C.
-2.  **Cross-Attention for Taxonomy:** Introducing a simple yet effective dedicated **cross-attention layer** for taxonomy discovery, which enables efficient graph inference over type embeddings without full encoder fine-tuning.
-3.  **Competitive Performance:** Achieving competitive results across all subtasks, including top-2 placement in multiple domains and strong zero-shot generalization[cite: 302]. The method is fully task-agnostic, lightweight, and requires no large-scale fine-tuning.
+For Task C (Taxonomy Discovery), they model taxonomy discovery as graph inference. Using embeddings of type labels, they train a lightweight cross-attention layer to predict is-a relations by approximating a soft adjacency matrix.
 
-This work successfully challenges the notion that OL requires heavy fine-tuning or complex multi-component pipelines, demonstrating that a lean system built on efficient prompting and adaptive lightweight modules can compete with or outperform more expensive methods, supporting scalable, domain-agnostic ontology learning.
 
-   
+
 Loading Ontological Data
 ----------------------------------
 We start by importing necessary components from the ontolearner package, loading ontology, and doing train-test splits.
@@ -45,9 +37,6 @@ We start by importing necessary components from the ontolearner package, loading
 
     train_data, test_data = train_test_split(ontological_data, test_size=0.2, random_state=42)
 
-.. note::
-
-    * ``AutoRetrieverLearner``: A wrapper class to easily configure and run retriever-based learners.
 
 Initialize Learner
 ----------------------------------
@@ -100,8 +89,7 @@ Pipeline Usage
 Text2Onto Pipeline 
 -------------------
 
-The pipeline example focuses on **text2onto** task using AlexbekFewShotLearner with a local LLM. It illustrates term extraction and typing from domain documents, 
-demonstrating how to adapt the pipeline for a different ontology or learner.
+The pipeline example focuses on text2onto task using AlexbekFewShotLearner with a local LLM. It illustrates term extraction and typing from domain documents.
 
 .. code-block:: python
 
@@ -180,8 +168,7 @@ demonstrating how to adapt the pipeline for a different ontology or learner.
 Taxonomy Discovery Pipeline 
 ---------------------------
 
-The pipeline example focuses on **taxonomy-discovery** task using AlexbekCrossAttnLearner with a sentence-transformer embedding model. It illustrates inducing hierarchical relationships between types, 
-demonstrating how to adapt the pipeline for a different ontology or learner.
+The pipeline example focuses on taxonomy-discovery task using AlexbekCrossAttnLearner with a sentence-transformer embedding model.
 
 .. code-block:: python
 
@@ -232,8 +219,7 @@ demonstrating how to adapt the pipeline for a different ontology or learner.
 Term Typing Pipeline 
 --------------------
 
-The pipeline example focuses on **term-typing** task using AlexbekRFLearner with a retriever model. It illustrates type assignment to given terms, 
-demonstrating how to adapt the pipeline for a different ontology or learner.
+The pipeline example focuses on term-typing task using AlexbekRFLearner with a retriever model.
 
 .. code-block:: python
 

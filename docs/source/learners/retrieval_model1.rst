@@ -1,4 +1,4 @@
-rwth_dbis learners 
+RWTH-DBIS team 
 ==================
 
 Description
@@ -6,15 +6,28 @@ Description
 
 .. sidebar:: Examples
 
-    * rwth_dbis Taxonomy Discovery Example: `llm_learner_rwthdbis_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_taxonomy_discovery.py>`_
-    * rwth_dbis Term Typing Example: `llm_learner_rwthdbis_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_term_typing.py>`_
+    * RWTH-DBIS Taxonomy Discovery Example: `llm_learner_rwthdbis_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_taxonomy_discovery.py>`_
+    * RWTH-DBIS Term Typing Example: `llm_learner_rwthdbis_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_term_typing.py>`_
 
 
-LLMs4OL learners address ontology learning tasks that leverage the reasoning capabilities of large language models to infer structured knowledge representations. In this study, two core tasks defined by the LLMs4OL Challenge were investigated: (1) Term Typing, which focuses on identifying the generalized semantic type for a given lexical term, and (2) Taxonomy Discovery, which aims to infer hierarchical (parent–child) relationships between ontological concepts. Together, these tasks form the foundation for constructing and refining domain-specific ontologies through automated linguistic and semantic analysis.
+The RWTH-DBIS team participated in the LLMs4OL Challenge at ISWC 2024, addressing two main tasks: term typing and taxonomy discovery. The team used LLaMA-3-8B and GPT-3.5-Turbo to compare performance gaps between open-source and commercial LLMs. For open-source models, methods included domain-specific continual training, fine-tuning, and knowledge-enhanced prompt-tuning, evaluated on benchmark datasets such as GeoNames, UMLS, Schema.org, and the Gene Ontology (GO).
 
-The experimental objectives were centered on evaluating the comparative effectiveness of open-source and commercial large language models in performing these ontology learning tasks. Specifically, the research sought to answer two guiding questions: (a) How do commercial LLMs compare with open-source models in terms of accuracy and generalization within domain-specific ontology learning scenarios?, and (b) To what extent can open-source models be enhanced through targeted training strategies and fine-tuning methods to close the performance gap with proprietary systems? Addressing these questions enables a deeper understanding of how different model architectures and adaptation techniques influence the capability of LLMs to perform ontology reasoning and structure induction efficiently and reliably.
+The experiments aimed to assess the effectiveness of both open-source and commercial LLMs in term typing and taxonomy discovery, following three stages: data augmentation, model training, and inference. For Task A (Term Typing), training data included an optional context sentence (only for WordNet), a lexical term, and one or more conceptual term types. The test set contained only the lexical term and optional context. For Task B (Taxonomy Discovery), training data consisted of type pairs {Ta, Tb}, where Ta is the parent and Tb the child, while the test set included only types, requiring identification of “is-a” relations.
 
-   
+1) Data Collection: Term and type descriptions were gathered from public sources like Wikipedia via its API, followed by cleaning and structuring. Commercial LLMs with web search capabilities—GPT-4o, Claude-3, and Copilot—were accessed through APIs using zero-shot prompts to gather additional contextual information. Ontology datasets were accessed directly via APIs or downloads to obtain relevant context.
+
+2) Training (Domain-Specific Continual Training): Context information for terms and types was integrated into the training data. For GeoNames, context was collected for all terms and types, while for other datasets, only type-level context was used.
+
++---------+-------------------------------------------------------------------------------------------------------------------------------------+
+| **Task**| **Description**                                                                                                                     |
++=========+=====================================================================================================================================+
+| Task A  | Models were trained on terms and corresponding types from the competition data. Each type was assigned a unique label, forming a    |
+|         | dataset of term–label pairs for fine-tuning.                                                                                        |
++---------+-------------------------------------------------------------------------------------------------------------------------------------+
+| Task B  | Hierarchical relationships were transformed into a binary classification format. Positive samples (parent–child) were labeled as 1, |
+|         | and negative samples (reversed pairs) as 0, creating the final dataset for training.                                                |
++---------+-------------------------------------------------------------------------------------------------------------------------------------+
+
 Loading Ontological Data
 ----------------------------------
 We start by importing necessary components from the ontolearner package, loading ontology, and doing train-test splits.
@@ -32,14 +45,11 @@ We start by importing necessary components from the ontolearner package, loading
 
     train_data, test_data = train_test_split(ontological_data, test_size=0.2, random_state=42)
 
-.. note::
-
-    * ``AutoRetrieverLearner``: A wrapper class to easily configure and run retriever-based learners.
 
 Initialize Learner
 ----------------------------------
 
-Before defining the Retriever learner, choose the task you want the Retriever to perform. Available tasks has been described in `LLMs4OL Paradigms <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_. The task IDs are: 'term-typing', 'taxonomy-discovery', 'non-taxonomic-re'.
+Before defining the learner, choose the task you want the Retriever to perform. Available tasks has been described in `LLMs4OL Paradigms <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_. The task IDs are: 'term-typing', 'taxonomy-discovery'.
 
 .. code-block:: python
 

@@ -1,4 +1,4 @@
-SBU-NLP learners
+SBU-NLP Team
 ================
 
 Description
@@ -10,30 +10,30 @@ Description
     * SBU-NLP Learner Term Typing (Zero-Shot) Example: `llm_learner_sbunlp_zs_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_sbunlp_zs_term_typing.py>`_
     * SBU-NLP Learner Taxonomy Discovery (Few-shot) Example: `llm_learner_sbunlp_fs_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_sbunlp_fs_taxonomy_discovery.py>`_
 
-The SBU-NLP team presented a fully automated approach to ontology construction that eliminates the need for any training or fine-tuning, relying entirely on **prompt engineering** and sampling techniques. This approach achieved the best overall performance in the LLMs4OL 2025 challenge.
 
-The methodology focused on three tasks (A, B, and C), employing in-context learning via few-shot examples derived from training data, and utilizing powerful models like **Claude Sonnet 4** and **Gemini**.
+The team participated in the LLMs4OL 2025 Shared Task, which included four subtasks:
+(A) Ontological term and type extraction (Text2Onto),
+(B) Term typing (Term Typing),
+(C) Taxonomy discovery (Taxonomy Discovery), and
+(D) Non-taxonomic relation extraction (Non-Taxonomic Relation Extraction).
 
-Core Methodologies:
+The team focused on Tasks A, B and C, adopting a unified prompting-based methodology that required no supervised training or fine-tuning. Instead, they applied prompt engineering combined with stratified and simple random sampling as well as chunking-based strategies to incorporate representative examples within the context window.
 
-* **Training-Free Approach:** The central theme is avoiding resource-intensive model fine-tuning for improved scalability and generalizability.
-* **Context Window Management:** Strategies like **stratified random sampling**, **simple random sampling**, and **chunking** were used to include training samples (few-shot examples) within the LLM's context window limits.
-* **Batch Prompting:** For efficiency, **batch prompting** was often employed, where a full set of test items was submitted as a single concatenated prompt for joint extraction, frequently outperforming non-batch methods.
+Datasets
 
-Task-Specific Approaches:
+Task A: Text2Onto: Ontology extraction from domain-specific corpora in ecology, engineering, and scholarly domains.
 
-* **Task A (Text2Onto - Term and Type Extraction):**
-    * Used few-shot examples constructed via random sampling of documents paired with their associated ground-truth terms/types.
-    * Separate prompt formats were designed for term extraction and type extraction.
+Task B: Term Typing: Semantic typing of terms using datasets from OBI and SWEET taxonomies.
 
-* **Task B (Term Typing - Assigning Types to Terms):**
-    * Few-shot examples were constructed by pairing each type with a small random sample of its associated terms, ensuring all target types were represented in the prompt.
-    * The **blind subtasks** relied solely on the provided list of candidate types within the prompt, without prior example-term associations.
+Task C: Taxonomy Discovery: Identification of hierarchical relations using OBI, Schema.org, SWEET, and MatOnto ontologies. Test instances correspond to unique types rather than document IDs.
 
-* **Task C (Taxonomy Discovery - *is-a* Relations):**
-    * Used a **chunking strategy** to split the large input of potential parent-child pairs into manageable segments due to context window limits.
-    * For the OBI dataset (with high lexical overlap), a **sentence embedding similarity comparison** was employed as an alternative to simple prompting to capture semantic relationships.
-    * The team showed that for certain domains, sentence embedding models performed comparably to a simple **F1 token overlap baseline**, questioning the necessity of complex embedding models.
+
+Methodology
+
+For Text2Onto, two prompt formats were designed — one for term extraction and another for type identification — enabling effective use of few-shot in-context learning from the provided training examples.
+
+For Taxonomy Discovery, the focus was on detecting parent–child relationships between ontology terms. Due to the relational nature of this task, only batch prompting was employed to efficiently handle multiple type pairs per inference.
+
 
    
 Loading Ontological Data
@@ -52,10 +52,8 @@ We start by importing necessary components from the ontolearner package, loading
     ontological_data = ontology.extract()
 
     train_data, test_data = train_test_split(ontological_data, test_size=0.2, random_state=42)
+ 
 
-.. note::
-
-    * ``AutoRetrieverLearner``: A wrapper class to easily configure and run retriever-based learners.
 
 Initialize Learner
 ----------------------------------
@@ -108,8 +106,7 @@ Pipeline Usage
 Text2Onto Pipeline 
 -------------------
 
-The pipeline example focuses on **text2onto** task using the SBU-NLP learner with a local LLM model. It demonstrates the complete workflow from loading data, fitting the model with few-shot examples, making predictions, and evaluating the results. The example is structured to be easily adaptable,
-demonstrating how to adapt the pipeline for a different ontology or learner.
+The pipeline example focuses on text2onto task using the SBU-NLP learner with a local LLM model. It demonstrates the complete workflow from loading data, fitting the model with few-shot examples, making predictions, and evaluating the results.
 
 .. code-block:: python
 
@@ -198,8 +195,7 @@ demonstrating how to adapt the pipeline for a different ontology or learner.
 Term-Typing Pipeline 
 --------------------
 
-The pipeline example focuses on **term-typing** task using the SBU-NLP Zero-Shot learner with the Qwen model. It demonstrates the complete workflow from loading data, splitting into train/test sets, making predictions, and evaluating the results. The example is structured to be easily adaptable,
-demonstrating how to adapt the pipeline for a different ontology or learner.
+The pipeline example focuses on term-typing task using the SBU-NLP Zero-Shot learner with the Qwen model.
 
 .. code-block:: python
 
@@ -263,8 +259,7 @@ demonstrating how to adapt the pipeline for a different ontology or learner.
 Taxonomy Discovery Pipeline 
 ---------------------------
 
-The pipeline example focuses on **taxonomy-discovery** task using the SBU-NLP Few-Shot learner with the Qwen model. It demonstrates the complete workflow from loading data, splitting into train/test sets, making predictions, and evaluating the results. The example is structured to be easily adaptable,
-demonstrating how to adapt the pipeline for a different ontology or learner.
+The pipeline example focuses on taxonomy-discovery task using the SBU-NLP Few-Shot learner with the Qwen model. 
 
 .. code-block:: python
 
