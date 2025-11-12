@@ -2,7 +2,7 @@
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
 
 # Import the specific Few-Shot Learner implementation
-from ontolearner.learner.taxonomy_discovery.sbunlp import SBUNLPFewShotLearner
+from ontolearner.learner.taxonomy_discovery import SBUNLPFewShotLearner
 
 # Load ontology and split
 # Load the GeoNames ontology for taxonomy discovery.

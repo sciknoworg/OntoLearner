@@ -1,6 +1,6 @@
 # Import core modules from the OntoLearner library
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
-from ontolearner.learner.term_typing.alexbek import AlexbekRAGLearner
+from ontolearner.learner.term_typing import AlexbekRAGLearner
 
 # Load the GeoNames ontology.
 ontology = GeoNames()

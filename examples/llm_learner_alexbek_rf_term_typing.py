@@ -1,8 +1,6 @@
 # Import core modules from the OntoLearner library
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
-from ontolearner.learner.term_typing.alexbek import (
-    AlexbekRFLearner,
-)  # A random-forest term-typing learner over text+graph features
+from ontolearner.learner.term_typing import AlexbekRFLearner # A random-forest term-typing learner over text+graph features
 
 # Load the GeoNames ontology and extract labeled term-typing data
 

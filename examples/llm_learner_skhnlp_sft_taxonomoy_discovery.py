@@ -1,6 +1,6 @@
 # Import core modules from the OntoLearner library
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
-from ontolearner.learner.taxonomy_discovery.skhnlp import SKHNLPSequentialFTLearner
+from ontolearner.learner.taxonomy_discovery import SKHNLPSequentialFTLearner
 
 # Load ontology and split
 # Load the GeoNames ontology for taxonomy discovery.

@@ -2,7 +2,7 @@
 from ontolearner import AgrO, train_test_split, LearnerPipeline
 
 # Import the specific Zero-Shot Learner implementation for Term Typing
-from ontolearner.learner.term_typing.sbunlp import SBUNLPZSLearner
+from ontolearner.learner.term_typing import SBUNLPZSLearner
 
 # Load ontology and split
 # Load the AgrO ontology for type inventory and test data.

@@ -1,6 +1,6 @@
 # Import core modules from the OntoLearner library
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
-from ontolearner.learner.taxonomy_discovery.skhnlp import SKHNLPZSLearner
+from ontolearner.learner.taxonomy_discovery import SKHNLPZSLearner
 
 # Load ontology and split data
 # The GeoNames ontology provides geographic term types and relationships.

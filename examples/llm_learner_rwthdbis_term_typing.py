@@ -1,6 +1,6 @@
 # Import core modules from the OntoLearner library
 from ontolearner import LearnerPipeline, train_test_split, AgrO
-from ontolearner.learner.term_typing.rwthdbis import RWTHDBISSFTLearner
+from ontolearner.learner.term_typing import RWTHDBISSFTLearner
 
 # load the AgrO ontology.
 # AgrO provides term-typing supervision where each term can be annotated with one or more types.

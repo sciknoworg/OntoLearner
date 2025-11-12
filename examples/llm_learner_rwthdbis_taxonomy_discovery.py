@@ -1,6 +1,6 @@
 # Import core modules from the OntoLearner library
 from ontolearner import LearnerPipeline, train_test_split, ChordOntology
-from ontolearner.learner.taxonomy_discovery.rwthdbis import RWTHDBISSFTLearner
+from ontolearner.learner.taxonomy_discovery import RWTHDBISSFTLearner
 
 # Load the Chord ontology, which exposes hierarchical (parent, child) relations for taxonomy discovery
 ontology = ChordOntology()

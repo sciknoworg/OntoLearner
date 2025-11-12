@@ -1,5 +1,5 @@
 from ontolearner import GeoNames, train_test_split, LearnerPipeline
-from ontolearner.learner.taxonomy_discovery.alexbek import AlexbekCrossAttnLearner
+from ontolearner.learner.taxonomy_discovery import AlexbekCrossAttnLearner
 
 # 1) Load & split
 ontology = GeoNames()

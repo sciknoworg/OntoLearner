@@ -29,7 +29,7 @@ from .learner import (AutoLLMLearner,
                       AutoRetrieverLearner,
                       AutoRAGLearner,
                       StandardizedPrompting,
-                      LabelMapper,)
+                      LabelMapper)
 from ._learner import LearnerPipeline
 
 from .processor import Processor
