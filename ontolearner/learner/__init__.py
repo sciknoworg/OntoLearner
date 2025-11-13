@@ -17,13 +17,3 @@ from .retriever import AutoRetrieverLearner
 from .rag import AutoRAGLearner
 from .prompt import StandardizedPrompting
 from .label_mapper import LabelMapper
-from .taxonomy_discovery import (RWTHDBISSFTLearner,
-                                 SKHNLPSequentialFTLearner,
-                                 AlexbekCrossAttnLearner,
-                                 SBUNLPFewShotLearner,
-                                 SKHNLPZSLearner)
-from .term_typing import (RWTHDBISSFTLearner,
-                          SBUNLPZSLearner,
-                          AlexbekRFLearner,
-                          AlexbekRAGLearner)
-from .text2onto import AlexbekFewShotLearner, SBUNLPFewShotLearner
