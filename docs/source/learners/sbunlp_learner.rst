@@ -1,4 +1,4 @@
-SBU-NLP Team
+SBU-NLP Learner
 ================
 
 Description
