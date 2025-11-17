@@ -3,14 +3,21 @@ LLMs4OL Challenge Learners
 
 LLMs4OL is a community development initiative collocated with the 23rd International Semantic Web Conference (ISWC) to explore the potential of Large Language Models (LLMs) in Ontology Learning (OL), a vital process for enhancing the web with structured knowledge to improve interoperability. By leveraging LLMs, the challenge aims to advance understanding and innovation in OL, aligning with the goals of the Semantic Web to create a more intelligent and user-friendly web.
 
-**Learning Tasks**
 
-.. list-table:: 
+.. list-table::
    :widths: 20 80
    :header-rows: 1
-  
+
    * - **Task**
      - **Description**
+   * - **Text2Onto**
+     - Extract ontological terms and types from unstructured text.
+
+       **ID**: ``text-to-onto``
+
+       **Info**: This task focuses on extracting foundational elements (Terms and Types) from unstructured text documents to build the initial structure of an ontology. It involves recognizing domain-relevant vocabulary (Term Extraction, SubTask 1) and categorizing it appropriately (Type Extraction, SubTask 2). It bridges the gap between natural language and structured knowledge representation.
+
+       **Example**: **COVID-19** is a term of the type **Disease**.
    * - **Term Typing**
      - Discover the generalized type for a lexical term.
 
@@ -43,7 +50,7 @@ LLMs4OL is a community development initiative collocated with the 23rd Internati
    :caption: LLMs4OL Learners
    :titlesonly:
 
-   retrieval_model1
-   retrieval_model2
-   retrieval_model3
-   retrieval_model4
+   rwthdbis_learner
+   skhnlp_learner
+   alexbek_learner
+   sbunlp_learner

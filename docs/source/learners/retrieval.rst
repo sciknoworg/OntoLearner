@@ -11,8 +11,6 @@ Retriever-only learners use embedding-based retrieval models to perform ontology
 
 By transforming terms, concepts, and relationships into embeddings through pre-trained language models, the system can measure semantic similarity between ontological components without relying on explicit linguistic patterns or rules. This approach leverages the distributional hypothesis—that semantically similar terms appear in similar contexts—to identify relationships between entities. The system then employs deterministic aggregation methods like majority voting or weighted consensus to derive predictions from the retrieved examples. This methodology is computationally efficient compared to LLM-based approaches and particularly effective for tasks with well-defined patterns across domain-specific ontologies.
 
-
-
 Loading Ontological Data
 ----------------------------------
 We start by importing necessary components from the ontolearner package, loading ontology, and doing train-test splits.
