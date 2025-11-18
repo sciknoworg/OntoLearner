@@ -1,23 +1,37 @@
 RWTH-DBIS Learner
 ==================
 
-.. sidebar:: Examples
+.. sidebar:: RWTH-DBIS Learner Examples
 
-   * RWTH-DBIS Taxonomy Discovery Example: `llm_learner_rwthdbis_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_taxonomy_discovery.py>`_
-   * RWTH-DBIS Term Typing Example: `llm_learner_rwthdbis_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_term_typing.py>`_
+	* Term Typing: `llm_learner_rwthdbis_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_term_typing.py>`_
+	* Taxonomy Discovery: `llm_learner_rwthdbis_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_taxonomy_discovery.py>`_
+
 
 The RWTH-DBIS team participated in the LLMs4OL Challenge at ISWC 2024, addressing two main tasks: **Term Typing** and **Taxonomy Discovery**. The team used LLaMA-3-8B (an open-source model) and GPT-3.5-Turbo (a commercial model) to rigorously compare the performance gaps and distinct capabilities between these two classes of Large Language Models (LLMs). This comparison was crucial for establishing baselines for future Ontology Learning research, particularly focusing on how well models can generalize and incorporate external knowledge for structured knowledge extraction. The evaluation was conducted across established benchmark datasets, including GeoNames, UMLS, Schema.org, and the Gene Ontology (GO).
 
-The experimental methodology was robust, involving three sequential stages: **data augmentation**, **model training**, and **inference**. A key part of the data augmentation phase involved gathering rich contextual descriptions for terms and types from public web sources like Wikipedia and specialized ontology APIs. Furthermore, the team leveraged advanced commercial LLMs—specifically GPT-4o, Claude-3, and Copilot—using zero-shot prompts to access their web search capabilities and generate additional, high-quality contextual information. This enriched data was vital for overcoming the limitations of base models and enhancing their semantic understanding of domain-specific concepts prior to training.
+.. note::
 
-For the open-source LLaMA-3-8B model, the training stage incorporated several advanced techniques to maximize performance. These included **domain-specific continual training** to adapt the LLM's vocabulary and knowledge base to the target ontology domain (e.g., biomedical for GO, geographical for GeoNames). Furthermore, **fine-tuning** was used to specialize the model for the direct objectives of Term Typing and Taxonomy Discovery. Crucially, **knowledge-enhanced prompt-tuning** was implemented, which integrated the collected external context (from Wikipedia and commercial LLM searches) directly into the model's prompts during inference.
+	Read more about the model at `RWTH-DBIS at LLMs4OL 2024 Tasks A and B Knowledge-Enhanced Domain-Specific Continual Learning and Prompt-Tuning of Large Language Models for Ontology Learning <https://www.tib-op.org/ojs/index.php/ocp/article/view/2491>`_.
 
-**Datasets**
+.. hint::
 
-* **Term Typing.** Labeled term–type pairs from benchmark ontologies, including GeoNames, UMLS, Schema.org, and GO, used to train and evaluate supervised encoders for semantic typing.
-* **Taxonomy Discovery.** Hierarchical (parent–child) edges drawn from the same ontologies, converted into positive/negative relation pairs for binary classification of taxonomic relations.
+	The original implementation is available at `https://github.com/MouYongli/LLMs4OL <https://github.com/MouYongli/LLMs4OL>`_ repository.
 
-**Methodology**
+
+
+Overview
+---------------------------------
+
+.. raw:: html
+
+   <div align="center">
+     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/dev/docs/source/learners/images/rwth-dbis-learner.png" alt="RWTH-DBIS Team" width="90%"/>
+   </div>
+   <br>
+
+The methodology is involved three sequential stages: **data augmentation**, **model training**, and **inference**. A key part of the data augmentation phase involved gathering rich contextual descriptions for terms and types from public web sources like Wikipedia and specialized ontology APIs. Furthermore, the team leveraged advanced commercial LLMs—specifically GPT-4o, Claude-3, and Copilot—using zero-shot prompts to access their web search capabilities and generate additional, high-quality contextual information. This enriched data was vital for overcoming the limitations of base models and enhancing their semantic understanding of domain-specific concepts prior to training. For the open-source LLaMA-3-8B model, the training stage incorporated several advanced techniques to maximize performance. These included **domain-specific continual training** to adapt the LLM's vocabulary and knowledge base to the target ontology domain (e.g., biomedical for GO, geographical for GeoNames). Furthermore, **fine-tuning** was used to specialize the model for the direct objectives of Term Typing and Taxonomy Discovery. Crucially, **knowledge-enhanced prompt-tuning** was implemented, which integrated the collected external context (from Wikipedia and commercial LLM searches) directly into the model's prompts during inference.
+
+Methodological Summary:
 
 1. **Data Collection & Context Enrichment.** Term and type descriptions were gathered from public sources like Wikipedia via its API, followed by cleaning and structuring. Commercial LLMs with web search capabilities—GPT-4o, Claude-3, and Copilot—were accessed through APIs using zero-shot prompts to gather additional contextual information. Ontology datasets were accessed directly via APIs or downloads to obtain relevant context.
 

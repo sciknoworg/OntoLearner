@@ -1,27 +1,35 @@
 Alexbek Learner
 ================
 
-.. sidebar:: Examples
+.. sidebar:: Alexbek Learner Examples
 
-   * Alexbek Learner Text2Onto Example: `llm_learner_alexbek_text2onto.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_text2onto.py>`_
-   * Alexbek Learner Term Typing Example: `llm_learner_alexbek_rf_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_rf_term_typing.py>`_
-   * Alexbek Learner Taxonomy Discovery Example: `llm_learner_alexbek_cross_attn_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_cross_attn_taxonomy_discovery.py>`_
+   * Text2Onto: `llm_learner_alexbek_text2onto.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_text2onto.py>`_
+   * Term Typing: `llm_learner_alexbek_rf_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_rf_term_typing.py>`_
+   * Taxonomy Discovery: `llm_learner_alexbek_cross_attn_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_cross_attn_taxonomy_discovery.py>`_
 
 The team presented a comprehensive system for addressing Tasks A, B, and C of the LLMs4OL 2025 challenge, which together span the full ontology construction pipeline: term extraction, typing, and taxonomy discovery. Their approach combines retrieval-augmented prompting, zero-shot classification, and attention-based graph modeling — each tailored to the demands of the respective task.
 
-For **Task A (Text2Onto)**, they jointly extract domain-specific terms and their ontological types using a retrieval-augmented generation (RAG) pipeline. Training data is reformulated into a correspondence between documents, terms, and types, while test-time inference leverages semantically similar training examples. This single-pass method requires no model fine-tuning and leverages lexical augmentation.
+.. note::
 
-For **Task B (Term Typing)**, which involves assigning types to given terms, they adopt a dual strategy. In the few-shot setting (for domains with labeled training data), they reuse the RAG scheme with few-shot prompting. In the zero-shot or label-scarce setting, they use a classifier that combines cosine similarity scores from multiple embedding models using confidence-based weighting (e.g., via random forests or RAG-style retrieval).
+	Read more about the model at `Alexbek at LLMs4OL 2025 Tasks A, B, and C: Heterogeneous LLM Methods for Ontology Learning (Few-Shot Prompting, Ensemble Typing, and Attention-Based Taxonomies) <https://www.tib-op.org/ojs/index.php/ocp/article/view/2899>`_.
 
-For **Task C (Taxonomy Discovery)**, they model taxonomy discovery as graph inference. Using embeddings of type labels, they train a lightweight cross-attention layer to predict *is-a* relations by approximating a soft adjacency matrix.
+.. hint::
 
-**Datasets**
+	The original implementation is available at `https://github.com/BelyaevaAlex/LLMs4OL-Challenge-Alexbek <https://github.com/BelyaevaAlex/LLMs4OL-Challenge-Alexbek>`_ repository.
 
-* **Task A – Text2Onto.** Domain corpora and annotations from the LLMs4OL Task A benchmark, covering ontology extraction in specialized domains.
-* **Task B – Term Typing.** Labeled term–type pairs from ontology-based benchmarks (e.g., GeoNames-style ontologies) used to train and evaluate both RF-based and RAG-based term-typing models.
-* **Task C – Taxonomy Discovery.** Hierarchical (parent–child) type graphs, such as those derived from GeoNames, providing edges for taxonomic relation prediction.
+Overview
+---------------------------------
 
-**Methodology**
+.. raw:: html
+
+   <div align="center">
+     <img src="https://raw.githubusercontent.com/sciknoworg/OntoLearner/refs/heads/dev/docs/source/learners/images/alexbek-learner.png" alt="Alexbek Team" width="90%"/>
+   </div>
+   <br>
+
+For **Task A (Text2Onto)**, they jointly extract domain-specific terms and their ontological types using a retrieval-augmented generation (RAG) pipeline. Training data is reformulated into a correspondence between documents, terms, and types, while test-time inference leverages semantically similar training examples. This single-pass method requires no model fine-tuning and leverages lexical augmentation. For **Task B (Term Typing)**, which involves assigning types to given terms, they adopt a dual strategy. In the few-shot setting (for domains with labeled training data), they reuse the RAG scheme with few-shot prompting. In the zero-shot or label-scarce setting, they use a classifier that combines cosine similarity scores from multiple embedding models using confidence-based weighting (e.g., via random forests or RAG-style retrieval). For **Task C (Taxonomy Discovery)**, they model taxonomy discovery as graph inference. Using embeddings of type labels, they train a lightweight cross-attention layer to predict *is-a* relations by approximating a soft adjacency matrix.
+
+Methodological Summary:
 
 1. **Retrieval-Augmented Text2Onto.** Training data is restructured into document–term–type correspondences. At inference time, the system retrieves semantically similar training examples and feeds them, together with the query document, into a small generative LLM to jointly predict candidate terms and their types.
 
