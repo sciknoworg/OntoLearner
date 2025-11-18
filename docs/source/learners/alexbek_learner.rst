@@ -1,9 +1,6 @@
 Alexbek Learner
 ================
 
-Description
------------
-
 .. sidebar:: Examples
 
    * Alexbek Learner Text2Onto Example: `llm_learner_alexbek_text2onto.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_alexbek_text2onto.py>`_

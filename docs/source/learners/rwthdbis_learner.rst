@@ -1,9 +1,6 @@
 RWTH-DBIS Learner
 ==================
 
-Description
------------
-
 .. sidebar:: Examples
 
    * RWTH-DBIS Taxonomy Discovery Example: `llm_learner_rwthdbis_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_rwthdbis_taxonomy_discovery.py>`_

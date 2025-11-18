@@ -1,8 +1,6 @@
 SKH-NLP Learner
 ============
 
-Description
------------
 
 .. sidebar:: Examples
 

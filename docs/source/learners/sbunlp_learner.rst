@@ -1,8 +1,6 @@
 SBU-NLP Learner
 ================
 
-Description
------------
 
 .. sidebar:: Examples
 

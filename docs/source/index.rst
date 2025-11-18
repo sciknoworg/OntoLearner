@@ -203,8 +203,8 @@ or GitHub repository:
 
    learners/llm
    learners/retrieval
-   learners/llms4ol
    learners/rag
+   learners/llms4ol
 
 .. toctree::
    :maxdepth: 4
