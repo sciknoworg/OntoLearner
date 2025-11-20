@@ -53,8 +53,7 @@ For term typing, we use the AgrO ontology as a running example. Terms and their 
 
 .. code-block:: python
 
-   from ontolearner import train_test_split, AgrO, evaluation_report
-   from ontolearner.learner.term_typing import RWTHDBISSFTLearner
+   from ontolearner import train_test_split, AgrO
 
    # Load the AgrO ontology and extract labeled term-typing data
    ontology = AgrO()
@@ -83,6 +82,8 @@ Next, we initialize :class:`RWTHDBISSFTLearner`. This learner is based on a smal
 
 .. code-block:: python
 
+   from ontolearner.learner.term_typing import RWTHDBISSFTLearner
+
    learner = RWTHDBISSFTLearner(
        model_name="microsoft/deberta-v3-small",
        output_dir="./results/deberta-v3",
@@ -98,6 +99,15 @@ Next, we initialize :class:`RWTHDBISSFTLearner`. This learner is based on a smal
    # Load the base encoder and prepare it for supervised term typing
    learner.load(llm_id=learner.model_name)
 
+
+Learn and Predict
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. code-block:: python
+
+   from ontolearner import evaluation_report
+
    # Indexing (fitting) the model on the training data for the LLMs4OL task
    learner.fit(train_data, task=task)
 
@@ -106,61 +116,6 @@ Next, we initialize :class:`RWTHDBISSFTLearner`. This learner is based on a smal
    truth = learner.tasks_ground_truth_former(data=test_data, task=task)
    metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
    print(metrics)
-
-Pipeline Usage
-~~~~~~~~~~~~~~
-
-The :class:`LearnerPipeline` class offers a streamlined, end-to-end wrapper for Supervised Fine-Tuning (SFT) models like :class:`RWTHDBISTermTypingLearner`. It encapsulates the full workflow—from initializing the model and its training parameters to executing training, prediction, and evaluation—in a single, clean function call.
-
-.. code-block:: python
-
-   # Import core modules from the OntoLearner library
-   from ontolearner import LearnerPipeline, train_test_split, AgrO
-   from ontolearner import RWTHDBISTermTypingLearner
-
-   # Load the AgrO ontology.
-   ontology = AgrO()
-   ontology.load()
-   data = ontology.extract()
-
-   # Split the labeled term-typing data into train and test sets
-   train_data, test_data = train_test_split(
-       data,
-       test_size=0.2,
-       random_state=42,
-   )
-
-   # Configure a supervised encoder-based classifier for term typing.
-   learner = RWTHDBISTermTypingLearner(
-       model_name="microsoft/deberta-v3-small",
-       output_dir="./results/deberta-v3",
-       num_train_epochs=30,
-       per_device_train_batch_size=16,
-       gradient_accumulation_steps=2,
-       learning_rate=2e-5,
-       max_length=64,
-       seed=42,
-   )
-
-   # Build the pipeline and pass raw structured objects end-to-end.
-   pipeline = LearnerPipeline(
-       llm=learner,
-       llm_id=learner.model_name,
-       ontologizer_data=False,
-   )
-
-   # Run the full learning pipeline on the term-typing task
-   outputs = pipeline(
-       train_data=train_data,
-       test_data=test_data,
-       task="term-typing",
-       evaluate=True,
-       ontologizer_data=False,
-   )
-
-   print("Metrics:", outputs["metrics"])
-   print("Elapsed time:", outputs["elapsed_time"])
-   print(outputs)
 
 
 Taxonomy Discovery
@@ -173,9 +128,7 @@ For taxonomy discovery, we use the Chord ontology as a running example. It expos
 
 .. code-block:: python
 
-   from ontolearner import train_test_split, evaluation_report
-   from ontolearner import ChordOntology
-   from ontolearner import RWTHDBISTaxonomyLearner
+   from ontolearner import train_test_split, ChordOntology
 
    # Load the Chord ontology (taxonomy discovery benchmark)
    ontology = ChordOntology()
@@ -203,6 +156,8 @@ Next, we initialize :class:`RWTHDBISTaxonomyLearner`. This learner fine-tunes a 
 
 .. code-block:: python
 
+   from ontolearner import RWTHDBISTaxonomyLearner
+
    learner = RWTHDBISTaxonomyLearner(
        model_name="microsoft/deberta-v3-small",
        output_dir="./results/",
@@ -221,6 +176,14 @@ Next, we initialize :class:`RWTHDBISTaxonomyLearner`. This learner fine-tunes a 
    # Load the base model and prepare it for supervised taxonomy learning
    learner.load(llm_id=learner.model_name)
 
+
+Learn and Predict
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   from ontolearner import evaluation_report
+
    # Fine-tune the model on the taxonomic training data
    learner.fit(train_data, task=task)
 
@@ -229,59 +192,3 @@ Next, we initialize :class:`RWTHDBISTaxonomyLearner`. This learner fine-tunes a 
    truth = learner.tasks_ground_truth_former(data=test_data, task=task)
    metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
    print(metrics)
-
-Pipeline Usage
-~~~~~~~~~~~~~~
-
-The pipeline example for :class:`RWTHDBISTaxonomyLearner` demonstrates how to adapt the workflow to a specific ontology and run taxonomy discovery end-to-end.
-
-.. code-block:: python
-
-   # Import core modules from the OntoLearner library
-   from ontolearner import LearnerPipeline, train_test_split
-   from ontolearner import ChordOntology, RWTHDBISTaxonomyLearner
-
-   # Load the Chord ontology, which exposes hierarchical (parent, child) relations for taxonomy discovery
-   ontology = ChordOntology()
-   ontology.load()
-
-   # Extract typed taxonomic edges and split into train/test while preserving the structured shape
-   train_data, test_data = train_test_split(
-       ontology.extract(),
-       test_size=0.2,
-       random_state=42,
-   )
-
-   learner = RWTHDBISTaxonomyLearner(
-       model_name="microsoft/deberta-v3-small",
-       output_dir="./results/",
-       num_train_epochs=1,
-       per_device_train_batch_size=8,
-       gradient_accumulation_steps=4,
-       learning_rate=2e-5,
-       max_length=256,
-       seed=42,
-       negative_ratio=5,
-       bidirectional_templates=True,
-       context_json_path=None,
-       ontology_name=ontology.ontology_full_name,
-   )
-
-   # Build the pipeline and run taxonomy discovery
-   pipeline = LearnerPipeline(
-       llm=learner,
-       llm_id=learner.model_name,
-       ontologizer_data=False,
-   )
-
-   outputs = pipeline(
-       train_data=train_data,
-       test_data=test_data,
-       task="taxonomy-discovery",
-       evaluate=True,
-       ontologizer_data=False,
-   )
-
-   print("Metrics:", outputs["metrics"])
-   print("Elapsed time:", outputs["elapsed_time"])
-   print(outputs)

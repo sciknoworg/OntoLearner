@@ -51,7 +51,7 @@ For term typing, we use GeoNames as an example ontology. Labeled term–type pai
 
 .. code-block:: python
 
-   from ontolearner import GeoNames, train_test_split, evaluation_report
+   from ontolearner import GeoNames, train_test_split
 
    # Load the GeoNames ontology and extract labeled term-typing data
    ontology = GeoNames()
@@ -74,14 +74,14 @@ The task IDs are: ``term-typing``, ``taxonomy-discovery``, ``non-taxonomic-re``.
 
 .. code-block:: python
 
-   from ontolearner.learner.term_typing import AlexbekRFLearner
-
    task = "term-typing"
 
 We first configure the Alexbek random-forest learner.
 This learner builds features from text embeddings (and optionally graph structure) and trains a random-forest classifier for term typing.
 
 .. code-block:: python
+
+   from ontolearner.learner.term_typing import AlexbekRFLearner
 
    rf_learner = AlexbekRFLearner(
        device="cpu",           # switch to "cuda" if available
@@ -91,6 +91,12 @@ This learner builds features from text embeddings (and optionally graph structur
        use_graph_features=True # set False for pure text-based features
    )
 
+Learn and Predict
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   from ontolearner import evaluation_report
    # Fit the RF-based learner on the training split
    rf_learner.fit(train_data, task=task)
 
@@ -102,62 +108,6 @@ This learner builds features from text embeddings (and optionally graph structur
    metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
    print(metrics)
 
-Pipeline Usage
-~~~~~~~~~~~~~~
-
-The :class:`LearnerPipeline` class integrates the random-forest term-typing learner with a retriever, runs training, and evaluates performance on the test split.
-
-.. code-block:: python
-
-   # Import core modules from the OntoLearner library
-   from ontolearner import GeoNames, train_test_split, LearnerPipeline
-   from ontolearner.learner.term_typing import AlexbekRFLearner  # RF learner over text+graph features
-
-   # Load the GeoNames ontology and extract labeled term-typing data
-   ontology = GeoNames()
-   ontology.load()
-   data = ontology.extract()
-
-   # Split the labeled term-typing data into train and test sets
-   train_data, test_data = train_test_split(
-       data,
-       test_size=0.2,
-       random_state=42,
-   )
-
-   # Configure the RF-based learner (embeddings + optional graph features)
-   rf_learner = AlexbekRFLearner(
-       device="cpu",            # switch to "cuda" if you have a GPU
-       batch_size=16,
-       max_length=512,          # max tokenizer length for embedding model inputs
-       threshold=0.30,          # probability cutoff for assigning each type
-       use_graph_features=True, # set False for pure RF on text embeddings only
-   )
-
-   # Build the pipeline and pass raw structured objects end-to-end.
-   pipe = LearnerPipeline(
-       retriever=rf_learner,
-       retriever_id="intfloat/e5-base-v2",  # or "Qwen/Qwen3-Embedding-4B" if you have sufficient GPU memory
-       ontologizer_data=True,               # True if data is already {"term": ..., "types": [...], ...}
-       device="cpu",
-       batch_size=16,
-   )
-
-   # Run the full learning pipeline on the term-typing task
-   outputs = pipe(
-       train_data=train_data,
-       test_data=test_data,
-       task="term-typing",
-       evaluate=True,
-       ontologizer_data=True,
-   )
-
-   # Display evaluation summary and runtime
-   print("Metrics:", outputs.get("metrics"))
-   print("Elapsed time:", outputs["elapsed_time"])
-   print(outputs)
-
-
 Term Typing (RAG-based)
 -----------------------
 
@@ -168,7 +118,7 @@ The RAG-based term-typing setup also uses GeoNames. We again load the ontology a
 
 .. code-block:: python
 
-   from ontolearner import GeoNames, train_test_split, evaluation_report
+   from ontolearner import GeoNames, train_test_split
 
    ontology = GeoNames()
    ontology.load()
@@ -190,14 +140,14 @@ The task IDs are: ``term-typing``, ``taxonomy-discovery``, ``non-taxonomic-re``.
 
 .. code-block:: python
 
-   from ontolearner.learner.term_typing import AlexbekRAGLearner
-
    task = "term-typing"
 
 Next, we configure a Retrieval-Augmented Generation (RAG) term-typing classifier.
 An encoder retrieves top-k similar training examples, and a generative LLM predicts types conditioned on the query term plus retrieved examples.
 
 .. code-block:: python
+
+   from ontolearner.learner.term_typing import AlexbekRAGLearner
 
    rag_learner = AlexbekRAGLearner(
        llm_model_id="Qwen/Qwen2.5-0.5B-Instruct",
@@ -211,6 +161,13 @@ An encoder retrieves top-k similar training examples, and a generative LLM predi
    # Load the underlying LLM and retriever for RAG-based term typing
    rag_learner.load(llm_id=rag_learner.llm_model_id)
 
+Learn and Predict
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   from ontolearner import evaluation_report
+
    # Index the training data for retrieval and prepare prompts
    rag_learner.fit(train_data, task=task)
 
@@ -221,59 +178,6 @@ An encoder retrieves top-k similar training examples, and a generative LLM predi
    truth = rag_learner.tasks_ground_truth_former(data=test_data, task=task)
    metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
    print(metrics)
-
-Pipeline Usage
-~~~~~~~~~~~~~~
-
-We place the RAG learner in the ``llm`` slot of :class:`LearnerPipeline`.
-The pipeline handles retrieval, LLM calls, and evaluation end-to-end.
-
-.. code-block:: python
-
-    # Import core modules from the OntoLearner library
-    from ontolearner import GeoNames, train_test_split, LearnerPipeline
-    from ontolearner.learner.term_typing import AlexbekRAGLearner
-
-    # Load the GeoNames ontology.
-    ontology = GeoNames()
-    ontology.load()
-
-    # Extract labeled items and split into train/test sets for evaluation
-    train_data, test_data = train_test_split(
-        ontology.extract(),
-        test_size=0.2,
-        random_state=42,
-    )
-
-    # Configure a Retrieval-Augmented Generation (RAG) term-typing classifier.
-    rag_learner = AlexbekRAGLearner(
-        llm_model_id="Qwen/Qwen2.5-0.5B-Instruct",
-        retriever_model_id="sentence-transformers/all-MiniLM-L6-v2",
-        device="cuda",
-        top_k=3,
-        max_new_tokens=256,
-        output_dir="./results/",
-    )
-
-    # Build the pipeline and pass raw structured objects end-to-end.
-    pipe = LearnerPipeline(
-        llm=rag_learner,
-        llm_id="Qwen/Qwen2.5-0.5B-Instruct",
-        ontologizer_data=True,
-    )
-
-    # Run the full learning pipeline on the term-typing task
-    outputs = pipe(
-        train_data=train_data,
-        test_data=test_data,
-        task="term-typing",
-        evaluate=True,
-        ontologizer_data=True,
-    )
-
-    # Display the evaluation results and runtime
-    print("Metrics:", outputs.get("metrics"))  # e.g., {'precision': ..., 'recall': ..., 'f1_micro': ..., ...}
-    print("Elapsed time (s):", outputs.get("elapsed_time"))
 
 
 Taxonomy Discovery
@@ -286,7 +190,7 @@ For taxonomy discovery, we again use the GeoNames ontology. It exposes parent–
 
 .. code-block:: python
 
-   from ontolearner import GeoNames, train_test_split, evaluation_report
+   from ontolearner import GeoNames, train_test_split
 
    ontology = GeoNames()
    ontology.load()
@@ -307,14 +211,14 @@ The task IDs are: ``term-typing``, ``taxonomy-discovery``, ``non-taxonomic-re``.
 
 .. code-block:: python
 
-   from ontolearner import AlexbekCrossAttnLearner
-
    task = "taxonomy-discovery"
 
 Next, we configure the Alexbek cross-attention learner.
 It uses embeddings of type labels and a lightweight cross-attention layer to predict *is-a* relations.
 
 .. code-block:: python
+
+   from ontolearner import AlexbekCrossAttnLearner
 
    cross_learner = AlexbekCrossAttnLearner(
        embedding_model="sentence-transformers/all-MiniLM-L6-v2",
@@ -328,6 +232,13 @@ It uses embeddings of type labels and a lightweight cross-attention layer to pre
        output_dir="./results/crossattn/",
        seed=42,
    )
+
+Learn and Predict
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   from ontolearner import evaluation_report
 
    # Train the cross-attention model on taxonomic edges
    cross_learner.fit(train_data, task=task)
@@ -339,57 +250,3 @@ It uses embeddings of type labels and a lightweight cross-attention layer to pre
    truth = cross_learner.tasks_ground_truth_former(data=test_data, task=task)
    metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
    print(metrics)
-
-Pipeline Usage
-~~~~~~~~~~~~~~
-
-Here, :class:`LearnerPipeline` trains the cross-attention model on train edges, predicts taxonomic relations on the test set, and reports evaluation metrics.
-
-.. code-block:: python
-
-   from ontolearner import GeoNames, train_test_split, LearnerPipeline
-   from ontolearner.learner.taxonomy_discovery import AlexbekCrossAttnLearner
-
-   # Load & split
-   ontology = GeoNames()
-   ontology.load()
-   data = ontology.extract()
-   train_data, test_data = train_test_split(
-       data,
-       test_size=0.2,
-       random_state=42,
-   )
-
-   # Configure the cross-attention learner
-   cross_learner = AlexbekCrossAttnLearner(
-       embedding_model="sentence-transformers/all-MiniLM-L6-v2",
-       device="cpu",
-       num_heads=8,
-       lr=5e-5,
-       weight_decay=0.01,
-       num_epochs=1,
-       batch_size=256,
-       neg_ratio=1.0,
-       output_dir="./results/crossattn/",
-       seed=42,
-   )
-
-   # Build pipeline
-   pipeline = LearnerPipeline(
-       llm=cross_learner,    # cross-attention learner
-       llm_id="cross-attn",  # label for bookkeeping
-       ontologizer_data=False,
-   )
-
-   # Train + predict + evaluate
-   outputs = pipeline(
-       train_data=train_data,
-       test_data=test_data,
-       task="taxonomy-discovery",
-       evaluate=True,
-       ontologizer_data=False,
-   )
-
-   print("Metrics:", outputs.get("metrics"))
-   print("Elapsed time:", outputs["elapsed_time"])
-   print(outputs)
