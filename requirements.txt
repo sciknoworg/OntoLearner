@@ -4,6 +4,7 @@ pandas
 openpyxl
 matplotlib
 tqdm
+g4f
 python-dotenv
 rdflib~=7.1.4
 networkx~=3.4.2
@@ -20,3 +21,5 @@ sentence-transformers~=5.1.0
 scikit-learn~=1.6.1
 bitsandbytes~=0.45.1
 mistral-common[sentencepiece]~=1.8.5
+protobuf<5
+Levenshtein

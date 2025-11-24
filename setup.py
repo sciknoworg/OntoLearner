@@ -21,6 +21,7 @@ setup(
         "pandas",
         "matplotlib",
         "tqdm",
+        "g4f",
         "python-dotenv",
         "rdflib==7.1.1",
         "networkx==3.2.1",
@@ -32,7 +33,9 @@ setup(
         "transformers>=4.56.0,<5.0.0",
         "sentence-transformers>=5.1.0,<6.0.0",
         "scikit-learn>=1.6.1,<2.0.0",
-        "bitsandbytes>=0.45.1,<1.0.0"
+        "bitsandbytes>=0.45.1,<1.0.0",
+        "protobuf<5",
+        "Levenshtein"
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

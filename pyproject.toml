@@ -17,6 +17,7 @@ numpy = "*"
 pandas = "*"
 openpyxl = "*"
 tqdm = "*"
+g4f = "*"
 pydantic = "2.11.3"
 pathlib = "1.0.1"
 python-dotenv = "*"
@@ -30,6 +31,8 @@ sentence-transformers = "^5.1.0"
 dspy = "^2.6.14"
 bitsandbytes="^0.45.1"
 mistral-common = { version = "^1.8.5", extras = ["sentencepiece"] }
+protobuf = "<5"
+Levenshtein = "*"
 
 [tool.poetry.dev-dependencies]
 ruff = "*"
