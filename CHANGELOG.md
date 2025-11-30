@@ -1,5 +1,10 @@
 ## Changelog
 
+### v1.4.8 (November 3, 2025)
+- add alexbeck, rwthdbis, sbunlp, and skhnlp learners
+- add documentation for learners
+- minor bug fixings
+
 ### v1.4.7 (October 1, 2025)
 - add custom LLM based learner
 - add Falcon-H and Mistral-Small custom AutoLLMs.
