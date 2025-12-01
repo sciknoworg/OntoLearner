@@ -33,9 +33,9 @@ To contribute changes to the library, please follow these steps:
 git clone git@github.com:sciknoworg/OntoLearner.git
 cd OntoLearner
 ```
-2. Create a virtual environment with python>=3.9, activate it, install the required dependencies and install the pre-commit configuration:
+2. Create a virtual environment with python>=3.11, activate it, install the required dependencies and install the pre-commit configuration:
 ```bash
-conda create -n my_env python=3.9
+conda create -n my_env python=3.11
 conda activate my_env
 pip install -r requirements.txt
 pre-commit install
