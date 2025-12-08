@@ -1,5 +1,10 @@
 ## Changelog
 
+### v1.4.10 (December 8, 2025)
+- add complexity score
+- add documentation for metrics
+- bug fixes in Ontologizer
+
 ### v1.4.9 (December 8, 2025)
 - add retriever collection
 - add documentation for retrievers
