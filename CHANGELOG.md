@@ -1,6 +1,13 @@
 ## Changelog
 
-### v1.4.8 (November 3, 2025)
+### v1.4.9 (December 8, 2025)
+- add retriever collection
+- add documentation for retrievers
+- minor bug fixings in docs
+- add unittest for retrievers
+- add new requirements (`gensim`)
+
+### v1.4.8 (December 3, 2025)
 - add alexbeck, rwthdbis, sbunlp, and skhnlp learners
 - add documentation for learners
 - minor bug fixings
