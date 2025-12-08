@@ -14,6 +14,7 @@
 
 import logging
 import time
+import numpy as np
 from abc import ABC
 from rdflib import RDF, RDFS, OWL
 from collections import defaultdict
@@ -185,6 +186,56 @@ class Analyzer(ABC):
         logger.info(f"Completed topology metrics computation in {time.time() - start_time:.2f} seconds")
 
         return metrics
+
+    @staticmethod
+    def compute_complexity_score(
+            topology_metrics: TopologyMetrics,
+            dataset_metrics: DatasetMetrics,
+            a: float = 0.4,
+            b: float = 6.0,
+            eps: float = 1e-12
+        ) -> float:
+        """
+        Compute a single normalized complexity score for an ontology.
+
+        This function combines structural topology metrics and dataset quality metrics
+        into a weighted aggregate score, then applies a logistic transformation to
+        normalize it to the range [0, 1]. The score reflects overall ontology complexity,
+        considering graph structure, hierarchy, breadth, coverage, and dataset richness.
+
+        Args:
+            topology_metrics (TopologyMetrics): Precomputed structural metrics of the ontology graph.
+            dataset_metrics (DatasetMetrics): Precomputed metrics of extracted learning datasets.
+            a (float, optional): Steepness parameter for the logistic normalization function. Default is 0.4.
+            b (float, optional): Centering parameter for the logistic function, should be tuned to match the scale of aggregated metrics. Default is 6.0.
+            eps (float, optional): Small epsilon to prevent numerical issues in logistic computation. Default is 1e-12.
+
+        Returns:
+            float: Normalized complexity score in [0, 1], where higher values indicate more complex ontologies.
+
+        Notes:
+            - Weights are assigned to different metric categories: graph metrics, coverage metrics, hierarchy metrics,
+              breadth metrics, and dataset metrics (term-types, taxonomic, non-taxonomic relations).
+            - Metrics are log-normalized before weighting to reduce scale differences.
+            - The logistic transformation ensures the final score is bounded and interpretable.
+        """
+        # Define metric categories with their weights
+        metric_categories = {
+            0.3: ["total_nodes", "total_edges", "num_root_nodes", "num_leaf_nodes"],
+            0.25: ["num_classes", "num_properties", "num_individuals"],
+            0.10: ["max_depth", "min_depth", "avg_depth", "depth_variance"],
+            0.20: ["max_breadth", "min_breadth", "avg_breadth", "breadth_variance"],
+            0.15: ["num_term_types", "num_taxonomic_relations", "num_non_taxonomic_relations", "avg_terms"]
+        }
+        weights = {metric: weight for weight, metrics in metric_categories.items() for metric in metrics}
+        metrics = [metric for _, metric_list in metric_categories.items() for metric in metric_list]
+        onto_metrics = {**topology_metrics.__dict__, **dataset_metrics.__dict__}
+        norm_weighted_values = [np.log1p(onto_metrics[m]) * weights[m] for m in metrics if m in onto_metrics]
+        total_weight = sum(weights[m] for m in metrics if m in onto_metrics)
+        weighted_sum = sum(norm_weighted_values) / total_weight if total_weight > 0 else 0.0
+        complexity_score = 1.0 / (1.0 + np.exp(-a * (weighted_sum - b) + eps))
+        return complexity_score
+
 
     @staticmethod
     def compute_dataset_metrics(ontology: BaseOntology) -> DatasetMetrics:
