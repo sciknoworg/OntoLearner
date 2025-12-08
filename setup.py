@@ -35,7 +35,8 @@ setup(
         "scikit-learn>=1.6.1,<2.0.0",
         "bitsandbytes>=0.45.1,<1.0.0",
         "protobuf<5",
-        "Levenshtein"
+        "Levenshtein",
+        "gensim"
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
