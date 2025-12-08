@@ -13,11 +13,11 @@ The team participated in the LLMs4OL 2025 Shared Task, which included four subta
 
 .. note::
 
-	Read more about the model at `RWTH-DBIS at LLMs4OL 2024 Tasks A and B Knowledge-Enhanced Domain-Specific Continual Learning and Prompt-Tuning of Large Language Models for Ontology Learning <https://www.tib-op.org/ojs/index.php/ocp/article/view/2491>`_.
+	Read more about the model at `SBU-NLP at LLMs4OL 2025 Tasks A, B, and C: Stage-Wise Ontology Construction Through LLMs Without any Training Procedure <https://www.tib-op.org/ojs/index.php/ocp/article/view/2887>`_.
 
 .. hint::
 
-	The original implementation is available at `https://github.com/MouYongli/LLMs4OL <https://github.com/MouYongli/LLMs4OL>`_ repository.
+	The original implementation is available at `https://github.com/rarahnamoun/LLMs4OL-Challenge-ISWC-2025 <https://github.com/rarahnamoun/LLMs4OL-Challenge-ISWC-2025>`_ repository.
 
 
 
