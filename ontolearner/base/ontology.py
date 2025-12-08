@@ -372,7 +372,7 @@ class BaseOntology(ABC):
         # Save updated metrics
         df.to_excel(metrics_file_path, index=False)
 
-    def is_valid_label(label: str) -> Any:
+    def is_valid_label(self, label: str) -> Any:
         invalids = ['root', 'thing']
         if label.lower() in invalids:
             return None
@@ -522,7 +522,7 @@ class BaseOntology(ABC):
                 return True
         return False
 
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Check if a label represents an anonymous class identifier."""
         if not label:
             return True
