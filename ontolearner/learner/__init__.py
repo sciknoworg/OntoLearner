@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from .llm import AutoLLMLearner, FalconLLM, MistralLLM
-from .retriever import AutoRetrieverLearner
+from .retriever import AutoRetrieverLearner, LLMAugmentedRetrieverLearner
 from .rag import AutoRAGLearner
 from .prompt import StandardizedPrompting
 from .label_mapper import LabelMapper
