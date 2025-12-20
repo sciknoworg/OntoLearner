@@ -186,6 +186,7 @@ or GitHub repository:
    ontologizer/ontology_hosting
    ontologizer/new_ontologies
    ontologizer/metadata
+   ontologizer/metrics
 
 .. toctree::
    :maxdepth: 1
@@ -197,13 +198,14 @@ or GitHub repository:
    learning_tasks/text2onto
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 4
    :caption: Learner Models
    :hidden:
 
    learners/llm
    learners/retrieval
    learners/rag
+   learners/llms4ol
 
 .. toctree::
    :maxdepth: 4

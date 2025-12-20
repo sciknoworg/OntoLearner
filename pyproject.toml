@@ -33,6 +33,7 @@ bitsandbytes="^0.45.1"
 mistral-common = { version = "^1.8.5", extras = ["sentencepiece"] }
 protobuf = "<5"
 Levenshtein = "*"
+gensim="*"
 
 [tool.poetry.dev-dependencies]
 ruff = "*"
