@@ -1,84 +1,111 @@
 import os
-import json
-import torch
+import dspy
 
-# LocalAutoLLM handles model loading/generation; AlexbekFewShotLearner provides fit/predict APIs
-from ontolearner.learner.text2onto.alexbek import LocalAutoLLM, AlexbekFewShotLearner
+# Import ontology loader/manager
+from ontolearner.ontology import OM
 
-# Local folder where the dataset is stored (relative to this script)
-DATA_DIR = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology"
+# Import Text2Onto utilities: synthetic sample generation + dataset splitting
+from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
 
-# Input paths (already saved)
-TRAIN_DOCS_PATH = os.path.join(DATA_DIR, "train", "documents.jsonl")
-TRAIN_TERMS2DOCS_PATH = os.path.join(DATA_DIR, "train", "terms2docs.json")
-TEST_DOCS_FULL_PATH = os.path.join(
-    DATA_DIR, "test", "text2onto_ecology_test_documents.jsonl"
+# Import pipeline orchestrator + the specific Few-Shot learner you want to run
+from ontolearner import LearnerPipeline
+from ontolearner.learner.text2onto import AlexbekRAGFewShotLearner
+
+# ---- DSPy -> Ollama (LiteLLM-style) ----
+# Configure DSPy to send prompts to a locally running Ollama server (via LiteLLM-compatible args).
+LLM_MODEL_ID = "ollama/llama3.2:3b"      # use your pulled Ollama model
+LLM_API_KEY  = "NA"                      # Ollama local doesn't use a key; kept for interface compatibility
+LLM_BASE_URL = "http://localhost:11434"  # default Ollama server endpoint
+
+# Create the DSPy language model wrapper.
+# Note: DSPy uses LiteLLM-style parameters under the hood when given model/base_url/api_key.
+dspy_llm = dspy.LM(
+    model=LLM_MODEL_ID,
+    cache=True,          # cache generations to speed up repeated runs
+    max_tokens=4000,     # generous context for synthetic generation prompts
+    temperature=0,       # deterministic output; helpful for reproducibility
+    api_key=LLM_API_KEY,
+    base_url=LLM_BASE_URL,
 )
 
-# Output paths
-DOC_TERMS_OUT_PATH = os.path.join(
-    DATA_DIR, "test", "extracted_terms_ecology.fast.jsonl"
-)
-TERMS2TYPES_OUT_PATH = os.path.join(
-    DATA_DIR, "test", "terms2types_pred_ecology.fast.json"
-)
-TYPES2DOCS_OUT_PATH = os.path.join(
-    DATA_DIR, "test", "types2docs_pred_ecology.fast.json"
-)
+# Register the LM globally so DSPy modules (and generator internals) use it.
+dspy.configure(lm=dspy_llm)
 
-# Device selection
-DEVICE = (
-    "cuda"
-    if torch.cuda.is_available()
-    else ("mps" if torch.backends.mps.is_available() else "cpu")
+# ---- Synthetic generation configuration ----
+# Allow scaling generation without editing code by using environment variables:
+#   TEXT2ONTO_BATCH=20 TEXT2ONTO_WORKERS=2 python script.py
+pseudo_sentence_batch_size = int(os.getenv("TEXT2ONTO_BATCH", "10"))
+max_worker_count_for_llm_calls = int(os.getenv("TEXT2ONTO_WORKERS", "1"))
+
+# Instantiate the generator that turns ontology structures into pseudo-text samples.
+text2onto_synthetic_generator = SyntheticGenerator(
+    batch_size=pseudo_sentence_batch_size,       # number of samples requested per batch
+    worker_count=max_worker_count_for_llm_calls, # parallel LLM calls (increase if your machine can handle it)
 )
 
-# Model config
-MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
-LOAD_IN_4BIT = DEVICE == "cuda"  # 4-bit helps on GPU
+# ---- Load ontology and extract structured data ----
+# OM loads the ontology configured in your OntoLearner setup and exposes domain metadata.
+ontology = OM()
+ontology.load()
+ontological_data = ontology.extract()  # structured: term typings, taxonomies, relations, etc.
 
-# 1) Load LLM
-llm = LocalAutoLLM(device=DEVICE)
-llm.load(MODEL_ID, load_in_4bit=LOAD_IN_4BIT)
-
-# 2) Build few-shot exemplars from training split
-learner = AlexbekFewShotLearner(model=llm, device=DEVICE)
-learner.fit(
-    train_docs_jsonl=TRAIN_DOCS_PATH,
-    terms2doc_json=TRAIN_TERMS2DOCS_PATH,
-    # use defaults for sample size/seed
+# ---- Generate synthetic Text2Onto samples ----
+# Uses the extracted ontology structures + domain/topic to create synthetic training examples.
+synthetic_data = text2onto_synthetic_generator.generate(
+    ontological_data=ontological_data,
+    topic=ontology.domain
 )
 
-# 3) Predict terms per test document
-os.makedirs(os.path.dirname(DOC_TERMS_OUT_PATH), exist_ok=True)
-num_written_doc_terms = learner.predict_terms(
-    docs_test_jsonl=TEST_DOCS_FULL_PATH,
-    out_jsonl=DOC_TERMS_OUT_PATH,
-    # use defaults for max_new_tokens and few_shot_k
-)
-print(f"[terms] wrote {num_written_doc_terms} lines → {DOC_TERMS_OUT_PATH}")
-
-# 4) Predict types for extracted terms, using the JSONL we just wrote
-typing_summary = learner.predict_types_from_terms(
-    doc_terms_jsonl=DOC_TERMS_OUT_PATH,  # read the predictions directly
-    doc_terms_list=None,  # (not needed when doc_terms_jsonl is provided)
-    model_id=MODEL_ID,  # reuse the same small model
-    out_terms2types=TERMS2TYPES_OUT_PATH,
-    out_types2docs=TYPES2DOCS_OUT_PATH,
-    # use defaults for everything else
+# ---- Dataset splitter ----
+# Wrap the synthetic dataset with a splitter utility for reproducible partitioning.
+splitter = SyntheticDataSplitter(
+    synthetic_data=synthetic_data,
+    onto_name=ontology.ontology_id  # used to tag/identify outputs for this ontology
 )
 
-print(
-    f"[types] {typing_summary['unique_terms']} unique terms | {typing_summary['types_count']} types"
-)
-print(f"[saved] {TERMS2TYPES_OUT_PATH}")
-print(f"[saved] {TYPES2DOCS_OUT_PATH}")
+# Optional sanity checks to verify what was extracted from the ontology.
+print(f"term types: {len(ontological_data.term_typings)}")
+print(f"taxonomic relations: {len(ontological_data.type_taxonomies.taxonomies)}")
+print(f"non-taxonomic relations: {len(ontological_data.type_non_taxonomic_relations.non_taxonomies)}")
 
-# 5) Small preview of term→types
-try:
-    with open(TERMS2TYPES_OUT_PATH, "r", encoding="utf-8") as fin:
-        preview = json.load(fin)[:3]
-    print("[preview] first 3:")
-    print(json.dumps(preview, ensure_ascii=False, indent=2))
-except Exception as e:
-    print(f"[preview] skipped: {e}")
+# ---- Split into train/val/test ----
+# val=0.0 keeps the API consistent while skipping validation split for this run.
+train_data, val_data, test_data = splitter.train_test_val_split(train=0.8, val=0.0, test=0.2)
+
+# ---- Configure the Few-Shot learner for Text2Onto ----
+# This learner will be used by the pipeline to learn/predict from Text2Onto-style samples.
+text2ontolearner = AlexbekRAGFewShotLearner(
+    llm_model_id="Qwen/Qwen2.5-0.5B-Instruct",               # generator model used inside the learner
+    retriever_model_id="sentence-transformers/all-MiniLM-L6-v2",  # embedding model for retrieval
+    device="cpu",                                            # set "cuda" if you have GPU support
+    top_k=3,                                                 # number of retrieved examples/chunks
+    max_new_tokens=256,                                      # response length for the learner's generator
+    use_tfidf=True,                                          # optional lexical retrieval alongside embeddings
+)
+
+# ---- Build pipeline ----
+# LearnerPipeline orchestrates training/prediction/evaluation for the chosen task.
+pipe = LearnerPipeline(
+    llm=text2ontolearner,                   # the learner implementation used by the pipeline
+    llm_id="Qwen/Qwen2.5-0.5B-Instruct",    # label/id recorded with results
+    ontologizer_data=False,                 # whether to run Ontologizer-related processing
+)
+
+# ---- Run end-to-end (train -> predict -> evaluate) ----
+outputs = pipe(
+    train_data=train_data,
+    test_data=test_data,
+    task="text2onto",
+    evaluate=True,                          # compute evaluation metrics on the test set
+    ontologizer_data=False,                 # keep consistent with pipeline setting above
+)
+
+# ---- Display results ----
+# Metrics typically include task-specific scores (depends on OntoLearner implementation).
+print("Metrics:", outputs.get("metrics"))
+
+# Total elapsed time for training + prediction + evaluation.
+print("Elapsed time:", outputs["elapsed_time"])
+
+# Print everything returned (often includes predictions, logs, artifacts, etc.)
+print(outputs)

@@ -12,5 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .alexbek import AlexbekFewShotLearner
+from .alexbek import AlexbekRAGFewShotLearner
 from .sbunlp import SBUNLPFewShotLearner

@@ -18,6 +18,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import torch.nn.functional as F
 from sentence_transformers import SentenceTransformer
+from collections import defaultdict
 
 class AutoLearner(ABC):
     """
@@ -70,6 +71,7 @@ class AutoLearner(ABC):
                  - "term-typing": Predict semantic types for terms
                  - "taxonomy-discovery": Identify hierarchical relationships
                  - "non-taxonomy-discovery": Identify non-hierarchical relationships
+                 - "text2onto" : Extract ontology terms and their semantic types from documents
 
         Raises:
             NotImplementedError: If not implemented by concrete class.
@@ -81,6 +83,8 @@ class AutoLearner(ABC):
             self._taxonomy_discovery(train_data, test=False)
         elif task == 'non-taxonomic-re':
             self._non_taxonomic_re(train_data, test=False)
+        elif task == 'text2onto':
+            self._text2onto(train_data, test=False)
         else:
             raise ValueError(f"{task} is not a valid task.")
 
@@ -103,6 +107,7 @@ class AutoLearner(ABC):
             - term-typing: List of predicted types for each term
             - taxonomy-discovery: Boolean predictions for relationships
             - non-taxonomy-discovery: Predicted relation types
+            - text2onto : Extract ontology terms and their semantic types from documents
 
         Raises:
             NotImplementedError: If not implemented by concrete class.
@@ -115,6 +120,8 @@ class AutoLearner(ABC):
             return self._taxonomy_discovery(eval_data, test=True)
         elif task == 'non-taxonomic-re':
             return self._non_taxonomic_re(eval_data, test=True)
+        elif task == 'text2onto':
+            return self._text2onto(eval_data, test=True)
         else:
             raise ValueError(f"{task} is not a valid task.")
 
@@ -147,6 +154,9 @@ class AutoLearner(ABC):
     def _non_taxonomic_re(self, data: Any, test: bool = False) -> Optional[Any]:
         pass
 
+    def _text2onto(self, data: Any, test: bool = False) -> Optional[Any]:
+        pass
+
     def tasks_data_former(self, data: Any, task: str, test: bool = False) -> List[str | Dict[str, str]]:
         formatted_data = []
         if task == "term-typing":
@@ -171,6 +181,7 @@ class AutoLearner(ABC):
             non_taxonomic_types = list(set(non_taxonomic_types))
             non_taxonomic_res = list(set(non_taxonomic_res))
             formatted_data = {"types": non_taxonomic_types, "relations": non_taxonomic_res}
+
         return formatted_data
 
     def tasks_ground_truth_former(self, data: Any, task: str) -> List[Dict[str, str]]:
@@ -186,6 +197,26 @@ class AutoLearner(ABC):
                 formatted_data.append({"head": non_taxonomic_triplets.head,
                                        "tail": non_taxonomic_triplets.tail,
                                        "relation": non_taxonomic_triplets.relation})
+        if task == "text2onto":
+            terms2docs = data.get("terms2docs", {}) or {}
+            terms2types = data.get("terms2types", {}) or {}
+
+            # gold doc→terms
+            gold_terms = []
+            for term, doc_ids in terms2docs.items():
+                for doc_id in doc_ids or []:
+                    gold_terms.append({"doc_id": doc_id, "term": term})
+
+            # gold doc→types derived via doc→terms + term→types
+            doc2types = defaultdict(set)
+            for term, doc_ids in terms2docs.items():
+                for doc_id in doc_ids or []:
+                    for ty in (terms2types.get(term, []) or []):
+                        if isinstance(ty, str) and ty.strip():
+                            doc2types[doc_id].add(ty.strip())
+            gold_types = [{"doc_id": doc_id, "type": ty} for doc_id, tys in doc2types.items() for ty in tys]
+            return {"terms": gold_terms, "types": gold_types}
+
         return formatted_data
 
 class AutoLLM(ABC):

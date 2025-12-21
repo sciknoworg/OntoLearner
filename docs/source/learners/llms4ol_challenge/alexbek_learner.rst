@@ -250,3 +250,147 @@ Learn and Predict
    truth = cross_learner.tasks_ground_truth_former(data=test_data, task=task)
    metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
    print(metrics)
+
+Text2Onto
+------------------
+
+Loading Ontological Data
+~~~~~~~~~~~~~~~~~~~~~~
+
+For the Text2Onto task, we load an ontology (via ``OM``), extract its structured content, and then generate synthetic pseudo-sentences using an LLM-backed generator (DSPy + Ollama in this example).
+
+.. code-block:: python
+
+   import os
+   import dspy
+
+   # Ontology loader/manager
+   from ontolearner.ontology import OM
+
+   # Text2Onto utilities: synthetic generation + dataset splitting
+   from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
+
+   # ---- DSPy -> Ollama (LiteLLM-style) ----
+   LLM_MODEL_ID = "ollama/llama3.2:3b"      # use your pulled Ollama model
+   LLM_API_KEY  = "NA"                      # local Ollama doesn't use a key
+   LLM_BASE_URL = "http://localhost:11434"  # default Ollama endpoint
+
+   dspy_llm = dspy.LM(
+       model=LLM_MODEL_ID,
+       cache=True,
+       max_tokens=4000,
+       temperature=0,
+       api_key=LLM_API_KEY,
+       base_url=LLM_BASE_URL,
+   )
+   dspy.configure(lm=dspy_llm)
+
+   # ---- Synthetic generation configuration ----
+   pseudo_sentence_batch_size = int(os.getenv("TEXT2ONTO_BATCH", "10"))
+   max_worker_count_for_llm_calls = int(os.getenv("TEXT2ONTO_WORKERS", "1"))
+
+   text2onto_synthetic_generator = SyntheticGenerator(
+       batch_size=pseudo_sentence_batch_size,
+       worker_count=max_worker_count_for_llm_calls,
+   )
+
+   # ---- Load ontology and extract structured data ----
+   ontology = OM()
+   ontology.load()
+   ontological_data = ontology.extract()
+
+   print(f"term types: {len(ontological_data.term_typings)}")
+   print(f"taxonomic relations: {len(ontological_data.type_taxonomies.taxonomies)}")
+   print(f"non-taxonomic relations: {len(ontological_data.type_non_taxonomic_relations.non_taxonomies)}")
+
+   # ---- Generate synthetic Text2Onto samples ----
+   synthetic_data = text2onto_synthetic_generator.generate(
+       ontological_data=ontological_data,
+       topic=ontology.domain,
+   )
+
+Split Synthetic Data
+~~~~~~~~~~~~~~~~~~~~
+
+We split the synthetic dataset into train/val/test sets using ``SyntheticDataSplitter``.
+Each split is a dict with keys:
+
+- ``documents``
+- ``terms``
+- ``types``
+- ``terms2docs``
+- ``terms2types``
+
+.. code-block:: python
+
+   splitter = SyntheticDataSplitter(
+       synthetic_data=synthetic_data,
+       onto_name=ontology.ontology_id,
+   )
+
+   train_data, val_data, test_data = splitter.train_test_val_split(
+       train=0.8,
+       val=0.0,
+       test=0.2,
+   )
+
+   print("TRAIN sizes:")
+   print("  documents:", len(train_data.get("documents", [])))
+   print("  terms:", len(train_data.get("terms", [])))
+   print("  types:", len(train_data.get("types", [])))
+   print("  terms2docs:", len(train_data.get("terms2docs", {})))
+   print("  terms2types:", len(train_data.get("terms2types", {})))
+
+   print("TEST sizes:")
+   print("  documents:", len(test_data.get("documents", [])))
+   print("  terms:", len(test_data.get("terms", [])))
+   print("  types:", len(test_data.get("types", [])))
+   print("  terms2docs:", len(test_data.get("terms2docs", {})))
+   print("  terms2types:", len(test_data.get("terms2types", {})))
+
+Initialize Learner
+~~~~~~~~~~~~~~~~~~
+
+We configure a retrieval-augmented few-shot learner for the Text2Onto task.
+The learner retrieves relevant synthetic examples and uses an LLM to predict structured outputs.
+
+.. code-block:: python
+
+   from ontolearner.learner.text2onto import AlexbekRAGFewShotLearner
+
+   text2onto_learner = AlexbekRAGFewShotLearner(
+       llm_model_id="Qwen/Qwen2.5-0.5B-Instruct",
+       retriever_model_id="sentence-transformers/all-MiniLM-L6-v2",
+       device="cpu",          # set "cuda" if available
+       top_k=3,
+       max_new_tokens=256,
+       use_tfidf=True,
+   )
+
+Learn and Predict
+~~~~~~~~~~~~~~~~~
+
+We run the end-to-end pipeline (train -> predict -> evaluate) with ``LearnerPipeline`` using the ``text2onto`` task id.
+
+.. code-block:: python
+
+   from ontolearner import LearnerPipeline
+
+   task = "text2onto"
+
+   pipe = LearnerPipeline(
+       llm=text2onto_learner,
+       llm_id="Qwen/Qwen2.5-0.5B-Instruct",
+       ontologizer_data=False,
+   )
+
+   outputs = pipe(
+       train_data=train_data,
+       test_data=test_data,
+       task=task,
+       evaluate=True,
+       ontologizer_data=False,
+   )
+
+   print("Metrics:", outputs.get("metrics"))
+   print("Elapsed time:", outputs.get("elapsed_time"))
