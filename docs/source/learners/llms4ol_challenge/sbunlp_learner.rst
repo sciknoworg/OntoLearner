@@ -31,6 +31,8 @@ Methodological Summary:
 
 - For **Taxonomy Discovery**, the focus was on detecting parent–child relationships between ontology terms. Due to the relational nature of this task, batch prompting was employed to efficiently handle multiple type pairs per inference, enabling the model to consider several candidate relations jointly.
 
+- For **Text2Onto**, the objective was to extract ontology construction signals from text-like inputs: generating/using documents, identifying candidate terms, assigning types, and producing supporting mappings such as term–document and term–type associations. In OntoLearner, this is implemented by first generating synthetic pseudo-documents from an ontology (using an LLM-backed synthetic generator), then applying the SBU-NLP prompting strategy to infer structured outputs without any fine-tuning. Dataset splitting and optional Ontologizer-style processing are used to support reproducible evaluation and artifact generation.
+
 Term Typing
 -----------------------
 
@@ -179,3 +181,147 @@ Learn and Predict
    # Evaluate taxonomy discovery performance
    metrics = evaluation_report(y_true=truth, y_pred=predicts, task=task)
    print(metrics)
+
+Text2Onto
+------------------
+
+Loading Ontological Data
+~~~~~~~~~~~~~~~~~~~~~~
+
+For the Text2Onto task, we load an ontology (via ``OM``), extract its structured content, and generate synthetic pseudo-sentences using an LLM-backed generator (DSPy + Ollama in this example).
+
+.. code-block:: python
+
+   import os
+   import dspy
+
+   # Import ontology loader/manager and Text2Onto utilities
+   from ontolearner.ontology import OM
+   from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
+
+   # ---- DSPy -> Ollama (LiteLLM-style) ----
+   LLM_MODEL_ID = "ollama/llama3.2:3b"
+   LLM_API_KEY  = "NA"                      # local Ollama doesn't use a key
+   LLM_BASE_URL = "http://localhost:11434"  # default Ollama endpoint
+
+   dspy_llm = dspy.LM(
+       model=LLM_MODEL_ID,
+       cache=True,
+       max_tokens=4000,
+       temperature=0,
+       api_key=LLM_API_KEY,
+       base_url=LLM_BASE_URL,
+   )
+   dspy.configure(lm=dspy_llm)
+
+   # ---- Synthetic generation configuration ----
+   batch_size = int(os.getenv("TEXT2ONTO_BATCH", "10"))
+   worker_count = int(os.getenv("TEXT2ONTO_WORKERS", "1"))
+
+   text2onto_synthetic_generator = SyntheticGenerator(
+       batch_size=batch_size,
+       worker_count=worker_count,
+   )
+
+   # ---- Load ontology and extract structured data ----
+   ontology = OM()
+   ontology.load()
+   ontological_data = ontology.extract()
+
+   # Optional sanity checks to verify what was extracted from the ontology
+   print(f"term types: {len(ontological_data.term_typings)}")
+   print(f"taxonomic relations: {len(ontological_data.type_taxonomies.taxonomies)}")
+   print(f"non-taxonomic relations: {len(ontological_data.type_non_taxonomic_relations.non_taxonomies)}")
+
+   # ---- Generate synthetic Text2Onto samples ----
+   synthetic_data = text2onto_synthetic_generator.generate(
+       ontological_data=ontological_data,
+       topic=ontology.domain,
+   )
+
+Split Synthetic Data
+~~~~~~~~~~~~~~~~~~~~
+
+We split the synthetic dataset into train/val/test sets using ``SyntheticDataSplitter``.
+Each split is a dict with keys:
+
+- ``documents``
+- ``terms``
+- ``types``
+- ``terms2docs``
+- ``terms2types``
+
+.. code-block:: python
+
+   splitter = SyntheticDataSplitter(
+       synthetic_data=synthetic_data,
+       onto_name=ontology.ontology_id,
+   )
+
+   train_data, val_data, test_data = splitter.train_test_val_split(
+       train=0.8,
+       val=0.0,
+       test=0.2,
+   )
+
+   print("TRAIN sizes:")
+   print("  documents:", len(train_data.get("documents", [])))
+   print("  terms:", len(train_data.get("terms", [])))
+   print("  types:", len(train_data.get("types", [])))
+   print("  terms2docs:", len(train_data.get("terms2docs", {})))
+   print("  terms2types:", len(train_data.get("terms2types", {})))
+
+   print("TEST sizes:")
+   print("  documents:", len(test_data.get("documents", [])))
+   print("  terms:", len(test_data.get("terms", [])))
+   print("  types:", len(test_data.get("types", [])))
+   print("  terms2docs:", len(test_data.get("terms2docs", {})))
+   print("  terms2types:", len(test_data.get("terms2types", {})))
+
+Initialize Learner
+~~~~~~~~~~~~~~~~~~
+
+We configure the SBU-NLP few-shot learner for the Text2Onto task.
+This learner uses an LLM to produce predictions from the synthetic Text2Onto-style samples.
+
+.. code-block:: python
+
+   from ontolearner.learner.text2onto import SBUNLPFewShotLearner
+
+   text2onto_learner = SBUNLPFewShotLearner(
+       llm_model_id="Qwen/Qwen2.5-0.5B-Instruct",
+       device="cpu",            # set "cuda" if available
+       max_new_tokens=256,
+       output_dir="./results/",
+   )
+
+Learn and Predict
+~~~~~~~~~~~~~~~~~
+
+We run the end-to-end pipeline (train -> predict -> evaluate) with ``LearnerPipeline`` using the ``text2onto`` task id.
+
+.. code-block:: python
+
+   from ontolearner import LearnerPipeline
+
+   task = "text2onto"
+
+   pipe = LearnerPipeline(
+       llm=text2onto_learner,
+       llm_id="Qwen/Qwen2.5-0.5B-Instruct",
+       ontologizer_data=False,
+   )
+
+   outputs = pipe(
+       train_data=train_data,
+       test_data=test_data,
+       task=task,
+       evaluate=True,
+       ontologizer_data=True,
+   )
+
+   print("Metrics:", outputs.get("metrics"))
+   print("Elapsed time:", outputs.get("elapsed_time"))
+
+   # Print all returned outputs (often includes predictions/artifacts/logs)
+   print(outputs)
