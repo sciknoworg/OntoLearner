@@ -296,8 +296,8 @@ class AutoLLM(ABC):
 
         # Decode only the generated part
         decoded_outputs = [self.tokenizer.decode(g, skip_special_tokens=True).strip() for g in generated_tokens]
-        print(decoded_outputs)
-        print(self.label_mapper.predict(decoded_outputs))
+        # print(decoded_outputs)
+        # print(self.label_mapper.predict(decoded_outputs))
         # Map the decoded text to labels
         return self.label_mapper.predict(decoded_outputs)
 
