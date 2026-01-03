@@ -1,88 +1,108 @@
 import os
-import torch
+import dspy
 
-# Import all the required classes
-from ontolearner import SBUNLPText2OntoLearner
-from ontolearner.learner.text2onto.sbunlp import LocalAutoLLM
+# Import ontology loader/manager and Text2Onto utilities
+from ontolearner.ontology import OM
+from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
 
-# Local folder where the dataset is stored
-# This path is relative to the directory where the script is executed
-# (e.g., E:\OntoLearner\examples)
-LOCAL_DATA_DIR = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology"
+# Import the pipeline orchestrator and the specific Few-Shot learner for Text2Onto
+from ontolearner import LearnerPipeline
+from ontolearner.learner.text2onto import SBUNLPFewShotLearner
 
-# Ensure the base directories exist
-# Creates the train and test subdirectories if they don't already exist.
-os.makedirs(os.path.join(LOCAL_DATA_DIR, "train"), exist_ok=True)
-os.makedirs(os.path.join(LOCAL_DATA_DIR, "test"), exist_ok=True)
+# ---- DSPy -> Ollama (LiteLLM-style) ----
+# Configure DSPy to send prompts to a locally running Ollama server.
+LLM_MODEL_ID = "ollama/llama3.2:3b"
+LLM_API_KEY = "NA"  # Ollama local doesn't use a key; kept for interface compatibility.
+LLM_BASE_URL = "http://localhost:11434"  # default Ollama endpoint
 
-# Define local file paths: POINTING TO ALREADY SAVED FILES
-# These files are used as input for the Fit and Predict phases.
-DOCS_ALL_PATH = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/train/documents.jsonl"
-TERMS2DOC_PATH = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/train/terms2docs.json"
-DOCS_TEST_PATH = "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/test/text2onto_ecology_test_documents.jsonl"
-
-# Output files for predictions (saved directly under LOCAL_DATA_DIR/test)
-# These files will be created by the predict_terms/types methods.
-TERMS_PRED_OUT = (
-    "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/test/extracted_terms_ecology.jsonl"
-)
-TYPES_PRED_OUT = (
-    "./dataset_llms4ol_2025/TaskA-Text2Onto/ecology/test/extracted_types_ecology.jsonl"
+# Create the DSPy language model wrapper (LiteLLM-compatible settings)
+dspy_llm = dspy.LM(
+    model=LLM_MODEL_ID,
+    cache=True,          # cache generations to speed up iterative runs
+    max_tokens=4000,
+    temperature=0,       # deterministic output; useful for reproducible synthetic data
+    api_key=LLM_API_KEY,
+    base_url=LLM_BASE_URL,
 )
 
-# Initialize and Load Learner ---
-MODEL_ID = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-# Determine the device for inference (GPU or CPU)
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+# Register the LM globally so DSPy modules (and generator internals) use it
+dspy.configure(lm=dspy_llm)
 
-# Instantiate the underlying LLM helper
-# (LocalAutoLLM handles model loading and generation)
-llm_model_helper = LocalAutoLLM(device=DEVICE)
+# ---- Synthetic generation configuration ----
+# Allow scaling generation without code edits via environment variables:
+#   TEXT2ONTO_BATCH=20 TEXT2ONTO_WORKERS=2 python script.py
+batch_size = int(os.getenv("TEXT2ONTO_BATCH", "10"))
+worker_count = int(os.getenv("TEXT2ONTO_WORKERS", "1"))
 
-# Instantiate the main learner class, passing the LLM helper to its constructor
-learner = SBUNLPText2OntoLearner(model=llm_model_helper, device=DEVICE)
-
-# Load the model (This calls llm_model_helper.load)
-LOAD_IN_4BIT = torch.cuda.is_available()
-learner.model.load(MODEL_ID, load_in_4bit=LOAD_IN_4BIT)
-
-# Build Few-Shot Exemplars (Fit Phase)
-# The fit method uses the local data paths to build the in-context learning prompts.
-learner.fit(
-    train_docs_jsonl=DOCS_ALL_PATH,
-    terms2doc_json=TERMS2DOC_PATH,
-    sample_size=28,
-    seed=123,  # Seed for stratified random sampling stability
+# Instantiate the generator that turns ontology structures into pseudo-text samples
+text2onto_synthetic_generator = SyntheticGenerator(
+    batch_size=batch_size,       # number of samples requested per batch
+    worker_count=worker_count,   # parallel LLM calls (increase if your machine can handle it)
 )
 
-MAX_NEW_TOKENS = 100
+# ---- Load ontology and extract structured data ----
+# OM loads the ontology configured in your OntoLearner setup and exposes its domain metadata.
+ontology = OM()
+ontology.load()
+ontological_data = ontology.extract()  # structured: term typings, taxonomies, relations, etc.
 
-terms_written = learner.predict_terms(
-    docs_test_jsonl=DOCS_TEST_PATH,
-    out_jsonl=TERMS_PRED_OUT,
-    max_new_tokens=MAX_NEW_TOKENS,
+# ---- Generate synthetic Text2Onto samples ----
+# Uses the ontology's extracted structures + domain/topic to create synthetic training examples.
+synthetic_data = text2onto_synthetic_generator.generate(
+    ontological_data=ontological_data,
+    topic=ontology.domain,
 )
-print(f"✅ Term Extraction Complete. Wrote {terms_written} prediction lines.")
 
-# Type Extraction subtask
-types_written = learner.predict_types(
-    docs_test_jsonl=DOCS_TEST_PATH,
-    out_jsonl=TYPES_PRED_OUT,
-    max_new_tokens=MAX_NEW_TOKENS,
+# Optional sanity checks to verify what was extracted from the ontology
+print(f"term types: {len(ontological_data.term_typings)}")
+print(f"taxonomic relations: {len(ontological_data.type_taxonomies.taxonomies)}")
+print(f"non-taxonomic relations: {len(ontological_data.type_non_taxonomic_relations.non_taxonomies)}")
+
+# ---- Split into train/val/test ----
+# Wrap the synthetic dataset with a splitter utility for reproducible partitioning.
+splitter = SyntheticDataSplitter(
+    synthetic_data=synthetic_data,
+    onto_name=ontology.ontology_id,  # used to tag/identify outputs for this ontology
 )
-print(f"✅ Type Extraction Complete. Wrote {types_written} prediction lines.")
 
-try:
-    # Evaluate Term Extraction using the custom F1 function and gold data
-    f1_term = learner.evaluate_extraction_f1(TERMS2DOC_PATH, TERMS_PRED_OUT, key="term")
-    print(f"Final Term Extraction F1: {f1_term:.4f}")
+# Create splits for training and evaluation.
+# val=0.0 keeps the API consistent while skipping validation split in this run.
+train_data, val_data, test_data = splitter.train_test_val_split(
+    train=0.8,
+    val=0.0,
+    test=0.2,
+)
 
-    # Evaluate Type Extraction
-    f1_type = learner.evaluate_extraction_f1(TERMS2DOC_PATH, TYPES_PRED_OUT, key="type")
-    print(f"Final Type Extraction F1: {f1_type:.4f}")
+# ---- Configure the Few-Shot learner for Text2Onto ----
+# This learner will be used by the pipeline to learn/predict from Text2Onto-style samples.
+text2ontolearner = SBUNLPFewShotLearner(
+    llm_model_id="Qwen/Qwen2.5-0.5B-Instruct",
+    device="cpu",
+    max_new_tokens=256,
+)
 
-except Exception as e:
-    # Catches errors like missing sklearn (ImportError) or missing prediction files (FileNotFoundError)
-    print(
-        f"❌ Evaluation Error: {e}. Ensure sklearn is installed and prediction files were created."
-    )
+# Build pipeline and run
+# Build the pipeline, passing the Few-Shot Learner.
+pipe = LearnerPipeline(
+    llm=text2ontolearner,
+    llm_id="Qwen/Qwen2.5-0.5B-Instruct",
+    ontologizer_data=False,
+)
+
+# Run the full learning pipeline on the text2onto task
+outputs = pipe(
+    train_data=train_data,
+    test_data=test_data,
+    task="text2onto",
+    evaluate=True,
+    ontologizer_data=True,
+)
+
+# Display the evaluation results
+print("Metrics:", outputs.get("metrics"))
+
+# Display total elapsed time for training + prediction + evaluation
+print("Elapsed time:", outputs["elapsed_time"])
+
+# Print all returned outputs (include predictions)
+print(outputs)

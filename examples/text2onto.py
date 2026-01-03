@@ -58,20 +58,33 @@ splitter = SyntheticDataSplitter(
     onto_name=ontology.ontology_id
 )
 
-# Split the synthetic data into train/val/test for each component
-terms, types, docs, types2docs = splitter.split(train=0.8, val=0.1, test=0.1)
+# split the train, val, test
+train_data, val_data, test_data = splitter.train_test_val_split(
+    train=0.8,
+    val=0.0,
+    test=0.2,
+)
 
-# Print how many items exist in each split for terms
-print("Terms:")
-for split in terms:
-    print(f"  {split}: {len(terms[split])}")
+# print train split
+print("\nTRAIN split:")
+print("  docs:", len(train_data.get("documents", [])))
+print("  terms:", len(train_data.get("terms", [])))
+print("  types:", len(train_data.get("types", [])))
+print("  terms2docs:", len(train_data.get("terms2docs", {})))
+print("  terms2types:", len(train_data.get("terms2types", {})))
 
-# Print how many items exist in each split for types
-print("Types:")
-for split in types:
-    print(f"  {split}: {len(types[split])}")
+# print val split
+print("\nVAL split:")
+print("  docs:", len(val_data.get("documents", [])))
+print("  terms:", len(val_data.get("terms", [])))
+print("  types:", len(val_data.get("types", [])))
+print("  terms2docs:", len(val_data.get("terms2docs", {})))
+print("  terms2types:", len(val_data.get("terms2types", {})))
 
-# Print how many items exist in each split for docs
-print("Docs:")
-for split in docs:
-    print(f"  {split}: {len(docs[split])}")
+# print test split
+print("\nTEST split:")
+print("  docs:", len(test_data.get("documents", [])))
+print("  terms:", len(test_data.get("terms", [])))
+print("  types:", len(test_data.get("types", [])))
+print("  terms2docs:", len(test_data.get("terms2docs", {})))
+print("  terms2types:", len(test_data.get("terms2types", {})))

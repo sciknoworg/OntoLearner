@@ -31,7 +31,7 @@ LLMs4OL is a community development initiative collocated with the International 
      - **Text2Onto**
      - Extract ontological terms and types from unstructured text.
 
-       **ID**: ``text-to-onto``
+       **ID**: ``text2onto``
 
        **Info**: This task focuses on extracting foundational elements (Terms and Types) from unstructured text documents to build the initial structure of an ontology. It involves recognizing domain-relevant vocabulary (Term Extraction, SubTask 1) and categorizing it appropriately (Type Extraction, SubTask 2). It bridges the gap between natural language and structured knowledge representation.
 

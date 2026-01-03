@@ -11,44 +11,84 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List, Dict, Tuple, Set
+from typing import List, Dict, Tuple, Set, Any, Union
 
 SYMMETRIC_RELATIONS = {"equivalentclass", "sameas", "disjointwith"}
 
-def text2onto_metrics(y_true: List[str], y_pred: List[str], similarity_threshold: float = 0.8) -> Dict[str, float | int]:
-    def jaccard_similarity(a: str, b: str) -> float:
-        set_a = set(a.lower().split())
-        set_b = set(b.lower().split())
-        if not set_a and not set_b:
+def text2onto_metrics(
+    y_true: Dict[str, Any],
+    y_pred: Dict[str, Any],
+    similarity_threshold: float = 0.8
+) -> Dict[str, Any]:
+    """
+    Expects:
+      y_true = {"terms": [{"doc_id": str, "term": str}, ...],
+               "types": [{"doc_id": str, "type": str}, ...]}
+      y_pred = same shape
+
+    Returns:
+      {"terms": {...}, "types": {...}}
+    """
+
+    def jaccard_similarity(text_a: str, text_b: str) -> float:
+        tokens_a = set(text_a.lower().split())
+        tokens_b = set(text_b.lower().split())
+        if not tokens_a and not tokens_b:
             return 1.0
-        return len(set_a & set_b) / len(set_a | set_b)
+        return len(tokens_a & tokens_b) / len(tokens_a | tokens_b)
 
-    matched_gt_indices = set()
-    matched_pred_indices = set()
-    for i, pred_label in enumerate(y_pred):
-        for j, gt_label in enumerate(y_true):
-            if j in matched_gt_indices:
-                continue
-            sim = jaccard_similarity(pred_label, gt_label)
-            if sim >= similarity_threshold:
-                matched_pred_indices.add(i)
-                matched_gt_indices.add(j)
-                break  # each gt matched once
+    def pairs_to_strings(rows: List[Dict[str, str]], value_key: str) -> List[str]:
+        paired_strings: List[str] = []
+        for row in rows or []:
+            doc_id = (row.get("doc_id") or "").strip()
+            value = (row.get(value_key) or "").strip()
+            if doc_id and value:
+                # keep doc association + allow token Jaccard
+                paired_strings.append(f"{doc_id} {value}")
+        return paired_strings
 
-    total_correct = len(matched_pred_indices)
-    total_predicted = len(y_pred)
-    total_ground_truth = len(y_true)
+    def score_list(ground_truth_items: List[str], predicted_items: List[str]) -> Dict[str, Union[float, int]]:
+        matched_ground_truth_indices: Set[int] = set()
+        matched_predicted_indices: Set[int] = set()
 
-    precision = total_correct / total_predicted if total_predicted > 0 else 0
-    recall = total_correct / total_ground_truth if total_ground_truth > 0 else 0
-    f1_score = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0
+        for predicted_index, predicted_item in enumerate(predicted_items):
+            for ground_truth_index, ground_truth_item in enumerate(ground_truth_items):
+                if ground_truth_index in matched_ground_truth_indices:
+                    continue
+
+                if jaccard_similarity(predicted_item, ground_truth_item) >= similarity_threshold:
+                    matched_predicted_indices.add(predicted_index)
+                    matched_ground_truth_indices.add(ground_truth_index)
+                    break
+
+        total_correct = len(matched_predicted_indices)
+        total_predicted = len(predicted_items)
+        total_ground_truth = len(ground_truth_items)
+
+        precision = total_correct / total_predicted if total_predicted else 0.0
+        recall = total_correct / total_ground_truth if total_ground_truth else 0.0
+        f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0
+
+        return {
+            "f1_score": f1,
+            "precision": precision,
+            "recall": recall,
+            "total_correct": total_correct,
+            "total_predicted": total_predicted,
+            "total_ground_truth": total_ground_truth,
+        }
+
+    ground_truth_terms = pairs_to_strings(y_true.get("terms", []), "term")
+    predicted_terms = pairs_to_strings(y_pred.get("terms", []), "term")
+    ground_truth_types = pairs_to_strings(y_true.get("types", []), "type")
+    predicted_types = pairs_to_strings(y_pred.get("types", []), "type")
+
+    terms_metrics = score_list(ground_truth_terms, predicted_terms)
+    types_metrics = score_list(ground_truth_types, predicted_types)
+
     return {
-        "f1_score": f1_score,
-        "precision": precision,
-        "recall": recall,
-        "total_correct": total_correct,
-        "total_predicted": total_predicted,
-        "total_ground_truth": total_ground_truth
+        "terms": terms_metrics,
+        "types": types_metrics,
     }
 
 def term_typing_metrics(y_true: List[Dict[str, List[str]]], y_pred: List[Dict[str, List[str]]]) -> Dict[str, float | int]:
