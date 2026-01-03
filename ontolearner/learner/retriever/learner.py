@@ -122,7 +122,6 @@ class AutoRetrieverLearner(AutoLearner):
             warnings.warn("No requirement for fiting the non-taxonomic RE model, the predict module will use the input data to do the fit as well..")
 
 
-
 class LLMAugmentedRetrieverLearner(AutoRetrieverLearner):
 
     def set_augmenter(self, augmenter):
@@ -160,9 +159,9 @@ class LLMAugmentedRetrieverLearner(AutoRetrieverLearner):
             taxonomic_pairs = [{"parent": candidate, "child": query}
                                for query, candidates in zip(data, candidates_lst)
                                for candidate in candidates if candidate.lower() != query.lower()]
-            taxonomic_pairs += [{"parent": query, "child": candidate}
-                                for query, candidates in zip(data, candidates_lst)
-                                for candidate in candidates if candidate.lower() != query.lower()]
+            # taxonomic_pairs += [{"parent": query, "child": candidate}
+            #                    for query, candidates in zip(data, candidates_lst)
+            #                    for candidate in candidates if candidate.lower() != query.lower()]
             unique_taxonomic_pairs, seen = [], set()
             for pair in taxonomic_pairs:
                 key = (pair["parent"].lower(), pair["child"].lower())  # Directional key (parent, child)

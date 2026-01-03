@@ -14,8 +14,7 @@
 
 import warnings
 from typing import Any
-from ..base import AutoLearner
-
+from ...base import AutoLearner
 
 class AutoRAGLearner(AutoLearner):
     def __init__(self,
@@ -87,3 +86,9 @@ class AutoRAGLearner(AutoLearner):
             return self.llm._non_taxonomic_re_predict(dataset=dataset)
         else:
             warnings.warn("No requirement for fiting the non-taxonomic-re model, the predict module will use the input data to do the fit as well.")
+
+
+class LLMAugmentedRAGLearner(AutoRAGLearner):
+
+    def set_augmenter(self, augmenter):
+        self.retriever.set_augmenter(augmenter=augmenter)

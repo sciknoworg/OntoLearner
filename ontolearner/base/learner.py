@@ -201,7 +201,7 @@ class AutoLLM(ABC):
         tokenizer: The tokenizer associated with the model.
     """
 
-    def __init__(self, label_mapper: Any, device: str='cpu', token: str="") -> None:
+    def __init__(self, label_mapper: Any, device: str='cpu', token: str="", max_length: int = 256) -> None:
         """
         Initialize the LLM component.
 
@@ -213,6 +213,7 @@ class AutoLLM(ABC):
         self.device=device
         self.model: Optional[Any] = None
         self.tokenizer: Optional[Any] = None
+        self.max_length = max_length
 
 
     def load(self, model_id: str) -> None:
@@ -236,10 +237,8 @@ class AutoLLM(ABC):
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, padding_side='left', token=self.token)
         self.tokenizer.pad_token = self.tokenizer.eos_token
         if self.device == "cpu":
-            # device_map = "cpu"
             self.model = AutoModelForCausalLM.from_pretrained(
                 model_id,
-                # device_map=device_map,
                 torch_dtype=torch.bfloat16,
                 token=self.token
             )
@@ -248,8 +247,8 @@ class AutoLLM(ABC):
             self.model = AutoModelForCausalLM.from_pretrained(
                 model_id,
                 device_map=device_map,
-                torch_dtype=torch.bfloat16,
-                token=self.token
+                token=self.token,
+                trust_remote_code=True,
             )
         self.label_mapper.fit()
 
@@ -276,29 +275,20 @@ class AutoLLM(ABC):
             List of generated text responses, one for each input prompt.
             Responses include the original input plus generated continuation.
         """
-        # Tokenize inputs and move to device
         encoded_inputs = self.tokenizer(inputs,
                                         return_tensors="pt",
-                                        padding=True,
+                                        max_length=self.max_length,
                                         truncation=True).to(self.model.device)
         input_ids = encoded_inputs["input_ids"]
         input_length = input_ids.shape[1]
-
-        # Generate output
         outputs = self.model.generate(
             **encoded_inputs,
             max_new_tokens=max_new_tokens,
-            pad_token_id=self.tokenizer.eos_token_id
+            pad_token_id=self.tokenizer.eos_token_id,
+            eos_token_id=self.tokenizer.eos_token_id
         )
-
-        # Extract only the newly generated tokens (excluding prompt)
         generated_tokens = outputs[:, input_length:]
-
-        # Decode only the generated part
         decoded_outputs = [self.tokenizer.decode(g, skip_special_tokens=True).strip() for g in generated_tokens]
-        # print(decoded_outputs)
-        # print(self.label_mapper.predict(decoded_outputs))
-        # Map the decoded text to labels
         return self.label_mapper.predict(decoded_outputs)
 
 class AutoRetriever(ABC):
