@@ -42,7 +42,7 @@ class DummyData:
 @pytest.fixture
 def mock_openai():
     """Patch OpenAI client and return a controlled response for function calling."""
-    with patch("ontolearner.learner.retriever.llm_retriever.OpenAI") as mock_client:
+    with patch("ontolearner.learner.retriever.augmented_retriever.OpenAI") as mock_client:
         instance = mock_client.return_value
 
         fake_response = MagicMock()
@@ -92,7 +92,7 @@ def test_llm_augmenter_transform():
         "taxonomy-discovery": {"Dog": ["Animal", "Mammal", "Pet"]},
     }
 
-    with patch("ontolearner.learner.retriever.llm_retriever.load_json", return_value=fake_json):
+    with patch("ontolearner.learner.retriever.augmented_retriever.load_json", return_value=fake_json):
         augmenter = LLMAugmenter("dummy/path.json")
 
     assert augmenter.transform("Dog", "taxonomy-discovery") == ["Animal", "Mammal", "Pet"]
