@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock, patch
-from ontolearner.learner.retriever.llm_retriever import (
+from ontolearner.learner.retriever.augmented_retriever import (
     LLMAugmenterGenerator,
     LLMAugmenter,
     LLMAugmentedRetriever,
