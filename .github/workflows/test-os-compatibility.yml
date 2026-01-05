@@ -1,0 +1,49 @@
+name: Cross-platform Compatibility Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  os-compatibility-tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        shell: bash
+        run: |
+          curl -sSL https://install.python-poetry.org | python -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          echo "$APPDATA/Python/Scripts" >> $GITHUB_PATH
+
+      - name: Configure Poetry and install plugin
+        shell: bash
+        run: |
+          poetry --version
+          poetry config virtualenvs.create false
+          poetry self add "poetry-dynamic-versioning[plugin]"
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          poetry install --no-interaction --no-ansi
+
+      - name: Run tests
+        shell: bash
+        run: |
+          poetry run pytest

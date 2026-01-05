@@ -31,7 +31,7 @@ class LabelMapper:
                  ngram_range: Tuple=(1, 1),
                  label_dict: Dict[str, List[str]]=None,
                  analyzer: str = 'word',
-                 iterator_no: int = 100):
+                 iterator_no: int = 1000):
         """
         Initializes the TFIDFLabelMapper with a specified classifier and TF-IDF configuration.
 

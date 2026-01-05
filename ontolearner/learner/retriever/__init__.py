@@ -16,4 +16,4 @@ from .crossencoder import CrossEncoderRetriever
 from .embedding import GloveRetriever, Word2VecRetriever
 from .ngram import NgramRetriever
 from .learner import AutoRetrieverLearner, LLMAugmentedRetrieverLearner
-from .llm_retriever import LLMAugmenterGenerator, LLMAugmenter, LLMAugmentedRetriever
+from .augmented_retriever import LLMAugmenterGenerator, LLMAugmenter, LLMAugmentedRetriever

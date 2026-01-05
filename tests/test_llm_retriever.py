@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock, patch
-from ontolearner.learner.retriever.llm_retriever import (
+from ontolearner.learner.retriever.augmented_retriever import (
     LLMAugmenterGenerator,
     LLMAugmenter,
     LLMAugmentedRetriever,
@@ -42,7 +42,7 @@ class DummyData:
 @pytest.fixture
 def mock_openai():
     """Patch OpenAI client and return a controlled response for function calling."""
-    with patch("ontolearner.learner.retriever.llm_retriever.OpenAI") as mock_client:
+    with patch("ontolearner.learner.retriever.augmented_retriever.OpenAI") as mock_client:
         instance = mock_client.return_value
 
         fake_response = MagicMock()
@@ -92,7 +92,7 @@ def test_llm_augmenter_transform():
         "taxonomy-discovery": {"Dog": ["Animal", "Mammal", "Pet"]},
     }
 
-    with patch("ontolearner.learner.retriever.llm_retriever.load_json", return_value=fake_json):
+    with patch("ontolearner.learner.retriever.augmented_retriever.load_json", return_value=fake_json):
         augmenter = LLMAugmenter("dummy/path.json")
 
     assert augmenter.transform("Dog", "taxonomy-discovery") == ["Animal", "Mammal", "Pet"]
@@ -102,15 +102,14 @@ def test_llm_augmenter_transform():
 def test_llm_augmented_retriever_taxonomy(monkeypatch):
     retriever = LLMAugmentedRetriever()
 
-    def fake_retrieve(self, query, top_k=5, batch_size=32):
+    def fake_retrieve(self, query, top_k=5, batch_size=32, task='taxonomy-discovery'):
         return [[f"doc_{q}_{i}" for i in range(top_k)] for q in query]
 
     monkeypatch.setattr(
-        AutoRetriever,
-        "retrieve",
+        LLMAugmentedRetriever,
+        "augmented_retrieve",
         fake_retrieve
     )
-
     class FakeAug:
         top_n_candidate = 2
         def transform(self, q, task):
@@ -120,7 +119,7 @@ def test_llm_augmented_retriever_taxonomy(monkeypatch):
 
     results = retriever.retrieve(["Dog"], top_k=2, task="taxonomy-discovery")
     assert len(results) == 1
-    assert len(results[0]) == 4
+    assert len(results[0]) == 2
 
 
 

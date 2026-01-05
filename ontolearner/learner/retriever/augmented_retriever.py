@@ -17,6 +17,8 @@ from typing import Any, List, Dict
 from openai import OpenAI
 import time
 from tqdm import tqdm
+import torch
+import torch.nn.functional as F
 
 from ...base import AutoRetriever
 from ...utils import load_json
@@ -125,7 +127,6 @@ class LLMAugmenterGenerator(ABC):
             except Exception:
                 print("sleep for 5 seconds")
                 time.sleep(5)
-
         return inference
 
     def tasks_data_former(self, data: Any, task: str) -> List[str] | Dict[str, List[str]]:
@@ -298,21 +299,12 @@ class LLMAugmentedRetriever(AutoRetriever):
     Attributes:
         augmenter: An augmenter instance that provides transform() and top_n_candidate.
     """
-
-    def __init__(self) -> None:
-        """
-        Initialize the augmented retriever with no augmenter attached.
-        """
+    def __init__(self, threshold: float = 0.0, cutoff_rate: float = 100.0) -> None:
         super().__init__()
-        self.augmenter = None
+        self.threshold = threshold
+        self.cutoff_rate = cutoff_rate
 
     def set_augmenter(self, augmenter):
-        """
-        Attach an augmenter instance.
-
-        Args:
-            augmenter: An object providing `transform(query, task)` and `top_n_candidate`.
-        """
         self.augmenter = augmenter
 
     def retrieve(self, query: List[str], top_k: int = 5, batch_size: int = -1, task: str = None) -> List[List[str]]:
@@ -328,29 +320,46 @@ class LLMAugmentedRetriever(AutoRetriever):
         Returns:
             list[list[str]]: A list of document lists, one per input query.
         """
-        parent_retrieve = super(LLMAugmentedRetriever, self).retrieve
+        if task != 'taxonomy-discovery':
+            return super().retrieve(query=query, top_k=top_k, batch_size=batch_size)
+        return self.augmented_retrieve(query, top_k=top_k, batch_size=batch_size, task=task)
 
-        if task == 'taxonomy-discovery':
-            query_sets = []
-            for idx in range(self.augmenter.top_n_candidate):
-                query_set = []
-                for qu in query:
-                    query_set.append(self.augmenter.transform(qu, task=task)[idx])
-                query_sets.append(query_set)
+    def augmented_retrieve(self, query: List[str], top_k: int = 5, batch_size: int = -1, task: str = None):
+        if self.embeddings is None:
+            raise RuntimeError("Retriever model must index documents before prediction.")
 
-            retrieves = [
-                parent_retrieve(query=query_set, top_k=top_k, batch_size=batch_size)
-                for query_set in query_sets
-            ]
+        augmented_queries, index_map = [], []
+        for qu_idx, qu in enumerate(query):
+            augmented = self.augmenter.transform(qu, task=task)
+            for aug in augmented:
+                augmented_queries.append(aug)
+                index_map.append(qu_idx)
 
-            results = []
-            for qu_idx, qu in enumerate(query):
-                qu_result = []
-                for top_idx in range(self.augmenter.top_n_candidate):
-                    qu_result += retrieves[top_idx][qu_idx]
-                results.append(list(set(qu_result)))
+        doc_norm = F.normalize(self.embeddings, p=2, dim=1)
+        results = [dict() for _ in range(len(query))]
 
-            return results
+        if batch_size == -1:
+            batch_size = len(augmented_queries)
 
-        else:
-            return parent_retrieve(query=query, top_k=top_k, batch_size=batch_size)
+        for start in range(0, len(augmented_queries), batch_size):
+            batch_aug = augmented_queries[start:start + batch_size]
+            batch_embeddings = self.embedding_model.encode(batch_aug, convert_to_tensor=True)
+            batch_norm = F.normalize(batch_embeddings, p=2, dim=1)
+            similarity_matrix = torch.matmul(batch_norm, doc_norm.T)
+            current_top_k = min(top_k, len(self.documents))
+            topk_similarities, topk_indices = torch.topk(similarity_matrix, k=current_top_k, dim=1)
+
+            for i, (doc_indices, sim_scores) in enumerate(zip(topk_indices, topk_similarities)):
+                original_query_idx = index_map[start + i]
+
+                for doc_idx, score in zip(doc_indices.tolist(), sim_scores.tolist()):
+                    if score >= self.threshold:
+                        doc = self.documents[doc_idx]
+                        prev = results[original_query_idx].get(doc, 0.0)
+                        results[original_query_idx][doc] = prev + score
+
+        final_results = []
+        for doc_score_map in results:
+            sorted_docs = sorted(doc_score_map.items(), key=lambda x: x[1], reverse=True)
+            final_results.append([doc for doc, _ in sorted_docs])
+        return final_results
