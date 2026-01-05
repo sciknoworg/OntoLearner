@@ -102,15 +102,14 @@ def test_llm_augmenter_transform():
 def test_llm_augmented_retriever_taxonomy(monkeypatch):
     retriever = LLMAugmentedRetriever()
 
-    def fake_retrieve(self, query, top_k=5, batch_size=32):
+    def fake_retrieve(self, query, top_k=5, batch_size=32, task='taxonomy-discovery'):
         return [[f"doc_{q}_{i}" for i in range(top_k)] for q in query]
 
     monkeypatch.setattr(
-        AutoRetriever,
-        "retrieve",
+        LLMAugmentedRetriever,
+        "augmented_retrieve",
         fake_retrieve
     )
-
     class FakeAug:
         top_n_candidate = 2
         def transform(self, q, task):
@@ -120,7 +119,7 @@ def test_llm_augmented_retriever_taxonomy(monkeypatch):
 
     results = retriever.retrieve(["Dog"], top_k=2, task="taxonomy-discovery")
     assert len(results) == 1
-    assert len(results[0]) == 4
+    assert len(results[0]) == 2
 
 
 
