@@ -200,10 +200,73 @@ class SyntheticDataSplitter:
 
         return terms_splits, types_splits, docs_split, types2docs_splits
 
-    def split(self, train: float = 0.8, val: float = 0.1, test: float = 0.1):
-        split_targets, split_docs_targets = self.set_train_val_test_sizes(train_percentage=train,
-                                                                          val_percentage=val,
-                                                                          test_percentage=test)
+    def split_fine_grained(self, doc_ids):
+        """
+        Build a single split bundle containing only:
+        - docs
+        - terms
+        - types
+        - terms2docs
+        - terms2types
+        """
+        # normalize to string ids (constructor uses str(row.id))
+        doc_ids = {str(d) for d in (doc_ids or [])}
+
+        # docs + collect terms/types from docs
+        docs = []
+        terms_set = set()
+        types_set = set()
+
+        for doc_id in doc_ids:
+            doc = self.doc_id_to_doc[doc_id]
+            docs.append({"id": str(doc.id), "title": doc.title, "text": doc.text})
+
+            terms_set.update(self.doc_id_to_terms[doc_id])
+            types_set.update(self.doc_id_to_types[doc_id])
+
+        terms = sorted(terms_set)
+        types = sorted(types_set)
+
+        # terms2docs: use the constructor-built mapping and restrict to this split's doc_ids
+        terms2docs = {
+            term: sorted(list(self.term_to_doc_id.get(term, set()) & doc_ids))
+            for term in terms
+        }
+
+        # terms2types: ontology lookup (term -> parent types)
+        terms2types = {term: self.child_to_parent.get(term, []) for term in terms}
+
+        return {
+            "documents": docs,
+            "terms": terms,
+            "types": types,
+            "terms2docs": terms2docs,
+            "terms2types": terms2types,
+        }
+
+    def train_test_val_split(self, train: float = 0.8, val: float = 0.1, test: float = 0.1):
+        """
+        Returns:
+            train_split, val_split, test_split
+
+        Each split is a dict with keys:
+        - "docs"
+        - "terms"
+        - "types"
+        - "terms2docs"
+        - "terms2types"
+        """
+        # compute which docs go to which split
+        split_targets, split_docs_targets = self.set_train_val_test_sizes(
+            train_percentage=train,
+            val_percentage=val,
+            test_percentage=test,
+        )
         split_docs = self.create_train_val_test_splits(split_targets, split_docs_targets)
-        terms, types, docs, types2docs = self.generate_split_artefacts(split_docs)
-        return terms, types, docs, types2docs
+        # split_docs: {"train": set(doc_ids), "val": set(doc_ids), "test": set(doc_ids)}
+
+        train_split = self.split_fine_grained(split_docs.get("train", set()))
+        val_split   = self.split_fine_grained(split_docs.get("val", set()))
+        test_split  = self.split_fine_grained(split_docs.get("test", set()))
+
+        return train_split, val_split, test_split
