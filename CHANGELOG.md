@@ -1,5 +1,10 @@
 ## Changelog
 
+### v1.4.11 (Janouary 5, 2026)
+- Add `text2onto` component for challenge learners with their documentation.
+- Code refactoring
+- OS compatibility CI/CD
+
 ### v1.4.10 (December 8, 2025)
 - add complexity score
 - add documentation for metrics
