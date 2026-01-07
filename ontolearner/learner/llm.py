@@ -18,6 +18,7 @@ import warnings
 from tqdm import tqdm
 from torch.utils.data import DataLoader
 import torch
+import torch.nn.functional as F
 from transformers import Mistral3ForConditionalGeneration
 from mistral_common.protocol.instruct.request import ChatCompletionRequest
 from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
@@ -144,6 +145,7 @@ class AutoLLMLearner(AutoLearner):
 
 class FalconLLM(AutoLLM):
 
+    @torch.no_grad()
     def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
         encoded_inputs = self.tokenizer(inputs,
                                         return_tensors="pt",
@@ -178,6 +180,7 @@ class MistralLLM(AutoLLM):
             self.tokenizer.pad_token_id = self.model.generation_config.eos_token_id
         self.label_mapper.fit()
 
+    @torch.no_grad()
     def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
         tokenized_list = []
         for prompt in inputs:
@@ -206,3 +209,63 @@ class MistralLLM(AutoLLM):
             output_text = self.tokenizer.decode(tokens[len(tokenized_list[i]):])
             decoded_outputs.append(output_text)
         return self.label_mapper.predict(decoded_outputs)
+
+
+class QwenThinkingLLM(AutoLLM):
+
+    @torch.no_grad()
+    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
+        messages = [[{"role": "user", "content": prompt + " Please show your final response with 'answer': 'label'."}]
+                    for prompt in inputs]
+        texts = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        encoded_inputs = self.tokenizer(texts, return_tensors="pt", padding=True).to(self.model.device)
+        generated_ids = self.model.generate(**encoded_inputs, max_new_tokens=max_new_tokens)
+        decoded_outputs = []
+        for i in range(len(generated_ids)):
+            prompt_len = encoded_inputs.attention_mask[i].sum().item()
+            output_ids = generated_ids[i][prompt_len:].tolist()
+            try:
+                end = len(output_ids) - output_ids[::-1].index(151668)
+                thinking_ids = output_ids[:end]
+            except ValueError:
+                thinking_ids = output_ids
+            thinking_content = self.tokenizer.decode(thinking_ids, skip_special_tokens=True).strip()
+            decoded_outputs.append(thinking_content)
+        return self.label_mapper.predict(decoded_outputs)
+
+
+class LogitLLM(AutoLLM):
+    def _get_label_token_ids(self):
+        label_token_ids = {}
+        for label, words in self.label_mapper.label_dict.items():
+            ids = []
+            for w in words:
+                token_ids = self.tokenizer.encode(w, add_special_tokens=False)
+                ids.append(token_ids)
+            label_token_ids[label] = ids
+        return label_token_ids
+
+    def load(self, model_id: str) -> None:
+        super().load(model_id)
+        self.label_token_ids = self._get_label_token_ids()
+
+    @torch.no_grad()
+    def generate(self, inputs: List[str], max_new_tokens: int = 1) -> List[str]:
+        encoded = self.tokenizer(inputs, return_tensors="pt", truncation=True, padding=True).to(self.model.device)
+        outputs = self.model(**encoded)
+        logits = outputs.logits # logits: [batch, seq_len, vocab]
+        last_logits = logits[:, -1, :]  # [batch, vocab] # we only care about the NEXT token prediction
+        probs = F.softmax(last_logits, dim=-1)
+        predictions = []
+        for i in range(probs.size(0)):
+            label_scores = {}
+            for label, token_id_lists in self.label_token_ids.items():
+                score = 0.0
+                for token_ids in token_id_lists:
+                    if len(token_ids) == 1:
+                        score += probs[i, token_ids[0]].item()
+                    else:
+                        score += probs[i, token_ids[0]].item() # multi-token fallback (rare but safe)
+                label_scores[label] = score
+            predictions.append(max(label_scores, key=label_scores.get))
+        return predictions
