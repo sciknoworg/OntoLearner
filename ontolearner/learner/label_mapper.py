@@ -45,11 +45,12 @@ class LabelMapper:
         if label_dict is None:
             label_dict = {
                 "yes": ["yes", "true"],
-                "no": ["no",  "false", " "]
+                "no": ["no",  "false"]
             }
-        self.labels = [label.lower() for label in list(label_dict.keys())]
+        self.label_dict = label_dict
+        self.labels = [label.lower() for label in list(self.label_dict.keys())]
         self.x_train, self.y_train = [], []
-        for label, candidates in label_dict.items():
+        for label, candidates in self.label_dict.items():
             self.x_train += [label] + candidates
             self.y_train += [label] * (len(candidates) + 1)
         self.x_train = iterator_no * self.x_train
