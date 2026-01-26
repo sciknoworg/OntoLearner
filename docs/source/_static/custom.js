@@ -1,18 +1,46 @@
+// function addGithubButton() {
+//     const div = `
+//         <div class="github-repo">
+//             <div style="display: flex; justify-content: center;">
+//                 <div id="hf-button">
+//                     <a href="https://huggingface.co/collections/SciKnowOrg/ontolearner-benchmarking-6823bcd051300c210b7ef68a" target="_blank" title="See all OntoLearner Ontologies"><img src="https://chunte-hfba.static.hf.space/images/Brand%20Logos/Hugging%20Face.png" style="margin: 0px 10px 0px -10px; padding: 0px; height: 30px; width: 30px;"></a>
+//                 </div>
+//                 <a class="github-button"
+//                     href="https://github.com/sciknoworg/OntoLearner" data-size="large" data-show-count="true" aria-label="Star sciknoworg/OntoLearner on GitHub" title="OntoLearner on GitHub">
+//                     Star
+//                 </a>
+//             </div>
+//         </div>
+//     `;
+//     document.getElementsByClassName("logo")[0].parentElement.insertAdjacentHTML("afterend", div);
+// }
+document.title = "";
 function addGithubButton() {
-    const div = `
-        <div class="github-repo">
-            <div style="display: flex; justify-content: center;">
-                <div id="hf-button">
-                    <a href="https://huggingface.co/collections/SciKnowOrg/ontolearner-benchmarking-6823bcd051300c210b7ef68a" target="_blank" title="See all OntoLearner Ontologies"><img src="https://chunte-hfba.static.hf.space/images/Brand%20Logos/Hugging%20Face.png" style="margin: 0px 10px 0px -10px; padding: 0px; height: 30px; width: 30px;"></a>
-                </div>
+    const html = `
+        <div class="github-repo" style="margin-top:0.5rem;">
+            <div style="display:flex; justify-content:center; align-items:center; gap:12px;">
+                <a href="https://huggingface.co/collections/SciKnowOrg/ontolearner-benchmarking-6823bcd051300c210b7ef68a"
+                   target="_blank" title="See all OntoLearner Ontologies">
+                    <img src="https://chunte-hfba.static.hf.space/images/Brand%20Logos/Hugging%20Face.png"
+                         style="height:30px; width:30px;">
+                </a>
+
                 <a class="github-button"
-                    href="https://github.com/sciknoworg/OntoLearner" data-size="large" data-show-count="true" aria-label="Star sciknoworg/OntoLearner on GitHub" title="OntoLearner on GitHub">
+                   href="https://github.com/sciknoworg/OntoLearner"
+                   data-size="large"
+                   data-show-count="true"
+                   aria-label="Star sciknoworg/OntoLearner on GitHub">
                     Star
                 </a>
             </div>
         </div>
     `;
-    document.getElementsByClassName("logo")[0].parentElement.insertAdjacentHTML("afterend", div);
+
+    const logoContainer = document.querySelector(".sidebar-brand");
+
+    if (!logoContainer) return;
+
+    logoContainer.insertAdjacentHTML("afterend", html);
 }
 
 
