@@ -22,6 +22,7 @@ import torch.nn.functional as F
 from transformers import Mistral3ForConditionalGeneration
 from mistral_common.protocol.instruct.request import ChatCompletionRequest
 from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 class AutoLLMLearner(AutoLearner):
 
@@ -162,6 +163,7 @@ class FalconLLM(AutoLLM):
         decoded_outputs = [self.tokenizer.decode(g, skip_special_tokens=True).strip() for g in generated_tokens]
         return self.label_mapper.predict(decoded_outputs)
 
+
 class MistralLLM(AutoLLM):
 
     def load(self, model_id: str) -> None:
@@ -211,6 +213,101 @@ class MistralLLM(AutoLLM):
         return self.label_mapper.predict(decoded_outputs)
 
 
+class LogitMistralLLM(AutoLLM):
+    label_dict = {
+        "yes": ["yes", "true", " yes", "Yes"],
+        "no": ["no", "false", " no", "No"]
+    }
+
+    def _get_label_token_ids(self):
+        label_token_ids = {}
+
+        for label, words in self.label_dict.items():
+            ids = []
+            for w in words:
+                messages = [{"role": "user", "content": [{"type": "text", "text": w}]}]
+                tokenized = self.tokenizer.encode_chat_completion(ChatCompletionRequest(messages=messages))
+                token_ids = tokenized.tokens[2:-1]
+                ids.append(token_ids)
+            label_token_ids[label] = ids
+        return label_token_ids
+
+    def load(self, model_id: str) -> None:
+        self.tokenizer = MistralTokenizer.from_hf_hub(model_id)
+        self.tokenizer.padding_side = 'left'
+        device_map = "cpu" if self.device == "cpu" else "balanced"
+        self.model = Mistral3ForConditionalGeneration.from_pretrained(
+            model_id,
+            device_map=device_map,
+            torch_dtype=torch.bfloat16,
+            token=self.token
+        )
+        self.pad_token_id = self.model.generation_config.eos_token_id
+        self.label_token_ids = self._get_label_token_ids()
+
+    @torch.no_grad()
+    def generate(self, inputs: List[str], max_new_tokens: int = 1) -> List[str]:
+        tokenized_list = []
+        for prompt in inputs:
+            messages = [{"role": "user", "content": [{"type": "text", "text": prompt}]}]
+            req = ChatCompletionRequest(messages=messages)
+            tokenized = self.tokenizer.encode_chat_completion(req)
+            tokenized_list.append(tokenized.tokens)
+
+        max_len = max(len(t) for t in tokenized_list)
+        input_ids, attention_masks = [], []
+        for tokens in tokenized_list:
+            pad_len = max_len - len(tokens)
+            input_ids.append(tokens + [self.pad_token_id] * pad_len)
+            attention_masks.append([1] * len(tokens) + [0] * pad_len)
+
+        input_ids = torch.tensor(input_ids).to(self.model.device)
+        attention_masks = torch.tensor(attention_masks).to(self.model.device)
+
+        outputs = self.model(input_ids=input_ids, attention_mask=attention_masks)
+        # logits: [batch, seq_len, vocab]
+        logits = outputs.logits
+        # next-token prediction
+        last_logits = logits[:, -1, :]
+        probs = torch.softmax(last_logits, dim=-1)
+        predictions = []
+        for i in range(probs.size(0)):
+            label_scores = {}
+            for label, token_id_lists in self.label_token_ids.items():
+                score = 0.0
+                for token_ids in token_id_lists:
+                    # single-token in practice, but safe
+                    score += probs[i, token_ids[0]].item()
+                label_scores[label] = score
+            predictions.append(max(label_scores, key=label_scores.get))
+        return predictions
+
+
+class QwenInstructAutoLLM(AutoLLM):
+
+    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
+        messages = [[{"role": "user", "content": prompt + " Please show your final response with 'answer': 'label'."}]
+                    for prompt in inputs]
+
+        texts = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+
+        encoded_inputs = self.tokenizer(texts, return_tensors="pt", padding="max_length", truncation=True,
+                                        max_length=256).to(self.model.device)
+
+        generated_ids = self.model.generate(**encoded_inputs,
+                                            max_new_tokens=max_new_tokens,
+                                            use_cache=False,
+                                            pad_token_id=self.tokenizer.pad_token_id,
+                                            eos_token_id=self.tokenizer.eos_token_id)
+        decoded_outputs = []
+        for i in range(len(generated_ids)):
+            prompt_len = encoded_inputs.attention_mask[i].sum().item()
+            output_ids = generated_ids[i][prompt_len:].tolist()
+            output_content = self.tokenizer.decode(output_ids, skip_special_tokens=True).strip()
+            decoded_outputs.append(output_content)
+        return self.label_mapper.predict(decoded_outputs)
+
+
 class QwenThinkingLLM(AutoLLM):
 
     @torch.no_grad()
@@ -234,7 +331,7 @@ class QwenThinkingLLM(AutoLLM):
         return self.label_mapper.predict(decoded_outputs)
 
 
-class LogitLLM(AutoLLM):
+class LogitAutoLLM(AutoLLM):
     def _get_label_token_ids(self):
         label_token_ids = {}
         for label, words in self.label_mapper.label_dict.items():
@@ -267,5 +364,102 @@ class LogitLLM(AutoLLM):
                     else:
                         score += probs[i, token_ids[0]].item() # multi-token fallback (rare but safe)
                 label_scores[label] = score
+            predictions.append(max(label_scores, key=label_scores.get))
+        return predictions
+
+
+class LogitQuantAutoLLM(AutoLLM):
+    label_dict = {
+        "yes": ["yes", "true", " yes", "Yes"],
+        "no": ["no", "false", " no", "No"]
+    }
+
+    def _get_label_token_ids(self):
+        label_token_ids = {}
+
+        for label, words in self.label_dict.items():
+            ids = []
+            for w in words:
+                token_ids = self.tokenizer.encode(
+                    w,
+                    add_special_tokens=False
+                )
+                # usually single-token, but be safe
+                ids.append(token_ids)
+            label_token_ids[label] = ids
+
+        return label_token_ids
+
+    def load(self, model_id: str) -> None:
+
+        self.tokenizer = AutoTokenizer.from_pretrained(model_id, padding_side='left', token=self.token)
+        self.tokenizer.pad_token = self.tokenizer.eos_token
+        if self.device == "cpu":
+            # device_map = "cpu"
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_id,
+                # device_map=device_map,
+                torch_dtype=torch.bfloat16,
+                token=self.token
+            )
+        else:
+            device_map = "balanced"
+            # self.model = AutoModelForCausalLM.from_pretrained(
+            #     model_id,
+            #     device_map=device_map,
+            #     torch_dtype=torch.bfloat16,
+            #     token=self.token
+            # )
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=True
+            )
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_id,
+                quantization_config=bnb_config,
+                device_map=device_map,
+                token=self.token,
+                # trust_remote_code=True,
+                # attn_implementation="flash_attention_2"
+            )
+        self.label_token_ids = self._get_label_token_ids()
+
+    @torch.no_grad()
+    def generate(self, inputs: List[str], max_new_tokens: int = 1) -> List[str]:
+        encoded = self.tokenizer(
+            inputs,
+            return_tensors="pt",
+            max_length=256,
+            truncation=True,
+            padding=True
+        ).to(self.model.device)
+
+        outputs = self.model(**encoded)
+
+        # logits: [batch, seq_len, vocab]
+        logits = outputs.logits
+
+        # we only care about the NEXT token prediction
+        last_logits = logits[:, -1, :]  # [batch, vocab]
+
+        probs = F.softmax(last_logits, dim=-1)
+
+        predictions = []
+
+        for i in range(probs.size(0)):
+            label_scores = {}
+
+            for label, token_id_lists in self.label_token_ids.items():
+                score = 0.0
+                for token_ids in token_id_lists:
+                    if len(token_ids) == 1:
+                        score += probs[i, token_ids[0]].item()
+                    else:
+                        # multi-token fallback (rare but safe)
+                        score += probs[i, token_ids[0]].item()
+                label_scores[label] = score
+
             predictions.append(max(label_scores, key=label_scores.get))
         return predictions
