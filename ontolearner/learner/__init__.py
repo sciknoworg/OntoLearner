@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from .llm import AutoLLMLearner, FalconLLM, MistralLLM, LogitMistralLLM, \
-                 QwenInstructAutoLLM, QwenThinkingLLM, LogitAutoLLM, LogitQuantAutoLLM
+                 QwenInstructLLM, QwenThinkingLLM, LogitAutoLLM, LogitQuantAutoLLM
 from .retriever import AutoRetrieverLearner, LLMAugmentedRetrieverLearner
 from .rag import AutoRAGLearner, LLMAugmentedRAGLearner
 from .prompt import StandardizedPrompting
