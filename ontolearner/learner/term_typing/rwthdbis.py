@@ -337,6 +337,7 @@ class RWTHDBISSFTLearner(AutoLearner):
             List of integer label ids corresponding to `terms`.
         """
         self._ensure_loaded_for_inference()
+        model_device = next(self.model.parameters()).device
         predictions: List[int] = []
         for term_text in tqdm(
             terms, desc="Inference", bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt}"
@@ -347,7 +348,7 @@ class RWTHDBISSFTLearner(AutoLearner):
                 truncation=True,
                 max_length=self.max_length,
             )
-            inputs = {name: tensor.to(self.device) for name, tensor in inputs.items()}
+            inputs = {name: tensor.to(model_device) for name, tensor in inputs.items()}
             with torch.no_grad():
                 logits = self.model(**inputs).logits
                 predictions.append(int(torch.argmax(logits, dim=-1).item()))

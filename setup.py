@@ -31,6 +31,7 @@ setup(
         "torch>=2.8.0,<3.0.0",
         "huggingface-hub>=0.34.4,<1.0.0",
         "transformers>=4.56.0,<5.0.0",
+        "accelerate>=0.26.0,<1.0.0",
         "sentence-transformers>=5.1.0,<6.0.0",
         "scikit-learn>=1.6.1,<2.0.0",
         "bitsandbytes>=0.45.1,<1.0.0; platform_system == 'Linux'",

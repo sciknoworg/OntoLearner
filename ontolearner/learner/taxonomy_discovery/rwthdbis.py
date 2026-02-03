@@ -419,6 +419,7 @@ class RWTHDBISSFTLearner(AutoLearner):
         import torch.nn.functional as F
 
         self._ensure_loaded_for_inference()
+        model_device = next(self.model.parameters()).device
 
         candidate_pairs = self._extract_pairs_for_eval(eval_data)
         if not candidate_pairs:
@@ -437,7 +438,7 @@ class RWTHDBISSFTLearner(AutoLearner):
                     truncation=True,
                     max_length=self.max_length,
                 )
-                inputs = {key: tensor.to(self.device) for key, tensor in inputs.items()}
+                inputs = {key: tensor.to(model_device) for key, tensor in inputs.items()}
                 logits = self.model(**inputs).logits
                 probabilities = F.softmax(logits, dim=-1).squeeze(0)
                 p_positive = float(probabilities[1].item())

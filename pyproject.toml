@@ -27,6 +27,7 @@ scikit-learn = "*"
 huggingface-hub = "^0.34.4"
 torch = "^2.8.0"
 transformers = "^4.56.0"
+accelerate = "^0.26.0"
 sentence-transformers = "^5.1.0"
 dspy = "^2.6.14"
 bitsandbytes = { version = ">=0.45.1,<1.0.0", markers = "platform_system == 'Linux'" }
