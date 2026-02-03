@@ -232,7 +232,7 @@ class AutoLLM(ABC):
         tokenizer: The tokenizer associated with the model.
     """
 
-    def __init__(self, label_mapper: Any, device: str='cpu', token: str="", max_length: int = 256) -> None:
+    def __init__(self, label_mapper: Any, device: str='cpu', token: str="", max_length: int = 512) -> None:
         """
         Initialize the LLM component.
 
@@ -283,6 +283,7 @@ class AutoLLM(ABC):
             )
         self.label_mapper.fit()
 
+    @torch.no_grad()
     def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
         """
         Generate text responses for the given input prompts.
@@ -309,7 +310,8 @@ class AutoLLM(ABC):
         encoded_inputs = self.tokenizer(inputs,
                                         return_tensors="pt",
                                         max_length=self.max_length,
-                                        truncation=True).to(self.model.device)
+                                        truncation=True,
+                                        padding=True).to(self.model.device)
         input_ids = encoded_inputs["input_ids"]
         input_length = input_ids.shape[1]
         outputs = self.model.generate(

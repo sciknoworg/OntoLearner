@@ -255,7 +255,7 @@ Text2Onto
 ------------------
 
 Loading Ontological Data
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For the Text2Onto task, we load an ontology (via ``OM``), extract its structured content, and then generate synthetic pseudo-sentences using an LLM-backed generator (DSPy + Ollama in this example).
 

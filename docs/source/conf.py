@@ -69,7 +69,7 @@ master_doc = "index"
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_rtd_theme"
+html_theme = "furo"
 
 html_theme_options = {
     "external_links": [
@@ -99,7 +99,7 @@ html_context = {
     "github_repo": "OntoLearner",
     "github_version": "main/",
 }
-
+html_title = " "
 html_logo = 'images/logo.png'
 html_favicon = "images/icon.ico"
 autoclass_content = "both"

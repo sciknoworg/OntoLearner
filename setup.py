@@ -34,6 +34,7 @@ setup(
         "sentence-transformers>=5.1.0,<6.0.0",
         "scikit-learn>=1.6.1,<2.0.0",
         "bitsandbytes>=0.45.1,<1.0.0; platform_system == 'Linux'",
+        "mistral-common[sentencepiece]>=1.8.5",
         "protobuf<5",
         "Levenshtein",
         "gensim"

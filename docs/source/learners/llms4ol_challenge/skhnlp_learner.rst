@@ -1,5 +1,5 @@
 SKH-NLP Learner
-============
+================
 
 
 .. sidebar:: SKH-NLP Learner Examples
@@ -34,10 +34,10 @@ Methodological Summary:
 
 
 Taxonomy Discovery (Zero-Shot)
-------------------------------
+---------------------------------
 
 Loading Ontological Data
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We first load the GeoNames ontology and split the taxonomic edges into train and test sets.
 
@@ -56,7 +56,7 @@ We first load the GeoNames ontology and split the taxonomic edges into train and
    )
 
 Initialize Learner
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 Before defining the learner, choose the ontology learning task to perform.
 Available tasks have been described in `LLMs4OL Paradigms <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_.
@@ -109,7 +109,7 @@ Taxonomy Discovery (Supervised Fine-Tuning)
 -------------------------------------------
 
 Loading Ontological Data
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For supervised fine-tuning, we again use GeoNames and split the taxonomic relationships into train and test sets.
 
@@ -128,7 +128,7 @@ For supervised fine-tuning, we again use GeoNames and split the taxonomic relati
    )
 
 Initialize Learner
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 Before defining the learner, choose the ontology learning task to perform.
 Available tasks have been described in `LLMs4OL Paradigms <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_.

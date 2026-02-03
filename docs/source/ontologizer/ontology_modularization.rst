@@ -75,7 +75,7 @@ Each of these ontologies is tied to a specific domain repository on Hugging Face
 
 
 Inspecting Metadata
------------
+---------------------------------
 
 Once an ontology is loaded, you can inspect its metadata by simply printing the ontology object. This outputs essential information encoded during modularization—capturing attributes that ensure traceability, version control, and alignment with FAIR principles. These metadata fields not only describe the ontology’s origin and scope but also support filtering, documentation, and automated validation during training or inference workflows.
 

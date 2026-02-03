@@ -61,6 +61,6 @@ You can install OntoLearner directly from source to take advantage of the bleedi
 
 .. hint:: The -e flag installs the package in editable mode, which is ideal for development—changes in the code reflect immediately.
 
-Install PyTorch with CUDA support
+Install PyTorch with CUDA support
 --------------------------------------------
 To use a GPU/CUDA for learners, you must install PyTorch with CUDA support. Follow `PyTorch - Get Started<https://pytorch.org/get-started/locally/>`_ for installation steps.
