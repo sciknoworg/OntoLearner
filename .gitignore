@@ -3,6 +3,8 @@
 # Ignore the following directories
 data/
 trash/*
+examples/results/
+results/
 
 __pycache__/
 *.py[cod]

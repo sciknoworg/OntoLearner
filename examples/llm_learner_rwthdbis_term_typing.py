@@ -16,7 +16,7 @@ train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 learner = RWTHDBISSFTLearner(
     model_name="microsoft/deberta-v3-small",
     output_dir="./results/deberta-v3",
-    device="cpu",
+    device="cuda",
     num_train_epochs=30,
     per_device_train_batch_size=16,
     gradient_accumulation_steps=2,
