@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import os
 import re
 import random
@@ -31,7 +30,7 @@ from transformers import (
     Trainer,
     TrainingArguments,
 )
-
+from tqdm import tqdm
 from ...base import AutoLearner, AutoPrompt
 from ...utils import taxonomy_split, train_test_split as ontology_split
 from ...data_structure import OntologyData, TaxonomicRelation
@@ -88,31 +87,31 @@ class SKHNLPSequentialFTLearner(AutoLearner):
     """
 
     def __init__(
-        self,
-        # core
-        model_name: str = "bert-large-uncased",
-        n_prompts: int = 7,
-        random_state: int = 1403,
-        num_labels: int = 2,
-        device: str = "cpu",  # "cuda" | "cpu" | None (auto)
-        # data split & negative sampling (now configurable)
-        eval_fraction: float = 0.16,
-        neg_ratio_reversed: float = 1 / 3,
-        neg_ratio_manipulated: float = 2 / 3,
-        # ---- expose TrainingArguments as individual user-defined args ----
-        output_dir: str = "./results/",
-        num_train_epochs: int = 1,
-        per_device_train_batch_size: int = 4,
-        per_device_eval_batch_size: int = 4,
-        warmup_steps: int = 500,
-        weight_decay: float = 0.01,
-        logging_dir: str = "./logs/",
-        logging_steps: int = 50,
-        eval_strategy: str = "epoch",
-        save_strategy: str = "epoch",
-        load_best_model_at_end: bool = True,
-        use_fast_tokenizer: Optional[bool] = None,
-        trust_remote_code: bool = False,
+            self,
+            # core
+            model_name: str = "bert-large-uncased",
+            n_prompts: int = 7,
+            random_state: int = 1403,
+            num_labels: int = 2,
+            device: str = "cpu",  # "cuda" | "cpu" | None (auto)
+            # data split & negative sampling (now configurable)
+            eval_fraction: float = 0.16,
+            neg_ratio_reversed: float = 1 / 3,
+            neg_ratio_manipulated: float = 2 / 3,
+            # ---- expose TrainingArguments as individual user-defined args ----
+            output_dir: str = "./results/",
+            num_train_epochs: int = 1,
+            per_device_train_batch_size: int = 4,
+            per_device_eval_batch_size: int = 4,
+            warmup_steps: int = 500,
+            weight_decay: float = 0.01,
+            logging_dir: str = "./logs/",
+            logging_steps: int = 50,
+            eval_strategy: str = "epoch",
+            save_strategy: str = "epoch",
+            load_best_model_at_end: bool = True,
+            use_fast_tokenizer: Optional[bool] = None,
+            trust_remote_code: bool = False,
     ) -> None:
         """Configure the sequential fine-tuning learner.
 
@@ -170,6 +169,7 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         self._last_eval: Optional[pd.DataFrame] = None
         self.trust_remote_code = bool(trust_remote_code)
         self.use_fast_tokenizer = use_fast_tokenizer
+        self.per_device_eval_batch_size = per_device_eval_batch_size
 
         random.seed(self.random_state)
 
@@ -216,9 +216,9 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         if getattr(self.tokenizer, "pad_token", None) is None:
             # Try sensible fallbacks
             fallback = (
-                getattr(self.tokenizer, "eos_token", None)
-                or getattr(self.tokenizer, "sep_token", None)
-                or getattr(self.tokenizer, "cls_token", None)
+                    getattr(self.tokenizer, "eos_token", None)
+                    or getattr(self.tokenizer, "sep_token", None)
+                    or getattr(self.tokenizer, "cls_token", None)
             )
             if fallback is not None:
                 self.tokenizer.pad_token = fallback
@@ -234,8 +234,8 @@ class SKHNLPSequentialFTLearner(AutoLearner):
 
         # Make sure padding ids line up
         if (
-            getattr(self.model.config, "pad_token_id", None) is None
-            and getattr(self.tokenizer, "pad_token_id", None) is not None
+                getattr(self.model.config, "pad_token_id", None) is None
+                and getattr(self.tokenizer, "pad_token_id", None) is not None
         ):
             self.model.config.pad_token_id = self.tokenizer.pad_token_id
 
@@ -279,7 +279,7 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         return super().tasks_ground_truth_former(data, task)
 
     def _make_negatives(
-        self, positives_df: pd.DataFrame
+            self, positives_df: pd.DataFrame
     ) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """Create two types of negatives from a positives table.
 
@@ -313,10 +313,10 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         return as_reversed(positives_df), with_random_parent(positives_df)
 
     def _balance_with_negatives(
-        self,
-        positives_df: pd.DataFrame,
-        reversed_df: pd.DataFrame,
-        manipulated_df: pd.DataFrame,
+            self,
+            positives_df: pd.DataFrame,
+            reversed_df: pd.DataFrame,
+            manipulated_df: pd.DataFrame,
     ) -> pd.DataFrame:
         """Combine positives with negatives using configured ratios.
 
@@ -368,7 +368,7 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         return out
 
     def _df_from_relations(
-        self, relations: List[TaxonomicRelation], label: bool = True
+            self, relations: List[TaxonomicRelation], label: bool = True
     ) -> pd.DataFrame:
         """Convert a list of `TaxonomicRelation` to a DataFrame.
 
@@ -400,7 +400,7 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         ]
 
     def _build_masked_prompt(
-        self, parent: str, child: str, index_1_based: int, mask_token: str = "[MASK]"
+            self, parent: str, child: str, index_1_based: int, mask_token: str = "[MASK]"
     ) -> str:
         """Construct one of several True/False prompts with a mask token.
 
@@ -441,7 +441,7 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         predicted_label = torch.argmax(logits, dim=1).item()
         return predicted_label == 1
 
-    def _select_parent_via_prompts(self, child: str) -> str:
+    def _select_parent_via_prompts_main(self, child: str) -> str:
         """Select the most likely parent for a given child via prompt voting.
 
         The procedure:
@@ -493,6 +493,128 @@ class SKHNLPSequentialFTLearner(AutoLearner):
 
         return recurse(list(scores.keys()), level=0)
 
+    def _select_parent_via_prompts(self, child: str) -> str:
+        """Select the most likely parent for a given child via batched inference.
+
+        This vectorized approach processes all candidate parents simultaneously,
+        making it O(n_prompts) instead of O(candidates × n_prompts).
+
+        Args:
+            child: The child label whose parent should be predicted.
+
+        Returns:
+            The chosen parent string with highest average probability.
+
+        Raises:
+            AssertionError: If candidate parents were not initialized.
+        """
+        assert self._candidate_parents, "Candidate parents not initialized."
+
+        # Build all prompts for all candidates at once
+        # Shape: (n_candidates, n_prompts)
+        all_prompts = []
+        for parent in self._candidate_parents:
+            parent_prompts = [
+                self._build_masked_prompt(parent, child, idx + 1)
+                for idx in range(self.n_prompts)
+            ]
+            all_prompts.extend(parent_prompts)
+
+        # Tokenize all prompts in one batch
+        encodings = self.tokenizer(
+            all_prompts,
+            return_tensors="pt",
+            padding=True,
+            truncation=True,
+        ).to(self.model.device)
+
+        # Single forward pass for all prompts
+        logits = self.model(**encodings).logits
+
+        # Get probabilities for the "True" class (index 1)
+        true_probs = torch.softmax(logits, dim=1)[:, 1]
+
+        # Reshape to (n_candidates, n_prompts)
+        true_probs = true_probs.view(len(self._candidate_parents), self.n_prompts)
+
+        # Average across prompts for each candidate
+        avg_scores = true_probs.mean(dim=1)
+
+        # Select candidate with highest average score
+        best_idx = torch.argmax(avg_scores).item()
+
+        return self._candidate_parents[best_idx]
+
+
+    def _select_parents_batch(self,
+                              children: List[str],
+                              batch_size: int = 8,
+                              max_prompts_per_forward: int = 32) -> List[str]:
+        """Select parents for multiple children with memory-efficient chunked inference.
+
+        Args:
+            children: List of child labels to find parents for.
+            batch_size: Number of children to process simultaneously.
+            max_prompts_per_forward: Max prompts per forward pass (reduce if OOM: try 32, 16, or 8).
+
+        Returns:
+            List of chosen parent strings (same order as input children).
+        """
+        assert self._candidate_parents, "Candidate parents not initialized."
+
+        all_predictions = []
+
+        for batch_start in tqdm(range(0, len(children), batch_size), desc="Batch parent selection"):
+            batch_children = children[batch_start:batch_start + batch_size]
+
+            # Build all prompts for this batch of children
+            # Shape: (batch_size × n_candidates × n_prompts)
+            batch_prompts = []
+            for child in batch_children:
+                for parent in self._candidate_parents:
+                    for idx in range(self.n_prompts):
+                        batch_prompts.append(
+                            self._build_masked_prompt(parent, child, idx + 1)
+                        )
+
+            # Process prompts in chunks to avoid OOM
+            all_true_probs = []
+            for chunk_start in range(0, len(batch_prompts), max_prompts_per_forward):
+                chunk_prompts = batch_prompts[chunk_start:chunk_start + max_prompts_per_forward]
+
+                # Tokenize chunk
+                encodings = self.tokenizer(
+                    chunk_prompts,
+                    return_tensors="pt",
+                    padding=True,
+                    max_length=256,
+                    truncation=True,
+                ).to(self.model.device)
+
+                # Forward pass on chunk
+                logits = self.model(**encodings).logits
+                true_probs = torch.softmax(logits, dim=1)[:, 1]
+                all_true_probs.append(true_probs.cpu())  # Move to CPU to free GPU memory
+
+                # Clear GPU cache
+                del encodings, logits
+                torch.cuda.empty_cache() if torch.cuda.is_available() else None
+
+            # Concatenate all chunks
+            all_true_probs = torch.cat(all_true_probs, dim=0)
+
+            # Reshape: (batch_size, n_candidates, n_prompts)
+            all_true_probs = all_true_probs.view(len(batch_children), len(self._candidate_parents), self.n_prompts)
+            # Average across prompts, then select best candidate per child
+            avg_scores = all_true_probs.mean(dim=2)  # (batch_size, n_candidates)
+            best_indices = torch.argmax(avg_scores, dim=1)  # (batch_size,)
+
+            # Map indices to parent names
+            batch_predictions = [self._candidate_parents[idx.item()] for idx in best_indices]
+            all_predictions.extend(batch_predictions)
+
+        return all_predictions
+
     def _taxonomy_discovery(self, data: Any, test: bool = False):
         """
         TRAIN:
@@ -540,18 +662,24 @@ class SKHNLPSequentialFTLearner(AutoLearner):
 
         if test:
             if is_ontology_object and self._candidate_parents:
-                predictions: List[dict[str, str]] = []
-                for _, row in pairs_df.iterrows():
-                    child_term = row["child"]
-                    chosen_parent = self._select_parent_via_prompts(child_term)
-                    predictions.append({"parent": chosen_parent, "child": child_term})
+                # predictions: List[dict[str, str]] = []
+                # for _, row in tqdm(pairs_df.iterrows(), desc="Select paren via prompt:"):
+                #     child_term = row["child"]
+                #     chosen_parent = self._select_parent_via_prompts(child_term)
+                #     predictions.append({"parent": chosen_parent, "child": child_term})
+                # return predictions
+                # predictions: List[dict[str, str]] = []
+                children_list = pairs_df["child"].tolist()
+                chosen_parents = self._select_parents_batch(children_list, batch_size=self.per_device_eval_batch_size)
+                predictions = [{"parent": parent, "child": child}
+                               for parent, child in zip(chosen_parents, children_list)]
                 return predictions
 
             # pairwise binary classification
             prompts_df = self._add_prompt_columns(pairs_df.copy())
             true_probs_by_prompt: List[torch.Tensor] = []
 
-            for i in range(self.n_prompts):
+            for i in tqdm(range(self.n_prompts), desc="Prompt via prompt:"):
                 col = f"prompt_{i + 1}"
                 enc = self.tokenizer(
                     prompts_df[col].tolist(),
@@ -567,36 +695,21 @@ class SKHNLPSequentialFTLearner(AutoLearner):
             predicted_bool = (avg_true_prob >= 0.5).cpu().tolist()
 
             results: List[dict[str, Any]] = []
-            for p, c, s, yhat in zip(
-                pairs_df["parent"],
-                pairs_df["child"],
-                avg_true_prob.tolist(),
-                predicted_bool,
-            ):
-                results.append(
-                    {
-                        "parent": p,
-                        "child": c,
-                        "label": int(bool(yhat)),
-                        "score": float(s),
-                    }
-                )
+            for p, c, s, yhat in tqdm(zip(pairs_df["parent"],
+                                          pairs_df["child"],
+                                          avg_true_prob.tolist(),
+                                          predicted_bool), desc="Append:"):
+                results.append({"parent": p, "child": c, "label": int(bool(yhat)), "score": float(s)})
             return results
 
         if isinstance(data, OntologyData):
-            train_onto, eval_onto = ontology_split(
-                data,
-                test_size=self._eval_fraction,
-                random_state=self.random_state,
-                verbose=False,
-            )
+            train_onto, eval_onto = ontology_split(data,
+                                                   test_size=self._eval_fraction,
+                                                   random_state=self.random_state,
+                                                   verbose=False)
 
-            train_pos_rel: List[TaxonomicRelation] = (
-                getattr(train_onto.type_taxonomies, "taxonomies", []) or []
-            )
-            eval_pos_rel: List[TaxonomicRelation] = (
-                getattr(eval_onto.type_taxonomies, "taxonomies", []) or []
-            )
+            train_pos_rel: List[TaxonomicRelation] = getattr(train_onto.type_taxonomies, "taxonomies", []) or []
+            eval_pos_rel: List[TaxonomicRelation] = getattr(eval_onto.type_taxonomies, "taxonomies", []) or []
 
             train_pos_df = self._df_from_relations(train_pos_rel, label=True)
             eval_pos_df = self._df_from_relations(eval_pos_rel, label=True)
@@ -612,9 +725,7 @@ class SKHNLPSequentialFTLearner(AutoLearner):
 
         else:
             if "label" not in pairs_df.columns or pairs_df["label"].nunique() == 1:
-                positives_df = pairs_df[pairs_df.get("label", True)][
-                    ["parent", "child"]
-                ].copy()
+                positives_df = pairs_df[pairs_df.get("label", True)][["parent", "child"]].copy()
                 pos_rel = self._relations_from_df(positives_df)
 
                 tr_rel, ev_rel = taxonomy_split(
@@ -630,12 +741,8 @@ class SKHNLPSequentialFTLearner(AutoLearner):
                 tr_rev_df, tr_man_df = self._make_negatives(train_pos_df)
                 ev_rev_df, ev_man_df = self._make_negatives(eval_pos_df)
 
-                train_df = self._balance_with_negatives(
-                    train_pos_df, tr_rev_df, tr_man_df
-                )
-                eval_df = self._balance_with_negatives(
-                    eval_pos_df, ev_rev_df, ev_man_df
-                )
+                train_df = self._balance_with_negatives(train_pos_df, tr_rev_df, tr_man_df)
+                eval_df = self._balance_with_negatives(eval_pos_df, ev_rev_df, ev_man_df)
 
                 train_df = self._add_prompt_columns(train_df)
                 eval_df = self._add_prompt_columns(eval_df)
@@ -655,20 +762,11 @@ class SKHNLPSequentialFTLearner(AutoLearner):
                 eval_pos_df = self._df_from_relations(ev_rel, label=True)
 
                 negatives_df = pairs_df[pairs_df["label"]][["parent", "child"]].copy()
-                negatives_df = negatives_df.sample(
-                    frac=1.0, random_state=self.random_state
-                ).reset_index(drop=True)
+                negatives_df = negatives_df.sample(frac=1.0, random_state=self.random_state).reset_index(drop=True)
 
-                n_eval_neg = (
-                    max(1, int(len(negatives_df) * self._eval_fraction))
-                    if len(negatives_df) > 0
-                    else 0
-                )
-                eval_neg_df = (
-                    negatives_df.iloc[:n_eval_neg].copy()
-                    if n_eval_neg > 0
-                    else negatives_df.iloc[:0].copy()
-                )
+                n_eval_neg = max(1, int(len(negatives_df) * self._eval_fraction)) if len(negatives_df) > 0 else 0
+
+                eval_neg_df = negatives_df.iloc[:n_eval_neg].copy() if n_eval_neg > 0 else negatives_df.iloc[:0].copy()
                 train_neg_df = negatives_df.iloc[n_eval_neg:].copy()
 
                 train_neg_df["label"] = False
@@ -687,35 +785,21 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         # Sequential fine-tuning across prompts
         for i in range(self.n_prompts):
             prompt_col = f"prompt_{i + 1}"
-            train_ds = Dataset.from_pandas(
-                train_df[[prompt_col, "label"]].reset_index(drop=True)
-            )
-            eval_ds = Dataset.from_pandas(
-                eval_df[[prompt_col, "label"]].reset_index(drop=True)
-            )
+            train_ds = Dataset.from_pandas(train_df[[prompt_col, "label"]].reset_index(drop=True))
+            eval_ds = Dataset.from_pandas(eval_df[[prompt_col, "label"]].reset_index(drop=True))
 
             train_ds = train_ds.rename_column("label", "labels")
             eval_ds = eval_ds.rename_column("label", "labels")
 
             def tokenize_batch(batch):
                 """Tokenize a batch for the current prompt column with truncation/padding."""
-                return self.tokenizer(
-                    batch[prompt_col], padding="max_length", truncation=True
-                )
+                return self.tokenizer(batch[prompt_col], padding="max_length", truncation=True)
 
-            train_ds = train_ds.map(
-                tokenize_batch, batched=True, remove_columns=[prompt_col]
-            )
-            eval_ds = eval_ds.map(
-                tokenize_batch, batched=True, remove_columns=[prompt_col]
-            )
+            train_ds = train_ds.map(tokenize_batch, batched=True, remove_columns=[prompt_col])
+            eval_ds = eval_ds.map(tokenize_batch, batched=True, remove_columns=[prompt_col])
 
-            train_ds.set_format(
-                type="torch", columns=["input_ids", "attention_mask", "labels"]
-            )
-            eval_ds.set_format(
-                type="torch", columns=["input_ids", "attention_mask", "labels"]
-            )
+            train_ds.set_format(type="torch", columns=["input_ids", "attention_mask", "labels"])
+            eval_ds.set_format(type="torch", columns=["input_ids", "attention_mask", "labels"])
 
             trainer = Trainer(
                 model=self.model,
@@ -728,7 +812,6 @@ class SKHNLPSequentialFTLearner(AutoLearner):
         self._last_train = train_df
         self._last_eval = eval_df
         return None
-
 
 class SKHNLPZSLearner(AutoLearner):
     """
@@ -848,10 +931,7 @@ class SKHNLPZSLearner(AutoLearner):
         self._tokenizer = AutoTokenizer.from_pretrained(model_id)
 
         # Ensure a pad token is set for generation
-        if (
-            self._tokenizer.pad_token_id is None
-            and self._tokenizer.eos_token_id is not None
-        ):
+        if self._tokenizer.pad_token_id is None and self._tokenizer.eos_token_id is not None:
             self._tokenizer.pad_token = self._tokenizer.eos_token
 
         self._model = AutoModelForCausalLM.from_pretrained(
@@ -871,9 +951,7 @@ class SKHNLPZSLearner(AutoLearner):
             print("Device set to use", "cuda" if self._has_cuda else "cpu")
             print("[ZeroShotTaxonomyLearner] Model loaded.")
 
-    def _taxonomy_discovery(
-        self, data: Any, test: bool = False
-    ) -> Optional[List[Dict[str, str]]]:
+    def _taxonomy_discovery(self, data: Any, test: bool = False) -> Optional[List[Dict[str, str]]]:
         """
         Zero-shot prediction over all incoming rows (no filtering/augmentation).
 
@@ -967,16 +1045,14 @@ class SKHNLPZSLearner(AutoLearner):
             add_generation_prompt=True,
         )
 
-        generation = self._pipeline(
-            prompt,
-            max_new_tokens=self.max_new_tokens,
-            do_sample=False,
-            temperature=0.0,
-            top_p=1.0,
-            eos_token_id=self._tokenizer.eos_token_id,
-            pad_token_id=self._tokenizer.eos_token_id,
-            return_full_text=False,
-        )[0]["generated_text"]
+        generation = self._pipeline(prompt,
+                                    max_new_tokens=self.max_new_tokens,
+                                    do_sample=False,
+                                    temperature=0.0,
+                                    top_p=1.0,
+                                    eos_token_id=self._tokenizer.eos_token_id,
+                                    pad_token_id=self._tokenizer.eos_token_id,
+                                    return_full_text=False)[0]["generated_text"]
 
         match = self._PREDICTION_PATTERN.search(generation)
         parsed = match.group(1).strip() if match else "unknown"
@@ -1000,11 +1076,7 @@ class SKHNLPZSLearner(AutoLearner):
 
         for label in self.CLASS_LIST:
             label_lower = label.lower()
-            if (
-                lowered == label_lower
-                or lowered in label_lower
-                or label_lower in lowered
-            ):
+            if lowered == label_lower or lowered in label_lower or label_lower in lowered:
                 return label
         return "unknown"
 
@@ -1045,9 +1117,7 @@ class SKHNLPZSLearner(AutoLearner):
             Normalized label string or 'unknown'.
         """
         snapped = self._normalize_substring_only(text)
-        return (
-            snapped if snapped != "unknown" else self._normalize_levenshtein_only(text)
-        )
+        return snapped if snapped != "unknown" else self._normalize_levenshtein_only(text)
 
     def _to_dataframe(self, data: Any) -> pd.DataFrame:
         """
@@ -1082,13 +1152,9 @@ class SKHNLPZSLearner(AutoLearner):
             if isinstance(first, (list, tuple)) and not isinstance(first, dict):
                 n = len(first)
                 if n >= 3:
-                    return pd.DataFrame(
-                        data, columns=["child", "parent", "label"]
-                    ).reset_index(drop=True)
+                    return pd.DataFrame(data, columns=["child", "parent", "label"]).reset_index(drop=True)
                 if n == 2:
-                    return pd.DataFrame(data, columns=["child", "parent"]).reset_index(
-                        drop=True
-                    )
+                    return pd.DataFrame(data, columns=["child", "parent"]).reset_index(drop=True)
 
         try:
             type_taxonomies = getattr(data, "type_taxonomies", None)
@@ -1099,15 +1165,9 @@ class SKHNLPZSLearner(AutoLearner):
                     for rel in taxonomies:
                         parent = getattr(rel, "parent", None)
                         child = getattr(rel, "child", None)
-                        label = (
-                            getattr(rel, "label", None)
-                            if hasattr(rel, "label")
-                            else None
-                        )
+                        label = getattr(rel, "label", None) if hasattr(rel, "label") else None
                         if parent is not None and child is not None:
-                            rows.append(
-                                {"child": child, "parent": parent, "label": label}
-                            )
+                            rows.append({"child": child, "parent": parent, "label": label})
                     if rows:
                         return pd.DataFrame(rows).reset_index(drop=True)
         except Exception:
