@@ -258,9 +258,14 @@ For this, you can extend the ``AutoLLM`` class and implement the required
 
 	The following example shows how the logit-based probability calculation is happening in the OntoLearner to reduce the experimentation time and efficiency:
 
+	.. hint::
+
+		- To use Mistral LLM in a logit-based approach please use the ``LogitMistralLLM`` class.
+		- Also you can use quantized variant of logit-based approach by calling ``LogitQuantLLM`` class.
+
 	::
 
-		class LogitLLM(AutoLLM):
+		class LogitAutoLLM(AutoLLM):
 		    def _get_label_token_ids(self):
 		        label_token_ids = {}
 		        for label, words in self.label_mapper.label_dict.items():
@@ -296,6 +301,63 @@ For this, you can extend the ``AutoLLM`` class and implement the required
 		            predictions.append(max(label_scores, key=label_scores.get))
 		        return predictions
 
+.. tab:: Qwen3-Thinking LLM
+
+	The thinking model of Qwen3 requires a different way of inference, similar to Mistral LLM. The following example shows how to use such model within the OntoLearner. You only need to import ``QwenThinkingLLM`` class and use it.
+
+	::
+
+		class QwenThinkingLLM(AutoLLM):
+		    @torch.no_grad()
+		    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
+		        messages = [[{"role": "user", "content": prompt + " Please show your final response with 'answer': 'label'."}]
+		                    for prompt in inputs]
+		        texts = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+		        encoded_inputs = self.tokenizer(texts, return_tensors="pt", padding=True).to(self.model.device)
+		        generated_ids = self.model.generate(**encoded_inputs, max_new_tokens=max_new_tokens)
+		        decoded_outputs = []
+		        for i in range(len(generated_ids)):
+		            prompt_len = encoded_inputs.attention_mask[i].sum().item()
+		            output_ids = generated_ids[i][prompt_len:].tolist()
+		            try:
+		                end = len(output_ids) - output_ids[::-1].index(151668)
+		                thinking_ids = output_ids[:end]
+		            except ValueError:
+		                thinking_ids = output_ids
+		            thinking_content = self.tokenizer.decode(thinking_ids, skip_special_tokens=True).strip()
+		            decoded_outputs.append(thinking_content)
+		        return self.label_mapper.predict(decoded_outputs)
+
+
+.. tab:: Qwen3-Instruct  LLM
+
+	Similar to the thinking model of Qwen3, the instruct variant also requires a different way of inference. The following example shows how to use such model within the OntoLearner. You only need to import ``QwenInstructLLM`` class and use it.
+
+	::
+
+		class QwenInstructLLM(AutoLLM):
+
+		    def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
+		        messages = [[{"role": "user", "content": prompt + " Please show your final response with 'answer': 'label'."}]
+		                    for prompt in inputs]
+
+		        texts = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+
+		        encoded_inputs = self.tokenizer(texts, return_tensors="pt", padding="max_length", truncation=True,
+		                                        max_length=256).to(self.model.device)
+
+		        generated_ids = self.model.generate(**encoded_inputs,
+		                                            max_new_tokens=max_new_tokens,
+		                                            use_cache=False,
+		                                            pad_token_id=self.tokenizer.pad_token_id,
+		                                            eos_token_id=self.tokenizer.eos_token_id)
+		        decoded_outputs = []
+		        for i in range(len(generated_ids)):
+		            prompt_len = encoded_inputs.attention_mask[i].sum().item()
+		            output_ids = generated_ids[i][prompt_len:].tolist()
+		            output_content = self.tokenizer.decode(output_ids, skip_special_tokens=True).strip()
+		            decoded_outputs.append(output_content)
+		        return self.label_mapper.predict(decoded_outputs)
 
 
 Once your custom class is defined, you can pass it into ``AutoLLMLearner``:
