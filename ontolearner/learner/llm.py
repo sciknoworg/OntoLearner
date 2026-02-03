@@ -283,7 +283,7 @@ class LogitMistralLLM(AutoLLM):
         return predictions
 
 
-class QwenInstructAutoLLM(AutoLLM):
+class QwenInstructLLM(AutoLLM):
 
     def generate(self, inputs: List[str], max_new_tokens: int = 50) -> List[str]:
         messages = [[{"role": "user", "content": prompt + " Please show your final response with 'answer': 'label'."}]
