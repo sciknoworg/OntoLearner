@@ -33,14 +33,13 @@ class BTO(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/BTO"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle VIMMP-specific blank nodes."""
         if re.match(r'^BTO_[0-9]+$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False

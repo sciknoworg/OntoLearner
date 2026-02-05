@@ -53,15 +53,14 @@ class DBpedia(BaseOntology):
     format = "OWL"
     download_url = "https://wiki.dbpedia.org/"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle DBpedia/Wikidata-specific blank nodes."""
         # DBpedia/Wikidata-specific patterns
         if re.match(r'^Q[0-9]+$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -226,15 +225,14 @@ class UMBEL(BaseOntology):
     format = "n3"
     download_url = "https://github.com/structureddynamics/UMBEL/tree/master/Ontology"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle UMBEL-specific blank nodes."""
         # UMBEL-specific patterns
         if re.match(r'^f5295f96ac3e649dcb1740b0d93d3e6c2b[0-9a-f]+$', label):  # Long hexadecimal identifiers
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False

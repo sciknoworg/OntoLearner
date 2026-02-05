@@ -181,8 +181,7 @@ class DUO(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/DUO/"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle DUO-specific blank nodes."""
         if re.match(r'^APOLLO_SV_[0-9]+$', label):
             return True
@@ -191,7 +190,7 @@ class DUO(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -327,14 +326,13 @@ class Metadata4Ing(BaseOntology):
     format = "TTL"
     download_url = "https://git.rwth-aachen.de/nfdi4ing/metadata4ing/metadata4ing"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle Metadata4Ing-specific blank nodes."""
         if re.match(r'^\d{4}-\d{4}-\d{4}-\d{4}$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -517,14 +515,13 @@ class SWO(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/SWO"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle SWO-specific blank nodes."""
         if re.match(r'^SWO_[0-9]+$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
