@@ -71,10 +71,10 @@ Each ontology class inherits from ``BaseOntology`` and defines:
 
 	.. code-block:: python
 
-	    def _is_anonymous_id(label: str) -> bool:
+	    def _is_anonymous_id(self, label: str) -> bool:
 	        """Override to handle ontology-specific blank nodes."""
 	        # Check the general patterns from the parent class
-	        if BaseOntology._is_anonymous_id(label):
+	        if supper()._is_anonymous_id(label):
 	            return True
 
 	        # Add ontology-specific patterns
@@ -141,7 +141,7 @@ You can also access the processed ontology via:
 	# "ontology_data": ...,
 	# "documentation": ...
 
-Once this process is done, you might use the `.save_resource` function to check the constructed files and documentations:
+Once this process is done, you might use the ``.save_resource`` function to check the constructed files and documentations:
 
 .. code-block:: python
 
