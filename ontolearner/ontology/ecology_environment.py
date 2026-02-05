@@ -35,15 +35,14 @@ class ENVO(BaseOntology):
     format = "OWL"
     download_url = "https://obofoundry.org/ontology/envo.html"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle ENVO-specific blank nodes."""
         # ENVO-specific patterns
         if re.match(r'^PATO_[0-9]+$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False

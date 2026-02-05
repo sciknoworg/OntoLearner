@@ -57,15 +57,15 @@ class ChEBI(BaseOntology):
     format = "OWL"
     download_url = "https://www.ebi.ac.uk/chebi/"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle ChEBI-specific blank nodes."""
         # ChEBI-specific patterns
         if re.match(r'^CHEBI_[0-9]+$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -89,15 +89,15 @@ class CHEMINF(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/CHEMINF"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle CHEMINF-specific blank nodes."""
         # ChEBI-specific patterns
         if re.match(r'^CHEMINF_[0-9]+$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -145,15 +145,15 @@ class ChMO(BaseOntology):
     format = "OWL"
     download_url = "https://github.com/rsc-ontologies/rsc-cmo"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle ChMO-specific blank nodes."""
         # ChEBI-specific patterns
         if re.match(r'^CHMO_[0-9]+$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -190,15 +190,15 @@ class MassSpectrometry(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/MS"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle MassSpectrometry-specific blank nodes."""
         # MassSpectrometry-specific patterns
         if re.match(r'^PEFF_[0-9]+$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -220,8 +220,7 @@ class MOP(BaseOntology):
     format = "OWL"
     download_url = "https://terminology.tib.eu/ts/ontologies/MOP"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle MOP-specific blank nodes."""
         # MOP-specific patterns
         if re.match(r'^MOP_[0-9]+$', label):
@@ -234,7 +233,7 @@ class MOP(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -357,8 +356,7 @@ class RXNO(BaseOntology):
     format = "OWL"
     download_url = "https://github.com/rsc-ontologies/rxno"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle RXNO-specific blank nodes."""
         # RXNO-specific patterns
         if re.match(r'^RXNO_[0-9]+$', label):
@@ -368,7 +366,7 @@ class RXNO(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False

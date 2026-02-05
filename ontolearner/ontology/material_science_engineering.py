@@ -74,15 +74,14 @@ class Atomistic(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/domain-atomistic"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle Atomistic-specific blank nodes."""
         # EMMO-specific patterns (UUID format) in Atomistic
         if re.match(r'^EMMO_[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$', label):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -106,8 +105,8 @@ class BattINFO(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/BIG-MAP/BattINFO"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle BattINFO-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -123,7 +122,7 @@ class BattINFO(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -168,8 +167,7 @@ class BVCO(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/Battery-Value-Chain-Ontology/ontology"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle BVCO-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -184,7 +182,7 @@ class BVCO(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -277,8 +275,7 @@ class CHAMEO(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/domain-characterisation-methodology"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle CHAMEO-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -287,7 +284,7 @@ class CHAMEO(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -400,8 +397,7 @@ class EMMOCrystallography(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/domain-crystallography"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle EMMOCrystallography-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -410,7 +406,7 @@ class EMMOCrystallography(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -451,8 +447,7 @@ class GPO(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/General-Process-Ontology/ontology"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle GPO-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -463,7 +458,7 @@ class GPO(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -697,8 +692,7 @@ class MechanicalTesting(BaseOntology):
     format = "OWL"
     download_url = "https://github.com/emmo-repo/domain-mechanical-testing"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle MechanicalTesting-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -707,7 +701,7 @@ class MechanicalTesting(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -731,8 +725,7 @@ class MicroStructures(BaseOntology):
     format = "OWL"
     download_url = "https://github.com/jesper-friis/emmo-microstructure"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle MicroStructures-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -741,7 +734,7 @@ class MicroStructures(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -868,8 +861,7 @@ class OIECharacterisation(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle OIECharacterisation-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -878,7 +870,7 @@ class OIECharacterisation(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -901,8 +893,7 @@ class OIEManufacturing(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle OIEManufacturing-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -911,7 +902,7 @@ class OIEManufacturing(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -934,8 +925,7 @@ class OIEMaterials(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle OIEMaterials-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -944,7 +934,7 @@ class OIEMaterials(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -967,8 +957,7 @@ class OIEModels(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle OIEModels-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -977,7 +966,7 @@ class OIEModels(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -999,8 +988,7 @@ class OIESoftware(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/OIE-Ontologies/"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle OIESoftware-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -1009,7 +997,7 @@ class OIESoftware(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -1067,8 +1055,7 @@ class Photovoltaics(BaseOntology):
     format = "TTL"
     download_url = "https://github.com/emmo-repo/domain-photovoltaics"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle Photovoltaics-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -1077,7 +1064,7 @@ class Photovoltaics(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
@@ -1219,8 +1206,8 @@ class VIMMP(BaseOntology):
     format = "OWL"
     download_url = "https://matportal.org/ontologies/VIMMP_ONTOLOGIES"
 
-    @staticmethod
-    def _is_anonymous_id(label: str) -> bool:
+
+    def _is_anonymous_id(self, label: str) -> bool:
         """Override to handle VIMMP-specific blank nodes."""
         # UUID pattern for various prefixes
         uuid_pattern = r'[0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}$'
@@ -1232,7 +1219,39 @@ class VIMMP(BaseOntology):
             return True
 
         # Check the general patterns from the parent class
-        if BaseOntology._is_anonymous_id(label):
+        if super()._is_anonymous_id(label):
             return True
 
         return False
+
+
+class MDSOnto(BaseOntology):
+    """
+    MDS-Onto is a domain (low) level ontology that describes terms in Materials Data Science. It is divided into six
+    large modules: BuiltEnv, Exposure, Chemistry, Manufacture, Characterization, and Geospatial. Under each module,
+    there are multiple sub-modules such as FTIR, AFM, Chem-Rxn, PV-Module, Accelerated Exposure, etc.
+    """
+    ontology_id = "MDSOnto"
+    ontology_full_name = "The Modular Ontology for Materials and Data Science (MDS-Onto)"
+    domain = "Materials Science and Engineering"
+    category = "Materials Data Science"
+    version = "0.3.1.16"
+    last_updated = "2026-02-03"
+    creator = "SDLE Research Center"
+    license = "CC BY-SA 4.0"
+    format = "OWL"
+    download_url = "https://cwrusdle.bitbucket.io/files/MDS_Onto/index-en.html"
+
+    def _is_anonymous_id(self, label: str) -> bool:
+        """Override to handle MDSOnto-specific and ontology-generated blank nodes."""
+        # Treat IDs starting with 'ont0' as anonymous (e.g. ont00000562)
+        if re.match(r'^ont0', label):
+            return True
+        if super()._is_anonymous_id(label):
+            return True
+        return False
+
+
+    # def contains_imports(self) -> bool:
+    #     """Hook: Check if the ontology contains imports."""
+    #     return True  # Set to True if your ontology imports other ontologies
