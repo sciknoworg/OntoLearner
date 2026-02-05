@@ -1,5 +1,14 @@
 ## Changelog
 
+### v1.5.0 (February 5, 2026)
+- Fix challenge learners
+- Adding MDS-Onto Ontologizer
+- Fix to Ontologizers and Processor
+- Minor code refactoring
+- Change to the theme of documentatin website
+- Update documentation website
+- Add LLM learners (Logit, Thinking, etc)
+
 ### v1.4.11 (January 5, 2026)
 - Add `text2onto` component for challenge learners with their documentation.
 - Code refactoring
