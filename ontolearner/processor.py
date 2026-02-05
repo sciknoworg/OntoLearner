@@ -850,13 +850,13 @@ If you find our work helpful, feel free to give us a cite.
 
             # Commit and push ontology repository
             repo.git_add(auto_lfs_track=True)
-            commit_message = f":sparkles: Added {self.ontology_id} ontology!"
+            commit_message = f"✨ Added {self.processed_ontology['ontology_id']} ontology!"
             repo.git_commit(commit_message)
             repo.git_push()
 
             # Commit and push metrics repository
             metrics_repo.git_add(auto_lfs_track=True)
-            metrics_commit_message = f":memo: Update metrics for {self.ontology_id}"
+            metrics_commit_message = f"📝 Update metrics for {self.processed_ontology['ontology_id']}"
             metrics_repo.git_commit(metrics_commit_message)
             metrics_repo.git_push()
 
@@ -864,7 +864,7 @@ If you find our work helpful, feel free to give us a cite.
                 "status": "success",
                 "repository": repo_id,
                 "metrics_repository": metrics_repo_id,
-                "ontology_id": self.ontology_id,
+                "ontology_id": self.processed_ontology['ontology_id'],
                 "url": f"https://huggingface.co/datasets/{repo_id}",
                 "metrics_url": f"https://huggingface.co/spaces/{metrics_repo_id}"
             }
