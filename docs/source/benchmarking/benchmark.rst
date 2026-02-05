@@ -250,6 +250,7 @@ Ontologies related to materials, their structure, properties, processing, and en
    materials_science_and_engineering/vimmp.rst
    materials_science_and_engineering/oiecharacterisation.rst
    materials_science_and_engineering/prima.rst
+   materials_science_and_engineering/mdsonto.rst
 
 Medicine
 ==========

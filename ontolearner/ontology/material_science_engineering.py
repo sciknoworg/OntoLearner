@@ -1223,3 +1223,35 @@ class VIMMP(BaseOntology):
             return True
 
         return False
+
+
+class MDSOnto(BaseOntology):
+    """
+    MDS-Onto is a domain (low) level ontology that describes terms in Materials Data Science. It is divided into six
+    large modules: BuiltEnv, Exposure, Chemistry, Manufacture, Characterization, and Geospatial. Under each module,
+    there are multiple sub-modules such as FTIR, AFM, Chem-Rxn, PV-Module, Accelerated Exposure, etc.
+    """
+    ontology_id = "MDSOnto"
+    ontology_full_name = "The Modular Ontology for Materials and Data Science (MDS-Onto)"
+    domain = "Materials Science and Engineering"
+    category = "Materials Data Science"
+    version = "0.3.1.16"
+    last_updated = "2026-02-03"
+    creator = "SDLE Research Center"
+    license = "CC BY-SA 4.0"
+    format = "OWL"
+    download_url = "https://cwrusdle.bitbucket.io/files/MDS_Onto/index-en.html"
+
+    def _is_anonymous_id(self, label: str) -> bool:
+        """Override to handle MDSOnto-specific and ontology-generated blank nodes."""
+        # Treat IDs starting with 'ont0' as anonymous (e.g. ont00000562)
+        if re.match(r'^ont0', label):
+            return True
+        if super()._is_anonymous_id(label):
+            return True
+        return False
+
+
+    # def contains_imports(self) -> bool:
+    #     """Hook: Check if the ontology contains imports."""
+    #     return True  # Set to True if your ontology imports other ontologies
