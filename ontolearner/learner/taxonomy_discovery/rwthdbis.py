@@ -28,7 +28,9 @@ import torch
 from datasets import Dataset, DatasetDict
 from transformers import (
     AutoTokenizer,
+    AutoModelForCausalLM,
     AutoModelForSequenceClassification,
+    DataCollatorForLanguageModeling,
     DataCollatorWithPadding,
     Trainer,
     TrainingArguments,
@@ -101,6 +103,10 @@ class RWTHDBISSFTLearner(AutoLearner):
         "For more detailed information",
     ]
 
+################################################################################
+#  Initialize Parameters ##########################################################
+################################################################################
+
     def __init__(
         self,
         min_predictions: int = 1,
@@ -119,6 +125,7 @@ class RWTHDBISSFTLearner(AutoLearner):
         fp16: bool = True,
         bf16: bool = False,
         seed: int = 42,
+        train_method: int = 2,
         negative_ratio: int = 5,
         bidirectional_templates: bool = True,
         context_json_path: Optional[str] = None,
@@ -156,6 +163,7 @@ class RWTHDBISSFTLearner(AutoLearner):
         self.fp16 = fp16
         self.bf16 = bf16
         self.seed = seed
+        self.train_method = train_method
 
         self.negative_ratio = negative_ratio
         self.bidirectional_templates = bidirectional_templates
@@ -175,6 +183,37 @@ class RWTHDBISSFTLearner(AutoLearner):
     def _is_windows(self) -> bool:
         """Return True if the current OS is Windows (NT)."""
         return (os.name == "nt") or (platform.system().lower() == "windows")
+
+################################################################################
+#  Data Preprocessing ##########################################################
+################################################################################
+
+    def _format_input(
+        self, parent_term: str, child_term: str, reverse: bool = False
+    ) -> str:
+        """
+        Format a (parent, child) pair into relation text + optional context.
+
+        Returns:
+            str: "<relation template> [## Context. 'parent': ... 'child': ...]"
+        """
+        relation_text = (
+            f"{child_term} is a subclass / child / subtype / descendant class of {parent_term}"
+            if reverse
+            else f"{parent_term} is the superclass / parent / supertype / ancestor class of {child_term}"
+        )
+
+        parent_info = self._lookup_context_info(parent_term)
+        child_info = self._lookup_context_info(child_term)
+        if not parent_info and not child_info:
+            return relation_text
+
+        context_text = (
+            f"## Context. '{parent_term}': {parent_info} '{child_term}': {child_info}"
+        )
+        return f"{relation_text} {context_text}"
+
+### Generate Context Information by GPT(via g4f.Client) ##########################################################
 
     def _normalize_text(self, raw_text: str, *, drop_questions: bool = False) -> str:
         """
@@ -250,405 +289,6 @@ class RWTHDBISSFTLearner(AutoLearner):
 
         return self._normalize_text(raw_text, drop_questions=True)
 
-    def _taxonomy_discovery(self, data: Any, test: bool = False) -> Optional[Any]:
-        """
-        AutoLearner hook: route to training or prediction.
-
-        Args:
-            data: Ontology-like object (has `.taxonomies` or `.type_taxonomies.taxonomies`).
-            test: If True, run inference; otherwise, train a model.
-
-        Returns:
-            If test=True, a list of accepted edges as dicts with keys `parent` and `child`;
-            otherwise None.
-        """
-        return self._predict_pairs(data) if test else self._train_from_pairs(data)
-
-    def _train_from_pairs(self, train_data: Any) -> None:
-        """
-        Train a binary classifier from ontology pairs.
-
-        Steps:
-            1) (Re)build the term-context JSON unless `context_json_path` is set.
-            2) Extract positive (parent, child) edges from `train_data`.
-            3) Sample negatives at `negative_ratio`.
-            4) Tokenize, instantiate HF Trainer, train, and save.
-
-        Args:
-            train_data: Ontology-like object with `.type_taxonomies.taxonomies`
-                (preferred) or `.taxonomies`, each item providing `parent` and `child`.
-
-        Raises:
-            ValueError: If no positive pairs are found.
-
-        Side Effects:
-            - Writes a trained model to `self.output_dir` (via `trainer.save_model`).
-            - Writes the tokenizer to `self.output_dir` (via `save_pretrained`).
-            - Sets `self.context_json_path` if it was previously unset.
-              The generated context file is named `rwthdbis_onto_processed.json`.
-        """
-        # Always (re)build context from ontology unless an explicit file is provided
-        if not self.context_json_path:
-            context_dir = Path(self.output_dir) / "context"
-            context_dir.mkdir(parents=True, exist_ok=True)
-            processed_context_file = context_dir / "rwthdbis_onto_processed.json"
-
-            # Remove stale file then regenerate
-            if processed_context_file.exists():
-                try:
-                    processed_context_file.unlink()
-                except Exception:
-                    pass
-
-            self.preprocess_context_from_ontology(
-                ontology=train_data,
-                processed_dir=context_dir,
-                dataset_name=self.ontology_name,
-                num_workers=max(1, min(os.cpu_count() or 2, 4)),
-                provider=partial(
-                    self._default_gpt_inference_with_dataset,
-                    dataset_name=self.ontology_name,
-                ),
-                max_retries=5,
-            )
-            self.context_json_path = str(processed_context_file)
-
-        # Reproducibility
-        set_seed(self.seed)
-        random.seed(self.seed)
-        torch.manual_seed(self.seed)
-        if torch.cuda.is_available():
-            torch.cuda.manual_seed_all(self.seed)
-
-        # Build labeled pairs from ontology; context comes from preprocessed map
-        positive_pairs = self._extract_positive_pairs(train_data)
-        if not positive_pairs:
-            raise ValueError("No positive (parent, child) pairs found in train_data.")
-
-        entity_names = sorted(
-            {parent for parent, _ in positive_pairs}
-            | {child for _, child in positive_pairs}
-        )
-        negative_pairs = self._generate_negatives(
-            positives=positive_pairs,
-            entities=entity_names,
-            ratio=self.negative_ratio,
-        )
-
-        labels, input_texts = self._build_text_dataset(positive_pairs, negative_pairs)
-        dataset_dict = DatasetDict(
-            {"train": Dataset.from_dict({"label": labels, "text": input_texts})}
-        )
-
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-        # Ensure a pad token exists for robust padding across models.
-        if self.tokenizer.pad_token is None:
-            self.tokenizer.pad_token = (
-                getattr(self.tokenizer, "eos_token", None)
-                or getattr(self.tokenizer, "sep_token", None)
-                or getattr(self.tokenizer, "cls_token", None)
-            )
-
-        def tokenize_batch(batch: Dict[str, List[str]]):
-            """Tokenize a batch of input texts for HF Datasets mapping."""
-            return self.tokenizer(
-                batch["text"], truncation=True, max_length=self.max_length
-            )
-
-        tokenized_dataset = dataset_dict.map(
-            tokenize_batch, batched=True, remove_columns=["text"]
-        )
-        data_collator = DataCollatorWithPadding(self.tokenizer)
-
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            self.model_name,
-            num_labels=2,
-            id2label={0: "incorrect", 1: "correct"},
-            label2id={"incorrect": 0, "correct": 1},
-        )
-        # Ensure model has a pad_token_id if tokenizer provides one.
-        if (
-            getattr(self.model.config, "pad_token_id", None) is None
-            and self.tokenizer.pad_token_id is not None
-        ):
-            self.model.config.pad_token_id = self.tokenizer.pad_token_id
-
-        training_args = TrainingArguments(
-            output_dir=self.output_dir,
-            learning_rate=self.learning_rate,
-            per_device_train_batch_size=self.per_device_train_batch_size,
-            gradient_accumulation_steps=self.gradient_accumulation_steps,
-            num_train_epochs=self.num_train_epochs,
-            weight_decay=self.weight_decay,
-            save_strategy=self.save_strategy,
-            save_total_limit=self.save_total_limit,
-            logging_steps=self.logging_steps,
-            dataloader_pin_memory=bool(torch.cuda.is_available()),
-            fp16=self.fp16,
-            bf16=self.bf16,
-            report_to="none",
-            save_safetensors=True,
-        )
-
-        trainer = Trainer(
-            model=self.model,
-            args=training_args,
-            train_dataset=tokenized_dataset["train"],
-            tokenizer=self.tokenizer,
-            data_collator=data_collator,
-        )
-        trainer.train()
-        trainer.save_model()
-        # Persist tokenizer alongside the model for from_pretrained() loads.
-        self.tokenizer.save_pretrained(self.output_dir)
-
-    def _predict_pairs(self, eval_data: Any) -> List[Dict[str, str]]:
-        """
-        Score candidate pairs and return those predicted as positive.
-
-        If no pair is predicted positive but `min_predictions` > 0, the top-k
-        pairs by positive probability are returned.
-
-        Args:
-            eval_data: Ontology-like object with either `.pairs` (preferred) or
-                `.type_taxonomies.taxonomies` / `.taxonomies`.
-
-        Returns:
-            list[dict]: Each dict has keys `parent` and `child`.
-        """
-        import torch.nn.functional as F
-
-        self._ensure_loaded_for_inference()
-
-        candidate_pairs = self._extract_pairs_for_eval(eval_data)
-        if not candidate_pairs:
-            return []
-
-        accepted_pairs: List[Dict[str, str]] = []
-        scored_candidates: List[Tuple[float, str, str, int]] = []
-
-        self.model.eval()
-        with torch.no_grad():
-            for parent_term, child_term in candidate_pairs:
-                input_text = self._format_input(parent_term, child_term)
-                inputs = self.tokenizer(
-                    input_text,
-                    return_tensors="pt",
-                    truncation=True,
-                    max_length=self.max_length,
-                )
-                inputs = {key: tensor.to(self.device) for key, tensor in inputs.items()}
-                logits = self.model(**inputs).logits
-                probabilities = F.softmax(logits, dim=-1).squeeze(0)
-                p_positive = float(probabilities[1].item())
-                predicted_label = int(torch.argmax(logits, dim=-1).item())
-                scored_candidates.append(
-                    (p_positive, parent_term, child_term, predicted_label)
-                )
-                if predicted_label == 1:
-                    accepted_pairs.append({"parent": parent_term, "child": child_term})
-
-        if accepted_pairs:
-            return accepted_pairs
-
-        top_k = max(0, int(self.min_predictions))
-        if top_k == 0:
-            return []
-        scored_candidates.sort(key=lambda item: item[0], reverse=True)
-        return [
-            {"parent": parent_term, "child": child_term}
-            for (_prob, parent_term, child_term, _pred) in scored_candidates[:top_k]
-        ]
-
-    def _ensure_loaded_for_inference(self) -> None:
-        """
-        Load model and tokenizer from `self.output_dir` if not already loaded.
-
-        Side Effects:
-            - Sets `self.model` and `self.tokenizer`.
-            - Moves the model to `self.device`.
-            - Ensures `tokenizer.pad_token_id` is set if model config provides one.
-        """
-        if self.model is not None and self.tokenizer is not None:
-            return
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            self.output_dir
-        ).to(self.device)
-        self.tokenizer = AutoTokenizer.from_pretrained(self.output_dir)
-        if (
-            self.tokenizer.pad_token_id is None
-            and getattr(self.model.config, "pad_token_id", None) is not None
-        ):
-            self.tokenizer.pad_token_id = self.model.config.pad_token_id
-
-    def _load_context_map(self) -> None:
-        """
-        Populate in-memory maps from the context JSON (`self.context_json_path`).
-
-        Builds:
-            - `_context_exact`: dict mapping lowercased term → term_info.
-            - `_context_rows`: list of dict rows with 'term' and 'term_info'.
-
-        If `context_json_path` is falsy or loading fails, both structures become empty.
-        """
-        if not self.context_json_path:
-            self._context_exact = {}
-            self._context_rows = []
-            return
-        try:
-            rows = json.load(open(self.context_json_path, "r", encoding="utf-8"))
-            self._context_exact = {
-                str(row.get("term", "")).strip().lower(): str(
-                    row.get("term_info", "")
-                ).strip()
-                for row in rows
-            }
-            self._context_rows = [
-                {
-                    "term": str(row.get("term", "")),
-                    "term_info": str(row.get("term_info", "")),
-                }
-                for row in rows
-            ]
-        except Exception:
-            self._context_exact = {}
-            self._context_rows = []
-
-    def _lookup_context_info(self, raw_term: str) -> str:
-        """
-        Retrieve textual context for a term using exact and simple fuzzy matching.
-
-        - Exact: lowercased term lookup in `_context_exact`.
-        - Fuzzy: split `raw_term` by commas, strip whitespace; treat each piece
-                 as a case-insensitive substring against row['term'].
-
-        Args:
-            raw_term: Original term string (possibly comma-separated).
-
-        Returns:
-            str: Concatenated matches' term_info ('.' joined). Empty string if none.
-        """
-        if not raw_term:
-            return ""
-        term_key = raw_term.strip().lower()
-        if term_key in self._context_exact:
-            return self._context_exact[term_key]
-
-        subterms = [re.sub(r"\s+", "", piece) for piece in raw_term.split(",")]
-        matched_infos: List[str] = []
-        for subterm in subterms:
-            if not subterm:
-                continue
-            lower_subterm = subterm.lower()
-            for row in self._context_rows:
-                if lower_subterm in row["term"].lower():
-                    info = row.get("term_info", "")
-                    if info:
-                        matched_infos.append(info)
-                        break  # one hit per subterm
-        return ".".join(matched_infos)
-
-    def _extract_positive_pairs(self, ontology_obj: Any) -> List[Tuple[str, str]]:
-        """
-        Extract positive (parent, child) edges from an ontology-like object.
-
-        Reads from `ontology_obj.type_taxonomies.taxonomies` (preferred) or
-        falls back to `ontology_obj.taxonomies`. Each item must expose `parent`
-        and `child` as attributes or dict keys.
-
-        Returns:
-            list[tuple[str, str]]: (parent, child) pairs (may be empty).
-        """
-        type_taxonomies = getattr(ontology_obj, "type_taxonomies", None)
-        items = (
-            getattr(type_taxonomies, "taxonomies", None)
-            if type_taxonomies is not None
-            else getattr(ontology_obj, "taxonomies", None)
-        )
-        pairs: List[Tuple[str, str]] = []
-        if items:
-            for item in items:
-                parent_term = (
-                    getattr(item, "parent", None)
-                    if not isinstance(item, dict)
-                    else item.get("parent")
-                )
-                child_term = (
-                    getattr(item, "child", None)
-                    if not isinstance(item, dict)
-                    else item.get("child")
-                )
-                if parent_term and child_term:
-                    pairs.append((str(parent_term), str(child_term)))
-        return pairs
-
-    def _extract_pairs_for_eval(self, ontology_obj: Any) -> List[Tuple[str, str]]:
-        """
-        Extract candidate pairs for evaluation.
-
-        Prefers `ontology_obj.pairs` if present; otherwise falls back to the
-        positive pairs from the ontology (see `_extract_positive_pairs`).
-
-        Returns:
-            list[tuple[str, str]]: Candidate (parent, child) pairs.
-        """
-        candidate_pairs = getattr(ontology_obj, "pairs", None)
-        if candidate_pairs:
-            pairs: List[Tuple[str, str]] = []
-            for item in candidate_pairs:
-                parent_term = (
-                    getattr(item, "parent", None)
-                    if not isinstance(item, dict)
-                    else item.get("parent")
-                )
-                child_term = (
-                    getattr(item, "child", None)
-                    if not isinstance(item, dict)
-                    else item.get("child")
-                )
-                if parent_term and child_term:
-                    pairs.append((str(parent_term), str(child_term)))
-            return pairs
-        return self._extract_positive_pairs(ontology_obj)
-
-    def _generate_negatives(
-        self,
-        positives: List[Tuple[str, str]],
-        entities: List[str],
-        ratio: int,
-    ) -> List[Tuple[str, str]]:
-        """
-        Sample negative edges by excluding known positives and self-pairs.
-
-        Constructs the cartesian product of entities (excluding (x, x)),
-        removes all known positives, and samples up to `ratio * len(positives)`
-        negatives uniformly at random.
-
-        Args:
-            positives: Known positive edges.
-            entities: Unique set/list of entity terms.
-            ratio: Target negatives per positive (lower-bounded by 1×).
-
-        Returns:
-            list[tuple[str, str]]: Sampled negative pairs (may be smaller).
-        """
-        positive_set = set(positives)
-        all_possible = {
-            (parent, child)
-            for parent in entities
-            for child in entities
-            if parent != child
-        }
-        negative_candidates = list(all_possible - positive_set)
-
-        target_count = max(len(positive_set) * max(1, ratio), len(positive_set))
-        sample_count = min(target_count, len(negative_candidates))
-        return (
-            random.sample(negative_candidates, k=sample_count)
-            if sample_count > 0
-            else []
-        )
-
     def _build_text_dataset(
         self,
         positives: List[Tuple[str, str]],
@@ -686,30 +326,6 @@ class RWTHDBISSFTLearner(AutoLearner):
 
         return labels, input_texts
 
-    def _format_input(
-        self, parent_term: str, child_term: str, reverse: bool = False
-    ) -> str:
-        """
-        Format a (parent, child) pair into relation text + optional context.
-
-        Returns:
-            str: "<relation template> [## Context. 'parent': ... 'child': ...]"
-        """
-        relation_text = (
-            f"{child_term} is a subclass / child / subtype / descendant class of {parent_term}"
-            if reverse
-            else f"{parent_term} is the superclass / parent / supertype / ancestor class of {child_term}"
-        )
-
-        parent_info = self._lookup_context_info(parent_term)
-        child_info = self._lookup_context_info(child_term)
-        if not parent_info and not child_info:
-            return relation_text
-
-        context_text = (
-            f"## Context. '{parent_term}': {parent_info} '{child_term}': {child_info}"
-        )
-        return f"{relation_text} {context_text}"
 
     def _fill_bucket_threaded(
         self, bucket_rows: List[dict], output_path: Path, provider: Callable[[str], str]
@@ -954,6 +570,8 @@ class RWTHDBISSFTLearner(AutoLearner):
         )
         return remaining_short
 
+### Extract Context Information from Ontology ##########################################################
+
     def _extract_terms_from_ontology(self, ontology: Any) -> List[str]:
         """
         Collect unique term names from `ontology.type_taxonomies.taxonomies`,
@@ -1080,3 +698,512 @@ class RWTHDBISSFTLearner(AutoLearner):
         print(f"[Preprocess] Done. Merged context at: {merged_path}")
         self.context_json_path = str(merged_path)
         return merged_path
+
+### Process Training / Inference Data - Augmented with Context Information (from Ontology or GPT) ##########################################################
+
+    def _load_context_map(self) -> None:
+        """
+        Populate in-memory maps from the context JSON (`self.context_json_path`).
+
+        Builds:
+            - `_context_exact`: dict mapping lowercased term → term_info.
+            - `_context_rows`: list of dict rows with 'term' and 'term_info'.
+
+        If `context_json_path` is falsy or loading fails, both structures become empty.
+        """
+        if not self.context_json_path:
+            self._context_exact = {}
+            self._context_rows = []
+            return
+        try:
+            rows = json.load(open(self.context_json_path, "r", encoding="utf-8"))
+            self._context_exact = {
+                str(row.get("term", "")).strip().lower(): str(
+                    row.get("term_info", "")
+                ).strip()
+                for row in rows
+            }
+            self._context_rows = [
+                {
+                    "term": str(row.get("term", "")),
+                    "term_info": str(row.get("term_info", "")),
+                }
+                for row in rows
+            ]
+        except Exception:
+            self._context_exact = {}
+            self._context_rows = []
+
+    def _lookup_context_info(self, raw_term: str) -> str:
+        """
+        Retrieve textual context for a term using exact and simple fuzzy matching.
+
+        - Exact: lowercased term lookup in `_context_exact`.
+        - Fuzzy: split `raw_term` by commas, strip whitespace; treat each piece
+                 as a case-insensitive substring against row['term'].
+
+        Args:
+            raw_term: Original term string (possibly comma-separated).
+
+        Returns:
+            str: Concatenated matches' term_info ('.' joined). Empty string if none.
+        """
+        if not raw_term:
+            return ""
+        term_key = raw_term.strip().lower()
+        if term_key in self._context_exact:
+            return self._context_exact[term_key]
+
+        subterms = [re.sub(r"\s+", "", piece) for piece in raw_term.split(",")]
+        matched_infos: List[str] = []
+        for subterm in subterms:
+            if not subterm:
+                continue
+            lower_subterm = subterm.lower()
+            for row in self._context_rows:
+                if lower_subterm in row["term"].lower():
+                    info = row.get("term_info", "")
+                    if info:
+                        matched_infos.append(info)
+                        break  # one hit per subterm
+        return ".".join(matched_infos)
+
+### Generate Positive/Negative Samples - for Adversarial Training ##########################################################
+
+    def _extract_positive_pairs(self, ontology_obj: Any) -> List[Tuple[str, str]]:
+        """
+        Extract positive (parent, child) edges from an ontology-like object.
+
+        Reads from `ontology_obj.type_taxonomies.taxonomies` (preferred) or
+        falls back to `ontology_obj.taxonomies`. Each item must expose `parent`
+        and `child` as attributes or dict keys.
+
+        Returns:
+            list[tuple[str, str]]: (parent, child) pairs (may be empty).
+        """
+        type_taxonomies = getattr(ontology_obj, "type_taxonomies", None)
+        items = (
+            getattr(type_taxonomies, "taxonomies", None)
+            if type_taxonomies is not None
+            else getattr(ontology_obj, "taxonomies", None)
+        )
+        pairs: List[Tuple[str, str]] = []
+        if items:
+            for item in items:
+                parent_term = (
+                    getattr(item, "parent", None)
+                    if not isinstance(item, dict)
+                    else item.get("parent")
+                )
+                child_term = (
+                    getattr(item, "child", None)
+                    if not isinstance(item, dict)
+                    else item.get("child")
+                )
+                if parent_term and child_term:
+                    pairs.append((str(parent_term), str(child_term)))
+        return pairs
+
+    def _extract_pairs_for_eval(self, ontology_obj: Any) -> List[Tuple[str, str]]:
+        """
+        Extract candidate pairs for evaluation.
+
+        Prefers `ontology_obj.pairs` if present; otherwise falls back to the
+        positive pairs from the ontology (see `_extract_positive_pairs`).
+
+        Returns:
+            list[tuple[str, str]]: Candidate (parent, child) pairs.
+        """
+        candidate_pairs = getattr(ontology_obj, "pairs", None)
+        if candidate_pairs:
+            pairs: List[Tuple[str, str]] = []
+            for item in candidate_pairs:
+                parent_term = (
+                    getattr(item, "parent", None)
+                    if not isinstance(item, dict)
+                    else item.get("parent")
+                )
+                child_term = (
+                    getattr(item, "child", None)
+                    if not isinstance(item, dict)
+                    else item.get("child")
+                )
+                if parent_term and child_term:
+                    pairs.append((str(parent_term), str(child_term)))
+            return pairs
+        return self._extract_positive_pairs(ontology_obj)
+
+    def _generate_negatives(
+        self,
+        positives: List[Tuple[str, str]],
+        entities: List[str],
+        ratio: int,
+    ) -> List[Tuple[str, str]]:
+        """
+        Sample negative edges by excluding known positives and self-pairs.
+
+        Constructs the cartesian product of entities (excluding (x, x)),
+        removes all known positives, and samples up to `ratio * len(positives)`
+        negatives uniformly at random.
+
+        Args:
+            positives: Known positive edges.
+            entities: Unique set/list of entity terms.
+            ratio: Target negatives per positive (lower-bounded by 1×).
+
+        Returns:
+            list[tuple[str, str]]: Sampled negative pairs (may be smaller).
+        """
+        positive_set = set(positives)
+        all_possible = {
+            (parent, child)
+            for parent in entities
+            for child in entities
+            if parent != child
+        }
+        negative_candidates = list(all_possible - positive_set)
+
+        target_count = max(len(positive_set) * max(1, ratio), len(positive_set))
+        sample_count = min(target_count, len(negative_candidates))
+        return (
+            random.sample(negative_candidates, k=sample_count)
+            if sample_count > 0
+            else []
+        )
+
+
+################################################################################
+#  Model Training ##########################################################
+################################################################################
+
+    def _taxonomy_discovery(self, data: Any, test: bool = False) -> Optional[Any]:
+        """
+        AutoLearner hook: route to training or prediction.
+
+        Args:
+            data: Ontology-like object (has `.taxonomies` or `.type_taxonomies.taxonomies`).
+            test: If True, run inference; otherwise, train a model.
+
+        Returns:
+            If test=True, a list of accepted edges as dicts with keys `parent` and `child`;
+            otherwise None.
+        """
+        return (
+            self._predict_pairs(data)
+            if test
+            else self._train_from_pairs(
+                data,
+                train_method=self.train_method,
+            )
+        )
+
+
+
+    def _train_from_pairs(self, train_data: Any, train_method: int = 2) -> None:
+        """
+        Train a binary classifier from ontology pairs.
+
+        Steps:
+            1) (Re)build the term-context JSON unless `context_json_path` is set.
+            2) Extract positive (parent, child) edges from `train_data`.
+            3) Sample negatives at `negative_ratio`.
+            4) Tokenize, instantiate HF Trainer, train, and save.
+
+        Args:
+            train_data: Ontology-like object with `.type_taxonomies.taxonomies`
+                (preferred) or `.taxonomies`, each item providing `parent` and `child`.
+
+        Raises:
+            ValueError: If no positive pairs are found.
+
+        Side Effects:
+            - Writes a trained model to `self.output_dir` (via `trainer.save_model`).
+            - Writes the tokenizer to `self.output_dir` (via `save_pretrained`).
+            - Sets `self.context_json_path` if it was previously unset.
+              The generated context file is named `rwthdbis_onto_processed.json`.
+        """
+        # Always (re)build context from ontology unless an explicit file is provided
+        if not self.context_json_path:
+            context_dir = Path(self.output_dir) / "context"
+            context_dir.mkdir(parents=True, exist_ok=True)
+            processed_context_file = context_dir / "rwthdbis_onto_processed.json"
+
+            # Remove stale file then regenerate
+            if processed_context_file.exists():
+                try:
+                    processed_context_file.unlink()
+                except Exception:
+                    pass
+
+            self.preprocess_context_from_ontology(
+                ontology=train_data,
+                processed_dir=context_dir,
+                dataset_name=self.ontology_name,
+                num_workers=max(1, min(os.cpu_count() or 2, 4)),
+                provider=partial(
+                    self._default_gpt_inference_with_dataset,
+                    dataset_name=self.ontology_name,
+                ),
+                max_retries=5,
+            )
+            self.context_json_path = str(processed_context_file)
+
+        # Reproducibility
+        set_seed(self.seed)
+        random.seed(self.seed)
+        torch.manual_seed(self.seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(self.seed)
+
+        # Build labeled pairs from ontology; context comes from preprocessed map
+        positive_pairs = self._extract_positive_pairs(train_data)
+        if not positive_pairs:
+            raise ValueError("No positive (parent, child) pairs found in train_data.")
+
+        entity_names = sorted(
+            {parent for parent, _ in positive_pairs}
+            | {child for _, child in positive_pairs}
+        )
+
+        # Best Ratio would be 1:10 for the training data.
+        negative_pairs = self._generate_negatives(
+            positives=positive_pairs,
+            entities=entity_names,
+            ratio=self.negative_ratio,
+        )
+
+        labels, input_texts = self._build_text_dataset(positive_pairs, negative_pairs)
+
+        ## labels: [1, 1, 1, 1, 1, 1, 0, 0, 0, 0] - 1: positive, 0: negative
+        # input_texts: ["{parent} is the superclass / parent / supertype / ancestor class of {child}. ## Context. '{parent}': {parent_info} '{child}': {child_info}"]
+        # "ScaleInterval is a subclass / child / subtype / descendant class of SemitoneInterval ## Context. 'SemitoneInterval': A semitone interval is a ..., ... 'ScaleInterval': ScaleInterval is a ..."]
+
+        ## train_method: 1: DS-CL + without_context FT-TC, 2: with_context FT-TC
+        train_method_dict = {
+            1: "DS-CL + without_context FT-TC: Domain-specific Continual Learning + Fine-tuning for Text Classification without context",
+            2: "with_context FT-TC: Fine-tuning for Text Classification with context",
+        }
+
+        backbone = self.model_name
+
+        if train_method == 1:
+            print(f"Train method: {train_method_dict[train_method]}")
+            self._load_context_map()
+
+            # Pretrain on context-only texts built from unique entity names.
+            pretrain_texts = [
+                info
+                for info in (
+                    self._lookup_context_info(term_name) for term_name in entity_names
+                )
+                if info
+            ]
+            if pretrain_texts:
+                pretrain_output_dir = Path(self.output_dir) / "pretrain"
+                pretrain_output_dir.mkdir(parents=True, exist_ok=True)
+
+                pretrain_dataset = DatasetDict(
+                    {"train": Dataset.from_dict({"text": pretrain_texts})}
+                )
+                pretrain_tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+                if pretrain_tokenizer.pad_token is None:
+                    pretrain_tokenizer.pad_token = (
+                        getattr(pretrain_tokenizer, "eos_token", None)
+                        or getattr(pretrain_tokenizer, "sep_token", None)
+                        or getattr(pretrain_tokenizer, "cls_token", None)
+                    )
+
+                def pretrain_tokenize_batch(batch: Dict[str, List[str]]):
+                    return pretrain_tokenizer(
+                        batch["text"], truncation=True, max_length=self.max_length
+                    )
+
+                pretrain_tokenized = pretrain_dataset.map(
+                    pretrain_tokenize_batch,
+                    batched=True,
+                    remove_columns=pretrain_dataset["train"].column_names,
+                )
+                pretrain_collator = DataCollatorForLanguageModeling(
+                    tokenizer=pretrain_tokenizer, mlm=False
+                )
+                pretrain_model = AutoModelForCausalLM.from_pretrained(self.model_name)
+
+                pretrain_args = TrainingArguments(
+                    output_dir=str(pretrain_output_dir),
+                    per_device_train_batch_size=4,
+                    gradient_accumulation_steps=self.gradient_accumulation_steps,
+                    num_train_epochs=2,
+                    learning_rate=self.learning_rate,
+                    weight_decay=self.weight_decay,
+                    logging_steps=self.logging_steps,
+                    save_strategy=self.save_strategy,
+                    report_to="none",
+                )
+                pretrain_trainer = Trainer(
+                    model=pretrain_model,
+                    args=pretrain_args,
+                    train_dataset=pretrain_tokenized["train"],
+                    tokenizer=pretrain_tokenizer,
+                    data_collator=pretrain_collator,
+                )
+                pretrain_trainer.train()
+                pretrain_trainer.save_model(str(pretrain_output_dir))
+                backbone = str(pretrain_output_dir)
+
+            # Remove context suffix for FT-TC without context.
+            input_texts = [
+                text.split(" ## Context.", 1)[0] for text in input_texts
+            ]
+
+        elif train_method == 2:
+            print(f"Train method: {train_method_dict[train_method]}")
+
+        dataset_dict = DatasetDict(
+            {"train": Dataset.from_dict({"label": labels, "text": input_texts})}
+        )
+
+        self.tokenizer = AutoTokenizer.from_pretrained(backbone)
+        # Ensure a pad token exists for robust padding across models.
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = (
+                getattr(self.tokenizer, "eos_token", None)
+                or getattr(self.tokenizer, "sep_token", None)
+                or getattr(self.tokenizer, "cls_token", None)
+            )
+
+        def tokenize_batch(batch: Dict[str, List[str]]):
+            """Tokenize a batch of input texts for HF Datasets mapping."""
+            return self.tokenizer(
+                batch["text"], truncation=True, max_length=self.max_length
+            )
+
+        tokenized_dataset = dataset_dict.map(
+            tokenize_batch, batched=True, remove_columns=dataset_dict["train"].column_names
+        )
+        data_collator = DataCollatorWithPadding(self.tokenizer)
+
+        self.model = AutoModelForSequenceClassification.from_pretrained(
+            backbone,
+            num_labels=2,
+            id2label={0: "incorrect", 1: "correct"},
+            label2id={"incorrect": 0, "correct": 1},
+        )
+        # Ensure model has a pad_token_id if tokenizer provides one.
+        if (
+            getattr(self.model.config, "pad_token_id", None) is None
+            and self.tokenizer.pad_token_id is not None
+        ):
+            self.model.config.pad_token_id = self.tokenizer.pad_token_id
+
+        training_args = TrainingArguments(
+            output_dir=self.output_dir,
+            learning_rate=self.learning_rate,
+            per_device_train_batch_size=self.per_device_train_batch_size,
+            gradient_accumulation_steps=self.gradient_accumulation_steps,
+            num_train_epochs=self.num_train_epochs,
+            weight_decay=self.weight_decay,
+            save_strategy=self.save_strategy,
+            save_total_limit=self.save_total_limit,
+            logging_steps=self.logging_steps,
+            dataloader_pin_memory=bool(torch.cuda.is_available()),
+            fp16=self.fp16,
+            bf16=self.bf16,
+            report_to="none",
+            save_safetensors=True,
+        )
+
+        trainer = Trainer(
+            model=self.model,
+            args=training_args,
+            train_dataset=tokenized_dataset["train"],
+            tokenizer=self.tokenizer,
+            data_collator=data_collator,
+        )
+        trainer.train()
+        trainer.save_model()
+        # Persist tokenizer alongside the model for from_pretrained() loads.
+        self.tokenizer.save_pretrained(self.output_dir)
+
+################################################################################
+#  Model Inference ##########################################################
+################################################################################
+
+    def _predict_pairs(self, eval_data: Any) -> List[Dict[str, str]]:
+        """
+        Score candidate pairs and return those predicted as positive.
+
+        If no pair is predicted positive but `min_predictions` > 0, the top-k
+        pairs by positive probability are returned.
+
+        Args:
+            eval_data: Ontology-like object with either `.pairs` (preferred) or
+                `.type_taxonomies.taxonomies` / `.taxonomies`.
+
+        Returns:
+            list[dict]: Each dict has keys `parent` and `child`.
+        """
+        import torch.nn.functional as F
+
+        self._ensure_loaded_for_inference()
+        model_device = next(self.model.parameters()).device
+
+        candidate_pairs = self._extract_pairs_for_eval(eval_data)
+        if not candidate_pairs:
+            return []
+
+        accepted_pairs: List[Dict[str, str]] = []
+        scored_candidates: List[Tuple[float, str, str, int]] = []
+
+        self.model.eval()
+        with torch.no_grad():
+            for parent_term, child_term in candidate_pairs:
+                input_text = self._format_input(parent_term, child_term)
+                inputs = self.tokenizer(
+                    input_text,
+                    return_tensors="pt",
+                    truncation=True,
+                    max_length=self.max_length,
+                )
+                inputs = {key: tensor.to(model_device) for key, tensor in inputs.items()}
+                logits = self.model(**inputs).logits
+                probabilities = F.softmax(logits, dim=-1).squeeze(0)
+                p_positive = float(probabilities[1].item())
+                predicted_label = int(torch.argmax(logits, dim=-1).item())
+                scored_candidates.append(
+                    (p_positive, parent_term, child_term, predicted_label)
+                )
+                if predicted_label == 1:
+                    accepted_pairs.append({"parent": parent_term, "child": child_term})
+
+        if accepted_pairs:
+            return accepted_pairs
+
+        top_k = max(0, int(self.min_predictions))
+        if top_k == 0:
+            return []
+        scored_candidates.sort(key=lambda item: item[0], reverse=True)
+        return [
+            {"parent": parent_term, "child": child_term}
+            for (_prob, parent_term, child_term, _pred) in scored_candidates[:top_k]
+        ]
+
+    def _ensure_loaded_for_inference(self) -> None:
+        """
+        Load model and tokenizer from `self.output_dir` if not already loaded.
+
+        Side Effects:
+            - Sets `self.model` and `self.tokenizer`.
+            - Moves the model to `self.device`.
+            - Ensures `tokenizer.pad_token_id` is set if model config provides one.
+        """
+        if self.model is not None and self.tokenizer is not None:
+            return
+        self.model = AutoModelForSequenceClassification.from_pretrained(
+            self.output_dir
+        ).to(self.device)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.output_dir)
+        if (
+            self.tokenizer.pad_token_id is None
+            and getattr(self.model.config, "pad_token_id", None) is not None
+        ):
+            self.tokenizer.pad_token_id = self.model.config.pad_token_id
