@@ -25,7 +25,7 @@
 Chemical Information Ontology (CHEMINF)
 ========================================================================================================
 
-The chemical information ontology (cheminf) describes information entities about chemical entities.     It provides qualitative and quantitative attributes to richly describe chemicals.     Includes terms for the descriptors commonly used in cheminformatics software applications     and the algorithms which generate them.
+The chemical information ontology (cheminf) describes information entities about chemical entities. It provides qualitative and quantitative attributes to richly describe chemicals. Includes terms for the descriptors commonly used in cheminformatics software applications and the algorithms which generate them.
 
 Metrics & Statistics
 --------------------------

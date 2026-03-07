@@ -25,7 +25,7 @@
 Allotrope Foundation Ontology (AFO)
 ========================================================================================================
 
-The AFO is an ontology suite that provides a standard vocabulary and semantic model     for the representation of laboratory analytical processes. The AFO suite is aligned at the upper layer     to the Basic Formal Ontology (BFO). The core domains modeled include, Equipment, Material, Process, and Results.     This artifact contains all triples of Allotrope Foundation Merged Without QUDT Ontology Suite (REC/2023/12)     together with triples inferred with HermiT.
+The AFO is an ontology suite that provides a standard vocabulary and semantic model for the representation of laboratory analytical processes. The AFO suite is aligned at the upper layer to the Basic Formal Ontology (BFO). The core domains modeled include Equipment, Material, Process, and Results. This artifact contains all triples of Allotrope Foundation Merged Without QUDT Ontology Suite (REC/2023/12) together with triples inferred with HermiT.
 
 Metrics & Statistics
 --------------------------

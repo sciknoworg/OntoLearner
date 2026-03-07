@@ -25,7 +25,7 @@
 Open Provenance Model for Workflows (OPMW)
 ========================================================================================================
 
-The Open Provenance Model for Workflows (OPMW) is an ontology for describing workflow traces     and their templates based on the Open Provenance Model. It has been designed as a profile for OPM,     extending and reusing OPM's core ontologies OPMV (OPM-Vocabulary) and OPMO (OPM-Ontology).
+The Open Provenance Model for Workflows (OPMW) is an ontology for describing workflow traces and their templates based on the Open Provenance Model. It has been designed as a profile for OPM, extending and reusing OPM's core ontologies OPMV (OPM-Vocabulary) and OPMO (OPM-Ontology).
 
 Metrics & Statistics
 --------------------------

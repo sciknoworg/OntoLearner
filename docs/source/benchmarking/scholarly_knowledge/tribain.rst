@@ -25,7 +25,7 @@
 Tribology and Artificial Intelligence Ontology (TribAIn)
 ========================================================================================================
 
-TribAIn is an ontology for the description of tribological experiments and their results.     It is designed to be used in the context of the TribAIn project, which aims to develop     a knowledge-based system for the design of tribological systems.
+TribAIn is an ontology for the description of tribological experiments and their results. It is designed to be used in the context of the TribAIn project, which aims to develop a knowledge-based system for the design of tribological systems.
 
 Metrics & Statistics
 --------------------------

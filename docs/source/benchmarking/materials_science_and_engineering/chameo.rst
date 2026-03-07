@@ -25,7 +25,7 @@
 Characterisation Methodology Domain Ontology (CHAMEO)
 ========================================================================================================
 
-An ontology for materials characterization which represents the evolution of the CHADA template     in an ontological form, allowing to generate FAIR documentation of Characterisation Experiments     and that has been used as a basis for the development of a number of technique-specific     or application-specific ontologies in the materials characterisation domain. CHAMEO     has been used as a foundation for the definition of the new CHADA template during the CWA.
+An ontology for materials characterization which represents the evolution of the CHADA template in an ontological form, allowing to generate FAIR documentation of Characterisation Experiments and that has been used as a basis for the development of a number of technique-specific or application-specific ontologies in the materials characterisation domain. CHAMEO has been used as a foundation for the definition of the new CHADA template during the CWA.
 
 Metrics & Statistics
 --------------------------

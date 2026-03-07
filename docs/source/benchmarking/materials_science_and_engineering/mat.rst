@@ -25,7 +25,7 @@
 Material Properties Ontology (MAT)
 ========================================================================================================
 
-The Material Properties Ontology aims to provide the vocabulary to describe the building components,     materials, and their corresponding properties, relevant within the construction industry. More specifically,     the building elements and properties covered in this ontology support applications     focused on the design of building renovation projects.
+The Material Properties Ontology aims to provide the vocabulary to describe the building components, materials, and their corresponding properties, relevant within the construction industry. More specifically, the building elements and properties covered in this ontology support applications focused on the design of building renovation projects.
 
 Metrics & Statistics
 --------------------------

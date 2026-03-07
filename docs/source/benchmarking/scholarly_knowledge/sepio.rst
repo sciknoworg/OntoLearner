@@ -25,7 +25,7 @@
 Scientific Evidence and Provenance Information Ontology (SEPIO)
 ========================================================================================================
 
-The SEPIO ontology is in its early stages of development, undergoing iterative refinement     as new requirements emerge and alignment with existing standards is explored. The SEPIO core file imports two files     which can be resolved at the URLs below:     IAO ontology-metadata import: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/imports/ontology-metadata.owl     bfo mireot: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/mireots/bfo-mireot.owl
+The SEPIO ontology is in its early stages of development, undergoing iterative refinement as new requirements emerge and alignment with existing standards is explored. The SEPIO core file imports two files which can be resolved at the URLs below: IAO ontology-metadata import: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/imports/ontology-metadata.owl and BFO mireot: https://raw.githubusercontent.com/monarch-initiative/SEPIO-ontology/master/src/ontology/mireots/bfo-mireot.owl
 
 Metrics & Statistics
 --------------------------

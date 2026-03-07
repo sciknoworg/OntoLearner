@@ -25,7 +25,7 @@
 The Description of a Project vocabulary (DOAP)
 ========================================================================================================
 
-The Description of a Project vocabulary (DOAP), described using W3C RDF Schema and     the Web Ontology Language to describe software projects, and in particular open source projects.
+The Description of a Project vocabulary (DOAP) is a vocabulary for describing software projects, particularly open source projects, using W3C RDF Schema and the Web Ontology Language.
 
 Metrics & Statistics
 --------------------------

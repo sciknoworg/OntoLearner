@@ -25,7 +25,7 @@
 Molecules And Materials Basic Ontology (MAMBO)
 ========================================================================================================
 
-MAMBO (Molecules And Materials Basic Ontology) is a domain ontology for molecular materials.     Its main targets are: Allowing the retrieval of structured information regarding molecular materials     and related applications (i.e. devices based on molecular materials) Supporting the development of new,     complex workflows for modelling systems based on molecular materials (computational modelling     and data-driven techniques) Integrating data generated via computational simulations and empirical experiments.
+MAMBO (Molecules And Materials Basic Ontology) is a domain ontology for molecular materials. Its main targets are: allowing the retrieval of structured information regarding molecular materials and related applications (i.e. devices based on molecular materials); supporting the development of new, complex workflows for modelling systems based on molecular materials (computational modelling and data-driven techniques); and integrating data generated via computational simulations and empirical experiments.
 
 Metrics & Statistics
 --------------------------

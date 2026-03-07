@@ -23,7 +23,7 @@ The Modular Ontology for Materials and Data Science (MDS-Onto)
        * - **Download**
          - `Download The Modular Ontology for Materials and Data Science (MDS-Onto) <https://cwrusdle.bitbucket.io/files/MDS_Onto/index-en.html>`_
 
-MDS-Onto is a domain (low) level ontology that describes terms in Materials Data Science. It is divided into six     large modules: BuiltEnv, Exposure, Chemistry, Manufacture, Characterization, and Geospatial. Under each module,     there are multiple sub-modules such as FTIR, AFM, Chem-Rxn, PV-Module, Accelerated Exposure, etc.
+MDS-Onto is a domain (low) level ontology that describes terms in Materials Data Science. It is divided into six large modules: BuiltEnv, Exposure, Chemistry, Manufacture, Characterization, and Geospatial. Under each module, there are multiple sub-modules such as FTIR, AFM, Chem-Rxn, PV-Module, Accelerated Exposure, etc.
 
 Metrics & Statistics
 --------------------------

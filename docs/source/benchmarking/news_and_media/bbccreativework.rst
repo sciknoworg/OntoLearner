@@ -25,7 +25,7 @@
 BBC Creative Work Ontology (BBCCreativeWork)
 ========================================================================================================
 
-This ontology defines the terms required to describe the creative works produced by the BBC and their associated metadata.     This ontology powers reading and writing creative works in the triplestore using tags associated with them (about)     their more specific types (BlogPost, NewsItem, Programme) and audiences (audience).
+This ontology defines the terms required to describe the creative works produced by the BBC and their associated metadata. This ontology powers reading and writing creative works in the triplestore using tags associated with them (about) their more specific types (BlogPost, NewsItem, Programme) and audiences (audience).
 
 Metrics & Statistics
 --------------------------

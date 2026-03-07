@@ -25,7 +25,7 @@
 General Process Ontology (GPO)
 ========================================================================================================
 
-Basically, this ontology aims to model processes. Processes are holistic perspective elements     that transform inputs/educts (matter, energy, information) into output/products (matter, energy, information)     with the help of tools (devices, algorithms). They can be decomposed into sub-processes     and have predecessor and successor processes.
+Basically, this ontology aims to model processes. Processes are holistic perspective elements that transform inputs/educts (matter, energy, information) into output/products (matter, energy, information) with the help of tools (devices, algorithms). They can be decomposed into sub-processes and have predecessor and successor processes.
 
 Metrics & Statistics
 --------------------------

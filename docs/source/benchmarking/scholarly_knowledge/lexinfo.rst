@@ -25,7 +25,7 @@
 LexInfo (LexInfo)
 ========================================================================================================
 
-LexInfo allows us to associate linguistic information to elements in an ontology with respect     to any level of linguistic description and expressivity. LexInfo has been implemented as an OWL ontology     and is available together with an API.
+LexInfo allows us to associate linguistic information to elements in an ontology with respect to any level of linguistic description and expressivity. LexInfo has been implemented as an OWL ontology and is available together with an API.
 
 Metrics & Statistics
 --------------------------

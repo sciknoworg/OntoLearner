@@ -25,7 +25,7 @@
 GIST Upper Ontology (GIST)
 ========================================================================================================
 
-Gist is Semantic Arts' minimalist upper ontology for the enterprise.     It is designed to have the maximum coverage of typical business ontology concepts     with the fewest number of primitives and the least amount of ambiguity.
+Gist is Semantic Arts' minimalist upper ontology for the enterprise. It is designed to have the maximum coverage of typical business ontology concepts with the fewest number of primitives and the least amount of ambiguity.
 
 Metrics & Statistics
 --------------------------

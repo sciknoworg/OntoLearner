@@ -25,7 +25,7 @@
 Battery Interface Ontology (BattINFO)
 ========================================================================================================
 
-BattINFO is a foundational resource for harmonizing battery knowledge representation     and enhancing data interoperability. The primary objective is to provide the necessary tools     to create FAIR (Findable, Accessible, Interoperable, Reusable) battery data     that can be integrated into the Semantic Web.
+BattINFO is a foundational resource for harmonizing battery knowledge representation and enhancing data interoperability. The primary objective is to provide the necessary tools to create FAIR (Findable, Accessible, Interoperable, Reusable) battery data that can be integrated into the Semantic Web.
 
 Metrics & Statistics
 --------------------------

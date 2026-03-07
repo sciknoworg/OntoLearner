@@ -25,7 +25,7 @@
 The ontology of data analysis and management (EDAM)
 ========================================================================================================
 
-EDAM is a domain ontology of data analysis and data management in bio- and other sciences, and science-based applications.     It comprises concepts related to analysis, modelling, optimisation, and data life cycle. Targetting usability by diverse users,     the structure of EDAM is relatively simple, divided into 4 main sections: Topic, Operation, Data (incl. Identifier), and Format.
+EDAM is a domain ontology of data analysis and data management in bio- and other sciences, and science-based applications. It comprises concepts related to analysis, modelling, optimisation, and data life cycle. Targeting usability by diverse users, the structure of EDAM is relatively simple, divided into 4 main sections: Topic, Operation, Data (incl. Identifier), and Format.
 
 Metrics & Statistics
 --------------------------

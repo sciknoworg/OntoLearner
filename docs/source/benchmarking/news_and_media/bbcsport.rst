@@ -25,7 +25,7 @@
 BBC Sport Ontology (BBCSport)
 ========================================================================================================
 
-The Sport Ontology is a simple lightweight ontology for publishing data about competitive sports events.     The terms in this ontology allow data to be published about:     The structure of sports tournaments as a series of eventsThe competing of agents in a competitionThe type     of discipline a event involvesThe award associated with the competition and how received it...etc     Whilst it originates in a specific BBC use case, the Sport Ontology should be applicable     to a wide range of competitive sporting events data publishing use cases.     Care has been taken to try and ensure interoperability with more general ontologies in use.     In particular, it draws heavily upon the events ontology.
+The Sport Ontology is a simple lightweight ontology for publishing data about competitive sports events. The terms in this ontology allow data to be published about: the structure of sports tournaments as a series of events; the competing of agents in a competition; the type of discipline an event involves; and the award associated with the competition and how it is received. Whilst it originates in a specific BBC use case, the Sport Ontology should be applicable to a wide range of competitive sporting events data publishing use cases. Care has been taken to try and ensure interoperability with more general ontologies in use. In particular, it draws heavily upon the events ontology.
 
 Metrics & Statistics
 --------------------------

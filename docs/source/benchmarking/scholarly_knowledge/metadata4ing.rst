@@ -25,7 +25,7 @@
 Metadata for Intelligent Engineering (Metadata4Ing)
 ========================================================================================================
 
-The ontology Metadata4Ing provides a framework for the semantic description of research data     and of the whole data generation process, embracing the object of investigation,     all sample and data manipulation methods and tools, the data files themselves,     and the roles of persons and institutions. The structure and application of the ontology     are based on the principles of modularity and inheritance.
+The ontology Metadata4Ing provides a framework for the semantic description of research data and of the whole data generation process, embracing the object of investigation, all sample and data manipulation methods and tools, the data files themselves, and the roles of persons and institutions. The structure and application of the ontology are based on the principles of modularity and inheritance.
 
 Metrics & Statistics
 --------------------------

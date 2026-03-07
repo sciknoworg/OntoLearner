@@ -25,7 +25,7 @@
 Environmental Noise Measurement Ontology (ENM)
 ========================================================================================================
 
-The eNanoMapper project (https://www.enanomapper.net/), NanoCommons project (https://www.nanocommons.eu/)     and ACEnano project (http://acenano-project.eu/) are creating a pan-European computational infrastructure     for toxicological data management for ENMs, based on semantic web standards and ontologies.     This ontology is an application ontology targeting the full domain of nanomaterial safety assessment.     It re-uses several other ontologies including the NPO, CHEMINF, ChEBI, and ENVO.
+The eNanoMapper project (https://www.enanomapper.net/), NanoCommons project (https://www.nanocommons.eu/) and ACEnano project (http://acenano-project.eu/) are creating a pan-European computational infrastructure for toxicological data management for ENMs, based on semantic web standards and ontologies. This ontology is an application ontology targeting the full domain of nanomaterial safety assessment. It reuses several other ontologies including the NPO, CHEMINF, ChEBI, and ENVO.
 
 Metrics & Statistics
 --------------------------

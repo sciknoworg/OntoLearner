@@ -25,7 +25,7 @@
 Ontology for Provenance and Plans (P-Plan)
 ========================================================================================================
 
-The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology [PROV-O]     created to represent the plans that guided the execution of scientific processes. P-Plan describes     how the plans are composed and their correspondence to provenance records that describe the execution itself.
+The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology [PROV-O] created to represent the plans that guided the execution of scientific processes. P-Plan describes how the plans are composed and their correspondence to provenance records that describe the execution itself.
 
 Metrics & Statistics
 --------------------------

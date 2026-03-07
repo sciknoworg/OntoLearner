@@ -25,7 +25,7 @@
 Geographical Entities Ontology (GEO)
 ========================================================================================================
 
-Geographical Entities Ontology (GEO) is an inventory of geopolitical entities (such as sovereign states     and their administrative subdivisions) as well as various geographical regions (including but not limited     to the specific ones over which the governments have jurisdiction)
+Geographical Entities Ontology (GEO) is an inventory of geopolitical entities (such as sovereign states and their administrative subdivisions) as well as various geographical regions (including but not limited to the specific ones over which the governments have jurisdiction).
 
 Metrics & Statistics
 --------------------------

@@ -25,7 +25,7 @@
 EUropean Research Information Ontology (EURIO)
 ========================================================================================================
 
-EURIO (EUropean Research Information Ontology) conceptualises, formally encodes and makes available in an open,     structured and machine-readable format data about resarch projects funded by the EU's     framework programmes for research and innovation.
+EURIO (EUropean Research Information Ontology) conceptualises, formally encodes and makes available in an open, structured and machine-readable format data about research projects funded by the EU's framework programmes for research and innovation.
 
 Metrics & Statistics
 --------------------------

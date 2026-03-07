@@ -25,7 +25,7 @@
 Environment Ontology (ENVO)
 ========================================================================================================
 
-ENVO is an expressive, community ontology which helps humans, machines,     and semantic web applications understand environmental entities of all kinds,     from microscopic to intergalactic scales. As a FAIR-compliant resource, it promotes interoperability     through the concise, controlled description of all things environmental.
+ENVO is an expressive, community ontology which helps humans, machines, and semantic web applications understand environmental entities of all kinds, from microscopic to intergalactic scales. As a FAIR-compliant resource, it promotes interoperability through the concise, controlled description of all things environmental.
 
 Metrics & Statistics
 --------------------------

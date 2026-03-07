@@ -25,7 +25,7 @@
 Molecular Process Ontology (MOP)
 ========================================================================================================
 
-MOP is the molecular process ontology. It contains the molecular processes that underlie     the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
+MOP is the molecular process ontology. It contains the molecular processes that underlie the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
 
 Metrics & Statistics
 --------------------------

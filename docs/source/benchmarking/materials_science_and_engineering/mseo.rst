@@ -25,7 +25,7 @@
 Materials Science and Engineering Ontology (MSEO)
 ========================================================================================================
 
-MSEO utilizes the IOF Ontology stack giving materials scientists and engineers the ability     to represent their experiments and resulting data. The goal is to create machine and human readable sematic data     which can be easily digested by other science domains. It is a product of the joint venture Materials Open Lab Project     between the Bundesanstalt für Materialforschung und -prüfung (BAM) and the Fraunhofer Group MATERIALS     and uses the BWMD ontology created by Fraunhofer IWM as a starting point.
+MSEO utilizes the IOF Ontology stack giving materials scientists and engineers the ability to represent their experiments and resulting data. The goal is to create machine and human readable semantic data which can be easily digested by other science domains. It is a product of the joint venture Materials Open Lab Project between the Bundesanstalt für Materialforschung und -prüfung (BAM) and the Fraunhofer Group MATERIALS and uses the BWMD ontology created by Fraunhofer IWM as a starting point.
 
 Metrics & Statistics
 --------------------------

@@ -25,7 +25,7 @@
 Framester Ontology (Framester)
 ========================================================================================================
 
-Framester is a a frame-based ontological resource acting as a hub     between linguistic resources such as FrameNet, WordNet, VerbNet, BabelNet,     DBpedia, Yago, DOLCE-Zero, and leveraging this wealth of links to create     an interoperable predicate space formalized according to frame semantics and semiotics.     Framester uses WordNet and FrameNet at its core, expands it to other resources     transitively, and represents them in a formal version of frame semantics.
+Framester is a frame-based ontological resource acting as a hub between linguistic resources such as FrameNet, WordNet, VerbNet, BabelNet, DBpedia, Yago, DOLCE-Zero, and leveraging this wealth of links to create an interoperable predicate space formalized according to frame semantics and semiotics. Framester uses WordNet and FrameNet at its core, expands it to other resources transitively, and represents them in a formal version of frame semantics.
 
 Metrics & Statistics
 --------------------------

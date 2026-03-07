@@ -25,7 +25,7 @@
 The Elementary Multiperspective Material Ontology (EMMO)
 ========================================================================================================
 
-The Elementary Multiperspective Material Ontology (EMMO) is the result of a multidisciplinary effort within the EMMC,     aimed at the development of a standard representational ontology framework based on current materials modelling     and characterization knowledge. Instead of starting from general upper level concepts, as done by other ontologies,     the EMMO development started from the very bottom level, using the actual picture of the physical world coming     from applied sciences, and in particular from physics and material sciences.
+The Elementary Multiperspective Material Ontology (EMMO) is the result of a multidisciplinary effort within the EMMC, aimed at the development of a standard representational ontology framework based on current materials modelling and characterization knowledge. Instead of starting from general upper level concepts, as done by other ontologies, the EMMO development started from the very bottom level, using the actual picture of the physical world coming from applied sciences, and in particular from physics and material sciences.
 
 Metrics & Statistics
 --------------------------

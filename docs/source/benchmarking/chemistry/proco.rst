@@ -25,7 +25,7 @@
 PROcess Chemistry Ontology (PROCO)
 ========================================================================================================
 
-PROCO (PROcess Chemistry Ontology) is a formal ontology that aims to standardly represent entities     and relations among entities in the domain of process chemistry.
+PROCO (PROcess Chemistry Ontology) is a formal ontology that aims to standardly represent entities and relations among entities in the domain of process chemistry.
 
 Metrics & Statistics
 --------------------------

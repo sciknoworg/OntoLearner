@@ -25,7 +25,7 @@
 Gene Ontology (GO)
 ========================================================================================================
 
-The Gene Ontology (GO) Provides structured controlled vocabularies for the annotation of gene products     with respect to their molecular function, cellular component, and biological role.
+The Gene Ontology (GO) provides structured controlled vocabularies for the annotation of gene products with respect to their molecular function, cellular component, and biological role.
 
 Metrics & Statistics
 --------------------------

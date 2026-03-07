@@ -25,7 +25,7 @@
 BBC Provenance News Ontology (BBCProvenance)
 ========================================================================================================
 
-An ontology to capture data about the provenance of data in an RDF Triple Store.     This provenance is focused on the immediate providers and not the ultimate source,     so for example, this would record that geodata was provided by the BBC Locator team,     and not geonames. In the Linked Data Platform, this data is applied to contexts or named graphs.     A named graph is, in effect, a 'fourth part' to a triple, hence the term 'quad store'.
+An ontology to capture data about the provenance of data in an RDF Triple Store. This provenance is focused on the immediate providers and not the ultimate source; for example, this would record that geodata was provided by the BBC Locator team, and not Geonames. In the Linked Data Platform, this data is applied to contexts or named graphs. A named graph is, in effect, a 'fourth part' to a triple, hence the term 'quad store'.
 
 Metrics & Statistics
 --------------------------

@@ -25,7 +25,7 @@
 Vocabulary of a Friend (VOAF)
 ========================================================================================================
 
-The Vocabulary of a Friend (VOAF) is a vocabulary specification providing elements allowing the description     of vocabularies (RDFS vocabularies or OWL ontologies). It is based on Dublin Core and VOID.
+The Vocabulary of a Friend (VOAF) is a vocabulary specification providing elements allowing the description of vocabularies (RDFS vocabularies or OWL ontologies). It is based on Dublin Core and VOID.
 
 Metrics & Statistics
 --------------------------

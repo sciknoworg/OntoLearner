@@ -25,7 +25,7 @@
 Dislocation Ontology (DISO)
 ========================================================================================================
 
-DISO is an ontology that defines the linear defect, in particular dislocation concepts     and relations between them in crystalline materials.
+DISO is an ontology that defines the linear defect, in particular dislocation concepts and relations between them in crystalline materials.
 
 Metrics & Statistics
 --------------------------
