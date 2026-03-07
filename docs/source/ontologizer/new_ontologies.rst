@@ -7,7 +7,7 @@ New Ontologies
 
 	.. code-block:: bash
 
-		pip install -u OntoLearner
+		pip install -U OntoLearner
 
 This guide explains how to add new ontologies to the OntoLearner. Adding a new ontology involves creating a Ontologizer (class for the ontology to be imported Programmatically), implementing the necessary methods, and to process and benchmark the ontology.
 
@@ -124,11 +124,11 @@ To process the ontology and generate benchmarks, you will need to use a dedicate
 
 You can also access the processed ontology via:
 
-.. code-block::  python
+.. code-block:: python
 
 	processed_ontology = processor.get_processed_ontology()
 
-	# The processed_ontology` is dictionary with following key values:
+	# The processed_ontology is a dictionary with the following key-value pairs:
 	# "ontology": ontology
 	# "metrics": {...}
 	# "ontology_id": "MyNewOntology"

@@ -45,7 +45,7 @@ Below is an example using the `Agronomy Ontology <https://ontolearner.readthedoc
 
 .. note::
 
-    - ``AgrO()``  is a built-in Ontologizer class in OntoLearner.
+    - ``AgrO()`` is a built-in Ontologizer class in OntoLearner.
     - ``.load()`` fetches and parses the ontology into a structured internal format.
 
 
@@ -63,7 +63,7 @@ Ontology Learning plays a crucial role in dynamically building and maintaining o
    </div>
 
 
-As a presented in the above figure, core ontology learning tasks within OntoLearner are:
+As presented in the above figure, core ontology learning tasks within OntoLearner are:
 
 .. list-table::
    :widths: 20 80
@@ -193,6 +193,6 @@ What's Next?
 ---------------
 
 * :doc:`ontologizer/ontology_modularization` - How Ontologizer works.
-* :doc:`ontologizer/ontology_hosting` - Checkout avaiable domains and their repositories.
+* :doc:`ontologizer/ontology_hosting` - Check out available domains and their repositories.
 * :doc:`learning_tasks/learning_tasks` - Deep dive into all three tasks
 * :doc:`learning_tasks/text2onto` - How Text2Onto works?

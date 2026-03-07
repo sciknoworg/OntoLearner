@@ -8,7 +8,7 @@ Retrieval Augmented Generation
 
 **Retrieval Augmented Generation (RAG)** learners combine the strengths of both retrieval models and LLMs to perform ontology learning tasks. This methodology is a hybrid approach designed to enhance ontology learning by addressing the limitations of using LLMs alone.
 
-RAG learners operate in two main steps: 1) **Retrieval** component that finds the most relevant examples from the training data based on similarity to the input query. 2) **Generation** component that uses  retrieved examples as context to generate a response. The methodology behind RAG learners combines vector retrieval with generative language modeling to enhance ontology learning tasks. This hybrid approach addresses the limitations of using LLMs alone by grounding the model's responses in specific ontological examples from the training data. By encoding ontological elements into a vector space, the retriever can identify semantically similar concepts, relations, or taxonomic structures. These retrieved examples serve as few-shot demonstrations that provide the LLM with domain-specific context, enabling more accurate and consistent ontological inferences. This approach is particularly effective for specialized domains where the model's pre-trained knowledge may be insufficient or where precise ontological alignments are critical.
+RAG learners operate in two main steps: 1) **Retrieval** component that finds the most relevant examples from the training data based on similarity to the input query. 2) **Generation** component that uses retrieved examples as context to generate a response. The methodology behind RAG learners combines vector retrieval with generative language modeling to enhance ontology learning tasks. This hybrid approach addresses the limitations of using LLMs alone by grounding the model's responses in specific ontological examples from the training data. By encoding ontological elements into a vector space, the retriever can identify semantically similar concepts, relations, or taxonomic structures. These retrieved examples serve as few-shot demonstrations that provide the LLM with domain-specific context, enabling more accurate and consistent ontological inferences. This approach is particularly effective for specialized domains where the model's pre-trained knowledge may be insufficient or where precise ontological alignments are critical.
 
 Loading Ontological Data
 ----------------------------
@@ -99,7 +99,7 @@ To build a RAG model, you first initialize its constituent parts: an LLM learner
 
 Pipeline Usage
 ---------------------
-Similar to LLM and Retrieval learner, RAG Learner is also callable via streamlined ``LearnerPipeline`` class that simplifies the entire process learning.
+Similar to LLM and Retrieval learner, RAG Learner is also callable via streamlined ``LearnerPipeline`` class that simplifies the entire learning process.
 
 You initialize the ``LearnerPipeline`` by directly providing the ``retriever_id``, ``llm_id``, and other parameters like ``hf_token``, ``batch_size``, and ``top_k`` (number of top retrievals to include in RAG prompting). Then, you simply call the ``pipeline`` instance with your ``train_data``, ``test_data``, specify ``evaluate=True`` to compute metrics, and define the ``task`` (e.g., `'term-typing'`).
 

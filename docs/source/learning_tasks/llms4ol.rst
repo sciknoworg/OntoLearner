@@ -133,4 +133,4 @@ To perform machine learning tasks, the first step after extracting the dataset i
     ontology.load()
     data = ontology.extract()
 
-    train_data, test_data = train_test_split(data test_size=0.2, random_state=42)
+    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)

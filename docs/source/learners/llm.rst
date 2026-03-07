@@ -145,7 +145,7 @@ For this, you can extend the ``AutoLLM`` class and implement the required
 ``load`` and ``generate`` methods. Basic requirements are:
 
 1. Inherit from ``AutoLLM``
-2. Implement ``load(model_id)``, if your loging model is different (as an example `mistralai/Mistral-Small-3.2-24B-Instruct-2506 <https://huggingface.co/mistralai/Mistral-Small-3.2-24B-Instruct-2506>`_ uses different type of loading)
+2. Implement ``load(model_id)``, if your model loading is different (for example `mistralai/Mistral-Small-3.2-24B-Instruct-2506 <https://huggingface.co/mistralai/Mistral-Small-3.2-24B-Instruct-2506>`_ uses different type of loading)
 3. Implement ``generate(inputs, max_new_tokens)`` to encodes prompts, performs generation, decodes outputs, and maps them to labels.
 
 

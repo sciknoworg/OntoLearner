@@ -9,7 +9,7 @@ Install with pip
 
 .. sidebar:: Verify the installation
 
-    Once the isntallation is done, verify the installation by:
+    Once the installation is done, verify the installation by:
 
     .. code-block:: python
 
@@ -27,7 +27,7 @@ Install with pip
 
 .. tab:: From GitHub
 
-    The following pip install will installs the latest version of OntoLearner from the `main` branch of the OntoLearner at GitHub using `pip`.
+    The following pip install will install the latest version of OntoLearner from the `main` branch of the OntoLearner at GitHub using `pip`.
 
     ::
 
@@ -63,4 +63,4 @@ You can install OntoLearner directly from source to take advantage of the bleedi
 
 Install PyTorch with CUDA support
 --------------------------------------------
-To use a GPU/CUDA for learners, you must install PyTorch with CUDA support. Follow `PyTorch - Get Started<https://pytorch.org/get-started/locally/>`_ for installation steps.
+To use a GPU/CUDA for learners, you must install PyTorch with CUDA support. Follow `PyTorch - Get Started <https://pytorch.org/get-started/locally/>`_ for installation steps.
