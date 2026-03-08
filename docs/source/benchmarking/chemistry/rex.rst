@@ -25,7 +25,9 @@
 Physico-chemical process ontology (REX)
 ========================================================================================================
 
-REX is an ontology of physico-chemical processes, i.e. physico-chemical changes occurring in course of time.     REX includes both microscopic processes (involving molecular entities or subatomic particles) and macroscopic processes.     Some biochemical processes from Gene Ontology (GO Biological process) can be described as instances of REX.
+REX is a comprehensive ontology for formal representation of physico-chemical processes, including both microscopic molecular transformations and macroscopic chemical phenomena occurring over time. It provides structured vocabulary for describing processes at different scales: molecular-level processes (involving chemical bonds, molecular rearrangement, electron transfer) and macroscopic processes (phase changes, dissolution, crystallization). REX distinguishes between different process types and captures temporal and causal relationships between processes, enabling precise semantic representation of chemical transformations. The ontology integrates with biological process vocabularies (e.g., Gene Ontology's biological process namespace) to bridge molecular biochemistry and cellular processes. REX facilitates knowledge integration in chemistry databases, computational chemistry platforms, and systems biology models by providing standardized process definitions.
+
+**Example Usage**: Represent a multi-step chemical transformation process using REX terms to describe molecular-level processes (e.g., nucleophilic substitution, oxidation) linked together in sequence, with temporal ordering and causal dependencies between elementary steps.
 
 Metrics & Statistics
 --------------------------

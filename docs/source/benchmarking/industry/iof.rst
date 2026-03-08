@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Industrial Ontology Foundry (IOF)
 ========================================================================================================
 
-The IOF Core Ontology contains notions found to be common across multiple manufacturing domains.     This file is an RDF implementation of these notions. The ontology utilizes the Basic Formal Ontology or BFO     as a top-level ontology but also borrows terms from various domain-independent or mid-level ontologies.     The purpose of the ontology is to serve as a foundation for ensuring consistency     and interoperability across various domain-specific reference ontologies the IOF publishes.
+The Industrial Ontology Foundry (IOF) Core Ontology is a foundational ontology for the manufacturing industry, capturing concepts and relationships common across multiple manufacturing domains. It is implemented in RDF and leverages the Basic Formal Ontology (BFO) as its upper-level framework, while also incorporating terms from other domain-independent and mid-level ontologies. IOF provides a standardized vocabulary for describing manufacturing processes, equipment, materials, products, and organizational structures. The ontology is designed to ensure consistency and interoperability across various domain-specific reference ontologies published by the IOF, supporting integration of manufacturing data from diverse sources. IOF enables advanced applications such as digital twins, smart manufacturing, supply chain optimization, and industrial automation. By providing a common semantic foundation, IOF facilitates data sharing, analytics, and knowledge management in the manufacturing sector.
+
+**Example Usage**:
+Annotate a smart factory system with IOF terms to describe production lines, machines, materials, and process steps, enabling integration with enterprise resource planning (ERP) and manufacturing execution systems (MES).
 
 Metrics & Statistics
 --------------------------

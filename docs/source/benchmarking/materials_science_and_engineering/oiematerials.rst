@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,15 @@
 Open Innovation Environment Materials (OIEMaterials)
 ========================================================================================================
 
-The materials module populates the physicalistic perspective with materials subclasses categorised     according to modern applied physical sciences.
+
+The Open Innovation Environment Materials (OIEMaterials) ontology is a domain-level ontology developed to represent materials in materials science. It provides a structured vocabulary for describing materials, their properties, and data, supporting both experimental and computational research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of materials, properties, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OIEMaterials supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
+
+Typical applications of OIEMaterials include the development of new materials with specific properties, the optimization of material properties, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OIEMaterials enhances collaboration and innovation in the field of materials science.
+
+**Example Usage**:
+Annotate a materials dataset with OIEMaterials terms to specify material types, properties, and data, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

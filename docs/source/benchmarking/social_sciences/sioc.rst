@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Semantically-Interlinked Online Communities (SIOC)
 ========================================================================================================
 
-The SIOC (Semantically-Interlinked Online Communities) Ontology is an ontology for describing the     information in online communities. This includes sites that support online discussions, blogging,     file sharing, photo sharing, social networking, etc.
+The SIOC (Semantically-Interlinked Online Communities) Ontology is a widely used ontology for describing the information and structure of online communities. It provides a standardized vocabulary for representing discussion forums, blogs, wikis, social networks, and other collaborative platforms. SIOC enables the modeling of users, posts, threads, topics, and relationships between community members and content. By providing a common framework, SIOC facilitates interoperability between social platforms, supports data integration, and enables advanced queries and analytics on social data. The ontology is used in social media mining, digital humanities, and knowledge graph construction to link and analyze user-generated content across platforms. SIOC is actively maintained and extended to support emerging social web technologies and applications.
+
+**Example Usage**:
+Annotate a forum or blog platform with SIOC terms to describe users, posts, threads, and relationships, enabling semantic search and cross-platform analysis of online community interactions.
 
 Metrics & Statistics
 --------------------------

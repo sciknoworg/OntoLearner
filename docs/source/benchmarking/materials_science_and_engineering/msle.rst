@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Material Science Lab Equipment Ontology (MSLE)
 ========================================================================================================
 
-The current ontology describes Material Science Lab Equipment.
+The Material Science Lab Equipment Ontology (MSLE) is a domain ontology developed to describe laboratory equipment used in materials science. It provides a structured vocabulary for representing equipment, processes, and data, supporting both experimental and computational research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of equipment, processes, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MSLE supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
+
+Typical applications of MSLE include the integration of laboratory data from various sources, the development of new materials with specific properties, and the optimization of laboratory processes. By providing a standardized vocabulary and framework, MSLE enhances collaboration and innovation in the field of materials science.
+
+**Example Usage**:
+Annotate a laboratory equipment dataset with MSLE terms to specify equipment types, processes, and data, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

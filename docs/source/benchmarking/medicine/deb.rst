@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Devices, Experimental scaffolds and Biomaterials Ontology (DEB)
 ========================================================================================================
 
-The devices, experimental scaffolds, and biomaterials ontology (DEB) is an open resource     for organizing information about biomaterials, their design, manufacture, and biological testing.     It was developed using text analysis for identifying ontology terms from a biomaterials gold standard corpus,     systematically curated to represent the domain's lexicon. Topics covered were validated by members     of the biomaterials research community.
+The Devices, Experimental scaffolds and Biomaterials Ontology (DEB) is an open, community-driven ontology for organizing information about biomaterials, their design, manufacture, and biological testing. DEB provides a structured vocabulary for describing biomaterial types, experimental scaffolds, fabrication methods, and the biological assays used to evaluate them. The ontology was developed using text analysis of a biomaterials gold standard corpus and systematically curated to represent the domain's lexicon, with validation by biomaterials research experts. DEB supports semantic annotation of biomaterials research data, enabling interoperability, data integration, and advanced queries across experimental studies and databases. By providing a standardized framework, DEB facilitates reproducibility, knowledge sharing, and meta-analysis in biomaterials science and tissue engineering. The ontology is actively maintained and extended to incorporate new materials, experimental techniques, and biological endpoints as the field evolves.
+
+**Example Usage**:
+Annotate a biomaterials experiment with DEB terms to specify the scaffold material (e.g., "collagen hydrogel"), fabrication method (e.g., "electrospinning"), and biological assay (e.g., "cell viability test"), enabling cross-study comparison and data integration.
 
 Metrics & Statistics
 --------------------------

@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Extensible Observation Ontology (OBOE)
 ========================================================================================================
 
-The Extensible Observation Ontology (OBOE) is a formal ontology for capturing the semantics     of scientific observation and measurement. The ontology supports researchers to add detailed semantic annotations     to scientific data, thereby clarifying the inherent meaning of scientific observations.
+The Extensible Observation Ontology (OBOE) is a formal ontology for capturing the semantics of scientific observation and measurement. The ontology supports researchers to add detailed semantic annotations to scientific data, thereby clarifying the inherent meaning of scientific observations. It provides a structured vocabulary for representing scientific observations, measurements, and related data, supporting both theoretical and experimental research in scientific observation.
+
+The ontology employs a class-based modeling approach, defining classes for different types of observations, measurements, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OBOE supports the integration of data from various sources, promoting interoperability and data-driven research in scientific observation.
+
+Typical applications of OBOE include the development of new observation and measurement methods, the optimization of scientific observation practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OBOE enhances collaboration and innovation in the field of scientific observation.
+
+**Example Usage**:
+Annotate a scientific observation dataset with OBOE terms to specify observation types, measurements, and related data, enabling semantic search and integration with scientific observation platforms.
 
 Metrics & Statistics
 --------------------------

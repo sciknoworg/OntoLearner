@@ -25,7 +25,9 @@
 DataCite Ontology (DataCite)
 ========================================================================================================
 
-The DataCite Ontology (DataCite) is an ontology that enables the metadata properties of the DataCite Metadata Schema Specification (i.e., a list of metadata properties for the accurate and consistent identification of a resource for citation and retrieval purposes) to be described in RDF.
+The DataCite Ontology is an RDF-based representation of the DataCite Metadata Schema, providing standardized vocabulary and semantic structure for describing research data and digital objects with comprehensive citation and identification metadata. It enables formal representation of essential dataset properties including creators, titles, publication dates, contributors, funding information, and relationships to other scholarly resources. DataCite provides machine-readable definitions of metadata properties for accurate and consistent identification, retrieval, and citation of diverse digital resources including datasets, software, and research outputs. The ontology supports FAIR data principles by enabling standardized, interoperable representation of dataset metadata in linked data formats (RDF, JSON-LD). DataCite facilitates data discovery, citation tracking, and research impact assessment by providing standardized semantic metadata structures.
+
+**Example Usage**: Represent a published research dataset with DataCite ontology terms including persistent identifier (DOI), creators and contributors (with ORCID), publication date, subject areas, funding information, and related publications to enable proper citation and discovery across research repositories.
 
 Metrics & Statistics
 --------------------------

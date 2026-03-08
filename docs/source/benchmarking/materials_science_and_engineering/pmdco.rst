@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,13 @@
 The Platform MaterialDigital core ontology (PMDco)
 ========================================================================================================
 
-The PMD Core Ontology (PMDco) is a comprehensive framework for representing knowledge that encompasses fundamental concepts from the domains of materials science and engineering (MSE). The PMDco has been designed as a mid-level ontology to establish a connection between specific MSE application ontologies and the domain neutral concepts found in established top-level ontologies. The primary goal of the PMDco is to promote interoperability between diverse domains.
+
+The ontology employs a class-based modeling approach, defining classes for different types of materials, processes, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. PMDco supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
+
+Typical applications of PMDco include the development of new materials with specific properties, the optimization of materials for industrial applications, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, PMDco enhances collaboration and innovation in the field of materials science.
+
+**Example Usage**:
+Annotate a materials science project with PMDco terms to specify material types, processes, and data, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

@@ -25,7 +25,9 @@
 Environment Ontology (ENVO)
 ========================================================================================================
 
-ENVO is an expressive, community ontology which helps humans, machines, and semantic web applications understand environmental entities of all kinds, from microscopic to intergalactic scales. As a FAIR-compliant resource, it promotes interoperability through the concise, controlled description of all things environmental.
+ENVO is a comprehensive, expressive community-driven ontology that enables humans, machines, and semantic web applications to understand environmental entities and concepts across multiple scales, from microscopic organisms to astronomical phenomena. It provides standardized vocabulary for describing environmental features including biomes, ecosystems, habitats, environmental materials (air, water, soil), and environmental conditions (temperature, humidity, pollution levels). ENVO captures relationships between environmental entities and enables precise semantic annotation of environmental datasets, research findings, and monitoring data. As a FAIR-compliant resource, ENVO promotes semantic interoperability in environmental science by providing concise, controlled descriptions of environmental concepts using formal ontological definitions. The ontology supports diverse applications including environmental data management, ecology research, climate science studies, and environmental impact assessment.
+
+**Example Usage**: Annotate an environmental science dataset with ENVO terms such as "tropical rainforest" (biome), "Amazonia" (biogeographic region), and "high soil moisture" (environmental condition) to enable automated discovery of related environmental studies and climate research.
 
 Metrics & Statistics
 --------------------------

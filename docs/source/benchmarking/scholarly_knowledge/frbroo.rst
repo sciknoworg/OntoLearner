@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)
 ========================================================================================================
 
-The FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) initiative     is a joint effort of the CIDOC Conceptual Reference Model     and Functional Requirements for Bibliographic Records international working groups to establish     a formal ontology intended to capture and represent the underlying semantics of bibliographic information     and to facilitate the integration, mediation, and interchange of bibliographic and museum information.
+The FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) initiative is a joint effort of the CIDOC Conceptual Reference Model and Functional Requirements for Bibliographic Records international working groups to establish a formal ontology intended to capture and represent the underlying semantics of bibliographic information and to facilitate the integration, mediation, and interchange of bibliographic and museum information. It provides a structured vocabulary for representing bibliographic records, concepts, and relationships, supporting both theoretical and experimental research in bibliographic information management.
+
+The ontology employs a class-based modeling approach, defining classes for different types of bibliographic records, concepts, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. FRBRoo supports the integration of data from various sources, promoting interoperability and data-driven research in bibliographic information management.
+
+Typical applications of FRBRoo include the development of new bibliographic information management methods, the optimization of bibliographic record management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, FRBRoo enhances collaboration and innovation in the field of bibliographic information management.
+
+**Example Usage**:
+Annotate a bibliographic record with FRBRoo terms to specify record types, concepts, and relationships, enabling semantic search and integration with bibliographic information management platforms.
 
 Metrics & Statistics
 --------------------------

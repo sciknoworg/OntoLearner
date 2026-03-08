@@ -25,7 +25,9 @@
 Molecular Process Ontology (MOP)
 ========================================================================================================
 
-MOP is the molecular process ontology. It contains the molecular processes that underlie the name reaction ontology RXNO, for example cyclization, methylation and demethylation.
+The Molecular Process Ontology (MOP) is a systematic vocabulary for describing and classifying molecular-level chemical processes and transformations that occur in organic chemistry. It provides formal definitions of common molecular processes such as cyclization, methylation, demethylation, oxidation, reduction, and other fundamental reaction steps underlying named reactions in chemistry. MOP serves as the foundational semantic layer for the Reaction Ontology (RXNO), enabling precise description of chemical reaction mechanisms and their constituent molecular processes. The ontology facilitates integration of chemical databases, computational chemistry platforms, and reaction informatics systems by providing standardized semantic representations of molecular transformations. MOP enables advanced searching and classification of reactions based on their underlying molecular mechanisms.
+
+**Example Usage**: Represent a cyclization reaction step in RXNO by linking to MOP terms for the specific cyclization type (e.g., "6-membered ring closure"), enabling automated discovery of similar reactions across chemical databases.
 
 Metrics & Statistics
 --------------------------

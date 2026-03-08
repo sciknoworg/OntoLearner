@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Bibliographic Framework Ontology (BIBFRAME)
 ========================================================================================================
 
-The Bibframe vocabulary consists of RDF classes and properties used for the description of items cataloged principally by libraries, but may also be used to describe items cataloged by museums and archives. Classes include the three core classes - Work, Instance, and Item - in addition to many more classes to support description. Properties describe characteristics of the resource being described as well as relationships among resources. For example, one Work might be a "translation of" another Work; an Instance may be an "instance of" a particular Bibframe Work. Other properties describe attributes of Works and Instances. For example, the Bibframe property "subject" expresses an important attribute of a Work (what the Work is about), and the property "extent" (e.g., number of pages) expresses an attribute of an Instance.
+The Bibliographic Framework Ontology (BIBFRAME) is a comprehensive RDF-based vocabulary developed by the Library of Congress to modernize bibliographic description for libraries, museums, and archives. It provides a structured model for representing bibliographic resources, focusing on three core classes: Work (the abstract creative content), Instance (the physical or digital embodiment), and Item (the specific copy). BIBFRAME supports detailed description of relationships among resources, such as translations, adaptations, and editions, as well as attributes like subject, extent, and publication information. The ontology is designed to facilitate linked data publishing, interoperability, and integration with other metadata standards, enabling richer discovery and reuse of bibliographic information. BIBFRAME is widely adopted by libraries and cultural heritage institutions transitioning from MARC records to semantic web technologies. Its extensible structure allows for domain-specific adaptations and integration with authority files, vocabularies, and digital repositories.
+
+**Example Usage**:
+Describe a library book using BIBFRAME by linking the Work (e.g., "Pride and Prejudice"), its Instance (the 2003 Penguin Classics edition), and the Item (the specific copy held by a library), including relationships to subjects, authors, and related works.
 
 Metrics & Statistics
 --------------------------

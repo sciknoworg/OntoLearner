@@ -25,7 +25,9 @@
 The ontology of data analysis and management (EDAM)
 ========================================================================================================
 
-EDAM is a domain ontology of data analysis and data management in bio- and other sciences, and science-based applications. It comprises concepts related to analysis, modelling, optimisation, and data life cycle. Targeting usability by diverse users, the structure of EDAM is relatively simple, divided into 4 main sections: Topic, Operation, Data (incl. Identifier), and Format.
+EDAM is a domain ontology that formalizes concepts, operations, and data types used in computational data analysis and data management across biological sciences and related domains. It provides structured vocabulary for describing bioinformatics analysis workflows, computational operations (alignment, clustering, prediction), data types, data formats, and the relationships between analysis steps. EDAM comprises four main sections: Topic (research domains and concepts), Operation (analysis/processing operations), Data (data types and identifiers), and Format (computational data formats and standards). The ontology is designed for usability by diverse stakeholders including bioinformaticians, tool developers, and researchers, with a relatively simple hierarchical structure to facilitate adoption. EDAM supports standardization of bioinformatics tool descriptions, workflow definitions, and dataset annotations, enabling automated tool discovery and workflow composition.
+
+**Example Usage**: Annotate a bioinformatics tool or service with EDAM terms for Input data (e.g., EDAM:data_0006 for sequence alignment), Operation (e.g., EDAM:operation_0496 for pairwise sequence alignment), Output format (e.g., EDAM:format_1929 for FASTA), and research Topic (e.g., EDAM:topic_0199 for sequence analysis).
 
 Metrics & Statistics
 --------------------------

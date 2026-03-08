@@ -25,7 +25,9 @@
 Chemical Information Ontology (CHEMINF)
 ========================================================================================================
 
-The chemical information ontology (cheminf) describes information entities about chemical entities. It provides qualitative and quantitative attributes to richly describe chemicals. Includes terms for the descriptors commonly used in cheminformatics software applications and the algorithms which generate them.
+The Chemical Information Ontology (CHEMINF) provides a comprehensive vocabulary for representing and describing information entities and computational descriptors about chemical compounds and substances. It formalizes chemical descriptors, properties, and computational methods used in cheminformatics, enabling standardized representation of molecular attributes derived from chemical informatics tools and algorithms. CHEMINF captures qualitative and quantitative descriptors including molecular weight, logP, HOMO/LUMO energies, and topological indices used for chemical structure analysis and prediction. The ontology is designed to support semantic interoperability in chemistry databases, computational chemistry platforms, and drug discovery systems by providing unambiguous definitions of chemical information concepts. CHEMINF integrates with other chemistry ontologies (ChEBI, MOP, RXNO) to link chemical structures with their calculated properties and computational methods.
+
+**Example Usage**: Represent a computed molecular descriptor as a CHEMINF information entity linked to a ChEBI chemical structure, specifying the calculation method (e.g., "Wildman-Crippen LogP") and the resulting numeric value.
 
 Metrics & Statistics
 --------------------------

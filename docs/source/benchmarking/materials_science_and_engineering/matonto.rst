@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Material Ontology (MatOnto)
 ========================================================================================================
 
-The Material Ontology (MatOnto) is based on the upper level ontology, the BFO.
+The Material Ontology (MatOnto) is a domain ontology based on the Basic Formal Ontology (BFO) designed to provide a structured vocabulary for representing materials, their properties, and relationships in materials science and engineering. MatOnto supports semantic annotation of materials data, enabling interoperability, data integration, and advanced analysis across research databases, digital twins, and manufacturing systems. The ontology covers key concepts such as material types, compositions, processing methods, properties, and applications. MatOnto is designed for extensibility, allowing researchers and engineers to describe new materials, characterization techniques, and performance metrics. By providing a standardized framework, MatOnto facilitates cross-study comparison, materials selection, and knowledge sharing in materials research and industry. The ontology is actively maintained and extended to incorporate new materials, technologies, and research requirements.
+
+**Example Usage**:
+Annotate a materials database with MatOnto terms to specify material types (e.g., polymer, alloy), composition, processing methods, and properties (e.g., tensile strength, thermal conductivity), enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Laser Powder Bed Fusion Ontology (LPBFO)
 ========================================================================================================
 
-The LPBF Ontology can be used to describe the additive manufacturing of a component via Laser Powder Bed Fusion (LPBF) / Selective Laser Melting (SLM). The ontology builds on BFO2.0 and BWMD_mid and has been developed to be used in conjunction with the digital workflows provided by Fraunhofer IWM. If possible, the terminology within this ontology was used as provided by ISO/ASTM 52900:2015. Recently, classes relevant for Life Cycle Analysis (LCA) were added that enable sustainability assessment.
+The Laser Powder Bed Fusion Ontology (LPBFO) is a domain ontology for describing additive manufacturing processes, specifically Laser Powder Bed Fusion (LPBF) and Selective Laser Melting (SLM). LPBFO provides a structured vocabulary for representing process parameters, materials, equipment, component geometries, and quality attributes relevant to LPBF manufacturing. The ontology builds on BFO2.0 and BWMD_mid, and incorporates terminology from ISO/ASTM 52900:2015 to ensure alignment with industry standards. LPBFO supports semantic annotation of digital manufacturing workflows, enabling data integration, process optimization, and sustainability assessment through Life Cycle Analysis (LCA) classes. By providing a standardized framework, LPBFO facilitates interoperability between digital manufacturing systems, quality management, and research databases. The ontology is actively maintained and extended to support new developments in additive manufacturing and sustainability assessment.
+
+**Example Usage**:
+Annotate an LPBF manufacturing workflow with LPBFO terms to specify process parameters (e.g., laser power, scan speed), material types, component geometry, and LCA attributes, enabling semantic search and integration with digital manufacturing platforms.
 
 Metrics & Statistics
 --------------------------

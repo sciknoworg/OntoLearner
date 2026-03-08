@@ -25,7 +25,9 @@
 FAIR Vocabulary (FAIR)
 ========================================================================================================
 
-This is the formal vocabulary (ontology) describing the FAIR principles.
+The FAIR Vocabulary is a formal ontology that provides machine-readable definitions and semantic representation of the FAIR Data Principles (Findability, Accessibility, Interoperability, Reusability). It formalizes key concepts underlying FAIR data management including data discoverability mechanisms, access protocols, interoperability standards, and reusability conditions. The ontology enables automated assessment and verification of FAIR compliance, supporting the development of FAIR data management tools and services. FAIR vocabulary terms can be applied to dataset descriptions, data repositories, and digital object properties to formally declare their FAIR characteristics and compliance levels. The vocabulary facilitates communication of FAIR principles within research organizations, funding agencies, and data management communities by providing standardized semantic definitions.
+
+**Example Usage**: Annotate a dataset in a repository with FAIR terms to indicate its Findability (via persistent identifiers like DOIs), Accessibility (through standard protocols), Interoperability (using standard formats and ontologies), and Reusability (via clear licensing and metadata).
 
 Metrics & Statistics
 --------------------------

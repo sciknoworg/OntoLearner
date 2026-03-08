@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Suggested Upper Merged Ontology (SUMO)
 ========================================================================================================
 
-The Suggested Upper Merged Ontology (SUMO) and its domain ontologies form the largest formal public ontology     in existence today. They are being used for research and applications in search, linguistics and reasoning.     SUMO is the only formal ontology that has been mapped to all of the WordNet lexicon.
+The Suggested Upper Merged Ontology (SUMO) is one of the largest and most widely used formal upper ontologies, providing a comprehensive framework for representing general concepts and relationships across all domains of knowledge. SUMO and its domain ontologies are used for research and applications in search, linguistics, automated reasoning, and artificial intelligence. SUMO is unique in being formally mapped to the entire WordNet lexicon, enabling semantic integration between natural language and formal knowledge representation. The ontology covers abstract and concrete entities, processes, attributes, relations, and events, supporting logical inference and knowledge discovery. SUMO is open source and maintained by an active community, with ongoing extensions and domain-specific modules for specialized applications. By providing a rigorous semantic foundation, SUMO facilitates interoperability, data integration, and advanced reasoning in knowledge-based systems.
+
+**Example Usage**:
+Use SUMO as the upper ontology for a knowledge graph, mapping domain-specific concepts (e.g., "vehicle," "disease," "financial transaction") to SUMO classes and leveraging its logical axioms for automated reasoning and semantic search.
 
 Metrics & Statistics
 --------------------------

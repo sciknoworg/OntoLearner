@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Reaction Ontology (RXNO)
 ========================================================================================================
 
-RXNO is the name reaction ontology. It contains more than 500 classes representing organic reactions     such as the Diels–Alder cyclization.
+The Reaction Ontology (RXNO) is a specialized ontology that provides a comprehensive vocabulary for representing organic chemical reactions. It includes over 500 classes that describe named reactions, such as the Diels–Alder cyclization, and their associated mechanisms. RXNO enables the semantic annotation of chemical reaction data, facilitating data sharing, integration, and advanced querying in cheminformatics and organic chemistry research. By standardizing the representation of chemical reactions, RXNO supports the development of reaction databases, computational chemistry tools, and automated synthesis planning systems. The ontology also captures relationships between reactions, reactants, products, and catalysts, enabling detailed modeling of reaction networks.
+
+**Example Usage**:
+Annotate a reaction database with RXNO terms to specify reaction types, such as "RXNO:000001 (Diels–Alder reaction)," and link these reactions to their reactants, products, and catalysts.
 
 Metrics & Statistics
 --------------------------

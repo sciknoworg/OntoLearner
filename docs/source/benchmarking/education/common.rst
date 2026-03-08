@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Common Ontology (Common)
 ========================================================================================================
 
-Ontology for the representation of commons elements in the Trias ontology
+The Common Ontology provides a foundational vocabulary for representing shared and reusable elements used across the Trias (Transport and Mobility) ontology framework. It defines core concepts such as entities, attributes, relationships, and constraints that are applicable to multiple mobility and transportation domains. The ontology captures common modeling patterns for representing agents, organizations, times, locations, and relationships in a standardized way across diverse transportation contexts. Common Ontology enables semantic interoperability across Trias domain modules (mobility, traffic, vehicles) by providing consistent foundational concepts and relationships. It serves as the shared semantic backbone for specialized domain ontologies in transportation, facilitating knowledge integration and reasoning.
+
+**Example Usage**:
+Use Common Ontology entity types to represent agents (persons, organizations), locations (stops, streets, zones), time concepts, and relationships across transportation domain ontologies that extend or reference Common.
 
 Metrics & Statistics
 --------------------------

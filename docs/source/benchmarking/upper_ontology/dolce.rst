@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE)
 ========================================================================================================
 
-The Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE) is a foundational ontology     that provides a conceptual framework for the formalization of domain ontologies.
+The Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE) is a foundational ontology that provides a conceptual framework for the formalization of domain ontologies. DOLCE is designed to capture the ontological categories underlying natural language and human common sense, supporting the modeling of linguistic, cognitive, and social phenomena. It distinguishes between endurants (entities persisting through time), perdurants (events and processes), qualities, and abstract entities, enabling nuanced representation of reality. DOLCE is widely used in linguistics, cognitive science, artificial intelligence, and knowledge engineering to support semantic interoperability and reasoning. Its modular structure allows for extensions and customization for specific domains, making it a popular choice for building interoperable ontologies. DOLCE has influenced the development of many domain ontologies and is recognized for its rigorous formal foundations and alignment with human conceptualization.
+
+**Example Usage**:
+Use DOLCE as the upper ontology for a linguistic ontology, classifying entities such as "utterance" (perdurant), "speaker" (endurant), and "meaning" (abstract), enabling semantic integration with other cognitive and linguistic resources.
 
 Metrics & Statistics
 --------------------------

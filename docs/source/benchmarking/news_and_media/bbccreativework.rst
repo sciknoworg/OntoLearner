@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 BBC Creative Work Ontology (BBCCreativeWork)
 ========================================================================================================
 
-This ontology defines the terms required to describe the creative works produced by the BBC and their associated metadata. This ontology powers reading and writing creative works in the triplestore using tags associated with them (about) their more specific types (BlogPost, NewsItem, Programme) and audiences (audience).
+The BBC Creative Work Ontology (BBCCreativeWork) is a domain ontology designed to represent creative works produced by the BBC, such as articles, blog posts, news items, programmes, and their associated metadata. It provides a structured vocabulary for describing creative works, their types, audiences, tags, and relationships to other works and entities. BBCCreativeWork supports semantic annotation of content, enabling advanced search, recommendation, and content management across BBC platforms. The ontology is designed for extensibility, allowing integration with other BBC ontologies and external vocabularies for broader data interoperability. By providing standardized terms and relationships, BBCCreativeWork facilitates content linking, audience targeting, and analytics in digital publishing. The ontology is maintained as an open resource and is actively extended to support new content types and publishing requirements.
+
+**Example Usage**:
+Annotate a BBC news article with BBCCreativeWork terms to specify its type (e.g., "NewsItem"), associated tags (e.g., "climate change"), intended audience (e.g., "general public"), and relationships to related programmes or blog posts, enabling semantic search and personalized content recommendations.
 
 Metrics & Statistics
 --------------------------

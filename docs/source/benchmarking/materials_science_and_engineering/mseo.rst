@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Materials Science and Engineering Ontology (MSEO)
 ========================================================================================================
 
-MSEO utilizes the IOF Ontology stack giving materials scientists and engineers the ability to represent their experiments and resulting data. The goal is to create machine and human readable semantic data which can be easily digested by other science domains. It is a product of the joint venture Materials Open Lab Project between the Bundesanstalt für Materialforschung und -prüfung (BAM) and the Fraunhofer Group MATERIALS and uses the BWMD ontology created by Fraunhofer IWM as a starting point.
+The Materials Science and Engineering Ontology (MSEO) is a domain ontology developed to represent experiments and resulting data in materials science and engineering. It provides a structured vocabulary for describing materials, processes, and data, supporting both theoretical and experimental research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of materials, processes, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MSEO supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
+
+Typical applications of MSEO include the integration of materials data from various sources, the development of new materials with specific properties, and the optimization of manufacturing processes. By providing a standardized vocabulary and framework, MSEO enhances collaboration and innovation in the field of materials science.
+
+**Example Usage**:
+Annotate a materials science experiment with MSEO terms to specify material types, processes, and data, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

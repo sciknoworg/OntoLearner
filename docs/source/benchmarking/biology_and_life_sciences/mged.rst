@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 MGED Ontology (MGED)
 ========================================================================================================
 
-An ontology for microarray experiments in support of MAGE v.1. Concepts, definitions, terms,     and resources for standardized description of a microarray experiment in support of MAGE v.1.     The MGED ontology is divided into the MGED Core ontology which is intended to be stable and     in synch with MAGE v.1; and the MGED Extended ontology which adds further associations     and classes not found in MAGE v.1
+The MGED Ontology (MGED) is a domain-specific ontology designed to standardize the description of microarray experiments. It provides a structured vocabulary for representing experimental designs, protocols, and data in the context of microarray gene expression studies. The ontology is divided into two components: the MGED Core Ontology, which aligns with the Microarray Gene Expression (MAGE) standard, and the MGED Extended Ontology, which introduces additional classes and associations beyond the MAGE specification. MGED facilitates interoperability between microarray data repositories, enabling researchers to share, compare, and analyze experimental data effectively. By providing a common framework for describing experimental metadata, MGED supports reproducibility, data integration, and meta-analysis in functional genomics research. The ontology is widely used in bioinformatics tools and databases to annotate experimental datasets and ensure compliance with community standards.
+
+**Example Usage**:
+Annotate a microarray experiment with MGED terms to describe the experimental design, sample preparation protocols, and data processing steps, ensuring that the dataset is interoperable with other repositories and tools.
 
 Metrics & Statistics
 --------------------------

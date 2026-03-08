@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Geologic Timescale model (GTS)
 ========================================================================================================
 
-This is an RDF/OWL representation of the GeoSciML Geologic Timescale model, which has been adapted     from the model described in Cox, S.J.D, & Richard, S.M. (2005) A formal model for the geologic timescale and GSSP,     compatible with geospatial information transfer standards, Geosphere, Geological Society of America.
+The Geologic Timescale (GTS) is an RDF/OWL ontology representation of the standard geologic timescale model, adapted from the GeoSciML framework and compatible with geospatial information transfer standards. It provides a formal semantic model for representing geological time periods, epochs, eons, and their boundaries based on the Global Stratotype Section and Point (GSSP) framework established by the International Commission on Stratigraphy. GTS enables precise temporal annotation of geological data, enabling scientists to associate geological observations, samples, and events with specific time periods in Earth's history. The ontology supports hierarchical relationships between time divisions, enabling both broad geological age classification and detailed temporal analysis. GTS facilitates integration of paleontological, stratigraphic, and geological survey data across diverse research institutions and databases.
+
+**Example Usage**:
+Annotate a rock sample or fossil record with GTS terms such as "Cretaceous" (era), "Campanian" (stage), or specific GSSP boundary ages to enable temporal querying and stratigraphic correlation.
 
 Metrics & Statistics
 --------------------------

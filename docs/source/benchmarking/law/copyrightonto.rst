@@ -25,7 +25,13 @@
 Copyright Ontology (CopyrightOnto)
 ========================================================================================================
 
-The Copyright Ontology tries to formalise the copyright domain as a way to facilitate     automated (or computer-supported) copyright management through the whole content value chain,     as it is shaped by copyright law. Therefore, it does not focus just on the last step,     end-users permissions to consume content, like many rights languages and ontologies do.
+The Copyright Ontology formalizes the copyright domain to support automated and computer-assisted management of rights, permissions, and obligations across the entire content value chain rather than focusing solely on end-user permissions. It models core legal and business entities such as Works, Authors/Rightsholders, Rights and Permissions, Licenses, Contracts, Transactions, Agents, and Provenance. The ontology captures temporal and jurisdictional dimensions of rights (grant periods, territorial scopes), the lifecycle of rights transfers and assignments, and links between digital artefacts and their legal metadata.
+
+Key characteristics include an emphasis on provenance and traceability (who granted which right, when, and under what conditions), expressivity for different permission types (reproduction, distribution, modification), and support for linking to external vocabularies (e.g., dcterms for metadata, FOAF/ORCID for agents, and license URIs such as Creative Commons). Its structure is suitable for encoding both normative legal information and operational licensing metadata used in publishing platforms, rights registries, and DRM-aware systems.
+
+Typical applications are automated rights clearance, license management, tracking provenance of digital content, and enabling marketplaces and repositories to reason about reuse conditions.
+
+**Example Usage**: describe a digital artwork as a CopyrightOnto Work with associated Rights statements linking to a License URI, a Rightsholder Agent, and validity dates to support automated permission checks.
 
 Metrics & Statistics
 --------------------------

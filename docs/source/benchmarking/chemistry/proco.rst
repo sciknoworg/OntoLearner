@@ -25,7 +25,9 @@
 PROcess Chemistry Ontology (PROCO)
 ========================================================================================================
 
-PROCO (PROcess Chemistry Ontology) is a formal ontology that aims to standardly represent entities and relations among entities in the domain of process chemistry.
+PROCO (PROcess Chemistry Ontology) is a formal ontology that standardizes representation of entities, relationships, and processes in process chemistry and chemical manufacturing. It provides comprehensive vocabulary for describing chemical reactions, reaction conditions, reactants, products, catalysts, and process equipment used in industrial and laboratory chemical processes. PROCO captures essential process chemistry concepts including reaction parameters (temperature, pressure, time, stirring), process steps (mixing, heating, separation), material flows, and safety-critical information for chemical synthesis. The ontology enables semantic interoperability across chemical engineering databases, laboratory information management systems (LIMS), and process simulation tools by providing explicit, unambiguous definitions. PROCO supports knowledge integration and reasoning in process chemistry research, enabling automated workflow design, process optimization, and risk assessment.
+
+**Example Usage**: Represent a multi-step synthesis process with PROCO terms for each reaction step including reactants, reaction conditions (temperature and pressure ranges), catalysts, solvents, workup procedures, and desired products with yield information.
 
 Metrics & Statistics
 --------------------------

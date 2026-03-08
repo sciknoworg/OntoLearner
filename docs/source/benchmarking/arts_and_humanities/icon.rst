@@ -25,7 +25,7 @@
 Icon Ontology (ICON)
 ========================================================================================================
 
-The ICON ontology deals with high granularity art interpretation. It was developed by conceptualizing     Panofsky's theory of levels of interpretation, therefore artworks can be described according     to Pre-iconographical, Iconographical and Iconological information.
+The ICON ontology provides a formal framework for high-granularity art interpretation and analysis. It was developed by conceptualizing Panofsky's theory of levels of interpretation, enabling artworks to be systematically described according to three complementary analytical perspectives: Pre-iconographical (visual elements and their formal properties), Iconographical (symbolic meaning and subject matter), and Iconological (deeper cultural and philosophical context). This three-level approach enables comprehensive semantic annotation of artworks, capturing both surface-level visual descriptions and deeper interpretive insights. The ontology supports structured knowledge representation of artistic elements, iconographic themes, cultural references, and symbolic meanings. It facilitates semantic interoperability in digital art collections, museum databases, and art history research platforms. The ICON ontology enables advanced search and discovery capabilities based on artistic interpretation levels, supporting art historians, curators, and researchers in analyzing and understanding artworks. It also supports linked data integration with other cultural heritage ontologies and knowledge bases, enabling rich cross-domain art historical research and interpretation analysis.
 
 Metrics & Statistics
 --------------------------

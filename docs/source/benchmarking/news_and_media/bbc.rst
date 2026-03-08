@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 BBC Ontology (BBC)
 ========================================================================================================
 
-The BBC ontology codifies the logic that connects web documents, BBC products and platforms     for which content is available. Currently, there are 10 major products in Future Media     which produce content for BBC online. The majority of those contain more products dedicated in thematic areas,     for example Education propositions are part of the K&L (Knowledge and Learning) product portfolio.
+The BBC Ontology (BBC) is a domain ontology developed to represent the structure, relationships, and metadata of BBC web documents, products, and platforms. It provides a standardized vocabulary for describing content types, thematic areas, editorial products, and the connections between them. The ontology enables semantic annotation of BBC content, supporting advanced search, personalized recommendations, and content integration across BBC's digital ecosystem. BBC is designed for extensibility and interoperability, allowing integration with other BBC ontologies and external vocabularies for broader data linking. By providing a common semantic framework, the BBC Ontology facilitates content discovery, analytics, and knowledge management for editorial, educational, and entertainment products. The ontology is maintained as an open resource and is actively extended to support new content types, platforms, and user experiences.
+
+**Example Usage**:
+Annotate a BBC web page with BBC Ontology terms to specify its content type (e.g., "NewsArticle"), associated product (e.g., "BBC News"), thematic area (e.g., "Education"), and relationships to related articles or platforms, enabling semantic search and cross-platform content integration.
 
 Metrics & Statistics
 --------------------------

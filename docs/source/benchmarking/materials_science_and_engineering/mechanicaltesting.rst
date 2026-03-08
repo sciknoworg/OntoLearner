@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Mechanical Testing Ontology (MechanicalTesting)
 ========================================================================================================
 
-A domain ontology for mechanical testing based on EMMO.
+The Mechanical Testing Ontology (MechanicalTesting) is a domain ontology developed to represent knowledge in the field of mechanical testing, based on the Elementary Multiperspective Material Ontology (EMMO). It provides a structured vocabulary for describing mechanical testing methods, equipment, and results, supporting both experimental and computational research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of mechanical tests, equipment, and results, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MechanicalTesting supports the integration of data from experimental studies and simulations, promoting interoperability and data-driven research in mechanical testing.
+
+Typical applications of MechanicalTesting include the development of new testing methods, the optimization of testing procedures, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MechanicalTesting enhances collaboration and innovation in the field of mechanical testing.
+
+**Example Usage**:
+Annotate a mechanical testing dataset with MechanicalTesting terms to specify test types, equipment, and results, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

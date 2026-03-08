@@ -25,7 +25,10 @@
 Relation Ontology (RO)
 ========================================================================================================
 
-The Relations Ontology (RO) is a collection of OWL relations (ObjectProperties) intended for use     across a wide variety of biological ontologies.
+The Relations Ontology (RO) is a comprehensive collection of formally defined OWL object properties designed for standardized representation of relationships across diverse biological ontologies. It provides a curated set of relations (part-of, derives-from, has-participant, immediately-precedes, etc.) with precise logical definitions ensuring semantic consistency across different biological knowledge domains. RO is built on foundational principles of formal ontology, ensuring that relations are unambiguous, logically sound, and applicable across multiple biological contexts. The ontology serves as the standard relation vocabulary for Open Biomedical Ontologies (OBO), enabling interoperable knowledge representation in genomics, proteomics, anatomy, and other life sciences. RO enables automated reasoning about biological entities and their complex relationships, supporting knowledge integration and discovery in biomedical research. The ontology is maintained collaboratively and has become the de facto standard for biological relationship representation in the semantic web community.
+
+**Example Usage**:
+Define relationships in a biological ontology such as "protein A is part of complex B", "gene A has function X", or "disease A derives from mutation in gene B" using RO relations to enable automated reasoning about biological systems.
 
 Metrics & Statistics
 --------------------------

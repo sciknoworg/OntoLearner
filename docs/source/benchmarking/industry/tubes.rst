@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 TUBES System Ontology (TUBES)
 ========================================================================================================
 
-The scope of the TUBES System Ontology is to explicitly define interconnected building service system     in the AECO industry, their hierarchical subdivisions, structural and functional aspects,     and links to spatial entities. As such, TSO supports the effort to represent linkable information     in a future semantic web of building data. It has a strong alignment to other ontologies within the W3C community.
+The TUBES System Ontology (TSO) is a domain ontology for the Architecture, Engineering, Construction, and Operations (AECO) industry, explicitly defining interconnected building service systems, their hierarchical subdivisions, structural and functional aspects, and links to spatial entities. TSO supports the semantic representation of building services such as HVAC, plumbing, and electrical systems, enabling detailed modeling of their components, relationships, and operational characteristics. The ontology is designed to facilitate the integration of building information across design, construction, and facility management processes, supporting digital twins and smart building applications. TSO aligns with other W3C community ontologies to ensure interoperability and data exchange in the semantic web of building data. By providing a standardized vocabulary, TSO enables automated reasoning, compliance checking, and lifecycle management of building services. The ontology is actively developed and adopted by industry stakeholders for advanced building information modeling (BIM) and digital transformation initiatives.
+
+**Example Usage**:
+Annotate a BIM model with TUBES terms to describe the HVAC system, its components (air handling units, ducts, sensors), their spatial locations, and operational relationships, enabling automated analysis and integration with facility management systems.
 
 Metrics & Statistics
 --------------------------

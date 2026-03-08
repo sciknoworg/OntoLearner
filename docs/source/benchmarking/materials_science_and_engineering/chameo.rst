@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Characterisation Methodology Domain Ontology (CHAMEO)
 ========================================================================================================
 
-An ontology for materials characterization which represents the evolution of the CHADA template in an ontological form, allowing to generate FAIR documentation of Characterisation Experiments and that has been used as a basis for the development of a number of technique-specific or application-specific ontologies in the materials characterisation domain. CHAMEO has been used as a foundation for the definition of the new CHADA template during the CWA.
+The Characterisation Methodology Domain Ontology (CHAMEO) is a domain ontology for materials characterization, representing the evolution of the CHADA template in an ontological form. CHAMEO enables the generation of FAIR documentation for characterization experiments and serves as a foundation for the development of technique-specific and application-specific ontologies in the materials characterization domain. The ontology provides a structured vocabulary for describing experimental setups, measurement techniques, sample properties, data acquisition, and analysis workflows. CHAMEO supports semantic annotation of characterization data, facilitating interoperability, data integration, and advanced analytics across research projects and digital platforms. By providing a standardized framework, CHAMEO enhances reproducibility, knowledge sharing, and cross-laboratory comparison in materials science. The ontology is actively maintained and extended to incorporate new characterization methods, standards, and community requirements.
+
+**Example Usage**:
+Annotate a materials characterization experiment with CHAMEO terms to specify the measurement technique (e.g., X-ray diffraction), sample preparation, instrument configuration, and data analysis workflow, enabling semantic search and integration with materials databases.
 
 Metrics & Statistics
 --------------------------

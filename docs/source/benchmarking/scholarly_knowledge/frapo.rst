@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Funding, Research Administration and Projects Ontology (FRAPO)
 ========================================================================================================
 
-The Funding, Research Administration and Projects Ontology (FRAPO) is an ontology for describing the administrative information of research projects, e.g., grant applications, funding bodies, project partners, etc.
+The Funding, Research Administration and Projects Ontology (FRAPO) is an ontology for describing the administrative information of research projects, e.g., grant applications, funding bodies, project partners, etc. It provides a structured vocabulary for representing research administration, funding, and project information, supporting both theoretical and experimental research in research administration.
+
+The ontology employs a class-based modeling approach, defining classes for different types of research administration, funding, and project information, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. FRAPO supports the integration of data from various sources, promoting interoperability and data-driven research in research administration.
+
+Typical applications of FRAPO include the development of new research administration methods, the optimization of research project management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, FRAPO enhances collaboration and innovation in the field of research administration.
+
+**Example Usage**:
+Annotate a research project with FRAPO terms to specify administrative information, funding details, and project partners, enabling semantic search and integration with research administration platforms.
 
 Metrics & Statistics
 --------------------------

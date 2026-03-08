@@ -25,7 +25,9 @@
 Ontology for Biomedical Investigations (OBI)
 ========================================================================================================
 
-The Ontology for Biomedical Investigations (OBI) helps you communicate clearly about scientific investigations     by defining more than 2500 terms for assays, devices, objectives, and more.
+The Ontology for Biomedical Investigations (OBI) provides a comprehensive vocabulary for describing scientific investigations, experimental designs, and biomedical research methodology. It defines over 2500 terms covering assays, devices, protocols, objectives, materials, measurements, and outcomes used in biomedical and life sciences research. OBI enables standardized semantic annotation of experimental workflows, making research methodologies transparent, reproducible, and interoperable across databases and computational systems. The ontology captures hierarchical relationships between experimental concepts, allowing researchers to precisely describe complex experimental designs and data collection procedures. OBI integrates with other biological ontologies (BFO, ChEBI, CHEBI) to provide comprehensive semantic representation of biomedical investigations.
+
+**Example Usage**: Annotate a microarray experiment with OBI terms such as "assay" for the type of investigation, "microarray device" for equipment, "RNA extraction" for material preparation steps, and measurement-related terms for results.
 
 Metrics & Statistics
 --------------------------

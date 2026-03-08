@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,11 @@
 Materials Design Ontology (MDO)
 ========================================================================================================
 
-MDO is an ontology for materials design field, representing the domain knowledge specifically related     to solid-state physics and computational materials science.
+The Materials Design Ontology (MDO) is a comprehensive framework developed to represent domain knowledge in the field of materials design, particularly focusing on solid-state physics and computational materials science. MDO provides a structured vocabulary for describing materials, their properties, and design processes, supporting both theoretical and experimental research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of materials, properties, and design processes, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MDO supports the integration of data from computational simulations and experimental studies, promoting interoperability and data-driven research in materials design.
+
+Typical applications of MDO include the development of new materials with specific properties, the optimization of materials for industrial applications, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MDO enhances collaboration and innovation in the field of materials design.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +136,6 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+**Example Usage**:
+Annotate a materials design project with MDO terms to specify material types, design processes, and properties, enabling semantic search and integration with materials informatics platforms.

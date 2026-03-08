@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 General Process Ontology (GPO)
 ========================================================================================================
 
-Basically, this ontology aims to model processes. Processes are holistic perspective elements that transform inputs/educts (matter, energy, information) into output/products (matter, energy, information) with the help of tools (devices, algorithms). They can be decomposed into sub-processes and have predecessor and successor processes.
+The General Process Ontology (GPO) is a domain ontology developed to model processes in materials science and engineering, as well as other scientific and industrial domains. GPO provides a structured vocabulary for representing holistic processes that transform inputs (matter, energy, information) into outputs (products, byproducts, waste) using tools such as devices and algorithms. The ontology supports decomposition of processes into sub-processes, capturing predecessor and successor relationships, and enabling detailed modeling of workflows, manufacturing, and experimental procedures. GPO facilitates semantic annotation of process data, supporting interoperability, data integration, and advanced analytics across research, industry, and regulatory platforms. By providing a standardized framework, GPO enables lifecycle assessment, process optimization, and knowledge sharing in multidisciplinary projects. The ontology is actively maintained and extended to incorporate new process types, technologies, and application domains.
+
+**Example Usage**:
+Annotate a manufacturing workflow with GPO terms to specify process steps, input and output materials, tools used, and process dependencies, enabling semantic search and integration with process management systems.
 
 Metrics & Statistics
 --------------------------

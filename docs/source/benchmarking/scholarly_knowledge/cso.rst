@@ -25,7 +25,9 @@
 Computer Science Ontology (CSO)
 ========================================================================================================
 
-The Computer Science Ontology (CSO) is a large-scale ontology of research areas in computer science.     It provides a comprehensive vocabulary of research topics in computing, organized in a hierarchical structure.      This class processes the Computer Science Ontology (CSO) with custom hooks for:     - Topic-based class detection     - superTopicOf relationships     - contributesTo relationships
+The Computer Science Ontology (CSO) is a large-scale semantic resource that provides a comprehensive vocabulary of research areas, topics, and concepts in computer science organized in a hierarchical taxonomy. It covers diverse computing domains including artificial intelligence, software engineering, networking, databases, human-computer interaction, and emerging areas, enabling precise semantic annotation of research contributions. CSO supports sophisticated relationship modeling including superTopicOf (for topic hierarchies), contributesTo (linking topics to solutions), and other domain-relevant relationships enabling knowledge discovery and research mapping. The ontology enables automated research classification, literature organization, and expertise matching by providing standardized semantic definitions of computer science research areas. CSO facilitates semantic interoperability in scholarly information systems, research management platforms, and academic recommendation systems.
+
+**Example Usage**: Annotate a research paper or researcher profile with CSO terms such as "Machine Learning" (main topic), "Deep Learning" (subtopic), "Natural Language Processing" (related topic), and associated research methods and applications to enable semantic discovery of related research.
 
 Metrics & Statistics
 --------------------------

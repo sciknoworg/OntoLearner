@@ -25,7 +25,7 @@
 Plant Ontology (PO)
 ========================================================================================================
 
-The Plant Ontology (PO) is a structured vocabulary and database resource that links plant anatomy,     morphology and growth and development to plant genomics data.
+The Plant Ontology (PO) is a structured vocabulary and database resource that links plant anatomy, morphology and growth and development to plant genomics data. Developed collaboratively by plant biologists and ontology experts, PO provides a comprehensive framework for describing plant structures and developmental stages. The ontology integrates anatomical terms that can be associated with plant genes, enabling researchers to annotate phenotypic data and support comparative genomics across plant species. PO is designed to facilitate seamless data integration and interoperability in plant science research, allowing scientists to discover relationships between genes and plant structures. With its hierarchical organization of plant parts from whole organism level down to cellular structures, PO supports diverse applications including literature curation, genome annotation, and systems biology studies. The ontology is actively maintained by the Planteome project and integrated with other biological ontologies to ensure compatibility and comprehensive semantic representation in the plant science community.
 
 Metrics & Statistics
 --------------------------

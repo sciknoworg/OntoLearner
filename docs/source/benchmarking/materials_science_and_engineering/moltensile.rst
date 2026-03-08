@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,12 @@
 Matolab Tensile Test Ontology (MOL_TENSILE)
 ========================================================================================================
 
-An ontology for describing the tensile test process, made in the Materials Open Lab Project.
+
+The Matolab Tensile Test Ontology (MOL_TENSILE) is a domain ontology developed to describe the tensile test process. It provides a structured vocabulary for representing the testing methods, equipment, and results, supporting both experimental and computational research in materials testing.
+
+The ontology employs a class-based modeling approach, defining classes for different types of tests, equipment, and results, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MOL_TENSILE supports the integration of data from experimental studies and simulations, promoting interoperability and data-driven research in materials testing.
+
+Typical applications of MOL_TENSILE include the development of new testing methods, the optimization of testing procedures, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MOL_TENSILE enhances collaboration and innovation in the field of materials testing.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +137,5 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+Annotate a tensile testing dataset with MOL_TENSILE terms to specify test types, equipment, and results, enabling semantic search and integration with materials informatics platforms.

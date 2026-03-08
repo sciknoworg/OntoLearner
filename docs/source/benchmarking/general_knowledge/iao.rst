@@ -25,7 +25,9 @@
 Information Artifact Ontology (IAO)
 ========================================================================================================
 
-The Information Artifact Ontology (IAO) is an ontology of information entities,     originally driven by work by the OBI digital entity and realizable information entity branch.
+The Information Artifact Ontology (IAO) is a comprehensive ontology for formal representation of information entities, information artifacts, and abstract information objects. It provides structured definitions of concepts such as documents, data items, information content, and the relationships between information artifacts and their physical realizations. IAO distinguishes between abstract information objects (the content) and their concrete realizations (documents, files, databases), enabling precise semantic representation of information resources. The ontology captures properties of information artifacts including authorship, creation date, version history, and relationships to the entities they describe or represent. IAO is widely used in biomedical informatics, scientific data management, and linked data applications for annotating information resources with formal semantic types.
+
+**Example Usage**: Annotate a scientific publication with IAO terms such as "document" for the artifact type, "author" relationships, and "has content" linking to abstract information objects representing the scientific claims and data presented.
 
 Metrics & Statistics
 --------------------------

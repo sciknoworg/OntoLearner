@@ -25,7 +25,9 @@
 Biological Pathways Exchange (BioPAX)
 ========================================================================================================
 
-BioPAX is a standard language that aims to enable integration, exchange, visualization and analysis     of biological pathway data. Specifically, BioPAX supports data exchange between pathway data     groups and thus reduces the complexity of interchange between data formats by providing an     accepted standard format for pathway data.
+BioPAX (Biological Pathways Exchange) is a standard RDF/OWL-based language and ontology for exchanging, integrating, and analyzing biological pathway data. It enables comprehensive representation of molecular interaction networks, including biochemical reactions, gene regulatory pathways, signaling cascades, and transport processes. BioPAX models core pathway concepts such as Interactions (reactions, complexes), Participants (proteins, small molecules), Pathways (sequences of interactions), and their physical and functional properties. The ontology is designed to reduce complexity in data interchange by providing a unified format that bridges disparate pathway databases, modeling tools, and computational analysis platforms. It supports interoperability across systems like Reactome, KEGG, and other pathway databases, facilitating systems biology analysis and network visualization.
+
+**Example Usage**: Represent a phosphorylation reaction as a BioPAX BiochemicalReaction with specific proteins as catalysts and substrates, linked to cellular locations and regulatory conditions.
 
 Metrics & Statistics
 --------------------------

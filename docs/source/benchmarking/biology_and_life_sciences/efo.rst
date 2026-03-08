@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Experimental Factor Ontology (EFO)
 ========================================================================================================
 
-The Experimental Factor Ontology (EFO) provides a systematic description of many experimental variables     available in EBI databases, and for projects such as the GWAS catalog. It combines parts of several biological ontologies,     such as UBERON anatomy, ChEBI chemical compounds, and Cell Ontology. The scope of EFO is to support the annotation,     analysis and visualization of data handled by many groups at the EBI and as the core ontology for Open Targets.     EFO is developed by the EMBL-EBI Samples, Phenotypes and Ontologies Team (SPOT).
+The Experimental Factor Ontology (EFO) is a comprehensive ontology developed to provide systematic, standardized descriptions of experimental variables and factors in biological and biomedical research. EFO integrates terms from multiple biological ontologies, including UBERON (anatomy), ChEBI (chemical compounds), and Cell Ontology, to support the annotation, analysis, and visualization of experimental data. It is widely used for annotating datasets in EBI databases, the GWAS catalog, and as the core ontology for Open Targets. EFO enables semantic interoperability, data integration, and advanced queries across diverse experimental datasets, facilitating reproducibility and meta-analysis. The ontology is actively maintained by the EMBL-EBI Samples, Phenotypes and Ontologies Team (SPOT) and is continuously updated to reflect new experimental techniques and research needs. By providing a unified framework for describing experimental factors, EFO supports data sharing, discovery, and knowledge integration in genomics, transcriptomics, and other life sciences domains.
+
+**Example Usage**:
+Annotate a gene expression dataset with EFO terms to specify experimental variables such as tissue type, disease state, treatment, and assay platform, enabling cross-study comparison and meta-analysis.
 
 Metrics & Statistics
 --------------------------

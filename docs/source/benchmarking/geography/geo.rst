@@ -25,7 +25,9 @@
 Geographical Entities Ontology (GEO)
 ========================================================================================================
 
-Geographical Entities Ontology (GEO) is an inventory of geopolitical entities (such as sovereign states and their administrative subdivisions) as well as various geographical regions (including but not limited to the specific ones over which the governments have jurisdiction).
+The Geographical Entities Ontology (GEO) provides a comprehensive inventory and formal representation of geopolitical and geographical entities, including sovereign states, administrative subdivisions, and various geographical regions. GEO distinguishes between political entities (countries, provinces, cities) and natural geographical features (mountains, rivers, seas), enabling precise semantic representation of territorial and regional concepts. The ontology uses hierarchical relationships to model administrative subdivisions and political jurisdictions at multiple levels (national, state, regional, local), supporting complex governance structures. GEO facilitates location-aware data annotation, enabling applications in geopolitical analysis, administrative reporting, and location-based services to unambiguously identify geographic and political entities. The ontology is designed for integration with other geographic and spatial ontologies, supporting linked data applications in geography, governance, and international relations.
+
+**Example Usage**: Annotate a political news article with GEO terms such as "France" (sovereign state) linked to its subdivisions "Île-de-France" and "Paris" (administrative entities) to enable geographic and political context discovery.
 
 Metrics & Statistics
 --------------------------

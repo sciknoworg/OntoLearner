@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Virtual Materials Marketplace Ontologies (VIMMP)
 ========================================================================================================
 
-The Virtual Materials Marketplace (VIMMP) project is developing an open platform for providing and accessing services related to materials modelling. Within VIMMP, a system of marketplace-level ontologies is developed to characterize services, models, and interactions between users; the European Materials and Modelling Ontology (EMMO, recently renamed while keeping the original acronym) is employed as a top-level ontology. The ontologies are used to annotate data that are stored in the ZONTAL Space component of VIMMP and to support the ingest and retrieval of data and metadata at the VIMMP marketplace front-end.
+The Virtual Materials Marketplace Ontologies (VIMMP) are developed as part of the Virtual Materials Marketplace project, which aims to provide an open platform for accessing services related to materials modeling. VIMMP employs a system of marketplace-level ontologies to characterize services, models, and interactions between users, using the European Materials and Modelling Ontology (EMMO) as a top-level ontology.
+
+The ontologies provide a structured vocabulary for describing services, models, and interactions, supporting both theoretical and experimental research in materials modeling. VIMMP ontologies enable the annotation of data stored in the ZONTAL Space component and support the ingest and retrieval of data and metadata at the VIMMP marketplace front-end.
+
+Typical applications of VIMMP include the development of new materials modeling services, the optimization of modeling workflows, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, VIMMP enhances collaboration and innovation in the field of materials modeling.
+
+**Example Usage**:
+Annotate a materials modeling project with VIMMP terms to specify service types, models, and interactions, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

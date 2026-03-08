@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 MatoLab Brinell Test Ontology (MOL_BRINELL)
 ========================================================================================================
 
-An ontology for describing the Brinell hardness testing process, made in the Materials Open Lab Project.
+The MatoLab Brinell Test Ontology (MOL_BRINELL) is a domain ontology developed to describe the Brinell hardness testing process. It provides a structured vocabulary for representing the testing methods, equipment, and results, supporting both experimental and computational research in materials testing.
+
+The ontology employs a class-based modeling approach, defining classes for different types of tests, equipment, and results, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MOL_BRINELL supports the integration of data from experimental studies and simulations, promoting interoperability and data-driven research in materials testing.
+
+Typical applications of MOL_BRINELL include the development of new testing methods, the optimization of testing procedures, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MOL_BRINELL enhances collaboration and innovation in the field of materials testing.
+
+**Example Usage**:
+Annotate a Brinell hardness testing dataset with MOL_BRINELL terms to specify test types, equipment, and results, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

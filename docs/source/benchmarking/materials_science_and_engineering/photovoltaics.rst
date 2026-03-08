@@ -25,7 +25,9 @@
 EMMO Domain Ontology for Photovoltaics (Photovoltaics)
 ========================================================================================================
 
-This ontology is describing Perovskite solar cells.
+The EMMO Domain Ontology for Photovoltaics is a specialized vocabulary built upon the Elementary Multiperspective Material Ontology (EMMO) framework for comprehensive semantic description of perovskite solar cells and photovoltaic systems. It provides structured vocabulary for describing photovoltaic device components including perovskite absorber layers, transport layers, electrodes, and contact materials, along with their properties and functions. The ontology captures essential photovoltaic device concepts such as optical properties (bandgap, absorption coefficients), electrical properties (carrier mobility, recombination), and performance metrics (efficiency, fill factor, open-circuit voltage). Photovoltaics ontology enables standardized annotation of experimental fabrication procedures, characterization techniques, and computational modeling of perovskite solar cells. The ontology facilitates knowledge integration in photovoltaics research by providing EMMO-compliant semantic representations compatible with broader materials science knowledge bases.
+
+**Example Usage**: Annotate a perovskite solar cell research study with Photovoltaics terms describing device configuration (n-i-p or p-i-n), perovskite composition (CsPbI3, MAPbI3), transport materials (TiO2, spiro-OMeTAD), performance parameters (PCE, Voc, Jsc), and fabrication methods (spin-coating, vapor deposition).
 
 Metrics & Statistics
 --------------------------

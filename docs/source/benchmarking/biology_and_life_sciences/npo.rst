@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 NanoParticle Ontology (NPO)
 ========================================================================================================
 
-NanoParticle Ontology (NPO) is developed within the framework of the Basic Formal Ontology (BFO) and implemented in the Ontology Web Language (OWL) using well-defined ontology design principles. The NPO was developed to represent knowledge underlying the preparation, chemical composition, and characterization of nanomaterials involved in cancer research. Public releases of the NPO are available through BioPortal website, maintained by the National Center for Biomedical Ontology. Mechanisms for editorial and governance processes are being developed for the maintenance, review, and growth of the NPO.
+The NanoParticle Ontology (NPO) is a domain ontology developed within the Basic Formal Ontology (BFO) framework to represent knowledge about the preparation, chemical composition, and characterization of nanomaterials, especially in cancer research and nanomedicine. NPO provides a structured vocabulary for describing nanoparticle types, synthesis methods, physicochemical properties, surface modifications, and biological interactions. The ontology supports semantic annotation of nanomaterial data, enabling interoperability, data integration, and advanced queries across toxicology, biomedical, and materials science databases. NPO is publicly available through BioPortal and is maintained by the National Center for Biomedical Ontology, with ongoing editorial and governance processes for review and growth. By providing a standardized framework, NPO facilitates reproducibility, regulatory compliance, and knowledge sharing in nanotechnology research. The ontology is actively extended to incorporate new nanomaterial types, experimental techniques, and application domains as the field evolves.
+
+**Example Usage**:
+Annotate a nanomedicine study with NPO terms to specify nanoparticle type (e.g., "gold nanoparticle"), synthesis method, surface coating, and biological assay results, enabling cross-study comparison and regulatory reporting.
 
 Metrics & Statistics
 --------------------------

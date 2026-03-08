@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Microscopy Ontology (MO)
 ========================================================================================================
 
-The Microscopy Ontology (MO) extends the ontological framework of the PMDco. The MO facilitates semantic integration and the interoperable connection of diverse data sources from the fields of microscopy and microanalysis. Consequently, the MO paves the way for new, adaptable data applications and analyses across various experiments and studies.
+The Microscopy Ontology (MO) is a domain ontology designed to provide a structured framework for describing microscopy and microanalysis experiments, data, and equipment. MO extends the PMDco ontological framework and enables semantic integration and interoperability of diverse data sources in microscopy research. The ontology covers key concepts such as imaging modalities, sample preparation methods, instrument components, acquisition parameters, and data analysis techniques. MO supports the annotation of experimental workflows, facilitating data sharing, reproducibility, and advanced analysis across various microscopy studies. By providing a standardized vocabulary, MO enables the development of adaptable data applications and cross-experiment comparisons in materials science, biology, and medical research. The ontology is actively maintained and extended to incorporate new microscopy techniques and research requirements.
+
+**Example Usage**:
+Annotate a microscopy dataset with MO terms to specify the imaging modality (e.g., "scanning electron microscopy"), sample preparation method, instrument configuration, and analysis workflow, enabling semantic search and integration with other microscopy data sources.
 
 Metrics & Statistics
 --------------------------

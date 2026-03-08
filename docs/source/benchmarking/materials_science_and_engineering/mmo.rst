@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Materials Mechanics Ontology (MMO)
 ========================================================================================================
 
-The materials mechanics ontology is an application-level ontology that was created     for supporting named entity recognition tasks for materials fatigue domain. The ontology covers     some fairly general MSE concepts that could prospectively be merged into PMDco or other upper materials ontologies     such as descriptions of crystallographic defects and microstructural entities.     Furthermore, concepts related to the materials fatigue subdomain are also heavily incorporated.
+The Materials Mechanics Ontology (MMO) is an application-level ontology developed to support named entity recognition tasks in the materials fatigue domain. It provides a structured vocabulary for describing concepts related to materials mechanics, including crystallographic defects, microstructural entities, and materials fatigue. MMO is designed to facilitate the integration of materials mechanics data, supporting both theoretical and experimental research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of materials, defects, and microstructures, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MMO supports the integration of data from various sources, promoting interoperability and data-driven research in materials mechanics.
+
+Typical applications of MMO include the development of new materials with specific mechanical properties, the optimization of materials for fatigue resistance, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MMO enhances collaboration and innovation in the field of materials mechanics.
+
+**Example Usage**:
+Annotate a materials mechanics dataset with MMO terms to specify defect types, microstructural features, and fatigue properties, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

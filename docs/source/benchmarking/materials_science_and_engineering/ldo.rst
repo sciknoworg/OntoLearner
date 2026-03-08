@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Line Defect Ontology (LDO)
 ========================================================================================================
 
-LDO is an ontology designed to describe line defects in crystalline materials,     such as dislocations and disclinations.
+The Line Defect Ontology (LDO) is a domain ontology developed to provide a comprehensive and standardized vocabulary for describing line defects in crystalline materials, such as dislocations and disclinations. LDO enables the semantic annotation of experimental and computational data related to line defects, supporting interoperability and data integration across materials science databases and research platforms. The ontology covers key concepts including defect types, geometric and topological properties, formation mechanisms, and interactions with other defects or microstructural features. LDO is designed for extensibility, allowing researchers to describe new line defect types, characterization methods, and material systems as the field evolves. By providing a rigorous semantic framework, LDO facilitates advanced analytics, defect modeling, and knowledge sharing in materials science and engineering. The ontology is actively maintained and extended to incorporate new concepts and requirements from the materials science community.
+
+**Example Usage**:
+Annotate a transmission electron microscopy (TEM) dataset with LDO terms to specify the types of line defects observed, their Burgers vectors, line directions, and interactions with grain boundaries, enabling semantic search and integration with defect modeling tools.
 
 Metrics & Statistics
 --------------------------

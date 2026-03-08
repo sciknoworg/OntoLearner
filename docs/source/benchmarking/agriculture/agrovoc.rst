@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,9 @@
 AGROVOC Multilingual Thesaurus (AGROVOC)
 ========================================================================================================
 
-AGROVOC is a relevant Linked Open Data set about agriculture available for public use and facilitates     access and visibility of data across domains and languages. It offers a structured collection of agricultural concepts,     terms, definitions and relationships which are used to unambiguously identify resources, allowing standardized     indexing processes and making searches more efficient.
+AGROVOC is a comprehensive Linked Open Data resource developed and maintained by the Food and Agriculture Organization (FAO) of the United Nations. It provides a structured collection of agricultural concepts, terms, definitions, and relationships that enable unambiguous identification of resources and standardized indexing. As a multilingual thesaurus, AGROVOC supports multiple languages, facilitating access and visibility of agricultural data across domains and languages. The ontology covers diverse agricultural domains including crops, livestock, farm management practices, soil science, and food production. AGROVOC's hierarchical structure enables both broader and narrower term relationships, supporting semantic interoperability and making searches more efficient. The resource is widely used by research institutions, government agencies, and international organizations for data annotation, knowledge organization, and information retrieval. With millions of concept nodes and sophisticated relationship mappings, AGROVOC serves as a critical backbone for agricultural knowledge representation and data integration in the global agricultural community.
+
+**Example Usage**: Annotate a multilingual agricultural dataset with AGROVOC terms for crops, soil types, and farming practices to enable standardized indexing and cross-language search in international agricultural databases.
 
 Metrics & Statistics
 --------------------------

@@ -25,7 +25,9 @@
 Hydra Ontology (Hydra)
 ========================================================================================================
 
-Hydra is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts     commonly used in Web APIs it enables the creation of generic API clients.
+Hydra is a lightweight vocabulary and ontology for creating hypermedia-driven REST APIs that are self-describing and machine-actionable through semantic web technologies. It enables developers to create generic API clients that can automatically discover and interact with APIs by interpreting hypermedia controls and semantic metadata embedded in API responses. Hydra defines core concepts commonly used in Web APIs such as operations, properties, classes, and relationships, providing a standardized way to describe API structure and functionality. The vocabulary enables APIs to be self-documenting and interoperable, allowing clients to dynamically adapt to API changes without hardcoded endpoint knowledge. Hydra supports linked data and semantic web principles, enabling APIs to contribute to the broader linked open data ecosystem.
+
+**Example Usage**: Define a REST API endpoint for a resource collection using Hydra vocabularies to describe available operations (GET, POST, DELETE), supported classes, properties with their types, and hypermedia links to related resources, enabling automated client discovery and interaction.
 
 Metrics & Statistics
 --------------------------

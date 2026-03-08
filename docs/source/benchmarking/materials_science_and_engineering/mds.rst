@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Materials Data Science Ontology (MDS)
 ========================================================================================================
 
-Materials Data Science (MDS) is an ontology encompassing multiple domains relevant to materials science,     chemical synthesis and characterizations, photovoltaics and geospatial datasets. The terms used for classes,     subclasses and instances are mapped to PMDCo and BFO Ontologies.
+The Materials Data Science Ontology (MDS) is a comprehensive framework designed to encompass multiple domains relevant to materials science, chemical synthesis, characterizations, photovoltaics, and geospatial datasets. MDS provides a structured vocabulary for representing data and processes in these domains, supporting both theoretical and experimental research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of materials, processes, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MDS supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
+
+Typical applications of MDS include the integration of materials data from various sources, the development of new materials with specific properties, and the optimization of manufacturing processes. By providing a standardized vocabulary and framework, MDS enhances collaboration and innovation in the field of materials science.
+
+**Example Usage**:
+Annotate a materials database with MDS terms to specify material properties, processes, and data, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

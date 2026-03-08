@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Dislocation Ontology (DISO)
 ========================================================================================================
 
-DISO is an ontology that defines the linear defect, in particular dislocation concepts and relations between them in crystalline materials.
+DISO is a specialized ontology that formalizes the conceptualization and semantic representation of linear defects in crystalline materials, with particular focus on dislocations and their complex relationships. It provides structured vocabulary for describing dislocation types (edge, screw, mixed), dislocation properties (Burgers vector, line direction), and dislocation interactions (annihilation, multiplication, cross-slip). The ontology captures the geometric and topological properties of dislocations essential for understanding plastic deformation, work hardening, and material strength in metals and alloys. DISO enables precise annotation of experimental observations and computational simulations of dislocations in crystalline microstructures, supporting materials science research and industrial applications. DISO facilitates knowledge integration in materials databases and computational materials science by providing standardized semantic representations of linear defects.
+
+**Example Usage**:
+Annotate a transmission electron microscopy (TEM) image or molecular dynamics simulation showing dislocations with DISO terms describing dislocation type (edge or screw), Burgers vector, crystal system context, and interactions with other dislocations or grain boundaries.
 
 Metrics & Statistics
 --------------------------

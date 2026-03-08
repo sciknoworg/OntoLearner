@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Digital Buildings Ontology (DBO)
 ========================================================================================================
 
-The Digital Buildings ontology (DBO) is used by Google to represent structured information     about buildings and building-installed equipment.
+The Digital Buildings Ontology (DBO) is a structured vocabulary developed by Google for representing information about buildings and building-installed equipment. DBO provides a semantic model for describing building assets, their locations, types, operational states, and relationships, supporting digital twins and smart building applications. The ontology enables integration of data from building management systems, IoT devices, and facility management platforms, facilitating automated monitoring, control, and analytics. DBO is designed to be extensible and interoperable, allowing organizations to adapt the ontology to their specific building types and operational requirements. By providing standardized terms and relationships, DBO supports data-driven decision-making, energy optimization, and predictive maintenance in digital buildings. The ontology is open source and maintained by a community of contributors, ensuring ongoing development and alignment with industry needs.
+
+**Example Usage**:
+Annotate a smart building system with DBO terms to describe HVAC equipment, lighting systems, sensors, and their spatial locations, enabling automated control and integration with building management platforms.
 
 Metrics & Statistics
 --------------------------

@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -26,6 +24,13 @@ Animal Trait Ontology for Livestock (ATOL)
 ========================================================================================================
 
 ATOL (Animal Trait Ontology for Livestock) is an ontology of characteristics defining phenotypes of livestock in their environment. ATOL aims to: provide a reference ontology of phenotypic traits of farm animals for the international scientific and educational communities, farmers, etc.; deliver this reference ontology in a language which can be used by computers in order to support database management, semantic analysis and modeling; represent traits as generic as possible for livestock vertebrates; make the ATOL ontology as operational as possible and closely related to measurement techniques; and structure the ontology in relation to animal production.
+
+The ontology employs a class-based modeling approach, defining classes for different types of phenotypic traits, measurement techniques, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. ATOL supports the integration of data from various sources, promoting interoperability and data-driven research in animal science.
+
+Typical applications of ATOL include the development of new phenotypic trait analysis methods, the optimization of livestock management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, ATOL enhances collaboration and innovation in the field of animal science.
+
+**Example Usage**:
+Annotate a livestock dataset with ATOL terms to specify phenotypic traits, measurement techniques, and related data, enabling semantic search and integration with animal science research platforms.
 
 Metrics & Statistics
 --------------------------

@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 BBC Business News Ontology (BBCBusiness)
 ========================================================================================================
 
-The Business News Ontology describes the concepts that occur in BBC business news.
+The BBC Business News Ontology (BBCBusiness) is a domain-specific ontology designed to represent concepts, entities, and relationships relevant to business news coverage. It provides a structured vocabulary for describing companies, markets, financial instruments, economic indicators, business events, and regulatory developments. BBCBusiness enables semantic annotation of business news articles, supporting advanced search, aggregation, and analytics across news platforms. The ontology is designed for interoperability with other BBC ontologies and external vocabularies, facilitating integration with financial data sources and knowledge graphs. By providing a standardized framework, BBCBusiness supports automated content tagging, trend analysis, and personalized news delivery in business journalism. The ontology is actively maintained and extended to reflect changes in the global business landscape and emerging topics in finance and economics.
+
+**Example Usage**:
+Annotate a business news article with BBCBusiness terms to specify the companies involved, market sectors, financial events (e.g., mergers, IPOs), and economic indicators, enabling semantic search and cross-platform business news analysis.
 
 Metrics & Statistics
 --------------------------

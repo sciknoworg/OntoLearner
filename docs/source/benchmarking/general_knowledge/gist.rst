@@ -25,7 +25,10 @@
 GIST Upper Ontology (GIST)
 ========================================================================================================
 
-Gist is Semantic Arts' minimalist upper ontology for the enterprise. It is designed to have the maximum coverage of typical business ontology concepts with the fewest number of primitives and the least amount of ambiguity.
+GIST is Semantic Arts' minimalist upper ontology designed specifically for enterprise information systems, providing maximum coverage of typical business concepts with minimal primitives and minimal ambiguity. It emphasizes practical expressiveness and semantic clarity, avoiding unnecessary complexity while maintaining rigorous logical foundations. GIST covers essential business entities including agents (people, organizations), objects, events, measurements, and abstract concepts, with clearly defined relationships between them. The ontology is deliberately lightweight to facilitate adoption and integration into existing enterprise systems while providing sufficient semantic richness for sophisticated business logic representation. GIST supports both simple and complex semantic queries, reasoning, and knowledge graph construction for enterprise data integration and business intelligence applications. The ontology has been widely adopted in financial services, healthcare, and government sectors requiring reliable semantic foundations for data governance.
+
+**Example Usage**:
+Design a healthcare enterprise ontology by extending GIST's Agent (to represent physicians, patients), Event (to represent treatments, procedures), and Object (to represent medications, medical devices) concepts to build a comprehensive healthcare knowledge graph for clinical decision support.
 
 Metrics & Statistics
 --------------------------

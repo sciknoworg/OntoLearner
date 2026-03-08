@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Time Ontology in OWL (OWL-Time)
 ========================================================================================================
 
-OWL-Time is an OWL-2 DL ontology of temporal concepts, for describing the temporal properties of resources     in the world or described in Web pages. The ontology provides a vocabulary for expressing facts     about topological (ordering) relations among instants and intervals, together with information about durations,     and about temporal position including date-time information. Time positions and durations may be expressed     using either the conventional (Gregorian) calendar and clock, or using another temporal reference system     such as Unix-time, geologic time, or different calendars.
+The Time Ontology in OWL (OWL-Time) is a comprehensive ontology for representing temporal concepts, relationships, and properties in semantic web and linked data applications. It provides a standardized vocabulary for describing time instants, intervals, durations, temporal positions, and topological relations (e.g., before, after, during) among temporal entities. OWL-Time supports multiple temporal reference systems, including the Gregorian calendar, Unix time, geologic time, and custom calendars, enabling flexible modeling of temporal data. The ontology is widely used for annotating temporal aspects of resources in scientific datasets, event logs, web pages, and knowledge graphs. By providing a common framework, OWL-Time facilitates temporal reasoning, event sequencing, and integration of time-based data across domains. The ontology is maintained by the World Wide Web Consortium (W3C) and is continuously updated to support new temporal modeling requirements.
+
+**Example Usage**:
+Annotate an event dataset with OWL-Time terms to specify event start and end times, durations, and temporal relationships (e.g., "event A before event B"), enabling temporal reasoning and timeline visualization in knowledge graphs.
 
 Metrics & Statistics
 --------------------------

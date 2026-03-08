@@ -25,7 +25,9 @@
 Data Use Ontology (DUO)
 ========================================================================================================
 
-DUO is an ontology which represent data use conditions.
+The Data Use Ontology (DUO) is a comprehensive vocabulary for formally representing and managing data use restrictions, permissions, and conditions that govern access to and usage of biomedical and life sciences research data. It provides standardized definitions of data use constraints including disease-specific research restrictions, commercial use prohibitions, publication acknowledgment requirements, and ethical/policy-based limitations. DUO enables data stewards and repositories to precisely specify how datasets can be used, facilitating automated enforcement of data use agreements and supporting secondary data reuse in compliant ways. The ontology bridges the gap between legal/ethical restrictions and technical implementations by providing machine-readable representations of complex data use policies. DUO supports FAIR data principles by enabling discoverable, interoperable, and reusable data through clear expression of usage conditions.
+
+**Example Usage**: Annotate a biomedical research dataset with DUO terms to specify permissions (medical research only), restrictions (no commercial use), and requirements (publication acknowledgment, return of results to participants) enabling automated compliance checking and appropriate data sharing decisions.
 
 Metrics & Statistics
 --------------------------

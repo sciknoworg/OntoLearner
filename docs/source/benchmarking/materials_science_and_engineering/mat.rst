@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,11 @@
 Material Properties Ontology (MAT)
 ========================================================================================================
 
-The Material Properties Ontology aims to provide the vocabulary to describe the building components, materials, and their corresponding properties, relevant within the construction industry. More specifically, the building elements and properties covered in this ontology support applications focused on the design of building renovation projects.
+The Material Properties Ontology (MAT) is designed to provide a comprehensive vocabulary for describing building components, materials, and their properties within the construction industry. It focuses on supporting applications related to building renovation projects by offering a structured framework for representing material characteristics, performance metrics, and relationships between different building elements. MAT encompasses key entities such as materials, components, and properties, and models relationships to capture the complexity of construction materials.
+
+The ontology employs a class-based modeling approach, defining classes for various material types and properties, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MAT supports the integration of data from design, construction, and renovation projects, promoting interoperability and data-driven research in the construction industry.
+
+Typical applications of MAT include the design and optimization of building materials for energy efficiency, the assessment of material properties for renovation projects, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MAT enhances collaboration and innovation in the field of construction materials.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +136,6 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+**Example Usage**:
+Annotate a building renovation project with MAT terms to specify material types, properties, and performance metrics, enabling semantic search and integration with construction informatics platforms.

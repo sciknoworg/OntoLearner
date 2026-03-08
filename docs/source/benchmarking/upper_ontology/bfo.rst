@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Basic Formal Ontology (BFO)
 ========================================================================================================
 
-The Basic Formal Ontology (BFO) is a small, upper-level ontology that describes the basic types of entities in the world and how they relate to each other.
+The Basic Formal Ontology (BFO) is a small, upper-level ontology that describes the basic types of entities in the world and how they relate to each other. BFO provides a rigorous, domain-neutral framework for organizing and integrating domain ontologies across scientific and technical disciplines. It distinguishes between continuants (entities that persist through time, such as objects and qualities) and occurrents (entities that unfold over time, such as processes and events), supporting precise modeling of reality. BFO is widely adopted in the biomedical, engineering, and environmental sciences as the upper ontology for the Open Biomedical Ontologies (OBO) Foundry and other ontology initiatives. Its formal structure enables automated reasoning, semantic interoperability, and data integration across heterogeneous knowledge bases. BFO is actively maintained and extended by an international community of ontology experts and is recognized as an ISO standard (ISO/IEC 21838-2:2021).
+
+**Example Usage**:
+Use BFO as the upper ontology for a biomedical ontology, classifying entities such as "cell" (object, continuant), "cell division" (process, occurrent), and "cell membrane" (object part), enabling semantic integration with other OBO ontologies.
 
 Metrics & Statistics
 --------------------------

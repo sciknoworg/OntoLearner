@@ -25,7 +25,9 @@
 Gene Ontology (GO)
 ========================================================================================================
 
-The Gene Ontology (GO) provides structured controlled vocabularies for the annotation of gene products with respect to their molecular function, cellular component, and biological role.
+The Gene Ontology (GO) is a comprehensive resource that provides structured controlled vocabularies for the annotation of gene products with respect to their molecular function, cellular component, and biological process role. Developed collaboratively by a consortium of model organism databases and bioinformatics resources, GO enables consistent annotation of genes and proteins across diverse species and databases. The ontology is organized into three hierarchical namespaces: Biological Process (GO:BP) describing what the gene product does in biological context, Molecular Function (GO:MF) characterizing its biochemical activity, and Cellular Component (GO:CC) indicating where it functions. GO supports sophisticated biological data analysis, enabling researchers to discover functional similarities between genes, identify enriched biological processes in genomics datasets, and understand relationships between genes in biological systems.
+
+**Example Usage**: Annotate a protein like "TP53" with GO terms such as "GO:0006294 (nucleotide-excision repair)" for process, "GO:0003677 (DNA binding)" for molecular function, and "GO:0005634 (nucleus)" for cellular component.
 
 Metrics & Statistics
 --------------------------

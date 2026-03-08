@@ -25,7 +25,7 @@
 Music Ontology (MusicOntology)
 ========================================================================================================
 
-The Music Ontology Specification provides main concepts and     properties fo describing music (i.e. artists, albums and tracks)     on the Semantic Web.
+The Music Ontology Specification provides a comprehensive framework for describing music and related entities on the Semantic Web. It defines core concepts and properties for representing artists, albums, tracks, performances, and musical relationships. The ontology enables standardized music metadata annotation, facilitating interoperability across music information systems, streaming platforms, and digital libraries. It supports rich description of musical works including production details, distribution information, and artistic collaborations. The Music Ontology integrates with other semantic web vocabularies and allows linking of music resources with external datasets and knowledge bases. It enables music recommendation systems, search engines, and music discovery applications to leverage structured semantic data. The ontology supports various music-related use cases including discography management, performance tracking, playlist creation, and music history documentation. By providing a common framework for music representation, the Music Ontology facilitates semantic data integration across the music industry and enables advanced music information retrieval and analysis capabilities.
 
 Metrics & Statistics
 --------------------------

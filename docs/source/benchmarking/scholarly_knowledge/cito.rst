@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Citation Typing Ontology (CiTO)
 ========================================================================================================
 
-The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,     both factually and rhetorically.
+The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,     both factually and rhetorically. It provides a structured vocabulary for describing citation types, relationships, and contexts, supporting both theoretical and experimental research in scholarly communication.
+
+The ontology employs a class-based modeling approach, defining classes for different types of citations, relationships, and contexts, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. CiTO supports the integration of data from various sources, promoting interoperability and data-driven research in scholarly communication.
+
+Typical applications of CiTO include the development of new citation analysis methods, the optimization of citation practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, CiTO enhances collaboration and innovation in the field of scholarly communication.
+
+**Example Usage**:
+Annotate a research paper with CiTO terms to specify citation types, relationships, and contexts, enabling semantic search and integration with scholarly communication platforms.
 
 Metrics & Statistics
 --------------------------

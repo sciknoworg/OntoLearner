@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 GeoNames Ontology (GeoNames)
 ========================================================================================================
 
-The Geonames ontologies provides elements of description for geographical features,     in particular those defined in the geonames.org database.
+The GeoNames Ontology provides a structured vocabulary and semantic framework for describing geographical features, places, and administrative regions, particularly those defined in the geonames.org database. It enables the representation of place names, geographic coordinates, feature types (such as cities, rivers, mountains), and hierarchical relationships between locations (e.g., country, state, city). The ontology supports multilingual place names and alternative spellings, facilitating global interoperability and data integration. GeoNames is widely used in geographic information systems (GIS), linked data applications, and knowledge graphs to enable geospatial search, mapping, and data enrichment. By providing standardized identifiers and relationships, GeoNames enhances the discoverability and linking of geographic data across datasets and platforms. The ontology is maintained collaboratively and is continuously updated to reflect changes in geographic information and administrative boundaries.
+
+**Example Usage**:
+Annotate a dataset of cultural heritage sites with GeoNames terms to specify their geographic coordinates, administrative regions, and feature types, enabling geospatial search and integration with mapping services.
 
 Metrics & Statistics
 --------------------------

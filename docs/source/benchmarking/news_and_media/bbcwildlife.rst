@@ -25,7 +25,7 @@
 BBC Wildlife Ontology (BBCWildlife)
 ========================================================================================================
 
-A simple vocabulary for describing biological species and related taxa. The vocabulary defines terms     for describing the names and ranking of taxa, as well as providing support for describing their habitats,     conservation status, and behavioural characteristics, etc.
+The BBC Wildlife Ontology is a specialized vocabulary for describing and classifying biological species, taxa, and their ecological characteristics in a machine-readable format. It provides standardized terminology for representing biological classification hierarchies including species names, taxonomic ranks (kingdom, phylum, class, order, family, genus, species), and relationships between taxa. The ontology enables semantic annotation of wildlife information including habitat descriptions, conservation status, behavioral characteristics, geographic distribution, and ecological roles. BBCWildlife supports wildlife content discovery and semantic linking across BBC media platforms and broader biodiversity databases. The ontology facilitates knowledge integration in natural history and biodiversity research by providing standardized semantic representations of organisms and their ecological contexts. **Example Usage**: Annotate a wildlife documentary or encyclopedia entry about a species (e.g., tiger, African elephant) with BBCWildlife terms for taxonomic classification, habitat (forest, savanna, wetland), conservation status (endangered, vulnerable), behavior (predatory, migratory), and geographic distribution.
 
 Metrics & Statistics
 --------------------------

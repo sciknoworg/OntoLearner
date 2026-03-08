@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Dislocation Simulation and Model Ontology (DSIM)
 ========================================================================================================
 
-Dislocation simulation and model ontology (DSIM) is an ontology developed to model various concepts and relationships in the discrete dislocation dynamics domain and microscopy techniques used in the dislocation domain. The various concepts are the numerical representation of dislocation applied in the dislocation dynamic simulation and the pictorial concept of pixel applied in representing dislocation in the experimental image, e.g., TEM image, SEM image, and FIM image.
+The Dislocation Simulation and Model Ontology (DSIM) is a domain ontology developed to model concepts and relationships in the field of discrete dislocation dynamics and microscopy techniques used in dislocation research. DSIM provides a structured vocabulary for representing numerical representations of dislocations in simulations, as well as pictorial concepts such as pixels in experimental images (e.g., TEM, SEM, FIM). The ontology enables semantic annotation of simulation workflows, experimental setups, and image analysis procedures, supporting data integration and reproducibility in materials science. DSIM is designed for extensibility, allowing researchers to describe new simulation methods, image processing techniques, and dislocation phenomena. By providing a standardized framework, DSIM facilitates cross-study comparison, advanced analytics, and knowledge sharing in dislocation research. The ontology is actively maintained and extended to incorporate new concepts and requirements from the materials science community.
+
+**Example Usage**:
+Annotate a dislocation dynamics simulation with DSIM terms to specify the simulation method, dislocation types, image analysis workflow, and experimental conditions, enabling semantic search and integration with microscopy data.
 
 Metrics & Statistics
 --------------------------

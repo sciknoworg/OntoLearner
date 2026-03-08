@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Open Innovation Environment Models (OIEModels)
 ========================================================================================================
 
-The models module defines models as semiotic signs that stands for an object by resembling or imitating it,     in shape or by sharing a similar logical structure.
+The Open Innovation Environment Models (OIEModels) ontology is a domain-level ontology developed to represent models in materials science. It provides a structured vocabulary for describing models, their properties, and data, supporting both experimental and computational research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of models, properties, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OIEModels supports the integration of data from various sources, promoting interoperability and data-driven research in materials modeling.
+
+Typical applications of OIEModels include the development of new models with specific properties, the optimization of model properties, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OIEModels enhances collaboration and innovation in the field of materials modeling.
+
+**Example Usage**:
+Annotate a modeling dataset with OIEModels terms to specify model types, properties, and data, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

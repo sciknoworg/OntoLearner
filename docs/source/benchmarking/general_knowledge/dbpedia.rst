@@ -25,7 +25,10 @@
 DBpedia Ontology (DBpedia)
 ========================================================================================================
 
-The DBpedia ontology is generated from the manually created specifications in the DBpedia Mappings Wiki.     Each release of this ontology corresponds to a new release of the DBpedia dataset, which contains     instance data extracted from various language versions of Wikipedia. The DBpedia ontology has evolved     into a crowd-sourced effort, resulting in a shallow cross-domain ontology.
+The DBpedia ontology is generated from manually curated specifications in the DBpedia Mappings Wiki, providing a structured semantic model extracted from Wikipedia's rich content across multiple language editions. Each DBpedia release corresponds to a new Wikipedia data extraction, resulting in continuously evolving ontology versions that reflect growing knowledge representation in Wikipedia. The DBpedia ontology has become a shallow but comprehensive cross-domain ontology through crowd-sourced development involving thousands of contributors worldwide. It covers diverse knowledge domains including people, organizations, places, creative works, scientific concepts, and many others with relationships between them. DBpedia serves as a critical bridge between Wikipedia's unstructured information and the semantic web, enabling knowledge graph applications and linked data integration. The ontology is widely used in knowledge graph construction, information retrieval, entity linking, and semantic data integration projects leveraging Wikipedia's comprehensive and multilingual knowledge base.
+
+**Example Usage**:
+Query DBpedia to find relationships between entities (e.g., all people born in Berlin, all films directed by a specific director, companies in a particular industry) by using ontology classes (Person, Film, Company) and properties to enable advanced knowledge discovery and data analytics.
 
 Metrics & Statistics
 --------------------------

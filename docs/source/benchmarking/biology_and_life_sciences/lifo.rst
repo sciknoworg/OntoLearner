@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Life Ontology (LifO)
 ========================================================================================================
 
-The Life Ontology (LifO) is an ontology of the life of organism. LifO represents the     life processes of organisms and related entities and relations. LifO is a general     purpose ontology that covers the common features associated with different     organisms such as unicellular prokaryotes (e.g., E. coli) and multicellular organisms (e.g., human).
+The Life Ontology (LifO) is a general-purpose ontology designed to represent the life processes of organisms and their associated entities and relationships. It provides a structured framework for describing common biological features across diverse organisms, including unicellular prokaryotes like E. coli and multicellular organisms such as humans. LifO captures essential biological concepts such as growth, reproduction, metabolism, and adaptation, enabling researchers to model and analyze life processes in a standardized manner. The ontology supports interoperability between biological databases and facilitates the integration of diverse datasets for comparative studies. LifO is particularly useful in systems biology, evolutionary research, and bioinformatics applications, where a unified representation of life processes is essential for data analysis and hypothesis generation. By providing a common vocabulary for life sciences, LifO enhances data sharing, reproducibility, and collaborative research.
+
+**Example Usage**:
+Use LifO to annotate a dataset describing the metabolic pathways of E. coli, linking each pathway to its corresponding life process and associated biological entities, enabling cross-species comparisons and functional analyses.
 
 Metrics & Statistics
 --------------------------
