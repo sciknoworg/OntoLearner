@@ -1,5 +1,3 @@
-The Modular Ontology for Materials and Data Science (MDS-Onto)
-==============================================================================
 
 .. sidebar::
 
@@ -23,7 +21,18 @@ The Modular Ontology for Materials and Data Science (MDS-Onto)
        * - **Download**
          - `Download The Modular Ontology for Materials and Data Science (MDS-Onto) <https://cwrusdle.bitbucket.io/files/MDS_Onto/index-en.html>`_
 
-MDS-Onto is a domain (low) level ontology that describes terms in Materials Data Science. It is divided into six     large modules: BuiltEnv, Exposure, Chemistry, Manufacture, Characterization, and Geospatial. Under each module,     there are multiple sub-modules such as FTIR, AFM, Chem-Rxn, PV-Module, Accelerated Exposure, etc.
+The Modular Ontology for Materials and Data Science (MDS-Onto)
+==============================================================================
+
+MDS-Onto is a domain-level ontology that describes terms in Materials Data Science. It is divided into six large modules: BuiltEnv, Exposure, Chemistry, Manufacture, Characterization, and Geospatial. Each module contains multiple sub-modules such as FTIR, AFM, Chem-Rxn, PV-Module, and Accelerated Exposure, providing a comprehensive framework for representing data and processes in materials science.
+
+MDS-Onto employs a modular approach, defining classes and properties for each module to capture the complexity of materials data science. It supports semantic annotation of materials data, enabling interoperability, data integration, and advanced analysis across research databases and digital platforms. By providing a standardized framework, MDS-Onto facilitates cross-study comparison, materials selection, and knowledge sharing in materials research and industry.
+
+Typical applications include the integration of materials data from various sources, the development of new materials with specific properties, and the optimization of manufacturing processes. The ontology is actively maintained and extended to incorporate new materials, technologies, and research requirements.
+
+**Example Usage**:
+Annotate a materials database with MDS-Onto terms to specify material properties, processes, and data, enabling semantic search and integration with materials informatics platforms.
+
 
 Metrics & Statistics
 --------------------------

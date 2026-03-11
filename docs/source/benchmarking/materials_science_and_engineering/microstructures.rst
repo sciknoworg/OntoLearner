@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 EMMO-based ontology for microstructures (MicroStructures)
 ========================================================================================================
 
-This is intended to be a domain ontology for metallic microstructures, covering aspects like: composition,     particles, both stable (primary) and metastable (precipitates), grains, subgrains,     grain boundaries & particle free zones (PFZs), texture, dislocations. The aim is to support     both microstructure modelling as well as characterisation.
+The EMMO-based ontology for microstructures (MicroStructures) is a domain ontology designed to represent metallic microstructures, including their composition, particles (both stable and metastable), grains, subgrains, grain boundaries, particle free zones (PFZs), texture, and dislocations. The ontology provides a structured vocabulary for describing microstructure features, supporting both microstructure modeling and experimental characterization. MicroStructures enables semantic annotation of microstructural data, facilitating interoperability, data integration, and advanced analysis in materials science and engineering. The ontology is designed for extensibility, allowing researchers to describe new microstructure types, characterization techniques, and material systems. By providing a standardized framework, MicroStructures supports cross-study comparison, microstructure-property correlation, and knowledge sharing in materials research. The ontology is actively maintained and extended to incorporate new concepts and requirements from the materials science community.
+
+**Example Usage**:
+Annotate a microstructure characterization dataset with MicroStructures terms to specify grain size distribution, particle types, texture, and dislocation density, enabling semantic search and integration with materials databases and modeling tools.
 
 Metrics & Statistics
 --------------------------

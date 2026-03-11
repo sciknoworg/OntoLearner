@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,62 +23,10 @@
 Units of Measurement Ontology (UO)
 ========================================================================================================
 
-Metrical units for use in conjunction with PATO.
+The Units of Measurement Ontology (UO) is a domain ontology designed to provide a standardized vocabulary for metrical units, particularly for use in conjunction with the Phenotype and Trait Ontology (PATO) and other biomedical ontologies. UO covers a wide range of units, including SI units, derived units, and commonly used non-SI units, supporting the annotation of quantitative data in biological, medical, and scientific research. The ontology enables semantic interoperability and data integration by providing unique identifiers and relationships for units, quantities, and measurement systems. UO is widely used in bioinformatics, clinical informatics, and data repositories to ensure consistency and comparability of measurement data. By providing a common framework, UO facilitates automated data analysis, unit conversion, and cross-study comparison. The ontology is actively maintained and extended to incorporate new units and measurement concepts as research needs evolve.
 
-Metrics & Statistics
---------------------------
-
-.. tab:: Graph
-
-
-    .. list-table:: Graph Statistics
-        :widths: 50 50
-        :header-rows: 0
-
-        * - **Total Nodes**
-          - 2284
-        * - **Total Edges**
-          - 5354
-        * - **Root Nodes**
-          - 6
-        * - **Leaf Nodes**
-          - 754
-    ::
-
-
-.. tab:: Coverage
-
-
-    .. list-table:: Knowledge Coverage Statistics
-        :widths: 50 50
-        :header-rows: 0
-
-        * - **Classes**
-          - 928
-        * - **Individuals**
-          - 0
-        * - **Properties**
-          - 2
-
-    ::
-
-.. tab:: Hierarchy
-
-
-    .. list-table:: Hierarchical Metrics
-        :widths: 50 50
-        :header-rows: 0
-
-        * - **Maximum Depth**
-          - 4
-        * - **Minimum Depth**
-          - 0
-        * - **Average Depth**
-          - 1.14
-        * - **Depth Variance**
-          - 1.12
-    ::
-
+**Example Usage**:
+Annotate a biomedical dataset with UO terms to specify measurement units for phenotypic traits (e.g., "UO:0000016 (centimeter)", "UO:0000021 (gram)") and enable automated unit conversion and semantic search across datasets.
 
 .. tab:: Breadth
 

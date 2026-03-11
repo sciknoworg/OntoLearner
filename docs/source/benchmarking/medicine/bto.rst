@@ -25,7 +25,9 @@
 BRENDA Tissue Ontology (BTO)
 ========================================================================================================
 
-A structured controlled vocabulary for the source of an enzyme comprising tissues,     cell lines, cell types and cell cultures.
+The BRENDA Tissue Ontology (BTO) is a structured controlled vocabulary for systematically describing and classifying the tissues, cell lines, cell types, and cell cultures that serve as sources for enzymatic and biochemical studies. Developed as part of the BRENDA (BRaunschweig ENzyme DAtabase) project, BTO provides standardized terminology for identifying experimental sample origins and biological sources in biochemistry and molecular biology research. The ontology includes comprehensive hierarchical classifications of human tissues, animal tissues, plant tissues, and microbial cell types, enabling precise semantic annotation of biological materials used in enzyme research and biotechnology. BTO supports data integration across biochemical databases and enables accurate searches for enzymes studied in specific tissue contexts.
+
+**Example Usage**: Annotate an enzyme assay result with a BTO term like "BTO:0000079" (liver) or "BTO:0000142" (kidney) to indicate the tissue source of the enzyme sample.
 
 Metrics & Statistics
 --------------------------

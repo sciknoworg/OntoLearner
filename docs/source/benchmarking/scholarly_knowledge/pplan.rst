@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Ontology for Provenance and Plans (P-Plan)
 ========================================================================================================
 
-The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology [PROV-O]     created to represent the plans that guided the execution of scientific processes. P-Plan describes     how the plans are composed and their correspondence to provenance records that describe the execution itself.
+The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology [PROV-O] created to represent the plans that guided the execution of scientific processes. P-Plan describes how the plans are composed and their correspondence to provenance records that describe the execution itself. It provides a structured vocabulary for representing plans, provenance, and related data, supporting both theoretical and experimental research in provenance and planning.
+
+The ontology employs a class-based modeling approach, defining classes for different types of plans, provenance, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. P-Plan supports the integration of data from various sources, promoting interoperability and data-driven research in provenance and planning.
+
+Typical applications of P-Plan include the development of new provenance and planning methods, the optimization of scientific process execution, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, P-Plan enhances collaboration and innovation in the field of provenance and planning.
+
+**Example Usage**:
+Annotate a scientific process with P-Plan terms to specify plans, provenance, and related data, enabling semantic search and integration with provenance and planning platforms.
 
 Metrics & Statistics
 --------------------------

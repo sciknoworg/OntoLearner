@@ -25,7 +25,9 @@
 Semantic Web for Earth and Environment Technology Ontology (SWEET)
 ========================================================================================================
 
-The Semantic Web for Earth and Environment Technology Ontology (SWEET) is an investigation in improving discovery     and use of Earth science data, through software understanding of the semantics of web resources.     SWEET is a collection of ontologies conceptualizing a knowledge space for Earth system science,     represented using the web ontology language (OWL). It includes both orthogonal concepts (space, time,     Earth realms, physical quantities, etc.) and integrative science knowledge concepts (phenomena, events, etc.).
+SWEET is a comprehensive collection of interconnected ontologies designed to enhance discovery and utilization of Earth science data through semantic understanding of web resources and Earth system science concepts. It conceptualizes a knowledge space for Earth system science including orthogonal (cross-cutting) concepts such as space, time, Earth realms (atmosphere, hydrosphere, lithosphere), physical quantities, and units, alongside integrative science knowledge concepts such as phenomena, events, and processes. SWEET is represented in OWL (Web Ontology Language) to enable automated reasoning and semantic interoperability in Earth science research. The ontology supports integration of heterogeneous Earth science datasets and models by providing shared semantic definitions across atmospheric science, oceanography, geology, and climate science domains. SWEET facilitates Earth science data discovery and knowledge management by enabling semantic search and automated linking of related datasets and research findings.
+
+**Example Usage**: Annotate a climate dataset with SWEET terms to describe measured phenomena (e.g., "temperature increase"), spatial context (e.g., "atmosphere" realm, "troposphere" layer), temporal extent (e.g., "1980-2020"), and physical quantities (e.g., "degrees Celsius").
 
 Metrics & Statistics
 --------------------------

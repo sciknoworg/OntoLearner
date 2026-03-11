@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Ontology of Scientific Experiments (EXPO)
 ========================================================================================================
 
-Formalise generic knowledge about scientific experimental design, methodology, and results representation.
+The Ontology of Scientific Experiments (EXPO) formalizes generic knowledge about scientific experimental design, methodology, and results representation. It provides a structured vocabulary for representing scientific experiments, methodologies, and results, supporting both theoretical and experimental research in scientific experimentation.
+
+The ontology employs a class-based modeling approach, defining classes for different types of experiments, methodologies, and results, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. EXPO supports the integration of data from various sources, promoting interoperability and data-driven research in scientific experimentation.
+
+Typical applications of EXPO include the development of new experimental design methods, the optimization of experimental methodologies, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, EXPO enhances collaboration and innovation in the field of scientific experimentation.
+
+**Example Usage**:
+Annotate a scientific experiment with EXPO terms to specify experiment types, methodologies, and results, enabling semantic search and integration with scientific experimentation platforms.
 
 Metrics & Statistics
 --------------------------

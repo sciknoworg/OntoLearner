@@ -48,7 +48,7 @@ Usage
 
    See the `Quickstart <quickstart.html>`_ for more quick information on how to use OntoLearner.
 
-Working with OntoLearner s straightforward:
+Working with OntoLearner is straightforward:
 
 .. sidebar:: Installation
 

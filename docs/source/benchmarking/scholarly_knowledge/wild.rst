@@ -25,7 +25,9 @@
 Workflows in Linked Data (WiLD)
 ========================================================================================================
 
-Ontology to describe Workflows in Linked Data.
+WiLD is a specialized ontology for formal semantic description and representation of computational workflows and scientific data processing pipelines using linked data and semantic web technologies. It provides standardized vocabulary for describing workflow components including workflow steps, data flows, tool/service invocations, and their interdependencies in a machine-readable format. WiLD enables interoperable workflow specification and sharing across diverse scientific computing platforms and workflow management systems by providing uniform semantic representations. The ontology captures essential workflow metadata including execution parameters, input/output specifications, and constraints, supporting workflow automation and optimization. WiLD facilitates reproducible science by enabling systematic documentation of computational methods and data processing procedures in linked data formats.
+
+**Example Usage**: Represent a bioinformatics data processing pipeline using WiLD terms to describe sequential workflow steps (quality control, alignment, variant calling), input datasets, tool invocations (with parameters), and output data products to enable workflow reproducibility and reuse.
 
 Metrics & Statistics
 --------------------------

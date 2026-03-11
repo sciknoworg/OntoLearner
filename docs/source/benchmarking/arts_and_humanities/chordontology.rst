@@ -25,7 +25,7 @@
 Chord Ontology (ChordOntology)
 ========================================================================================================
 
-The Chord Ontology is an ontology for describing chords in musical pieces.
+The Chord Ontology is a formal representation for describing and classifying chords in musical compositions. It provides a structured vocabulary for representing harmonic concepts and chord structures, enabling precise annotation and analysis of music at the semantic level. The ontology captures essential chord properties including chord type (major, minor, diminished, augmented), root note, and constituent pitch classes. It facilitates semantic annotation of audio files, musical scores, and music information retrieval systems, allowing researchers and musicians to query and discover musical pieces based on harmonic content. The ontology integrates with broader music theory frameworks and supports interoperability with other music-related ontologies. By formalizing chord relationships and structures, the Chord Ontology enables computational music analysis, music recommendation systems, and digital musicology applications. It provides a common framework for music annotation across diverse platforms and datasets, supporting music education, composition analysis, and music information systems development.
 
 Metrics & Statistics
 --------------------------

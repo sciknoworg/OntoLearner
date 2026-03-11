@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Metadata for Intelligent Engineering (Metadata4Ing)
 ========================================================================================================
 
-The ontology Metadata4Ing provides a framework for the semantic description of research data     and of the whole data generation process, embracing the object of investigation,     all sample and data manipulation methods and tools, the data files themselves,     and the roles of persons and institutions. The structure and application of the ontology     are based on the principles of modularity and inheritance.
+The ontology Metadata4Ing provides a framework for the semantic description of research data and of the whole data generation process, embracing the object of investigation, all sample and data manipulation methods and tools, the data files themselves, and the roles of persons and institutions. It provides a structured vocabulary for representing research data, processes, and roles, supporting both theoretical and experimental research in intelligent engineering.
+
+The ontology employs a class-based modeling approach, defining classes for different types of research data, processes, and roles, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. Metadata4Ing supports the integration of data from various sources, promoting interoperability and data-driven research in intelligent engineering.
+
+Typical applications of Metadata4Ing include the development of new research data management methods, the optimization of research data generation processes, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, Metadata4Ing enhances collaboration and innovation in the field of intelligent engineering.
+
+**Example Usage**:
+Annotate a research dataset with Metadata4Ing terms to specify data types, processes, and roles, enabling semantic search and integration with research data management platforms.
 
 Metrics & Statistics
 --------------------------

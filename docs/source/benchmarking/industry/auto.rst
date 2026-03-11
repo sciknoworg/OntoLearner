@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Automotive Ontology (AUTO)
 ========================================================================================================
 
-The AUTOMOTIVE ONTOLOGY (AUTO) defines the shared conceptual structures     in the automotive industry. It is an OWL ontology. It is built upon the auto schema.org     extension created by the W3C Automotive Ontology Community Group. AUTO's development process     follows the best practices established by the EDMC FIBO Community.
+The Automotive Ontology (AUTO) is a comprehensive OWL ontology that defines shared conceptual structures and relationships in the automotive industry. It provides a standardized vocabulary for describing vehicles, components, systems, manufacturing processes, and regulatory requirements. AUTO is built upon the auto schema.org extension created by the W3C Automotive Ontology Community Group and follows best practices established by the EDM Council's Financial Industry Business Ontology (FIBO) Community. The ontology supports interoperability between automotive data sources, enabling integration of information from manufacturers, suppliers, service providers, and regulatory bodies. AUTO facilitates advanced applications such as digital twins, predictive maintenance, supply chain optimization, and regulatory compliance. By providing a common semantic framework, AUTO enables automated reasoning, data analytics, and knowledge sharing across the automotive ecosystem.
+
+**Example Usage**:
+Annotate a vehicle information system with AUTO terms to describe vehicle models, engine types, safety features, and maintenance schedules, enabling integration with manufacturer databases and regulatory reporting systems.
 
 Metrics & Statistics
 --------------------------

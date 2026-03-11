@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Open Innovation Environment Software (OIESoftware)
 ========================================================================================================
 
-EMMO-compliant, domain-level OIE ontology tackling the areas of software products.
+The Open Innovation Environment Software Ontology (OIESoftware) is an EMMO-compliant, domain-level ontology designed to represent software products and their roles in materials science and engineering. OIESoftware provides a structured vocabulary for describing software tools, simulation codes, data analysis packages, and their relationships to computational workflows and experimental processes. The ontology supports semantic annotation of software metadata, enabling interoperability, data integration, and advanced analytics across research platforms and digital infrastructures. OIESoftware is designed for extensibility, allowing researchers and developers to describe new software products, functionalities, and application domains. By providing a standardized framework, OIESoftware facilitates software discovery, workflow automation, and knowledge sharing in computational materials science. The ontology is actively maintained and extended to incorporate new software technologies and research requirements.
+
+**Example Usage**:
+Annotate a computational workflow with OIESoftware terms to specify the simulation codes used (e.g., "LAMMPS", "VASP"), their input/output formats, and their roles in the workflow, enabling semantic search and integration with research data management systems.
 
 Metrics & Statistics
 --------------------------

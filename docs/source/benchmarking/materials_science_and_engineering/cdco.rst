@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Crystallographic Defect Core Ontology (CDCO)
 ========================================================================================================
 
-CDCO defines the common terminology shared across all types of crystallographic defects,     providing a unified framework for data integration in materials science.
+The Crystallographic Defect Core Ontology (CDCO) is a domain ontology designed to provide a unified framework for representing and integrating data about crystallographic defects in materials science. CDCO defines common terminology for various types of defects, including vacancies, interstitials, dislocations, grain boundaries, and stacking faults, as well as their properties and relationships. The ontology supports semantic annotation of experimental and computational data, enabling interoperability, data integration, and advanced analysis across materials databases and research platforms. CDCO is designed for extensibility, allowing researchers to describe new defect types, characterization methods, and material systems. By providing a standardized vocabulary, CDCO facilitates cross-study comparison, defect modeling, and knowledge sharing in materials science. The ontology is actively maintained and extended to incorporate new concepts and requirements from the materials science community.
+
+**Example Usage**:
+Annotate a materials database with CDCO terms to specify the types of crystallographic defects present in a sample, their properties (e.g., density, energy), and relationships to material processing conditions, enabling semantic search and integration with defect modeling tools.
 
 Metrics & Statistics
 --------------------------

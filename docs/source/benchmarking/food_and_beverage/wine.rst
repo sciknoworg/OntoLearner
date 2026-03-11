@@ -25,7 +25,7 @@
 Wine Ontology (Wine)
 ========================================================================================================
 
-A project to define an RDF style ontology for wines and the wine-industry
+The Wine Ontology is a comprehensive RDF-based vocabulary for describing wines, wine-making processes, vineyards, and the wine industry. It provides a detailed classification system for different types of wines (red, white, rosé, sparkling), wine regions, grape varieties, producers, and tasting characteristics. The ontology captures properties such as alcohol content, acidity, vintage year, and flavor profiles, enabling precise semantic representation of wine products and attributes. It integrates with related ontologies for representing food, geography, and commercial information, supporting applications in e-commerce, wine recommendation systems, and food science research. Example: A specific wine instance can be linked to its grape variety (Pinot Noir), wine region (Burgundy), producer, vintage year, and taste descriptors through well-defined ontology properties.
 
 Metrics & Statistics
 --------------------------

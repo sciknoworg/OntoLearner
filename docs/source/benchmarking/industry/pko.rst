@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -26,6 +24,11 @@ Provenance Knowledge Ontology (PKO)
 ========================================================================================================
 
 Procedural Knowledge (PK) is knowing how to perform some tasks,     as opposed to descriptive/declarative knowledge, which is knowing     what in terms of facts and notions. In industry, PK refers in general     to structured processes to be followed, and can be related     to both production (e.g., procedure on the production line in a plant)     and services (e.g., procedure for troubleshooting during customer support);     to specific technical expertise (e.g., procedure to set up a specific machine)     and general regulations and best practices (e.g., safety procedures,     activities to minimise environmental impact).
+
+The Provenance Knowledge Ontology (PKO) is a domain ontology for representing procedural knowledge and provenance in industrial contexts. PKO formalizes structured processes, procedures, and best practices relevant to both production and services, capturing technical expertise, regulatory compliance, and operational workflows. The ontology enables the modeling of step-by-step procedures, their dependencies, required resources, and associated outcomes, supporting traceability and knowledge transfer. PKO is designed to facilitate the integration of procedural knowledge with provenance data, enabling organizations to track the execution of processes, ensure quality, and support continuous improvement. By providing a standardized vocabulary, PKO enhances interoperability between industrial information systems and supports automation, training, and compliance auditing. The ontology is maintained by industry experts and is aligned with broader provenance and process ontologies for maximum compatibility.
+
+**Example Usage**:
+Annotate a manufacturing process with PKO terms to describe each procedural step, required equipment, responsible personnel, and resulting products, enabling automated tracking, quality assurance, and regulatory compliance.
 
 Metrics & Statistics
 --------------------------

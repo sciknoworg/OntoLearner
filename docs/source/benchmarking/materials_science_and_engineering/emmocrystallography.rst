@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Crystallography Ontology (EMMOCrystallography)
 ========================================================================================================
 
-A crystallography domain ontology based on EMMO and the CIF core dictionary. It is implemented as a formal language.
+The Crystallography Ontology (EMMOCrystallography) is a domain ontology based on the Elementary Multiperspective Material Ontology (EMMO) and the Crystallographic Information Framework (CIF) core dictionary. It provides a formal language for representing crystallographic concepts, including crystal structures, symmetry operations, atomic positions, and experimental conditions. EMMOCrystallography supports semantic annotation of crystallographic datasets, enabling interoperability, data integration, and advanced analysis in materials science and structural biology. The ontology facilitates the standardized description of crystallographic experiments, data processing workflows, and structural models. By providing a rigorous semantic framework, EMMOCrystallography enhances reproducibility, data sharing, and computational modeling in crystallography research. The ontology is actively maintained and extended to incorporate new crystallographic concepts and community requirements.
+
+**Example Usage**:
+Annotate a crystallographic dataset with EMMOCrystallography terms to specify crystal lattice parameters, symmetry groups, atomic coordinates, and experimental metadata, enabling semantic search and integration with structural databases.
 
 Metrics & Statistics
 --------------------------

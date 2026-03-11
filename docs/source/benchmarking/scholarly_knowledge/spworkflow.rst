@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 SMART Protocols Ontology: Workflow Module (SP-Workflow)
 ========================================================================================================
 
-SP-Workflow module represents: i) the executable  elements of a protocol; ii) the experimental actions     and material entities that participates in instructions (sample/specimen, organisms, reagents,     instruments);  and iii) the order of execution of the instructions.
+SP-Workflow module represents: i) the executable elements of a protocol; ii) the experimental actions and material entities that participate in instructions (sample/specimen, organisms, reagents, instruments); and iii) the order of execution of the instructions. It provides a structured vocabulary for representing workflows, experimental actions, and related data, supporting both theoretical and experimental research in workflow management.
+
+The ontology employs a class-based modeling approach, defining classes for different types of workflows, experimental actions, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. SP-Workflow supports the integration of data from various sources, promoting interoperability and data-driven research in workflow management.
+
+Typical applications of SP-Workflow include the development of new workflow management methods, the optimization of experimental workflows, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, SP-Workflow enhances collaboration and innovation in the field of workflow management.
+
+**Example Usage**:
+Annotate an experimental workflow with SP-Workflow terms to specify workflow steps, experimental actions, and related data, enabling semantic search and integration with workflow management platforms.
 
 Metrics & Statistics
 --------------------------

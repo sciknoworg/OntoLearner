@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 The Elementary Multiperspective Material Ontology (EMMO)
 ========================================================================================================
 
-The Elementary Multiperspective Material Ontology (EMMO) is the result of a multidisciplinary effort within the EMMC,     aimed at the development of a standard representational ontology framework based on current materials modelling     and characterization knowledge. Instead of starting from general upper level concepts, as done by other ontologies,     the EMMO development started from the very bottom level, using the actual picture of the physical world coming     from applied sciences, and in particular from physics and material sciences.
+The Elementary Multiperspective Material Ontology (EMMO) is a foundational ontology developed by the European Materials Modelling Council (EMMC) to provide a standard representational framework for materials science and engineering. EMMO is unique in that it starts from the bottom level, using the physical world as described by applied sciences, especially physics and materials science, rather than from abstract upper-level concepts. The ontology covers a wide range of concepts including materials, processes, properties, structures, and measurement techniques, supporting the semantic integration of materials modelling, characterization, and experimental data. EMMO is modular and extensible, enabling domain-specific extensions for specialized applications in materials research, digital twins, and manufacturing. By providing a rigorous semantic foundation, EMMO facilitates data interoperability, knowledge sharing, and advanced analytics across the materials science community. The ontology is actively maintained and extended to incorporate new concepts and requirements from ongoing research and industrial projects.
+
+**Example Usage**:
+Annotate a materials database with EMMO terms to describe the composition, structure, and properties of a material sample, the experimental techniques used for characterization, and the modelling workflows applied, enabling semantic search and data integration across research projects.
 
 Metrics & Statistics
 --------------------------

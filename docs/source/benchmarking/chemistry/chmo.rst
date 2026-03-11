@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Chemical Methods Ontology (ChMO)
 ========================================================================================================
 
-The Chemical Methods Ontology contains more than 3000 classes and describes methods used to:     - collect data in chemical experiments, such as mass spectrometry and electron microscopy.     - prepare and separate material for further analysis, such as sample ionisation, chromatography, and electrophoresis     - synthesise materials, such as epitaxy and continuous vapour deposition It also describes the instruments used         in these experiments, such as mass spectrometers and chromatography columns and their outputs.
+The Chemical Methods Ontology (ChMO) is a comprehensive ontology that provides a structured vocabulary for describing chemical methods, experimental techniques, and analytical procedures used in chemistry and related sciences. ChMO contains over 3000 classes covering methods for data collection (e.g., mass spectrometry, electron microscopy), sample preparation and separation (e.g., ionisation, chromatography, electrophoresis), and material synthesis (e.g., epitaxy, vapor deposition). The ontology also describes the instruments and equipment used in these experiments, such as mass spectrometers and chromatography columns, as well as the outputs and results generated. ChMO enables semantic annotation of experimental workflows, facilitating data integration, reproducibility, and advanced analysis across chemical research and laboratory information systems. By providing a standardized framework, ChMO supports interoperability between chemical databases, electronic lab notebooks, and computational tools. The ontology is actively maintained and extended to incorporate new methods and technologies as the field evolves.
+
+**Example Usage**:
+Annotate a chemical experiment with ChMO terms to specify the analytical method (e.g., "liquid chromatography-mass spectrometry"), sample preparation steps, instrument configuration, and data outputs, enabling semantic search and integration with other chemical research datasets.
 
 Metrics & Statistics
 --------------------------

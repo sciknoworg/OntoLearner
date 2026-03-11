@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Quantities, Units, Dimensions and Data Types (QUDT)
 ========================================================================================================
 
-QUDT is an advocate for the development and implementation of standards to quantify data expressed in RDF and JSON.
+The Quantities, Units, Dimensions and Data Types (QUDT) ontology is a comprehensive framework for representing quantities, units, dimensions, and data types in scientific, engineering, and technical domains. QUDT provides a standardized vocabulary for describing measurement units, physical quantities, conversion factors, and dimensional analysis, supporting data expressed in RDF and JSON. The ontology is widely used for semantic annotation of scientific datasets, IoT data streams, and engineering models, enabling automated unit conversion, validation, and interoperability across diverse systems. QUDT is maintained by NASA Ames Research Center and is continuously updated to reflect new standards and measurement systems. By providing a common semantic foundation, QUDT facilitates data integration, analytics, and knowledge sharing in multidisciplinary projects. The ontology is extensible and can be aligned with other units and measurements ontologies for broader compatibility.
+
+**Example Usage**:
+Annotate a scientific dataset with QUDT terms to specify the quantities measured (e.g., "temperature", "pressure"), their units (e.g., "degree Celsius", "pascal"), and conversion factors, enabling automated unit conversion and semantic search across datasets.
 
 Metrics & Statistics
 --------------------------

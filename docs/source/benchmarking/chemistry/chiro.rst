@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 CHEBI Integrated Role Ontology (CHIRO)
 ========================================================================================================
 
-CHEBI provides a distinct role hierarchy. Chemicals in the structural hierarchy are connected via a 'has role' relation.     CHIRO provides links from these roles to useful other classes in other ontologies.     This will allow direct connection between chemical structures (small molecules, drugs) and what they do.     This could be formalized using 'capable of', in the same way Uberon and the Cell Ontology link structures to processes.
+The CHEBI Integrated Role Ontology (CHIRO) is a specialized ontology designed to provide a structured role hierarchy for chemicals. It connects chemicals in the structural hierarchy via a 'has role' relation, linking them to relevant classes in other ontologies. This enables the formalization of relationships between chemical structures (e.g., small molecules, drugs) and their functional roles, such as their biological or chemical activities. CHIRO facilitates the integration of chemical data with biological and biomedical ontologies, supporting applications in drug discovery, chemical informatics, and systems biology. By providing a standardized framework for describing chemical roles, CHIRO enhances data interoperability and enables advanced semantic queries across chemical and biological datasets. The ontology is particularly useful for linking chemical entities to their roles in biological processes, such as enzyme inhibitors, signaling molecules, or structural components.
+
+**Example Usage**:
+Annotate a dataset of small molecules with CHIRO terms to specify their roles, such as "enzyme inhibitor" or "neurotransmitter," and link these roles to relevant biological processes or pathways.
 
 Metrics & Statistics
 --------------------------

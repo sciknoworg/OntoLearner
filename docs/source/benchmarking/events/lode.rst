@@ -25,7 +25,9 @@
 Linking Open Descriptions of Events (LODE)
 ========================================================================================================
 
-People conventionally refer to an action or occurrence taking place at a certain time     at a specific location as an event. This notion is potentially useful for connecting individual facts     recorded in the rapidly growing collection of linked data sets and for discovering more complex relationships     between data. The LODE provide an overview and comparison of existing event models,     looking at the different choices they make of how to represent events. It is a model for publishing records     of events as Linked Data. A tools for populating this model and a prototype “event directory” web service,     which can be used to locate stable URIs for events that have occurred,     provide RDFS+OWL descriptions and link to related resources.
+LODE (Linking Open Descriptions of Events) is an ontology for publishing and interlinking structured event descriptions as Linked Data. It provides lightweight classes and properties for representing events, their time and place, and simple relationships to agents and sources. LODE is intentionally minimalistic to maximize interoperability and ease of adoption: it models events as occurrences with temporal extents and locations, and supports linking to richer event models when needed. Typical use cases include event directories, cultural heritage timelines, news event annotation, and discovery services that aggregate event records from multiple data providers. LODE emphasizes stable URIs and practical tools for populating event descriptions, enabling the creation of a searchable event directory of historical and contemporary events.
+
+**Example usage**: describe a public lecture as an lode:Event with a start/end time, a dcterms:spatial property linking to a Place URI, and a dc:source pointing to a news article; link the event to authority URIs for the speaker. The ontology's simplicity makes it a useful pivot for integrating event data across heterogeneous datasets.
 
 Metrics & Statistics
 --------------------------

@@ -25,7 +25,10 @@
 The Open Energy Ontology (OEO)
 ========================================================================================================
 
-The Open Energy Ontology (OEO) is a domain ontology of the energy system analysis context.     It is developed as part of the Open Energy Family. The OEO is published on GitHub under     an open source license. The language used is the Manchester OWL Syntax, which was chosen     because it is user-friendly for editing and viewing differences of edited files. The OEO is constantly     being extended. The first version of the OEO has been released on June 11th 2020. A Steering Committee (OEO-SC)     was created to accompany the development, increase awareness of the ontology and include it in current projects.
+The Open Energy Ontology (OEO) is a comprehensive domain ontology specifically designed for the energy system analysis context, covering concepts, relationships, and entities relevant to energy research and planning. Developed as part of the Open Energy Platform ecosystem, OEO provides standardized terminology for representing energy systems including generation, transmission, distribution, and consumption across diverse energy sources and technologies. The ontology is expressed in Manchester OWL Syntax to ensure user-friendliness for editing and version control, facilitating collaborative development and maintenance. OEO is actively maintained and continuously extended to incorporate emerging energy concepts, technologies, and regulatory frameworks relevant to energy system analysis and planning. The ontology is governed by a Steering Committee (OEO-SC) that ensures quality, alignment with community needs, and integration with ongoing energy research and policy projects. OEO enables standardized data representation, knowledge integration, and automated reasoning about energy systems for research, policy analysis, and strategic planning.
+
+**Example Usage**:
+Annotate an energy system dataset with OEO terms to describe energy sources (solar, wind, biomass), generation capacity, transmission networks, demand patterns, and storage systems to enable automated analysis of energy system configurations and transition scenarios.
 
 Metrics & Statistics
 --------------------------

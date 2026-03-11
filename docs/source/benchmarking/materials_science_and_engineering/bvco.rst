@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,11 @@
 Battery Value Chain Ontology (BVCO)
 ========================================================================================================
 
-Basically, Battery Value Chain Ontology (BVCO) aims to model processes along the Battery value chain. Processes are     holistic perspective elements that transform inputs/educts (matter, energy, information)     into output/products (matter, energy, information) with the help of tools (devices, algorithms).     They can be decomposed into sub-processes and have predecessor and successor processes.
+The Battery Value Chain Ontology (BVCO) is a domain ontology developed to model processes, entities, and relationships along the battery value chain, from raw material extraction to recycling and disposal. BVCO provides a structured vocabulary for describing holistic processes that transform inputs (matter, energy, information) into outputs (products, byproducts, waste) using tools such as devices and algorithms. The ontology supports decomposition of processes into sub-processes, capturing predecessor and successor relationships, and enabling detailed modeling of manufacturing, logistics, usage, and end-of-life stages. BVCO facilitates semantic annotation of battery value chain data, supporting interoperability, data integration, and advanced analytics across research, industry, and regulatory platforms. By providing a standardized framework, BVCO enables lifecycle assessment, supply chain optimization, and sustainability analysis in the battery industry. The ontology is actively maintained and extended to incorporate new battery technologies, process innovations, and regulatory requirements.
+
+**Example Usage**:
+Annotate a battery manufacturing workflow with BVCO terms to specify raw material sourcing, cell assembly, quality control, logistics, and recycling processes, enabling semantic search and integration with supply chain management systems.
+
 
 Metrics & Statistics
 --------------------------

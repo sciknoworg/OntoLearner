@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Additive Manufacturing Ontology (AMOntology)
 ========================================================================================================
 
-The AM ontology has been developed following two major milestones. The ontology developed within the first milestone     includes AMProcessOntology, ModelOntology and AMOntology files. AMProcessOntology contains the set of entities     used to capture knowledge about additive manufacturing processes. ModelOntology contains the set of entities     used to capture knowledge about modeling concepts that represent (possibly) multi-physics multi-scale processes.     AMOntology uses AMProcessOntology and ModelOntology files to describe entities that capture knowledge     about characteristics of computational models for AM processes.
+The Additive Manufacturing Ontology (AMOntology) is a domain ontology developed to represent knowledge about additive manufacturing (AM) processes, computational models, and their characteristics. It is structured around two main components: AMProcessOntology, which captures entities and relationships relevant to AM processes, and ModelOntology, which describes modeling concepts for multi-physics, multi-scale simulations. AMOntology integrates these components to provide a comprehensive framework for describing process parameters, material properties, equipment, and computational models in AM. The ontology supports semantic annotation of digital manufacturing workflows, enabling data integration, process optimization, and knowledge sharing across research and industry. By providing a standardized vocabulary, AMOntology facilitates interoperability between digital manufacturing systems, simulation tools, and research databases. The ontology is actively maintained and extended to support new developments in additive manufacturing and computational modeling.
+
+**Example Usage**:
+Annotate an additive manufacturing workflow with AMOntology terms to specify process parameters (e.g., laser power, layer thickness), computational model characteristics, and material properties, enabling semantic search and integration with digital manufacturing platforms.
 
 Metrics & Statistics
 --------------------------

@@ -25,7 +25,9 @@
 Juso Ontology (Juso)
 ========================================================================================================
 
-Juso Ontology is a Web vocabulary for describing geographical addresses and features.
+The Juso Ontology is a comprehensive Web vocabulary for describing and classifying geographical addresses, locations, and geographical features with machine-readable semantic annotations. It provides a structured framework for representing address components including postal codes, street names, building numbers, and administrative hierarchies, enabling standardized address representation across diverse geographic regions. Juso supports multiple address formats and conventions, accommodating international addressing systems and local geographic naming practices. The ontology facilitates geocoding applications, location-based services, and geographic data integration by providing unambiguous semantic definitions of address components and spatial relationships. Juso integrates with broader geographic ontologies (GEO, GeoNames) to link address information with geographic entities and spatial contexts.
+
+**Example Usage**: Represent a complete address as a Juso address instance with properties for street name, building number, postal code, city, and country, enabling automated address validation and geographic lookup services.
 
 Metrics & Statistics
 --------------------------

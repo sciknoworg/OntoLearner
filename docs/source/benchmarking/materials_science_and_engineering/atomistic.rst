@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Atomistic Ontology (Atomistic)
 ========================================================================================================
 
-An EMMO-based domain ontology for atomistic and electronic modelling.
+The Atomistic Ontology is an EMMO-based domain ontology designed for atomistic and electronic modeling in materials science. It provides a structured vocabulary for representing atomic-scale structures, electronic properties, and simulation methods. The ontology supports semantic annotation of computational models, enabling interoperability and data integration across materials modeling platforms. Atomistic Ontology facilitates detailed description of atomic configurations, electronic states, and interactions, supporting advanced materials design and analysis. The ontology is actively maintained and extended to incorporate new modeling techniques and scientific findings. By providing a standardized framework, Atomistic Ontology enhances reproducibility, data sharing, and collaborative research in atomistic simulations.
+
+**Example Usage**:
+Annotate a computational materials science dataset with Atomistic Ontology terms to specify atomic structures, electronic properties, and simulation parameters, enabling semantic search and integration with modeling tools.
 
 Metrics & Statistics
 --------------------------

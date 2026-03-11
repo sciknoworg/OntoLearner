@@ -25,7 +25,9 @@
 FIX Ontology (FIX)
 ========================================================================================================
 
-An ontology of physico-chemical methods and properties.
+The FIX (Physico-Chemical Methods and Properties) Ontology provides a systematic vocabulary for describing and classifying physico-chemical methods and their associated properties. It represents analytical and experimental techniques used in chemistry and materials science, including measurement methods, analytical procedures, and the physical and chemical properties they determine. The ontology captures relationships between methods and properties, enabling precise description of experimental workflows and results in laboratory and industrial settings. It supports semantic interoperability in chemistry databases, laboratory information systems (LIMS), and scientific data repositories.
+
+**Example Usage**: Represent a mass spectrometry measurement as an instance of FIX:AnalyticalMethod linked to FIX:ChemicalProperty instances such as molecular weight or compound identification.
 
 Metrics & Statistics
 --------------------------

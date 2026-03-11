@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Vocabulary of a Friend (VOAF)
 ========================================================================================================
 
-The Vocabulary of a Friend (VOAF) is a vocabulary specification providing elements allowing the description     of vocabularies (RDFS vocabularies or OWL ontologies). It is based on Dublin Core and VOID.
+The Vocabulary of a Friend (VOAF) is a vocabulary specification providing elements allowing the description of vocabularies (RDFS vocabularies or OWL ontologies). It is based on Dublin Core and VOID. VOAF provides a structured vocabulary for representing vocabularies, supporting both theoretical and experimental research in vocabulary management.
+
+The ontology employs a class-based modeling approach, defining classes for different types of vocabularies, elements, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. VOAF supports the integration of data from various sources, promoting interoperability and data-driven research in vocabulary management.
+
+Typical applications of VOAF include the development of new vocabulary management methods, the optimization of vocabulary usage, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, VOAF enhances collaboration and innovation in the field of vocabulary management.
+
+**Example Usage**:
+Annotate a vocabulary with VOAF terms to specify vocabulary types, elements, and relationships, enabling semantic search and integration with vocabulary management platforms.
 
 Metrics & Statistics
 --------------------------

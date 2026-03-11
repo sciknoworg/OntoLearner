@@ -25,7 +25,9 @@
 BBC CMS Ontology (BBCCMS)
 ========================================================================================================
 
-The Content Management Systems ontology defines the terms that LDP needs to interact with systems that produce content.     The linked data platform contain semantic metadata for the creative content and also the things the BBC produces content about.     The CMS ontology defines how these things and content are associated with other BBC instances of the same thing.
+The BBC CMS Ontology is a specialized vocabulary for representing and managing relationships between content management systems, creative content, and the entities that BBC produces content about. It defines standardized terms and structures for Content Management Systems (CMS) to interact with linked data platforms, enabling semantic representation of how content relates to real-world concepts. The ontology captures associations between different instances of the same concept across multiple BBC systems, ensuring consistency and linkage of related entities (people, places, organizations, events) referenced in content. BBCCMS facilitates content integration and semantic linking across BBC's diverse content production systems and publishing platforms. The ontology enables sophisticated content discovery and recommendations by providing explicit relationships between content and the concepts it addresses.
+
+**Example Usage**: Link a BBC news article or program to BBC Core Concepts (people, organizations, places, events) with BBCCMS terms that establish how the same entity is referenced across different content pieces and editorial domains.
 
 Metrics & Statistics
 --------------------------

@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 National Research Data Infrastructure Ontology (NFDIcore)
 ========================================================================================================
 
-The National Research Data Infrastructure (NFDI) initiative has led to the formation of various consortia,     each focused on developing a research data infrastructure tailored to its specific domain.     To ensure interoperability across these consortia, the NFDIcore ontology has been developed     as a mid-level ontology for representing metadata related to NFDI resources, including individuals,     organizations, projects, data portals, and more.
+The National Research Data Infrastructure (NFDI) initiative has led to the formation of various consortia,     each focused on developing a research data infrastructure tailored to its specific domain.     To ensure interoperability across these consortia, the NFDIcore ontology has been developed     as a mid-level ontology for representing metadata related to NFDI resources, including individuals,     organizations, projects, data portals, and more. It provides a structured vocabulary for representing research data infrastructure, supporting both theoretical and experimental research in research data management.
+
+The ontology employs a class-based modeling approach, defining classes for different types of research data infrastructure, metadata, and related entities, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. NFDIcore supports the integration of data from various sources, promoting interoperability and data-driven research in research data management.
+
+Typical applications of NFDIcore include the development of new research data infrastructure methods, the optimization of research data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, NFDIcore enhances collaboration and innovation in the field of research data management.
+
+**Example Usage**:
+Annotate a research data infrastructure project with NFDIcore terms to specify infrastructure types, metadata, and related entities, enabling semantic search and integration with research data management platforms.
 
 Metrics & Statistics
 --------------------------

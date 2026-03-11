@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 BBC Food Ontology (BBCFood)
 ========================================================================================================
 
-The Food Ontology is a simple lightweight ontology for publishing data about recipes,     including the foods they are made from and the foods they create as well as the diets,     menus, seasons, courses and occasions they may be suitable for. Whilst it originates in a specific BBC use case,     the Food Ontology should be applicable to a wide range of recipe data publishing across the web.
+The BBC Food Ontology (BBCFood) is a lightweight ontology designed to represent recipes, ingredients, and culinary concepts for publishing food-related data on the web. It provides a structured vocabulary for describing foods, their components, preparation methods, dietary suitability, menus, courses, seasons, and occasions. BBCFood supports semantic annotation of recipes and food content, enabling interoperability and data integration across recipe websites, nutrition databases, and culinary applications. The ontology is designed for extensibility and can be adapted to a wide range of food data publishing use cases beyond the original BBC context. By providing standardized terms and relationships, BBCFood facilitates advanced search, recommendation, and personalized meal planning. The ontology is maintained as an open resource and is compatible with other food and nutrition ontologies for broader data integration.
+
+**Example Usage**:
+Annotate a recipe database with BBCFood terms to specify ingredients, preparation steps, dietary restrictions (e.g., "vegetarian"), and suitable occasions (e.g., "holiday dinner"), enabling semantic search and personalized recipe recommendations.
 
 Metrics & Statistics
 --------------------------

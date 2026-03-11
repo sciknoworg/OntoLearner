@@ -25,7 +25,9 @@
 The Description of a Project vocabulary (DOAP)
 ========================================================================================================
 
-The Description of a Project vocabulary (DOAP), described using W3C RDF Schema and     the Web Ontology Language to describe software projects, and in particular open source projects.
+The Description of a Project (DOAP) vocabulary is an RDF/OWL-based ontology for machine-readable description of software projects, particularly open source initiatives. It models core project entities such as Project, Person, Revision, Repository, and License, capturing essential metadata about software development and distribution. DOAP enables representation of project attributes including name, description, homepage, version control systems (Git, SVN), issue tracking systems, programming languages, release history, and developer/maintainer information. The vocabulary facilitates integration of project data across diverse repositories, forges, and development platforms, supporting automated project discovery, dependency analysis, and ecosystem mapping. DOAP enables research on software development practices, project evolution, and open source community dynamics through structured, interoperable metadata.
+
+**Example Usage**: Describe an open source project with DOAP properties like foaf:name (project name), doap:repository (code repository URL), doap:programming-language (Python), doap:maintainer (developer agent), and doap:license (CC0 or Apache 2.0).
 
 Metrics & Statistics
 --------------------------

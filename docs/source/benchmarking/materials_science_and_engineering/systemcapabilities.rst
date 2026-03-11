@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 System Capabilities Ontology (SystemCapabilities)
 ========================================================================================================
 
-This ontology describes system capabilities, operating ranges, and survival ranges.
+The System Capabilities Ontology (SystemCapabilities) is designed to describe system capabilities, operating ranges, and survival ranges in materials science and engineering. It provides a structured vocabulary for representing the capabilities and limitations of systems, supporting both theoretical and experimental research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of systems, capabilities, and ranges, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. SystemCapabilities supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
+
+Typical applications of SystemCapabilities include the development of new systems with specific capabilities, the optimization of system performance, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, SystemCapabilities enhances collaboration and innovation in the field of materials science.
+
+**Example Usage**:
+Annotate a materials science project with SystemCapabilities terms to specify system types, capabilities, and ranges, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

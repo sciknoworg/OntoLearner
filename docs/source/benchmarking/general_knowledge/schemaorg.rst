@@ -25,7 +25,10 @@
 Schema.org Ontology (SchemaOrg)
 ========================================================================================================
 
-Schema.org is a collaborative, community activity with a mission to create,     maintain, and promote schemas for structured data on the Internet, on web pages, in email messages, and beyond.
+Schema.org is a collaborative, community-driven initiative providing standardized schemas and ontologies for structured data markup across the entire web. It creates and maintains comprehensive vocabularies that enable webmasters, content creators, and developers to annotate web pages, email messages, and other digital resources with machine-readable semantic information. Schema.org covers diverse domains including products, organizations, events, publications, creative works, health and medical information, and many others. The schemas are designed for broad applicability across different industries while remaining flexible enough for domain-specific extensions. Schema.org markup is widely recognized and processed by major search engines, social media platforms, and aggregation services, directly impacting content discovery and presentation. The ontology facilitates knowledge graph construction, enhanced search results (rich snippets), and improved interoperability across web applications and services.
+
+**Example Usage**:
+Annotate a restaurant website with Schema.org markup including Organization (restaurant details), LocalBusiness (address, phone, hours), and AggregateRating (customer reviews) to enable search engines to display rich snippets with ratings, location, and hours directly in search results.
 
 Metrics & Statistics
 --------------------------

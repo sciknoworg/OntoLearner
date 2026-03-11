@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Friend of a Friend (FOAF)
 ========================================================================================================
 
-FOAF is a project devoted to linking people and information using the Web.     Regardless of whether information is in people's heads, in physical or digital documents,     or in the form of factual data, it can be linked.
+FOAF (Friend of a Friend) is a widely adopted ontology for describing people, their relationships, and the information that links them on the web. It provides a standardized vocabulary for representing personal profiles, social connections, organizations, projects, and online accounts. FOAF enables the creation of machine-readable social networks, supporting interoperability between social platforms, personal websites, and linked data applications. The ontology is designed for extensibility, allowing integration with other vocabularies and domain-specific ontologies. FOAF is used in digital identity management, social media analytics, and knowledge graph construction to enable semantic search, data integration, and discovery of social connections. By providing a common framework, FOAF facilitates the linking of people and information across the decentralized web.
+
+**Example Usage**:
+Annotate a personal website or social network profile with FOAF terms to describe a person's name, email, homepage, friends, and memberships in organizations, enabling semantic search and cross-platform social data integration.
 
 Metrics & Statistics
 --------------------------

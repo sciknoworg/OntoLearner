@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Tribology and Artificial Intelligence Ontology (TribAIn)
 ========================================================================================================
 
-TribAIn is an ontology for the description of tribological experiments and their results.     It is designed to be used in the context of the TribAIn project, which aims to develop     a knowledge-based system for the design of tribological systems.
+TribAIn is an ontology for the description of tribological experiments and their results. It is designed to be used in the context of the TribAIn project, which aims to develop a knowledge-based system for the design of tribological systems. It provides a structured vocabulary for representing tribological experiments, results, and related data, supporting both theoretical and experimental research in tribology.
+
+The ontology employs a class-based modeling approach, defining classes for different types of tribological experiments, results, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. TribAIn supports the integration of data from various sources, promoting interoperability and data-driven research in tribology.
+
+Typical applications of TribAIn include the development of new tribological experiment methods, the optimization of tribological system design, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, TribAIn enhances collaboration and innovation in the field of tribology.
+
+**Example Usage**:
+Annotate a tribological experiment with TribAIn terms to specify experiment types, results, and related data, enabling semantic search and integration with tribology research platforms.
 
 Metrics & Statistics
 --------------------------

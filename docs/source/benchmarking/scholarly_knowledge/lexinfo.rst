@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 LexInfo (LexInfo)
 ========================================================================================================
 
-LexInfo allows us to associate linguistic information to elements in an ontology with respect     to any level of linguistic description and expressivity. LexInfo has been implemented as an OWL ontology     and is available together with an API.
+LexInfo allows us to associate linguistic information to elements in an ontology with respect to any level of linguistic description and expressivity. It provides a structured vocabulary for representing linguistic information, supporting both theoretical and experimental research in linguistics.
+
+The ontology employs a class-based modeling approach, defining classes for different types of linguistic information, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. LexInfo supports the integration of data from various sources, promoting interoperability and data-driven research in linguistics.
+
+Typical applications of LexInfo include the development of new linguistic information management methods, the optimization of linguistic data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, LexInfo enhances collaboration and innovation in the field of linguistics.
+
+**Example Usage**:
+Annotate an ontology with LexInfo terms to specify linguistic information, enabling semantic search and integration with linguistic information management platforms.
 
 Metrics & Statistics
 --------------------------

@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Protein Modifications Ontology (PSIMOD)
 ========================================================================================================
 
-PSI-MOD is an ontology developed by the Proteomics Standards Initiative (PSI) that describes protein chemical modifications,     logically linked by an is_a relationship in such a way as to form a direct acyclic graph (DAG).     The PSI-MOD ontology has more than 45 top-level nodes, and provides alternative hierarchical paths     for classifying protein modifications either by the molecular structure of the modification,     or by the amino acid residue that is modified.
+The Protein Modifications Ontology (PSIMOD) is a comprehensive ontology developed by the Proteomics Standards Initiative (PSI) to describe chemical modifications of proteins. It organizes protein modifications into a directed acyclic graph (DAG) structure, enabling hierarchical classification based on molecular structure or the modified amino acid residue. PSIMOD captures a wide range of protein modifications, including phosphorylation, acetylation, ubiquitination, and glycosylation, providing detailed descriptions of their chemical nature and biological significance. The ontology supports semantic annotation of proteomics datasets, facilitating data integration, analysis, and sharing across proteomics studies. By providing a standardized vocabulary, PSIMOD enhances the reproducibility and interoperability of proteomics research, enabling advanced queries and comparative analyses.
+
+**Example Usage**:
+Annotate a proteomics dataset with PSIMOD terms to specify protein modifications, such as "PSI-MOD:00046 (phosphorylation)" or "PSI-MOD:00048 (acetylation)," and link these modifications to their respective biological pathways.
 
 Metrics & Statistics
 --------------------------

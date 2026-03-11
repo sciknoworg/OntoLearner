@@ -25,7 +25,9 @@
 BBC Programmes Ontology (BBCProgrammes)
 ========================================================================================================
 
-This ontology aims at providing a simple vocabulary for describing programmes.     It covers brands, series (seasons), episodes, broadcast events, broadcast services,etc.     Its development was funded by the BBC, and is heavily grounded on previous programmes data modelling work done there.
+The BBC Programmes Ontology is a specialized vocabulary for describing television and radio programmes, their structure, and broadcast distribution across BBC platforms. It provides standardized terminology for representing programme hierarchies including brands (show franchises), series/seasons (annual or thematic groupings), episodes (individual content pieces), broadcast events (scheduled transmissions), and broadcast services (channels, stations). BBCProgrammes enables precise semantic annotation of broadcast content metadata including airing dates, durations, genres, and relationships between programmes. The ontology facilitates content discovery and programme management across BBC's television and radio platforms by providing standardized semantic structures. BBCProgrammes development was informed by extensive BBC programme data modelling experience, ensuring practical applicability in production systems.
+
+**Example Usage**: Represent a television series using BBCProgrammes terms with brand (Doctor Who), seasons/series (Series 10, Series 11), individual episodes with episode numbers and air dates, and associated broadcast events showing transmission times across different BBC channels.
 
 Metrics & Statistics
 --------------------------

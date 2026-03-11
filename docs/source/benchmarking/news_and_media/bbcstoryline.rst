@@ -25,7 +25,9 @@
 BBC Storyline Ontology (BBCStoryline)
 ========================================================================================================
 
-The News Storyline Ontology is a generic model for describing and organising the stories news organisations tell.     The ontology is intended to be flexible to support any given news or media publisher's approach to handling news stories.     At the heart of the ontology, is the concept of Storyline. As a nuance of the English language the word 'story'     has multiple meanings. In news organisations, a story can be an individual piece of content,     such as an article or news report. It can also be the editorial view on events occurring in the world.
+The BBC Storyline Ontology is a generic semantic framework for describing, organizing, and managing news stories and narrative content across diverse media publishing platforms. It models the core concept of "Storyline" to distinguish between individual news content pieces (articles, reports, videos) and broader editorial narratives representing events or topics in the world. The ontology captures relationships between stories, events, entities (people, places, organizations), and time periods, enabling sophisticated content organization and discovery. BBCStoryline is designed to be flexible and adaptable, supporting different news publishers' approaches to story organization while providing standardized semantic structures. The ontology facilitates semantic linking of content across media platforms and enables advanced search, recommendation, and editorial workflow systems.
+
+**Example Usage**: Represent a news story about a major political event using BBCStoryline terms to link individual articles (multiple reporters' perspectives), associated entities (politicians, organizations), timeline (chronological events), and related stories covering different aspects of the broader storyline.
 
 Metrics & Statistics
 --------------------------

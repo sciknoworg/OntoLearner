@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 General Formal Ontology (GFO)
 ========================================================================================================
 
-The General Formal Ontology is a top-level ontology for conceptual modeling,     which is being constantly further developed by Onto-Med. It includes elaborations of categories like objects,     processes, time and space, properties, relations, roles, functions, facts, and situations.     Moreover, we are working on an integration with the notion of levels of reality in order     to more appropriately capture entities in the material, mental, and social areas.
+The General Formal Ontology (GFO) is a top-level, foundational ontology developed by Onto-Med for conceptual modeling across scientific, technical, and philosophical domains. GFO provides a rigorous framework for representing fundamental categories such as objects, processes, time, space, properties, relations, roles, functions, facts, and situations. It is designed to support the integration of material, mental, and social entities by incorporating the notion of levels of reality, enabling nuanced modeling of complex systems. GFO is modular and extensible, allowing domain ontologies to build upon its core categories for specialized applications. The ontology is used in knowledge engineering, biomedical informatics, cognitive science, and information systems to ensure semantic interoperability and logical consistency. GFO is actively maintained and extended to address emerging requirements in conceptual modeling and ontology integration.
+
+**Example Usage**:
+Use GFO as the upper ontology for a biomedical ontology, classifying entities such as "disease" (situation), "patient" (object), and "treatment process" (process), enabling semantic integration and reasoning across clinical and research data.
 
 Metrics & Statistics
 --------------------------

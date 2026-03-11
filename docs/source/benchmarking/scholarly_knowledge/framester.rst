@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Framester Ontology (Framester)
 ========================================================================================================
 
-Framester is a a frame-based ontological resource acting as a hub     between linguistic resources such as FrameNet, WordNet, VerbNet, BabelNet,     DBpedia, Yago, DOLCE-Zero, and leveraging this wealth of links to create     an interoperable predicate space formalized according to frame semantics and semiotics.     Framester uses WordNet and FrameNet at its core, expands it to other resources     transitively, and represents them in a formal version of frame semantics.
+Framester is a frame-based ontological resource acting as a hub between linguistic resources such as FrameNet, WordNet, VerbNet, BabelNet, DBpedia, Yago, DOLCE-Zero, and leveraging this wealth of links to create an interoperable predicate space formalized according to frame semantics and semiotics. Framester uses WordNet and FrameNet at its core, expands it to other resources transitively, and represents them in a formal version of frame semantics. It provides a structured vocabulary for representing linguistic resources, supporting both theoretical and experimental research in linguistics.
+
+The ontology employs a class-based modeling approach, defining classes for different types of linguistic resources, frames, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. Framester supports the integration of data from various sources, promoting interoperability and data-driven research in linguistics.
+
+Typical applications of Framester include the development of new linguistic resource integration methods, the optimization of linguistic data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, Framester enhances collaboration and innovation in the field of linguistics.
+
+**Example Usage**:
+Annotate a linguistic dataset with Framester terms to specify linguistic resources, frames, and relationships, enabling semantic search and integration with linguistic information management platforms.
 
 Metrics & Statistics
 --------------------------

@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Environmental Noise Measurement Ontology (ENM)
 ========================================================================================================
 
-The eNanoMapper project (https://www.enanomapper.net/), NanoCommons project (https://www.nanocommons.eu/)     and ACEnano project (http://acenano-project.eu/) are creating a pan-European computational infrastructure     for toxicological data management for ENMs, based on semantic web standards and ontologies.     This ontology is an application ontology targeting the full domain of nanomaterial safety assessment.     It re-uses several other ontologies including the NPO, CHEMINF, ChEBI, and ENVO.
+The Environmental Noise Measurement Ontology (ENM) is an application ontology developed as part of the eNanoMapper  (https://www.enanomapper.net/), NanoCommons (https://www.nanocommons.eu/), and ACEnano (http://acenano-project.eu/)  projects to support toxicological data management for engineered nanomaterials (ENMs). ENM provides a comprehensive vocabulary for describing nanomaterial safety assessment, including experimental procedures, measurement techniques, material properties, and exposure scenarios. The ontology reuses and integrates terms from several established ontologies, such as the Nanoparticle Ontology (NPO), Chemical Information Ontology (CHEMINF), Chemical Entities of Biological Interest (ChEBI), and Environment Ontology (ENVO), to ensure semantic interoperability and data integration. ENM enables standardized annotation of nanomaterial safety data, facilitating data sharing, regulatory compliance, and advanced analysis across research projects and databases. By providing a common framework, ENM supports the development of computational infrastructure for toxicology, risk assessment, and environmental health studies. The ontology is actively maintained and extended to incorporate new concepts and requirements from the nanomaterial safety community.
+
+**Example Usage**:
+Annotate a nanotoxicology study with ENM terms to specify the nanomaterial type, measurement methods, exposure conditions, and observed biological effects, enabling cross-study comparison and regulatory reporting.
 
 Metrics & Statistics
 --------------------------

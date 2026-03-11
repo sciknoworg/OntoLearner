@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Activity Streams 2.0 Ontology (AS2)
 ========================================================================================================
 
-The Activity Streams 2.0 ontology is a vocabulary for describing social activities and actions.     It is based on the Activity Streams 2.0 specification and provides a set of classes and properties     for describing activities on the web.
+The Activity Streams 2.0 Ontology (AS2) is a W3C standard vocabulary for describing social activities, actions, and interactions on the web. It provides a set of classes and properties for modeling activities such as posting, liking, sharing, following, and commenting, as well as the actors, objects, and targets involved. AS2 enables interoperability between social networking platforms, federated social web applications, and activity tracking systems by providing a common semantic framework. The ontology supports extensibility, allowing developers to define custom activity types and properties for domain-specific use cases. AS2 is widely used in decentralized social networks, content syndication, and social analytics, enabling rich representation and exchange of activity data. By standardizing the description of social actions, AS2 facilitates data integration, aggregation, and analysis across diverse social platforms.
+
+**Example Usage**:
+Annotate a social networking application with AS2 terms to describe user activities such as posting a status update, liking a photo, or following another user, enabling interoperability with other platforms and activity streams consumers.
 
 Metrics & Statistics
 --------------------------

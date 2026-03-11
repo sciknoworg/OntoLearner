@@ -25,7 +25,9 @@
 BBC Core Concepts Ontology (BBCCoreConcepts)
 ========================================================================================================
 
-The generic BBC ontology for people, places, events, organisations, themes which represent things     that make sense across the BBC. This model is meant to be generic enough, and allow clients (domain experts)     link their own concepts e.g., athletes or politicians using rdfs:sublClassOf the particular concept.
+The BBC Core Concepts Ontology is a foundational vocabulary defining generic concepts that are universally relevant across BBC's diverse content domains including people, places, events, organizations, and themes. It provides a shared semantic model for representing real-world entities that frequently appear in BBC content, enabling consistent annotation and discovery across multiple media types and editorial departments. BBCCoreConcepts is designed to be sufficiently generic to serve as a base ontology, allowing domain experts and specialized ontologies to extend it for specific use cases (e.g., athletes for sports content, politicians for news content) through rdfs:subClassOf relationships. The ontology enables semantic interoperability across BBC's content production systems and linked data platforms by providing standardized definitions of common entities. BBCCoreConcepts facilitates sophisticated content linking and discovery by establishing shared semantic representations of entities referenced across diverse BBC programs and services.
+
+**Example Usage**: Define domain-specific concepts by creating athlete, musician, or politician subclasses of the generic "Person" concept in BBC Core Concepts, enabling both generic searches and domain-specific searches for related content.
 
 Metrics & Statistics
 --------------------------

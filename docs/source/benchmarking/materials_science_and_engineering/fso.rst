@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Flow Systems Ontology (FSO)
 ========================================================================================================
 
-The Flow Systems Ontology (FSO) is an ontology for describing interconnected systems     with material or energy flow connections, and their components.
+The Flow Systems Ontology (FSO) is a domain ontology developed to describe interconnected systems with material or energy flow connections and their components. FSO provides a structured vocabulary for representing flow systems, subsystems, flow paths, nodes, and the properties of materials or energy being transferred. The ontology supports semantic annotation of process engineering data, enabling interoperability, data integration, and advanced analysis in chemical engineering, energy systems, and process industries. FSO is designed for extensibility, allowing researchers and engineers to describe new flow system types, process configurations, and measurement techniques. By providing a standardized framework, FSO facilitates process modeling, simulation, optimization, and knowledge sharing across engineering domains. The ontology is actively maintained and extended to incorporate new concepts and requirements from the process engineering community.
+
+**Example Usage**:
+Annotate a chemical process simulation with FSO terms to specify the flow system structure, material streams, energy flows, and process units, enabling semantic search and integration with process engineering databases and simulation tools.
 
 Metrics & Statistics
 --------------------------

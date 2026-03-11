@@ -4,7 +4,7 @@ Ontology Hosting
 Ontology Repositories
 -----------------------
 
-OntoLearner provides seamless integration with HuggingFace, allowing you to easily download ontologies and use. OntoLearner follows a systematic methodology for processing and distributing ontologies through Hugging Face. Each ontology undergoes a comprehensive processing pipeline that includes: (1) loading and parsing the original ontology file, (2) extracting structured learning datasets including term typings, taxonomic relations, and non-taxonomic relations, (3) computing detailed metrics about the ontology's topology and content, (4) generating comprehensive documentation, and (5) organizing the processed data by domain and uploading to dedicated Hugging Face repositories. This approach ensures that researchers have access to both the original ontologies and ready-to-use datasets optimized for machine learning applications, while maintaining full traceability and documentation of the processing methodology.
+OntoLearner provides seamless integration with HuggingFace, allowing you to easily download ontologies and use them. OntoLearner follows a systematic methodology for processing and distributing ontologies through Hugging Face. Each ontology undergoes a comprehensive processing pipeline that includes: (1) loading and parsing the original ontology file, (2) extracting structured learning datasets including term typings, taxonomic relations, and non-taxonomic relations, (3) computing detailed metrics about the ontology's topology and content, (4) generating comprehensive documentation, and (5) organizing the processed data by domain and uploading to dedicated Hugging Face repositories. This approach ensures that researchers have access to both the original ontologies and ready-to-use datasets optimized for machine learning applications, while maintaining full traceability and documentation of the processing methodology.
 
 
 OntoLearner maintains a set of default repositories for each domain under the `SciKnowOrg <https://huggingface.co/collections/SciKnowOrg/>`_ organization. These repositories follow the naming pattern ``SciKnowOrg/ontolearner-{domain}`` and contain pre-processed ontology data.
@@ -25,7 +25,7 @@ The complete list of OntoLearner domain repositories is shown below:
    :widths: 20 40 40
 
    * - 🏷️ Domain
-     - 🤗 HuggignFace Repository
+     - 🤗 Hugging Face Repository
      - 📝 Description
    * - `Agriculture <https://huggingface.co/datasets/SciKnowOrg/ontolearner-agriculture>`_
      - ``SciKnowOrg/ontolearner-agriculture``

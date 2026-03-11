@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 NanoMine Ontology (NanoMine)
 ========================================================================================================
 
-Polymer Nanocomposites based ontology which enable researchers to develop and test     broad-reaching hypotheses about how inter-relationships between different materials     processing methods and composition result in specific changes in material properties.
+The NanoMine Ontology is a domain ontology developed to support research in polymer nanocomposites. It provides a structured vocabulary for representing the inter-relationships between different materials processing methods, compositions, and resulting material properties. NanoMine enables researchers to develop and test hypotheses about how these inter-relationships affect material performance, supporting both experimental and computational research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of materials, processes, and properties, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. NanoMine supports the integration of data from various sources, promoting interoperability and data-driven research in polymer nanocomposites.
+
+Typical applications of NanoMine include the development of new polymer nanocomposites with specific properties, the optimization of processing methods, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, NanoMine enhances collaboration and innovation in the field of polymer nanocomposites.
+
+**Example Usage**:
+Annotate a polymer nanocomposite dataset with NanoMine terms to specify material types, processing methods, and properties, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

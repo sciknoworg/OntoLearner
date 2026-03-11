@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,9 @@
 BBC Politics News Ontology (BBCPolitics)
 ========================================================================================================
 
-The Politics Ontology describes the concepts that occur in BBC politics news.
+The BBC Politics Ontology provides a formal vocabulary for describing and classifying political concepts, entities, and events as they appear in BBC news coverage. It models key political domain concepts including politicians, political parties, government institutions, legislative processes, electoral systems, and political ideologies. The ontology captures relationships between political entities (e.g., politicians affiliated with parties, parties contesting elections) and enables semantic annotation of news articles, television programs, and online content related to politics. It supports content discovery and automated linking of related political news stories across BBC's diverse platforms and archives. The ontology follows BBC's linked data principles and integrates with other BBC ontologies (People, Places, Organizations) to provide comprehensive semantic context.
+
+**Example Usage**: Annotate a political news article with BBCPolitics terms to identify mentioned politicians (as foaf:Person instances), their party affiliations, relevant legislation being discussed, and electoral contexts.
 
 Metrics & Statistics
 --------------------------

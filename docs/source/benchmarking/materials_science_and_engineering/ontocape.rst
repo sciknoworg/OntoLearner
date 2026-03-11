@@ -72,3 +72,4 @@ Usage Example
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+Annotate a process engineering project with OntoCAPE terms to specify process types, equipment, and data, enabling semantic search and integration with process informatics platforms.

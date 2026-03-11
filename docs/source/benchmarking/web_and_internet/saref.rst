@@ -25,7 +25,9 @@
 Smart Applications REFerence ontology (SAREF)
 ========================================================================================================
 
-The Smart Applications REFerence (SAREF) suite of ontologies forms a shared model of consensus     intended to enable semantic interoperability between solutions from different providers     and among various activity sectors in the Internet of Things (IoT),     thus contributing to the development of data spaces. SAREF is published as a set of open standards     produced by ETSI Technical Committee Smart Machine-to-Machine communications (SmartM2M).
+SAREF is a comprehensive suite of interrelated ontologies that defines a shared model of consensus for enabling semantic interoperability across IoT solutions and smart applications from diverse providers and industry sectors. It provides standardized vocabulary for describing smart devices, their capabilities, interactions, and services in Internet of Things (IoT) and smart environments (smart homes, smart buildings, smart cities). SAREF captures essential IoT concepts including devices, sensors, actuators, services, properties, and the relationships between them, facilitating machine-to-machine communication and automation. The SAREF suite is published as open standards by ETSI Technical Committee SmartM2M (Smart Machine-to-Machine communications), ensuring broad industry adoption and compatibility. SAREF enables semantic data spaces by providing common terminology that allows data and services from different IoT platforms and manufacturers to be integrated and understood.
+
+**Example Usage**: Annotate an IoT device deployment with SAREF terms describing the device type (smart thermostat, light bulb, motion sensor), its capabilities (temperature measurement, brightness control), services offered (remote adjustment, scheduling), and relationships to control systems and user preferences.
 
 Metrics & Statistics
 --------------------------

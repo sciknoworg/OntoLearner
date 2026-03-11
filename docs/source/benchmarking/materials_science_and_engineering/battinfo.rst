@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Battery Interface Ontology (BattINFO)
 ========================================================================================================
 
-BattINFO is a foundational resource for harmonizing battery knowledge representation     and enhancing data interoperability. The primary objective is to provide the necessary tools     to create FAIR (Findable, Accessible, Interoperable, Reusable) battery data     that can be integrated into the Semantic Web.
+The Battery Interface Ontology (BattINFO) is a domain ontology developed to standardize and harmonize the representation of battery-related knowledge, data, and interfaces. BattINFO provides a structured vocabulary for describing battery materials, components, interfaces, processes, and performance metrics, supporting the annotation and integration of experimental and computational battery data. The ontology is designed to enable FAIR battery data practices, facilitating data sharing, interoperability, and reuse across research, industry, and digital platforms. BattINFO supports semantic annotation of battery experiments, manufacturing workflows, and simulation results, enabling advanced analytics, lifecycle assessment, and knowledge discovery. The ontology is extensible and can be aligned with other materials science and energy ontologies for broader compatibility. BattINFO is actively maintained and extended to incorporate new battery technologies, standards, and research requirements.
+
+**Example Usage**:
+Annotate a battery research dataset with BattINFO terms to specify electrode materials, electrolyte composition, interface properties, and performance metrics (e.g., capacity, cycle life), enabling semantic search and integration with battery databases and digital twins.
 
 Metrics & Statistics
 --------------------------

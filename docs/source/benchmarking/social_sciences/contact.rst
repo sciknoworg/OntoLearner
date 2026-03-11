@@ -25,7 +25,9 @@
 Contact Ontology (Contact)
 ========================================================================================================
 
-Ontology to capture concepts related to contact information (addresses, phone numbers).     Reuses the iContact Ontology developed by the Enterprise Integration Lab in Toronto.     The iContact ontology is extended to introduce a specialized definition of Hours of Operation,     defined as a subclass of both the iContact definition of hours of operation,     and a subclass of the Recurring Event class defined in the iCity Recurring Event ontology.     The Contact ontology also extends the definition of address to include an associated location.
+The Contact Ontology is a specialized vocabulary for representing and managing contact information and related communication metadata such as addresses, phone numbers, email addresses, and physical locations. It reuses and extends the iContact Ontology developed by the Enterprise Integration Lab, incorporating specialized definitions while maintaining backward compatibility. The ontology extends the iContact model by introducing Hours of Operation as a specialized concept defined as both a subclass of iContact hours of operation and the Recurring Event class from the iCity Recurring Event ontology. Contact Ontology enriches address representation by associating address data with spatial location information, enabling geocoding and location-aware applications. The ontology supports business and organizational applications including customer relationship management (CRM), location-based services, and facility management systems.
+
+**Example Usage**: Represent a business location with Contact terms including street address, postal code, phone number, email, hours of operation (business hours), and associated geographic coordinates for location mapping and service discovery.
 
 Metrics & Statistics
 --------------------------

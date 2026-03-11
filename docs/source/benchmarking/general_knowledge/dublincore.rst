@@ -25,7 +25,10 @@
 Dublin Core Vocabulary (DublinCore)
 ========================================================================================================
 
-The Dublin Core Schema is a small set of vocabulary terms that can be used to describe several kinds of resources.     Dublin Core Metadata may be used for multiple purposes, from simple resource description,     to combining metadata vocabularies of different metadata standards, to providing interoperability     for metadata vocabularies in the Linked Data cloud and Semantic Web implementations.
+The Dublin Core Schema is a small yet powerful vocabulary providing essential metadata elements for describing resources across diverse domains. Dublin Core Metadata can be used for multiple purposes including simple resource description, cross-standard metadata interoperability, and Linked Data cloud integration. It comprises fifteen core metadata elements (title, creator, subject, description, publisher, contributor, date, type, format, identifier, source, language, relation, coverage, rights) that are universally applicable across resource types. Dublin Core supports both simple and qualified metadata representation, enabling both basic and complex semantic annotation requirements. The vocabulary is language-independent and has become the de facto standard for resource description in digital libraries, institutional repositories, and data catalogs worldwide. Dublin Core facilitates semantic interoperability across heterogeneous information systems and enables automated resource discovery and management.
+
+**Example Usage**:
+Annotate a research dataset or publication with Dublin Core terms including title, creator (author), date, subject (keywords), description, format (data type), identifier (DOI/URL), and rights (license) to enable standardized discovery and citation across digital repositories.
 
 Metrics & Statistics
 --------------------------

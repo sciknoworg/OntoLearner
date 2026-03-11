@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Ontology of Units of Measure (OM)
 ========================================================================================================
 
-The Ontology of units of Measure (OM) models concepts and relations important to scientific research.     It has a strong focus on units, quantities, measurements, and dimensions.     It includes, for instance, common units such as the SI units metre and kilogram,     but also units from other systems of units such as the mile or nautical mile. For many application areas     it includes more specific units and quantities, such as the unit of the Hubble constant or the quantity vaselife.     The following application areas are supported by OM: Geometry; Mechanics; Thermodynamics; Electromagnetism;     Fluid mechanics; Chemical physics; Photometry; Radiometry and Radiobiology; Nuclear physics;     Astronomy and Astrophysics; Cosmology; Earth science; Meteorology; Material science; Microbiology;     Economics; Information technology and Typography.
+The Ontology of units of Measure (OM) models concepts and relations important to scientific research. It has a strong focus on units, quantities, measurements, and dimensions. It includes, for instance, common units such as the SI units metre and kilogram, but also units from other systems of units such as the mile or nautical mile. For many application areas, it includes more specific units and quantities, such as the unit of the Hubble constant or the quantity vaselife. The following application areas are supported by OM: Geometry; Mechanics; Thermodynamics; Electromagnetism; Fluid mechanics; Chemical physics; Photometry; Radiometry and Radiobiology; Nuclear physics; Astronomy and Astrophysics; Cosmology; Earth science; Meteorology; Material science; Microbiology; Economics; Information technology and Typography.
+
+The ontology employs a class-based modeling approach, defining classes for different types of units, quantities, and measurements, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OM supports the integration of data from various sources, promoting interoperability and data-driven research in units and measurements.
+
+Typical applications of OM include the development of new measurement methods, the optimization of measurement practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OM enhances collaboration and innovation in the field of units and measurements.
+
+**Example Usage**:
+Annotate a scientific dataset with OM terms to specify units, quantities, and measurements, enabling semantic search and integration with measurement management platforms.
 
 Metrics & Statistics
 --------------------------

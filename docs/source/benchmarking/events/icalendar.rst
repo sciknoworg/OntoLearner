@@ -25,7 +25,9 @@
 iCalendar Vocabulary (iCalendar)
 ========================================================================================================
 
-iCalendar is an Internet standard for exchanging calendar and scheduling data across different applications     and platforms using a standardized text-based format (.ics). It enables interoperability for events, tasks,     and scheduling, supporting features like recurring events, invitations, and time zone adjustments.     While widely used in applications like Google Calendar and Outlook, its complexity and partial implementations     pose challenges, leading to efforts to integrate it with Semantic Web technologies     for enhanced data linking and automation.
+iCalendar is an Internet standard and RDF vocabulary for exchanging calendar and scheduling data across applications using a standardized representation (.ics and RDF views). It models core scheduling concepts such as Events, To-Dos, Recurrence Rules, Attendees, Time Zones, and Alarms, enabling interoperable representation of meetings, recurring appointments, and calendar invitations. While the original iCalendar format (.ics) is a text standard widely implemented in client applications (Google Calendar, Outlook), the iCalendar vocabulary expresses these concepts in RDF to support Semantic Web integration, richer linking, and automated reasoning. Key characteristics include explicit recurrence modelling, timezone-aware datatypes, and support for invitations and participation roles. Common applications include calendar synchronization, meeting scheduling services, automated reminders, and semantic linking of event metadata with external datasets.
+
+**Example usage**: represent a weekly team meeting as an Event with a RRULE for weekly recurrence, linked Attendee agents with roles (organizer, participant), and timezone-aware start/end datetimes. The vocabulary can be combined with other ontologies (e.g., FOAF for people) to enrich event descriptions and support advanced calendar automation.
 
 Metrics & Statistics
 --------------------------

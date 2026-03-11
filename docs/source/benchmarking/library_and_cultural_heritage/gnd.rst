@@ -1,5 +1,6 @@
 
 
+
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +26,9 @@
 Gemeinsame Normdatei (GND)
 ========================================================================================================
 
-GND stands for Gemeinsame Normdatei (Integrated Authority File) and offers a broad range of elements     to describe authorities. The GND originates from the German library community and aims     to solve the name ambiguity problem in the library world.
+The Gemeinsame Normdatei (GND, Integrated Authority File) is a comprehensive semantic vocabulary and linked data resource developed by the German library and information community for describing and disambiguating authority data. GND provides standardized, machine-readable descriptions of persons, organizations, geographic locations, corporate bodies, and other entities to solve name ambiguity problems in library catalogs and information systems. The ontology offers a rich set of properties and relationships for describing biographical data, organizational hierarchies, place names, and subject matter authorities. GND is widely used in German-speaking libraries, archives, and cultural heritage institutions for authority control and semantic data linking. The vocabulary integrates with broader linked data ecosystems and international authority systems (VIAF, LCSH) to enable cross-institutional data integration and discovery.
+
+**Example Usage**: Link a library catalog record to GND authority entries for the author (as person), publisher (as corporate body), and subject headings (as topic authorities) to enable semantic discovery and disambiguation across German and international library systems.
 
 Metrics & Statistics
 --------------------------

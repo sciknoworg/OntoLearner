@@ -25,7 +25,9 @@
 Semanticscience Integrated Ontology (SIO)
 ========================================================================================================
 
-The semanticscience integrated ontology (SIO) provides a simple, integrated upper level ontology (types, relations)     for consistent knowledge representation across physical, processual and informational entities.     This project provides foundational support for the Bio2RDF (http://bio2rdf.org) and SADI (http://sadiframework.org) projects.
+The Semanticscience Integrated Ontology (SIO) is a simple yet comprehensive upper-level ontology that provides foundational types and relations for consistent semantic knowledge representation across physical entities, processes, and information constructs. SIO defines core abstract concepts such as objects, processes, attributes, and information entities, enabling researchers to build domain-specific ontologies with consistent semantic foundations. The ontology supports interconnection of diverse knowledge domains through its generalized entity and relationship types, facilitating interoperability across heterogeneous biological and biomedical ontologies. SIO serves as the semantic backbone for major linked data projects including Bio2RDF (which integrates biological databases) and SADI (Semantic Automated Discovery and Integration framework). The ontology enables semantic reasoning and automated knowledge discovery by providing explicit typing and relationship hierarchies that computationally systems can interpret.
+
+**Example Usage**: Use SIO classes to type entities in a knowledge graph (e.g., SIO:Protein, SIO:Gene, SIO:Organism) and relate them via SIO properties (e.g., SIO:is-derived-from, SIO:encodes, SIO:has-function) for automated biomedical data integration and discovery.
 
 Metrics & Statistics
 --------------------------

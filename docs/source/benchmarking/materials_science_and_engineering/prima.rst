@@ -25,7 +25,9 @@
 PRovenance Information in MAterials science (PRIMA)
 ========================================================================================================
 
-An ontology that captures the provenance information in the materials science domain.
+PRIMA is a comprehensive ontology that formalizes and captures provenance information essential for understanding the complete lifecycle and traceability of materials science data, experiments, and computational workflows. It provides structured vocabulary for describing the origins, history, transformations, and chain of custody of materials science information from experimental synthesis through characterization to computational modeling. PRIMA enables documentation of experimental procedures, computational methods, instruments used, software tools employed, and human researchers involved in materials science investigations. The ontology captures temporal information (when experiments were conducted), spatial context (where work was performed), and relationships between different research activities and resulting data. PRIMA facilitates reproducibility, data authentication, and knowledge integration in materials science by providing standardized provenance metadata compatible with linked data standards.
+
+**Example Usage**: Annotate a materials science dataset with PRIMA terms describing experimental origin (synthesis method, instrument, date), processing steps applied, computational analyses performed, and final data product generation, enabling complete traceability and reproducibility of materials discovery workflows.
 
 Metrics & Statistics
 --------------------------

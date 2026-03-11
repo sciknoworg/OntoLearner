@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Phenotype and Trait Ontology (PATO)
 ========================================================================================================
 
-An ontology of phenotypic qualities (properties, attributes or characteristics).
+The Phenotype and Trait Ontology (PATO) is a structured vocabulary designed to describe phenotypic qualities, attributes, and traits across a wide range of biological organisms. It provides a standardized framework for annotating and analyzing phenotypic data, enabling researchers to compare and integrate data across species and studies. PATO defines qualities such as color, shape, size, and behavior, and links them to specific biological entities and contexts. The ontology is widely used in genetics, developmental biology, and evolutionary studies to describe phenotypic variations and their underlying genetic and environmental factors. By providing a common language for phenotypic traits, PATO facilitates data sharing, integration, and computational analysis in the life sciences. The ontology is actively maintained and updated to incorporate new terms and relationships as research advances.
+
+**Example Usage**:
+Annotate a genetic study with PATO terms to describe phenotypic traits such as "PATO:0000323 (red coloration)" for a flower petal or "PATO:0000383 (increased size)" for a specific organ, enabling cross-study comparisons and meta-analyses.
 
 Metrics & Statistics
 --------------------------

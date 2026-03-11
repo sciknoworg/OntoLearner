@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Open Innovation Environment Manufacturing (OIEManufacturing)
 ========================================================================================================
 
-The manufacturing module populates the physicalistic perspective with manufacturing subclasses categorised     according to modern applied physical sciences.
+The Open Innovation Environment Manufacturing (OIEManufacturing) ontology is a domain-level ontology developed to represent manufacturing processes in materials science. It provides a structured vocabulary for describing manufacturing methods, equipment, and data, supporting both experimental and computational research in materials science.
+
+The ontology employs a class-based modeling approach, defining classes for different types of manufacturing methods, equipment, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OIEManufacturing supports the integration of data from various sources, promoting interoperability and data-driven research in materials manufacturing.
+
+Typical applications of OIEManufacturing include the development of new manufacturing methods, the optimization of manufacturing processes, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OIEManufacturing enhances collaboration and innovation in the field of materials manufacturing.
+
+**Example Usage**:
+Annotate a manufacturing dataset with OIEManufacturing terms to specify manufacturing methods, equipment, and data, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

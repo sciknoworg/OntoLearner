@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Chemical Entities of Biological Interest (ChEBI)
 ========================================================================================================
 
-Chemical Entities of Biological Interest (ChEBI) is a dictionary of molecular entities     focused on ‘small’ chemical compounds. The term ‘molecular entity’ refers to any constitutionally     or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer, etc.,     identifiable as a separately distinguishable entity. The molecular entities in question     are either products of nature or synthetic products used to intervene in the processes of living organisms.     ChEBI incorporates an ontological classification, whereby the relationships between molecular entities     or classes of entities and their parents and/or children are specified.
+Chemical Entities of Biological Interest (ChEBI) is a comprehensive ontology and dictionary of molecular entities, focusing on small chemical compounds. It provides a structured vocabulary for describing constitutionally or isotopically distinct atoms, molecules, ions, radicals, complexes, and other molecular entities. ChEBI includes both naturally occurring substances and synthetic products used in biological systems. The ontology incorporates an ontological classification system, specifying relationships between molecular entities and their parent or child classes. ChEBI is widely used in bioinformatics, cheminformatics, and systems biology to annotate chemical data, enabling interoperability between databases and facilitating advanced queries. By providing a standardized framework for describing chemical entities, ChEBI supports data integration, analysis, and sharing across diverse scientific domains.
+
+**Example Usage**:
+Annotate a dataset of metabolites with ChEBI terms to specify their molecular structures and roles in metabolic pathways, such as "ChEBI:15377 (glucose)" or "ChEBI:15378 (ATP)."
 
 Metrics & Statistics
 --------------------------

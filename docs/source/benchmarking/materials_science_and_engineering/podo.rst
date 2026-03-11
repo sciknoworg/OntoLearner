@@ -25,7 +25,9 @@
 Point Defects Ontology (PODO)
 ========================================================================================================
 
-PODO focuses on the description of point defects in crystalline materials.
+PODO is a specialized ontology that formalizes the conceptualization and semantic representation of point defects in crystalline materials, enabling precise description and classification of atomic-scale defects. It provides structured vocabulary for describing different point defect types including vacancies, interstitials, substitutional defects, and antisite defects, along with their properties and formation mechanisms. PODO captures essential characteristics of point defects such as charge state, migration energy, binding interactions with other defects, and effects on material properties. The ontology enables systematic annotation of experimental observations (X-ray diffraction, electron microscopy) and computational predictions (first-principles calculations) of point defects in various crystal structures. PODO facilitates knowledge integration in materials informatics and computational materials databases by providing standardized semantic representations of point defect phenomena.
+
+**Example Usage**: Annotate a first-principles DFT study of point defects in semiconductors with PODO terms describing defect type (e.g., oxygen vacancy in TiO2), charge state (+2, neutral, -2), formation energy, charge transition levels, and effects on band structure and electrical properties.
 
 Metrics & Statistics
 --------------------------

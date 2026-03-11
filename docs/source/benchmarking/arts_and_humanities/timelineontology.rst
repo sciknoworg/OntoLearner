@@ -25,7 +25,7 @@
 Timeline Ontology (TimelineOntology)
 ========================================================================================================
 
-The Timeline Ontology is centered around the notion of timeline,     seen here as a way to identify a temporal backbone.     A timeline may support a signal, a video, a score, a work, etc.
+The Timeline Ontology provides a formal framework for representing and managing temporal information in multimedia and music contexts. It centers around the notion of timelines as temporal backbones that can support various types of media including signals, videos, musical scores, and musical works. The ontology enables precise temporal annotation and synchronization of multimedia elements, allowing for structured representation of time-based relationships between different media components. It supports rich temporal modeling including durations, intervals, and temporal landmarks within multimedia documents. The Timeline Ontology facilitates content synchronization across different representations, such as aligning audio signals with musical notation or video with accompanying metadata. It is particularly valuable for music information retrieval systems, multimedia annotation tools, and digital humanities research. The ontology enables advanced applications including temporal querying of multimedia content, cross-media alignment, and time-aware metadata management. By providing a common temporal framework, the Timeline Ontology supports interoperability in music and media analysis systems, enabling researchers and practitioners to work with complex temporal structures in a standardized, machine-readable format.
 
 Metrics & Statistics
 --------------------------

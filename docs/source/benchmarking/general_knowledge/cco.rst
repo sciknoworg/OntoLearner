@@ -25,7 +25,10 @@
 Common Core Ontologies (CCO)
 ========================================================================================================
 
-The Common Core Ontologies (CCO) is a widely-used suite of eleven ontologies that consist     of logically well-defined generic terms and relations among them reflecting entities across all domains of interest.
+The Common Core Ontologies (CCO) is a comprehensive suite of eleven interconnected ontologies providing logically well-defined generic terms and relations applicable across all domains of interest. CCO is built on formal semantic principles, ensuring that its concepts are unambiguous, semantically consistent, and applicable to diverse knowledge representation tasks. The ontology covers foundational concepts including objects, events, qualities, locations, and abstract entities, with explicit definitions of relationships between them. CCO is designed for maximum reusability across domain ontologies, enabling developers to extend CCO terms for specialized applications while maintaining semantic interoperability. The ontologies are documented with formal definitions, examples, and competency questions supporting both human understanding and computational reasoning. CCO has been adopted in enterprise information systems, knowledge graph construction, and semantic data integration projects requiring rigorous ontological foundations.
+
+**Example Usage**:
+Represent a business domain ontology by extending CCO's generic Object and Event concepts to define company-specific entities (employees, contracts, transactions) and their relationships, ensuring compatibility with other systems using CCO foundations.
 
 Metrics & Statistics
 --------------------------

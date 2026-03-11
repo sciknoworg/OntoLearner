@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Crystallographic Information Framework Core Dictionary (CIFCore)
 ========================================================================================================
 
-(1) to explain the historical development of CIF dictionaries to define in a machine-actionable manner the contents     of data files covering various aspects of crystallography and related structural sciences; (2) to demonstrate     some of the more complex types of information that can be handled with this approach.
+The Crystallographic Information Framework Core Dictionary (CIFCore) is a domain ontology developed to provide a machine-actionable representation of data files covering various aspects of crystallography and related structural sciences. CIFCore explains the historical development of CIF dictionaries and demonstrates the handling of complex information types in crystallographic data. The ontology supports semantic annotation of crystallographic datasets, enabling interoperability, data integration, and advanced analysis in structural biology, materials science, and chemistry. CIFCore facilitates the standardized description of crystal structures, symmetry operations, atomic coordinates, and experimental conditions. By providing a comprehensive vocabulary, CIFCore supports data sharing, reproducibility, and computational modeling in crystallography research. The ontology is actively maintained and extended to incorporate new crystallographic concepts and data standards.
+
+**Example Usage**:
+Annotate a crystallographic dataset with CIFCore terms to specify crystal lattice parameters, atomic positions, symmetry groups, and experimental conditions, enabling semantic search and integration with structural databases.
 
 Metrics & Statistics
 --------------------------

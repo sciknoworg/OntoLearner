@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Software Ontology (SWO)
 ========================================================================================================
 
-The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions,     provenance and associated data. It contains detailed information on licensing and formats     as well as software applications themselves, mainly (but not limited) to the bioinformatics community.
+The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions, provenance, and associated data. It contains detailed information on licensing and formats as well as software applications themselves, mainly (but not limited) to the bioinformatics community. It provides a structured vocabulary for representing software tools, supporting both theoretical and experimental research in software management.
+
+The ontology employs a class-based modeling approach, defining classes for different types of software tools, tasks, and associated data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. SWO supports the integration of data from various sources, promoting interoperability and data-driven research in software management.
+
+Typical applications of SWO include the development of new software management methods, the optimization of software tool usage, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, SWO enhances collaboration and innovation in the field of software management.
+
+**Example Usage**:
+Annotate a software tool with SWO terms to specify tool types, tasks, and associated data, enabling semantic search and integration with software management platforms.
 
 Metrics & Statistics
 --------------------------

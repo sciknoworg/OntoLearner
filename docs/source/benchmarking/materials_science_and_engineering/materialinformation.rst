@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Material Information Ontology (MaterialInformation)
 ========================================================================================================
 
-The Material Information ontology is divided into smaller ontologies (partitions).     The partitions are Environment, Geometry, Material Information, Manufacturing Process, Property,     Substance, Unit Dimension, Structure, Equation and Physical Constant.
+The Material Information Ontology is a comprehensive framework designed to represent various aspects of materials science, including environment, geometry, material information, manufacturing processes, properties, substances, unit dimensions, structures, equations, and physical constants. This ontology is divided into smaller partitions, each focusing on a specific domain, to facilitate detailed modeling and integration of materials data.
+
+The ontology employs a modular approach, defining classes and properties for each partition to capture the complexity of materials science. It supports semantic annotation of materials data, enabling interoperability, data integration, and advanced analysis across research databases and digital platforms. By providing a standardized framework, the Material Information Ontology facilitates cross-study comparison, materials selection, and knowledge sharing in materials research and industry.
+
+Typical applications include the integration of materials data from various sources, the development of new materials with specific properties, and the optimization of manufacturing processes. The ontology is actively maintained and extended to incorporate new materials, technologies, and research requirements.
+
+**Example Usage**:
+Annotate a materials database with Material Information Ontology terms to specify material properties, manufacturing processes, and environmental conditions, enabling semantic search and integration with materials informatics platforms.
 
 Metrics & Statistics
 --------------------------

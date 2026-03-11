@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Quantities, Units, Dimensions and Values (QUDV)
 ========================================================================================================
 
-The SysML QUDV (Quantities, Units, Dimensions and Values) modelLibrary is specified in a UML/SysML     class/block diagram. In order to generalize its potential usage and alignment with other standardization efforts     concerning quantities and units, it is of interest to verify that the QUDV model can also be represented     in the form of an ontology using a formal ontology definition language.
+The Quantities, Units, Dimensions and Values (QUDV) ontology is a formal representation of the SysML QUDV modelLibrary, providing a standardized vocabulary for describing quantities, units, dimensions, and values in scientific and engineering domains. QUDV is specified in UML/SysML class/block diagrams and is designed to support interoperability and alignment with other standardization efforts concerning quantities and units. The ontology enables the semantic annotation of measurement data, supporting unit conversion, dimensional analysis, and data integration across diverse systems. QUDV is used in systems engineering, modeling and simulation, and scientific data management to ensure consistency and comparability of quantitative information. By providing a common framework, QUDV facilitates automated reasoning, validation, and knowledge sharing in multidisciplinary projects. The ontology is maintained by the SysML community and is aligned with other units and measurements ontologies for broader compatibility.
+
+**Example Usage**:
+Annotate a systems engineering model with QUDV terms to specify the quantities measured (e.g., "length", "mass"), their units (e.g., "meter", "kilogram"), and dimensions, enabling automated unit conversion and validation across engineering tools.
 
 Metrics & Statistics
 --------------------------

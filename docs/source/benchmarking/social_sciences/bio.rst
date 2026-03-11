@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 BIO: A vocabulary for biographical information (BIO)
 ========================================================================================================
 
-The BIO vocabulary contains terms useful for finding out more about people and their backgrounds and has some cross-over into genealogical information.     The approach taken is to describe a person's life as a series of interconnected key events, around which other information can be woven.     This vocabulary defines the event framework and supplies a set of core event types that cover many use cases, but it is expected that it     will be extended in other vocabularies to suit their needs. The intention of this vocabulary is to describe biographical events of people     and this intention carries through to the definitions of the properties and classes which are person-centric rather than neutral. For example     the Employment event puts the person being employed as the principal agent in the event rather than the employer.
+The BIO vocabulary is a domain ontology for describing biographical information about people, their backgrounds, and genealogical relationships. It models a person's life as a series of interconnected key events (birth, marriage, employment, death, etc.), providing a framework for weaving together biographical and genealogical data. BIO defines an event-centric approach, supplying a set of core event types and properties that are person-centric, making it suitable for representing life histories, family trees, and career trajectories. The ontology is designed for extensibility, allowing other vocabularies to build upon its event framework for specialized use cases. BIO is widely used in digital humanities, genealogy platforms, and social history research to enable semantic annotation, data integration, and advanced queries on biographical datasets. By providing a standardized vocabulary, BIO facilitates interoperability and knowledge sharing across biographical and genealogical information systems.
+
+**Example Usage**:
+Annotate a genealogy database with BIO terms to describe a person's birth, marriage, and employment events, linking them to dates, places, and related individuals for semantic search and family history visualization.
 
 Metrics & Statistics
 --------------------------

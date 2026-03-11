@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,14 @@
 Periodic Table of the Elements Ontology (PeriodicTable)
 ========================================================================================================
 
-PeriodicTable.owl is a representation of the Periodic Table of the Elements in the OWL Web Ontology Language.     It provides reference data to support Semantic Web applications in chemistry and related disciplines.
+The Periodic Table of the Elements Ontology (PeriodicTable) is a representation of the Periodic Table of the Elements in the OWL Web Ontology Language. It provides reference data to support Semantic Web applications in chemistry and related disciplines. The ontology offers a structured vocabulary for describing elements, their properties, and relationships, supporting both theoretical and experimental research in chemistry.
+
+The ontology employs a class-based modeling approach, defining classes for different types of elements, properties, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. PeriodicTable supports the integration of data from various sources, promoting interoperability and data-driven research in chemistry.
+
+Typical applications of PeriodicTable include the development of new chemical compounds, the optimization of chemical processes, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, PeriodicTable enhances collaboration and innovation in the field of chemistry.
+
+**Example Usage**:
+Annotate a chemical research project with PeriodicTable terms to specify element types, properties, and relationships, enabling semantic search and integration with chemical informatics platforms.
 
 Metrics & Statistics
 --------------------------

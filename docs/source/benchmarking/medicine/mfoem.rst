@@ -1,5 +1,3 @@
-
-
 .. sidebar::
 
     .. list-table:: **Ontology Card**
@@ -25,7 +23,10 @@
 Mental Functioning Ontology of Emotions - Emotion Module (MFOEM)
 ========================================================================================================
 
-The Mental Functioning Ontology - Emotion Module (MFOEM) aims to include all relevant aspects of affective phenomena     including their bearers, the different types of emotions, moods, etc., their different parts and dimensions     of variation, their facial and vocal expressions, and the role of emotions and affective phenomena     in general in influencing human behavior.This class processes Mental Functioning Ontology of Emotions (MFOEM)     using default behavior.
+The Mental Functioning Ontology of Emotions - Emotion Module (MFOEM) is a domain ontology designed to comprehensively represent affective phenomena, including emotions, moods, and their various dimensions and expressions. MFOEM provides a structured vocabulary for describing the bearers of emotions, types of emotions, their parts, and the dimensions along which they vary (such as intensity, duration, and valence). The ontology also covers facial and vocal expressions of emotions and the influence of affective phenomena on human behavior. MFOEM supports semantic annotation of psychological and neuroscientific data, enabling interoperability, data integration, and advanced analysis in affective science research. By providing a standardized framework, MFOEM facilitates cross-study comparison, meta-analysis, and the development of emotion-aware applications in artificial intelligence and human-computer interaction. The ontology is actively maintained and extended to incorporate new findings and requirements from the affective science community.
+
+**Example Usage**:
+Annotate a psychological study with MFOEM terms to specify the types of emotions measured (e.g., "fear," "joy"), their intensity, and observed facial expressions, enabling semantic integration and comparison across emotion research datasets.
 
 Metrics & Statistics
 --------------------------

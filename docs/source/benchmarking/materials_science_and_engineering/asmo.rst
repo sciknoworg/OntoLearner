@@ -25,7 +25,9 @@
 Atomistic Simulation Methods Ontology (ASMO)
 ========================================================================================================
 
-ASMO is an ontology that aims to define the concepts needed to describe commonly     used atomic scale simulation methods, i.e. density functional theory, molecular dynamics,     Monte Carlo methods, etc. ASMO uses the Provenance Ontology (PROV-O) to describe the simulation process.
+ASMO is a comprehensive ontology that formalizes concepts and relationships needed to describe and classify atomic-scale computational simulation methods used in materials science and computational chemistry. It provides structured vocabulary for representing commonly used simulation methodologies including density functional theory (DFT), molecular dynamics (MD), Monte Carlo (MC) methods, and other first-principles and statistical mechanics techniques. ASMO captures essential properties of simulation methods such as theoretical foundations, computational complexity, applicable material systems, and resulting properties that can be predicted. The ontology uses the Provenance Ontology (PROV-O) to formally describe simulation processes, enabling tracking of computational workflows, software tools, and input parameters used in materials modeling. ASMO facilitates reproducibility and interoperability in computational materials science by providing standardized semantic representations of simulation methods and their parameters.
+
+**Example Usage**: Annotate a materials database entry with ASMO terms for the simulation method (e.g., DFT with specific functional), system size (number of atoms), computational details (basis sets, k-point meshes), and resulting properties (band gap, elastic constants).
 
 Metrics & Statistics
 --------------------------

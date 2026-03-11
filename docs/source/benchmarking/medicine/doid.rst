@@ -25,7 +25,9 @@
 Human Disease Ontology (DOID)
 ========================================================================================================
 
-The Disease Ontology has been developed as a standardized ontology for human disease     with the purpose of providing the biomedical community with consistent,     reusable and sustainable descriptions of human disease terms,     phenotype characteristics and related medical vocabulary disease concepts.
+The Disease Ontology (DOID) is a standardized, machine-readable ontology that provides consistent, reusable and sustainable descriptions of human diseases, medical conditions, and disease-related phenotypic characteristics. Developed collaboratively by the biomedical research community, DOID comprehensively covers disease classifications across diverse medical domains including infectious diseases, genetic disorders, cancers, cardiovascular diseases, and mental health conditions. The ontology employs hierarchical relationships to organize diseases from general categories to specific disease subtypes, enabling both broad and fine-grained disease annotation. DOID integrates with other biomedical ontologies (e.g., phenotype ontologies, gene ontologies) to link disease concepts with associated genes, symptoms, and environmental factors. The ontology is widely used in biomedical databases, genomics research, and clinical informatics for disease annotation and knowledge integration.
+
+**Example Usage**: Annotate a disease research paper or dataset with DOID terms such as "DOID:2841 (lymphoma)" or "DOID:1816 (diabetes mellitus)" to enable automated discovery of disease-related research and clinical data.
 
 Metrics & Statistics
 --------------------------
