@@ -25,8 +25,8 @@ We start by importing necessary components from the ontolearner package, loading
         AgrO,                   # Example agricultural ontology
         train_test_split,       # Helper function for data splitting
         LabelMapper,            # Maps ontology labels to/from textual representations
-        StandardizedPrompting   # Standard prompting strategy across tasks
-        evaluation_report
+        StandardizedPrompting,  # Standard prompting strategy across tasks
+        evaluation_report,
     )
 
     # Load the AgrO ontology (an agricultural domain ontology)
@@ -99,16 +99,24 @@ To build a RAG model, you first initialize its constituent parts: an LLM learner
 
 Pipeline Usage
 ---------------------
-Similar to LLM and Retrieval learner, RAG Learner is also callable via streamlined ``LearnerPipeline`` class that simplifies the entire learning process.
+Similar to LLM and Retrieval learners, RAG is callable via ``LearnerPipeline``, you can run RAG in two equivalent ways:
 
-You initialize the ``LearnerPipeline`` by directly providing the ``retriever_id``, ``llm_id``, and other parameters like ``hf_token``, ``batch_size``, and ``top_k`` (number of top retrievals to include in RAG prompting). Then, you simply call the ``pipeline`` instance with your ``train_data``, ``test_data``, specify ``evaluate=True`` to compute metrics, and define the ``task`` (e.g., `'term-typing'`).
+1. Provide both ``retriever_id`` and ``llm_id`` (pipeline auto-composes an ``AutoRAGLearner``).
+2. Provide a prebuilt ``rag`` learner object for custom configurations.
 
 .. code-block:: python
 
-    # Import core modules from the OntoLearner library
-    from ontolearner import LearnerPipeline, AgrO, train_test_split
+    from ontolearner import (
+        LearnerPipeline,
+        AutoLLMLearner,
+        AutoRetrieverLearner,
+        AutoRAGLearner,
+        LabelMapper,
+        StandardizedPrompting,
+        AgrO,
+        train_test_split,
+    )
 
-    # Load the AgrO ontology, which contains concepts related to wines, their properties, and categories
     ontology = AgrO()
     ontology.load()  # Load entities, types, and structured term annotations from the ontology
     ontological_data = ontology.extract()

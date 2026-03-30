@@ -81,7 +81,7 @@ When working with large contexts, the retriever model may encounter memory issue
 Pipeline Usage
 -----------------------
 
-Similar to LLM learner, Retrieval Learner is also callable via streamlined ``LearnerPipeline`` class that simplifies the entire process learning.
+Similar to the LLM learner, Retrieval learner is also callable via the streamlined ``LearnerPipeline`` class. In this section we use **retriever-only** mode by providing ``retriever_id`` only.
 
 .. code-block:: python
 
@@ -100,7 +100,7 @@ Similar to LLM learner, Retrieval Learner is also callable via streamlined ``Lea
     )
 
     # Initialize the learning pipeline using a dense retriever
-    # This configuration uses sentence embeddings to match similar relational contexts
+    # This is retriever-only mode (no LLM component)
     pipeline = LearnerPipeline(
         retriever_id='sentence-transformers/all-MiniLM-L6-v2',  # Hugging Face model ID for retrieval
         batch_size=10,       # Number of samples to process per batch (if batching is enabled internally)
@@ -124,6 +124,10 @@ Similar to LLM learner, Retrieval Learner is also callable via streamlined ``Lea
 
     # Print the full output dictionary (includes predictions)
     print(outputs)
+
+.. note::
+
+    For RAG with ``LearnerPipeline`` see: `https://ontolearner.readthedocs.io/learners/rag.html <https://ontolearner.readthedocs.io/learners/rag.html>`_.
 
 .. hint::
     See `Learning Tasks <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_ for possible tasks within Learners.
@@ -371,6 +375,9 @@ Here the ``LLMAugmentedRetrieverLearner`` is the high-level wrapper that orchest
 	llm_augmenter_generator = LLMAugmenterGenerator(model_id='gpt-4.1-mini', token = 'your_openai_token', top_n_candidate=10)
 	augments = {"config": llm_augmenter_generator.get_config()}
 	augments[task] = llm_augmenter_generator.augment(ontological_data, task=task)
+
+	base_retriever = LLMAugmentedRetriever()
+	learner = LLMAugmentedRetrieverLearner(base_retriever=base_retriever)
 
 	learner.set_augmenter(augments)
 	learner.load(model_id="Qwen/Qwen3-Embedding-8B")
