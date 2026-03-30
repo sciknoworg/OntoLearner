@@ -30,13 +30,18 @@ logger = logging.getLogger(__name__)
 
 class LearnerPipeline:
     """
-    Unified pipeline for ontology learning using LLMs, retrievers, or RAG-based models.
-    Supports end-to-end training, prediction, and evaluation in a scikit-learn-like interface.
+    Unified pipeline for ontology learning using retriever-only, LLM-only,
+    or Retrieval-Augmented Generation (RAG) learners.
+
+    RAG can be configured in two ways:
+    1) pass both ``retriever`` and ``llm`` (or their model IDs), or
+    2) pass a prebuilt ``rag`` learner.
     """
 
     def __init__(self,
                  retriever: Optional[Any] = None,
                  llm: Optional[Any] = None,
+                 rag: Optional[Any] = None,
                  retriever_id: Optional[str] = None,
                  llm_id: Optional[str] = None,
                  prompting: Optional[AutoPrompt] = StandardizedPrompting,
@@ -46,20 +51,24 @@ class LearnerPipeline:
                  top_k: int = 5,
                  batch_size: int = 10,
                  device: str = 'cpu',
-                 max_new_tokens: int=10):
+                 max_new_tokens: int = 10):
         """
-        Initialize the pipeline for a specific ontology learning task.
+        Initialize the pipeline for ontology learning tasks.
 
         Args:
-            task: One of ["term-typing", "taxonomy-discovery", "non-taxonomic-re"]
-            prompting: Optional prompting strategy (defaults to StandardizedPrompting)
-            retriever: Pre-initialized retriever learner (if any)
-            llm: Pre-initialized LLM learner (if any)
-            retriever_id: HF model ID for retriever (if not provided explicitly)
-            llm_id: HF model ID for LLM (if not provided explicitly)
-            hf_token: Hugging Face token (for gated LLM access)
-            ontologizer_data: If True, uses Ontologizer-style datasets
-            top_k: Number of top examples to retrieve for RAG or Retriever
+            retriever: Pre-initialized retriever learner.
+            llm: Pre-initialized LLM learner.
+            rag: Pre-initialized ``AutoRAGLearner`` (or compatible) instance.
+            retriever_id: Retriever model ID used when loading retriever components.
+            llm_id: LLM model ID used when loading LLM components.
+            prompting: Prompting strategy for AutoLLMLearner initialization.
+            label_mapper: Label mapper for AutoLLMLearner initialization.
+            hf_token: Hugging Face token (for gated model access).
+            ontologizer_data: If True, uses Ontologizer-style datasets by default.
+            top_k: Number of top examples retrieved for retriever/RAG workflows.
+            batch_size: Batch size used by learner backends where applicable.
+            device: Target device for model execution (e.g., 'cpu', 'cuda').
+            max_new_tokens: Max generated tokens for LLM generation.
         """
         self.ontologizer_data = ontologizer_data
         # Instantiate retriever
@@ -77,8 +86,12 @@ class LearnerPipeline:
                                  max_new_tokens=max_new_tokens)
         llm_id = llm_id if llm_id is not None else 'Qwen/Qwen2.5-0.5B-Instruct'
         # Determine pipeline strategy
-        if retriever and llm:
+        if retriever and llm and not rag:
             self.learner = AutoRAGLearner(retriever=retriever, llm=llm)
+            self.learner.load(retriever_id=retriever_id, llm_id=llm_id)
+            self.model_type = "rag"
+        elif rag:
+            self.learner = rag
             self.learner.load(retriever_id=retriever_id, llm_id=llm_id)
             self.model_type = "rag"
         elif retriever:
