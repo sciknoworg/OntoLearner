@@ -330,7 +330,11 @@ class LLMAugmentedRetriever(AutoRetriever):
 
         augmented_queries, index_map = [], []
         for qu_idx, qu in enumerate(query):
-            augmented = self.augmenter.transform(qu, task=task)
+            try:
+                augmented = self.augmenter.transform(qu, task=task)
+            except Exception:
+                augmented = self.augmenter[task].get(qu, [qu])
+
             for aug in augmented:
                 augmented_queries.append(aug)
                 index_map.append(qu_idx)
