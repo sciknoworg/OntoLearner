@@ -1,8 +1,11 @@
 ## Changelog
 
-### v1.5.1 (February 23, 2026)
+### v1.5.1 (March 30, 2026)
 - Fix challenge learner
 - Update requirements.
+- Updated documentations website.
+- Add RAG var to LearnerPipeline and its documentation with examples.
+- Minor bug fixing in LLM-Augmenter.
 
 ### v1.5.0 (February 5, 2026)
 - Fix challenge learners
