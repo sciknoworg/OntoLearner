@@ -134,7 +134,9 @@ print(metrics)
 
 Other available learners:
 - [LLM-Based Learner](https://ontolearner.readthedocs.io/learners/llm.html)
+- [Retriever-Based Learner](https://ontolearner.readthedocs.io/learners/retrieval.html)
 - [RAG-Based Learner](https://ontolearner.readthedocs.io/learners/rag.html)
+- [LLMs4OL Challenge Learners](https://ontolearner.readthedocs.io/learners/llms4ol.html)
 
 ---
 
