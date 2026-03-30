@@ -27,11 +27,11 @@ rag_learner = AlexbekRAGLearner(
     output_dir="./results/",
 )
 
-# Build the pipeline and pass raw structured objects end-to-end.
-# We place the RAG learner in the llm slot and set llm_id accordingly.
+# Build the pipeline and pass the dedicated RAG learner explicitly.
 pipe = LearnerPipeline(
-    llm=rag_learner,
+    rag=rag_learner,
     llm_id="Qwen/Qwen2.5-0.5B-Instruct",
+    retriever_id="sentence-transformers/all-MiniLM-L6-v2",
     ontologizer_data=True,
 )
 
