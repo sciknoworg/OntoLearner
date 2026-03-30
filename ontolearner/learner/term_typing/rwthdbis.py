@@ -187,12 +187,10 @@ class RWTHDBISSFTLearner(AutoLearner):
             )
             return None
 
-################################################################################
-#  Data Preprocessing ##########################################################
-################################################################################
-
-### Generate Context Information by GPT(via g4f.Client) ##########################################################
-
+    ########################
+    ###  Data Preprocessing
+    ########################
+    ### Generate Context Information by GPT(via g4f.Client)
     def _normalize_text(self, raw_text: str, *, drop_questions: bool = False) -> str:
         """
         Normalize plain text consistently across the pipeline.
@@ -511,8 +509,7 @@ class RWTHDBISSFTLearner(AutoLearner):
         )
         return remaining_short
 
-### Extract Context Information from Ontology ##########################################################
-
+    ### Extract Context Information from Ontology
     def _extract_terms_from_ontology(self, ontology: Any) -> List[str]:
         """
         Collect unique term names from `ontology.type_taxonomies.taxonomies`,
@@ -640,8 +637,7 @@ class RWTHDBISSFTLearner(AutoLearner):
         self.context_json_path = str(merged_path)
         return merged_path
 
-### Process Training / Inference Data - Augmented with Context Information (from Ontology or GPT) ##########################################################
-
+    ### Process Training / Inference Data - Augmented with Context Information (from Ontology or GPT)
     def _load_context_map(self) -> None:
         """
         Populate in-memory maps from the context JSON (`self.context_json_path`).
@@ -709,8 +705,7 @@ class RWTHDBISSFTLearner(AutoLearner):
                         break  # one hit per subterm
         return ".".join(matched_infos)
 
-### Process Training Data - for Fine-tuning for Text Classification(FT-TC) ##########################################################
-
+    ### Process Training Data - for Fine-tuning for Text Classification(FT-TC)
     def _expand_multilabel_training_rows(
         self, term_typings: List[Any]
     ) -> Tuple[List[str], List[int], Dict[int, str], Dict[str, int]]:
@@ -780,10 +775,9 @@ class RWTHDBISSFTLearner(AutoLearner):
         return terms
 
 
-################################################################################
-#  Model Training ##########################################################
-################################################################################
-
+    ####################
+    #  Model Training ##
+    ####################
     def _train_from_term_typings(self, train_data: Any, train_method: int = 2) -> None:
         """Train the term-typing classifier from `.term_typings`.
 
@@ -1041,8 +1035,6 @@ class RWTHDBISSFTLearner(AutoLearner):
         trainer.save_model(self.output_dir)
         self.tokenizer.save_pretrained(self.output_dir)
 
-
-
     def _ensure_loaded_for_inference(self) -> None:
         """Load model/tokenizer for inference if not already loaded.
 
@@ -1066,10 +1058,9 @@ class RWTHDBISSFTLearner(AutoLearner):
 
         self.model.to(self.device).eval()
 
-################################################################################
-#  Model Inference ##########################################################
-################################################################################
-
+    #####################
+    #  Model Inference ##
+    #####################
     def _predict_label_ids(self, terms: List[str]) -> List[int]:
         """Predict label ids (argmax) for a list of term strings.
 
