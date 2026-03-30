@@ -137,7 +137,11 @@ To alighn with machine learning follow, once the ontology is loaded, and ontolog
    )
 
 
-Once the data is split into training and testing sets, you can apply learning models to the ontology learning tasks. OntoLearner supports multiple modeling approaches, including retrieval-based methods, Large Language Model (LLM)-based techniques, and Retrieval-Augmented Generation (RAG) strategies. The ``LearnerPipeline`` within OntoLearner is designed for ease of use, abstracting away the complexities of loading models and preparing datasets or data loaders. You can configure the pipeline with your choice of LLMs, retrievers, or RAG components.
+Once the data is split into training and testing sets, you can apply learning models to the ontology learning tasks. OntoLearner supports multiple modeling approaches, including retrieval-based methods, Large Language Model (LLM)-based techniques, and Retrieval-Augmented Generation (RAG) strategies. The ``LearnerPipeline`` supports all three modes:
+
+- Retriever-only: set ``retriever_id``
+- LLM-only: set ``llm_id``
+- RAG: set both ``retriever_id`` + ``llm_id`` for AutoRAGLearner. For prebuild RAG pass ``rag`` learner.
 
 In the example below, we configure a RAG-based learner by specifying the Qwen LLM (`Qwen/Qwen2.5-0.5B-Instruct <https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct>`_) and a retriever based on a sentence-transformer model (`all-MiniLM-L6-v2 <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>`_):
 
@@ -165,6 +169,34 @@ In the example below, we configure a RAG-based learner by specifying the Qwen LL
     - ``llm_id``: The instruction-following language model used to generate candidate outputs.
     - ``top_k``: Number of retrieved examples passed to the LLM (used in RAG setup).
     - ``hf_token``: Required for loading gated models from Hugging Face.
+    - ``rag``: Optional prebuilt ``AutoRAGLearner`` (or compatible) object for custom RAG setups.
+
+If you already created a RAG learner object, you can pass it directly:
+
+.. code-block:: python
+
+   from ontolearner import (
+       LearnerPipeline,
+       AutoLLMLearner,
+       AutoRetrieverLearner,
+       AutoRAGLearner,
+       LabelMapper,
+       StandardizedPrompting,
+   )
+
+   retriever = AutoRetrieverLearner(top_k=3)
+   llm = AutoLLMLearner(
+       prompting=StandardizedPrompting,
+       label_mapper=LabelMapper(),
+       token='<YOUR_HF_TOKEN>'
+   )
+   rag = AutoRAGLearner(retriever=retriever, llm=llm)
+
+   pipeline = LearnerPipeline(
+       rag=rag,
+       retriever_id='sentence-transformers/all-MiniLM-L6-v2',
+       llm_id='Qwen/Qwen2.5-0.5B-Instruct'
+   )
 
 Once configured, the pipeline is executed on the training and test data:
 

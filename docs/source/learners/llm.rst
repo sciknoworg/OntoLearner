@@ -93,7 +93,7 @@ You will see a evaluations results.
 
 Pipeline Usage
 -----------------------
-The OntoLearner package also offers a streamlined ``LearnerPipeline`` class that simplifies the entire process of initializing, training, predicting, and evaluating a RAG setup into a single call. This is particularly useful for rapid experimentation and deployment.
+The OntoLearner package also offers a streamlined ``LearnerPipeline`` class that simplifies initialization, training, prediction, and evaluation into a single call. In this section, we run the pipeline in **LLM-only** mode by setting ``llm_id`` only.
 
 .. code-block:: python
 
@@ -113,7 +113,7 @@ The OntoLearner package also offers a streamlined ``LearnerPipeline`` class that
 
     # Set up the learner pipeline using a lightweight instruction-tuned LLM
     pipeline = LearnerPipeline(
-        llm_id='Qwen/Qwen2.5-0.5B-Instruct',   # Small-scale LLM for reasoning over term-type assignments
+        llm_id='Qwen/Qwen2.5-0.5B-Instruct',   # LLM-only mode
         hf_token='...',                        # Hugging Face access token for loading gated models
         batch_size=32                          # Batch size for parallel inference (if applicable)
     )

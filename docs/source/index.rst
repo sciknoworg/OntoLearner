@@ -1,5 +1,3 @@
-
-
 .. raw:: html
 
    <div align="center">
@@ -109,8 +107,8 @@ Working with OntoLearner is straightforward:
             random_state=42
         )
 
-        # Initialize a multi-component learning pipeline (retriever + LLM)
-        # This configuration enables a Retrieval-Augmented Generation (RAG) setup
+        # RAG can be configured either by passing both IDs (shown here),
+        # or by passing a prebuilt `rag=` learner object.
         pipeline = LearnerPipeline(
             retriever_id='sentence-transformers/all-MiniLM-L6-v2',
             llm_id='Qwen/Qwen2.5-0.5B-Instruct',
