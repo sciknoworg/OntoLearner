@@ -23,10 +23,28 @@
 Microscopy Ontology (MO)
 ========================================================================================================
 
-The Microscopy Ontology (MO) is a domain ontology designed to provide a structured framework for describing microscopy and microanalysis experiments, data, and equipment. MO extends the PMDco ontological framework and enables semantic integration and interoperability of diverse data sources in microscopy research. The ontology covers key concepts such as imaging modalities, sample preparation methods, instrument components, acquisition parameters, and data analysis techniques. MO supports the annotation of experimental workflows, facilitating data sharing, reproducibility, and advanced analysis across various microscopy studies. By providing a standardized vocabulary, MO enables the development of adaptable data applications and cross-experiment comparisons in materials science, biology, and medical research. The ontology is actively maintained and extended to incorporate new microscopy techniques and research requirements.
+The Microscopy Ontology (MO) is a domain ontology developed to provide a
+structured framework for describing microscopy and microanalysis
+experiments, data, and equipment. It extends the PMD Core Ontology
+(PMDco) and was developed within the Platform MaterialDigital ecosystem
+to support semantic integration and interoperability of microscopy data
+[#mo-repo]_ [#mo-paper]_. The ontology covers microscopy-specific
+concepts and relationships needed to describe processes, equipment, and
+parameters in microscopy and microanalysis workflows [#mo-paper]_
+[#mo-overview]_. MO is intended to improve the semantic representation
+of microscopy knowledge and support better query results and logical
+linking among related terms and data objects [#mo-paper]_ [#mo-repo]_.
+By providing a standardized vocabulary grounded in PMDco, the ontology
+supports interoperable data description and integration across
+materials-science microscopy datasets and related digital research
+infrastructures [#mo-overview]_ [#pmdco-paper]_.
 
-**Example Usage**:
-Annotate a microscopy dataset with MO terms to specify the imaging modality (e.g., "scanning electron microscopy"), sample preparation method, instrument configuration, and analysis workflow, enabling semantic search and integration with other microscopy data sources.
+**Example Usage**: Annotate a microscopy dataset with MO terms to specify
+the imaging modality (for example scanning electron microscopy or
+transmission electron microscopy), relevant equipment and parameters,
+sample-related descriptors, and analysis-related concepts, enabling
+semantic search, interoperable data integration, and improved querying
+across microscopy data sources [#mo-paper]_ [#mo-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +153,27 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#mo-paper] Bayerlein, B., Schilling, M., Curran, M., and Lau, J. W.
+   2024. "Natural Language Processing-Driven Microscopy Ontology
+   Development."
+   *Integrating Materials and Manufacturing Innovation*.
+   doi:10.1007/s40192-024-00378-y
+
+.. [#mo-repo] materialdigital. n.d. "Microscopy Ontology (MO)."
+   GitHub repository.
+   Available at: `https://github.com/materialdigital/microscopy-ontology <https://github.com/materialdigital/microscopy-ontology>`_
+
+.. [#mo-overview] Bayerlein, B., Schilling, M., Bruns, S., and others.
+   2024. "Concepts for a Semantically Accessible Materials Data Space:
+   Overview over Specific Implementations in Materials Science."
+   *Advanced Engineering Materials*.
+   Available at: `https://advanced.onlinelibrary.wiley.com/doi/10.1002/adem.202401092 <https://advanced.onlinelibrary.wiley.com/doi/10.1002/adem.202401092>`_
+
+.. [#pmdco-paper] Schilling, M., Bayerlein, B., Birkholz, H., and others.
+   2024. "PMD Core Ontology: Achieving Semantic Interoperability in
+   Materials Science."
+   *Materials & Design* 237: 112563.

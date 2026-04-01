@@ -25,7 +25,33 @@
 Timeline Ontology (TimelineOntology)
 ========================================================================================================
 
-The Timeline Ontology provides a formal framework for representing and managing temporal information in multimedia and music contexts. It centers around the notion of timelines as temporal backbones that can support various types of media including signals, videos, musical scores, and musical works. The ontology enables precise temporal annotation and synchronization of multimedia elements, allowing for structured representation of time-based relationships between different media components. It supports rich temporal modeling including durations, intervals, and temporal landmarks within multimedia documents. The Timeline Ontology facilitates content synchronization across different representations, such as aligning audio signals with musical notation or video with accompanying metadata. It is particularly valuable for music information retrieval systems, multimedia annotation tools, and digital humanities research. The ontology enables advanced applications including temporal querying of multimedia content, cross-media alignment, and time-aware metadata management. By providing a common temporal framework, the Timeline Ontology supports interoperability in music and media analysis systems, enabling researchers and practitioners to work with complex temporal structures in a standardized, machine-readable format.
+The Timeline Ontology provides a formal framework for representing and
+managing temporal information in multimedia and music contexts. It is
+centered around the notion of timelines as temporal backbones that can
+support various types of media and temporal objects, including signals,
+videos, performances, scores, and musical works [#timeline-spec]_. The
+ontology enables precise temporal annotation by allowing instants and
+intervals to be defined on a timeline, supporting structured
+representation of time-based relationships between different media
+components [#timeline-spec]_. It supports temporal modelling of
+durations, intervals, and temporal positions within multimedia and music
+resources [#timeline-spec]_ [#mo-paper]_. The Timeline Ontology
+facilitates synchronization across different representations, such as
+aligning audio signals with musical notation or linking performances and
+recordings to temporal metadata [#timeline-spec]_ [#mo-paper]_. It is
+particularly useful in music information retrieval, multimedia
+annotation, and Semantic Web applications that require machine-readable
+temporal descriptions [#timeline-spec]_ [#omras2]_. By providing a
+common temporal framework, the Timeline Ontology supports interoperability
+across music and media analysis systems and enables temporal querying and
+integration of complex time-based data [#timeline-spec]_ [#omras2]_.
+
+**Example Usage**: Annotate an audio recording, video, or symbolic music
+file with Timeline Ontology terms for timelines, instants, and
+intervals in order to align chord events, note events, subtitles, or
+performance segments with precise temporal positions, enabling temporal
+querying, cross-media synchronization, and interoperable multimedia
+annotation [#timeline-spec]_ [#omras2]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +160,23 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#timeline-spec] Raimond, Y., and Abdallah, S. A. 2006.
+   "The Timeline Ontology."
+   OWL ontology specification.
+   Available at: `https://motools.sourceforge.net/timeline/timeline.html <https://motools.sourceforge.net/timeline/timeline.html>`_
+
+.. [#mo-paper] Raimond, Y., Abdallah, S. A., Sandler, M. B.,
+   and Giasson, F. 2007. "The Music Ontology."
+   In *Proceedings of the 8th International Conference on Music
+   Information Retrieval (ISMIR 2007)*, Vienna, Austria,
+   pp. 417-422.
+   Available at: `https://ismir2007.ismir.net/proceedings/ISMIR2007_p417_raimond.pdf <https://ismir2007.ismir.net/proceedings/ISMIR2007_p417_raimond.pdf>`_
+
+.. [#omras2] Fazekas, G., Raimond, Y., Jacobson, K., and Sandler, M. 2010.
+   "An Overview of Semantic Web Activities in the OMRAS2 Project."
+   *Journal of New Music Research* 39(4): 295-311.
+   doi:10.1080/09298215.2010.536555

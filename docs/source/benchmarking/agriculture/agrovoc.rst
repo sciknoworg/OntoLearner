@@ -23,9 +23,28 @@
 AGROVOC Multilingual Thesaurus (AGROVOC)
 ========================================================================================================
 
-AGROVOC is a comprehensive Linked Open Data resource developed and maintained by the Food and Agriculture Organization (FAO) of the United Nations. It provides a structured collection of agricultural concepts, terms, definitions, and relationships that enable unambiguous identification of resources and standardized indexing. As a multilingual thesaurus, AGROVOC supports multiple languages, facilitating access and visibility of agricultural data across domains and languages. The ontology covers diverse agricultural domains including crops, livestock, farm management practices, soil science, and food production. AGROVOC's hierarchical structure enables both broader and narrower term relationships, supporting semantic interoperability and making searches more efficient. The resource is widely used by research institutions, government agencies, and international organizations for data annotation, knowledge organization, and information retrieval. With millions of concept nodes and sophisticated relationship mappings, AGROVOC serves as a critical backbone for agricultural knowledge representation and data integration in the global agricultural community.
+AGROVOC is a multilingual thesaurus and Linked Open Data resource
+developed and maintained by the Food and Agriculture Organization (FAO)
+of the United Nations [#fao-home]_ [#agrovoc-paper]_. It provides a
+structured collection of agricultural concepts, terms, definitions, and
+relationships that support unambiguous resource identification,
+standardized indexing, and more efficient search [#fao-home]_. As a
+multilingual knowledge organization system, AGROVOC facilitates access
+to agricultural information across domains and languages [#fao-home]_
+[#agrovoc-paper]_. It covers concepts relevant to food, agriculture,
+fisheries, forestry, environment, and related domains, and supports
+semantic interoperability through hierarchical and associative
+relationships as well as links to other vocabularies and datasets
+[#fao-home]_ [#linked-dataset]_. With over 41,000 concepts and extensive
+multilingual term coverage, AGROVOC is widely used for data annotation,
+knowledge organization, and information retrieval in agricultural and
+food-related information systems [#fao-dpg]_ [#agrovoc-paper]_.
 
-**Example Usage**: Annotate a multilingual agricultural dataset with AGROVOC terms for crops, soil types, and farming practices to enable standardized indexing and cross-language search in international agricultural databases.
+**Example Usage**: Annotate a multilingual agricultural dataset with AGROVOC concepts for
+crops, soil types, pests, livestock, and farming practices to enable
+standardized indexing, semantic interoperability, and cross-language
+search across international agricultural databases and repositories
+[#fao-home]_ [#agrovoc-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +153,27 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#fao-home] Food and Agriculture Organization of the United Nations
+   (FAO). n.d. "AGROVOC." Available at:
+   https://www.fao.org/agrovoc/
+
+.. [#agrovoc-paper] Subirats-Coll, I., Kolshus, K., Turbati, A.,
+   Stellato, A., Mietzsch, E., Martini, D., and Zeng, M. 2022.
+   "AGROVOC: The linked data concept hub for food and agriculture."
+   *Computers and Electronics in Agriculture* 196:105965.
+   doi:10.1016/j.compag.2020.105965
+
+.. [#linked-dataset] Caracciolo, C., Stellato, A., Morshed, A.,
+   Johannsen, G., Rajbhandari, S., Jaques, Y., and Keizer, J. 2013.
+   "The AGROVOC Linked Dataset." *Semantic Web* 4(3):341-348.
+   Available at:
+   https://www.fao.org/agrovoc/publications/agrovoc-linked-dataset
+
+.. [#fao-dpg] Food and Agriculture Organization of the United Nations
+   (FAO). 2024. "AGROVOC is now a certified Digital Public Good!"
+   Available at:
+   https://www.fao.org/agora/news/agrovoc-now-certified-digital-public-good

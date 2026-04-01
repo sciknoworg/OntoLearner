@@ -23,10 +23,30 @@
 NanoParticle Ontology (NPO)
 ========================================================================================================
 
-The NanoParticle Ontology (NPO) is a domain ontology developed within the Basic Formal Ontology (BFO) framework to represent knowledge about the preparation, chemical composition, and characterization of nanomaterials, especially in cancer research and nanomedicine. NPO provides a structured vocabulary for describing nanoparticle types, synthesis methods, physicochemical properties, surface modifications, and biological interactions. The ontology supports semantic annotation of nanomaterial data, enabling interoperability, data integration, and advanced queries across toxicology, biomedical, and materials science databases. NPO is publicly available through BioPortal and is maintained by the National Center for Biomedical Ontology, with ongoing editorial and governance processes for review and growth. By providing a standardized framework, NPO facilitates reproducibility, regulatory compliance, and knowledge sharing in nanotechnology research. The ontology is actively extended to incorporate new nanomaterial types, experimental techniques, and application domains as the field evolves.
+The NanoParticle Ontology (NPO) is a domain ontology developed within
+the Basic Formal Ontology (BFO) framework to represent knowledge about
+the preparation, chemical composition, and characterization of
+nanomaterials, especially in cancer research and nanomedicine
+[#npo-paper]_ [#npo-bioportal]_. NPO provides a structured vocabulary
+for describing nanoparticle composition, preparation methods,
+physicochemical characteristics, and related entities relevant to
+nanotechnology research [#npo-paper]_ [#enanomapper]_. The ontology
+supports semantic annotation of nanomaterial data, enabling data
+integration, interoperability, and ontology-based querying across
+biomedical and nanoinformatics resources [#npo-paper]_ [#enanomapper]_.
+NPO is publicly available through NCBO BioPortal and has been used as a
+reference ontology in nanomaterial data standardization efforts
+[#npo-bioportal]_ [#enanomapper]_. By providing a standardized semantic
+framework for nanomaterial representation, NPO supports knowledge
+sharing, data reuse, and computational analysis in nanotechnology and
+nanomedicine research [#npo-paper]_ [#nanoinformatics]_.
 
-**Example Usage**:
-Annotate a nanomedicine study with NPO terms to specify nanoparticle type (e.g., "gold nanoparticle"), synthesis method, surface coating, and biological assay results, enabling cross-study comparison and regulatory reporting.
+**Example Usage**: Annotate a nanomedicine study with NPO terms to
+specify nanoparticle composition (for example, a gold nanoparticle),
+preparation or formulation characteristics, surface functionalization,
+and measured physicochemical or biological assay properties, enabling
+cross-study comparison, semantic search, and integration across
+nanomaterial datasets [#npo-paper]_ [#enanomapper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +155,30 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#npo-paper] Thomas, D. G., Pappu, R. V., and Baker, N. A. 2011.
+   "NanoParticle Ontology for Cancer Nanotechnology Research."
+   *Journal of Biomedical Informatics* 44(1): 59-74.
+   doi:10.1016/j.jbi.2010.03.001
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC3042056/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC3042056/>`_
+
+.. [#npo-bioportal] NCBO BioPortal. n.d. "NanoParticle Ontology (NPO)."
+   Available at: `https://bioportal.bioontology.org/ontologies/NPO <https://bioportal.bioontology.org/ontologies/NPO>`_
+
+.. [#enanomapper] Hastings, J., Jeliazkova, N., Owen, G., Tsiliki, G.,
+   Munteanu, C. R., Steinbeck, C., Willighagen, E., Del Pozo, A.,
+   Džeroski, S., Jeliazkov, V., and others. 2015.
+   "eNanoMapper: Harnessing Ontologies to Enable Data Integration for
+   Nanomaterial Risk Assessment."
+   *Journal of Biomedical Semantics* 6:10.
+   doi:10.1186/s13326-015-0005-5
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC4374589/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC4374589/>`_
+
+.. [#nanoinformatics] Panneerselvam, S., and Choi, S. 2014.
+   "Nanoinformatics: Emerging Databases and Available Tools."
+   *International Journal of Molecular Sciences* 15(5): 7158-7182.
+   doi:10.3390/ijms15057158
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC4057665/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC4057665/>`_

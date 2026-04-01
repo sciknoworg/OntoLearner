@@ -25,9 +25,31 @@
 Environment Ontology (ENVO)
 ========================================================================================================
 
-ENVO is a comprehensive, expressive community-driven ontology that enables humans, machines, and semantic web applications to understand environmental entities and concepts across multiple scales, from microscopic organisms to astronomical phenomena. It provides standardized vocabulary for describing environmental features including biomes, ecosystems, habitats, environmental materials (air, water, soil), and environmental conditions (temperature, humidity, pollution levels). ENVO captures relationships between environmental entities and enables precise semantic annotation of environmental datasets, research findings, and monitoring data. As a FAIR-compliant resource, ENVO promotes semantic interoperability in environmental science by providing concise, controlled descriptions of environmental concepts using formal ontological definitions. The ontology supports diverse applications including environmental data management, ecology research, climate science studies, and environmental impact assessment.
 
-**Example Usage**: Annotate an environmental science dataset with ENVO terms such as "tropical rainforest" (biome), "Amazonia" (biogeographic region), and "high soil moisture" (environmental condition) to enable automated discovery of related environmental studies and climate research.
+ENVO (Environment Ontology) is a comprehensive, community-driven
+ontology for the concise, controlled description of environmental
+systems, components, and processes [#envo-obo]_ [#envo-2013]_. It
+provides standardized vocabulary for describing environmental features
+such as biomes, ecosystems, habitats, environmental materials (for
+example air, water, and soil), and environmental conditions [#envo-2016]_
+[#envo-2013]_. ENVO captures semantic relationships between environmental
+entities and supports precise annotation of environmental, ecological,
+biological, and biomedical datasets [#envo-2013]_ [#envo-2016]_. As an
+open, FAIR-enabling ontology resource, ENVO promotes semantic
+interoperability by providing formal ontological definitions for
+environmental concepts that can be used by humans, machines, and
+Semantic Web applications [#envo-obo]_ [#envo-2016]_. The ontology
+supports diverse applications including environmental data management,
+ecology, biodiversity and microbiome studies, and other research that
+requires interoperable environmental descriptions [#envo-2013]_
+[#envo-2016]_.
+
+**Example Usage**: Annotate an environmental dataset with ENVO terms for
+a biome, habitat, environmental material, or environmental condition. For
+example, terms describing a tropical rainforest environment, a
+biogeographic setting, or elevated soil moisture to enable semantic
+search, cross-study integration, and automated discovery of related
+environmental and ecological data [#envo-2013]_ [#envo-2016]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +158,24 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#envo-obo] OBO Foundry. n.d. "Environment Ontology (ENVO)."
+   Available at: `https://obofoundry.org/ontology/envo.html <https://obofoundry.org/ontology/envo.html>`_
+
+.. [#envo-2013] Buttigieg, P. L., Morrison, N., Smith, B., Mungall, C. J.,
+   and Lewis, S. E. 2013. "The Environment Ontology: Contextualising
+   Biological and Biomedical Entities."
+   *Journal of Biomedical Semantics* 4:43.
+   doi:10.1186/2041-1480-4-43
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC3904460/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC3904460/>`_
+
+.. [#envo-2016] Buttigieg, P. L., Pafilis, E., Lewis, S. E.,
+   Schildhauer, M. P., Walls, R. L., and Mungall, C. J. 2016.
+   "The Environment Ontology in 2016: Bridging Domains with Increased
+   Scope, Semantic Density, and Interoperation."
+   *Journal of Biomedical Semantics* 7:57.
+   doi:10.1186/s13326-016-0097-6
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC5035502/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC5035502/>`_
