@@ -23,14 +23,29 @@
 Animal Trait Ontology for Livestock (ATOL)
 ========================================================================================================
 
-ATOL (Animal Trait Ontology for Livestock) is an ontology of characteristics defining phenotypes of livestock in their environment. ATOL aims to: provide a reference ontology of phenotypic traits of farm animals for the international scientific and educational communities, farmers, etc.; deliver this reference ontology in a language which can be used by computers in order to support database management, semantic analysis and modeling; represent traits as generic as possible for livestock vertebrates; make the ATOL ontology as operational as possible and closely related to measurement techniques; and structure the ontology in relation to animal production.
+ATOL (Animal Trait Ontology for Livestock) is an ontology of
+characteristics defining phenotypes of livestock in their environment
+[#inra]_ [#atol-paper]_. ATOL aims to provide a reference ontology of
+phenotypic traits for farm animals for the international scientific and
+educational communities and other stakeholders, and to deliver this
+reference ontology in a form that can be used by computers to support
+database management, semantic analysis, and modeling [#inra]_. It is
+designed to represent traits as generically as possible for livestock
+vertebrates, to remain closely related to measurement techniques, and to
+structure the ontology in relation to animal production [#inra]_. The
+multi-species ATOL model was developed as a reference source for
+indexing phenotype databases and scientific papers, and it covers major
+livestock production topics including growth and meat quality, animal
+nutrition, milk production, reproduction, and welfare [#atol-paper]_.
+By providing a standardized vocabulary and semantic framework, ATOL
+supports consistent annotation, interoperability, and integration of
+livestock phenotype data across animal science resources [#inra]_
+[#agroportal]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of phenotypic traits, measurement techniques, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. ATOL supports the integration of data from various sources, promoting interoperability and data-driven research in animal science.
-
-Typical applications of ATOL include the development of new phenotypic trait analysis methods, the optimization of livestock management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, ATOL enhances collaboration and innovation in the field of animal science.
-
-**Example Usage**:
-Annotate a livestock dataset with ATOL terms to specify phenotypic traits, measurement techniques, and related data, enabling semantic search and integration with animal science research platforms.
+**Example Usage**: Annotate a livestock dataset with ATOL terms to specify phenotypic
+traits, measurement techniques, and related data, enabling semantic
+search and integration with animal science research platforms
+[#inra]_ [#atol-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +154,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#inra] INRAE Open Data. n.d. "Animal Trait Ontology for Livestock."
+   Available at: https://opendata.inra.fr/ATOL/page/
+
+.. [#agroportal] AgroPortal. n.d. "ATOL | Summary."
+   Available at: https://agroportal.lirmm.fr/ontologies/ATOL
+
+.. [#atol-paper] Golik, W., Dameron, O., Bugeon, J., Fatet, A., Hue, I.,
+   Hurtaud, C., Reichstadt, M., Salaün, M.-C., Vernet, J., Joret, L.,
+   Papazian, F., Nédellec, C., and Le Bail, P.-Y. 2012.
+   "ATOL: The Multi-species Livestock Trait Ontology."
+   In *Metadata and Semantics Research*, CCIS 343, 289-300.
+   doi:10.1007/978-3-642-35233-1_28

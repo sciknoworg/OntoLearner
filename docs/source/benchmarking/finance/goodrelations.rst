@@ -25,9 +25,32 @@
 Good Relations Language Reference (GoodRelations)
 ========================================================================================================
 
-GoodRelations is a widely-used ontology for describing products, services, offers, and commercial entities on the Web. It provides a rich vocabulary for modeling commercial information such as Products, Offers, Stores, Sellers, Payment and Delivery options, Price specifications, and Availability. GoodRelations emphasizes machine-actionable, fine-grained descriptions that support e-commerce discovery, comparison shopping, and automated processing by search engines, marketplaces, and recommendation systems. Key characteristics include a modular class structure (distinguishing Products/Services from Offers and Sellers), detailed modeling of price specifications (including currency, unit price, and price components), temporal validity of offers, and explicit representation of delivery and payment methods. The ontology is designed for interoperability: it can be embedded in HTML pages (microdata/RDFa/JSON-LD), linked with vocabularies like schema.org and FOAF, and exported in RDF/OWL for semantic-web use. GoodRelations supports provenance and business metadata, enabling trust and auditing use cases in marketplaces. Typical applications include SEO and product rich snippets, integration of catalog data across vendors, automated price aggregation, and semantic matching in recommender systems.
+GoodRelations is a widely used ontology for describing products,
+services, offers, and commercial entities on the Web [#gr-paper]_
+[#gr-wiki]_. It provides a rich vocabulary for modeling commercial
+information such as offers, business entities, price specifications,
+availability, payment options, and delivery methods [#gr-paper]_
+[#gr-ref]_. GoodRelations emphasizes machine-processable, fine-grained
+descriptions of e-commerce information that support product discovery,
+comparison, and automated processing on the Web [#gr-paper]_ [#gr-wiki]_.
+A key design principle is the distinction between products or services,
+the offers made for them, and the legal entities that provide them,
+together with detailed modeling of prices and commercial conditions
+[#gr-paper]_ [#gr-ref]_. The ontology is designed for interoperability
+and can be used in RDF/OWL as well as embedded in Web pages; it also
+influenced and was integrated into the schema.org e-commerce model
+[#gr-wiki]_ [#schema-releases]_. By providing a shared semantic
+framework for commercial data, GoodRelations supports e-commerce SEO,
+catalog integration, offer aggregation, and other Semantic Web and Web
+data applications [#gr-paper]_ [#gr-wiki]_.
 
-**Example usage**: describe a product offering as an gr:Offering that links to a gr:Product (with identifiers and brand), includes a gr:UnitPriceSpecification (with priceCurrency, price, and validFrom/validThrough), and connects to a gr:BusinessEntity representing the seller with contact details and opening hours.
+**Example Usage**: Describe a product offering as a
+``gr:Offering`` that links to a product or service, includes a
+``gr:UnitPriceSpecification`` with currency and price information, and
+connects to a ``gr:BusinessEntity`` representing the seller together
+with relevant payment, delivery, and offer-validity information, so
+that the offering can be processed consistently by search engines,
+marketplaces, and other web applications [#gr-ref]_ [#gr-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +159,25 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#gr-paper] Hepp, M. 2008.
+   "GoodRelations: An Ontology for Describing Products and Services
+   Offers on the Web."
+   In *Knowledge Engineering: Practice and Patterns*, Lecture Notes in
+   Computer Science 5268, pp. 329-346.
+   Available at: `https://www.heppnetz.de/files/GoodRelationsEKAW2008-crc-final.pdf <https://www.heppnetz.de/files/GoodRelationsEKAW2008-crc-final.pdf>`_
+
+.. [#gr-ref] Hepp, M. 2010.
+   "GoodRelations Language Reference."
+   Available at: `https://www.heppnetz.de/ontologies/goodrelations/20100412/v1.html <https://www.heppnetz.de/ontologies/goodrelations/20100412/v1.html>`_
+
+.. [#gr-wiki] GoodRelations Wiki. n.d.
+   "Documentation/Intro."
+   Available at: `https://wiki.goodrelations-vocabulary.org/Documentation/Intro <https://wiki.goodrelations-vocabulary.org/Documentation/Intro>`_
+
+.. [#schema-releases] Schema.org. 2026.
+   "Schema.org Releases."
+   Available at: `https://schema.org/docs/releases.html <https://schema.org/docs/releases.html>`_
