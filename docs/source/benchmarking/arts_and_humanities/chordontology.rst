@@ -25,7 +25,28 @@
 Chord Ontology (ChordOntology)
 ========================================================================================================
 
-The Chord Ontology is a formal representation for describing and classifying chords in musical compositions. It provides a structured vocabulary for representing harmonic concepts and chord structures, enabling precise annotation and analysis of music at the semantic level. The ontology captures essential chord properties including chord type (major, minor, diminished, augmented), root note, and constituent pitch classes. It facilitates semantic annotation of audio files, musical scores, and music information retrieval systems, allowing researchers and musicians to query and discover musical pieces based on harmonic content. The ontology integrates with broader music theory frameworks and supports interoperability with other music-related ontologies. By formalizing chord relationships and structures, the Chord Ontology enables computational music analysis, music recommendation systems, and digital musicology applications. It provides a common framework for music annotation across diverse platforms and datasets, supporting music education, composition analysis, and music information systems development.
+The Chord Ontology is a formal representation for describing and classifying
+chords and chord sequences in musical resources. It provides a structured
+vocabulary for representing harmonic concepts and chord structures, enabling
+semantic annotation and analysis of music data. The ontology captures core
+chord properties including chord type (for example major, minor, diminished,
+and augmented), root note, constituent intervals, and bass note. It supports
+the annotation of audio files, musical scores, and symbolic music files by
+linking chord events to temporal structures and music resources. The ontology
+was developed within the OMRAS2 project and is designed to interoperate with
+related Semantic Web resources such as the Music Ontology, Timeline Ontology,
+and Event Ontology. By formalizing chord relationships and structures, the
+Chord Ontology supports computational music analysis, harmonic annotation,
+music information retrieval, and digital musicology applications. It provides
+a common framework for music annotation across datasets and tools, supporting
+harmonic analysis, corpus annotation, and music information systems
+development [#chord-spec]_ [#omras2]_ [#music-ontology]_.
+
+**Example Usage**: Annotate the harmonic timeline of an audio recording,
+musical score, or symbolic music file with Chord Ontology terms for chord
+events, root notes, intervals, and bass notes to enable semantic search,
+computational harmonic analysis, and integration with music information
+retrieval datasets and tools [#chord-spec]_ [#omras2]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +155,24 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#chord-spec] Sutton, C., Raimond, Y., and Mauch, M. 2007.
+   "Chord Ontology Specification."
+   OMRAS2 Project, Centre for Digital Music, Queen Mary University of London.
+   Available at: http://purl.org/ontology/chord/
+   Also available at: https://motools.sourceforge.net/chord_draft_1/chord.html
+
+.. [#omras2] Fazekas, G., Raimond, Y., Jacobson, K., and Sandler, M. 2010.
+   "An Overview of Semantic Web Activities in the OMRAS2 Project."
+   *Journal of New Music Research* 39(4): 295-311.
+   doi:10.1080/09298215.2010.536555
+
+.. [#music-ontology] Raimond, Y., Abdallah, S. A., Sandler, M. B.,
+   and Giasson, F. 2007.
+   "The Music Ontology."
+   In *Proceedings of the 8th International Conference on Music Information
+   Retrieval (ISMIR 2007)*, Vienna, Austria, pp. 417-422.
+   Available at: https://ismir2007.ismir.net/proceedings/ISMIR2007_p417_raimond.pdf

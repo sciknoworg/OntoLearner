@@ -25,7 +25,29 @@
 Agronomy Ontology (AgrO)
 ========================================================================================================
 
-An ontology is a formal representation of a disciplinary domain, representing a semantic standard that can be employed to annotate data where key concepts are defined, as well as the relationships that exist between those concepts (Gruber, 2009). Ontologies provide a common language for different kinds of data to be easily interpretable and interoperable, allowing for easier aggregation and analysis. The Agronomy Ontology (AgrO) provides terms from the agronomy domain that are semantically organized and can facilitate the collection, storage, and use of agronomic data, enabling easy interpretation and reuse of the data by humans and machines alike. To fully understand the implications of varying practices within cropping systems and derive insights, it is often necessary to pull together information from data in different disciplinary domains. For example, data on field management, soil, weather, and crop phenotypes may need to be aggregated to assess performance of a particular crop under different management interventions. However, agronomic data are often collected, described, and stored in inconsistent ways, impeding data comparison, mining, interpretation, and reuse. The use of standards for metadata and data annotation plays a key role in addressing these challenges. While the CG Core Metadata Schema provides a metadata standard to describe agricultural datasets, the Agronomy Ontology enables the description of agronomic data variables using standard terms.
+The Agronomy Ontology (AgrO) provides terms from the agronomy domain
+that are semantically organized and facilitate the collection, storage,
+and use of agronomic data, enabling easier interpretation and reuse by
+both humans and machines [#cgiar]_ [#obo]_. To analyze the effects of
+varying practices within cropping systems, it is often necessary to
+integrate data from multiple disciplinary domains. For example, data on
+field management, soil, weather, and crop phenotypes may need to be
+combined to assess crop performance under different management
+interventions. However, agronomic data are often collected, described,
+and stored in inconsistent ways, which impedes data comparison, mining,
+interpretation, and reuse [#cgiar]_. The use of standards for metadata
+and data annotation plays a key role in addressing these challenges.
+While the CG Core Metadata Schema provides a metadata standard to
+describe agricultural datasets, the Agronomy Ontology enables the
+description of agronomic variables using standardized and semantically
+defined terms [#cgiar]_ [#agrofims]_. AgrO specifically covers agronomic
+practices, techniques, and variables used in agronomic experiments and
+reuses terms from other ontologies to support interoperability [#obo]_.
+
+**Example Usage**: Annotate agronomic field experiment data with AgrO terms for management
+practices, treatments, and measured variables to enable standardized
+description, interoperable storage, and cross-study comparison of
+agricultural data [#obo]_ [#agrofims]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +156,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#cgiar] CGIAR. n.d. "Agronomy Ontology."
+   Available at: https://bigdata.cgiar.org/resources/agronomy-ontology/
+
+.. [#obo] OBO Foundry. n.d. "Agronomy Ontology (AGRO)."
+   Available at: https://obofoundry.org/ontology/agro.html
+
+.. [#agrofims] Devare, M., Aubert, C., Benites Alfaro, O. E.,
+   Perez Masias, I. O., and Laporte, M.-A. 2021.
+   "AgroFIMS: A Tool to Enable Digital Collection of
+   Standards-Compliant FAIR Data."
+   *Frontiers in Sustainable Food Systems* 5:726646.
+   Available at:
+   https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2021.726646/full

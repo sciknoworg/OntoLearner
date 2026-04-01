@@ -25,7 +25,31 @@
 Food Ontology (FoodON)
 ========================================================================================================
 
-FoodOn, the Food Ontology, provides comprehensive vocabulary for naming and classifying food materials throughout the entire food supply chain. It encompasses raw harvested foods and their botanical/zoological origins as well as processed food products designed for both human consumption and animal feed. FoodOn integrates anatomical and taxonomic knowledge, enabling precise semantic representation of food items and their components. The ontology is designed as a neutral, ontology-driven standard that bridges the interests of government agencies, industry stakeholders, nonprofits, and consumers. Its hierarchical structure captures relationships between ingredient components, processing methods, and final food products. FoodOn facilitates standardized naming conventions and interoperability across diverse food-related databases and systems. The ontology supports critical applications including food safety traceability, nutritional analysis, dietary research, and supply chain transparency. By providing unambiguous semantic definitions, FoodOn enables automated systems to track food products, ingredients, and allergens, enhancing data integration across the food industry and supporting evidence-based policy decisions in food security and nutrition.
+FoodOn  is a farm-to-fork food ontology that provides a comprehensive
+vocabulary for naming and classifying food materials across the food
+supply chain [#foodon-home]_ [#foodon-paper]_. It covers raw harvested
+foods, their botanical and zoological origins, and processed food
+products intended for both human consumption and animal feed
+[#foodon-home]_ [#foodon-paper]_. FoodOn integrates anatomical,
+taxonomic, and other reusable ontology terms to support precise semantic
+representation of food items, their components, and related food
+processes [#foodon-home]_ [#foodon-paper]_. It is designed as an open,
+ontology-driven standard that supports consistent food description and
+interoperability across government, industry, research, and other
+food-related systems [#foodon-paper]_ [#foodon-home]_. Its hierarchical
+structure supports relationships among source organisms, anatomical
+parts, processing methods, preservation methods, packaging, and final
+food products [#foodon-home]_ [#foodon-paper]_. By providing
+unambiguous semantic definitions, FoodOn supports standardized naming,
+food safety traceability, quality control, nutrition and dietary
+research, and data integration across food-related databases and
+applications [#foodon-paper]_ [#foodon-home]_.
+
+**Example Usage**: Annotate a food product dataset with FoodOn terms for source organisms,
+anatomical parts, processing methods, packaging, and final food products
+to enable standardized description, interoperable data exchange, and
+traceability across food safety, nutrition, and supply chain systems
+[#foodon-home]_ [#foodon-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +158,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#foodon-home] FoodOn. n.d. "FoodOn: A farm to fork ontology."
+   Available at: https://foodon.org/
+
+.. [#foodon-paper] Dooley, D. M., Griffiths, E. J., Gosal, G. S.,
+   Buttigieg, P. L., Hoehndorf, R., Lange, M. C., Schriml, L. M.,
+   Brinkman, F. S. L., and Hsiao, W. W. L. 2018.
+   "FoodOn: a harmonized food ontology to increase global food
+   traceability, quality control and data integration."
+   *npj Science of Food* 2:23.
+   doi:10.1038/s41538-018-0032-6

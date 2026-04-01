@@ -25,7 +25,33 @@
 Icon Ontology (ICON)
 ========================================================================================================
 
-The ICON ontology provides a formal framework for high-granularity art interpretation and analysis. It was developed by conceptualizing Panofsky's theory of levels of interpretation, enabling artworks to be systematically described according to three complementary analytical perspectives: Pre-iconographical (visual elements and their formal properties), Iconographical (symbolic meaning and subject matter), and Iconological (deeper cultural and philosophical context). This three-level approach enables comprehensive semantic annotation of artworks, capturing both surface-level visual descriptions and deeper interpretive insights. The ontology supports structured knowledge representation of artistic elements, iconographic themes, cultural references, and symbolic meanings. It facilitates semantic interoperability in digital art collections, museum databases, and art history research platforms. The ICON ontology enables advanced search and discovery capabilities based on artistic interpretation levels, supporting art historians, curators, and researchers in analyzing and understanding artworks. It also supports linked data integration with other cultural heritage ontologies and knowledge bases, enabling rich cross-domain art historical research and interpretation analysis.
+The ICON ontology provides a formal framework for high-granularity art
+interpretation and analysis. It was developed by conceptualizing Panofsky’s
+theory of levels of interpretation, enabling artworks to be systematically
+described according to three complementary analytical perspectives:
+Pre-iconographical (visual recognition and formal elements), Iconographical
+(subject matter and represented themes), and Iconological (deeper symbolic,
+cultural, and philosophical meanings) [#icon-paper]_. This three-level
+approach enables comprehensive semantic annotation of artworks, capturing
+both surface-level visual descriptions and deeper interpretive insights
+[#icon-paper]_ [#icon-extension]_. The ontology supports structured
+knowledge representation of artistic elements, iconographic themes,
+cultural references, and symbolic meanings [#icon-paper]_. It facilitates
+semantic interoperability in linked cultural heritage data by aligning with
+other ontologies and knowledge bases, including CIDOC-CRM and VIR
+[#icon-paper]_ [#icon-doc]_. The ICON ontology enables detailed modelling
+of artistic interpretation for art history research, corpus annotation,
+and linked data applications, supporting researchers and curators in
+analyzing and comparing artworks across interpretation levels
+[#icon-paper]_ [#icon-extension]_.
+
+**Example Usage**: Annotate an artwork or museum object with ICON ontology
+terms describing pre-iconographical elements, iconographical subjects,
+and iconological meanings for example, identifying depicted figures,
+their symbolic attributes, and the broader cultural or philosophical
+interpretation of the scene to support semantic search, comparative art
+historical analysis, and linked data integration across cultural heritage
+datasets [#icon-paper]_ [#icon-extension]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +160,24 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#icon-paper] Sartini, B., Baroncini, S., van Erp, M., Tomasi, F.,
+   and Gangemi, A. 2023. "ICON: An Ontology for Comprehensive Artistic
+   Interpretations."
+   *ACM Journal on Computing and Cultural Heritage* 16(3), Article 59: 1-38.
+   doi:10.1145/3594724
+
+.. [#icon-extension] Sartini, B. 2023.
+   "A Comparative Study of Simple and Complex Art Interpretations in
+   Linked Open Data Using ICON Ontology."
+   In *Proceedings of the Semantic Web and Ontology Design for Cultural
+   Heritage Workshop (SWODCH 2023)*.
+   CEUR Workshop Proceedings 3540.
+   Available at: `https://ceur-ws.org/Vol-3540/paper4.pdf <https://ceur-ws.org/Vol-3540/paper4.pdf>`_
+
+.. [#icon-doc] ICON Ontology Documentation. n.d.
+   "ICON Ontology Documentation 2.0."
+   Available at: `https://br0ast.github.io/ICON/ICONOntologyDocumentation2.0/index-en.html <https://br0ast.github.io/ICON/ICONOntologyDocumentation2.0/index-en.html>`_

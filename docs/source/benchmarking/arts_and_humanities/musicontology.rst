@@ -26,6 +26,32 @@ Music Ontology (MusicOntology)
 ========================================================================================================
 
 The Music Ontology Specification provides a comprehensive framework for describing music and related entities on the Semantic Web. It defines core concepts and properties for representing artists, albums, tracks, performances, and musical relationships. The ontology enables standardized music metadata annotation, facilitating interoperability across music information systems, streaming platforms, and digital libraries. It supports rich description of musical works including production details, distribution information, and artistic collaborations. The Music Ontology integrates with other semantic web vocabularies and allows linking of music resources with external datasets and knowledge bases. It enables music recommendation systems, search engines, and music discovery applications to leverage structured semantic data. The ontology supports various music-related use cases including discography management, performance tracking, playlist creation, and music history documentation. By providing a common framework for music representation, the Music Ontology facilitates semantic data integration across the music industry and enables advanced music information retrieval and analysis capabilities.
+The Music Ontology Specification provides a comprehensive framework for
+describing music and related entities on the Semantic Web. It defines
+core concepts and properties for representing artists, albums, tracks,
+performances, recordings, and musical relationships [#mo-spec]_
+[#mo-paper]_. The ontology enables standardized music metadata
+annotation, facilitating interoperability across music information
+systems and digital music libraries [#mo-spec]_ [#mo-paper]_. It
+supports rich description of musical works, performances, recordings,
+signals, and associated editorial, cultural, and acoustic information
+[#mo-paper]_ [#mo-spec]_. The Music Ontology integrates with other
+Semantic Web vocabularies and allows linking music resources with
+external datasets and knowledge bases [#mo-paper]_. It provides a common
+framework for publishing and integrating structured music-related data,
+supporting applications such as discography representation, performance
+description, playlist and collection modelling, and music information
+retrieval [#mo-spec]_ [#mo-paper]_. By enabling interoperable semantic
+descriptions of music resources, the Music Ontology supports data
+integration and analysis across diverse music datasets and tools
+[#mo-paper]_.
+
+**Example Usage**: Annotate a music dataset, recording collection, or
+linked music catalog with Music Ontology terms for artists, albums,
+tracks, performances, recordings, and release relationships to enable
+semantic search, metadata integration, and interoperability with music
+information retrieval and linked data applications [#mo-spec]_
+[#mo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +160,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#mo-spec] Raimond, Y., Abdallah, S. A., Sandler, M. B.,
+   and Giasson, F. n.d. "Music Ontology Specification."
+   Available at: `https://motools.sourceforge.net/doc/musicontology.html <https://motools.sourceforge.net/doc/musicontology.html>`_
+
+.. [#mo-paper] Raimond, Y., Abdallah, S. A., Sandler, M. B.,
+   and Giasson, F. 2007. "The Music Ontology."
+   In *Proceedings of the 8th International Conference on Music
+   Information Retrieval (ISMIR 2007)*, Vienna, Austria,
+   pp. 417-422.
+   Available at: `https://ismir2007.ismir.net/proceedings/ISMIR2007_p417_raimond.pdf <https://ismir2007.ismir.net/proceedings/ISMIR2007_p417_raimond.pdf>`_

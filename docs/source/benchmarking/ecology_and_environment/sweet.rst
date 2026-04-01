@@ -26,8 +26,31 @@ Semantic Web for Earth and Environment Technology Ontology (SWEET)
 ========================================================================================================
 
 SWEET is a comprehensive collection of interconnected ontologies designed to enhance discovery and utilization of Earth science data through semantic understanding of web resources and Earth system science concepts. It conceptualizes a knowledge space for Earth system science including orthogonal (cross-cutting) concepts such as space, time, Earth realms (atmosphere, hydrosphere, lithosphere), physical quantities, and units, alongside integrative science knowledge concepts such as phenomena, events, and processes. SWEET is represented in OWL (Web Ontology Language) to enable automated reasoning and semantic interoperability in Earth science research. The ontology supports integration of heterogeneous Earth science datasets and models by providing shared semantic definitions across atmospheric science, oceanography, geology, and climate science domains. SWEET facilitates Earth science data discovery and knowledge management by enabling semantic search and automated linking of related datasets and research findings.
+SWEET (Semantic Web for Earth and Environmental Terminology) is a
+comprehensive collection of interconnected ontologies designed to
+improve discovery and use of Earth science data through semantic
+understanding of web resources and Earth system science concepts
+[#sweet-paper]_ [#sweet-repo]_. It conceptualizes a knowledge space for
+Earth system science that includes cross-cutting concepts such as
+space, time, Earth realms, phenomena, physical quantities, and units,
+alongside more domain-specific scientific concepts [#sweet-paper]_
+[#sweet-repo]_. SWEET is represented in OWL and organized as a highly
+modular ontology suite, enabling semantic interoperability and automated
+reasoning in Earth and environmental science applications
+[#sweet-paper]_ [#sweet-repo]_. The ontology supports integration of
+heterogeneous Earth science datasets and models by providing shared
+semantic definitions across domains such as atmospheric science,
+oceanography, geology, and climate science [#sweet-paper]_
+[#sweet-search]_. By providing a shared semantic framework, SWEET
+supports Earth science data discovery, semantic search, and knowledge
+management across distributed datasets and services [#sweet-paper]_
+[#sweet-search]_.
 
-**Example Usage**: Annotate a climate dataset with SWEET terms to describe measured phenomena (e.g., "temperature increase"), spatial context (e.g., "atmosphere" realm, "troposphere" layer), temporal extent (e.g., "1980-2020"), and physical quantities (e.g., "degrees Celsius").
+**Example Usage**: Annotate a climate or Earth observation dataset with
+SWEET terms to describe observed phenomena, Earth realm or layer,
+spatial and temporal context, and relevant physical quantities and
+units, enabling semantic search, automated linking of related datasets,
+and interoperable Earth science analysis [#sweet-paper]_ [#sweet-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +159,22 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#sweet-paper] Raskin, R. G., and Pan, M. J. 2005.
+   "Knowledge Representation in the Semantic Web for Earth and
+   Environmental Terminology (SWEET)."
+   *Computers & Geosciences* 31(9): 1119-1125.
+   Available at: `https://www.sciencedirect.com/science/article/pii/S0098300405001020 <https://www.sciencedirect.com/science/article/pii/S0098300405001020>`_
+
+.. [#sweet-repo] ESIP Federation. n.d.
+   "SWEET: Official repository for Semantic Web for Earth and
+   Environmental Terminology Ontologies."
+   Available at: `https://github.com/ESIPFed/sweet <https://github.com/ESIPFed/sweet>`_
+
+.. [#sweet-search] Pouchard, L. C., Huhns, M. N., and McGuinness, D. L.
+   2013. "Linking Earth and Climate Science to Support Semantic Search."
+   *Semantic Web*.
+   Available at: `https://semantic-web-journal.net/content/linking-earth-and-climate-science-semantic-search-supporting-investigation-climate-change <https://semantic-web-journal.net/content/linking-earth-and-climate-science-semantic-search-supporting-investigation-climate-change>`_

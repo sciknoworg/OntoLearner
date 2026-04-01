@@ -25,10 +25,31 @@
 The Open Energy Ontology (OEO)
 ========================================================================================================
 
-The Open Energy Ontology (OEO) is a comprehensive domain ontology specifically designed for the energy system analysis context, covering concepts, relationships, and entities relevant to energy research and planning. Developed as part of the Open Energy Platform ecosystem, OEO provides standardized terminology for representing energy systems including generation, transmission, distribution, and consumption across diverse energy sources and technologies. The ontology is expressed in Manchester OWL Syntax to ensure user-friendliness for editing and version control, facilitating collaborative development and maintenance. OEO is actively maintained and continuously extended to incorporate emerging energy concepts, technologies, and regulatory frameworks relevant to energy system analysis and planning. The ontology is governed by a Steering Committee (OEO-SC) that ensures quality, alignment with community needs, and integration with ongoing energy research and policy projects. OEO enables standardized data representation, knowledge integration, and automated reasoning about energy systems for research, policy analysis, and strategic planning.
+The Open Energy Ontology (OEO) is a domain ontology designed for the
+energy system analysis context, covering concepts, relationships, and
+entities relevant to energy research and planning [#oeo-paper]_
+[#oeo-site]_. Developed as part of the Open Energy Family and used
+within the Open Energy Platform ecosystem, OEO provides standardized
+terminology for representing energy systems, including generation,
+conversion, transmission, distribution, storage, and consumption
+concepts across different technologies and sectors [#oeo-paper]_
+[#oeo-github]_. The ontology is represented in Manchester OWL Syntax,
+chosen to support user-friendly editing and version control in
+collaborative development workflows [#oeo-paper]_ [#oeo-github]_. OEO is
+updated regularly through a release cycle and is continuously extended
+to incorporate new concepts relevant to energy system modelling and
+analysis [#oeo-site]_ [#oeo-github]_. By providing a shared semantic
+framework, OEO supports standardized data annotation, knowledge
+integration, semantic search, model interfacing, and automated
+reasoning for energy system research and related applications
+[#oeo-paper]_ [#oeo-site]_.
 
-**Example Usage**:
-Annotate an energy system dataset with OEO terms to describe energy sources (solar, wind, biomass), generation capacity, transmission networks, demand patterns, and storage systems to enable automated analysis of energy system configurations and transition scenarios.
+**Example Usage**: Annotate an energy system dataset with OEO terms to
+describe energy carriers and sources, generation technologies,
+transmission or distribution infrastructure, storage systems, demand
+concepts, or scenario-study entities, enabling semantic search,
+interoperable data integration, and analysis of energy system
+configurations and transition scenarios [#oeo-paper]_ [#oeo-site]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,3 +158,23 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#oeo-paper] Booshehri, M., Emele, L., Flügel, S., Förster, H.,
+   Frey, J., Frey, U., Glauer, M., Hastings, J., Hofmann, C.,
+   Hoyer-Klick, C., Hülk, L., Kleinau, A., Knosala, K., Kotzur, L.,
+   Kuckertz, P., Mossakowski, T., Muschner, C., Neuhaus, F., Pehl, M.,
+   Robinius, M., Sehn, V., and Stappel, M. 2021.
+   "Introducing the Open Energy Ontology: Enhancing Data Interpretation
+   and Interfacing in Energy Systems Analysis."
+   *Energy and AI* 5:100074.
+   doi:10.1016/j.egyai.2021.100074
+   Available at: `https://publications.pik-potsdam.de/pubman/item/item_25641_2/component/file_25642/25641oa.pdf <https://publications.pik-potsdam.de/pubman/item/item_25641_2/component/file_25642/25641oa.pdf>`_
+
+.. [#oeo-site] Open Energy Platform. n.d. "OEO Ontology."
+   Available at: `https://openenergyplatform.org/ontology/ <https://openenergyplatform.org/ontology/>`_
+
+.. [#oeo-github] OpenEnergyPlatform. n.d. "Repository for the Open Energy Ontology (OEO)."
+   Available at: `https://github.com/OpenEnergyPlatform/ontology <https://github.com/OpenEnergyPlatform/ontology>`_

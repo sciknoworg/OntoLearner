@@ -23,10 +23,26 @@
 Phenotype and Trait Ontology (PATO)
 ========================================================================================================
 
-The Phenotype and Trait Ontology (PATO) is a structured vocabulary designed to describe phenotypic qualities, attributes, and traits across a wide range of biological organisms. It provides a standardized framework for annotating and analyzing phenotypic data, enabling researchers to compare and integrate data across species and studies. PATO defines qualities such as color, shape, size, and behavior, and links them to specific biological entities and contexts. The ontology is widely used in genetics, developmental biology, and evolutionary studies to describe phenotypic variations and their underlying genetic and environmental factors. By providing a common language for phenotypic traits, PATO facilitates data sharing, integration, and computational analysis in the life sciences. The ontology is actively maintained and updated to incorporate new terms and relationships as research advances.
+The Phenotype and Trait Ontology (PATO) is a structured vocabulary for
+describing phenotypic qualities, attributes, and traits in a
+species-neutral way [#pato-obo]_ [#pato-framework]_. It provides a
+standardized framework for annotating and analyzing phenotypic data by
+defining qualities such as size, shape, color, morphology, and other
+characteristics that can be combined with biological entity ontologies
+to describe phenotypes [#pato-framework]_ [#pato-anatomy]_. PATO is
+widely used in phenotype annotation and in the logical definition of
+phenotype terms across species, supporting data integration and
+comparative analysis in genetics, developmental biology, and related
+life science domains [#pato-obo]_ [#pato-integration]_. By providing a
+common language for phenotypic qualities, PATO facilitates cross-species
+interoperability, computational reasoning, and semantic analysis of
+phenotype data [#pato-anatomy]_ [#oba-paper]_.
 
-**Example Usage**:
-Annotate a genetic study with PATO terms to describe phenotypic traits such as "PATO:0000323 (red coloration)" for a flower petal or "PATO:0000383 (increased size)" for a specific organ, enabling cross-study comparisons and meta-analyses.
+**Example Usage**: Annotate a genetic or phenotype study with PATO terms
+to describe qualities such as red coloration, increased size, abnormal
+shape, or altered morphology in association with a specific biological
+entity, enabling cross-study comparison, semantic integration, and
+computational phenotype analysis [#pato-framework]_ [#pato-integration]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +151,37 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#pato-obo] OBO Foundry. n.d. "Phenotype And Trait Ontology (PATO)."
+   Available at: `https://obofoundry.org/ontology/pato.html <https://obofoundry.org/ontology/pato.html>`_
+
+.. [#pato-framework] Gkoutos, G. V., Green, E. C. J., Mallon, A.-M.,
+   Hancock, J. M., and Davidson, D. 2005.
+   "Using Ontologies to Describe Mouse Phenotypes."
+   *Genome Biology* 6:R8.
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC545487/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC545487/>`_
+
+.. [#pato-integration] Mungall, C. J., Gkoutos, G. V., Smith, C. L.,
+   Haendel, M. A., Lewis, S. E., and Ashburner, M. 2010.
+   "Integrating Phenotype Ontologies Across Multiple Species."
+   *Genome Biology* 11:R2.
+   doi:10.1186/gb-2010-11-1-r2
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC2847714/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC2847714/>`_
+
+.. [#pato-anatomy] Gkoutos, G. V., Schofield, P. N., and Hoehndorf, R.
+   2018. "The Anatomy of Phenotype Ontologies: Principles, Properties
+   and Applications."
+   *Briefings in Bioinformatics* 19(5): 1008-1021.
+   doi:10.1093/bib/bbx035
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC6169674/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC6169674/>`_
+
+.. [#oba-paper] Stefancsik, R., Mungall, C. J., Robinson, P. N.,
+   Smith, C. L., Haendel, M. A., and Gkoutos, G. V. 2023.
+   "The Ontology of Biological Attributes (OBA)—Computational Traits for
+   the Life Sciences."
+   *Database* 2023: baad038.
+   doi:10.1093/database/baad038
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC9900877/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC9900877/>`_

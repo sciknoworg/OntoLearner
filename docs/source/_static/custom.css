@@ -34,6 +34,14 @@ dd > dl {
     padding-top: 0px;
 }
 
+.backrefs {
+    font-size: 0;
+}
+
+.backrefs:after {
+    font-size: initial;
+    content: "\00a0";
+}
 .components {
     display: flex;
     flex-flow: row wrap;
