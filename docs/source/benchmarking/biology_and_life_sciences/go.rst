@@ -28,28 +28,28 @@ Gene Ontology (GO)
 The Gene Ontology (GO) is a comprehensive resource that provides
 structured controlled vocabularies for the annotation of gene products
 with respect to their molecular function, cellular component, and
-biological process roles [#go-site]_ [#go-paper]_. Developed
+biological process roles [#go-site]_ [#go-2026]_. Developed
 collaboratively by the Gene Ontology Consortium, GO enables consistent
 annotation of genes and proteins across diverse species and databases
-[#go-paper]_ [#go-2026]_. The ontology is organized into three
-hierarchical namespaces: Biological Process (BP), describing the larger
+[#go-2026]_ [#go-site]_. The ontology is organized into three
+hierarchical namespaces: Biological Process, describing the larger
 biological objectives to which a gene product contributes; Molecular
-Function (MF), characterizing its molecular activity; and Cellular
-Component (CC), indicating where that activity occurs [#go-overview]_
-[#go-annotations]_. GO supports biological data analysis by enabling
+Function, characterizing its molecular activity; and Cellular
+Component, indicating where that activity occurs [#go-site]_
+[#go-2026]_. GO supports biological data analysis by enabling
 researchers to compare gene functions, identify enriched biological
 processes or functions in genomics datasets, and understand
 relationships among genes and gene products in biological systems
-[#go-paper]_ [#go-2026]_. By providing a shared semantic framework for
+[#go-2026]_ [#go-site]_. By providing a shared semantic framework for
 functional annotation, GO facilitates data integration, comparative
 genomics, and computational analysis across the life sciences
-[#go-paper]_ [#go-2026]_.
+[#go-2026]_ [#go-site]_.
 
 **Example Usage**: Annotate a protein such as TP53 with GO terms for
-biological process, molecular function, and cellular component. For
-example, terms related to apoptotic process, DNA binding, and nucleus to
+biological process, molecular function, and cellular component, for
+example terms related to apoptotic process, DNA binding, and nucleus, to
 enable standardized functional annotation, enrichment analysis, and
-cross-database comparison [#go-annotations]_ [#go-site]_.
+cross-database comparison [#go-site]_ [#go-2026]_.
 
 Metrics & Statistics
 --------------------------
@@ -164,19 +164,6 @@ References
 
 .. [#go-site] Gene Ontology Consortium. n.d. "The Gene Ontology Resource."
    Available at: `https://geneontology.org/ <https://geneontology.org/>`_
-
-.. [#go-overview] Gene Ontology Consortium. n.d. "Gene Ontology Overview."
-   Available at: `https://geneontology.org/docs/ontology-documentation/ <https://geneontology.org/docs/ontology-documentation/>`_
-
-.. [#go-annotations] Gene Ontology Consortium. n.d.
-   "Introduction to GO Annotations."
-   Available at: `https://geneontology.org/docs/go-annotations/ <https://geneontology.org/docs/go-annotations/>`_
-
-.. [#go-paper] The Gene Ontology Consortium. 2021.
-   "The Gene Ontology Resource: Enriching a GOld Mine."
-   *Nucleic Acids Research* 49(D1): D325-D334.
-   doi:10.1093/nar/gkaa1113
-   Available at: `https://pubmed.ncbi.nlm.nih.gov/33290552/ <https://pubmed.ncbi.nlm.nih.gov/33290552/>`_
 
 .. [#go-2026] The Gene Ontology Consortium. 2026.
    "The Gene Ontology Knowledgebase in 2026."

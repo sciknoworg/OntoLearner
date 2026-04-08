@@ -27,27 +27,28 @@ Marine Taxonomy and Life Ontology (MarineTLO)
 
 MarineTLO is a top-level ontology for the marine domain, designed to
 provide consistent abstractions for concepts appearing across marine
-data models and ontologies. It provides the properties needed to make a
-distributed marine knowledge base a coherent source of facts, relating
-observational data to spatiotemporal context and categorical
-(systematic) domain knowledge [#marinetlo-site]_ [#marinetlo-paper]_.
-It can be used as a core schema for publishing linked data and for
-building integration systems for the marine domain [#marinetlo-site]_
-[#marinetlo-paper]_. MarineTLO is generic enough to be extended to
-different levels of detail while preserving monotonicity, and it has
-been implemented in OWL 2 and evaluated through competency queries that
-capture domain requirements provided by related communities
-[#marinetlo-site]_ [#marinetlo-doc]_. By providing a shared top-level
-semantic framework, MarineTLO supports semantic interoperability and the
-integration of heterogeneous marine biodiversity and observation data
-across distributed sources [#marinetlo-paper]_ [#marinetlo-site]_.
+data models and ontologies [#marinetlo-paper]_ [#marinetlo-doc]_. It
+provides the properties needed to make a distributed marine knowledge
+base a coherent source of facts, relating observational data to
+spatiotemporal context and categorical, systematic domain knowledge
+[#marinetlo-paper]_ [#marinetlo-doc]_. It can be used as a core schema
+for publishing linked data and for building integration systems for the
+marine domain [#marinetlo-paper]_ [#marinetlo-doc]_. MarineTLO is
+generic enough to be extended to different levels of detail while
+preserving monotonicity, and it has been implemented in OWL 2 and
+evaluated through competency queries that capture domain requirements
+provided by related communities [#marinetlo-paper]_ [#marinetlo-doc]_.
+By providing a shared top-level semantic framework, MarineTLO supports
+semantic interoperability and the integration of heterogeneous marine
+biodiversity and observation data across distributed sources
+[#marinetlo-paper]_ [#marinetlo-doc]_.
 
 **Example Usage**: Use MarineTLO as a core schema to integrate marine
 species, observations, habitats, and sampling-event data from multiple
 sources, linking each observation to its taxonomic, spatial, and
 temporal context to enable semantic querying and interoperable analysis
 across marine biodiversity datasets [#marinetlo-paper]_
-[#marinetlo-site]_.
+[#marinetlo-doc]_.
 
 Metrics & Statistics
 --------------------------
@@ -160,12 +161,10 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#marinetlo-site] Institute of Computer Science, FORTH. 2020.
-   "MarineTLO | A Top Level Ontology for the Marine/Biodiversity Domain."
-   Available at: `https://projects.ics.forth.gr/isl/MarineTLO/ <https://projects.ics.forth.gr/isl/MarineTLO/>`_
-
-.. [#marinetlo-doc] Tzitzikas, Y., and collaborators. n.d.
-   "MarineTLO: A Top Level Ontology for the Marine Domain."
+.. [#marinetlo-doc] Tzitzikas, Y., Allocca, C., Bekiari, C.,
+   Marketakis, Y., Fafalios, P., Doerr, M., Minadakis, N., Patkos, T.,
+   and Candela, L. n.d. "MarineTLO: A Top Level Ontology for the Marine
+   Domain."
    Documentation.
    Available at: `https://projects.ics.forth.gr/isl/MarineTLO/files/MarineTLO.pdf <https://projects.ics.forth.gr/isl/MarineTLO/files/MarineTLO.pdf>`_
 
@@ -176,4 +175,3 @@ References
    MarineTLO."
    *Program* 50(1): 16-40.
    doi:10.1108/PROG-10-2014-0072
-   Available at: `https://www.vliz.be/imisdocs/publications/283055.pdf <https://www.vliz.be/imisdocs/publications/283055.pdf>`_

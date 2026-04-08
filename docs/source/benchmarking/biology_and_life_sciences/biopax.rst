@@ -28,28 +28,28 @@ Biological Pathways Exchange (BioPAX)
 BioPAX (Biological Pathway Exchange) is a standard RDF/OWL-based
 language and ontology for exchanging, integrating, and analyzing
 biological pathway data [#biopax-paper]_ [#biopax-spec]_. It enables the
-representation of molecular interaction networks, including metabolic and
-signaling pathways, molecular and genetic interactions, and gene
+representation of molecular interaction networks, including metabolic
+and signaling pathways, molecular and genetic interactions, and gene
 regulation processes [#biopax-paper]_ [#biopax-spec]_. BioPAX models
-core pathway concepts such as interactions, physical entities
-(for example proteins, DNA, RNA, complexes, and small molecules),
-pathways, and their associated biological and cellular properties
-[#biopax-paper]_ [#biopax-spec]_. The ontology is designed to reduce
-complexity in data interchange by providing a unified format that
-supports integration across pathway databases, visualization tools, and
-computational analysis platforms [#biopax-paper]_. BioPAX is widely used
-in pathway informatics and has been adopted by major resources and tools
-for pathway data sharing and integration [#biopax-paper]_ [#pathway-commons]_.
-By providing a common semantic framework for pathway representation,
-BioPAX supports systems biology analysis, pathway visualization, and
-interoperable exchange of biological knowledge across diverse resources
-[#biopax-paper]_.
+core pathway concepts such as interactions, physical entities, including
+proteins, DNA, RNA, complexes, and small molecules, pathways, and their
+associated biological and cellular properties [#biopax-paper]_
+[#biopax-spec]_. The ontology is designed to reduce complexity in data
+interchange by providing a unified format that supports integration
+across pathway databases, visualization tools, and computational
+analysis platforms [#biopax-paper]_. BioPAX is widely used in pathway
+informatics for pathway data sharing and integration [#biopax-paper]_
+[#biopax-spec]_. By providing a common semantic framework for pathway
+representation, BioPAX supports systems biology analysis, pathway
+visualization, and interoperable exchange of biological knowledge across
+diverse resources [#biopax-paper]_ [#biopax-spec]_.
 
 **Example Usage**: Represent a phosphorylation event as a BioPAX
 BiochemicalReaction in which a protein substrate is converted into its
 phosphorylated form, linked to the relevant catalyst or controller,
 cellular location, and pathway context to enable pathway exchange,
-visualization, and computational analysis [#biopax-spec]_ [#biopax-paper]_.
+visualization, and computational analysis [#biopax-spec]_
+[#biopax-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -189,11 +189,3 @@ References
 .. [#biopax-spec] BioPAX Editorial Board. n.d.
    "BioPAX Level 3 Documentation."
    Available at: `https://biopax.github.io/Paxtools/ <https://biopax.github.io/Paxtools/>`_
-
-.. [#pathway-commons] Cerami, E. G., Gross, B. E., Demir, E.,
-   Rodchenkov, I., Babur, O., Anwar, N., Schultz, N., Bader, G. D.,
-   and Sander, C. 2011. "Pathway Commons, a Web Resource for Biological
-   Pathway Data."
-   *Nucleic Acids Research* 39(Database issue): D685-D690.
-   doi:10.1093/nar/gkq1039
-   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC3013641/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC3013641/>`_

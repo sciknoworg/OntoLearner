@@ -25,11 +25,26 @@ Mass Spectrometry Ontology (MassSpectrometry)
 
 A structured controlled vocabulary for the annotation of experiments concerned with proteomics mass spectrometry.
 
-The Mass Spectrometry Ontology (MassSpectrometry) is a structured controlled vocabulary designed to annotate experiments in the field of proteomics mass spectrometry. It provides a standardized framework for describing experimental setups, instrumentation, data acquisition methods, and analysis workflows. The ontology captures essential concepts such as ionization techniques, mass analyzers, fragmentation methods, and data processing algorithms. By offering a common language for mass spectrometry, it facilitates data sharing, integration, and reproducibility across proteomics studies. The ontology is widely used in bioinformatics pipelines, proteomics databases, and experimental repositories to ensure semantic consistency and interoperability. Researchers can leverage the Mass Spectrometry Ontology to annotate datasets, describe experimental protocols, and enable advanced queries for comparative analyses.
+The Mass Spectrometry Ontology (MassSpectrometry) is a structured
+controlled vocabulary developed by the HUPO Proteomics Standards
+Initiative to support the annotation of proteomics mass spectrometry
+experiments [#ms-obo]_ [#ms-paper]_. It provides a standardized
+framework for describing experimental setups, instrumentation, data
+acquisition methods, and analysis workflows in mass spectrometry
+[#ms-paper]_ [#ms-obo]_. The ontology captures key concepts such as
+ionization techniques, mass analyzers, fragmentation methods, software,
+and data-processing terms used in proteomics experiments [#ms-paper]_
+[#ms-obo]_. By providing a common vocabulary for mass spectrometry, it
+supports semantic consistency, data sharing, interoperability, and
+reproducibility across proteomics databases, repositories, and analysis
+pipelines [#ms-obo]_ [#ms-paper]_.
 
-**Example Usage**:
-Annotate a proteomics experiment with MassSpectrometry terms to specify the ionization method (e.g., "electrospray ionization"), mass analyzer type (e.g., "time-of-flight"), and data processing software used for peak detection and quantification.
-
+**Example Usage**: Annotate a proteomics experiment with
+MassSpectrometry terms to specify the ionization method, such as
+electrospray ionization, the mass analyzer type, such as time-of-flight,
+the fragmentation approach, and the software used for peak detection or
+quantification, enabling semantic interoperability and cross-study
+comparison [#ms-paper]_ [#ms-obo]_.
 Metrics & Statistics
 --------------------------
 
@@ -137,3 +152,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#ms-obo] OBO Foundry. n.d. "Mass Spectrometry Ontology."
+   Available at: `https://obofoundry.org/ontology/ms.html <https://obofoundry.org/ontology/ms.html>`_
+
+.. [#ms-paper] Mayer, G., Jones, A. R., Binz, P.-A., Deutsch, E. W.,
+   Orchard, S., Montecchi-Palazzi, L., Vizcaíno, J. A., Hermjakob, H.,
+   and others. 2013. "The HUPO Proteomics Standards Initiative-Mass
+   Spectrometry Controlled Vocabulary."
+   *Database* 2013: bat009.
+   doi:10.1093/database/bat009
