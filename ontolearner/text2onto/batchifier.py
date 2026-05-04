@@ -111,7 +111,7 @@ class TaxonomyBatchifier(ABC):
             for rel in batch:
                 pseudo_sentence = f"{rel[2]} {rel[3]} {rel[0]}"
                 # keeping track of terms and types included in each pseudo sentence
-                if rel[3] == "is a":
+                if rel[3] == "is instance of":
                     terms = [rel[2]]
                     types = [rel[0]]
                 else:

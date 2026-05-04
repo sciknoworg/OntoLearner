@@ -188,31 +188,18 @@ Text2Onto
 Loading Ontological Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For the Text2Onto task, we load an ontology (via ``OM``), extract its structured content, and generate synthetic pseudo-sentences using an LLM-backed generator (DSPy + Ollama in this example).
+For the Text2Onto task, we load an ontology (via ``OM``), extract its structured content, and generate synthetic pseudo-sentences using a direct ``transformers`` backend.
 
 .. code-block:: python
 
    import os
-   import dspy
 
    # Import ontology loader/manager and Text2Onto utilities
    from ontolearner.ontology import OM
    from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
 
-   # ---- DSPy -> Ollama (LiteLLM-style) ----
-   LLM_MODEL_ID = "ollama/llama3.2:3b"
-   LLM_API_KEY  = "NA"                      # local Ollama doesn't use a key
-   LLM_BASE_URL = "http://localhost:11434"  # default Ollama endpoint
-
-   dspy_llm = dspy.LM(
-       model=LLM_MODEL_ID,
-       cache=True,
-       max_tokens=4000,
-       temperature=0,
-       api_key=LLM_API_KEY,
-       base_url=LLM_BASE_URL,
-   )
-   dspy.configure(lm=dspy_llm)
+   MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+   HF_TOKEN = os.getenv("HF_TOKEN", "")
 
    # ---- Synthetic generation configuration ----
    batch_size = int(os.getenv("TEXT2ONTO_BATCH", "10"))
@@ -221,6 +208,8 @@ For the Text2Onto task, we load an ontology (via ``OM``), extract its structured
    text2onto_synthetic_generator = SyntheticGenerator(
        batch_size=batch_size,
        worker_count=worker_count,
+       model_id=MODEL_ID,
+       token=HF_TOKEN,
    )
 
    # ---- Load ontology and extract structured data ----

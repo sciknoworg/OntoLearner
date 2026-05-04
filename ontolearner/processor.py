@@ -23,8 +23,8 @@ import tempfile
 from pathlib import Path
 from typing import Union, Any, Dict
 from jinja2 import Template
-from huggingface_hub import HfApi, Repository
-from huggingface_hub.errors import RepositoryNotFoundError
+from huggingface_hub import HfApi, snapshot_download
+from huggingface_hub.utils import RepositoryNotFoundError
 
 
 from .base import BaseOntology
@@ -822,21 +822,47 @@ If you find our work helpful, feel free to give us a cite.
             # Clone ontology repository
             try:
                 api.repo_info(repo_id=repo_id, repo_type="dataset")
-                repo = Repository(local_dir=ontology_repo_path, clone_from=repo_id, repo_type="dataset", token=hf_token)
-                repo.git_pull()
+                snapshot_download(
+                    repo_id=repo_id,
+                    repo_type="dataset",
+                    local_dir=ontology_repo_path,
+                    token=hf_token,
+                    local_dir_use_symlinks=False
+                )
             except RepositoryNotFoundError:
-                api.create_repo(repo_id=repo_id, repo_type="dataset", private=False, token=hf_token)
-                repo = Repository(local_dir=ontology_repo_path, clone_from=repo_id, repo_type="dataset", token=hf_token)
-
+                api.create_repo(
+                    repo_id=repo_id,
+                    repo_type="dataset",
+                    private=False,
+                    token=hf_token
+                )
+                snapshot_download(
+                    repo_id=repo_id,
+                    repo_type="dataset",
+                    local_dir=ontology_repo_path,
+                    token=hf_token,
+                    local_dir_use_symlinks=False
+                )
             # Clone metrics space repository
             try:
                 api.repo_info(repo_id=metrics_repo_id, repo_type="space")
-                metrics_repo = Repository(local_dir=metrics_repo_path, clone_from=metrics_repo_id, repo_type="space", token=hf_token)
-                metrics_repo.git_pull()
+                snapshot_download(
+                    repo_id=metrics_repo_id,
+                    repo_type="space",
+                    local_dir=metrics_repo_path,
+                    token=hf_token,
+                    local_dir_use_symlinks=False
+                )
             except RepositoryNotFoundError:
                 # If metrics repo doesn't exist, create it (though it should exist)
                 api.create_repo(repo_id=metrics_repo_id, repo_type="space", private=False, token=hf_token)
-                metrics_repo = Repository(local_dir=metrics_repo_path, clone_from=metrics_repo_id, repo_type="space", token=hf_token)
+                snapshot_download(
+                    repo_id=metrics_repo_id,
+                    repo_type="space",
+                    local_dir=metrics_repo_path,
+                    token=hf_token,
+                    local_dir_use_symlinks=False
+                )
 
             # Create ontology directory in the ontology repo
             self.save_resource(output_dir=str(ontology_repo_path), processed_ontology=self.processed_ontology)
@@ -848,17 +874,22 @@ If you find our work helpful, feel free to give us a cite.
             # Update domain README.md in the ontology repository
             self.update_domain_readme(ontology_repo_path, metrics_file_path, domain_normalized)
 
-            # Commit and push ontology repository
-            repo.git_add(auto_lfs_track=True)
-            commit_message = f"✨ Added {self.processed_ontology['ontology_id']} ontology!"
-            repo.git_commit(commit_message)
-            repo.git_push()
+            api.upload_folder(
+                folder_path=str(ontology_repo_path),
+                repo_id=repo_id,
+                repo_type="dataset",
+                commit_message=f"✨ Added {self.processed_ontology['ontology_id']} ontology!",
+                token=hf_token,
+            )
 
             # Commit and push metrics repository
-            metrics_repo.git_add(auto_lfs_track=True)
-            metrics_commit_message = f"📝 Update metrics for {self.processed_ontology['ontology_id']}"
-            metrics_repo.git_commit(metrics_commit_message)
-            metrics_repo.git_push()
+            api.upload_folder(
+                folder_path=str(metrics_repo_path),
+                repo_id=metrics_repo_id,
+                repo_type="space",
+                commit_message=f"📝 Update metrics for {self.processed_ontology['ontology_id']}",
+                token=hf_token,
+            )
 
             result = {
                 "status": "success",
