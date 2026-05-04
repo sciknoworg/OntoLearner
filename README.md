@@ -73,6 +73,7 @@ print(ontolearner.__version__)
 - **Unified API**: consistent `fit → predict → evaluate` interface across all learners.
 - **LearnerPipeline**: end-to-end pipeline in a single call.
 - **Extensible**: easily plug in custom ontologies, learners, or retrievers.
+- **Text2Onto generation**: synthetic document generation now uses a direct `transformers` backend with ontology-aware context enrichment.
 
 ---
 

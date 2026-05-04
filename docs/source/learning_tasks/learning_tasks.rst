@@ -17,6 +17,8 @@ Within the OntoLearner framework, the modularized ontologies are extended with O
 
 Additionally, OntoLearner incorporates a **Text2Onto**, which focuses on extracting ontological terms and types directly from raw text. Notably, Text2Onto is designed to function independently of the LLMs4OL pipeline, and Ontologizer. Users can import or load LLMs4OL tasks as inputs to Text2Onto, enabling flexible and extensible data extraction workflows for OL.
 
+Text2Onto synthetic generation now uses a direct ``transformers``-based backend, and the generator can enrich each passage with ontology-aware context pulled from the extracted term/type graph. This makes the generated text more faithful to the source ontology and easier to use for downstream training.
+
 LLMs4OL Paradigm
 -------------------
 

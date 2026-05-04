@@ -1,5 +1,4 @@
 import os
-import dspy
 
 # Import ontology loader/manager
 from ontolearner.ontology import OM
@@ -11,25 +10,11 @@ from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
 from ontolearner import LearnerPipeline
 from ontolearner.learner.text2onto import AlexbekRAGFewShotLearner
 
-# ---- DSPy -> Ollama (LiteLLM-style) ----
-# Configure DSPy to send prompts to a locally running Ollama server (via LiteLLM-compatible args).
-LLM_MODEL_ID = "ollama/llama3.2:3b"      # use your pulled Ollama model
-LLM_API_KEY  = "NA"                      # Ollama local doesn't use a key; kept for interface compatibility
-LLM_BASE_URL = "http://localhost:11434"  # default Ollama server endpoint
-
-# Create the DSPy language model wrapper.
-# Note: DSPy uses LiteLLM-style parameters under the hood when given model/base_url/api_key.
-dspy_llm = dspy.LM(
-    model=LLM_MODEL_ID,
-    cache=True,          # cache generations to speed up repeated runs
-    max_tokens=4000,     # generous context for synthetic generation prompts
-    temperature=0,       # deterministic output; helpful for reproducibility
-    api_key=LLM_API_KEY,
-    base_url=LLM_BASE_URL,
-)
-
-# Register the LM globally so DSPy modules (and generator internals) use it.
-dspy.configure(lm=dspy_llm)
+# ---- Transformers backend ----
+# Configure the synthetic generator with a Hugging Face model.
+LLM_MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+HF_TOKEN = os.getenv("HF_TOKEN", "")
+TEXT2ONTO_DEVICE = os.getenv("TEXT2ONTO_DEVICE", "auto")
 
 # ---- Synthetic generation configuration ----
 # Allow scaling generation without editing code by using environment variables:
@@ -40,7 +25,10 @@ max_worker_count_for_llm_calls = int(os.getenv("TEXT2ONTO_WORKERS", "1"))
 # Instantiate the generator that turns ontology structures into pseudo-text samples.
 text2onto_synthetic_generator = SyntheticGenerator(
     batch_size=pseudo_sentence_batch_size,       # number of samples requested per batch
-    worker_count=max_worker_count_for_llm_calls, # parallel LLM calls (increase if your machine can handle it)
+    worker_count=max_worker_count_for_llm_calls, # used as a generation micro-batch size
+    model_id=LLM_MODEL_ID,
+    token=HF_TOKEN,
+    device=TEXT2ONTO_DEVICE,
 )
 
 # ---- Load ontology and extract structured data ----

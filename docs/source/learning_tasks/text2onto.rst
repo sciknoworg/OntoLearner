@@ -13,60 +13,62 @@ The first step is to load the ontology data from the selected ontology.
 
     conference = ConferenceOntology()
     conference.load()
-    ontological_data = ontology.extract()
+    ontological_data = conference.extract()
 
     print(f"term types: {len(ontological_data.term_typings)}")
     print(f"taxonomic relations: {len(ontological_data.type_taxonomies.taxonomies)}")
     print(f"non-taxonomic relations: {len(ontological_data.type_non_taxonomic_relations.non_taxonomies)}")
 
 
-As the second step, an LLM is used to generate synthetic text documents. DSPy is used to connect to the LLM and parse the LLM outputs. You can use an LLM from an external provider
-or host an LLM locally using tools such as Ollama or vLLM.
+As the second step, an LLM is used to generate synthetic text documents. Text2Onto now uses a direct ``transformers`` backend for generation, so you can run it with a Hugging Face model locally or with a remote model that is accessible through the standard Transformers APIs.
+
+The generator also enriches the prompt with ontology-aware context derived from the extracted term typing, taxonomy, and non-taxonomic relation structure. This improves faithfulness and helps the model produce more coherent passages that stay closer to the source ontology.
 
 .. note::
 
-     More details about all providers supported by ``DSPy`` (through *LiteLLM*) can be found in `this link <https://docs.litellm.ai/docs/providers>`_.
+     Text2Onto works best with instruction-tuned Hugging Face models that can follow structured-output prompts. Smaller models can work for quick demos, while stronger instruction-tuned models usually produce cleaner passages and more consistent JSON.
 
-Information about the LLM is provided in a ``.env`` file similar to the following.
-
-.. code-block::
-
-    "LLM_MODEL_ID"={model_id_from_provider}
-    "LLM_BASE_URL"={llm_provider_base_url}
-    "LLM_API_KEY"={api_key_for_the_provider}
-
-
-Then you can configure DSPy to use the provided LLM and generate the synthetic text documents using the ontology data extracted before.
+You can configure the generator directly with a model identifier, optional Hugging Face token, and decoding settings.
 
 .. code-block:: python
 
     from dotenv import load_dotenv
-    import dspy
+    import os
 
     from ontolearner.text2onto import SyntheticGenerator
 
     load_dotenv(override=True)
 
-    dspy_llm = dspy.LM(
-        model=os.environ["LLM_MODEL_ID"],
-        cache=True,
-        max_tokens=4000,
-        temperature=0,
-        api_key=os.environ["LLM_API_KEY"],
-        base_url=os.environ["LLM_BASE_URL"])
-    dspy.configure(lm=dspy_llm)
-
     pseudo_sentence_batch_size = 50
     max_worker_count_for_llm_calls = 3
     text2onto_synthetic_generator = SyntheticGenerator(batch_size=pseudo_sentence_batch_size,
-                                                   worker_count=max_worker_count_for_llm_calls)
+                                                        worker_count=max_worker_count_for_llm_calls,
+                                                        model_id=os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct"),
+                                                        token=os.getenv("HF_TOKEN", ""),
+                                                        device=os.getenv("TEXT2ONTO_DEVICE", "auto"),
+                                                        max_new_tokens=256)
     synthetic_data = text2onto_synthetic_generator.generate(ontological_data=ontological_data,
                                                                     topic=ontology.domain)
+
+.. tip::
+
+   For better generation quality, use an instruction-tuned model, keep temperature low, and increase ``batch_size`` only when the ontology context still fits comfortably into the model context window.
+
+.. note::
+
+   The generator does not rely on DSPy anymore. If you previously configured DSPy for Text2Onto, you can remove that setup and pass the model directly through ``SyntheticGenerator``.
 
 Data Splitter
 ------------------------
 
 You can split the generated synthetic data for training, hyperparameter optimization (validation), and testing purposes.
+
+If you want to improve the synthetic corpus further, the current generator can be extended with:
+
+* richer ontology context retrieval from neighboring terms or parent chains,
+* stricter JSON/structured-output validation,
+* post-generation repair retries when required labels are missing,
+* and optional reranking of multiple candidate passages.
 
 .. code-block:: python
 

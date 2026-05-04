@@ -1,28 +1,13 @@
-# Import the DSPy library for declarative prompting with LLMs
-import dspy
+import os
 
 # Import necessary modules from the OntoLearner library
 from ontolearner.ontology import OM
 from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
 
-# Define your LLM credentials and model configuration
-LLM_MODEL_ID = "..."      # e.g., "gpt-4" or "ollama/mistral"
-LLM_API_KEY = "..."       # API key for accessing the model
-LLM_BASE_URL = "..."      # Base URL for the LLM provider (if using LiteLLM or similar)
-
-# Configure DSPy to use the specified LLM via LiteLLM
-# See: https://docs.litellm.ai/docs/providers for setting up providers
-dspy_llm = dspy.LM(
-    model=LLM_MODEL_ID,
-    cache=True,           # Cache previous completions to save costs/time
-    max_tokens=4000,      # Maximum tokens allowed in a single response
-    temperature=0,        # Set to 0 for deterministic output
-    api_key=LLM_API_KEY,
-    base_url=LLM_BASE_URL
-)
-
-# Apply the LLM configuration to DSPy
-dspy.configure(lm=dspy_llm)
+# Define the Hugging Face model configuration used for synthetic generation.
+MODEL_ID = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
+HF_TOKEN = os.getenv("HF_TOKEN", "")
+DEVICE = os.getenv("TEXT2ONTO_DEVICE", "auto")
 
 # Set parameters for synthetic pseudo-sentence generation
 pseudo_sentence_batch_size = 50
@@ -31,7 +16,10 @@ max_worker_count_for_llm_calls = 3
 # Instantiate the synthetic sentence generator for ontology data
 text2onto_synthetic_generator = SyntheticGenerator(
     batch_size=pseudo_sentence_batch_size,
-    worker_count=max_worker_count_for_llm_calls
+    worker_count=max_worker_count_for_llm_calls,  # used as a generation micro-batch size
+    model_id=MODEL_ID,
+    token=HF_TOKEN,
+    device=DEVICE,
 )
 
 # Load an example ontology using the OM class
@@ -46,7 +34,7 @@ print(f"term types: {len(ontological_data.term_typings)}")
 print(f"taxonomic relations: {len(ontological_data.type_taxonomies.taxonomies)}")
 print(f"non-taxonomic relations: {len(ontological_data.type_non_taxonomic_relations.non_taxonomies)}")
 
-# Generate synthetic training data from the ontology using LLMs
+# Generate synthetic training data from the ontology using the transformers backend
 synthetic_data = text2onto_synthetic_generator.generate(
     ontological_data=ontological_data,
     topic=ontology.domain    # Pass the ontology's domain as a topic prompt

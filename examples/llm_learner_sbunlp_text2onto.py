@@ -1,5 +1,4 @@
 import os
-import dspy
 
 # Import ontology loader/manager and Text2Onto utilities
 from ontolearner.ontology import OM
@@ -9,24 +8,11 @@ from ontolearner.text2onto import SyntheticGenerator, SyntheticDataSplitter
 from ontolearner import LearnerPipeline
 from ontolearner.learner.text2onto import SBUNLPFewShotLearner
 
-# ---- DSPy -> Ollama (LiteLLM-style) ----
-# Configure DSPy to send prompts to a locally running Ollama server.
-LLM_MODEL_ID = "ollama/llama3.2:3b"
-LLM_API_KEY = "NA"  # Ollama local doesn't use a key; kept for interface compatibility.
-LLM_BASE_URL = "http://localhost:11434"  # default Ollama endpoint
-
-# Create the DSPy language model wrapper (LiteLLM-compatible settings)
-dspy_llm = dspy.LM(
-    model=LLM_MODEL_ID,
-    cache=True,          # cache generations to speed up iterative runs
-    max_tokens=4000,
-    temperature=0,       # deterministic output; useful for reproducible synthetic data
-    api_key=LLM_API_KEY,
-    base_url=LLM_BASE_URL,
-)
-
-# Register the LM globally so DSPy modules (and generator internals) use it
-dspy.configure(lm=dspy_llm)
+# ---- Transformers backend ----
+# Configure the synthetic generator with a Hugging Face model (local or remote).
+LLM_MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+HF_TOKEN = os.getenv("HF_TOKEN", "")
+TEXT2ONTO_DEVICE = os.getenv("TEXT2ONTO_DEVICE", "auto")
 
 # ---- Synthetic generation configuration ----
 # Allow scaling generation without code edits via environment variables:
@@ -37,7 +23,10 @@ worker_count = int(os.getenv("TEXT2ONTO_WORKERS", "1"))
 # Instantiate the generator that turns ontology structures into pseudo-text samples
 text2onto_synthetic_generator = SyntheticGenerator(
     batch_size=batch_size,       # number of samples requested per batch
-    worker_count=worker_count,   # parallel LLM calls (increase if your machine can handle it)
+    worker_count=worker_count,   # used as a generation micro-batch size
+    model_id=LLM_MODEL_ID,
+    token=HF_TOKEN,
+    device=TEXT2ONTO_DEVICE,
 )
 
 # ---- Load ontology and extract structured data ----
