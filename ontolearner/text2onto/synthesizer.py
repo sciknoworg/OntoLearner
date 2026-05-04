@@ -76,7 +76,8 @@ class SyntheticGenerator(ABC):
         self.temperature = temperature
         self.top_p = top_p
         self.repetition_penalty = repetition_penalty
-        self.generation_batch_size = generation_batch_size
+        # Default to batch_size when not provided to avoid None in range() calls
+        self.generation_batch_size = generation_batch_size or batch_size
         # self.max_context_items = max_context_items
         self.max_input_length = max_input_length
         self.extraction_method = extraction_method
@@ -295,8 +296,9 @@ class SyntheticGenerator(ABC):
         return repair_prompt
 
     def _generate_texts(self, prompts: List[str]) -> List[str]:
+        # Route to the correct backend and return its outputs
         if self.is_chat_model:
-            self._generate_texts_chat_llm(prompts=prompts)
+            return self._generate_texts_chat_llm(prompts=prompts)
         return self._generate_texts_causal_llm(prompts=prompts)
 
     def _generate_texts_causal_llm(self, prompts: List[str]) -> List[str]:
@@ -425,7 +427,7 @@ class SyntheticGenerator(ABC):
                     raise ValueError("Generated response is not valid JSON.")
                 validated = self._validate_document(response_payload, row=row, topic=topic)
                 generated_docs.append(
-                    Document(id=row["id"], title=validated.title, text=validated.fluent_passage_text, row=row))
+                    Document(id=row["id"], title=validated.title, text=validated.fluent_passage_text))
                 print(">>> Generation was sucessful for doc: ", row["id"])
                 # except Exception:
                 #     try:
