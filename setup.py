@@ -36,7 +36,8 @@ setup(
         "mistral-common[sentencepiece]>=1.8.5",
         "protobuf<5",
         "Levenshtein",
-        "gensim"
+        "gensim",
+        "openai"
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
