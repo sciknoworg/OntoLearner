@@ -8,6 +8,8 @@ Retrieval Augmented Generation
 
 **Retrieval Augmented Generation (RAG)** learners combine the strengths of both retrieval models and LLMs to perform ontology learning tasks. This methodology is a hybrid approach designed to enhance ontology learning by addressing the limitations of using LLMs alone.
 
+The same retrieval-and-context idea is also useful for Text2Onto generation: ontology graph context can be injected into the synthetic document prompt so the generated passages stay closer to the source ontology.
+
 RAG learners operate in two main steps: 1) **Retrieval** component that finds the most relevant examples from the training data based on similarity to the input query. 2) **Generation** component that uses retrieved examples as context to generate a response. The methodology behind RAG learners combines vector retrieval with generative language modeling to enhance ontology learning tasks. This hybrid approach addresses the limitations of using LLMs alone by grounding the model's responses in specific ontological examples from the training data. By encoding ontological elements into a vector space, the retriever can identify semantically similar concepts, relations, or taxonomic structures. These retrieved examples serve as few-shot demonstrations that provide the LLM with domain-specific context, enabling more accurate and consistent ontological inferences. This approach is particularly effective for specialized domains where the model's pre-trained knowledge may be insufficient or where precise ontological alignments are critical.
 
 Loading Ontological Data

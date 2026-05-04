@@ -18,7 +18,7 @@ SyntheticGenerator
 
 SyntheticDataSplitter
 -----------------------
-.. autoclass:: ontolearner.text2onto.spliter.SyntheticDataSplitter
+.. autoclass:: ontolearner.text2onto.splitter.SyntheticDataSplitter
    :members:
    :undoc-members:
    :show-inheritance:
@@ -26,7 +26,7 @@ SyntheticDataSplitter
 
 TaxonomyBatchifier
 -----------------------
-.. autoclass:: ontolearner.text2onto.batchifier.SyntheticDataSplitter
+.. autoclass:: ontolearner.text2onto.batchifier.TaxonomyBatchifier
    :members:
    :undoc-members:
    :show-inheritance:

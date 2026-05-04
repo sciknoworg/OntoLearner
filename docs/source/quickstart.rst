@@ -143,6 +143,8 @@ Once the data is split into training and testing sets, you can apply learning mo
 - LLM-only: set ``llm_id``
 - RAG: set both ``retriever_id`` + ``llm_id`` for AutoRAGLearner. For prebuild RAG pass ``rag`` learner.
 
+Text2Onto synthetic data generation follows a similar philosophy: the generator now uses a direct ``transformers`` backend and augments prompts with ontology graph context, which makes the generated passages more faithful and easier to validate.
+
 In the example below, we configure a RAG-based learner by specifying the Qwen LLM (`Qwen/Qwen2.5-0.5B-Instruct <https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct>`_) and a retriever based on a sentence-transformer model (`all-MiniLM-L6-v2 <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>`_):
 
 .. sidebar:: Other Learners
