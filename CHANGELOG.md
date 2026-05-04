@@ -1,5 +1,12 @@
 ## Changelog
 
+### v1.6.0 (May 5, 2026)
+- Update requirements.
+- Updated documentations website.
+- Add major changes to the Text2Onto module and its documentation with examples.
+- Add `openai` requirements for Text2Onto module.
+- Use of `poetry.lock` for dependency management and versioning.
+
 ### v1.5.1 (March 30, 2026)
 - Fix challenge learner
 - Update requirements.
