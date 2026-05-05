@@ -25,9 +25,9 @@
 Geographical Entities Ontology (GEO)
 ========================================================================================================
 
-The Geographical Entities Ontology (GEO) provides a comprehensive inventory and formal representation of geopolitical and geographical entities, including sovereign states, administrative subdivisions, and various geographical regions. GEO distinguishes between political entities (countries, provinces, cities) and natural geographical features (mountains, rivers, seas), enabling precise semantic representation of territorial and regional concepts. The ontology uses hierarchical relationships to model administrative subdivisions and political jurisdictions at multiple levels (national, state, regional, local), supporting complex governance structures. GEO facilitates location-aware data annotation, enabling applications in geopolitical analysis, administrative reporting, and location-based services to unambiguously identify geographic and political entities. The ontology is designed for integration with other geographic and spatial ontologies, supporting linked data applications in geography, governance, and international relations.
+The Geographical Entities Ontology (GEO) provides a comprehensive inventory and formal representation of geopolitical and geographical entities, including sovereign states, administrative subdivisions, and various geographical regions [#geo-obofoundry]_ [#geo-bioportal]_. GEO distinguishes between political entities, such as countries, provinces, and cities, and the territorial or regional entities associated with them, enabling precise semantic representation of geographic and geopolitical concepts [#geo-obofoundry]_. The ontology uses hierarchical relationships to model administrative subdivisions and political jurisdictions at multiple levels, including national, state, regional, and local levels [#geo-obofoundry]_ [#geo-bioportal]_. GEO facilitates location-aware data annotation, enabling applications in geopolitical analysis, administrative reporting, and location-based services to unambiguously identify geographic and political entities [#geo-obofoundry]_. The ontology is designed for integration with other geographic and spatial ontologies, supporting linked data applications in geography, governance, and international relations [#geo-bioportal]_.
 
-**Example Usage**: Annotate a political news article with GEO terms such as "France" (sovereign state) linked to its subdivisions "Île-de-France" and "Paris" (administrative entities) to enable geographic and political context discovery.
+**Example Usage**: Annotate a political news article with GEO terms such as ``France`` as a sovereign state, linked to subdivisions such as ``Île-de-France`` and ``Paris`` as administrative entities, to enable geographic and political context discovery [#geo-obofoundry]_ [#geo-bioportal]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +136,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#geo-obofoundry] OBO Foundry. n.d.
+   "Geographical Entity Ontology."
+   Available at:
+   `https://obofoundry.org/ontology/geo.html <https://obofoundry.org/ontology/geo.html>`_
+
+.. [#geo-bioportal] NCBO BioPortal. 2019.
+   "Geographical Entity Ontology."
+   Available at:
+   `https://bioportal.bioontology.org/ontologies/GEO <https://bioportal.bioontology.org/ontologies/GEO>`_

@@ -23,10 +23,10 @@
 TUBES System Ontology (TUBES)
 ========================================================================================================
 
-The TUBES System Ontology (TSO) is a domain ontology for the Architecture, Engineering, Construction, and Operations (AECO) industry, explicitly defining interconnected building service systems, their hierarchical subdivisions, structural and functional aspects, and links to spatial entities. TSO supports the semantic representation of building services such as HVAC, plumbing, and electrical systems, enabling detailed modeling of their components, relationships, and operational characteristics. The ontology is designed to facilitate the integration of building information across design, construction, and facility management processes, supporting digital twins and smart building applications. TSO aligns with other W3C community ontologies to ensure interoperability and data exchange in the semantic web of building data. By providing a standardized vocabulary, TSO enables automated reasoning, compliance checking, and lifecycle management of building services. The ontology is actively developed and adopted by industry stakeholders for advanced building information modeling (BIM) and digital transformation initiatives.
+The TUBES System Ontology (TSO) is a domain ontology for the Architecture, Engineering, Construction, and Operations (AECO) industry, explicitly defining interconnected building service systems, their hierarchical subdivisions, structural and functional aspects, and links to spatial entities [#tso-github]_ [#tso-paper]_. TSO supports the semantic representation of building service systems such as HVAC, mechanical, plumbing, electrical, and data systems, enabling detailed modeling of their components, relationships, and operational characteristics [#tso-paper]_. The ontology is designed to facilitate the integration of building information across design, construction, and facility management processes by making building service system information machine-readable and linkable [#tso-github]_ [#tso-paper]_. TSO aligns with other W3C community ontologies to support interoperability and data exchange in the semantic web of building data [#tso-github]_. By providing a standardized vocabulary for technical systems and their relationships to spatial structures, TSO supports automated analysis, reasoning, lifecycle management, and integration of building service information across AECO workflows [#tso-github]_ [#tso-paper]_.
 
 **Example Usage**:
-Annotate a BIM model with TUBES terms to describe the HVAC system, its components (air handling units, ducts, sensors), their spatial locations, and operational relationships, enabling automated analysis and integration with facility management systems.
+Annotate a BIM model with TUBES terms to describe an HVAC system, its components such as air handling units, ducts, sensors, their spatial locations, and operational relationships, enabling automated analysis and integration with facility management systems [#tso-github]_ [#tso-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#tso-github] RWTH-E3D. n.d.
+   "TUBES System Ontology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/RWTH-E3D/tso <https://github.com/RWTH-E3D/tso>`_
+
+.. [#tso-paper] Pauen, Nadine, Daniel Schlütter, Jacek Siwiecki,
+   Julian Frisch, and Christoph van Treeck. 2021.
+   "TUBES System Ontology: Digitalization of Building Service Systems."
+   *Linked Data in Architecture and Construction 2021*.
+   Available at:
+   `https://linkedbuildingdata.net/ldac2021/files/papers/CIB_W78_2021_paper_115.pdf <https://linkedbuildingdata.net/ldac2021/files/papers/CIB_W78_2021_paper_115.pdf>`_

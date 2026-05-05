@@ -26,9 +26,9 @@
 Gemeinsame Normdatei (GND)
 ========================================================================================================
 
-The Gemeinsame Normdatei (GND, Integrated Authority File) is a comprehensive semantic vocabulary and linked data resource developed by the German library and information community for describing and disambiguating authority data. GND provides standardized, machine-readable descriptions of persons, organizations, geographic locations, corporate bodies, and other entities to solve name ambiguity problems in library catalogs and information systems. The ontology offers a rich set of properties and relationships for describing biographical data, organizational hierarchies, place names, and subject matter authorities. GND is widely used in German-speaking libraries, archives, and cultural heritage institutions for authority control and semantic data linking. The vocabulary integrates with broader linked data ecosystems and international authority systems (VIAF, LCSH) to enable cross-institutional data integration and discovery.
+The Gemeinsame Normdatei (GND, Integrated Authority File) is a comprehensive semantic vocabulary and linked data resource developed by the German library and information community for describing and disambiguating authority data [#gnd-dnb]_ [#gnd-ontology]_. GND provides standardized, machine-readable descriptions of entities such as persons, corporate bodies, conferences and events, geographic entities, topics, and works relating to cultural and academic collections [#gnd-dnb]_. The GND Ontology defines RDF classes and relations used to describe Integrated Authority File data in RDF format, enabling authority data to be represented in semantic web and linked data environments [#gnd-ontology]_. GND offers rich properties and relationships for describing names, biographical information, organizational relationships, geographic entities, subject authorities, and links to related resources [#gnd-ontology]_. It is widely used by libraries and is increasingly relevant for archives, museums, and cultural heritage institutions for authority control, entity identification, and semantic data linking [#gnd-dnb]_. The vocabulary supports integration with broader linked data ecosystems by enabling GND entities to be linked with other authority files and external knowledge resources [#gnd-ontology]_.
 
-**Example Usage**: Link a library catalog record to GND authority entries for the author (as person), publisher (as corporate body), and subject headings (as topic authorities) to enable semantic discovery and disambiguation across German and international library systems.
+**Example Usage**: Link a library catalog record to GND authority entries for the author as a person, the publisher as a corporate body, and subject headings as topic authorities. This enables semantic discovery, entity disambiguation, and cross-institutional linking across German and international library systems [#gnd-dnb]_ [#gnd-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,3 +137,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#gnd-dnb] German National Library. n.d.
+   "The Integrated Authority File (GND)."
+   Available at:
+   `https://www.dnb.de/EN/Professionell/Standardisierung/GND/gnd_node.html <https://www.dnb.de/EN/Professionell/Standardisierung/GND/gnd_node.html>`_
+
+.. [#gnd-ontology] German National Library. n.d.
+   "RDF Vocabularies: GND Ontology."
+   Available at:
+   `https://www.dnb.de/EN/Professionell/Metadatendienste/Exportformate/RDF-Vokabulare/rdf_node.html <https://www.dnb.de/EN/Professionell/Metadatendienste/Exportformate/RDF-Vokabulare/rdf_node.html>`_

@@ -25,10 +25,9 @@
 Juso Ontology (Juso)
 ========================================================================================================
 
-The Juso Ontology is a comprehensive Web vocabulary for describing and classifying geographical addresses, locations, and geographical features with machine-readable semantic annotations. It provides a structured framework for representing address components including postal codes, street names, building numbers, and administrative hierarchies, enabling standardized address representation across diverse geographic regions. Juso supports multiple address formats and conventions, accommodating international addressing systems and local geographic naming practices. The ontology facilitates geocoding applications, location-based services, and geographic data integration by providing unambiguous semantic definitions of address components and spatial relationships. Juso integrates with broader geographic ontologies (GEO, GeoNames) to link address information with geographic entities and spatial contexts.
+The Juso Ontology is a Web vocabulary for describing geographical addresses and geographical features using machine-readable semantic annotations [#juso-ontology]_ [#juso-github]_. It provides a structured framework for representing core geographic and address-related concepts, including spatial things, features, geometries, points, addresses, names, official names, alternate names, and containment relationships [#juso-github]_. Juso also defines address components such as full address, country, postal code, and multiple levels of administrative divisions, enabling more standardized representation of addresses across geographic datasets [#juso-github]_. The ontology supports semantic description of political and administrative divisions, including countries, provinces, counties, municipalities, districts, towns, townships, neighborhoods, villages, and related regional units [#juso-github]_. By providing explicit classes and properties for addresses, geographic features, and administrative hierarchies, Juso can support geocoding, location-based services, address validation, geographic lookup, and linked data integration [#juso-ontology]_ [#juso-github]_. Juso can also be connected with broader geographic and web vocabularies through linked-data relationships, helping address information interoperate with geographic entities and spatial contexts [#juso-github]_.
 
-**Example Usage**: Represent a complete address as a Juso address instance with properties for street name, building number, postal code, city, and country, enabling automated address validation and geographic lookup services.
-
+**Example Usage**: Represent a complete address as a Juso address instance with properties for street name, building number, postal code, city, administrative division, and country, enabling automated address validation, geographic lookup, and integration with location-based services [#juso-ontology]_ [#juso-github]_.
 Metrics & Statistics
 --------------------------
 
@@ -136,3 +135,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#juso-ontology] Juso Ontology. n.d.
+   "Juso Ontology."
+   Available at:
+   `https://rdfs.co/juso/latest/html <https://rdfs.co/juso/latest/html>`_
+
+.. [#juso-github] Juso Ontology Contributors. n.d.
+   "Juso Ontology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/listinc/juso-ontology <https://github.com/listinc/juso-ontology>`_
