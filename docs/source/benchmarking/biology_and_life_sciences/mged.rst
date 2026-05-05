@@ -24,23 +24,19 @@ MGED Ontology (MGED)
 ========================================================================================================
 
 The MGED Ontology (MGED) is a domain-specific ontology developed to
-standardize the description of microarray experiments. It provides a
-structured vocabulary and semantic framework for representing
-experimental designs, protocols, biomaterials, array platforms, and
-data-related aspects of microarray gene expression studies
-[#mged-paper]_ [#mged-bioportal]_. MGED was developed by the microarray
-community to support consistent annotation of experiments and to align
-with broader microarray data standards such as MIAME and MAGE
-[#mged-paper]_ [#mged-standards]_. The ontology has been described as
-including a more stable core aligned with MAGE and an extended part that
-adds further terms and associations for richer experimental description
-[#mged-fairsharing]_ [#mged-scicrunch]_. MGED facilitates
-interoperability between microarray data repositories and tools,
-supporting the sharing, comparison, and analysis of experimental data
-[#mged-paper]_ [#mged-standards]_. By providing a common framework for
-experimental metadata, MGED supports reproducibility, data integration,
-and meta-analysis in functional genomics and microarray informatics
-[#mged-paper]_ [#mged-standards]_.
+standardize the description of microarray experiments [#mged-paper]_
+[#mged-bioportal]_. It provides a structured vocabulary and semantic
+framework for representing experimental designs, protocols,
+biomaterials, array platforms, and data-related aspects of microarray
+gene expression studies [#mged-paper]_ [#mged-bioportal]_. MGED was
+developed by the microarray community to support consistent annotation
+of experiments and to align with broader microarray data standards
+[#mged-paper]_. It facilitates interoperability between microarray data
+repositories and tools, supporting the sharing, comparison, and
+analysis of experimental data [#mged-paper]_ [#mged-bioportal]_.
+By providing a common framework for experimental metadata, MGED
+supports reproducibility, data integration, and meta-analysis in
+functional genomics and microarray informatics [#mged-paper]_.
 
 **Example Usage**: Annotate a microarray experiment with MGED terms to
 describe the experimental design, sample and biomaterial
@@ -162,27 +158,14 @@ References
 
 .. [#mged-paper] Whetzel, P. L., Parkinson, H., Causton, H. C.,
    Fan, L., Fostel, J., Fragoso, G., Game, L., Heiskanen, M.,
-   Morrison, N., Rocca-Serra, P., Sansone, S.-A., and Stoeckert, C. J. Jr.
-   2006. "The MGED Ontology: a resource for semantics-based description
-   of microarray experiments."
+   Morrison, N., Rocca-Serra, P., Sansone, S.-A., Sklyar, N.,
+   Stoeckert, C. J., Jr., Tong, W., and Sarkans, U. 2006.
+   "The MGED Ontology: A Resource for Semantics-Based Description
+   of Microarray Experiments."
    *Bioinformatics* 22(7): 866-873.
-   doi:10.1093/bioinformatics/btl091
-
-.. [#mged-standards] Ball, C. A., Brazma, A., Causton, H.,
-   Chervitz, S., Edgar, R., Hingamp, P., Hermjakob, H., Ikeo, K.,
-   Quackenbush, J., Sherlock, G., Spellman, P., Stoekert, C.,
-   Tateno, Y., and Sarkans, U. 2006. "MGED standards: work in progress."
-   *OMICS* 10(2): 138-144.
-   Available at: `https://pubmed.ncbi.nlm.nih.gov/16901218/ <https://pubmed.ncbi.nlm.nih.gov/16901218/>`_
+   Available at:
+   `https://academic.oup.com/bioinformatics/article/22/7/866/202362 <https://academic.oup.com/bioinformatics/article/22/7/866/202362>`_
 
 .. [#mged-bioportal] NCBO BioPortal. n.d.
    "Microarray and Gene Expression Data Ontology."
    Available at: `https://bioportal.bioontology.org/ontologies/MO <https://bioportal.bioontology.org/ontologies/MO>`_
-
-.. [#mged-fairsharing] FAIRsharing. n.d.
-   "Microarray and Gene Expression Data Ontology."
-   Available at: `https://fairsharing.org/1193 <https://fairsharing.org/1193>`_
-
-.. [#mged-scicrunch] SciCrunch. n.d.
-   "MGED Ontology."
-   Available at: `https://scicrunch.org/resolver/SCR_004484 <https://scicrunch.org/resolver/SCR_004484>`_

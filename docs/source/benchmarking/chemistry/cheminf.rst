@@ -25,9 +25,28 @@
 Chemical Information Ontology (CHEMINF)
 ========================================================================================================
 
-The Chemical Information Ontology (CHEMINF) provides a comprehensive vocabulary for representing and describing information entities and computational descriptors about chemical compounds and substances. It formalizes chemical descriptors, properties, and computational methods used in cheminformatics, enabling standardized representation of molecular attributes derived from chemical informatics tools and algorithms. CHEMINF captures qualitative and quantitative descriptors including molecular weight, logP, HOMO/LUMO energies, and topological indices used for chemical structure analysis and prediction. The ontology is designed to support semantic interoperability in chemistry databases, computational chemistry platforms, and drug discovery systems by providing unambiguous definitions of chemical information concepts. CHEMINF integrates with other chemistry ontologies (ChEBI, MOP, RXNO) to link chemical structures with their calculated properties and computational methods.
+The Chemical Information Ontology (CHEMINF) provides a comprehensive
+vocabulary for representing chemical information entities, including
+chemical descriptors, properties, algorithms, and computational methods
+used in cheminformatics [#cheminf-paper]_ [#cheminf-obo]_. It supports
+standardized representation of molecular attributes and calculated or
+reported chemical information, enabling unambiguous description of
+qualitative and quantitative descriptors derived from chemical
+informatics tools and workflows [#cheminf-paper]_ [#cheminf-obo]_.
+CHEMINF is designed to improve semantic interoperability across chemistry
+databases, computational chemistry platforms, and drug discovery
+systems by providing explicit definitions for chemical information
+concepts and their provenance [#cheminf-paper]_ [#cheminf-obo]_. It can
+be used alongside related chemistry ontologies to link chemical
+structures with their calculated properties, descriptors, and generating
+methods [#cheminf-paper]_ [#cheminf-obo]_.
 
-**Example Usage**: Represent a computed molecular descriptor as a CHEMINF information entity linked to a ChEBI chemical structure, specifying the calculation method (e.g., "Wildman-Crippen LogP") and the resulting numeric value.
+**Example Usage**: Represent a computed molecular descriptor as a
+CHEMINF information entity linked to a chemical structure, specifying
+the descriptor type, the calculation method, and the resulting numeric
+value, so that descriptor data can be queried, compared, and integrated
+across cheminformatics datasets and software environments
+[#cheminf-paper]_ [#cheminf-obo]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +155,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#cheminf-paper] Hastings, J., Chepelev, L., Willighagen, E.,
+   Adams, N., Steinbeck, C., and Dumontier, M. 2011.
+   "The Chemical Information Ontology: Provenance and Disambiguation
+   for Chemical Data on the Biological Semantic Web."
+   *PLoS ONE* 6(10): e25513.
+   doi:10.1371/journal.pone.0025513
+   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC3184996/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC3184996/>`_
+
+.. [#cheminf-obo] OBO Foundry. n.d. "Chemical Information Ontology."
+   Available at: `https://obofoundry.org/ontology/cheminf.html <https://obofoundry.org/ontology/cheminf.html>`_

@@ -25,26 +25,25 @@
 Semantic Web for Earth and Environment Technology Ontology (SWEET)
 ========================================================================================================
 
-SWEET is a comprehensive collection of interconnected ontologies designed to enhance discovery and utilization of Earth science data through semantic understanding of web resources and Earth system science concepts. It conceptualizes a knowledge space for Earth system science including orthogonal (cross-cutting) concepts such as space, time, Earth realms (atmosphere, hydrosphere, lithosphere), physical quantities, and units, alongside integrative science knowledge concepts such as phenomena, events, and processes. SWEET is represented in OWL (Web Ontology Language) to enable automated reasoning and semantic interoperability in Earth science research. The ontology supports integration of heterogeneous Earth science datasets and models by providing shared semantic definitions across atmospheric science, oceanography, geology, and climate science domains. SWEET facilitates Earth science data discovery and knowledge management by enabling semantic search and automated linking of related datasets and research findings.
 SWEET (Semantic Web for Earth and Environmental Terminology) is a
 comprehensive collection of interconnected ontologies designed to
 improve discovery and use of Earth science data through semantic
-understanding of web resources and Earth system science concepts
+representation of Earth system science concepts and web resources
 [#sweet-paper]_ [#sweet-repo]_. It conceptualizes a knowledge space for
 Earth system science that includes cross-cutting concepts such as
 space, time, Earth realms, phenomena, physical quantities, and units,
 alongside more domain-specific scientific concepts [#sweet-paper]_
-[#sweet-repo]_. SWEET is represented in OWL and organized as a highly
-modular ontology suite, enabling semantic interoperability and automated
+[#sweet-repo]_. SWEET is represented in OWL and organized as a modular
+ontology suite, enabling semantic interoperability and automated
 reasoning in Earth and environmental science applications
 [#sweet-paper]_ [#sweet-repo]_. The ontology supports integration of
 heterogeneous Earth science datasets and models by providing shared
 semantic definitions across domains such as atmospheric science,
 oceanography, geology, and climate science [#sweet-paper]_
-[#sweet-search]_. By providing a shared semantic framework, SWEET
+[#sweet-repo]_. By providing a shared semantic framework, SWEET
 supports Earth science data discovery, semantic search, and knowledge
 management across distributed datasets and services [#sweet-paper]_
-[#sweet-search]_.
+[#sweet-repo]_.
 
 **Example Usage**: Annotate a climate or Earth observation dataset with
 SWEET terms to describe observed phenomena, Earth realm or layer,
@@ -173,8 +172,3 @@ References
    "SWEET: Official repository for Semantic Web for Earth and
    Environmental Terminology Ontologies."
    Available at: `https://github.com/ESIPFed/sweet <https://github.com/ESIPFed/sweet>`_
-
-.. [#sweet-search] Pouchard, L. C., Huhns, M. N., and McGuinness, D. L.
-   2013. "Linking Earth and Climate Science to Support Semantic Search."
-   *Semantic Web*.
-   Available at: `https://semantic-web-journal.net/content/linking-earth-and-climate-science-semantic-search-supporting-investigation-climate-change <https://semantic-web-journal.net/content/linking-earth-and-climate-science-semantic-search-supporting-investigation-climate-change>`_

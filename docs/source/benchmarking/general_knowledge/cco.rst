@@ -25,10 +25,35 @@
 Common Core Ontologies (CCO)
 ========================================================================================================
 
-The Common Core Ontologies (CCO) is a comprehensive suite of eleven interconnected ontologies providing logically well-defined generic terms and relations applicable across all domains of interest. CCO is built on formal semantic principles, ensuring that its concepts are unambiguous, semantically consistent, and applicable to diverse knowledge representation tasks. The ontology covers foundational concepts including objects, events, qualities, locations, and abstract entities, with explicit definitions of relationships between them. CCO is designed for maximum reusability across domain ontologies, enabling developers to extend CCO terms for specialized applications while maintaining semantic interoperability. The ontologies are documented with formal definitions, examples, and competency questions supporting both human understanding and computational reasoning. CCO has been adopted in enterprise information systems, knowledge graph construction, and semantic data integration projects requiring rigorous ontological foundations.
+The Common Core Ontologies (CCO) are a suite of eleven interconnected
+mid-level ontologies that provide logically well-defined generic terms
+and relations applicable across many domains of interest [#cco-repo]_
+[#cco-paper]_. CCO extends the Basic Formal Ontology (BFO), an upper-level
+ontology, and is designed to support semantic interoperability, data
+integration, and reusable domain ontology development [#cco-repo]_.
 
-**Example Usage**:
-Represent a business domain ontology by extending CCO's generic Object and Event concepts to define company-specific entities (employees, contracts, transactions) and their relationships, ensuring compatibility with other systems using CCO foundations.
+CCO is built on formal semantic principles, ensuring that its concepts
+are unambiguous, semantically consistent, and suitable for computational
+reasoning [#cco-paper]_. The ontology suite covers foundational concepts
+including objects, processes, qualities, information entities, locations,
+units of measure, agents, artifacts, facilities, and relations between
+entities [#cco-repo]_ [#cco-paper]_. Its terms are intended to be reused
+and extended by domain-specific ontologies while preserving compatibility
+with other CCO- and BFO-based systems [#cco-repo]_.
+
+The ontologies are documented with formal definitions, examples, and
+design patterns that support both human understanding and automated
+reasoning [#cco-paper]_. CCO can be used in enterprise information
+systems, knowledge graph construction, semantic data integration, and
+ontology engineering projects that require rigorous semantic foundations
+[#cco-repo]_ [#cco-paper]_.
+
+**Example Usage**: Represent a business domain ontology by extending
+CCO's generic Object, Agent, Organization, and Event/Process concepts to
+define company-specific entities such as employees, contracts,
+transactions, departments, and business activities. This helps ensure
+that the business ontology remains compatible with other systems using
+CCO or BFO-based semantic foundations [#cco-repo]_ [#cco-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,3 +162,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------------
+.. [#cco-repo] Common Core Ontology Repository. n.d.
+   "The Common Core Ontologies."
+   GitHub Repository.
+   Available at:
+   `https://github.com/CommonCoreOntology/CommonCoreOntologies <https://github.com/CommonCoreOntology/CommonCoreOntologies>`_
+
+.. [#cco-paper] Jensen, M., De Colle, G., Kindya, S., More, C.,
+   Cox, A. P., and Beverley, J. 2024.
+   "The Common Core Ontologies."
+   arXiv.
+   Available at:
+   `https://arxiv.org/abs/2404.17758 <https://arxiv.org/abs/2404.17758>`_

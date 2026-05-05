@@ -25,9 +25,31 @@
 iCalendar Vocabulary (iCalendar)
 ========================================================================================================
 
-iCalendar is an Internet standard and RDF vocabulary for exchanging calendar and scheduling data across applications using a standardized representation (.ics and RDF views). It models core scheduling concepts such as Events, To-Dos, Recurrence Rules, Attendees, Time Zones, and Alarms, enabling interoperable representation of meetings, recurring appointments, and calendar invitations. While the original iCalendar format (.ics) is a text standard widely implemented in client applications (Google Calendar, Outlook), the iCalendar vocabulary expresses these concepts in RDF to support Semantic Web integration, richer linking, and automated reasoning. Key characteristics include explicit recurrence modelling, timezone-aware datatypes, and support for invitations and participation roles. Common applications include calendar synchronization, meeting scheduling services, automated reminders, and semantic linking of event metadata with external datasets.
+iCalendar is an Internet standard and RDF vocabulary for exchanging
+calendar and scheduling data across applications using standardized
+representations such as iCalendar files and RDF views
+[#ical-rdf-note]_ [#ical-rfc]_. It models core scheduling concepts such
+as events, to-dos, recurrence rules, attendees, time zones, and alarms,
+enabling interoperable representation of meetings, recurring
+appointments, and calendar invitations [#ical-rdf-note]_ [#ical-rfc]_.
+While the original iCalendar format is a text-based standard widely
+implemented in calendar clients, the iCalendar vocabulary expresses
+these concepts in RDF to support Semantic Web integration, richer
+linking, and machine-processable event data [#ical-rdf-note]_
+[#ical-w3c]_. Key characteristics include explicit recurrence modeling,
+timezone-aware date and time representation, and support for
+invitations and participation roles [#ical-rdf-note]_ [#ical-rfc]_.
+By providing a shared semantic framework for calendar and scheduling
+data, the vocabulary supports calendar synchronization, meeting
+scheduling services, automated reminders, and semantic linking of event
+metadata with external datasets [#ical-rdf-note]_ [#ical-w3c]_.
 
-**Example usage**: represent a weekly team meeting as an Event with a RRULE for weekly recurrence, linked Attendee agents with roles (organizer, participant), and timezone-aware start/end datetimes. The vocabulary can be combined with other ontologies (e.g., FOAF for people) to enrich event descriptions and support advanced calendar automation.
+**Example Usage**: Represent a weekly team meeting as an event with a
+recurrence rule for weekly repetition, linked attendee agents with
+roles such as organizer and participant, and timezone-aware start and
+end datetimes. The vocabulary can also be combined with other
+ontologies, such as FOAF for people, to enrich event descriptions and
+support advanced calendar automation [#ical-rdf-note]_ [#ical-rfc]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +158,24 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#ical-rdf-note] Connolly, D., and Miller, L. 2005.
+   "RDF Calendar - An Application of the Resource Description Framework
+   to iCalendar Data."
+   W3C Note, 29 September 2005.
+   Available at:
+   `https://www.w3.org/2002/12/cal/report1173.html <https://www.w3.org/2002/12/cal/report1173.html>`_
+
+.. [#ical-w3c] W3C. n.d. "RDF Calendar Workspace."
+   Available at:
+   `https://www.w3.org/2002/12/cal/ <https://www.w3.org/2002/12/cal/>`_
+
+.. [#ical-rfc] Desruisseaux, B. 2009.
+   "Internet Calendaring and Scheduling Core Object Specification
+   (iCalendar)."
+   RFC 5545.
+   Available at:
+   `https://www.rfc-editor.org/rfc/rfc5545 <https://www.rfc-editor.org/rfc/rfc5545>`_

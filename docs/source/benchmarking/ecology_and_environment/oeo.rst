@@ -33,16 +33,16 @@ within the Open Energy Platform ecosystem, OEO provides standardized
 terminology for representing energy systems, including generation,
 conversion, transmission, distribution, storage, and consumption
 concepts across different technologies and sectors [#oeo-paper]_
-[#oeo-github]_. The ontology is represented in Manchester OWL Syntax,
-chosen to support user-friendly editing and version control in
-collaborative development workflows [#oeo-paper]_ [#oeo-github]_. OEO is
-updated regularly through a release cycle and is continuously extended
-to incorporate new concepts relevant to energy system modelling and
-analysis [#oeo-site]_ [#oeo-github]_. By providing a shared semantic
-framework, OEO supports standardized data annotation, knowledge
-integration, semantic search, model interfacing, and automated
-reasoning for energy system research and related applications
-[#oeo-paper]_ [#oeo-site]_.
+[#oeo-site]_. The ontology is intended to support collaborative and
+interoperable modeling of energy knowledge, enabling clearer data
+interpretation and more consistent interfacing between models, datasets,
+and analytical workflows [#oeo-paper]_ [#oeo-site]_. OEO is updated
+through an ongoing development and release process in order to
+incorporate concepts relevant to energy system modelling and analysis
+[#oeo-site]_ [#oeo-paper]_. By providing a shared semantic framework,
+OEO supports standardized data annotation, knowledge integration,
+semantic search, model interfacing, and automated reasoning for energy
+system research and related applications [#oeo-paper]_ [#oeo-site]_.
 
 **Example Usage**: Annotate an energy system dataset with OEO terms to
 describe energy carriers and sources, generation technologies,
@@ -175,6 +175,3 @@ References
 
 .. [#oeo-site] Open Energy Platform. n.d. "OEO Ontology."
    Available at: `https://openenergyplatform.org/ontology/ <https://openenergyplatform.org/ontology/>`_
-
-.. [#oeo-github] OpenEnergyPlatform. n.d. "Repository for the Open Energy Ontology (OEO)."
-   Available at: `https://github.com/OpenEnergyPlatform/ontology <https://github.com/OpenEnergyPlatform/ontology>`_

@@ -30,25 +30,22 @@ resource that links plant anatomy, morphology, growth, and development
 to plant genomics and phenomics data [#obo]_ [#po-paper]_. Developed as
 a community resource, PO provides a framework for describing plant
 structures and developmental stages across plant species [#obo]_
-[#po-dev-paper]_. The ontology integrates anatomical and developmental
+[#po-paper]_. The ontology integrates anatomical and developmental
 terms that can be associated with plant genes and phenotypes, enabling
 researchers to annotate data and support comparative genomics and
-comparative plant biology [#po-paper]_ [#po-dev-paper]_. PO is designed
-to facilitate data integration and interoperability in plant science
-research [#obo]_ [#po-paper]_. With its hierarchical organization of
-plant structures and developmental stages, including whole plants,
-organs, tissues, and cell types, PO supports applications such as
-literature curation, genome annotation, and phenotypic data annotation
-[#po-paper]_. The ontology is under active development and is integrated
-with the Planteome project and other biological ontologies to support
-semantic compatibility in the plant science community [#obo]_
-[#planteome]_.
+comparative plant biology [#po-paper]_. PO is designed to facilitate
+data integration and interoperability in plant science research
+[#obo]_ [#po-paper]_. With its hierarchical organization of plant
+structures and developmental stages, including whole plants, organs,
+tissues, and cell types, PO supports applications such as literature
+curation, genome annotation, and phenotypic data annotation
+[#po-paper]_.
 
-**Example Usage**: Annotate a plant genomics or phenomics dataset with PO terms for plant
-structures and developmental stages, such as leaf, root, flower, seed,
-or senescent stage, to enable standardized annotation, cross-species
-comparison, and integration with plant science databases and analysis
-platforms [#obo]_ [#po-paper]_.
+**Example Usage**: Annotate a plant genomics or phenomics dataset with
+PO terms for plant structures and developmental stages, such as leaf,
+root, flower, seed, or senescent stage, to enable standardized
+annotation, cross-species comparison, and integration with plant
+science databases and analysis platforms [#obo]_ [#po-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -171,18 +168,3 @@ References
    *Plant and Cell Physiology* 54(2): e1.
    doi:10.1093/pcp/pcs163
    Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC3583023/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC3583023/>`_
-
-.. [#po-dev-paper] Walls, R. L., Cooper, L., Elser, J., Gandolfo, M. A.,
-   Mungall, C. J., Smith, B., Stevenson, D. W., and Jaiswal, P. 2019.
-   "The Plant Ontology Facilitates Comparisons of Plant Development
-   Stages Across Species."
-   *Frontiers in Plant Science* 10:631.
-   doi:10.3389/fpls.2019.00631
-   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC6558174/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC6558174/>`_
-
-.. [#planteome] Cooper, L., Elser, J., Laporte, M.-A., Arnaud, E.,
-   and Jaiswal, P. 2024. "Planteome 2024 Update: Reference Ontologies
-   and Knowledgebase for Plant Biology."
-   *Nucleic Acids Research* 52(D1): D1548-D1555.
-   doi:10.1093/nar/gkad1028
-   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC10767901/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC10767901/>`_

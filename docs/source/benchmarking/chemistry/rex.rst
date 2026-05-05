@@ -25,9 +25,26 @@
 Physico-chemical process ontology (REX)
 ========================================================================================================
 
-REX is a comprehensive ontology for formal representation of physico-chemical processes, including both microscopic molecular transformations and macroscopic chemical phenomena occurring over time. It provides structured vocabulary for describing processes at different scales: molecular-level processes (involving chemical bonds, molecular rearrangement, electron transfer) and macroscopic processes (phase changes, dissolution, crystallization). REX distinguishes between different process types and captures temporal and causal relationships between processes, enabling precise semantic representation of chemical transformations. The ontology integrates with biological process vocabularies (e.g., Gene Ontology's biological process namespace) to bridge molecular biochemistry and cellular processes. REX facilitates knowledge integration in chemistry databases, computational chemistry platforms, and systems biology models by providing standardized process definitions.
+REX is an ontology for the formal representation of physico-chemical
+processes, including both microscopic molecular transformations and
+macroscopic chemical phenomena [#rex-obo]_ [#rex-bioportal]_. It
+provides a structured vocabulary for describing processes at different
+scales, such as molecular-level processes involving chemical bond
+changes, molecular rearrangements, and electron transfer, as well as
+macroscopic processes such as phase changes, dissolution, and
+crystallization [#rex-obo]_ [#rex-bioportal]_. REX distinguishes
+between different process types and supports formal representation of
+chemical transformations in a standardized and machine-readable way
+[#rex-obo]_ [#rex-bioportal]_. By providing explicit process
+definitions, the ontology supports knowledge integration across
+chemistry databases, computational chemistry platforms, and related
+scientific data systems [#rex-obo]_ [#rex-bioportal]_.
 
-**Example Usage**: Represent a multi-step chemical transformation process using REX terms to describe molecular-level processes (e.g., nucleophilic substitution, oxidation) linked together in sequence, with temporal ordering and causal dependencies between elementary steps.
+**Example Usage**: Represent a multi-step chemical transformation using
+REX terms to describe molecular-level processes such as oxidation or
+substitution, together with their sequence and relationships, enabling
+structured representation and semantic querying of complex
+physico-chemical processes [#rex-obo]_ [#rex-bioportal]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +153,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#rex-obo] OBO Foundry. n.d. "Physico-chemical process."
+   Available at: `https://obofoundry.org/ontology/rex.html <https://obofoundry.org/ontology/rex.html>`_
+
+.. [#rex-bioportal] NCBO BioPortal. n.d. "Physico-Chemical Process (REX)."
+   Available at: `https://bioportal.bioontology.org/ontologies/REX <https://bioportal.bioontology.org/ontologies/REX>`_

@@ -25,10 +25,26 @@
 Chemical Kinetics Ontology (OntoKin)
 ========================================================================================================
 
-OntoKin is a comprehensive ontology developed for formal and standardized representation of chemical kinetics data, reaction mechanisms, and kinetic rate parameters used in chemistry and combustion science. It provides structured definitions of reaction mechanisms, including species involved, reaction pathways, elementary steps, and kinetic rate coefficients essential for modeling chemical processes. OntoKin captures important chemical kinetics concepts such as reaction types (forward, reverse, three-body), activation energies, temperature dependencies, and pressure effects on reaction rates. The ontology facilitates data integration and knowledge sharing in computational chemistry, combustion research, and chemical process modeling by providing unambiguous semantic representations. OntoKin supports automated reasoning and knowledge discovery in chemical databases, enabling researchers to search, compare, and reuse kinetic mechanisms across different applications.
+The Chemical Kinetics Ontology (OntoKin) is an ontology developed for
+the formal and standardized representation of chemical kinetic reaction
+mechanisms [#ontokin-paper]_ [#ontokin-context]_. It provides structured
+definitions for reaction mechanisms, including chemical species,
+reaction pathways, elementary reactions, phases, and kinetic rate
+coefficients needed to model chemical processes [#ontokin-paper]_
+[#ontokin-context]_. OntoKin captures important kinetics concepts such
+as reaction types, activation energies, temperature dependence, and
+other parameters used in combustion chemistry and related modeling
+domains [#ontokin-paper]_. As a semantic framework for reaction
+mechanism knowledge, it supports integration, querying, comparison, and
+reuse of kinetic mechanisms across chemistry databases and computational
+chemistry systems [#ontokin-paper]_ [#ontokin-context]_.
 
-**Example Usage**: Represent a chemical reaction mechanism with OntoKin terms for species (CH4, O2, H2O), elementary reaction steps with activation energies, and temperature-dependent rate coefficients using Arrhenius or modified Arrhenius equations.
-
+**Example Usage**: Represent a combustion reaction mechanism with
+OntoKin terms for chemical species such as CH4, O2, and H2O, together
+with elementary reaction steps, activation energies, and
+temperature-dependent rate coefficients, enabling semantic comparison
+and reuse of kinetic models across chemical and combustion datasets
+[#ontokin-paper]_ [#ontokin-context]_.
 Metrics & Statistics
 --------------------------
 
@@ -136,3 +152,15 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#ontokin-paper] Farazi, F., Akroyd, J., Mosbach, S., and Kraft, M. 2020.
+   "An Ontology for Chemical Kinetic Reaction Mechanisms."
+   *Journal of Chemical Information and Modeling* 60(1): 108-120.
+   doi:10.1021/acs.jcim.9b00960
+
+.. [#ontokin-context] NFDI4Chem Knowledge Base. n.d. "Ontology."
+   Available at:
+   `https://nfdi4chem.chemie.uni-mainz.de/knowledge_base/docs/topics/ontology/ <https://nfdi4chem.chemie.uni-mainz.de/knowledge_base/docs/topics/ontology/>`_

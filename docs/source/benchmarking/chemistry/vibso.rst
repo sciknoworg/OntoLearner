@@ -25,9 +25,30 @@
 Vibrational Spectroscopy Ontology (VIBSO)
 ========================================================================================================
 
-The Vibrational Spectroscopy Ontology (VIBSO) is a domain-specific vocabulary for comprehensive and standardized semantic description of vibrational spectroscopy experiments and their resulting research data. It provides formal definitions of technical terms and concepts used in vibrational spectroscopy including spectroscopy types (infrared, Raman, NIR), sample preparation methods, measurement parameters, instrumentation, and data analysis procedures. VIBSO enables researchers to annotate spectroscopy datasets with machine-readable semantic metadata, making data FAIR (Findable, Accessible, Interoperable, Reusable) and supporting automated data discovery and integration. The ontology captures the complete experimental context including measurement conditions, instrument specifications, data processing steps, and quality metrics critical for reproducibility and data reuse. VIBSO facilitates semantic interoperability in spectroscopy databases, analytical chemistry platforms, and materials science research by providing unambiguous definitions of spectroscopic concepts.
+The Vibrational Spectroscopy Ontology (VIBSO) is a domain-specific
+vocabulary for comprehensive and standardized semantic description of
+vibrational spectroscopy experiments and their resulting research data
+[#vibso-doc]_ [#vibso-repo]_. It provides formal definitions of
+technical terms and concepts used in vibrational spectroscopy,
+including spectroscopy types such as infrared, Raman, and NIR, sample
+preparation methods, measurement parameters, instrumentation, and data
+analysis procedures [#vibso-doc]_ [#vibso-repo]_. VIBSO enables
+researchers to annotate spectroscopy datasets with machine-readable
+semantic metadata, supporting FAIR data practices and automated data
+discovery and integration [#vibso-doc]_ [#vibso-repo]_. The ontology
+captures the complete experimental context, including measurement
+conditions, instrument specifications, data processing steps, and
+quality-related metadata important for reproducibility and data reuse
+[#vibso-doc]_ [#vibso-repo]_. By providing unambiguous definitions of
+spectroscopic concepts, VIBSO facilitates semantic interoperability in
+spectroscopy databases, analytical chemistry platforms, and materials
+science research [#vibso-doc]_ [#vibso-repo]_.
 
-**Example Usage**: Annotate a Raman spectroscopy experiment with VIBSO terms including spectroscopy type (Raman), sample material, laser wavelength, temperature conditions, and data processing methods to enable automated discovery of similar spectroscopic studies.
+**Example Usage**: Annotate a Raman spectroscopy experiment with VIBSO
+terms including spectroscopy type, sample material, laser wavelength,
+temperature conditions, and data processing methods to enable automated
+discovery of similar spectroscopic studies [#vibso-doc]_
+[#vibso-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +157,13 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#vibso-doc] VIBSO Workgroup. n.d. "Vibrational Spectroscopy Ontology Documentation."
+   Available at: `https://nfdi4chem.github.io/VibrationalSpectroscopyOntology/ <https://nfdi4chem.github.io/VibrationalSpectroscopyOntology/>`_
+
+.. [#vibso-repo] NFDI4Chem. n.d. "Vibrational Spectroscopy Ontology."
+   GitHub repository.
+   Available at: `https://github.com/NFDI4Chem/VibrationalSpectroscopyOntology <https://github.com/NFDI4Chem/VibrationalSpectroscopyOntology>`_
