@@ -23,10 +23,10 @@
 Time Ontology in OWL (OWL-Time)
 ========================================================================================================
 
-The Time Ontology in OWL (OWL-Time) is a comprehensive ontology for representing temporal concepts, relationships, and properties in semantic web and linked data applications. It provides a standardized vocabulary for describing time instants, intervals, durations, temporal positions, and topological relations (e.g., before, after, during) among temporal entities. OWL-Time supports multiple temporal reference systems, including the Gregorian calendar, Unix time, geologic time, and custom calendars, enabling flexible modeling of temporal data. The ontology is widely used for annotating temporal aspects of resources in scientific datasets, event logs, web pages, and knowledge graphs. By providing a common framework, OWL-Time facilitates temporal reasoning, event sequencing, and integration of time-based data across domains. The ontology is maintained by the World Wide Web Consortium (W3C) and is continuously updated to support new temporal modeling requirements.
+The Time Ontology in OWL (OWL-Time) is an OWL ontology for representing temporal concepts, relationships, and properties in Semantic Web and Linked Data applications [#owltime-w3c]_ [#owltime-ogc]_. It provides a standardized vocabulary for describing temporal entities, including instants and intervals, as well as durations, temporal positions, date-time descriptions, and ordering relations between temporal entities [#owltime-w3c]_. OWL-Time supports multiple temporal reference systems, allowing temporal positions and durations to be expressed using the Gregorian calendar and clock, Unix time, geologic time, or other temporal reference systems and calendars [#owltime-w3c]_. The ontology is used to annotate temporal aspects of resources in datasets, event logs, web pages, knowledge graphs, and other Web resources [#owltime-w3c]_ [#owltime-ogc]_. By providing a common semantic framework, OWL-Time facilitates temporal reasoning, event sequencing, temporal ordering, and integration of time-based data across domains [#owltime-w3c]_ [#owltime-ogc]_. OWL-Time is maintained as a W3C/OGC standard for describing temporal properties of resources on the Web [#owltime-w3c]_ [#owltime-ogc]_.
 
 **Example Usage**:
-Annotate an event dataset with OWL-Time terms to specify event start and end times, durations, and temporal relationships (e.g., "event A before event B"), enabling temporal reasoning and timeline visualization in knowledge graphs.
+Annotate an event dataset with OWL-Time terms to specify event start and end times, durations, temporal positions, and temporal relationships such as ``before``, ``after``, or ``during``. This enables temporal reasoning, event ordering, timeline visualization, and integration of temporal information in knowledge graphs [#owltime-w3c]_ [#owltime-ogc]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#owltime-w3c] W3C. 2022.
+   "Time Ontology in OWL."
+   W3C Candidate Recommendation Draft.
+   Available at:
+   `https://www.w3.org/TR/owl-time/ <https://www.w3.org/TR/owl-time/>`_
+
+.. [#owltime-ogc] Open Geospatial Consortium. n.d.
+   "Time Ontology in OWL."
+   Available at:
+   `https://www.ogc.org/standards/time-ontology-in-owl/ <https://www.ogc.org/standards/time-ontology-in-owl/>`_

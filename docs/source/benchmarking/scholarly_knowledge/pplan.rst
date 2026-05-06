@@ -23,14 +23,14 @@
 Ontology for Provenance and Plans (P-Plan)
 ========================================================================================================
 
-The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology [PROV-O] created to represent the plans that guided the execution of scientific processes. P-Plan describes how the plans are composed and their correspondence to provenance records that describe the execution itself. It provides a structured vocabulary for representing plans, provenance, and related data, supporting both theoretical and experimental research in provenance and planning.
+The Ontology for Provenance and Plans (P-Plan) is an extension of the PROV-O ontology created to represent the plans that guide the execution of scientific processes [#pplan-ontology]_. P-Plan describes how plans are composed and how their elements correspond to provenance records that describe the execution itself [#pplan-ontology]_. It provides a structured vocabulary for representing plans, steps, variables, activities, entities, agents, and the relationships between abstract process descriptions and concrete executions [#pplan-ontology]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of plans, provenance, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. P-Plan supports the integration of data from various sources, promoting interoperability and data-driven research in provenance and planning.
+The ontology uses a class-based modeling approach, defining concepts such as ``p-plan:Plan``, ``p-plan:Step``, and ``p-plan:Variable``, together with links to execution-level provenance entities and activities [#pplan-ontology]_. This allows researchers to distinguish between the intended structure of a process and the actual provenance trace generated when that process is executed [#pplan-ontology]_. P-Plan supports interoperability between workflow descriptions, scientific process models, and provenance records by connecting planned process structures with their corresponding execution data [#pplan-ontology]_.
 
-Typical applications of P-Plan include the development of new provenance and planning methods, the optimization of scientific process execution, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, P-Plan enhances collaboration and innovation in the field of provenance and planning.
+Typical applications of P-Plan include scientific workflow documentation, provenance tracking, process reproducibility, workflow comparison, experiment reporting, and integration of provenance data across computational research systems [#pplan-ontology]_. By connecting plans with execution provenance, P-Plan helps researchers understand how results were produced, which steps were followed, and how abstract methods correspond to concrete process executions [#pplan-ontology]_.
 
 **Example Usage**:
-Annotate a scientific process with P-Plan terms to specify plans, provenance, and related data, enabling semantic search and integration with provenance and planning platforms.
+Annotate a scientific process with P-Plan terms to describe the overall plan, individual steps, input and output variables, responsible agents, and the corresponding execution activities and entities generated during execution. This enables semantic search, provenance tracking, reproducibility analysis, and integration with workflow and provenance management platforms [#pplan-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#pplan-ontology] OPMW. 2014.
+   "The P-Plan Ontology."
+   Available at:
+   `https://www.opmw.org/model/p-plan/ <https://www.opmw.org/model/p-plan/>`_

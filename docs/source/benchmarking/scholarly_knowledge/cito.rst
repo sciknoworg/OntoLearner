@@ -23,14 +23,14 @@
 Citation Typing Ontology (CiTO)
 ========================================================================================================
 
-The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,     both factually and rhetorically. It provides a structured vocabulary for describing citation types, relationships, and contexts, supporting both theoretical and experimental research in scholarly communication.
+The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations, both factually and rhetorically [#cito-spec]_ [#cito-paper]_. It provides a structured vocabulary for describing citation relationships between citing and cited scholarly works, including whether a citation supports, extends, disputes, uses methods from, reviews, or obtains background from another work [#cito-spec]_. CiTO enables citation metadata to describe not only the existence of a citation link, but also the author's citation intent and the scholarly context of that relationship [#cito-spec]_ [#cito-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of citations, relationships, and contexts, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. CiTO supports the integration of data from various sources, promoting interoperability and data-driven research in scholarly communication.
+The ontology employs an OWL-based modeling approach, defining citation properties such as ``cito:cites`` and more specific subproperties for different citation functions [#cito-spec]_. These properties are organized into hierarchies, enabling structured retrieval, reasoning, and analysis of citation networks [#cito-spec]_. CiTO supports integration of citation data from different scholarly sources and publishing platforms, promoting interoperability and data-driven research in scholarly communication [#cito-paper]_.
 
-Typical applications of CiTO include the development of new citation analysis methods, the optimization of citation practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, CiTO enhances collaboration and innovation in the field of scholarly communication.
+Typical applications of CiTO include semantic citation annotation, citation network analysis, scholarly knowledge graph construction, citation intent analysis, and integration of bibliographic datasets for advanced analytics and knowledge discovery [#cito-paper]_. By providing a standardized vocabulary and framework, CiTO enhances semantic interoperability and supports richer analysis of how scholarly works relate to one another [#cito-spec]_ [#cito-paper]_.
 
 **Example Usage**:
-Annotate a research paper with CiTO terms to specify citation types, relationships, and contexts, enabling semantic search and integration with scholarly communication platforms.
+Annotate a research paper with CiTO terms to specify citation relationships and contexts, such as ``cito:citesAsEvidence``, ``cito:extends``, ``cito:usesMethodIn``, or ``cito:disagreesWith``. This enables semantic search, citation intent analysis, and integration with scholarly communication platforms [#cito-spec]_ [#cito-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#cito-spec] SPAR Ontologies. 2018.
+   "CiTO, the Citation Typing Ontology."
+   Available at:
+   `https://sparontologies.github.io/cito/current/cito.html <https://sparontologies.github.io/cito/current/cito.html>`_
+
+.. [#cito-paper] Shotton, David. 2010.
+   "CiTO, the Citation Typing Ontology."
+   *Journal of Biomedical Semantics* 1(Suppl 1): S6.
+   DOI:
+   `10.1186/2041-1480-1-S1-S6 <https://doi.org/10.1186/2041-1480-1-S1-S6>`_

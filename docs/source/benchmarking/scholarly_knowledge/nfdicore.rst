@@ -23,14 +23,14 @@
 National Research Data Infrastructure Ontology (NFDIcore)
 ========================================================================================================
 
-The National Research Data Infrastructure (NFDI) initiative has led to the formation of various consortia,     each focused on developing a research data infrastructure tailored to its specific domain.     To ensure interoperability across these consortia, the NFDIcore ontology has been developed     as a mid-level ontology for representing metadata related to NFDI resources, including individuals,     organizations, projects, data portals, and more. It provides a structured vocabulary for representing research data infrastructure, supporting both theoretical and experimental research in research data management.
+The NFDIcore ontology is a mid-level ontology developed to support interoperability across the consortia of the National Research Data Infrastructure (NFDI) [#nfdicore-docs]_ [#nfdicore-github]_. It represents metadata related to NFDI resources, including individuals, organizations, projects, data portals, datasets, services, and other research infrastructure entities [#nfdicore-github]_. NFDIcore helps provide a shared semantic structure for describing the organization of NFDI and the research data resources made available by its project partners [#nfdicore-docs]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of research data infrastructure, metadata, and related entities, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. NFDIcore supports the integration of data from various sources, promoting interoperability and data-driven research in research data management.
+The ontology uses a class-based modeling approach to define reusable concepts and relations for research data infrastructure, metadata, organizations, projects, persons, services, repositories, and related resources [#nfdicore-docs]_. As a mid-level ontology, it bridges general upper-level concepts with more specific domain ontologies, supporting both flexibility and consistency across different NFDI consortia [#nfdicore-docs]_. This enables heterogeneous research data infrastructure metadata to be described, linked, queried, and integrated in a machine-readable form [#nfdicore-github]_.
 
-Typical applications of NFDIcore include the development of new research data infrastructure methods, the optimization of research data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, NFDIcore enhances collaboration and innovation in the field of research data management.
+Typical applications of NFDIcore include research data infrastructure documentation, metadata integration, semantic annotation of NFDI resources, data portal description, project and organization modeling, knowledge graph construction, and cross-consortium interoperability [#nfdicore-docs]_ [#nfdicore-github]_. By providing a standardized semantic framework, NFDIcore supports data discovery, integration, collaboration, and knowledge sharing across research data management platforms [#nfdicore-docs]_.
 
 **Example Usage**:
-Annotate a research data infrastructure project with NFDIcore terms to specify infrastructure types, metadata, and related entities, enabling semantic search and integration with research data management platforms.
+Annotate an NFDI research data infrastructure project with NFDIcore terms to describe participating organizations, researchers, projects, datasets, data portals, services, software repositories, and related metadata. This enables semantic search, cross-consortium integration, and interoperability with research data management platforms [#nfdicore-docs]_ [#nfdicore-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#nfdicore-docs] FIZ Karlsruhe. n.d.
+   "NFDIcore Ontology."
+   Available at:
+   `https://ise-fizkarlsruhe.github.io/nfdicore/ <https://ise-fizkarlsruhe.github.io/nfdicore/>`_
+
+.. [#nfdicore-github] ISE-FIZKarlsruhe. n.d.
+   "NFDI Core Ontology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/ISE-FIZKarlsruhe/nfdicore <https://github.com/ISE-FIZKarlsruhe/nfdicore>`_

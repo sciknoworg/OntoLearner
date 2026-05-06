@@ -23,14 +23,14 @@
 EUropean Research Information Ontology (EURIO)
 ========================================================================================================
 
-The EUropean Research Information Ontology (EURIO) conceptualizes, formally encodes, and makes available in an open, structured, and machine-readable format data about research projects funded by the EU's framework programmes for research and innovation. It provides a structured vocabulary for representing research projects, funding information, and related data, supporting both theoretical and experimental research in research information management.
+The EUropean Research Information Ontology (EURIO) conceptualizes, formally encodes, and makes available data about research projects funded by the European Union's framework programmes for research and innovation in an open, structured, and machine-readable format [#eurio-euvoc]_ [#eurio-paper]_. EURIO was developed for CORDIS and the Publications Office of the European Union to represent research project information as semantic data, improving its visibility, accessibility, interoperability, and reuse [#eurio-paper]_. It provides a structured vocabulary for describing research projects, funding schemes, grants, organizations, persons, project results, publications, and related research information [#eurio-euvoc]_ [#eurio-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of research projects, funding information, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. EURIO supports the integration of data from various sources, promoting interoperability and data-driven research in research information management.
+The ontology uses a class-based semantic modeling approach, defining classes and properties for research projects, participants, funding information, outputs, and administrative metadata [#eurio-paper]_. These concepts allow EU-funded research information to be organized, linked, queried, and integrated with other semantic resources and reference data assets [#eurio-euvoc]_ [#eurio-paper]_. EURIO supports interoperability in research information management by enabling project data from CORDIS and related sources to be represented consistently in linked data formats [#eurio-euvoc]_.
 
-Typical applications of EURIO include the development of new research information management methods, the optimization of research project management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, EURIO enhances collaboration and innovation in the field of research information management.
+Typical applications of EURIO include semantic publication of EU research project data, research information management, project discovery, funding analysis, institutional reporting, knowledge graph construction, and integration of research outputs across platforms [#eurio-paper]_. By providing a standardized ontology for EU-funded research information, EURIO supports data discovery, analytics, interoperability, and knowledge sharing across research information systems [#eurio-euvoc]_ [#eurio-paper]_.
 
 **Example Usage**:
-Annotate a research project with EURIO terms to specify project types, funding information, and related data, enabling semantic search and integration with research information management platforms.
+Annotate an EU-funded research project with EURIO terms to specify the project title, acronym, grant information, funding programme, participating organizations, researchers, project duration, deliverables, publications, and related results. This enables semantic search, project discovery, funding analysis, and integration with research information management platforms [#eurio-euvoc]_ [#eurio-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#eurio-euvoc] Publications Office of the European Union. n.d.
+   "EUropean Research Information Ontology (EURIO)."
+   Available at:
+   `https://op.europa.eu/en/web/eu-vocabularies/eurio <https://op.europa.eu/en/web/eu-vocabularies/eurio>`_
+
+.. [#eurio-paper] Publications Office of the European Union. 2020.
+   "EURIO: an ontology for publishing research projects' data."
+   Available at:
+   `https://publications.europa.eu/resource/cellar/369859bb-3611-11eb-b27b-01aa75ed71a1.0001.01/DOC_1 <https://publications.europa.eu/resource/cellar/369859bb-3611-11eb-b27b-01aa75ed71a1.0001.01/DOC_1>`_

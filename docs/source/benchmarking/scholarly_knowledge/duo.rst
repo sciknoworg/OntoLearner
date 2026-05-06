@@ -25,9 +25,9 @@
 Data Use Ontology (DUO)
 ========================================================================================================
 
-The Data Use Ontology (DUO) is a comprehensive vocabulary for formally representing and managing data use restrictions, permissions, and conditions that govern access to and usage of biomedical and life sciences research data. It provides standardized definitions of data use constraints including disease-specific research restrictions, commercial use prohibitions, publication acknowledgment requirements, and ethical/policy-based limitations. DUO enables data stewards and repositories to precisely specify how datasets can be used, facilitating automated enforcement of data use agreements and supporting secondary data reuse in compliant ways. The ontology bridges the gap between legal/ethical restrictions and technical implementations by providing machine-readable representations of complex data use policies. DUO supports FAIR data principles by enabling discoverable, interoperable, and reusable data through clear expression of usage conditions.
+The Data Use Ontology (DUO) is a controlled vocabulary and ontology for formally representing data use restrictions, permissions, and conditions that govern access to and use of biomedical, clinical, and life sciences research data [#duo-obofoundry]_ [#duo-paper]_. DUO provides standardized terms for describing data use conditions, including general research use, health or medical research use, disease-specific restrictions, population-origin restrictions, commercial use limitations, publication requirements, and ethics or policy-based conditions [#duo-obofoundry]_ [#duo-paper]_. It enables data stewards, repositories, and data access committees to precisely specify how datasets may be used, supporting responsible secondary reuse and helping match researcher requests with dataset permissions [#duo-paper]_. DUO bridges policy and technical implementation by expressing complex data use conditions in a human-readable and machine-readable form [#duo-paper]_. By providing structured data use terms, DUO supports discoverability, interoperability, compliant reuse, and FAIR-oriented management of sensitive research datasets [#duo-obofoundry]_ [#duo-paper]_.
 
-**Example Usage**: Annotate a biomedical research dataset with DUO terms to specify permissions (medical research only), restrictions (no commercial use), and requirements (publication acknowledgment, return of results to participants) enabling automated compliance checking and appropriate data sharing decisions.
+**Example Usage**: Annotate a biomedical research dataset with DUO terms to specify permissions such as ``general research use`` or ``health/medical/biomedical research``, restrictions such as ``no commercial use`` or disease-specific use, and requirements such as publication acknowledgment. This enables data access review, automated compliance checking, and appropriate data sharing decisions [#duo-obofoundry]_ [#duo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +136,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#duo-obofoundry] OBO Foundry. n.d.
+   "Data Use Ontology."
+   Available at:
+   `https://obofoundry.org/ontology/duo.html <https://obofoundry.org/ontology/duo.html>`_
+
+.. [#duo-paper] Lawson, James, et al. 2021.
+   "The Data Use Ontology to streamline responsible access to human biomedical datasets."
+   *Cell Genomics* 1(2): 100028.
+   DOI:
+   `10.1016/j.xgen.2021.100028 <https://doi.org/10.1016/j.xgen.2021.100028>`_

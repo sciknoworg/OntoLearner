@@ -24,10 +24,9 @@
 
 Workflows in Linked Data (WiLD)
 ========================================================================================================
+WiLD is an ontology for describing, specifying, monitoring, and executing workflows in Linked Data environments [#wild-home]_ [#wild-paper]_. It provides a structured vocabulary for representing workflow models, workflow instances, activities, execution order, data flow, and dependencies between workflow components [#wild-paper]_. WiLD focuses on workflows whose components interact through read-write Linked Data interfaces, making workflow descriptions machine-readable and suitable for semantic web applications [#wild-paper]_. The ontology supports the formal representation of workflow structure and execution semantics, helping systems document, exchange, monitor, and reuse workflow descriptions in a consistent way [#wild-home]_ [#wild-paper]_. By providing a linked data-based workflow model, WiLD can support reproducibility, automation, workflow sharing, and semantic integration of computational or data-processing processes [#wild-paper]_.
 
-WiLD is a specialized ontology for formal semantic description and representation of computational workflows and scientific data processing pipelines using linked data and semantic web technologies. It provides standardized vocabulary for describing workflow components including workflow steps, data flows, tool/service invocations, and their interdependencies in a machine-readable format. WiLD enables interoperable workflow specification and sharing across diverse scientific computing platforms and workflow management systems by providing uniform semantic representations. The ontology captures essential workflow metadata including execution parameters, input/output specifications, and constraints, supporting workflow automation and optimization. WiLD facilitates reproducible science by enabling systematic documentation of computational methods and data processing procedures in linked data formats.
-
-**Example Usage**: Represent a bioinformatics data processing pipeline using WiLD terms to describe sequential workflow steps (quality control, alignment, variant calling), input datasets, tool invocations (with parameters), and output data products to enable workflow reproducibility and reuse.
+**Example Usage**: Represent a bioinformatics data-processing pipeline using WiLD terms to describe sequential workflow steps such as quality control, alignment, and variant calling, together with input datasets, execution order, tool or service invocations, intermediate data, and output data products. This enables workflow documentation, semantic search, monitoring, reproducibility, and reuse across Linked Data-based workflow systems [#wild-home]_ [#wild-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +135,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#wild-home] WiLD. n.d.
+   "WiLD - Workflows in Linked Data."
+   Available at:
+   `https://purl.org/wild <https://purl.org/wild>`_
+
+.. [#wild-paper] Käfer, Tobias, and Andreas Harth. 2018.
+   "Specifying, Monitoring, and Executing Workflows in Linked Data Environments."
+   *The Semantic Web -- ISWC 2018*.
+   Available at:
+   `https://arxiv.org/pdf/1804.05044 <https://arxiv.org/pdf/1804.05044>`_

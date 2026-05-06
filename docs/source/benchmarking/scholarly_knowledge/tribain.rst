@@ -22,15 +22,14 @@
 
 Tribology and Artificial Intelligence Ontology (TribAIn)
 ========================================================================================================
+TribAIn is an ontology for the description of tribological experiments and their results [#tribain-github]_ [#tribain-paper]_. It is designed to be used in the context of the TribAIn project, which aims to develop a knowledge-based system for the design and analysis of tribological systems [#tribain-paper]_. It provides a structured vocabulary for representing tribological experiments, experimental setups, methodological background knowledge, measurements, analyses, interpretations, and related data, supporting research in tribology [#tribain-github]_ [#tribain-paper]_.
 
-TribAIn is an ontology for the description of tribological experiments and their results. It is designed to be used in the context of the TribAIn project, which aims to develop a knowledge-based system for the design of tribological systems. It provides a structured vocabulary for representing tribological experiments, results, and related data, supporting both theoretical and experimental research in tribology.
+The ontology employs a class-based modeling approach, defining classes for different types of tribological experiments, experimental setups, results, measurements, analyses, and related data, along with properties to describe their characteristics and interactions [#tribain-paper]_. Hierarchies are used to organize classes into categories, enabling efficient data retrieval, comparison, and analysis [#tribain-github]_. TribAIn supports the integration of data from various sources, including natural-language texts and tabular data, promoting interoperability and data-driven research in tribology [#tribain-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of tribological experiments, results, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. TribAIn supports the integration of data from various sources, promoting interoperability and data-driven research in tribology.
-
-Typical applications of TribAIn include the development of new tribological experiment methods, the optimization of tribological system design, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, TribAIn enhances collaboration and innovation in the field of tribology.
+Typical applications of TribAIn include the documentation of tribological experiments, semantic annotation of experimental setups and results, reuse and comparison of tribological knowledge, optimization of tribological system design, and integration of diverse datasets to support advanced analytics and knowledge discovery [#tribain-github]_ [#tribain-paper]_. By providing a standardized vocabulary and framework, TribAIn enhances collaboration, interoperability, and knowledge reuse in the field of tribology [#tribain-paper]_.
 
 **Example Usage**:
-Annotate a tribological experiment with TribAIn terms to specify experiment types, results, and related data, enabling semantic search and integration with tribology research platforms.
+Annotate a tribological experiment with TribAIn terms to specify the experimental setup, contact bodies, lubricant, testing conditions, measurements, analysis results, and interpretations. This enables semantic search, comparison of experimental results, and integration with tribology research platforms [#tribain-github]_ [#tribain-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +138,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#tribain-github] Kügler, Patricia. n.d.
+   "tribAIn: Ontology for scientific experiments in the domain of tribology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/snow0815/tribAIn <https://github.com/snow0815/tribAIn>`_
+
+.. [#tribain-paper] Kügler, Patricia, and Marian Wartzack. 2020.
+   "tribAIn—Towards an Explicit Specification of Shared Tribological Understanding."
+   *Applied Sciences* 10(13): 4421.
+   DOI:
+   `10.3390/app10134421 <https://doi.org/10.3390/app10134421>`_

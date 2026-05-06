@@ -23,14 +23,14 @@
 Metadata for Intelligent Engineering (Metadata4Ing)
 ========================================================================================================
 
-The ontology Metadata4Ing provides a framework for the semantic description of research data and of the whole data generation process, embracing the object of investigation, all sample and data manipulation methods and tools, the data files themselves, and the roles of persons and institutions. It provides a structured vocabulary for representing research data, processes, and roles, supporting both theoretical and experimental research in intelligent engineering.
+The Metadata4Ing ontology provides a framework for the semantic description of research data and the complete data generation process, with a particular focus on engineering sciences and related disciplines [#m4i-nfdi]_. It covers the object of investigation, sample and data manipulation methods, tools, generated data files, and the roles of persons and institutions involved in the research process [#m4i-nfdi]_. Metadata4Ing supports the structured description of experiments, simulations, observations, workflows, and data-processing activities, enabling research data and its provenance context to be represented in a machine-readable form [#m4i-nfdi]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of research data, processes, and roles, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. Metadata4Ing supports the integration of data from various sources, promoting interoperability and data-driven research in intelligent engineering.
+The ontology uses a class-based modeling approach to describe research data, methods, tools, projects, organizations, people, roles, variables, and generated outputs [#m4i-nfdi]_. These semantic descriptions support data retrieval, interpretation, comparison, reuse, and integration across engineering research datasets and infrastructures [#m4i-nfdi]_. Metadata4Ing is especially useful for research data management because it helps document not only the final dataset, but also how the data was created, processed, and contextualized [#m4i-nfdi]_.
 
-Typical applications of Metadata4Ing include the development of new research data management methods, the optimization of research data generation processes, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, Metadata4Ing enhances collaboration and innovation in the field of intelligent engineering.
+Typical applications of Metadata4Ing include research data management, documentation of data generation workflows, semantic annotation of engineering datasets, FAIR data publication, provenance tracking, and knowledge graph construction for research processes [#m4i-nfdi]_. By providing a standardized vocabulary and framework, Metadata4Ing enhances interoperability, reproducibility, collaboration, and data-driven research in engineering and related scientific domains [#m4i-nfdi]_.
 
 **Example Usage**:
-Annotate a research dataset with Metadata4Ing terms to specify data types, processes, and roles, enabling semantic search and integration with research data management platforms.
+Annotate an engineering research dataset with Metadata4Ing terms to specify the object of investigation, experimental or simulation method, tools used, generated data files, variables, responsible persons, institutional roles, and related project context. This enables semantic search, reproducibility, provenance tracking, and integration with research data management platforms [#m4i-nfdi]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#m4i-nfdi] NFDI4Ing. n.d.
+   "Metadata4Ing."
+   Available at:
+   `https://nfdi4ing.de/m4i/ <https://nfdi4ing.de/m4i/>`_

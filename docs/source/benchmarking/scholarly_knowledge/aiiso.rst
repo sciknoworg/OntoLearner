@@ -25,9 +25,9 @@
 Academic Institution Internal Structure Ontology (AIISO)
 ========================================================================================================
 
-AIISO is a specialized ontology for describing and formalizing the internal organizational structures, hierarchies, and administrative units of academic institutions including universities, colleges, and research centers. It provides standardized vocabulary for representing academic departments, faculties, schools, research groups, and their relationships within an institution's organizational hierarchy. AIISO is designed for integration with complementary ontologies including Participation (for describing role participation), FOAF (for person information), and aiiso-roles (for person roles within institutions). The ontology enables semantic representation of academic organizational information, supporting institutional data integration, organizational mapping, and staff/student management systems. AIISO facilitates interoperability in academic information systems and institutional repositories by providing standardized semantic definitions of academic structures.
+AIISO, the Academic Institution Internal Structure Ontology, is a specialized ontology for describing and formalizing the internal organizational structures, hierarchies, and administrative units of academic institutions, including universities, colleges, schools, departments, faculties, and research centers [#aiiso-vocab]_ [#aiiso-schema]_. It provides standardized classes and properties for representing academic organizational units, knowledge groupings, courses, modules, programmes, subjects, and their relationships within an institution's hierarchy [#aiiso-schema]_. AIISO is designed for integration with complementary vocabularies including Participation, FOAF, and AIISO Roles, enabling the description of people and the roles they play within academic institutions [#aiiso-vocab]_. The ontology supports semantic representation of academic organizational information, enabling institutional data integration, organizational mapping, academic resource description, and staff or student information systems [#aiiso-vocab]_ [#aiiso-schema]_. By providing standardized semantic definitions for academic structures, AIISO facilitates interoperability in academic information systems, institutional repositories, and linked open education data [#aiiso-vocab]_.
 
-**Example Usage**: Represent an academic institution's structure with AIISO terms for faculties (Faculty of Science, Faculty of Engineering), departments (Computer Science Department, Physics Department), research groups, and their organizational relationships and hierarchies.
+**Example Usage**: Represent an academic institution's structure with AIISO terms for faculties, departments, schools, research centers, programmes, courses, modules, and subjects, such as ``Faculty of Science``, ``Department of Computer Science``, and ``Artificial Intelligence Module``. This enables academic hierarchy modeling, semantic discovery, and integration across institutional information systems [#aiiso-schema]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +136,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#aiiso-vocab] Talis Information Ltd. 2008.
+   "Academic Institution Internal Structure Ontology (AIISO)."
+   Available at:
+   `https://vocab.org/aiiso/ <https://vocab.org/aiiso/>`_
+
+.. [#aiiso-schema] Talis Information Ltd. 2008.
+   "Academic Institution Internal Structure Ontology Schema."
+   Available at:
+   `https://vocab.org/aiiso/schema-20080514.html <https://vocab.org/aiiso/schema-20080514.html>`_

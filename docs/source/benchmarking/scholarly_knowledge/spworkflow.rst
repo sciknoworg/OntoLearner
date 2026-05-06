@@ -23,14 +23,14 @@
 SMART Protocols Ontology: Workflow Module (SP-Workflow)
 ========================================================================================================
 
-SP-Workflow module represents: i) the executable elements of a protocol; ii) the experimental actions and material entities that participate in instructions (sample/specimen, organisms, reagents, instruments); and iii) the order of execution of the instructions. It provides a structured vocabulary for representing workflows, experimental actions, and related data, supporting both theoretical and experimental research in workflow management.
+SP-Workflow module represents: i) the executable elements of a protocol; ii) the experimental actions and material entities that participate in instructions, such as samples/specimens, organisms, reagents, and instruments; and iii) the order of execution of the instructions [#sp-workflow]_ [#sp-github]_. It provides a structured vocabulary for representing workflows, experimental actions, protocol instructions, material entities, and related data, supporting semantic representation of experimental protocol execution [#sp-workflow]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of workflows, experimental actions, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. SP-Workflow supports the integration of data from various sources, promoting interoperability and data-driven research in workflow management.
+The ontology employs a class-based modeling approach, defining classes for different types of protocol instructions, experimental actions, workflow elements, samples/specimens, organisms, reagents, instruments, and related data, along with properties to describe their characteristics and interactions [#sp-workflow]_. Hierarchies and relations are used to organize workflow concepts into structured categories, enabling retrieval, comparison, and analysis of experimental protocol workflows [#sp-workflow]_. SP-Workflow supports the integration of protocol workflow information from various sources, promoting interoperability and data-driven research in experimental workflow management [#sp-github]_.
 
-Typical applications of SP-Workflow include the development of new workflow management methods, the optimization of experimental workflows, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, SP-Workflow enhances collaboration and innovation in the field of workflow management.
+Typical applications of SP-Workflow include the semantic representation of experimental protocol execution, documentation of protocol instructions, optimization of experimental workflows, workflow comparison, protocol retrieval, and integration of workflow descriptions with laboratory information systems and workflow management platforms [#sp-workflow]_ [#sp-github]_. By providing a standardized vocabulary and framework, SP-Workflow enhances interoperability, reuse, and semantic search in the field of experimental workflow documentation [#sp-workflow]_.
 
 **Example Usage**:
-Annotate an experimental workflow with SP-Workflow terms to specify workflow steps, experimental actions, and related data, enabling semantic search and integration with workflow management platforms.
+Annotate an experimental workflow with SP-Workflow terms to specify protocol instructions, workflow steps, experimental actions, samples/specimens, organisms, reagents, instruments, and the order in which instructions should be executed. This enables semantic search, workflow comparison, protocol reuse, and integration with workflow management platforms [#sp-workflow]_ [#sp-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#sp-workflow] SMART Protocols. 2013.
+   "SMART Protocols Ontology: Workflow Module."
+   Available at:
+   `https://vocab.linkeddata.es/SMARTProtocols/myDocumentation_SPwf_19Abril2017/index_SPwf_V4.0.html <https://vocab.linkeddata.es/SMARTProtocols/myDocumentation_SPwf_19Abril2017/index_SPwf_V4.0.html>`_
+
+.. [#sp-github] Ontology Engineering Group, Universidad Politécnica de Madrid. n.d.
+   "SMART-Protocols."
+   GitHub Repository.
+   Available at:
+   `https://github.com/oeg-upm/SMART-Protocols <https://github.com/oeg-upm/SMART-Protocols>`_
