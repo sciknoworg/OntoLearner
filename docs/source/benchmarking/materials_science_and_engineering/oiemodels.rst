@@ -23,14 +23,12 @@
 Open Innovation Environment Models (OIEModels)
 ========================================================================================================
 
-The Open Innovation Environment Models (OIEModels) ontology is a domain-level ontology developed to represent models in materials science. It provides a structured vocabulary for describing models, their properties, and data, supporting both experimental and computational research in materials science.
+The **Open Innovation Environment Models (OIEModels)** ontology is a domain-level ontology developed to represent model-related concepts in materials science [#oiemodels-github]_. It provides a structured vocabulary for describing models and supports their alignment with the wider Open Innovation Environment ontology set [#oiemodels-github]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of models, properties, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OIEModels supports the integration of data from various sources, promoting interoperability and data-driven research in materials modeling.
-
-Typical applications of OIEModels include the development of new models with specific properties, the optimization of model properties, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OIEModels enhances collaboration and innovation in the field of materials modeling.
+OIEModels is part of the Open Innovation Environment ontology collection, which includes EMMO-compliant, domain-level ontologies for characterisation methods, manufacturing processes, materials, models, and software products [#oiemodels-github]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of model-related information across materials modelling and materials informatics workflows [#oiemodels-github]_.
 
 **Example Usage**:
-Annotate a modeling dataset with OIEModels terms to specify model types, properties, and data, enabling semantic search and integration with materials informatics platforms.
+Annotate a materials modelling dataset with OIEModels terms to specify model types, model-related information, and links to materials science concepts, enabling semantic search and integration with materials informatics platforms [#oiemodels-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#oiemodels-github] EMMO-repo. n.d.
+   "Open Innovation Environment (OIE) domain ontologies."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/OIE-Ontologies <https://github.com/emmo-repo/OIE-Ontologies>`_

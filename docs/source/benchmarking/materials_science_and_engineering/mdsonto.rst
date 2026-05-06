@@ -141,3 +141,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+.. [#mds-paper] Rajamohan, B. P., Bradley, A. C. H., Tran, V. D., et al. 2025.
+   "Materials Data Science Ontology(MDS-Onto): Unifying Domain Knowledge in Materials and Applied Data Science."
+   *Scientific Data*, 12, 628.
+   DOI: 10.1038/s41597-025-04938-5.
+   Available at:
+   `https://www.nature.com/articles/s41597-025-04938-5 <https://www.nature.com/articles/s41597-025-04938-5>`_

@@ -23,10 +23,12 @@
 Laser Powder Bed Fusion Ontology (LPBFO)
 ========================================================================================================
 
-The Laser Powder Bed Fusion Ontology (LPBFO) is a domain ontology for describing additive manufacturing processes, specifically Laser Powder Bed Fusion (LPBF) and Selective Laser Melting (SLM). LPBFO provides a structured vocabulary for representing process parameters, materials, equipment, component geometries, and quality attributes relevant to LPBF manufacturing. The ontology builds on BFO2.0 and BWMD_mid, and incorporates terminology from ISO/ASTM 52900:2015 to ensure alignment with industry standards. LPBFO supports semantic annotation of digital manufacturing workflows, enabling data integration, process optimization, and sustainability assessment through Life Cycle Analysis (LCA) classes. By providing a standardized framework, LPBFO facilitates interoperability between digital manufacturing systems, quality management, and research databases. The ontology is actively maintained and extended to support new developments in additive manufacturing and sustainability assessment.
+The Laser Powder Bed Fusion Ontology (LPBFO) is a domain ontology developed to describe knowledge related to Laser Powder Bed Fusion (LPBF) additive manufacturing [#lpbfo-gitlab]_. LPBFO provides a structured vocabulary for representing LPBF manufacturing knowledge, including process information, materials, equipment, component-related data, and quality-relevant concepts [#lpbfo-gitlab]_.
+
+The ontology supports semantic annotation of LPBF manufacturing workflows, enabling data integration, knowledge sharing, semantic search, and interoperability across additive manufacturing research and industrial platforms [#lpbfo-gitlab]_. By providing a standardized semantic framework, LPBFO supports the reuse and comparison of LPBF manufacturing knowledge [#lpbfo-gitlab]_.
 
 **Example Usage**:
-Annotate an LPBF manufacturing workflow with LPBFO terms to specify process parameters (e.g., laser power, scan speed), material types, component geometry, and LCA attributes, enabling semantic search and integration with digital manufacturing platforms.
+Annotate an LPBF manufacturing workflow with LPBFO terms to specify process parameters such as laser power, scan speed, layer thickness, material type, equipment information, component geometry, and quality-related attributes, enabling semantic search and integration with digital manufacturing platforms [#lpbfo-gitlab]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#lpbfo-gitlab] Fraunhofer EMI_datamanagement. n.d.
+   "LPBFO: Laser Powder Bed Fusion Ontology."
+   GitLab repository.
+   Available at:
+   `https://gitlab.cc-asp.fraunhofer.de/EMI_datamanagement/LPBFO <https://gitlab.cc-asp.fraunhofer.de/EMI_datamanagement/LPBFO>`_

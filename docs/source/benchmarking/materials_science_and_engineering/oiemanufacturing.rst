@@ -23,14 +23,12 @@
 Open Innovation Environment Manufacturing (OIEManufacturing)
 ========================================================================================================
 
-The Open Innovation Environment Manufacturing (OIEManufacturing) ontology is a domain-level ontology developed to represent manufacturing processes in materials science. It provides a structured vocabulary for describing manufacturing methods, equipment, and data, supporting both experimental and computational research in materials science.
+The Open Innovation Environment Manufacturing (OIEManufacturing) ontology is a domain-level ontology developed to represent manufacturing processes in materials science [#oiemanufacturing-github]_. It provides a structured vocabulary for describing manufacturing-related concepts and supports their alignment with the wider Open Innovation Environment ontology set [#oiemanufacturing-github]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of manufacturing methods, equipment, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OIEManufacturing supports the integration of data from various sources, promoting interoperability and data-driven research in materials manufacturing.
-
-Typical applications of OIEManufacturing include the development of new manufacturing methods, the optimization of manufacturing processes, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OIEManufacturing enhances collaboration and innovation in the field of materials manufacturing.
+OIEManufacturing is part of the Open Innovation Environment ontology collection, which includes domain-level ontologies for characterisation methods, manufacturing processes, materials, models, and software products [#oiemanufacturing-github]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of manufacturing-related materials science information [#oiemanufacturing-github]_. By providing a standardized semantic framework, OIEManufacturing helps organize manufacturing knowledge for semantic search and integration with materials informatics platforms [#oiemanufacturing-github]_.
 
 **Example Usage**:
-Annotate a manufacturing dataset with OIEManufacturing terms to specify manufacturing methods, equipment, and data, enabling semantic search and integration with materials informatics platforms.
+Annotate a manufacturing dataset with OIEManufacturing terms to specify manufacturing processes, manufacturing methods, and related materials science information, enabling semantic search and integration with materials informatics platforms [#oiemanufacturing-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#oiemanufacturing-github] EMMO-repo. n.d.
+   "Open Innovation Environment (OIE) domain ontologies."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/OIE-Ontologies <https://github.com/emmo-repo/OIE-Ontologies>`_

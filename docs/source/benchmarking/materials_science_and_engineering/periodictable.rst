@@ -139,3 +139,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#periodictable-daml] DAML.org. 2004.
+   "Periodic Table in OWL."
+   Available at:
+   `https://www.daml.org/2003/01/periodictable/ <https://www.daml.org/2003/01/periodictable/>`_

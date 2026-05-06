@@ -23,10 +23,12 @@
 Open Innovation Environment Software (OIESoftware)
 ========================================================================================================
 
-The Open Innovation Environment Software Ontology (OIESoftware) is an EMMO-compliant, domain-level ontology designed to represent software products and their roles in materials science and engineering. OIESoftware provides a structured vocabulary for describing software tools, simulation codes, data analysis packages, and their relationships to computational workflows and experimental processes. The ontology supports semantic annotation of software metadata, enabling interoperability, data integration, and advanced analytics across research platforms and digital infrastructures. OIESoftware is designed for extensibility, allowing researchers and developers to describe new software products, functionalities, and application domains. By providing a standardized framework, OIESoftware facilitates software discovery, workflow automation, and knowledge sharing in computational materials science. The ontology is actively maintained and extended to incorporate new software technologies and research requirements.
+The Open Innovation Environment Software Ontology (OIESoftware) is an EMMO-compliant, domain-level ontology developed to represent software products in materials science and engineering [#oiesoftware-github]_. It provides a structured vocabulary for describing software-related concepts and supports their alignment with the wider Open Innovation Environment ontology set [#oiesoftware-github]_.
+
+OIESoftware is part of the Open Innovation Environment ontology collection, which includes domain-level ontologies for characterisation methods, manufacturing processes, materials, models, and software products [#oiesoftware-github]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of software-related information across materials science workflows and digital research infrastructures [#oiesoftware-github]_.
 
 **Example Usage**:
-Annotate a computational workflow with OIESoftware terms to specify the simulation codes used (e.g., "LAMMPS", "VASP"), their input/output formats, and their roles in the workflow, enabling semantic search and integration with research data management systems.
+Annotate a computational materials science workflow with OIESoftware terms to specify the software products used, their roles in the workflow, and their links to related models, materials, or characterisation/manufacturing processes, enabling semantic search and integration with research data management systems [#oiesoftware-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#oiesoftware-github] EMMO-repo. n.d.
+   "Open Innovation Environment (OIE) domain ontologies."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/OIE-Ontologies <https://github.com/emmo-repo/OIE-Ontologies>`_

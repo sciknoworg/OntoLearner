@@ -23,10 +23,12 @@
 Atomistic Ontology (Atomistic)
 ========================================================================================================
 
-The Atomistic Ontology is an EMMO-based domain ontology designed for atomistic and electronic modeling in materials science. It provides a structured vocabulary for representing atomic-scale structures, electronic properties, and simulation methods. The ontology supports semantic annotation of computational models, enabling interoperability and data integration across materials modeling platforms. Atomistic Ontology facilitates detailed description of atomic configurations, electronic states, and interactions, supporting advanced materials design and analysis. The ontology is actively maintained and extended to incorporate new modeling techniques and scientific findings. By providing a standardized framework, Atomistic Ontology enhances reproducibility, data sharing, and collaborative research in atomistic simulations.
+The Atomistic Ontology is an EMMO-based domain ontology designed for atomistic and electronic modelling [#atomistic-github]_. It provides a structured vocabulary for representing concepts related to atomistic modelling, electronic modelling, and their connection to the wider EMMO materials ontology ecosystem [#atomistic-github]_. The ontology supports semantic annotation of atomistic and electronic modelling knowledge, enabling interoperability and data integration across materials modelling platforms [#atomistic-github]_.
+
+Atomistic Ontology facilitates the description of computational modelling concepts used in atomistic and electronic simulations, supporting more consistent representation, sharing, and reuse of materials modelling knowledge [#atomistic-github]_. The ontology is described as work-in-progress and under development, rather than as a fully finalized or actively maintained standard [#atomistic-github]_. By providing a standardized semantic framework, Atomistic Ontology supports reproducibility, data sharing, and collaborative research in atomistic and electronic modelling [#atomistic-github]_.
 
 **Example Usage**:
-Annotate a computational materials science dataset with Atomistic Ontology terms to specify atomic structures, electronic properties, and simulation parameters, enabling semantic search and integration with modeling tools.
+Annotate a computational materials science dataset with Atomistic Ontology terms to specify atomistic modelling concepts, electronic modelling concepts, simulation-related information, and their links to EMMO-based materials modelling vocabularies, enabling semantic search and integration with modelling tools [#atomistic-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#atomistic-github] EMMO-repo. n.d.
+   "Domain ontology for atomistic and electronic modelling."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/domain-atomistic <https://github.com/emmo-repo/domain-atomistic>`_

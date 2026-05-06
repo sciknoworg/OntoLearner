@@ -23,10 +23,12 @@
 The Heat Pump Ontology (HPOnt)
 ========================================================================================================
 
-The Heat Pump Ontology (HPOnt) is a domain ontology developed to formalize and represent all relevant information about heat pumps, including their components, operational parameters, performance metrics, and integration with building energy systems. HPOnt provides a structured vocabulary for describing heat pump types, working fluids, control strategies, installation contexts, and maintenance procedures. The ontology supports semantic annotation of heat pump data, enabling interoperability between smart building systems, energy management platforms, and research databases. HPOnt is designed for extensibility and can be adapted to represent new heat pump technologies, regulatory requirements, and sustainability metrics. By providing a standardized framework, HPOnt facilitates advanced analytics, predictive maintenance, and optimization of heat pump operation in residential, commercial, and industrial settings. The ontology is actively maintained and extended as part of the REACT project and is aligned with European Union research and innovation initiatives.
+The Heat Pump Ontology (HPOnt) is a domain ontology developed to formalize and represent information about heat pump systems [#hpont-doc]_. HPOnt provides a structured vocabulary for describing heat pump-related concepts such as operating mode, cooling capacity, power supply, storage volume, power consumption, and other technical information relevant to heat pump operation [#hpont-doc]_.
+
+The ontology supports semantic annotation of heat pump data, enabling interoperability, data integration, querying, and reuse across smart-building and energy-management systems [#hpont-doc]_ [#hpont-bioregistry]_. HPOnt was developed in the context of the REACT project and is registered as the Heat Pump Ontology in Bioregistry [#hpont-bioregistry]_.
 
 **Example Usage**:
-Annotate a smart building energy management system with HPOnt terms to specify the types of heat pumps installed, their operational parameters (e.g., COP, setpoints), maintenance schedules, and integration with renewable energy sources, enabling semantic search and optimization of building energy performance.
+Annotate a smart building energy management system with HPOnt terms to specify heat pump operating mode, cooling capacity, power supply, storage volume, power consumption, and related system information, enabling semantic search and integration with building energy management platforms [#hpont-doc]_ [#hpont-bioregistry]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#hpont-doc] REACT Project. 2021.
+   "The Heat Pump Ontology (HPOnt)."
+   Ontology documentation.
+   Available at:
+   `https://react2020.github.io/REACT-ONTOLOGY/HPOnt/index-en.html <https://react2020.github.io/REACT-ONTOLOGY/HPOnt/index-en.html>`_
+
+.. [#hpont-bioregistry] Bioregistry. n.d.
+   "Heat Pump Ontology."
+   Registry entry.
+   Available at:
+   `https://bioregistry.io/tib.hpont <https://bioregistry.io/tib.hpont>`_

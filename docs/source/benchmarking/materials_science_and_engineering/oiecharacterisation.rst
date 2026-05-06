@@ -23,14 +23,12 @@
 Open Innovation Environment Characterisation (OIECharacterisation)
 ========================================================================================================
 
-The Open Innovation Environment Characterisation (OIECharacterisation) ontology is an EMMO-compliant, domain-level ontology developed to represent characterization methods in materials science. It provides a structured vocabulary for describing characterization techniques, equipment, and data, supporting both experimental and computational research in materials science.
+The Open Innovation Environment Characterisation (OIECharacterisation) ontology is an EMMO-compliant, domain-level ontology developed to represent characterisation methods in materials science [#oiecharacterisation-github]_. It provides a structured vocabulary for describing characterisation-method concepts and supports their alignment with the wider EMMO ontology ecosystem [#oiecharacterisation-github]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of characterization methods, equipment, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OIECharacterisation supports the integration of data from various sources, promoting interoperability and data-driven research in materials characterization.
-
-Typical applications of OIECharacterisation include the development of new characterization methods, the optimization of characterization procedures, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OIECharacterisation enhances collaboration and innovation in the field of materials characterization.
+OIECharacterisation is part of the Open Innovation Environment (OIE) ontology set, which covers characterisation methods, manufacturing processes, materials, models, and software products [#oiecharacterisation-github]_. The OIE ontologies are aligned with EMMO and were developed in the context of the OYSTER project [#oiecharacterisation-github]_. By providing a standardized semantic framework, OIECharacterisation supports semantic annotation, interoperability, data integration, and reuse of characterisation-related materials science information [#oiecharacterisation-github]_.
 
 **Example Usage**:
-Annotate a characterization dataset with OIECharacterisation terms to specify characterization methods, equipment, and data, enabling semantic search and integration with materials informatics platforms.
+Annotate a materials characterisation dataset with OIECharacterisation terms to specify characterisation methods, related measurement information, and links to EMMO-aligned materials science concepts, enabling semantic search and integration with materials informatics platforms [#oiecharacterisation-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#oiecharacterisation-github] EMMO-repo. n.d.
+   "Open Innovation Environment (OIE) domain ontologies."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/OIE-Ontologies <https://github.com/emmo-repo/OIE-Ontologies>`_

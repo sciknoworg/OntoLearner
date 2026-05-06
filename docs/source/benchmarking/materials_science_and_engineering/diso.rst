@@ -23,10 +23,12 @@
 Dislocation Ontology (DISO)
 ========================================================================================================
 
-DISO is a specialized ontology that formalizes the conceptualization and semantic representation of linear defects in crystalline materials, with particular focus on dislocations and their complex relationships. It provides structured vocabulary for describing dislocation types (edge, screw, mixed), dislocation properties (Burgers vector, line direction), and dislocation interactions (annihilation, multiplication, cross-slip). The ontology captures the geometric and topological properties of dislocations essential for understanding plastic deformation, work hardening, and material strength in metals and alloys. DISO enables precise annotation of experimental observations and computational simulations of dislocations in crystalline microstructures, supporting materials science research and industrial applications. DISO facilitates knowledge integration in materials databases and computational materials science by providing standardized semantic representations of linear defects.
+The Dislocation Ontology (DISO) is a domain ontology that defines concepts and relationships related to linear defects in crystalline materials, especially dislocations [#diso-doc]_ [#ihsan2023]_. It provides a structured vocabulary for describing dislocation-related concepts, including dislocation structures, dislocation lines, Burgers vectors, crystal structures, and relationships between dislocation-domain entities [#ihsan2023]_.
+
+DISO was developed using a top-down approach, starting from general concepts in the dislocation domain and then specializing them into more specific concepts [#diso-doc]_ [#ihsan2023]_. Version 1.1 adapts and extends DISO for the discrete dislocation dynamics domain by adding missing concepts, improving class definitions, exploring additional relationships, and aligning it with related ontologies such as EMMO and the Materials Design Ontology (MDO) [#diso-doc]_. By providing a standardized semantic representation, DISO supports annotation, interoperability, data integration, and reuse of dislocation-related experimental and simulation data [#ihsan2023]_.
 
 **Example Usage**:
-Annotate a transmission electron microscopy (TEM) image or molecular dynamics simulation showing dislocations with DISO terms describing dislocation type (edge or screw), Burgers vector, crystal system context, and interactions with other dislocations or grain boundaries.
+Annotate a transmission electron microscopy (TEM) dataset or dislocation dynamics simulation with DISO terms to specify dislocation structures, Burgers vectors, line directions, crystal-structure context, and relationships between dislocation-domain entities, enabling semantic search and integration with materials science databases and simulation workflows [#diso-doc]_ [#ihsan2023]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#diso-doc] Materials Data Science and Informatics. n.d.
+   "Dislocation Ontology (DISO)."
+   *Dislocation Ontology Suite*.
+   Available at:
+   `https://materials-data-science-and-informatics.github.io/Dislocation-Ontology-Suite/DISO/ <https://materials-data-science-and-informatics.github.io/Dislocation-Ontology-Suite/DISO/>`_
+
+.. [#ihsan2023] Ihsan, A. Z., Fathalla, S., and Sandfeld, S. 2023.
+   "DISO: A Domain Ontology for Modeling Dislocations in Crystalline Materials."
+   In *The 38th ACM/SIGAPP Symposium on Applied Computing (SAC '23)*, Article 4, 8 pages.
+   DOI: 10.1145/3555776.3578739.
+   Available at:
+   `https://arxiv.org/html/2401.02540v1 <https://arxiv.org/html/2401.02540v1>`_
