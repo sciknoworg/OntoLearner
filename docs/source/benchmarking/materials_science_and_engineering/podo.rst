@@ -24,10 +24,12 @@
 
 Point Defects Ontology (PODO)
 ========================================================================================================
+The Point Defect Ontology (PODO) is a specialized ontology designed to describe point defects in crystalline materials [#podo-github]_. It provides a structured vocabulary for representing point-defect concepts such as vacancies, interstitials, impurities, antisite defects, Frenkel defects, and Schottky defects [#podo-github]_.
 
-PODO is a specialized ontology that formalizes the conceptualization and semantic representation of point defects in crystalline materials, enabling precise description and classification of atomic-scale defects. It provides structured vocabulary for describing different point defect types including vacancies, interstitials, substitutional defects, and antisite defects, along with their properties and formation mechanisms. PODO captures essential characteristics of point defects such as charge state, migration energy, binding interactions with other defects, and effects on material properties. The ontology enables systematic annotation of experimental observations (X-ray diffraction, electron microscopy) and computational predictions (first-principles calculations) of point defects in various crystal structures. PODO facilitates knowledge integration in materials informatics and computational materials databases by providing standardized semantic representations of point defect phenomena.
+PODO supports semantic annotation of experimental and computational data related to point defects, enabling interoperability, semantic search, data integration, and reuse across materials science databases and research workflows [#podo-github]_. By providing a standardized representation of point-defect knowledge, PODO helps organize and compare defect-related information in crystalline materials [#podo-github]_.
 
-**Example Usage**: Annotate a first-principles DFT study of point defects in semiconductors with PODO terms describing defect type (e.g., oxygen vacancy in TiO2), charge state (+2, neutral, -2), formation energy, charge transition levels, and effects on band structure and electrical properties.
+**Example Usage**:
+Annotate a first-principles DFT study of point defects in semiconductors with PODO terms to specify point-defect types such as vacancies, interstitials, impurities, antisite defects, Frenkel defects, or Schottky defects, enabling semantic search and integration with materials informatics platforms [#podo-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +138,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#podo-github] OCDO. n.d.
+   "Point Defects Ontology (PODO)."
+   GitHub repository.
+   Available at:
+   `https://github.com/OCDO/podo <https://github.com/OCDO/podo>`_s

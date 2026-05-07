@@ -23,7 +23,7 @@
 Open Innovation Environment Models (OIEModels)
 ========================================================================================================
 
-The **Open Innovation Environment Models (OIEModels)** ontology is a domain-level ontology developed to represent model-related concepts in materials science [#oiemodels-github]_. It provides a structured vocabulary for describing models and supports their alignment with the wider Open Innovation Environment ontology set [#oiemodels-github]_.
+The Open Innovation Environment Models (OIEModels) ontology is a domain-level ontology developed to represent model-related concepts in materials science [#oiemodels-github]_. It provides a structured vocabulary for describing models and supports their alignment with the wider Open Innovation Environment ontology set [#oiemodels-github]_.
 
 OIEModels is part of the Open Innovation Environment ontology collection, which includes EMMO-compliant, domain-level ontologies for characterisation methods, manufacturing processes, materials, models, and software products [#oiemodels-github]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of model-related information across materials modelling and materials informatics workflows [#oiemodels-github]_.
 

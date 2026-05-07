@@ -23,14 +23,12 @@
 Planar Defects Ontology (PLDO)
 ========================================================================================================
 
-The Planar Defects Ontology (PLDO) is an ontology designed to describe planar defects in crystalline materials, such as grain boundaries and stacking faults, with a focus on their atomic-scale structure and properties. PLDO provides a structured vocabulary for representing the types, properties, and interactions of planar defects, supporting both experimental and computational research in materials science.
+The Planar Defects Ontology (PLDO) is an ontology designed to describe planar defects in crystalline materials, such as grain boundaries and stacking faults [#pldo-github]_. It provides a structured vocabulary for representing planar-defect concepts, their properties, and relationships in materials science [#pldo-github]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of planar defects, properties, and interactions, along with properties to describe their characteristics and effects on material properties. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. PLDO supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
-
-Typical applications of PLDO include the development of new materials with specific defect properties, the optimization of material properties through defect engineering, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, PLDO enhances collaboration and innovation in the field of materials science.
+PLDO supports semantic annotation of experimental and computational data related to planar defects, enabling interoperability, semantic search, data integration, and reuse across materials science databases and research workflows [#pldo-github]_. By providing a standardized vocabulary, PLDO helps organize planar-defect knowledge and supports comparison of defect-related information in crystalline materials [#pldo-github]_.
 
 **Example Usage**:
-Annotate a materials science study with PLDO terms to specify planar defect types, properties, and interactions, enabling semantic search and integration with materials informatics platforms.
+Annotate a materials science study with PLDO terms to specify planar defect types such as grain boundaries or stacking faults, together with their related properties and relationships, enabling semantic search and integration with materials informatics platforms [#pldo-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#pldo-github] OCDO. n.d.
+   "Planar Defects Ontology (PLDO)."
+   GitHub repository.
+   Available at:
+   `https://github.com/OCDO/pldo <https://github.com/OCDO/pldo>`_

@@ -23,7 +23,7 @@
 Ontology of Computer-Aided Process Engineering (OntoCAPE)
 ========================================================================================================
 
-The **Ontology of Computer-Aided Process Engineering (OntoCAPE)** is a large-scale ontology for the domain of Computer-Aided Process Engineering (CAPE) [#ontocape-homepage]_. It is represented in a formal, machine-interpretable ontology language and captures consensual knowledge of the process engineering domain in a generic way so that it can be reused and shared across groups of people and software systems [#ontocape-homepage]_.
+The Ontology of Computer-Aided Process Engineering (OntoCAPE) is a large-scale ontology for the domain of Computer-Aided Process Engineering (CAPE) [#ontocape-homepage]_. It is represented in a formal, machine-interpretable ontology language and captures consensual knowledge of the process engineering domain in a generic way so that it can be reused and shared across groups of people and software systems [#ontocape-homepage]_.
 
 OntoCAPE supports the development of software tools for engineering activities such as the systematic management and retrieval of simulation models and design documents, electronic procurement of plant equipment, mathematical modelling, and integration of design data from distributed sources [#ontocape-homepage]_. By providing a standardized semantic framework, OntoCAPE facilitates interoperability, knowledge sharing, and data integration in process engineering and manufacturing-related workflows [#ontocape-homepage]_.
 

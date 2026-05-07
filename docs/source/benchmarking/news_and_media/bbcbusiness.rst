@@ -22,11 +22,12 @@
 
 BBC Business News Ontology (BBCBusiness)
 ========================================================================================================
+The BBC Business News Ontology (BBCBusiness) is a domain-specific ontology for describing concepts that occur in BBC business news [#bbcbusiness-ontology]_. It provides a structured vocabulary for representing business-news entities such as companies, private companies, public companies, market sectors, shares, stock markets, and market indexes [#bbcbusiness-ontology]_.
 
-The BBC Business News Ontology (BBCBusiness) is a domain-specific ontology designed to represent concepts, entities, and relationships relevant to business news coverage. It provides a structured vocabulary for describing companies, markets, financial instruments, economic indicators, business events, and regulatory developments. BBCBusiness enables semantic annotation of business news articles, supporting advanced search, aggregation, and analytics across news platforms. The ontology is designed for interoperability with other BBC ontologies and external vocabularies, facilitating integration with financial data sources and knowledge graphs. By providing a standardized framework, BBCBusiness supports automated content tagging, trend analysis, and personalized news delivery in business journalism. The ontology is actively maintained and extended to reflect changes in the global business landscape and emerging topics in finance and economics.
+BBCBusiness supports semantic annotation and linked-data representation of business news content by defining classes and properties such as **Company**, **Sector**, **Share**, **Market**, **Index**, **companyLocation**, **parentCompany**, **sector**, **hasShare**, **listing**, **shareTicker**, and **marketTicker** [#bbcbusiness-ontology]_. By providing a standardized vocabulary, BBCBusiness supports business-news search, content integration, and semantic linking across BBC news data [#bbcbusiness-ontology]_.
 
 **Example Usage**:
-Annotate a business news article with BBCBusiness terms to specify the companies involved, market sectors, financial events (e.g., mergers, IPOs), and economic indicators, enabling semantic search and cross-platform business news analysis.
+Annotate a business news article with BBCBusiness terms to specify the companies involved, whether they are public or private companies, their market sector, share information, stock-market listings, and ticker symbols, enabling semantic search and cross-platform business news integration [#bbcbusiness-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +136,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bbcbusiness-ontology] BBC. 2014.
+   "Business News Ontology."
+   Available at:
+   `https://iptc.org/thirdparty/bbc-ontologies/business.html <https://iptc.org/thirdparty/bbc-ontologies/business.html>`_
