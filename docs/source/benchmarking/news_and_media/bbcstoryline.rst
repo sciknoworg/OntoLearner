@@ -25,9 +25,12 @@
 BBC Storyline Ontology (BBCStoryline)
 ========================================================================================================
 
-The BBC Storyline Ontology is a generic semantic framework for describing, organizing, and managing news stories and narrative content across diverse media publishing platforms. It models the core concept of "Storyline" to distinguish between individual news content pieces (articles, reports, videos) and broader editorial narratives representing events or topics in the world. The ontology captures relationships between stories, events, entities (people, places, organizations), and time periods, enabling sophisticated content organization and discovery. BBCStoryline is designed to be flexible and adaptable, supporting different news publishers' approaches to story organization while providing standardized semantic structures. The ontology facilitates semantic linking of content across media platforms and enables advanced search, recommendation, and editorial workflow systems.
+The BBC Storyline Ontology is a generic model for describing and organising news storylines [#bbcstoryline-ontology]_. It uses the central concept of Storyline to distinguish between an individual piece of news content, such as an article or report, and the broader editorial perspective on events occurring in the world [#bbcstoryline-ontology]_.
 
-**Example Usage**: Represent a news story about a major political event using BBCStoryline terms to link individual articles (multiple reporters' perspectives), associated entities (politicians, organizations), timeline (chronological events), and related stories covering different aspects of the broader storyline.
+The ontology supports the organisation of storyline components, which may be ordered using an index, arranged temporally, or represented as a graph to describe parallel developments [#bbcstoryline-ontology]_. By providing a structured semantic framework, the BBC Storyline Ontology supports content organisation, semantic linking, discovery, and management of news narratives across media publishing platforms [#bbcstoryline-ontology]_.
+
+**Example Usage**:
+Represent a news storyline about a major political event by linking individual articles, reports, related events, entities, time periods, and parallel developments into a broader editorial storyline, enabling semantic search and organisation of related news content [#bbcstoryline-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +139,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bbcstoryline-ontology] BBC. 2013.
+   "Storyline Ontology."
+   Available at:
+   `https://iptc.org/thirdparty/bbc-ontologies/storyline.html <https://iptc.org/thirdparty/bbc-ontologies/storyline.html>`_

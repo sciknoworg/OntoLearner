@@ -27,23 +27,24 @@ Nomisma Ontology (Nomisma)
 
 The Nomisma Ontology is a collaborative framework that provides stable,
 standardized digital representations of numismatic concepts according to
-the principles of Linked Open Data. It offers HTTP URIs that provide
-persistent access to reusable information about numismatic entities and
-related concepts, enabling integration with other linked data resources
-[#nomisma-project]_ [#numismatics-lod]_. The Nomisma community maintains
-a formalized RDF ontology and a data model for encoding concepts, coins,
-typologies, hoards, and other kinds of numismatic objects as linked open
-data [#nomisma-project]_. The ontology and controlled vocabulary support
-the description of entities such as coins, denominations, mints, rulers,
-regions, and related numismatic concepts across different periods and
-cultures [#nomisma-project]_ [#diginuma]_. It facilitates semantic
-annotation of numismatic data and supports interoperability across
-digital coin collections, archaeological datasets, and historical
-research resources [#numismatics-lod]_ [#diginuma]_. By providing
-standardized semantic representations, Nomisma enables querying,
-integration, and comparative analysis of monetary and material culture
-data within broader cultural heritage and digital humanities ecosystems
-[#numismatics-lod]_ [#semantic-solutions]_.
+the principles of Linked Open Data [#nomisma-project]_ [#numismatics-lod]_.
+It offers HTTP URIs that provide persistent access to reusable
+information about numismatic entities and related concepts, enabling
+integration with other linked data resources [#nomisma-project]_
+[#numismatics-lod]_. The Nomisma community maintains a formalized RDF
+ontology and data model for encoding concepts, coins, typologies,
+hoards, and other kinds of numismatic objects as linked open data
+[#nomisma-project]_ [#numismatics-lod]_. The ontology and controlled
+vocabulary support the description of entities such as coins,
+denominations, mints, rulers, regions, and related numismatic concepts
+across different periods and cultures [#nomisma-project]_. It
+facilitates semantic annotation of numismatic data and supports
+interoperability across digital coin collections, archaeological
+datasets, and historical research resources [#numismatics-lod]_.
+By providing standardized semantic representations, Nomisma enables
+querying, integration, and comparative analysis of monetary and
+material culture data within broader cultural heritage and digital
+humanities ecosystems [#numismatics-lod]_.
 
 **Example Usage**: Annotate a digital coin collection, hoard dataset, or
 archaeological numismatic catalog with Nomisma terms for coin types,
@@ -169,15 +170,3 @@ References
 .. [#numismatics-lod] Gruber, E. 2021. "Numismatics and Linked Open Data."
    *ISAW Papers* 20(6).
    Available at: `https://dlib.nyu.edu/awdl/isaw/isaw-papers/20-6/ <https://dlib.nyu.edu/awdl/isaw/isaw-papers/20-6/>`_
-
-.. [#diginuma] Rantala, H., Oksanen, E., Ehrnsten, F., and Hyvönen, E. 2022.
-   "Harmonizing and Using Numismatic Linked Data in Digital Humanities
-   Research and Application Development: Case DigiNUMA."
-   In *The Semantic Web: ESWC 2022 Satellite Events*, pp. 141-146.
-   Available at: `https://2022.eswc-conferences.org/wp-content/uploads/2022/05/pd_Rantala_et_al_paper_238.pdf <https://2022.eswc-conferences.org/wp-content/uploads/2022/05/pd_Rantala_et_al_paper_238.pdf>`_
-
-.. [#semantic-solutions] Hyvönen, E., Rantala, H., Oksanen, E., and
-   Ehrnsten, F. 2023. "Semantic Solutions for Democratizing
-   Archaeological and Numismatic Data."
-   *Journal on Computing and Cultural Heritage* 16(4).
-   doi:10.1145/3625302

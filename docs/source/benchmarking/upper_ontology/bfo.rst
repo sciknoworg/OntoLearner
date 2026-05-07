@@ -23,10 +23,10 @@
 Basic Formal Ontology (BFO)
 ========================================================================================================
 
-The Basic Formal Ontology (BFO) is a small, upper-level ontology that describes the basic types of entities in the world and how they relate to each other. BFO provides a rigorous, domain-neutral framework for organizing and integrating domain ontologies across scientific and technical disciplines. It distinguishes between continuants (entities that persist through time, such as objects and qualities) and occurrents (entities that unfold over time, such as processes and events), supporting precise modeling of reality. BFO is widely adopted in the biomedical, engineering, and environmental sciences as the upper ontology for the Open Biomedical Ontologies (OBO) Foundry and other ontology initiatives. Its formal structure enables automated reasoning, semantic interoperability, and data integration across heterogeneous knowledge bases. BFO is actively maintained and extended by an international community of ontology experts and is recognized as an ISO standard (ISO/IEC 21838-2:2021).
+The Basic Formal Ontology (BFO) is a small, upper-level ontology that describes the basic types of entities in the world and how they relate to each other [#bfo-github]_ [#bfo-obo]_. BFO provides a rigorous, domain-neutral framework for organizing and integrating domain ontologies across scientific and technical disciplines [#bfo-github]_. It distinguishes between continuants, which are entities that persist through time, such as objects and qualities, and occurrents, which are entities that unfold over time, such as processes and events, supporting precise modeling of reality [#bfo-github]_ [#bfo-obo]_. BFO is widely adopted in the biomedical, engineering, and environmental sciences and is used as the upper ontology for the Open Biomedical Ontologies (OBO) Foundry [#bfo-obo]_. Its formal structure supports automated reasoning, semantic interoperability, and data integration across heterogeneous knowledge bases [#bfo-github]_. BFO is actively maintained and extended by an international ontology community through the BFO project and the OBO Foundry ecosystem [#bfo-github]_ [#bfo-obo]_.
 
 **Example Usage**:
-Use BFO as the upper ontology for a biomedical ontology, classifying entities such as "cell" (object, continuant), "cell division" (process, occurrent), and "cell membrane" (object part), enabling semantic integration with other OBO ontologies.
+Use BFO as the upper ontology for a biomedical ontology, classifying entities such as ``cell`` as an object/continuant, ``cell division`` as a process/occurrent, and ``cell membrane`` as an object part. This enables semantic integration with other OBO ontologies that share the same upper-level structure [#bfo-obo]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bfo-github] BFO Ontology. n.d.
+   "Basic Formal Ontology (BFO)."
+   GitHub Repository.
+   Available at:
+   `https://github.com/bfo-ontology/bfo <https://github.com/bfo-ontology/bfo>`_
+
+.. [#bfo-obo] OBO Foundry. n.d.
+   "Basic Formal Ontology."
+   Available at:
+   `https://obofoundry.org/ontology/bfo.html <https://obofoundry.org/ontology/bfo.html>`_

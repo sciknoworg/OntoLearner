@@ -23,10 +23,28 @@
 Protein Modifications Ontology (PSIMOD)
 ========================================================================================================
 
-The Protein Modifications Ontology (PSIMOD) is a comprehensive ontology developed by the Proteomics Standards Initiative (PSI) to describe chemical modifications of proteins. It organizes protein modifications into a directed acyclic graph (DAG) structure, enabling hierarchical classification based on molecular structure or the modified amino acid residue. PSIMOD captures a wide range of protein modifications, including phosphorylation, acetylation, ubiquitination, and glycosylation, providing detailed descriptions of their chemical nature and biological significance. The ontology supports semantic annotation of proteomics datasets, facilitating data integration, analysis, and sharing across proteomics studies. By providing a standardized vocabulary, PSIMOD enhances the reproducibility and interoperability of proteomics research, enabling advanced queries and comparative analyses.
+The Protein Modifications Ontology (PSIMOD) is a comprehensive ontology
+developed by the Proteomics Standards Initiative (PSI) to describe
+chemical modifications of proteins [#psimod-paper]_ [#psimod-obo]_.
+It organizes protein modifications into a directed acyclic graph (DAG)
+structure, enabling hierarchical classification based on molecular
+structure or the modified amino acid residue [#psimod-paper]_
+[#psimod-obo]_. PSIMOD captures a wide range of protein modifications,
+including phosphorylation, acetylation, ubiquitination, and
+glycosylation, providing detailed descriptions of their chemical nature
+and biological significance [#psimod-paper]_ [#psimod-obo]_. The
+ontology supports semantic annotation of proteomics datasets,
+facilitating data integration, analysis, and sharing across proteomics
+studies [#psimod-paper]_ [#psimod-obo]_. By providing a standardized
+vocabulary, PSIMOD enhances the reproducibility and interoperability of
+proteomics research, enabling advanced queries and comparative analyses
+[#psimod-paper]_ [#psimod-obo]_.
 
-**Example Usage**:
-Annotate a proteomics dataset with PSIMOD terms to specify protein modifications, such as "PSI-MOD:00046 (phosphorylation)" or "PSI-MOD:00048 (acetylation)," and link these modifications to their respective biological pathways.
+**Example Usage**: Annotate a proteomics dataset with PSIMOD terms to
+specify protein modifications, such as phosphorylation or acetylation,
+and link these modifications to their relevant biological context,
+enabling standardized annotation, semantic querying, and cross-study
+comparison [#psimod-paper]_ [#psimod-obo]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +153,15 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+.. [#psimod-obo] OBO Foundry. n.d. "Protein Modification Ontology (MOD)."
+   Available at: `https://obofoundry.org/ontology/mod.html <https://obofoundry.org/ontology/mod.html>`_
+
+.. [#psimod-paper] Montecchi-Palazzi, L., Beavis, R., Binz, P.-A.,
+   Chalkley, R. J., Cottrell, J., Creasy, D., Shofstahl, J.,
+   Seymour, S. L., Garavelli, J. S., and Orchard, S. 2008.
+   "The PSI-MOD Community Standard for Representation of Protein
+   Modification Data."
+   *Nature Biotechnology* 26(8): 864-866.

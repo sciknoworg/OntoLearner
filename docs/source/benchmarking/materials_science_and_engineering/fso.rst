@@ -23,10 +23,12 @@
 Flow Systems Ontology (FSO)
 ========================================================================================================
 
-The Flow Systems Ontology (FSO) is a domain ontology developed to describe interconnected systems with material or energy flow connections and their components. FSO provides a structured vocabulary for representing flow systems, subsystems, flow paths, nodes, and the properties of materials or energy being transferred. The ontology supports semantic annotation of process engineering data, enabling interoperability, data integration, and advanced analysis in chemical engineering, energy systems, and process industries. FSO is designed for extensibility, allowing researchers and engineers to describe new flow system types, process configurations, and measurement techniques. By providing a standardized framework, FSO facilitates process modeling, simulation, optimization, and knowledge sharing across engineering domains. The ontology is actively maintained and extended to incorporate new concepts and requirements from the process engineering community.
+The Flow Systems Ontology (FSO) is a domain ontology developed to describe interconnected systems with material or energy flow connections and their components [#fso-doc]_ [#kukkonen2021]_. FSO provides a structured vocabulary for representing flow systems, components, distribution systems, supply systems, return systems, segments, terminals, storage devices, flow controllers, flow-moving devices, and treatment devices [#fso-doc]_.
+
+The ontology supports the description of system composition and mass or energy flows between systems and components, enabling semantic annotation, interoperability, data integration, and querying across building and engineering workflows [#kukkonen2021]_. FSO was proposed to support flow-system descriptions from design to operation of buildings and was demonstrated using example models and SPARQL queries [#kukkonen2021]_. By providing a standardized semantic framework, FSO supports process modelling, simulation, and knowledge sharing across flow-system-related engineering domains [#fso-doc]_ [#kukkonen2021]_.
 
 **Example Usage**:
-Annotate a chemical process simulation with FSO terms to specify the flow system structure, material streams, energy flows, and process units, enabling semantic search and integration with process engineering databases and simulation tools.
+Annotate a building or process-engineering model with FSO terms to specify flow-system structure, supply and return systems, components such as pumps, valves, ducts, pipes, terminals, and storage devices, and the material or energy flows between them. This enables semantic search, querying, and integration with building information modelling and engineering databases [#fso-doc]_ [#kukkonen2021]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#fso-doc] Kücükavci, A. n.d.
+   "Flow Systems Ontology."
+   Ontology documentation.
+   Available at:
+   `https://alikucukavci.github.io/FSO/ <https://alikucukavci.github.io/FSO/>`_
+
+.. [#kukkonen2021] Kukkonen, V., Kücükavci, A., Seidenschnur, M., Rasmussen, M. H., Smith, K. M., and Hviid, C. A. 2021.
+   "An ontology to support flow system descriptions from design to operation of buildings."
+   *Automation in Construction*, 134, Article 104067.
+   DOI: 10.1016/j.autcon.2021.104067.
+   Available at:
+   `https://doi.org/10.1016/j.autcon.2021.104067 <https://doi.org/10.1016/j.autcon.2021.104067>`_

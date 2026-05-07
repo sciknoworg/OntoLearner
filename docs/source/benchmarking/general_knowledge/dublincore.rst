@@ -25,10 +25,35 @@
 Dublin Core Vocabulary (DublinCore)
 ========================================================================================================
 
-The Dublin Core Schema is a small yet powerful vocabulary providing essential metadata elements for describing resources across diverse domains. Dublin Core Metadata can be used for multiple purposes including simple resource description, cross-standard metadata interoperability, and Linked Data cloud integration. It comprises fifteen core metadata elements (title, creator, subject, description, publisher, contributor, date, type, format, identifier, source, language, relation, coverage, rights) that are universally applicable across resource types. Dublin Core supports both simple and qualified metadata representation, enabling both basic and complex semantic annotation requirements. The vocabulary is language-independent and has become the de facto standard for resource description in digital libraries, institutional repositories, and data catalogs worldwide. Dublin Core facilitates semantic interoperability across heterogeneous information systems and enables automated resource discovery and management.
+The Dublin Core Schema is a compact but powerful metadata vocabulary for
+describing resources across diverse domains [#dublin-core]_
+[#dublin-core-paper]_. It provides a set of fifteen core metadata
+elements, including title, creator, subject, description, publisher,
+contributor, date, type, format, identifier, source, language, relation,
+coverage, and rights, which are broadly applicable to many types of
+resources [#dublin-core]_.
 
-**Example Usage**:
-Annotate a research dataset or publication with Dublin Core terms including title, creator (author), date, subject (keywords), description, format (data type), identifier (DOI/URL), and rights (license) to enable standardized discovery and citation across digital repositories.
+Dublin Core metadata can be used for simple resource description,
+cross-standard metadata interoperability, and resource discovery on the
+Internet [#dublin-core-paper]_. The vocabulary supports basic resource
+description using the Dublin Core Metadata Element Set and can be used
+in digital libraries, repositories, archives, government systems,
+scientific institutions, and business information systems
+[#dublin-core]_ [#dublin-core-paper]_.
+
+Dublin Core is language-independent and widely used for resource
+description and discovery across heterogeneous information systems
+[#dublin-core-paper]_. By providing standardized metadata terms, it
+supports semantic interoperability and enables automated resource
+discovery, citation, description, and management [#dublin-core]_
+[#dublin-core-paper]_.
+
+**Example Usage**: Annotate a research dataset or publication with
+Dublin Core terms such as title, creator, date, subject, description,
+format, identifier, and rights. This allows the resource to be discovered,
+cited, exchanged, and integrated across digital repositories and metadata
+systems using a common semantic description model [#dublin-core]_
+[#dublin-core-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,3 +162,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------------
+.. [#dublin-core] Dublin Core Metadata Initiative. 2020.
+   "Dublin Core Metadata Element Set, Version 1.1."
+   Available at:
+   `https://www.dublincore.org/documents/dces/ <https://www.dublincore.org/documents/dces/>`_
+
+.. [#dublin-core-paper] Sugimoto, S., Baker, T., and Weibel, S. L. 2002.
+   "Dublin Core: Process and Principles."
+   In *Digital Libraries: People, Knowledge, and Technology*,
+   ICADL 2002, Lecture Notes in Computer Science, vol. 2555,
+   pp. 25--35. Springer, Berlin, Heidelberg.
+   DOI:
+   `10.1007/3-540-36227-4_3 <https://doi.org/10.1007/3-540-36227-4_3>`_

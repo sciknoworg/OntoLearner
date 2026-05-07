@@ -23,10 +23,10 @@
 Friend of a Friend (FOAF)
 ========================================================================================================
 
-FOAF (Friend of a Friend) is a widely adopted ontology for describing people, their relationships, and the information that links them on the web. It provides a standardized vocabulary for representing personal profiles, social connections, organizations, projects, and online accounts. FOAF enables the creation of machine-readable social networks, supporting interoperability between social platforms, personal websites, and linked data applications. The ontology is designed for extensibility, allowing integration with other vocabularies and domain-specific ontologies. FOAF is used in digital identity management, social media analytics, and knowledge graph construction to enable semantic search, data integration, and discovery of social connections. By providing a common framework, FOAF facilitates the linking of people and information across the decentralized web.
+FOAF (Friend of a Friend) is a widely adopted RDF vocabulary for describing people, their relationships, and the information that links them on the Web [#foaf-spec]_ [#foaf-bioportal]_. It provides a standardized vocabulary for representing personal profiles, social connections, organizations, projects, documents, online accounts, and other related entities [#foaf-spec]_. FOAF enables the creation of machine-readable social networks, supporting interoperability between personal websites, social platforms, linked data applications, and knowledge graphs [#foaf-spec]_. The vocabulary is designed for extensibility and can be used together with other RDF vocabularies and domain-specific ontologies to describe richer social and identity-related data [#foaf-spec]_. FOAF is used in digital identity management, social data publishing, semantic search, and knowledge graph construction to support data integration and discovery of social connections [#foaf-spec]_ [#foaf-bioportal]_. By providing a common framework for describing people, agents, and their relationships, FOAF facilitates linking people and information across the decentralized Web [#foaf-spec]_.
 
 **Example Usage**:
-Annotate a personal website or social network profile with FOAF terms to describe a person's name, email, homepage, friends, and memberships in organizations, enabling semantic search and cross-platform social data integration.
+Annotate a personal website or social network profile with FOAF terms to describe a person's name, email, homepage, friends, online accounts, and memberships in organizations, enabling semantic search and cross-platform social data integration [#foaf-spec]_ [#foaf-bioportal]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#foaf-spec] Brickley, Dan, and Libby Miller. 2014.
+   "FOAF Vocabulary Specification 0.99."
+   Available at:
+   `https://xmlns.com/foaf/spec/ <https://xmlns.com/foaf/spec/>`_
+
+.. [#foaf-bioportal] NCBO BioPortal. 2019.
+   "Friend of a Friend Vocabulary."
+   Available at:
+   `https://bioportal.bioontology.org/ontologies/FOAF <https://bioportal.bioontology.org/ontologies/FOAF>`_

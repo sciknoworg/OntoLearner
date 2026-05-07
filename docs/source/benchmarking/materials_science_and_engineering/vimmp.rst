@@ -23,14 +23,12 @@
 Virtual Materials Marketplace Ontologies (VIMMP)
 ========================================================================================================
 
-The Virtual Materials Marketplace Ontologies (VIMMP) are developed as part of the Virtual Materials Marketplace project, which aims to provide an open platform for accessing services related to materials modeling. VIMMP employs a system of marketplace-level ontologies to characterize services, models, and interactions between users, using the European Materials and Modelling Ontology (EMMO) as a top-level ontology.
+The Virtual Materials Marketplace Ontologies (VIMMP) are a system of marketplace-level ontologies developed as part of the Virtual Materials Marketplace project [#vimmp-paper]_. The VIMMP project aims to provide an open platform for providing and accessing services related to materials modelling [#vimmp-paper]_. Within VIMMP, the ontologies are used to characterise services, models, and interactions between users, with the European Materials and Modelling Ontology (EMMO) employed as a top-level ontology [#vimmp-paper]_.
 
-The ontologies provide a structured vocabulary for describing services, models, and interactions, supporting both theoretical and experimental research in materials modeling. VIMMP ontologies enable the annotation of data stored in the ZONTAL Space component and support the ingest and retrieval of data and metadata at the VIMMP marketplace front-end.
-
-Typical applications of VIMMP include the development of new materials modeling services, the optimization of modeling workflows, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, VIMMP enhances collaboration and innovation in the field of materials modeling.
+The VIMMP ontologies support semantic annotation of marketplace data stored in the ZONTAL Space component and help with the ingest and retrieval of data and metadata at the VIMMP marketplace frontend [#vimmp-paper]_. By providing a structured semantic framework, the ontologies support interoperability, data management, knowledge sharing, and integration of materials modelling services and workflows [#vimmp-paper]_.
 
 **Example Usage**:
-Annotate a materials modeling project with VIMMP terms to specify service types, models, and interactions, enabling semantic search and integration with materials informatics platforms.
+Annotate a materials modelling project with VIMMP ontology terms to specify service types, models, simulation workflows, user interactions, and marketplace metadata, enabling semantic search and integration with materials modelling and marketplace platforms [#vimmp-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,13 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#vimmp-paper] Horsch, M. T., Chiacchiera, S., Seaton, M. A., Todorov, I. T., Šindelka, K., Lísal, M., Andreon, B., Bayro Kaiser, E., Mogni, G., Goldbeck, G., Kunze, R., Summer, G., Fiseni, A., Brüning, H., Schiffels, P., and Leite Cavalcanti, W. 2020.
+   "Ontologies for the Virtual Materials Marketplace."
+   arXiv:1912.01519.
+   DOI: 10.48550/arXiv.1912.01519.
+   Available at:
+   `https://arxiv.org/abs/1912.01519 <https://arxiv.org/abs/1912.01519>`_

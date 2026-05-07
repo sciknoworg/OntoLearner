@@ -23,10 +23,12 @@
 Crystallographic Information Framework Core Dictionary (CIFCore)
 ========================================================================================================
 
-The Crystallographic Information Framework Core Dictionary (CIFCore) is a domain ontology developed to provide a machine-actionable representation of data files covering various aspects of crystallography and related structural sciences. CIFCore explains the historical development of CIF dictionaries and demonstrates the handling of complex information types in crystallographic data. The ontology supports semantic annotation of crystallographic datasets, enabling interoperability, data integration, and advanced analysis in structural biology, materials science, and chemistry. CIFCore facilitates the standardized description of crystal structures, symmetry operations, atomic coordinates, and experimental conditions. By providing a comprehensive vocabulary, CIFCore supports data sharing, reproducibility, and computational modeling in crystallography research. The ontology is actively maintained and extended to incorporate new crystallographic concepts and data standards.
+The Crystallographic Information Framework Core Dictionary (CIFCore) is a machine-readable dictionary developed to represent core crystallographic data within the Crystallographic Information Framework (CIF) [#cifcore-iucr]_. It provides structured data names for archiving and exchanging raw data, processed data, and derived structural results in crystallography and related structural sciences [#cifcore-iucr]_.
+
+The CIF Ontology provides an ontological representation of the CIF Dictionary Definition Language (DDLm) and the IUCr CIF core dictionary, supporting semantic annotation and machine-actionable use of CIF data [#cif-ontology-github]_. CIFCore supports the standardized description of crystallographic information such as crystal structures, symmetry information, atomic coordinates, diffraction data, and experimental details [#cifcore-iucr]_ [#cif-ontology-github]_. By providing a structured vocabulary, CIFCore supports data exchange, validation, interoperability, reproducibility, and integration with crystallographic and structural databases [#cifcore-iucr]_ [#cif-ontology-github]_.
 
 **Example Usage**:
-Annotate a crystallographic dataset with CIFCore terms to specify crystal lattice parameters, atomic positions, symmetry groups, and experimental conditions, enabling semantic search and integration with structural databases.
+Annotate a crystallographic dataset with CIFCore terms to specify crystal lattice parameters, atomic positions, symmetry information, diffraction experiment details, and derived structural results, enabling semantic search, validation, and integration with structural databases [#cifcore-iucr]_ [#cif-ontology-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#cifcore-iucr] International Union of Crystallography. n.d.
+   "Core CIF dictionary."
+   Available at:
+   `https://www.iucr.org/resources/cif/dictionaries/cif_core <https://www.iucr.org/resources/cif/dictionaries/cif_core>`_
+
+.. [#cif-ontology-github] EMMO-repo. n.d.
+   "CIF Ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/CIF-ontology <https://github.com/emmo-repo/CIF-ontology>`_

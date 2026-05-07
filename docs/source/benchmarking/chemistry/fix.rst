@@ -25,9 +25,27 @@
 FIX Ontology (FIX)
 ========================================================================================================
 
-The FIX (Physico-Chemical Methods and Properties) Ontology provides a systematic vocabulary for describing and classifying physico-chemical methods and their associated properties. It represents analytical and experimental techniques used in chemistry and materials science, including measurement methods, analytical procedures, and the physical and chemical properties they determine. The ontology captures relationships between methods and properties, enabling precise description of experimental workflows and results in laboratory and industrial settings. It supports semantic interoperability in chemistry databases, laboratory information systems (LIMS), and scientific data repositories.
+The FIX (Physico-Chemical Methods and Properties) Ontology provides a
+systematic vocabulary for describing and classifying physico-chemical
+methods and their associated properties [#fix-context]_. It represents
+analytical and experimental techniques used in chemistry and materials
+science, including measurement methods, analytical procedures, and the
+physical and chemical properties they determine [#fix-context]_. In the
+broader chemistry ontology landscape, FIX is related to ontologies such
+as ChEBI, which provides a comprehensive classification of chemical
+entities and their roles [#fix-context]_ [#chebi-paper]_. The ontology
+captures relationships between methods and properties, enabling precise
+description of experimental workflows and results in laboratory and
+industrial settings [#fix-context]_. It supports semantic
+interoperability in chemistry databases, laboratory information systems,
+and scientific data repositories [#fix-context]_.
 
-**Example Usage**: Represent a mass spectrometry measurement as an instance of FIX:AnalyticalMethod linked to FIX:ChemicalProperty instances such as molecular weight or compound identification.
+**Example Usage**: Represent a mass spectrometry measurement as an
+instance of a FIX analytical method linked to chemical property terms
+such as molecular weight or compound identification, and connect the
+measured substance to a ChEBI chemical entity to support semantic
+integration and structured querying of experimental results
+[#fix-context]_ [#chebi-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +154,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#fix-context] NFDI4Chem Knowledge Base. n.d. "Ontology."
+   Available at:
+   `https://knowledgebase.nfdi4chem.de/knowledge_base/docs/ontology/ <https://knowledgebase.nfdi4chem.de/knowledge_base/docs/ontology/>`_
+
+.. [#chebi-paper] Degtyarenko, K., de Matos, P., Ennis, M., Hastings, J.,
+   Zbinden, M., McNaught, A., Alcántara, R., Darsow, M., Guedj, M.,
+   and Ashburner, M. 2008. "ChEBI: A Database and Ontology for Chemical
+   Entities of Biological Interest."
+   *Nucleic Acids Research* 36(Database issue): D344-D350.
+   doi:10.1093/nar/gkm791
+   Available at:
+   `https://pubmed.ncbi.nlm.nih.gov/17932057/ <https://pubmed.ncbi.nlm.nih.gov/17932057/>`_

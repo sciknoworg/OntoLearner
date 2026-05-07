@@ -23,10 +23,12 @@
 EMMO-based ontology for microstructures (MicroStructures)
 ========================================================================================================
 
-The EMMO-based ontology for microstructures (MicroStructures) is a domain ontology designed to represent metallic microstructures, including their composition, particles (both stable and metastable), grains, subgrains, grain boundaries, particle free zones (PFZs), texture, and dislocations. The ontology provides a structured vocabulary for describing microstructure features, supporting both microstructure modeling and experimental characterization. MicroStructures enables semantic annotation of microstructural data, facilitating interoperability, data integration, and advanced analysis in materials science and engineering. The ontology is designed for extensibility, allowing researchers to describe new microstructure types, characterization techniques, and material systems. By providing a standardized framework, MicroStructures supports cross-study comparison, microstructure-property correlation, and knowledge sharing in materials research. The ontology is actively maintained and extended to incorporate new concepts and requirements from the materials science community.
+The EMMO-based ontology for microstructures (MicroStructures) is a domain ontology designed to represent metallic microstructures and related materials science concepts [#microstructures-emmc]_. It provides a structured framework for describing microstructure information, including microstructure features, materials, properties, processes, characterisation data, and modelling workflows [#microstructures-emmc]_.
+
+MicroStructures supports semantic annotation and integration of microstructural data, helping connect experimental characterisation, data processing, and through-scale or through-process modelling in materials science [#microstructures-emmc]_. By providing an EMMO-based framework, it supports interoperability, knowledge sharing, and more consistent representation of microstructure-related information across research and engineering workflows [#microstructures-emmc]_.
 
 **Example Usage**:
-Annotate a microstructure characterization dataset with MicroStructures terms to specify grain size distribution, particle types, texture, and dislocation density, enabling semantic search and integration with materials databases and modeling tools.
+Annotate a microstructure characterisation dataset with MicroStructures terms to describe microstructure features, material properties, characterisation results, processing history, and modelling information, enabling semantic search and integration with materials databases and modelling tools [#microstructures-emmc]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+---------
+
+.. [#microstructures-emmc] European Materials Modelling Council. 2024.
+   "TG Microstructure domain ontology."
+   Available at:
+   `https://emmc.eu/tg-microstructure-domain-ontology/ <https://emmc.eu/tg-microstructure-domain-ontology/>`_

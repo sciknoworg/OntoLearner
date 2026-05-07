@@ -23,10 +23,10 @@
 Suggested Upper Merged Ontology (SUMO)
 ========================================================================================================
 
-The Suggested Upper Merged Ontology (SUMO) is one of the largest and most widely used formal upper ontologies, providing a comprehensive framework for representing general concepts and relationships across all domains of knowledge. SUMO and its domain ontologies are used for research and applications in search, linguistics, automated reasoning, and artificial intelligence. SUMO is unique in being formally mapped to the entire WordNet lexicon, enabling semantic integration between natural language and formal knowledge representation. The ontology covers abstract and concrete entities, processes, attributes, relations, and events, supporting logical inference and knowledge discovery. SUMO is open source and maintained by an active community, with ongoing extensions and domain-specific modules for specialized applications. By providing a rigorous semantic foundation, SUMO facilitates interoperability, data integration, and advanced reasoning in knowledge-based systems.
+The Suggested Upper Merged Ontology (SUMO) is one of the largest and most widely used formal upper ontologies, providing a comprehensive framework for representing general concepts and relationships across many domains of knowledge [#sumo-github]_ [#sumo-paper]_. SUMO and its domain ontologies are used for research and applications in search, linguistics, automated reasoning, semantic interoperability, and artificial intelligence [#sumo-paper]_. The ontology covers abstract and concrete entities, processes, attributes, relations, and events, supporting logical inference and knowledge discovery [#sumo-github]_ [#sumo-paper]_. SUMO is open source and maintained through the Ontology Portal project, with ongoing extensions and domain-specific modules for specialized applications [#sumo-github]_. By providing a rigorous semantic foundation, SUMO facilitates interoperability, data integration, and advanced reasoning in knowledge-based systems [#sumo-paper]_.
 
 **Example Usage**:
-Use SUMO as the upper ontology for a knowledge graph, mapping domain-specific concepts (e.g., "vehicle," "disease," "financial transaction") to SUMO classes and leveraging its logical axioms for automated reasoning and semantic search.
+Use SUMO as an upper ontology for a domain knowledge graph, mapping domain entities such as ``Vehicle``, ``Process``, ``Agent``, or ``Communication`` to SUMO classes and relations. This enables logical reasoning, semantic search, knowledge discovery, and integration across heterogeneous knowledge-based systems [#sumo-github]_ [#sumo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#sumo-github] Ontology Portal. n.d.
+   "SUMO: Suggested Upper Merged Ontology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/ontologyportal/sumo <https://github.com/ontologyportal/sumo>`_
+
+.. [#sumo-paper] Pease, Adam, Ian Niles, and John Li. 2002.
+   "The Suggested Upper Merged Ontology: A Large Ontology for the Semantic Web and its Applications."
+   *AAAI Workshop on Ontologies and the Semantic Web*.
+   Available at:
+   `https://cdn.aaai.org/Workshops/2002/WS-02-11/WS02-11-011.pdf <https://cdn.aaai.org/Workshops/2002/WS-02-11/WS02-11-011.pdf>`_

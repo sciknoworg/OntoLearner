@@ -25,9 +25,9 @@
 The Description of a Project vocabulary (DOAP)
 ========================================================================================================
 
-The Description of a Project (DOAP) vocabulary is an RDF/OWL-based ontology for machine-readable description of software projects, particularly open source initiatives. It models core project entities such as Project, Person, Revision, Repository, and License, capturing essential metadata about software development and distribution. DOAP enables representation of project attributes including name, description, homepage, version control systems (Git, SVN), issue tracking systems, programming languages, release history, and developer/maintainer information. The vocabulary facilitates integration of project data across diverse repositories, forges, and development platforms, supporting automated project discovery, dependency analysis, and ecosystem mapping. DOAP enables research on software development practices, project evolution, and open source community dynamics through structured, interoperable metadata.
+The Description of a Project (DOAP) vocabulary is an RDF/OWL-based ontology for machine-readable description of software projects, particularly open source initiatives [#doap-github]_. It models core project entities such as ``Project``, ``Person``, ``Revision``, ``Repository``, and ``License``, capturing essential metadata about software development and distribution [#doap-github]_. DOAP enables representation of project attributes including name, description, homepage, version control systems, issue tracking systems, programming languages, release history, and developer or maintainer information [#doap-github]_. The vocabulary facilitates integration of project data across diverse repositories, forges, and development platforms, supporting automated project discovery, dependency analysis, and ecosystem mapping [#doap-github]_. DOAP enables research on software development practices, project evolution, and open source community dynamics through structured, interoperable metadata [#doap-github]_.
 
-**Example Usage**: Describe an open source project with DOAP properties like foaf:name (project name), doap:repository (code repository URL), doap:programming-language (Python), doap:maintainer (developer agent), and doap:license (CC0 or Apache 2.0).
+**Example Usage**: Describe an open source project with DOAP properties such as ``foaf:name`` for the project name, ``doap:repository`` for the code repository URL, ``doap:programming-language`` for the implementation language, ``doap:maintainer`` for the developer or maintainer agent, and ``doap:license`` for the project license [#doap-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +136,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#doap-github] DOAP Contributors. n.d.
+   "DOAP: Description Of A Project."
+   GitHub Repository.
+   Available at:
+   `https://github.com/ewilderj/doap <https://github.com/ewilderj/doap>`_

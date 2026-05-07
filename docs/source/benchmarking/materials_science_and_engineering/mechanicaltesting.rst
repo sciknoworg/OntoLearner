@@ -23,14 +23,12 @@
 Mechanical Testing Ontology (MechanicalTesting)
 ========================================================================================================
 
-The Mechanical Testing Ontology (MechanicalTesting) is a domain ontology developed to represent knowledge in the field of mechanical testing, based on the Elementary Multiperspective Material Ontology (EMMO). It provides a structured vocabulary for describing mechanical testing methods, equipment, and results, supporting both experimental and computational research in materials science.
+The Mechanical Testing Ontology (MechanicalTesting) is a domain ontology developed to represent knowledge in the field of mechanical testing and is built on top of the Elementary Multiperspective Material Ontology (EMMO) [#mechanicaltesting-github]_ [#morgado2020]_. It provides a structured vocabulary for describing mechanical testing concepts, supporting semantic representation of experiments, models, software, and data in materials science [#morgado2020]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of mechanical tests, equipment, and results, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MechanicalTesting supports the integration of data from experimental studies and simulations, promoting interoperability and data-driven research in mechanical testing.
-
-Typical applications of MechanicalTesting include the development of new testing methods, the optimization of testing procedures, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MechanicalTesting enhances collaboration and innovation in the field of mechanical testing.
+The ontology supports semantic annotation, data integration, interoperability, and sharing of mechanical-testing information across materials science workflows [#mechanicaltesting-github]_ [#morgado2020]_. It is described as an EMMO-based domain ontology and was developed as part of efforts to create EMMO-compliant domain ontologies for materials science [#mechanicaltesting-github]_ [#morgado2020]_. By providing a standardized semantic framework, MechanicalTesting supports knowledge representation, data retrieval, and reuse in mechanical testing and digital-twin-related applications [#morgado2020]_.
 
 **Example Usage**:
-Annotate a mechanical testing dataset with MechanicalTesting terms to specify test types, equipment, and results, enabling semantic search and integration with materials informatics platforms.
+Annotate a mechanical testing dataset with MechanicalTesting terms to specify mechanical testing methods, experiment-related information, test data, models, software, and results, enabling semantic search and integration with materials informatics platforms [#mechanicaltesting-github]_ [#morgado2020]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#mechanicaltesting-github] EMMO-repo. n.d.
+   "Domain: mechanical-testing."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/domain-mechanical-testing <https://github.com/emmo-repo/domain-mechanical-testing>`_
+
+.. [#morgado2020] Morgado, J. F., Ghedini, E., Goldbeck, G., Hashibon, A., Schmitz, G. J., Friis, J., and de Baas, A. F. 2020.
+   "Mechanical testing ontology for digital-twins: A roadmap based on EMMO."
+   *International Workshop on Semantic Digital Twins (SeDiT 2020)*.
+   Available at:
+   `https://publica.fraunhofer.de/entities/publication/cda015f5-a194-4e82-8b5f-cba29b43cf5b <https://publica.fraunhofer.de/entities/publication/cda015f5-a194-4e82-8b5f-cba29b43cf5b>`_

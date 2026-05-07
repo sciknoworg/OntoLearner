@@ -25,9 +25,30 @@
 Conference Ontology (Conference)
 ========================================================================================================
 
-The Conference Ontology is a self-contained ontology for modeling conferences, workshops, and related scholarly events. It captures core entities (events, organizers, venues, sessions, papers, posters, and participants) and their relationships, allowing structured representation of program schedules, affiliations, and scholarly communications around conferences. Designed following ontology design patterns and reuse principles, it reuses established vocabularies (e.g., FOAF, BIBO, schema.org) where appropriate and interlinks with the SWC (Semantic Web Conference) ontology to ensure interoperability. The ontology models temporal and spatial aspects (start/end times, room assignments), roles and responsibilities (chairs, speakers, reviewers), and provenance metadata (submission dates, acceptance decisions). Typical applications include conference management systems, semantic search of proceedings, program generation, and linking publications to presentation metadata.
+The Conference Ontology is a self-contained ontology for modeling
+conferences, workshops, and related scholarly events
+[#conference-onto]_ [#conference-paper]_. It captures core entities
+such as events, organizers, venues, sessions, papers, posters, and
+participants, together with their relationships, enabling structured
+representation of program schedules, affiliations, and scholarly
+communications around conferences [#conference-onto]_
+[#conference-paper]_. Designed following ontology design patterns and
+reuse principles, it reuses established vocabularies where appropriate
+and interlinks with the Semantic Web Conference ontology to support
+interoperability [#conference-paper]_ [#conference-onto]_. The ontology
+models temporal and spatial aspects, roles and responsibilities, and
+provenance-related information relevant to conference organization and
+scholarly communication [#conference-onto]_ [#conference-paper]_. It
+supports applications such as conference management systems, semantic
+search of proceedings, program generation, and linking publications to
+presentation metadata [#conference-onto]_ [#conference-paper]_.
 
-**Example usage**: represent a conference session as an Event with start/end times, linked to a Room (Venue), containing multiple Talk instances each linked to Speaker agents and associated Paper resources. The ontology supports export to RDF/OWL and integration with digital libraries, repositories, and research discovery services.
+**Example Usage**: Represent a conference session as an event with
+start and end times, linked to a room or venue, and containing multiple
+talk instances that are connected to speaker agents and associated
+paper resources, enabling RDF/OWL-based integration with digital
+libraries, repositories, and research discovery services
+[#conference-onto]_ [#conference-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +157,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#conference-onto] scholarlydata.org. n.d. "The Conference Ontology."
+   Available at:
+   `https://www.scholarlydata.org/ontology/doc/ <https://www.scholarlydata.org/ontology/doc/>`_
+
+.. [#conference-paper] Nuzzolese, A. G., Gentile, A. L.,
+   Presutti, V., and Gangemi, A. 2016.
+   "Semantic Web Conference Ontology - A Refactoring Solution."
+   In *The Semantic Web: ESWC 2016 Satellite Events*,
+   Lecture Notes in Computer Science 9989, pp. 84-87.
+   doi:10.1007/978-3-319-47602-5_18

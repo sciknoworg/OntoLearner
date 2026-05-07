@@ -23,14 +23,14 @@
 Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)
 ========================================================================================================
 
-The FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) initiative is a joint effort of the CIDOC Conceptual Reference Model and Functional Requirements for Bibliographic Records international working groups to establish a formal ontology intended to capture and represent the underlying semantics of bibliographic information and to facilitate the integration, mediation, and interchange of bibliographic and museum information. It provides a structured vocabulary for representing bibliographic records, concepts, and relationships, supporting both theoretical and experimental research in bibliographic information management.
+FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) is a formal ontology developed through the harmonization of the FRBR family of bibliographic conceptual models with the CIDOC Conceptual Reference Model (CIDOC CRM) [#frbroo-cidoc]_ [#frbroo-ifla]_. It is intended to capture and represent the underlying semantics of bibliographic information and to facilitate the integration, mediation, and interchange of bibliographic and museum information [#frbroo-cidoc]_. FRBRoo provides an object-oriented conceptual model for representing bibliographic entities, works, expressions, manifestations, items, agents, creation processes, publication events, identifiers, and relationships between cultural heritage resources [#frbroo-ifla]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of bibliographic records, concepts, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. FRBRoo supports the integration of data from various sources, promoting interoperability and data-driven research in bibliographic information management.
+The ontology reuses appropriate parts of CIDOC CRM and maps the entity-relationship models of the FRBR family into an object-oriented form [#frbroo-cidoc]_. This allows bibliographic information to be modeled together with museum and cultural heritage information using a shared semantic framework [#frbroo-cidoc]_ [#frbroo-ifla]_. FRBRoo supports semantic interoperability by making the structure and meaning of bibliographic records more explicit, enabling richer querying, reasoning, data mediation, and integration across library, archive, and museum systems [#frbroo-cidoc]_.
 
-Typical applications of FRBRoo include the development of new bibliographic information management methods, the optimization of bibliographic record management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, FRBRoo enhances collaboration and innovation in the field of bibliographic information management.
+Typical applications of FRBRoo include bibliographic data modeling, cultural heritage knowledge graphs, library and museum data integration, semantic cataloging, authority data linking, and interoperability between bibliographic and museum information systems [#frbroo-ifla]_. By providing a formal ontology aligned with CIDOC CRM, FRBRoo supports the exchange, interpretation, and reuse of bibliographic and cultural heritage metadata across heterogeneous repositories [#frbroo-cidoc]_ [#frbroo-ifla]_.
 
 **Example Usage**:
-Annotate a bibliographic record with FRBRoo terms to specify record types, concepts, and relationships, enabling semantic search and integration with bibliographic information management platforms.
+Annotate a bibliographic record with FRBRoo terms to represent a literary work, its expressions, manifestations, physical items, creators, publication events, identifiers, and relationships to museum or archival objects. This enables semantic search, cultural heritage data integration, and cross-domain discovery across library and museum information systems [#frbroo-cidoc]_ [#frbroo-ifla]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#frbroo-cidoc] International Working Group on FRBR and CIDOC CRM Harmonisation. 2015.
+   "Definition of Object-Oriented FRBR."
+   Available at:
+   `https://cidoc-crm.org/sites/default/files/FRBRoo_V3.0.pdf <https://cidoc-crm.org/sites/default/files/FRBRoo_V3.0.pdf>`_
+
+.. [#frbroo-ifla] IFLA. n.d.
+   "FRBRoo model."
+   Available at:
+   `https://www.iflastandards.info/fr/frbr/frbroo.html <https://www.iflastandards.info/fr/frbr/frbroo.html>`_

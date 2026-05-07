@@ -25,10 +25,32 @@
 Relation Ontology (RO)
 ========================================================================================================
 
-The Relations Ontology (RO) is a comprehensive collection of formally defined OWL object properties designed for standardized representation of relationships across diverse biological ontologies. It provides a curated set of relations (part-of, derives-from, has-participant, immediately-precedes, etc.) with precise logical definitions ensuring semantic consistency across different biological knowledge domains. RO is built on foundational principles of formal ontology, ensuring that relations are unambiguous, logically sound, and applicable across multiple biological contexts. The ontology serves as the standard relation vocabulary for Open Biomedical Ontologies (OBO), enabling interoperable knowledge representation in genomics, proteomics, anatomy, and other life sciences. RO enables automated reasoning about biological entities and their complex relationships, supporting knowledge integration and discovery in biomedical research. The ontology is maintained collaboratively and has become the de facto standard for biological relationship representation in the semantic web community.
+The Relation Ontology (RO) is an ontology of formally defined relations
+used to standardize how relationships are represented across biological
+and biomedical ontologies [#ro-home]_. Rather than modeling a complete
+biological domain by itself, RO provides reusable relation terms such as
+part of, has part, develops from, derives from, has participant, and
+precedes [#ro-home]_.
 
-**Example Usage**:
-Define relationships in a biological ontology such as "protein A is part of complex B", "gene A has function X", or "disease A derives from mutation in gene B" using RO relations to enable automated reasoning about biological systems.
+RO is designed to make relational statements in ontologies more precise,
+consistent, and logically interpretable [#ro-home]_. These relations help
+ontology developers represent spatial, temporal, developmental, causal,
+and participatory connections between entities in a standardized way
+[#ro-home]_.
+
+The ontology is widely used within the OBO ontology ecosystem as a shared
+relation vocabulary for biological and biomedical ontologies [#ro-home]_.
+By reusing RO relations, ontologies in domains such as anatomy, genomics,
+development, disease, and biological processes can remain interoperable
+and support automated reasoning across datasets and knowledge graphs
+[#ro-home]_.
+
+**Example Usage**: Define relationships in a biological ontology, such as
+a protein being part of a protein complex, an anatomical structure
+developing from another structure, or a biological process having a
+participant. Using RO relations makes these statements consistent across
+different ontologies and supports reasoning over biological knowledge
+[#ro-home]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,3 +159,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#ro-home] OBO Relation Ontology. n.d.
+   "OBO Relation Ontology."
+   Available at:
+   `https://oborel.github.io/ <https://oborel.github.io/>`_

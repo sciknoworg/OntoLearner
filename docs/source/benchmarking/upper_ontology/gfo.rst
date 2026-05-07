@@ -23,10 +23,10 @@
 General Formal Ontology (GFO)
 ========================================================================================================
 
-The General Formal Ontology (GFO) is a top-level, foundational ontology developed by Onto-Med for conceptual modeling across scientific, technical, and philosophical domains. GFO provides a rigorous framework for representing fundamental categories such as objects, processes, time, space, properties, relations, roles, functions, facts, and situations. It is designed to support the integration of material, mental, and social entities by incorporating the notion of levels of reality, enabling nuanced modeling of complex systems. GFO is modular and extensible, allowing domain ontologies to build upon its core categories for specialized applications. The ontology is used in knowledge engineering, biomedical informatics, cognitive science, and information systems to ensure semantic interoperability and logical consistency. GFO is actively maintained and extended to address emerging requirements in conceptual modeling and ontology integration.
+The General Formal Ontology (GFO) is a top-level foundational ontology developed for conceptual modeling across scientific, technical, and philosophical domains [#gfo-github]_ [#gfo-paper]_. GFO provides a rigorous framework for representing fundamental categories such as objects, processes, time, space, properties, relations, roles, functions, facts, and situations [#gfo-github]_. It is designed to support the integration of material, mental, and social entities by incorporating the notion of levels of reality, enabling nuanced modeling of complex systems [#gfo-paper]_. GFO is modular and extensible, allowing domain ontologies to build upon its core categories for specialized applications [#gfo-github]_ [#gfo-paper]_. The ontology is used in knowledge engineering, biomedical informatics, cognitive science, and information systems to support semantic interoperability and logical consistency [#gfo-paper]_. GFO is maintained as an ontology resource through the Onto-Med GitHub repository and continues to support conceptual modeling and ontology integration work [#gfo-github]_.
 
 **Example Usage**:
-Use GFO as the upper ontology for a biomedical ontology, classifying entities such as "disease" (situation), "patient" (object), and "treatment process" (process), enabling semantic integration and reasoning across clinical and research data.
+Use GFO as the upper ontology for a biomedical ontology, classifying entities such as ``disease`` as a situation, ``patient`` as an object, and ``treatment process`` as a process, enabling semantic integration and reasoning across clinical and research data [#gfo-github]_ [#gfo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+.. [#gfo-github] Onto-Med. n.d.
+   "GFO: The General Formal Ontology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/Onto-Med/GFO <https://github.com/Onto-Med/GFO>`_
+
+.. [#gfo-paper] Loebe, Frank, Patryk Burek, and Heinrich Herre. 2022.
+   "GFO: The General Formal Ontology."
+   *Applied Ontology*.
+   DOI:
+   `10.3233/AO-220264 <https://doi.org/10.3233/AO-220264>`_

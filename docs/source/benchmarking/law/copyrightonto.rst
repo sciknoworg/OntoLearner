@@ -25,13 +25,34 @@
 Copyright Ontology (CopyrightOnto)
 ========================================================================================================
 
-The Copyright Ontology formalizes the copyright domain to support automated and computer-assisted management of rights, permissions, and obligations across the entire content value chain rather than focusing solely on end-user permissions. It models core legal and business entities such as Works, Authors/Rightsholders, Rights and Permissions, Licenses, Contracts, Transactions, Agents, and Provenance. The ontology captures temporal and jurisdictional dimensions of rights (grant periods, territorial scopes), the lifecycle of rights transfers and assignments, and links between digital artefacts and their legal metadata.
+The Copyright Ontology (CopyrightOnto) is an OWL/RDF ontology for
+representing the copyright domain in a machine-processable way in order
+to facilitate automated or computer-supported copyright management
+through the whole content value chain, rather than focusing only on
+end-user permissions [#copyright-repo]_ [#copyright-paper]_. The project
+describes the ontology as a Web Ontology implemented using W3C standards
+such as RDF and OWL, and organizes the domain into three main parts:
+the **Creation Model**, **Rights Model**, and **Actions Model**
+[#copyright-repo]_. These models are intended to capture how creations
+appear across their lifecycle, which actions can be performed on them,
+and which legal rights or constraints regulate those actions
+[#copyright-repo]_ [#copyright-jis]_.
 
-Key characteristics include an emphasis on provenance and traceability (who granted which right, when, and under what conditions), expressivity for different permission types (reproduction, distribution, modification), and support for linking to external vocabularies (e.g., dcterms for metadata, FOAF/ORCID for agents, and license URIs such as Creative Commons). Its structure is suitable for encoding both normative legal information and operational licensing metadata used in publishing platforms, rights registries, and DRM-aware systems.
+The ontology has been presented in the context of semantic digital
+rights management and copyright-aware copyright management systems,
+including support for interoperable licensing and contract-related
+representations [#copyright-paper]_ [#copyright-contracts]_. This makes
+it suitable for applications such as automated rights clearance, license
+management, provenance-aware content workflows, and machine-readable
+reuse analysis in publishing, repositories, and digital content
+platforms [#copyright-joir]_ [#copyright-jis]_.
 
-Typical applications are automated rights clearance, license management, tracking provenance of digital content, and enabling marketplaces and repositories to reason about reuse conditions.
-
-**Example Usage**: describe a digital artwork as a CopyrightOnto Work with associated Rights statements linking to a License URI, a Rightsholder Agent, and validity dates to support automated permission checks.
+**Example Usage**: Describe a digital artwork as a CopyrightOnto
+creation/work entity, associate it with a rightsholder, connect it to
+the relevant rights or license statements, and attach temporal or legal
+constraints so that downstream systems can perform automated permission
+checks and copyright-aware reuse analysis [#copyright-repo]_
+[#copyright-joir]_.
 
 Metrics & Statistics
 --------------------------
@@ -140,3 +161,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#copyright-repo] Rhizomik. n.d. "CopyrightOnto - Copyright Ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/rhizomik/copyrightonto <https://github.com/rhizomik/copyrightonto>`_
+
+.. [#copyright-jis] García, R., Celma, Ò., and Gil, R. 2009.
+   "Content Value Chains Modelling using a Copyright Ontology."
+   Available at:
+   `https://rhizomik.net/html/~roberto/papers/rg-jis09.pdf <https://rhizomik.net/html/~roberto/papers/rg-jis09.pdf>`_

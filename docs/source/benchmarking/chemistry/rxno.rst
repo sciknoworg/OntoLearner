@@ -23,10 +23,26 @@
 Reaction Ontology (RXNO)
 ========================================================================================================
 
-The Reaction Ontology (RXNO) is a specialized ontology that provides a comprehensive vocabulary for representing organic chemical reactions. It includes over 500 classes that describe named reactions, such as the Diels–Alder cyclization, and their associated mechanisms. RXNO enables the semantic annotation of chemical reaction data, facilitating data sharing, integration, and advanced querying in cheminformatics and organic chemistry research. By standardizing the representation of chemical reactions, RXNO supports the development of reaction databases, computational chemistry tools, and automated synthesis planning systems. The ontology also captures relationships between reactions, reactants, products, and catalysts, enabling detailed modeling of reaction networks.
+The Reaction Ontology (RXNO) is a specialized ontology that provides a
+comprehensive vocabulary for representing organic chemical reactions
+[#rxno-obo]_ [#rxno-repo]_. It includes classes that describe named
+reactions, such as the Diels–Alder cyclization, and their associated
+roles in organic synthesis [#rxno-obo]_ [#rxno-repo]_. RXNO enables the
+semantic annotation of chemical reaction data, facilitating data
+sharing, integration, and advanced querying in cheminformatics and
+organic chemistry research [#rxno-obo]_ [#rxno-repo]_. By standardizing
+the representation of chemical reactions, RXNO supports the development
+of reaction databases, computational chemistry tools, and automated
+synthesis planning systems [#rxno-obo]_ [#rxno-repo]_. The ontology
+also captures relationships between reactions and related molecular
+processes, enabling more detailed modeling of reaction knowledge
+[#rxno-obo]_ [#rxno-repo]_.
 
-**Example Usage**:
-Annotate a reaction database with RXNO terms to specify reaction types, such as "RXNO:000001 (Diels–Alder reaction)," and link these reactions to their reactants, products, and catalysts.
+**Example Usage**: Annotate a reaction database with RXNO terms to
+specify reaction types, such as a Diels–Alder reaction, and link these
+reactions to related reaction information to support semantic search,
+integration, and comparison across chemical reaction datasets
+[#rxno-obo]_ [#rxno-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +151,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#rxno-obo] OBO Foundry. n.d. "Name Reaction Ontology."
+   Available at: `https://obofoundry.org/ontology/rxno.html <https://obofoundry.org/ontology/rxno.html>`_
+
+.. [#rxno-repo] Royal Society of Chemistry. n.d. "RXNO: reaction ontologies."
+   Available at: `https://github.com/rsc-ontology/rxno <https://github.com/rsc-ontology/rxno>`_

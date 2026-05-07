@@ -25,9 +25,28 @@
 PROcess Chemistry Ontology (PROCO)
 ========================================================================================================
 
-PROCO (PROcess Chemistry Ontology) is a formal ontology that standardizes representation of entities, relationships, and processes in process chemistry and chemical manufacturing. It provides comprehensive vocabulary for describing chemical reactions, reaction conditions, reactants, products, catalysts, and process equipment used in industrial and laboratory chemical processes. PROCO captures essential process chemistry concepts including reaction parameters (temperature, pressure, time, stirring), process steps (mixing, heating, separation), material flows, and safety-critical information for chemical synthesis. The ontology enables semantic interoperability across chemical engineering databases, laboratory information management systems (LIMS), and process simulation tools by providing explicit, unambiguous definitions. PROCO supports knowledge integration and reasoning in process chemistry research, enabling automated workflow design, process optimization, and risk assessment.
+PROCO (PROcess Chemistry Ontology) is a formal ontology developed to
+standardize the representation of entities, relationships, and
+processes in process chemistry and chemical manufacturing
+[#proco-paper]_ [#proco-bioportal]_. It provides a structured
+vocabulary for describing chemical reactions, reactants, products,
+catalysts, reaction conditions, and process steps used in laboratory
+and industrial chemistry workflows [#proco-paper]_ [#proco-bioportal]_.
+The ontology captures important process chemistry concepts such as
+temperature, pressure, time, stirring, solvents, workup operations, and
+other process-related information needed for detailed representation of
+chemical synthesis workflows [#proco-paper]_ [#proco-bioportal]_.
+By providing explicit and machine-interpretable definitions, PROCO
+supports semantic interoperability, data integration, and reasoning
+across process chemistry databases, laboratory information systems, and
+process development workflows [#proco-paper]_ [#proco-bioportal]_.
 
-**Example Usage**: Represent a multi-step synthesis process with PROCO terms for each reaction step including reactants, reaction conditions (temperature and pressure ranges), catalysts, solvents, workup procedures, and desired products with yield information.
+**Example Usage**: Represent a multi-step synthesis process with PROCO
+terms for each reaction step, including reactants, catalysts, solvents,
+reaction conditions such as temperature and pressure, workup procedures,
+and desired products with yield information, enabling semantic
+integration, process comparison, and automated reasoning across process
+chemistry datasets [#proco-paper]_ [#proco-bioportal]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +155,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#proco-bioportal] NCBO BioPortal. n.d. "Process Chemistry Ontology (PROCO)."
+   Available at:
+   `https://bioportal.bioontology.org/ontologies/PROCO <https://bioportal.bioontology.org/ontologies/PROCO>`_
+
+.. [#proco-paper] Schafer, W. A., Dance, Z. E., Dun, A. L., and He, Y. 2022.
+   "Collaborative Development of a Process Chemistry Ontology."
+   In *Proceedings of the International Conference on Biomedical Ontology (ICBO 2022)*.
+   CEUR Workshop Proceedings.
+   Available at:
+   `https://ceur-ws.org/Vol-3805/ICBO-2022_paper_4112.pdf <https://ceur-ws.org/Vol-3805/ICBO-2022_paper_4112.pdf>`_

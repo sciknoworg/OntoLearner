@@ -25,10 +25,34 @@
 Schema.org Ontology (SchemaOrg)
 ========================================================================================================
 
-Schema.org is a collaborative, community-driven initiative providing standardized schemas and ontologies for structured data markup across the entire web. It creates and maintains comprehensive vocabularies that enable webmasters, content creators, and developers to annotate web pages, email messages, and other digital resources with machine-readable semantic information. Schema.org covers diverse domains including products, organizations, events, publications, creative works, health and medical information, and many others. The schemas are designed for broad applicability across different industries while remaining flexible enough for domain-specific extensions. Schema.org markup is widely recognized and processed by major search engines, social media platforms, and aggregation services, directly impacting content discovery and presentation. The ontology facilitates knowledge graph construction, enhanced search results (rich snippets), and improved interoperability across web applications and services.
+Schema.org is a collaborative, community-driven initiative that provides
+a shared vocabulary for structured data markup on the web, in email
+messages, and beyond [#schema-home]_ [#schema-paper]_. It enables
+webmasters, content creators, and developers to annotate digital
+resources with machine-readable semantic information that can be used by
+search engines and other applications [#schema-home]_.
 
-**Example Usage**:
-Annotate a restaurant website with Schema.org markup including Organization (restaurant details), LocalBusiness (address, phone, hours), and AggregateRating (customer reviews) to enable search engines to display rich snippets with ratings, location, and hours directly in search results.
+Schema.org provides extensible schemas for describing entities,
+relationships, and actions across many domains, including people,
+organizations, places, products, events, creative works, publications,
+health and medical information, and other web resources [#schema-home]_.
+The vocabulary can be expressed using formats such as JSON-LD, RDFa, and
+Microdata, making it flexible for different publishing and data
+integration scenarios [#schema-home]_ [#schema-paper]_.
+
+Schema.org is designed for broad applicability across industries while
+also supporting extension mechanisms for more specialized use cases
+[#schema-home]_. Its markup is widely used by publishers and consumed by
+major web applications to support structured data exchange, enhanced
+search experiences, knowledge graph construction, content discovery, and
+interoperability across web-based services [#schema-paper]_.
+
+**Example Usage**: Annotate a restaurant website with Schema.org terms
+such as Organization, LocalBusiness, address, openingHours, telephone,
+and AggregateRating. This allows search engines and other applications to
+understand the restaurant's location, contact details, opening hours, and
+review information, supporting richer search results and improved
+resource discovery [#schema-home]_ [#schema-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,3 +161,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#schema-home] Schema.org. n.d.
+   "Schema.org."
+   Available at:
+   `https://schema.org/ <https://schema.org/>`_
+
+.. [#schema-paper] Guha, R. V., Brickley, D., and Macbeth, S. 2016.
+   "Schema.org: Evolution of Structured Data on the Web."
+   *Communications of the ACM* 59(2): 44--51.
+   DOI:
+   `10.1145/2857274.2857276 <https://doi.org/10.1145/2857274.2857276>`_

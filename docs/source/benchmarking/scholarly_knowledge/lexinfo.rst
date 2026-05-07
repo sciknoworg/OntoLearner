@@ -23,14 +23,14 @@
 LexInfo (LexInfo)
 ========================================================================================================
 
-LexInfo allows us to associate linguistic information to elements in an ontology with respect to any level of linguistic description and expressivity. It provides a structured vocabulary for representing linguistic information, supporting both theoretical and experimental research in linguistics.
+LexInfo is an ontology for associating linguistic information with elements in an ontology at different levels of linguistic description and expressivity [#lexinfo-ontology]_ [#lexinfo-paper]_. It was originally developed to support the lemon model and is now used as a data category ontology for OntoLex-Lemon, providing linguistic categories for describing lexical resources in RDF relative to ontologies [#lexinfo-ontology]_. LexInfo enables the representation of linguistic information such as parts of speech, grammatical gender, number, case, syntactic frames, subcategorization patterns, and other morphosyntactic and lexical properties [#lexinfo-ontology]_ [#lexinfo-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of linguistic information, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. LexInfo supports the integration of data from various sources, promoting interoperability and data-driven research in linguistics.
+The ontology supports ontology-lexicon interfaces by making it possible to connect ontology entities, such as classes, properties, and individuals, with their lexical realizations and linguistic descriptions [#lexinfo-paper]_. This is important for ontology-based information extraction, ontology learning from text, question answering, ontology verbalization, lexical data publication, and multilingual linked data applications [#lexinfo-paper]_. LexInfo provides a reusable semantic vocabulary for describing linguistic features consistently across lexical resources, supporting interoperability between ontologies, lexicons, and natural language processing systems [#lexinfo-ontology]_.
 
-Typical applications of LexInfo include the development of new linguistic information management methods, the optimization of linguistic data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, LexInfo enhances collaboration and innovation in the field of linguistics.
+Typical applications of LexInfo include semantic annotation of lexical entries, modeling linguistic features in OntoLex-Lemon lexicons, integrating heterogeneous lexical datasets, supporting ontology verbalization, and enriching knowledge graphs with linguistic metadata [#lexinfo-ontology]_ [#lexinfo-paper]_. By providing a standardized vocabulary for linguistic data categories, LexInfo enhances interoperability and reuse in computational linguistics, semantic web, and ontology engineering workflows [#lexinfo-paper]_.
 
 **Example Usage**:
-Annotate an ontology with LexInfo terms to specify linguistic information, enabling semantic search and integration with linguistic information management platforms.
+Annotate an ontology-linked lexical entry with LexInfo terms to specify its part of speech, grammatical number, gender, syntactic behavior, or subcategorization frame. This enables semantic search, ontology verbalization, multilingual lexical data integration, and use of lexical resources in natural language processing applications [#lexinfo-ontology]_ [#lexinfo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#lexinfo-ontology] OntoLex Community Group. n.d.
+   "LexInfo: Data Category Ontology for OntoLex-Lemon."
+   GitHub Repository.
+   Available at:
+   `https://github.com/ontolex/lexinfo <https://github.com/ontolex/lexinfo>`_
+
+.. [#lexinfo-paper] Cimiano, Philipp, Paul Buitelaar,
+   John McCrae, and Michael Sintek. 2011.
+   "LexInfo: A Declarative Model for the Lexicon-Ontology Interface."
+   *Journal of Web Semantics* 9(1): 29--51.
+   DOI:
+   `10.1016/j.websem.2010.11.001 <https://doi.org/10.1016/j.websem.2010.11.001>`_

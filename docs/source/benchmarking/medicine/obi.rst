@@ -25,9 +25,12 @@
 Ontology for Biomedical Investigations (OBI)
 ========================================================================================================
 
-The Ontology for Biomedical Investigations (OBI) provides a comprehensive vocabulary for describing scientific investigations, experimental designs, and biomedical research methodology. It defines over 2500 terms covering assays, devices, protocols, objectives, materials, measurements, and outcomes used in biomedical and life sciences research. OBI enables standardized semantic annotation of experimental workflows, making research methodologies transparent, reproducible, and interoperable across databases and computational systems. The ontology captures hierarchical relationships between experimental concepts, allowing researchers to precisely describe complex experimental designs and data collection procedures. OBI integrates with other biological ontologies (BFO, ChEBI, CHEBI) to provide comprehensive semantic representation of biomedical investigations.
+The Ontology for Biomedical Investigations (OBI) is an ontology for describing scientific investigations, experimental designs, and biomedical research methodology [#obi-obofoundry]_ [#obi-paper]_. It provides a structured vocabulary for representing assays, devices, protocols, objectives, materials, measurements, data, and analysis processes used in biomedical and life sciences research [#obi-paper]_.
 
-**Example Usage**: Annotate a microarray experiment with OBI terms such as "assay" for the type of investigation, "microarray device" for equipment, "RNA extraction" for material preparation steps, and measurement-related terms for results.
+OBI supports standardized semantic annotation of experimental workflows, enabling interoperability, data integration, comparison, and reuse of biomedical investigation data across databases and computational systems [#obi-obofoundry]_ [#obi-paper]_. By providing a common framework for describing how scientific data are generated, OBI helps make research methods more transparent and reproducible [#obi-paper]_.
+
+**Example Usage**:
+Annotate a microarray experiment with OBI terms to specify the assay type, microarray device, RNA extraction step, protocol, input material, generated data, and measurement results, enabling semantic search and integration with biomedical databases [#obi-obofoundry]_ [#obi-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +139,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#obi-obofoundry] OBO Foundry. n.d.
+   "OBI: Ontology for Biomedical Investigations."
+   Ontology registry entry.
+   Available at:
+   `https://obofoundry.org/ontology/obi.html <https://obofoundry.org/ontology/obi.html>`_
+
+.. [#obi-paper] Bandrowski, A., Brinkman, R., Brochhausen, M., et al. 2016.
+   "The Ontology for Biomedical Investigations."
+   *PLOS ONE*, 11(4), e0154556.
+   DOI: 10.1371/journal.pone.0154556.
+   Available at:
+   `https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0154556 <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0154556>`_

@@ -23,10 +23,12 @@
 The Elementary Multiperspective Material Ontology (EMMO)
 ========================================================================================================
 
-The Elementary Multiperspective Material Ontology (EMMO) is a foundational ontology developed by the European Materials Modelling Council (EMMC) to provide a standard representational framework for materials science and engineering. EMMO is unique in that it starts from the bottom level, using the physical world as described by applied sciences, especially physics and materials science, rather than from abstract upper-level concepts. The ontology covers a wide range of concepts including materials, processes, properties, structures, and measurement techniques, supporting the semantic integration of materials modelling, characterization, and experimental data. EMMO is modular and extensible, enabling domain-specific extensions for specialized applications in materials research, digital twins, and manufacturing. By providing a rigorous semantic foundation, EMMO facilitates data interoperability, knowledge sharing, and advanced analytics across the materials science community. The ontology is actively maintained and extended to incorporate new concepts and requirements from ongoing research and industrial projects.
+The Elementary Multiperspective Material Ontology (EMMO) is a foundational ontology developed by the European Materials Modelling Council (EMMC) to provide a standard representational framework for materials science, materials modelling, characterisation, and manufacturing [#emmo-emmc]_ [#emmo-github]_. EMMO is distinctive because it starts from the physical world as described by applied sciences, especially physics and materials science, rather than only from abstract upper-level concepts [#emmo-emmc]_.
+
+The ontology provides a framework for representing materials, processes, properties, models, measurements, and data, supporting semantic interoperability across materials modelling, characterisation, and experimental workflows [#emmo-emmc]_ [#emmo-github]_. EMMO is modular and extensible, allowing domain-specific ontologies to be developed for specialised applications in materials research, digital platforms, and manufacturing [#emmo-github]_. By providing a rigorous semantic foundation, EMMO supports data interoperability, knowledge sharing, FAIR documentation, and reuse across the materials science community [#emmo-emmc]_ [#emmo-github]_.
 
 **Example Usage**:
-Annotate a materials database with EMMO terms to describe the composition, structure, and properties of a material sample, the experimental techniques used for characterization, and the modelling workflows applied, enabling semantic search and data integration across research projects.
+Annotate a materials database with EMMO terms to describe the composition, structure, and properties of a material sample, the characterisation techniques used, and the modelling workflows applied, enabling semantic search and data integration across materials science research projects [#emmo-emmc]_ [#emmo-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#emmo-emmc] European Materials Modelling Council. n.d.
+   "EMMO – Ontology for Materials Science."
+   Available at:
+   `https://emmc.eu/emmo/ <https://emmc.eu/emmo/>`_
+
+.. [#emmo-github] EMMO-repo. n.d.
+   "Elementary Multiperspective Material Ontology (EMMO)."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/EMMO <https://github.com/emmo-repo/EMMO>`_

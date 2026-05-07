@@ -25,9 +25,36 @@
 The ontology of data analysis and management (EDAM)
 ========================================================================================================
 
-EDAM is a domain ontology that formalizes concepts, operations, and data types used in computational data analysis and data management across biological sciences and related domains. It provides structured vocabulary for describing bioinformatics analysis workflows, computational operations (alignment, clustering, prediction), data types, data formats, and the relationships between analysis steps. EDAM comprises four main sections: Topic (research domains and concepts), Operation (analysis/processing operations), Data (data types and identifiers), and Format (computational data formats and standards). The ontology is designed for usability by diverse stakeholders including bioinformaticians, tool developers, and researchers, with a relatively simple hierarchical structure to facilitate adoption. EDAM supports standardization of bioinformatics tool descriptions, workflow definitions, and dataset annotations, enabling automated tool discovery and workflow composition.
+EDAM is a domain ontology that formalizes concepts, operations, data
+types, identifiers, and formats used in computational data analysis and
+data management across bioinformatics, biological sciences, and related
+scientific domains [#edam-home]_ [#edam-paper]_. It provides a structured
+vocabulary for describing bioinformatics analysis workflows, computational
+operations, data types, data identifiers, data formats, and relationships
+between analysis steps [#edam-paper]_.
 
-**Example Usage**: Annotate a bioinformatics tool or service with EDAM terms for Input data (e.g., EDAM:data_0006 for sequence alignment), Operation (e.g., EDAM:operation_0496 for pairwise sequence alignment), Output format (e.g., EDAM:format_1929 for FASTA), and research Topic (e.g., EDAM:topic_0199 for sequence analysis).
+EDAM is organized into four main sections: Topic, Operation, Data, and
+Format [#edam-home]_ [#edam-paper]_. Topic represents research domains
+and application areas; Operation represents analysis and processing
+functions; Data represents data types and identifiers; and Format
+represents computational data formats and standards [#edam-home]_. This
+structure enables consistent semantic annotation of tools, workflows,
+databases, datasets, publications, and software resources in
+bioinformatics [#edam-paper]_.
+
+EDAM is designed for usability by diverse stakeholders, including
+bioinformaticians, tool developers, curators, and researchers
+[#edam-home]_. Its relatively simple hierarchical organization supports
+standardized descriptions of bioinformatics tools and services, automated
+tool discovery, workflow composition, dataset annotation, and semantic
+integration of computational biology resources [#edam-paper]_.
+
+**Example Usage**: Annotate a bioinformatics tool or service with EDAM
+terms for input data, operation, output format, and research topic, such
+as sequence alignment data, pairwise sequence alignment, FASTA format,
+and sequence analysis. These annotations make the tool easier to discover,
+compare, integrate into workflows, and connect with related datasets or
+services [#edam-home]_ [#edam-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +163,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#edam-home] EDAM Ontology. n.d.
+   "EDAM: The Ontology of Data Analysis and Management."
+   Available at:
+   `https://edamontology.org/ <https://edamontology.org/>`_
+
+.. [#edam-paper] Ison, J., Kalaš, M., Jonassen, I., Bolser, D.,
+   Uludag, M., McWilliam, H., Malone, J., Lopez, R., Pettifer, S.,
+   and Rice, P. 2013.
+   "EDAM: An Ontology of Bioinformatics Operations, Types of Data and
+   Identifiers, Topics and Formats."
+   *Bioinformatics* 29(10): 1325--1332.
+   DOI:
+   `10.1093/bioinformatics/btt113 <https://doi.org/10.1093/bioinformatics/btt113>`_

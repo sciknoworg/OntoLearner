@@ -25,9 +25,9 @@
 Hydra Ontology (Hydra)
 ========================================================================================================
 
-Hydra is a lightweight vocabulary and ontology for creating hypermedia-driven REST APIs that are self-describing and machine-actionable through semantic web technologies. It enables developers to create generic API clients that can automatically discover and interact with APIs by interpreting hypermedia controls and semantic metadata embedded in API responses. Hydra defines core concepts commonly used in Web APIs such as operations, properties, classes, and relationships, providing a standardized way to describe API structure and functionality. The vocabulary enables APIs to be self-documenting and interoperable, allowing clients to dynamically adapt to API changes without hardcoded endpoint knowledge. Hydra supports linked data and semantic web principles, enabling APIs to contribute to the broader linked open data ecosystem.
+Hydra is a lightweight vocabulary and ontology for creating hypermedia-driven Web APIs that are self-describing and machine-actionable through semantic web technologies [#hydra-core]_ [#hydra-paper]_. It enables developers to create generic API clients that can automatically discover and interact with APIs by interpreting hypermedia controls and semantic metadata embedded in API responses [#hydra-core]_. Hydra defines core concepts commonly used in Web APIs, such as API documentation, supported classes, supported properties, operations, links, collections, and entry points, providing a standardized way to describe API structure and functionality [#hydra-core]_. The vocabulary enables APIs to be more self-describing and interoperable, allowing clients to understand available state transitions and construct valid HTTP requests without relying only on hardcoded endpoint knowledge [#hydra-core]_ [#hydra-paper]_. Hydra supports Linked Data and REST principles, helping APIs contribute to broader linked data ecosystems while preserving loose coupling, maintainability, evolvability, and scalability [#hydra-paper]_.
 
-**Example Usage**: Define a REST API endpoint for a resource collection using Hydra vocabularies to describe available operations (GET, POST, DELETE), supported classes, properties with their types, and hypermedia links to related resources, enabling automated client discovery and interaction.
+**Example Usage**: Define a REST API endpoint for a resource collection using Hydra vocabulary terms to describe available operations such as ``GET``, ``POST``, and ``DELETE``, supported classes, properties and their types, entry points, collections, and hypermedia links to related resources. This enables automated client discovery, interaction, and adaptation to API structure [#hydra-core]_ [#hydra-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +136,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#hydra-core] Hydra W3C Community Group. 2021.
+   "Hydra Core Vocabulary."
+   Available at:
+   `https://www.hydra-cg.com/spec/latest/core/ <https://www.hydra-cg.com/spec/latest/core/>`_
+
+.. [#hydra-paper] Lanthaler, Markus, and Christian Gütl. 2013.
+   "Hydra: A Vocabulary for Hypermedia-Driven Web APIs."
+   *Proceedings of the 6th Workshop on Linked Data on the Web (LDOW 2013)*.
+   Available at:
+   `https://ceur-ws.org/Vol-996/papers/ldow2013-paper-03.pdf <https://ceur-ws.org/Vol-996/papers/ldow2013-paper-03.pdf>`_

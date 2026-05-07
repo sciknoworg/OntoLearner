@@ -161,8 +161,9 @@ References
 .. [#inra] INRAE Open Data. n.d. "Animal Trait Ontology for Livestock."
    Available at: https://opendata.inra.fr/ATOL/page/
 
-.. [#agroportal] AgroPortal. n.d. "ATOL | Summary."
-   Available at: https://agroportal.lirmm.fr/ontologies/ATOL
+.. [#agroportal] AgroPortal. n.d. "Animal Trait Ontology for Livestock (ATOL)."
+   Available at:
+   https://agroportal.lirmm.fr/ontologies/ATOL
 
 .. [#atol-paper] Golik, W., Dameron, O., Bugeon, J., Fatet, A., Hue, I.,
    Hurtaud, C., Reichstadt, M., Salaün, M.-C., Vernet, J., Joret, L.,

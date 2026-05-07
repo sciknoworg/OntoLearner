@@ -22,11 +22,12 @@
 
 BBC Ontology (BBC)
 ========================================================================================================
+The BBC Ontology (BBC) is an ontology used to describe BBC concepts in the BBC linked-data store [#bbc-ontology]_. It represents BBC divisions or products that publish linked data, the platforms for which BBC content is produced, and web documents that publish or are relevant to BBC content [#bbc-ontology]_.
 
-The BBC Ontology (BBC) is a domain ontology developed to represent the structure, relationships, and metadata of BBC web documents, products, and platforms. It provides a standardized vocabulary for describing content types, thematic areas, editorial products, and the connections between them. The ontology enables semantic annotation of BBC content, supporting advanced search, personalized recommendations, and content integration across BBC's digital ecosystem. BBC is designed for extensibility and interoperability, allowing integration with other BBC ontologies and external vocabularies for broader data linking. By providing a common semantic framework, the BBC Ontology facilitates content discovery, analytics, and knowledge management for editorial, educational, and entertainment products. The ontology is maintained as an open resource and is actively extended to support new content types, platforms, and user experiences.
+The ontology codifies the logic connecting web documents, BBC products, and platforms [#bbc-ontology]_. It defines key classes such as Product, Platform, WebDocument, WebDocumentCategory, and NewsService, together with properties such as product, platform, primaryContent, primaryContentOf, hasOutput, covers, and servedBy [#bbc-ontology]_. By providing a structured vocabulary, the BBC Ontology supports semantic annotation, content integration, discovery, and linked-data representation across BBC digital services [#bbc-ontology]_.
 
 **Example Usage**:
-Annotate a BBC web page with BBC Ontology terms to specify its content type (e.g., "NewsArticle"), associated product (e.g., "BBC News"), thematic area (e.g., "Education"), and relationships to related articles or platforms, enabling semantic search and cross-platform content integration.
+Annotate a BBC web document with BBC Ontology terms to specify the product it belongs to, such as BBC Sport, the platform it is intended for, such as HighWeb or Mobile, its primary creative work, and its web document category, enabling semantic search and integration across BBC linked-data systems [#bbc-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +136,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bbc-ontology] BBC. 2012.
+   "BBC Ontology."
+   Available at:
+   `https://iptc.org/thirdparty/bbc-ontologies/bbc.html <https://iptc.org/thirdparty/bbc-ontologies/bbc.html>`_

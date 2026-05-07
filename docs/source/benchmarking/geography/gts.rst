@@ -23,10 +23,10 @@
 Geologic Timescale model (GTS)
 ========================================================================================================
 
-The Geologic Timescale (GTS) is an RDF/OWL ontology representation of the standard geologic timescale model, adapted from the GeoSciML framework and compatible with geospatial information transfer standards. It provides a formal semantic model for representing geological time periods, epochs, eons, and their boundaries based on the Global Stratotype Section and Point (GSSP) framework established by the International Commission on Stratigraphy. GTS enables precise temporal annotation of geological data, enabling scientists to associate geological observations, samples, and events with specific time periods in Earth's history. The ontology supports hierarchical relationships between time divisions, enabling both broad geological age classification and detailed temporal analysis. GTS facilitates integration of paleontological, stratigraphic, and geological survey data across diverse research institutions and databases.
+The Geologic Timescale (GTS) is an RDF/OWL ontology representation of the standard geologic timescale model, adapted from the GeoSciML framework and compatible with geospatial information transfer standards [#gts-ontology]_ [#gts-cox-richard-2015]_. It provides a formal semantic model for representing geological time periods, epochs, eons, stages, and their boundaries [#gts-cox-richard-2015]_. GTS enables precise temporal annotation of geological data, allowing scientists to associate geological observations, samples, fossil records, stratigraphic units, and events with specific intervals in Earth's history [#gts-ontology]_. The ontology supports hierarchical relationships between geological time divisions, enabling both broad geological age classification and detailed temporal analysis [#gts-ontology]_ [#gts-cox-richard-2015]_. GTS facilitates integration of paleontological, stratigraphic, and geological survey data across diverse research institutions, databases, and linked data systems [#gts-cox-richard-2015]_.
 
 **Example Usage**:
-Annotate a rock sample or fossil record with GTS terms such as "Cretaceous" (era), "Campanian" (stage), or specific GSSP boundary ages to enable temporal querying and stratigraphic correlation.
+Annotate a rock sample or fossil record with GTS terms such as ``Cretaceous``, ``Campanian``, or specific geologic time boundary information to enable temporal querying, stratigraphic correlation, and integration with geological survey datasets [#gts-ontology]_ [#gts-cox-richard-2015]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#gts-ontology] CGI-IUGS. n.d.
+   "Geologic Timescale Ontology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/CGI-IUGS/timescale-ont <https://github.com/CGI-IUGS/timescale-ont>`_
+
+.. [#gts-cox-richard-2015] Cox, Simon J. D., and Stephen M. Richard. 2015.
+   "A Geologic Timescale Ontology and Service."
+   Available at:
+   `https://publications.csiro.au/publications/publication/PIcsiro:EP14855 <https://publications.csiro.au/publications/publication/PIcsiro:EP14855>`_

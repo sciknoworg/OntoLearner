@@ -25,10 +25,35 @@
 DBpedia Ontology (DBpedia)
 ========================================================================================================
 
-The DBpedia ontology is generated from manually curated specifications in the DBpedia Mappings Wiki, providing a structured semantic model extracted from Wikipedia's rich content across multiple language editions. Each DBpedia release corresponds to a new Wikipedia data extraction, resulting in continuously evolving ontology versions that reflect growing knowledge representation in Wikipedia. The DBpedia ontology has become a shallow but comprehensive cross-domain ontology through crowd-sourced development involving thousands of contributors worldwide. It covers diverse knowledge domains including people, organizations, places, creative works, scientific concepts, and many others with relationships between them. DBpedia serves as a critical bridge between Wikipedia's unstructured information and the semantic web, enabling knowledge graph applications and linked data integration. The ontology is widely used in knowledge graph construction, information retrieval, entity linking, and semantic data integration projects leveraging Wikipedia's comprehensive and multilingual knowledge base.
+The DBpedia ontology is generated from manually curated specifications
+in the DBpedia Mappings Wiki, providing a structured semantic model
+extracted from Wikipedia's rich content across multiple language
+editions [#dbpedia-ontology]_ [#dbpedia-paper]_. Each DBpedia release
+corresponds to a new Wikipedia data extraction, resulting in evolving
+ontology versions that reflect changes and growth in Wikipedia-based
+knowledge representation [#dbpedia-ontology]_.
 
-**Example Usage**:
-Query DBpedia to find relationships between entities (e.g., all people born in Berlin, all films directed by a specific director, companies in a particular industry) by using ontology classes (Person, Film, Company) and properties to enable advanced knowledge discovery and data analytics.
+The DBpedia ontology is a shallow but comprehensive cross-domain
+ontology developed through community-based mapping and curation
+activities [#dbpedia-ontology]_ [#dbpedia-paper]_. It covers diverse
+knowledge domains including people, organizations, places, creative
+works, scientific concepts, events, and many other entity types, together
+with properties that describe relationships between them
+[#dbpedia-ontology]_.
+
+DBpedia serves as a bridge between Wikipedia's semi-structured
+information and the Semantic Web, enabling linked data publication,
+knowledge graph construction, information retrieval, entity linking, and
+semantic data integration [#dbpedia-paper]_. Its ontology and mappings
+allow Wikipedia-derived information to be represented in RDF and queried
+using semantic technologies such as SPARQL [#dbpedia-paper]_.
+
+**Example Usage**: Query DBpedia to find relationships between entities,
+such as all people born in Berlin, all films directed by a specific
+director, or companies in a particular industry, by using ontology
+classes such as Person, Film, and Company together with ontology
+properties that support structured knowledge discovery and data
+analytics [#dbpedia-ontology]_ [#dbpedia-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,3 +162,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+---------------
+
+.. [#dbpedia-ontology] DBpedia Association. n.d.
+   "DBpedia Ontology."
+   Available at:
+   `https://www.dbpedia.org/resources/ontology/ <https://www.dbpedia.org/resources/ontology/>`_
+
+.. [#dbpedia-paper] Lehmann, J., Isele, R., Jakob, M., Jentzsch, A.,
+   Kontokostas, D., Mendes, P. N., Hellmann, S., Morsey, M.,
+   van Kleef, P., Auer, S., and Bizer, C. 2015.
+   "DBpedia: A Large-scale, Multilingual Knowledge Base Extracted
+   from Wikipedia."
+   Semantic Web 6(2): 167-195.
+   Available at:
+   `https://jens-lehmann.org/files/2015/swj_dbpedia.pdf <https://jens-lehmann.org/files/2015/swj_dbpedia.pdf>`_

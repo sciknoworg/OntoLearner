@@ -25,28 +25,32 @@
 Chord Ontology (ChordOntology)
 ========================================================================================================
 
-The Chord Ontology is a formal representation for describing and classifying
-chords and chord sequences in musical resources. It provides a structured
-vocabulary for representing harmonic concepts and chord structures, enabling
-semantic annotation and analysis of music data. The ontology captures core
-chord properties including chord type (for example major, minor, diminished,
-and augmented), root note, constituent intervals, and bass note. It supports
-the annotation of audio files, musical scores, and symbolic music files by
-linking chord events to temporal structures and music resources. The ontology
-was developed within the OMRAS2 project and is designed to interoperate with
-related Semantic Web resources such as the Music Ontology, Timeline Ontology,
-and Event Ontology. By formalizing chord relationships and structures, the
-Chord Ontology supports computational music analysis, harmonic annotation,
-music information retrieval, and digital musicology applications. It provides
-a common framework for music annotation across datasets and tools, supporting
+The Chord Ontology is a formal representation for describing and
+classifying chords and chord sequences in musical resources
+[#chord-spec]_. It provides a structured vocabulary for representing
+harmonic concepts and chord structures, enabling semantic annotation and
+analysis of music data [#chord-spec]_. The ontology captures core chord
+properties including chord type, such as major, minor, diminished, and
+augmented, as well as root note, constituent intervals, and bass note
+[#chord-spec]_. It supports the annotation of audio files, musical
+scores, and symbolic music files by linking chord events to temporal
+structures and music resources [#chord-spec]_. The ontology was
+developed within the OMRAS2 project and is designed to interoperate with
+related Semantic Web resources such as the Music Ontology, Timeline
+Ontology, and Event Ontology [#chord-spec]_. By formalizing chord
+relationships and structures, the Chord Ontology supports computational
+music analysis, harmonic annotation, music information retrieval, and
+digital musicology applications [#chord-spec]_. It provides a common
+framework for music annotation across datasets and tools, supporting
 harmonic analysis, corpus annotation, and music information systems
-development [#chord-spec]_ [#omras2]_ [#music-ontology]_.
+development [#chord-spec]_.
 
 **Example Usage**: Annotate the harmonic timeline of an audio recording,
-musical score, or symbolic music file with Chord Ontology terms for chord
-events, root notes, intervals, and bass notes to enable semantic search,
-computational harmonic analysis, and integration with music information
-retrieval datasets and tools [#chord-spec]_ [#omras2]_.
+musical score, or symbolic music file with Chord Ontology terms for
+chord events, root notes, intervals, and bass notes to enable semantic
+search, computational harmonic analysis, and integration with music
+information retrieval datasets and tools [#chord-spec]_.
+
 
 Metrics & Statistics
 --------------------------
@@ -162,17 +166,4 @@ References
 .. [#chord-spec] Sutton, C., Raimond, Y., and Mauch, M. 2007.
    "Chord Ontology Specification."
    OMRAS2 Project, Centre for Digital Music, Queen Mary University of London.
-   Available at: http://purl.org/ontology/chord/
-   Also available at: https://motools.sourceforge.net/chord_draft_1/chord.html
-
-.. [#omras2] Fazekas, G., Raimond, Y., Jacobson, K., and Sandler, M. 2010.
-   "An Overview of Semantic Web Activities in the OMRAS2 Project."
-   *Journal of New Music Research* 39(4): 295-311.
-   doi:10.1080/09298215.2010.536555
-
-.. [#music-ontology] Raimond, Y., Abdallah, S. A., Sandler, M. B.,
-   and Giasson, F. 2007.
-   "The Music Ontology."
-   In *Proceedings of the 8th International Conference on Music Information
-   Retrieval (ISMIR 2007)*, Vienna, Austria, pp. 417-422.
-   Available at: https://ismir2007.ismir.net/proceedings/ISMIR2007_p417_raimond.pdf
+   Available at: https://motools.sourceforge.net/chord_draft_1/chord.html

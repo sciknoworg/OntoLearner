@@ -25,9 +25,12 @@
 BBC Provenance News Ontology (BBCProvenance)
 ========================================================================================================
 
-The BBC Provenance News Ontology is a specialized vocabulary for capturing and representing provenance metadata about data quality, source attribution, and immediate data providers in RDF knowledge graphs and semantic web applications. It focuses on recording immediate data providers (e.g., which internal BBC team or external service provided data) rather than ultimate sources, enabling accountability and quality tracking in linked data systems. BBCProvenance applies provenance annotations to named graphs (quads in RDF stores), providing a fourth dimension to triples that enables context-aware data management and versioning. The ontology supports data governance and management in linked data platforms by providing standardized provenance metadata structures. BBCProvenance facilitates trust and quality assessment in semantic web applications by enabling transparent tracking of data origins and transformations.
+The BBC Provenance News Ontology is a vocabulary for capturing provenance metadata about data in the BBC RDF triple store [#bbcprovenance-ontology]_. It supports data management and auditing tasks by defining types of named graphs used in the BBC quad store and associating them with metadata for managing, validating, and exposing data to BBC services [#bbcprovenance-ontology]_.
 
-**Example Usage**: Annotate geodata in a named graph with BBCProvenance terms indicating that the data was provided by the BBC Locator team (immediate provider) on a specific date, with specific quality assurance level, enabling proper attribution and version tracking.
+The ontology focuses on recording the immediate provider of data rather than the ultimate source; for example, it can record that geodata was provided by the BBC Locator team rather than by the original external source [#bbcprovenance-ontology]_. In the BBC Linked Data Platform, this provenance information is applied to contexts or named graphs, where the named graph acts as a fourth part of an RDF triple, forming a quad store [#bbcprovenance-ontology]_.
+
+**Example Usage**:
+Annotate geodata in a named graph with BBC Provenance terms to indicate that the data was provided by the BBC Locator team, enabling attribution, validation, auditing, and management of provenance metadata in BBC linked-data systems [#bbcprovenance-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +139,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bbcprovenance-ontology] BBC. 2012.
+   "Provenance Ontology."
+   Available at:
+   `https://iptc.org/thirdparty/bbc-ontologies/provenance.html <https://iptc.org/thirdparty/bbc-ontologies/provenance.html>`_

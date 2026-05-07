@@ -23,14 +23,12 @@
 Materials Science and Engineering Ontology (MSEO)
 ========================================================================================================
 
-The Materials Science and Engineering Ontology (MSEO) is a domain ontology developed to represent experiments and resulting data in materials science and engineering. It provides a structured vocabulary for describing materials, processes, and data, supporting both theoretical and experimental research in materials science.
+The Materials Science and Engineering Ontology (MSEO) is a domain ontology developed to represent experiments and resulting data in materials science and engineering [#mseo-matportal]_ [#mseo-github]_. It provides a structured vocabulary for describing materials, processes, properties, software, identifiers, data transformations, and experiment-related information [#mseo-github]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of materials, processes, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MSEO supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
-
-Typical applications of MSEO include the integration of materials data from various sources, the development of new materials with specific properties, and the optimization of manufacturing processes. By providing a standardized vocabulary and framework, MSEO enhances collaboration and innovation in the field of materials science.
+MSEO supports the creation of machine-readable and human-readable semantic data, enabling interoperability, semantic annotation, data integration, retrieval, and reuse across materials science workflows [#mseo-matportal]_ [#mseo-github]_. By providing a standardized vocabulary, MSEO helps organize materials science experiments and supports knowledge sharing in materials informatics platforms [#mseo-github]_.
 
 **Example Usage**:
-Annotate a materials science experiment with MSEO terms to specify material types, processes, and data, enabling semantic search and integration with materials informatics platforms.
+Annotate a materials science experiment with MSEO terms to specify material types, experimental processes, measured properties, software, identifiers, data transformations, and resulting data, enabling semantic search and integration with materials informatics platforms [#mseo-matportal]_ [#mseo-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#mseo-matportal] MatPortal. 2023.
+   "Material Science and Engineering Ontology."
+   Ontology registry entry.
+   Available at:
+   `https://matportal.org/ontologies/MSEO <https://matportal.org/ontologies/MSEO>`_
+
+.. [#mseo-github] Mat-O-Lab. n.d.
+   "MSEO: Repository of Materials Science and Engineering Ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/Mat-O-Lab/MSEO <https://github.com/Mat-O-Lab/MSEO>`_

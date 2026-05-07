@@ -23,14 +23,14 @@
 Framester Ontology (Framester)
 ========================================================================================================
 
-Framester is a frame-based ontological resource acting as a hub between linguistic resources such as FrameNet, WordNet, VerbNet, BabelNet, DBpedia, Yago, DOLCE-Zero, and leveraging this wealth of links to create an interoperable predicate space formalized according to frame semantics and semiotics. Framester uses WordNet and FrameNet at its core, expands it to other resources transitively, and represents them in a formal version of frame semantics. It provides a structured vocabulary for representing linguistic resources, supporting both theoretical and experimental research in linguistics.
+Framester is a frame-based ontological resource that acts as a hub between linguistic and factual resources such as FrameNet, WordNet, VerbNet, BabelNet, DBpedia, YAGO, and DOLCE-Zero [#framester-home]_ [#framester-paper]_. It uses WordNet and FrameNet as core resources, expands connections to other resources transitively, and represents them in a formal version of frame semantics [#framester-paper]_. By leveraging links across lexical, ontological, and linked data resources, Framester creates an interoperable predicate space that supports linguistic linked data integration, frame-based knowledge representation, and semantic reasoning [#framester-home]_ [#framester-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of linguistic resources, frames, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. Framester supports the integration of data from various sources, promoting interoperability and data-driven research in linguistics.
+The ontology provides a structured framework for representing frames, frame elements, lexical units, semantic roles, synsets, and relationships between linguistic and factual resources [#framester-paper]_. Framester applies a formal treatment of Fillmore-style frame semantics, enabling OWL querying and reasoning over a large frame-based knowledge graph [#framester-paper]_. It also supports applications such as word frame disambiguation, semantic role labeling, knowledge graph construction from text, and integration of heterogeneous linguistic datasets [#framester-paper]_.
 
-Typical applications of Framester include the development of new linguistic resource integration methods, the optimization of linguistic data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, Framester enhances collaboration and innovation in the field of linguistics.
+Typical applications of Framester include linguistic resource alignment, semantic annotation, natural language understanding, frame detection, semantic role analysis, and enrichment of knowledge graphs with frame-based meaning representations [#framester-home]_ [#framester-paper]_. By providing a shared frame-oriented semantic layer, Framester improves interoperability between lexical resources and supports advanced research in computational linguistics, semantic web technologies, and knowledge discovery [#framester-paper]_.
 
 **Example Usage**:
-Annotate a linguistic dataset with Framester terms to specify linguistic resources, frames, and relationships, enabling semantic search and integration with linguistic information management platforms.
+Annotate a linguistic dataset with Framester terms to represent evoked frames, lexical units, semantic roles, frame elements, and mappings to resources such as FrameNet, WordNet, VerbNet, BabelNet, DBpedia, and YAGO. This enables semantic search, frame-based reasoning, word frame disambiguation, and integration with linguistic linked data platforms [#framester-home]_ [#framester-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+eferences
+----------
+
+.. [#framester-home] Framester. n.d.
+   "Framester."
+   Available at:
+   `https://etna.istc.cnr.it/framester_web/ <https://etna.istc.cnr.it/framester_web/>`_
+
+.. [#framester-paper] Gangemi, Aldo, Mehwish Alam, Luigi Asprino,
+   Valentina Presutti, and Diego Reforgiato Recupero. 2016.
+   "Framester: A Wide Coverage Linguistic Linked Data Hub."
+   *The Semantic Web: ESWC 2016 Satellite Events / EKAW 2016*, Lecture Notes in Computer Science.
+   Available at:
+   `https://www.fiz-karlsruhe.de/sites/default/files/FIZ/Dokumente/Forschung/ISE/Publications/EKAW-16.pdf <https://www.fiz-karlsruhe.de/sites/default/files/FIZ/Dokumente/Forschung/ISE/Publications/EKAW-16.pdf>`_

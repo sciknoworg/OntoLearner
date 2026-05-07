@@ -25,10 +25,34 @@
 GIST Upper Ontology (GIST)
 ========================================================================================================
 
-GIST is Semantic Arts' minimalist upper ontology designed specifically for enterprise information systems, providing maximum coverage of typical business concepts with minimal primitives and minimal ambiguity. It emphasizes practical expressiveness and semantic clarity, avoiding unnecessary complexity while maintaining rigorous logical foundations. GIST covers essential business entities including agents (people, organizations), objects, events, measurements, and abstract concepts, with clearly defined relationships between them. The ontology is deliberately lightweight to facilitate adoption and integration into existing enterprise systems while providing sufficient semantic richness for sophisticated business logic representation. GIST supports both simple and complex semantic queries, reasoning, and knowledge graph construction for enterprise data integration and business intelligence applications. The ontology has been widely adopted in financial services, healthcare, and government sectors requiring reliable semantic foundations for data governance.
+GIST is Semantic Arts' minimalist upper ontology designed for enterprise
+information systems, providing broad coverage of common business concepts
+with a small set of primitives and reduced ambiguity [#gist-home]_
+[#gist-repo]_. It is intended to serve as a practical starting point for
+organizations building enterprise ontologies or semantic models for
+business data integration [#gist-repo]_.
 
-**Example Usage**:
-Design a healthcare enterprise ontology by extending GIST's Agent (to represent physicians, patients), Event (to represent treatments, procedures), and Object (to represent medications, medical devices) concepts to build a comprehensive healthcare knowledge graph for clinical decision support.
+GIST emphasizes practical expressiveness, semantic clarity, and usability
+in enterprise settings [#gist-home]_ [#gist-repo]_. It covers essential
+business concepts such as agents, organizations, people, physical and
+conceptual objects, events, measurements, units, places, agreements, and
+other abstract entities, together with relationships that support
+structured representation of enterprise knowledge [#gist-repo]_.
+
+The ontology is deliberately lightweight so that it can be adopted and
+extended more easily than larger or more complex upper ontologies
+[#gist-home]_. GIST can support semantic querying, reasoning, knowledge
+graph construction, enterprise data integration, data governance, and
+business intelligence applications by providing a shared semantic
+foundation for business information [#gist-home]_ [#gist-repo]_.
+
+**Example Usage**: Design a healthcare enterprise ontology by extending
+GIST's Agent concepts to represent physicians and patients, Event
+concepts to represent treatments and procedures, and Object concepts to
+represent medications and medical devices. This can support the creation
+of a healthcare knowledge graph for clinical decision support, data
+integration, and semantic querying across healthcare information systems
+[#gist-home]_ [#gist-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,3 +161,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#gist-home] Semantic Arts. n.d.
+   "gist Upper Ontology."
+   Available at:
+   `https://www.semanticarts.com/gist/ <https://www.semanticarts.com/gist/>`_
+
+.. [#gist-repo] Semantic Arts. n.d.
+   "gist."
+   GitHub Repository.
+   Available at:
+   `https://github.com/semanticarts/gist <https://github.com/semanticarts/gist>`_

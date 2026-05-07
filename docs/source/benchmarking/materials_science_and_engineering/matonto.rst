@@ -23,10 +23,12 @@
 Material Ontology (MatOnto)
 ========================================================================================================
 
-The Material Ontology (MatOnto) is a domain ontology based on the Basic Formal Ontology (BFO) designed to provide a structured vocabulary for representing materials, their properties, and relationships in materials science and engineering. MatOnto supports semantic annotation of materials data, enabling interoperability, data integration, and advanced analysis across research databases, digital twins, and manufacturing systems. The ontology covers key concepts such as material types, compositions, processing methods, properties, and applications. MatOnto is designed for extensibility, allowing researchers and engineers to describe new materials, characterization techniques, and performance metrics. By providing a standardized framework, MatOnto facilitates cross-study comparison, materials selection, and knowledge sharing in materials research and industry. The ontology is actively maintained and extended to incorporate new materials, technologies, and research requirements.
+The Material Ontology (MatOnto) is a domain ontology for representing materials science knowledge, including materials, material categories, properties, units, symbols, crystal-related concepts, and thermodynamic or thermomechanical properties [#matonto-matportal]_ [#matonto-github]_. It provides a structured vocabulary for describing material types such as metals, ceramics, composites, polymers, plastics, glasses, nanomaterials, and related material qualities [#matonto-github]_.
+
+MatOnto supports semantic annotation of materials data, enabling interoperability, data integration, retrieval, and reuse across materials science databases and informatics workflows [#matonto-matportal]_. The ontology includes concepts for measured properties such as band gap, heat capacity, specific heat, bulk modulus, shear modulus, Gibbs free energy, and other material-related quantities [#matonto-github]_. By providing a standardized vocabulary, MatOnto facilitates semantic search, materials information sharing, and knowledge integration in materials science and engineering [#matonto-matportal]_ [#matonto-github]_.
 
 **Example Usage**:
-Annotate a materials database with MatOnto terms to specify material types (e.g., polymer, alloy), composition, processing methods, and properties (e.g., tensile strength, thermal conductivity), enabling semantic search and integration with materials informatics platforms.
+Annotate a materials database with MatOnto terms to specify material types such as metal, ceramic, polymer, or nanomaterial, together with properties such as band gap, heat capacity, bulk modulus, shear modulus, crystal system, and space group information, enabling semantic search and integration with materials informatics platforms [#matonto-matportal]_ [#matonto-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#matonto-matportal] Materials Open Laboratory. 2021.
+   "MatOnto Ontology."
+   MatPortal ontology entry.
+   Available at:
+   `https://matportal.org/ontologies/MATONTO <https://matportal.org/ontologies/MATONTO>`_
+
+.. [#matonto-github] iNovexIrad. n.d.
+   "MatOnto-Ontologies."
+   GitHub repository.
+   Available at:
+   `https://github.com/inovexcorp/MatOnto-Ontologies <https://github.com/inovexcorp/MatOnto-Ontologies>`_

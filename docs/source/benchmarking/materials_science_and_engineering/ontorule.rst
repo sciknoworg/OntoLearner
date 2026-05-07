@@ -23,10 +23,12 @@
 Ontology for the Steel Domain (ONTORULE)
 ========================================================================================================
 
-The Ontology for the Steel Domain (ONTORULE) is a domain ontology developed for the steel industry use case, providing a structured vocabulary for representing concepts, attributes, and relationships relevant to steel production and processing. ONTORULE supports the semantic annotation of steel industry data, including materials, processes, equipment, and quality attributes, enabling data integration and knowledge sharing across manufacturing systems. The ontology is designed for extensibility and can be adapted to represent new steel grades, production methods, and regulatory requirements. ONTORULE facilitates advanced analytics, process optimization, and compliance management in the steel industry by providing a standardized framework for knowledge representation. The ontology is documented with an HTML specification generated from the OWL file and is aligned with best practices in industrial ontology development.
+The Ontology for the Steel Domain (ONTORULE) is a domain ontology developed for the steel industry case study of the ONTORULE project [#ontorule-steel-doc]_. It provides a structured vocabulary for representing steel-domain concepts, attributes, and relationships relevant to steel production and processing [#ontorule-steel-doc]_.
+
+ONTORULE supports semantic annotation and representation of steel industry data, including materials, process-related information, defects, sampling information, and quality-relevant production data [#ontorule-steel-doc]_. By providing a standardized ontology for the steel domain, ONTORULE supports data integration, semantic search, and knowledge sharing across steel manufacturing and quality-management workflows [#ontorule-steel-doc]_.
 
 **Example Usage**:
-Annotate a steel manufacturing process with ONTORULE terms to specify the materials used, process steps, equipment, and quality control attributes, enabling semantic search and integration with production and quality management systems.
+Annotate a steel manufacturing process with ONTORULE terms to specify steel materials, process steps, defects, sampling information, and quality-control attributes, enabling semantic search and integration with production and quality management systems [#ontorule-steel-doc]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#ontorule-steel-doc] ONTORULE Project. 2010.
+   "Steel Industry case study Ontology."
+   Available at:
+   `https://ontorule-project.eu/resources/steel.html <https://ontorule-project.eu/resources/steel.html>`_

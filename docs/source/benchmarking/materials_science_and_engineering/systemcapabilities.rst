@@ -23,14 +23,12 @@
 System Capabilities Ontology (SystemCapabilities)
 ========================================================================================================
 
-The System Capabilities Ontology (SystemCapabilities) is designed to describe system capabilities, operating ranges, and survival ranges in materials science and engineering. It provides a structured vocabulary for representing the capabilities and limitations of systems, supporting both theoretical and experimental research in materials science.
+The System Capabilities Ontology (SystemCapabilities) is an ontology module designed to describe system capabilities, operating ranges, and survival ranges [#systemcapabilities-w3c]_ [#systemcapabilities-bioregistry]_. It provides a structured vocabulary for representing what a system is capable of doing under specified conditions, including capability properties, operating properties, survival properties, operating ranges, and survival ranges [#systemcapabilities-w3c]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of systems, capabilities, and ranges, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. SystemCapabilities supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
-
-Typical applications of SystemCapabilities include the development of new systems with specific capabilities, the optimization of system performance, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, SystemCapabilities enhances collaboration and innovation in the field of materials science.
+SystemCapabilities is part of the SSN/SOSA ontology framework and is used to describe capabilities and limitations of systems such as sensors and actuators [#systemcapabilities-w3c]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of system-related information across sensor, engineering, and data-management applications [#systemcapabilities-w3c]_.
 
 **Example Usage**:
-Annotate a materials science project with SystemCapabilities terms to specify system types, capabilities, and ranges, enabling semantic search and integration with materials informatics platforms.
+Annotate a sensor or engineering system with SystemCapabilities terms to specify its measurement capability, operating range, survival range, accuracy, frequency, latency, or environmental limits, enabling semantic search and integration with sensor-network and engineering data platforms [#systemcapabilities-w3c]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#systemcapabilities-w3c] W3C and OGC. 2017.
+   "Semantic Sensor Network Ontology: System capabilities, operating ranges, and survival ranges."
+   W3C Recommendation.
+   Available at:
+   `https://www.w3.org/TR/vocab-ssn/#System-capabilities <https://www.w3.org/TR/vocab-ssn/#System-capabilities>`_
+
+.. [#systemcapabilities-bioregistry] Bioregistry. n.d.
+   "System capabilities, operating ranges, and survival ranges ontology."
+   Registry entry.
+   Available at:
+   `https://bioregistry.io/ssn.system <https://bioregistry.io/ssn.system>`_

@@ -164,6 +164,10 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
+.. [#icon-doc] ICON Ontology Documentation. n.d.
+   "ICON Ontology Documentation 2.0."
+   Available at: https://br0ast.github.io/ICON/ICONOntologyDocumentation2.0/index-en.html
+
 .. [#icon-paper] Sartini, B., Baroncini, S., van Erp, M., Tomasi, F.,
    and Gangemi, A. 2023. "ICON: An Ontology for Comprehensive Artistic
    Interpretations."
@@ -176,8 +180,4 @@ References
    In *Proceedings of the Semantic Web and Ontology Design for Cultural
    Heritage Workshop (SWODCH 2023)*.
    CEUR Workshop Proceedings 3540.
-   Available at: `https://ceur-ws.org/Vol-3540/paper4.pdf <https://ceur-ws.org/Vol-3540/paper4.pdf>`_
-
-.. [#icon-doc] ICON Ontology Documentation. n.d.
-   "ICON Ontology Documentation 2.0."
-   Available at: `https://br0ast.github.io/ICON/ICONOntologyDocumentation2.0/index-en.html <https://br0ast.github.io/ICON/ICONOntologyDocumentation2.0/index-en.html>`_
+   Available at: https://ceur-ws.org/Vol-3540/paper4.pdf

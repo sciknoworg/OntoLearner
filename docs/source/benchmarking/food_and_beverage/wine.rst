@@ -25,7 +25,24 @@
 Wine Ontology (Wine)
 ========================================================================================================
 
-The Wine Ontology is a comprehensive RDF-based vocabulary for describing wines, wine-making processes, vineyards, and the wine industry. It provides a detailed classification system for different types of wines (red, white, rosé, sparkling), wine regions, grape varieties, producers, and tasting characteristics. The ontology captures properties such as alcohol content, acidity, vintage year, and flavor profiles, enabling precise semantic representation of wine products and attributes. It integrates with related ontologies for representing food, geography, and commercial information, supporting applications in e-commerce, wine recommendation systems, and food science research. Example: A specific wine instance can be linked to its grape variety (Pinot Noir), wine region (Burgundy), producer, vintage year, and taste descriptors through well-defined ontology properties.
+The Wine Ontology is an RDF-based vocabulary for describing wines and
+related wine domain concepts in a structured and machine-readable way
+[#wine-w3c]_ [#wine-repo]_. It provides a classification framework for
+different types of wines, grape varieties, wine regions, wineries, and
+wine characteristics, supporting semantic representation of wine
+products and their attributes [#wine-w3c]_ [#wine-repo]_. As a well-known
+example ontology in the Semantic Web community, it has been used to
+illustrate ontology modeling patterns and reasoning over class-based
+descriptions [#wine-w3c]_. The ontology can support applications such
+as semantic data integration, structured search, recommendation, and
+knowledge representation in domains involving wine, food, and related
+commercial or cultural information [#wine-repo]_ [#wine-w3c]_.
+
+**Example Usage**: Describe a specific wine by linking it to its grape
+variety, wine region, producer, vintage year, and taste-related
+characteristics through ontology properties, enabling structured search,
+comparison, and semantic integration of wine-related information
+[#wine-repo]_ [#wine-w3c]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +151,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#wine-w3c] McGuinness, D. L., and van Harmelen, F. 2004.
+   "OWL Web Ontology Language Guide."
+   W3C Recommendation, 10 February 2004.
+   Available at:
+   `https://www.w3.org/TR/owl-guide/ <https://www.w3.org/TR/owl-guide/>`_
+
+.. [#wine-repo] UC Davis Library. n.d. "Wine Linked Data / Wine Ontology."
+   Available at:
+   `https://github.com/UCDavisLibrary/wine-ontology <https://github.com/UCDavisLibrary/wine-ontology>`_

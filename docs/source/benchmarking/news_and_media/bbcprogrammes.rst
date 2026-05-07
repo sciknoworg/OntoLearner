@@ -25,9 +25,12 @@
 BBC Programmes Ontology (BBCProgrammes)
 ========================================================================================================
 
-The BBC Programmes Ontology is a specialized vocabulary for describing television and radio programmes, their structure, and broadcast distribution across BBC platforms. It provides standardized terminology for representing programme hierarchies including brands (show franchises), series/seasons (annual or thematic groupings), episodes (individual content pieces), broadcast events (scheduled transmissions), and broadcast services (channels, stations). BBCProgrammes enables precise semantic annotation of broadcast content metadata including airing dates, durations, genres, and relationships between programmes. The ontology facilitates content discovery and programme management across BBC's television and radio platforms by providing standardized semantic structures. BBCProgrammes development was informed by extensive BBC programme data modelling experience, ensuring practical applicability in production systems.
+The BBC Programmes Ontology is a vocabulary for describing television and radio programmes, their structure, and their broadcast distribution [#bbcprogrammes-ontology]_. It covers programme brands, series or seasons, episodes, versions of episodes, broadcast events, broadcast services, and related programme information [#bbcprogrammes-ontology]_.
 
-**Example Usage**: Represent a television series using BBCProgrammes terms with brand (Doctor Who), seasons/series (Series 10, Series 11), individual episodes with episode numbers and air dates, and associated broadcast events showing transmission times across different BBC channels.
+The ontology is grounded in BBC programme data modelling work and is inspired by the BBC PIPS database schema, which describes how brands, series, episodes, versions, and broadcasts interact with each other [#bbcprogrammes-ontology]_. By providing a standardized semantic structure, the BBC Programmes Ontology supports linked-data publication, programme discovery, metadata integration, and interchange of programme information on the Semantic Web [#bbcprogrammes-ontology]_.
+
+**Example Usage**:
+Represent a television programme using BBC Programmes Ontology terms by linking a brand such as **Doctor Who** to its series, episodes, versions, and broadcast events, including transmission information across BBC channels or services [#bbcprogrammes-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +139,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bbcprogrammes-ontology] BBC. 2009.
+   "BBC Programmes Ontology."
+   Available at:
+   `https://iptc.org/thirdparty/bbc-ontologies/po.html <https://iptc.org/thirdparty/bbc-ontologies/po.html>`_

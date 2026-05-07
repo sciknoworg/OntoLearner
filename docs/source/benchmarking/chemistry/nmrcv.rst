@@ -25,7 +25,27 @@
 Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV)
 ========================================================================================================
 
-This artefact is an MSI-approved controlled vocabulary primarily developed under COSMOS EU and PhenoMeNal EU governance. The nmrCV is supporting the nmrML XML format with standardized terms. nmrML is a vendor-agnostic open access NMR raw data standard. Its primary role is analogous to the mzCV for the PSI-approved mzML XML format. It uses BFO2.0 as its top level. This CV was derived from two predecessors (The NMR CV from the David Wishart Group, developed by Joseph Cruz) and the MSI nmr CV developed by Daniel Schober at the EBI. This simple taxonomy of terms (no DL semantics used) serves the nuclear magnetic resonance markup language (nmrML) with meaningful descriptors to amend the nmrML XML file with CV terms. Metabolomics scientists are encouraged to use this CV to annotate their raw and experimental context data, i.e. within nmrML. The approach to have an exchange syntax mixed of an XSD and CV stems from the PSI mzML effort. The reason to branch out from an XSD into a CV is that in areas where the terminology is likely to change faster than the nmrML XSD could be updated and aligned, an externally and decentralized maintained CV can compensate for such dynamics in a more flexible way. A second reason for this setup is that semantic validity of CV terms used in an nmrML XML instance (allowed CV terms, position/relation to each other, cardinality) can be validated by rule-based proprietary validators: by means of cardinality specifications and XPath expressions defined in an XML mapping file (an instance of the CvMappingRules.xsd), one can define what ontology terms are allowed in a specific location of the data model.
+The Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV) is an
+MSI-approved controlled vocabulary developed to support standardized
+annotation of nuclear magnetic resonance data and experiments
+[#nmr-bioportal]_ [#nmrml-paper]_. It supports the nmrML XML format, a
+vendor-agnostic open standard for the description, storage, and
+exchange of raw NMR data, by providing standardized terms for
+instrumentation, acquisition parameters, sample context, and other
+experimental metadata [#nmrml-paper]_ [#nmr-bioportal]_. The vocabulary
+serves as a flexible semantic layer alongside the nmrML schema,
+allowing terminology to evolve independently while still supporting
+semantic validation and interoperable data exchange [#nmrml-paper]_.
+By providing a shared terminology for NMR experiments, NMRCV improves
+semantic consistency, reproducibility, validation, and cross-study
+integration across metabolomics and analytical chemistry workflows
+[#nmr-bioportal]_ [#nmrml-paper]_.
+
+**Example Usage**: Annotate an nmrML file with NMRCV terms to specify
+the instrument type, pulse sequence, sample conditions, acquisition
+parameters, and processing metadata, enabling standardized exchange,
+validation, and cross-study comparison of NMR datasets
+[#nmrml-paper]_ [#nmr-bioportal]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +154,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#nmr-bioportal] NCBO BioPortal. n.d. "NMR-Controlled Vocabulary."
+   Available at:
+   `https://bioportal.bioontology.org/ontologies/NMR <https://bioportal.bioontology.org/ontologies/NMR>`_
+
+.. [#nmrml-paper] Schober, D., Jacob, D., Wilson, M., Cruz, J. A.,
+   Marcu, A., Grant, J. R., Moing, A., Deborde, C., de Figueiredo, L. F.,
+   Haug, K., Rocca-Serra, P., Easton, J., Ebbels, T. M. D., Hao, J.,
+   Ludwig, C., Nasi, N., Narayana, V. K., Sansone, S.-A., Viant, M. R.,
+   and Wishart, D. S. 2018.
+   "nmrML: A Community Supported Open Data Standard for the Description,
+   Storage, and Exchange of NMR Data."
+   *Analytical Chemistry* 90(1): 649-656.
+   doi:10.1021/acs.analchem.7b02795

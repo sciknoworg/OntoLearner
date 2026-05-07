@@ -23,10 +23,30 @@
 Document Components Ontology (DoCO)
 ========================================================================================================
 
-DoCO, the Document Components Ontology, is an OWL 2 DL ontology that provides a general-purpose structured vocabulary of document elements. DoCO has been designed as a general unifying ontological framework for describing different aspects related to the content of scientific and other scholarly texts. Its primary goal has been to improve the interoperability and shareability of academic documents (and related services) when multiple formats are actually used for their storage. The ontology defines a wide range of document components, such as sections, paragraphs, figures, tables, references, and metadata elements, supporting detailed semantic annotation of document structure. DoCO enables automated document processing, content extraction, and knowledge management in digital libraries, publishing platforms, and research repositories. By providing a standardized vocabulary, DoCO facilitates the integration of scholarly content across diverse formats and platforms, enhancing discoverability and reuse of academic knowledge.
+DoCO, the Document Components Ontology, is an OWL 2 DL ontology that
+provides a general-purpose structured vocabulary of document elements
+[#doco-paper]_ [#doco-site]_. DoCO has been designed as a general
+unifying ontological framework for describing different aspects related
+to the content of scientific and other scholarly texts
+[#doco-paper]_ [#doco-site]_. Its primary goal is to improve the
+interoperability and shareability of academic documents and related
+services when multiple formats are used for their storage
+[#doco-paper]_ [#doco-site]_. The ontology defines a wide range of
+document components, such as sections, paragraphs, figures, tables,
+references, and metadata elements, supporting detailed semantic
+annotation of document structure [#doco-paper]_ [#doco-site]_. DoCO
+enables automated document processing, content extraction, and
+knowledge management in digital libraries, publishing platforms, and
+research repositories [#doco-paper]_ [#doco-site]_. By providing a
+standardized vocabulary, DoCO facilitates the integration of scholarly
+content across diverse formats and platforms, enhancing discoverability
+and reuse of academic knowledge [#doco-paper]_ [#doco-site]_.
 
-**Example Usage**:
-Annotate a scientific article with DoCO terms to specify its sections (introduction, methods, results, discussion), figures, tables, and references, enabling automated extraction and semantic search of document components.
+**Example Usage**: Annotate a scientific article with DoCO terms to
+specify its sections, such as introduction, methods, results, and
+discussion, together with figures, tables, and references, enabling
+automated extraction and semantic search of document components
+[#doco-paper]_ [#doco-site]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +155,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#doco-paper] Constantin, A., Peroni, S., Pettifer, S.,
+   Shotton, D., and Vitali, F. 2015.
+   "The Document Components Ontology (DoCO)."
+   *Semantic Web*.
+   doi:10.3233/SW-150177
+   Available at:
+   `https://research.manchester.ac.uk/en/publications/the-document-components-ontology-doco/ <https://research.manchester.ac.uk/en/publications/the-document-components-ontology-doco/>`_
+
+.. [#doco-site] SPAR Ontologies. n.d. "DoCO, the Document Components Ontology."
+   Available at:
+   `https://www.sparontologies.net/ontologies/doco <https://www.sparontologies.net/ontologies/doco>`_

@@ -25,29 +25,29 @@
 Agronomy Ontology (AgrO)
 ========================================================================================================
 
-The Agronomy Ontology (AgrO) provides terms from the agronomy domain
-that are semantically organized and facilitate the collection, storage,
-and use of agronomic data, enabling easier interpretation and reuse by
-both humans and machines [#cgiar]_ [#obo]_. To analyze the effects of
-varying practices within cropping systems, it is often necessary to
-integrate data from multiple disciplinary domains. For example, data on
-field management, soil, weather, and crop phenotypes may need to be
-combined to assess crop performance under different management
-interventions. However, agronomic data are often collected, described,
-and stored in inconsistent ways, which impedes data comparison, mining,
-interpretation, and reuse [#cgiar]_. The use of standards for metadata
-and data annotation plays a key role in addressing these challenges.
-While the CG Core Metadata Schema provides a metadata standard to
-describe agricultural datasets, the Agronomy Ontology enables the
-description of agronomic variables using standardized and semantically
-defined terms [#cgiar]_ [#agrofims]_. AgrO specifically covers agronomic
-practices, techniques, and variables used in agronomic experiments and
-reuses terms from other ontologies to support interoperability [#obo]_.
 
-**Example Usage**: Annotate agronomic field experiment data with AgrO terms for management
-practices, treatments, and measured variables to enable standardized
-description, interoperable storage, and cross-study comparison of
-agricultural data [#obo]_ [#agrofims]_.
+The Agronomy Ontology (AgrO) provides terms from the agronomy domain
+that are semantically organized to support the collection, integration,
+and reuse of agronomic data across disciplinary domains [#agro]_.
+To analyze the effects of varying practices within cropping systems, it
+is often necessary to integrate data from multiple disciplinary domains,
+including field management, soil, weather, and crop phenotype data.
+AgrO was developed to address the inconsistent description and storage
+of agronomic data, which can hinder comparison, interpretation, and
+reuse across studies and information systems [#agro]_. The use of
+standards for metadata and data annotation plays a key role in
+addressing these challenges. AgrO enables the description of agronomic
+variables using standardized and semantically defined terms and covers
+agronomic practices, techniques, and variables used in agronomic
+experiments [#agro]_. The ontology is available through AgroPortal for
+browsing and access [#agroportal]_.
+
+**Example Usage**: Annotate agronomic field experiment data with AgrO
+terms for management practices, treatments, and measured variables to
+support standardized description, improved interoperability, and
+cross-study comparison across agricultural datasets [#agro]_
+[#agroportal]_.
+
 
 Metrics & Statistics
 --------------------------
@@ -160,11 +160,20 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#cgiar] CGIAR. n.d. "Agronomy Ontology."
-   Available at: https://bigdata.cgiar.org/resources/agronomy-ontology/
+.. [#agro] Devare, M., Aubert, C., Laporte, M.-A., Valette, L.,
+   Arnaud, E., and Buttigieg, P. L. 2016.
+   "Data-driven Agricultural Research for Development:
+   A Need for Data Harmonization Via Semantics."
+   In *Proceedings of the 7th International Conference on
+   Biomedical Ontology (ICBO 2016)*.
+   CEUR Workshop Proceedings, Vol. 1747.
+   Available at:
+   https://ceur-ws.org/Vol-1747/IT205_ICBO2016.pdf
 
-.. [#obo] OBO Foundry. n.d. "Agronomy Ontology (AGRO)."
-   Available at: https://obofoundry.org/ontology/agro.html
+.. [#agroportal] Devare, M., Aubert, C., Laporte, M.-A., Valette, L.,
+   Arnaud, E., and Buttigieg, P. L. n.d. "Agronomy Ontology (AgrO)."
+   Available at:
+   https://agroportal.lirmm.fr/ontologies/AGRO?p=summary
 
 .. [#agrofims] Devare, M., Aubert, C., Benites Alfaro, O. E.,
    Perez Masias, I. O., and Laporte, M.-A. 2021.

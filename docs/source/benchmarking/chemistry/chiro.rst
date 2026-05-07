@@ -23,10 +23,24 @@
 CHEBI Integrated Role Ontology (CHIRO)
 ========================================================================================================
 
-The CHEBI Integrated Role Ontology (CHIRO) is a specialized ontology designed to provide a structured role hierarchy for chemicals. It connects chemicals in the structural hierarchy via a 'has role' relation, linking them to relevant classes in other ontologies. This enables the formalization of relationships between chemical structures (e.g., small molecules, drugs) and their functional roles, such as their biological or chemical activities. CHIRO facilitates the integration of chemical data with biological and biomedical ontologies, supporting applications in drug discovery, chemical informatics, and systems biology. By providing a standardized framework for describing chemical roles, CHIRO enhances data interoperability and enables advanced semantic queries across chemical and biological datasets. The ontology is particularly useful for linking chemical entities to their roles in biological processes, such as enzyme inhibitors, signaling molecules, or structural components.
+The CHEBI Integrated Role Ontology (CHIRO) is a specialized ontology
+designed to provide a structured role hierarchy for chemicals
+[#chiro-obo]_ [#chiro-paper]_. It extends the role branch associated
+with ChEBI by connecting chemicals in the structural hierarchy through
+a `has role` relation and by linking chemical roles to relevant classes
+in other ontologies [#chiro-obo]_ [#chiro-paper]_. This enables formal
+representation of relationships between chemical structures, such as
+small molecules and drugs, and the biological or chemical roles they
+play [#chiro-obo]_ [#chiro-paper]_. By providing a standardized
+framework for describing chemical roles, CHIRO supports semantic
+interoperability, ontology-based integration, and advanced querying
+across chemical and biomedical datasets [#chiro-paper]_ [#chiro-obo]_.
 
-**Example Usage**:
-Annotate a dataset of small molecules with CHIRO terms to specify their roles, such as "enzyme inhibitor" or "neurotransmitter," and link these roles to relevant biological processes or pathways.
+**Example Usage**: Annotate a dataset of small molecules with CHIRO
+terms to specify roles such as enzyme inhibitor or neurotransmitter,
+and link those roles to related biological processes or target classes,
+enabling semantic search, cross-dataset integration, and role-based
+analysis of chemical entities [#chiro-obo]_ [#chiro-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +149,16 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#chiro-obo] OBO Foundry. n.d. "CHEBI Integrated Role Ontology."
+   Available at: `https://obofoundry.org/ontology/chiro.html <https://obofoundry.org/ontology/chiro.html>`_
+
+.. [#chiro-paper] Hoyt, C. T., Mungall, C., Vasilevsky, N.,
+   Domingo-Fernández, D., Healy, M., and Colluru, V. 2020.
+   "Extension of Roles in the ChEBI Ontology."
+   ChemRxiv.
+   doi:10.26434/chemrxiv.12591221
+   Available at: `https://chemrxiv.org/doi/10.26434/chemrxiv.12591221 <https://chemrxiv.org/doi/10.26434/chemrxiv.12591221>`_

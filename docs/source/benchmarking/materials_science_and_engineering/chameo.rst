@@ -23,10 +23,12 @@
 Characterisation Methodology Domain Ontology (CHAMEO)
 ========================================================================================================
 
-The Characterisation Methodology Domain Ontology (CHAMEO) is a domain ontology for materials characterization, representing the evolution of the CHADA template in an ontological form. CHAMEO enables the generation of FAIR documentation for characterization experiments and serves as a foundation for the development of technique-specific and application-specific ontologies in the materials characterization domain. The ontology provides a structured vocabulary for describing experimental setups, measurement techniques, sample properties, data acquisition, and analysis workflows. CHAMEO supports semantic annotation of characterization data, facilitating interoperability, data integration, and advanced analytics across research projects and digital platforms. By providing a standardized framework, CHAMEO enhances reproducibility, knowledge sharing, and cross-laboratory comparison in materials science. The ontology is actively maintained and extended to incorporate new characterization methods, standards, and community requirements.
+The Characterisation Methodology Domain Ontology (CHAMEO) is a domain ontology for materials characterisation that represents the CHADA template in ontological form [#chameo-github]_ [#chameo-paper]_. CHAMEO supports the generation of FAIR documentation for characterisation experiments and provides a foundation for developing technique-specific and application-specific ontologies in the materials characterisation domain [#chameo-github]_. It provides a structured vocabulary for describing characterisation methodologies, experimental workflows, samples, measurement processes, instruments, data acquisition, and data processing activities [#chameo-paper]_.
+
+The ontology supports semantic annotation of materials characterisation data, enabling interoperability, data integration, knowledge sharing, and more consistent documentation across laboratories and digital materials platforms [#chameo-github]_ [#chameo-paper]_. By providing a standardized framework, CHAMEO helps improve reproducibility and comparison of materials characterisation experiments [#chameo-paper]_.
 
 **Example Usage**:
-Annotate a materials characterization experiment with CHAMEO terms to specify the measurement technique (e.g., X-ray diffraction), sample preparation, instrument configuration, and data analysis workflow, enabling semantic search and integration with materials databases.
+Annotate a materials characterisation experiment with CHAMEO terms to specify the measurement technique, sample preparation, instrument configuration, measurement process, acquired data, and data analysis workflow. For example, an X-ray diffraction experiment can be described using CHAMEO concepts for the sample, characterisation method, instrument setup, measurement activity, and data processing steps, enabling semantic search and integration with materials databases [#chameo-github]_ [#chameo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#chameo-github] EMMO-repo. n.d.
+   "Characterisation Methodology Domain Ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/domain-characterisation-methodology <https://github.com/emmo-repo/domain-characterisation-methodology>`_
+
+.. [#chameo-paper] Del Nostro, P., Goldbeck, G., and Toti, D. 2022.
+   "CHAMEO: An ontology for the harmonisation of materials characterisation methodologies."
+   *Applied Ontology*, 17, 401--421.
+   DOI: 10.3233/AO-220271.
+   Available at:
+   `https://journals.sagepub.com/doi/10.3233/AO-220271 <https://journals.sagepub.com/doi/10.3233/AO-220271>`_

@@ -22,15 +22,14 @@
 
 Scientific Evidence and Provenance Information Ontology (SEPIO)
 ========================================================================================================
+The Scientific Evidence and Provenance Information Ontology (SEPIO) is an ontology for representing scientific evidence and provenance information, especially in relation to scientific claims [#sepio-github]_ [#sepio-bioportal]_. SEPIO provides a structured vocabulary for describing claims, evidence lines, information items, methods, tools, agents, and the provenance relationships involved in the creation and evaluation of scientific assertions [#sepio-bioportal]_.
 
-The Scientific Evidence and Provenance Information Ontology (SEPIO) is in its early stages of development, undergoing iterative refinement as new requirements emerge and alignment with existing standards is explored. SEPIO provides a structured vocabulary for representing scientific evidence, provenance, and related data, supporting both theoretical and experimental research in scientific evidence and provenance.
+The ontology employs a class-based modeling approach, defining classes for different types of scientific evidence, provenance, claims, evidence lines, and related information objects, along with properties to describe their relationships and interactions [#sepio-github]_ [#sepio-bioportal]_. Hierarchies and relations are used to organize evidence and provenance information, enabling structured retrieval, analysis, and comparison of scientific claims [#sepio-bioportal]_. SEPIO supports the integration of evidence and provenance metadata from various sources, promoting interoperability and data-driven research in scientific evidence representation [#sepio-github]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of scientific evidence, provenance, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. SEPIO supports the integration of data from various sources, promoting interoperability and data-driven research in scientific evidence and provenance.
-
-Typical applications of SEPIO include the development of new scientific evidence and provenance representation methods, the optimization of scientific evidence management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, SEPIO enhances collaboration and innovation in the field of scientific evidence and provenance.
+Typical applications of SEPIO include scientific claim annotation, evidence modeling, provenance tracking, data integration, curation, knowledge discovery, and manual or computational evaluation of scientific claims [#sepio-bioportal]_. By providing a standardized vocabulary and framework, SEPIO enhances interoperability and supports richer analysis of scientific evidence and provenance across research data platforms [#sepio-github]_ [#sepio-bioportal]_.
 
 **Example Usage**:
-Annotate a scientific study with SEPIO terms to specify scientific evidence, provenance, and related data, enabling semantic search and integration with scientific evidence and provenance platforms.
+Annotate a scientific study with SEPIO terms to specify a scientific claim, the evidence lines supporting or evaluating it, the information items used as evidence, and the methods, tools, and agents involved in producing that evidence. This enables semantic search, provenance tracking, claim evaluation, and integration with scientific evidence platforms [#sepio-github]_ [#sepio-bioportal]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +138,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#sepio-github] Monarch Initiative. n.d.
+   "Scientific Evidence and Provenance Information Ontology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/monarch-initiative/SEPIO-ontology <https://github.com/monarch-initiative/SEPIO-ontology>`_
+
+.. [#sepio-bioportal] NCBO BioPortal. 2023.
+   "Scientific Evidence and Provenance Information Ontology."
+   Available at:
+   `https://bioportal.bioontology.org/ontologies/SEPIO <https://bioportal.bioontology.org/ontologies/SEPIO>`_
