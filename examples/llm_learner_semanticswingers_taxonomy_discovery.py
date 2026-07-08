@@ -10,6 +10,7 @@ train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 # 2) Configure the semantic-swingers taxonomy learner.
 #    Offline default (no API key): the "embedding" selector.
 #    Champion: selector="openai" + api_key=... for gpt-4.1-mini parent selection.
+#    Local champion-reproduction (no API key): selector="ollama" (local Ollama server).
 learner = SemanticSwingersTaxonomyLearner(
     embedding_model="sentence-transformers/all-MiniLM-L6-v2",  # champion: mxbai-embed-large-v1
     top_k=10,

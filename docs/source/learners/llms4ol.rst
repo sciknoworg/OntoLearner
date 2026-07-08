@@ -79,3 +79,4 @@ LLMs4OL is a community development initiative collocated with the International 
    llms4ol_challenge/skhnlp_learner
    llms4ol_challenge/alexbek_learner
    llms4ol_challenge/sbunlp_learner
+   llms4ol_challenge/semanticswingers_learner

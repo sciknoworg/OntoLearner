@@ -15,12 +15,14 @@
 
 A retrieval-first taxonomy inducer: a sentence-embedding encoder embeds the type
 vocabulary, nearest neighbours become candidate parents, and a selection step picks
-the parent for each child. Two selectors are provided:
+the parent for each child. Three selectors are provided:
 
 * ``"embedding"`` (default) — fully offline/deterministic; the most *general* candidate
   (highest mean similarity to the vocabulary) is chosen as parent. No API key needed.
 * ``"openai"`` — the competition champion; an OpenAI chat model picks the parent from
   the retrieved candidates. Enabled only when an ``api_key`` is supplied (never hard-coded).
+* ``"ollama"`` — free, local reproduction of the champion: the same selection prompt is
+  served by a local Ollama model through its OpenAI-compatible endpoint. No API key needed.
 
 The team's finding is that the *encoder* is the bottleneck for this task, so the default
 encoder is ``mixedbread-ai/mxbai-embed-large-v1`` (a clean, no-fine-tuning +0.03 over MiniLM).
@@ -43,20 +45,34 @@ class SemanticSwingersTaxonomyLearner(AutoLearner):
         embedding_model: SentenceTransformer id used to embed type labels. Defaults to
             ``mixedbread-ai/mxbai-embed-large-v1`` (the team's champion encoder).
         top_k: Number of candidate parents retrieved per child before selection.
-        selector: ``"embedding"`` (offline heuristic) or ``"openai"`` (LLM selection).
-        openai_model: Chat model id used when ``selector="openai"``.
-        api_key: OpenAI API key. If ``None``, falls back to the ``OPENAI_API_KEY`` env
-            var; if still unset, the learner silently degrades to the embedding selector.
+        selector: ``"embedding"`` (offline heuristic), ``"openai"`` (champion LLM
+            selection), or ``"ollama"`` (local LLM selection, no API key).
+        llm_model: Chat model id used by the LLM selectors. Defaults to
+            ``gpt-4.1-mini`` for ``"openai"`` and ``llama3.1:8b`` for ``"ollama"``.
+        api_key: OpenAI API key for ``selector="openai"``. If ``None``, falls back to
+            the ``OPENAI_API_KEY`` env var; if still unset, the learner silently
+            degrades to the embedding selector. Ignored by ``"ollama"``.
+        base_url: OpenAI-compatible endpoint for the LLM selector. Defaults to the
+            local Ollama server (``http://localhost:11434/v1``) when
+            ``selector="ollama"``, and to the OpenAI API otherwise.
+        max_tokens: Completion budget for the LLM selector. Direct-answering models
+            need very little; thinking models (e.g. Qwen3.5) spend reasoning tokens
+            before answering and need a much larger budget (512+).
         device: Torch device for the encoder.
     """
+
+    _OLLAMA_BASE_URL = "http://localhost:11434/v1"
+    _DEFAULT_LLM = {"openai": "gpt-4.1-mini", "ollama": "llama3.1:8b"}
 
     def __init__(
         self,
         embedding_model: str = "mixedbread-ai/mxbai-embed-large-v1",
         top_k: int = 30,
         selector: str = "embedding",
-        openai_model: str = "gpt-4.1-mini",
+        llm_model: Optional[str] = None,
         api_key: Optional[str] = None,
+        base_url: Optional[str] = None,
+        max_tokens: int = 64,
         device: str = "cpu",
     ) -> None:
         """Initialise the learner and record configuration (no I/O yet)."""
@@ -64,8 +80,12 @@ class SemanticSwingersTaxonomyLearner(AutoLearner):
         self.embedding_model = embedding_model
         self.top_k = top_k
         self.selector = selector
-        self.openai_model = openai_model
+        self.llm_model = llm_model or self._DEFAULT_LLM.get(selector)
         self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
+        if base_url is None and selector == "ollama":
+            base_url = self._OLLAMA_BASE_URL
+        self.base_url = base_url
+        self.max_tokens = max_tokens
         self.device = device
         self._encoder: Optional[SentenceTransformer] = None
 
@@ -118,11 +138,16 @@ class SemanticSwingersTaxonomyLearner(AutoLearner):
                     break
         return preds
 
-    def _select_openai(self, nodes: List[str], sim: np.ndarray) -> List[dict]:
-        """Champion selector: an OpenAI chat model picks the parent from candidates."""
+    def _select_llm(self, nodes: List[str], sim: np.ndarray) -> List[dict]:
+        """LLM selector: a chat model picks the parent from the retrieved candidates.
+
+        Serves both the ``"openai"`` champion and the local ``"ollama"`` fallback —
+        the latter is just an OpenAI-compatible endpoint with a placeholder key.
+        """
         from openai import OpenAI
 
-        client = OpenAI(api_key=self.api_key)
+        api_key = self.api_key if self.selector == "openai" else (self.api_key or "ollama")
+        client = OpenAI(api_key=api_key, base_url=self.base_url)
         preds: List[dict] = []
         for child_idx, child in enumerate(nodes):
             candidates = [
@@ -138,10 +163,10 @@ class SemanticSwingersTaxonomyLearner(AutoLearner):
                 + "\n".join(f"- {c}" for c in candidates)
             )
             resp = client.chat.completions.create(
-                model=self.openai_model,
+                model=self.llm_model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0,
-                max_tokens=32,
+                max_tokens=self.max_tokens,
             )
             answer = (resp.choices[0].message.content or "").strip()
             for cand in candidates:
@@ -161,5 +186,5 @@ class SemanticSwingersTaxonomyLearner(AutoLearner):
             self._encoder.encode(nodes, normalize_embeddings=True, show_progress_bar=False)
         )
         sim = emb @ emb.T
-        use_openai = self.selector == "openai" and self.api_key
-        return self._select_openai(nodes, sim) if use_openai else self._select_embedding(nodes, sim)
+        use_llm = self.selector == "ollama" or (self.selector == "openai" and self.api_key)
+        return self._select_llm(nodes, sim) if use_llm else self._select_embedding(nodes, sim)
