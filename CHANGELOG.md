@@ -1,5 +1,9 @@
 ## Changelog
 
+### Unreleased
+- Add Semantic-Swingers taxonomy-discovery learner (LLMs4OL 2026, Task C): retrieval-first
+  taxonomy induction with a swappable parent selector (offline embedding baseline / OpenAI champion).
+
 ### v1.5.1 (March 30, 2026)
 - Fix challenge learner
 - Update requirements.
