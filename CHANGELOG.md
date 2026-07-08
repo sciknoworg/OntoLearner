@@ -1,6 +1,9 @@
 ## Changelog
 
 ### Unreleased
+- Add Semantic-Swingers term-typing learner (LLMs4OL 2026, Task B): closed-vocabulary
+  term typing with a swappable type selector (offline embedding baseline / OpenAI
+  champion / local Ollama reproduction).
 - Add Semantic-Swingers taxonomy-discovery learner (LLMs4OL 2026, Task C): retrieval-first
   taxonomy induction with a swappable parent selector (offline embedding baseline / OpenAI
   champion / local Ollama reproduction), plus documentation page and example.
