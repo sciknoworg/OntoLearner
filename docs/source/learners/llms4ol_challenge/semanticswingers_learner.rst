@@ -4,14 +4,50 @@ Semantic-Swingers Learner
 
 .. sidebar:: Semantic-Swingers Learner Examples
 
+   * Term Typing: `llm_learner_semanticswingers_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_semanticswingers_term_typing.py>`_
    * Taxonomy Discovery: `llm_learner_semanticswingers_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_semanticswingers_taxonomy_discovery.py>`_
 
-The Semantic-Swingers team participated in the LLMs4OL 2026 Shared Task. This page documents the
-taxonomy-discovery learner (Task C): a retrieval-first taxonomy inducer with a swappable
-parent-selection step.
+The Semantic-Swingers team participated in the LLMs4OL 2026 Shared Task. This page documents
+the term-typing learner (Task B) and the taxonomy-discovery learner (Task C). Both share the
+same design: a strong sentence-embedding encoder plus a swappable selection step with three
+interchangeable backends — an offline embedding heuristic (default, no API key), the OpenAI
+competition champion, and a free local Ollama reproduction of the champion pipeline.
 
+Term Typing (Task B)
+---------------------------------
 
-Overview
+Closed-vocabulary term typing: ``fit`` learns the inventory of allowed type labels from the
+train split, and at inference the selector assigns types to each term from that inventory only.
+
+- ``"embedding"`` (default) — each term gets its nearest type label by sentence-embedding
+  cosine similarity. Fully offline and deterministic.
+- ``"openai"`` — the champion. An OpenAI chat model (default ``gpt-4.1-mini``) classifies
+  term batches against the closed vocabulary with a precision-biased prompt (multi-type
+  allowed, abstains when nothing fits, labels copied exactly).
+- ``"ollama"`` — the same classification prompt served by a local Ollama model (default
+  ``llama3.1:8b``). No API key required.
+
+.. code-block:: python
+
+   from ontolearner import Wine, train_test_split, LearnerPipeline
+   from ontolearner.learner.term_typing import SemanticSwingersTermTypingLearner
+
+   ontology = Wine()
+   ontology.load()
+   train_data, test_data = train_test_split(ontology.extract(), test_size=0.2, random_state=42)
+
+   learner = SemanticSwingersTermTypingLearner(selector="embedding", device="cpu")
+
+   pipeline = LearnerPipeline(llm=learner, llm_id="semanticswingers-term-typing")
+   outputs = pipeline(
+       train_data=train_data,
+       test_data=test_data,
+       task="term-typing",
+       evaluate=True,
+   )
+   print(outputs["metrics"])
+
+Taxonomy Discovery (Task C)
 ---------------------------------
 
 The learner treats taxonomy discovery as *retrieve-then-select*:
@@ -43,7 +79,7 @@ inference time, so it works on unseen ontologies without any target-vocabulary
 assumptions.
 
 Loading Ontological Data
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -56,7 +92,7 @@ Loading Ontological Data
    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 
 Initialize Learner
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -81,7 +117,7 @@ Initialize Learner
    # )
 
 Run the Pipeline
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The learner runs on raw ontology objects, so pass ``ontologizer_data=False``.
 
