@@ -7,6 +7,9 @@
 - Add Semantic-Swingers taxonomy-discovery learner (LLMs4OL 2026, Task C): retrieval-first
   taxonomy induction with a swappable parent selector (offline embedding baseline / OpenAI
   champion / local Ollama reproduction), plus documentation page and example.
+- Add hermetic unit tests for both Semantic-Swingers learners (fit/predict contract,
+  embedding-selector determinism, closed-vocabulary parsing, openai-selector fallback with
+  no api_key) and a Reproducibility subsection to the Semantic-Swingers docs page.
 
 ### v1.5.1 (March 30, 2026)
 - Fix challenge learner

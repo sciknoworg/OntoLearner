@@ -140,3 +140,26 @@ The learner runs on raw ontology objects, so pass ``ontologizer_data=False``.
    )
 
    print(outputs["metrics"])
+
+Reproducibility
+---------------------------------
+
+Which selector reproduces which reported number, and what is required to run it:
+
+- **Term typing (Task B)** — the offline ``"embedding"`` selector alone gets close to the
+  competition champion on Wine (local ``≈0.687`` vs. the champion's ``0.690``). No API key
+  is needed to reproduce this figure.
+- **Taxonomy discovery (Task C)** — the gap is much larger: the paid champion selector
+  (``"openai"``) reaches ``0.21``, while the offline ``"embedding"`` heuristic reaches only
+  ``0.07``. Reproducing the champion number for this task requires an OpenAI API key (or the
+  local ``"ollama"`` selector as a free, unverified approximation of the same prompting
+  strategy).
+- **Determinism** — both offline ``"embedding"`` selectors are fully deterministic: same
+  encoder, same inputs, same outputs, every run (no sampling, ``temperature`` is irrelevant
+  since no LLM is called). The ``"openai"``/``"ollama"`` selectors call ``temperature=0``
+  but LLM outputs are not guaranteed bit-for-bit reproducible across provider versions.
+- **API key handling** — ``selector="openai"`` reads ``api_key`` if passed explicitly,
+  otherwise falls back to the ``OPENAI_API_KEY`` environment variable; if neither is set,
+  the learner silently degrades to the offline ``"embedding"`` selector rather than raising,
+  so pipelines never hard-fail for lack of a key. ``selector="ollama"`` never reads
+  ``OPENAI_API_KEY`` and needs no key at all — only a local Ollama server.
