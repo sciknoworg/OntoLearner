@@ -80,12 +80,12 @@ _SYSTEM_PROMPT = (
 _NOTHINK_SUFFIX = "<|im_start|>assistant\n<think>\n\n</think>\n\n"
 _TYPING_RELATIONS = {"is-a", "instance-of", "type"}
 
-# HuggingFace repo ids for the two published PEFT adapters (see yp4 for the publish step; these
-# are placeholders until the private HF repos exist — override via the `adapter` constructor arg
-# with a local path in the meantime, e.g. the team's `data/ft/_runners/raft_adapter/final`).
+# HuggingFace repo ids for the two published PEFT adapters (private until competition submission
+# 2026-07-26; override via the `adapter` constructor arg with a local path in the meantime, e.g.
+# the team's `data/ft/_runners/raft_adapter/final`).
 _ADAPTER_REPOS = {
-    "raft": "semanticswingers/qwen3.5-9b-raft-taska",
-    "baseft": "semanticswingers/qwen3.5-9b-baseft-taska",
+    "raft": "datagero/qwen3.5-9b-raft-taska",
+    "baseft": "datagero/qwen3.5-9b-baseft-taska",
 }
 
 
