@@ -6,12 +6,16 @@ Semantic-Swingers Learner
 
    * Term Typing: `llm_learner_semanticswingers_term_typing.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_semanticswingers_term_typing.py>`_
    * Taxonomy Discovery: `llm_learner_semanticswingers_taxonomy_discovery.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_semanticswingers_taxonomy_discovery.py>`_
+   * Text2Onto (Task A, flagship): `llm_learner_semanticswingers_text2onto.py <https://github.com/sciknoworg/OntoLearner/blob/main/examples/llm_learner_semanticswingers_text2onto.py>`_
 
 The Semantic-Swingers team participated in the LLMs4OL 2026 Shared Task. This page documents
-the term-typing learner (Task B) and the taxonomy-discovery learner (Task C). Both share the
-same design: a strong sentence-embedding encoder plus a swappable selection step with three
-interchangeable backends — an offline embedding heuristic (default, no API key), the OpenAI
-competition champion, and a free local Ollama reproduction of the champion pipeline.
+the term-typing learner (Task B), the taxonomy-discovery learner (Task C), and the flagship
+text2onto + taxonomy-discovery learner (Task A). Tasks B/C share the same design: a strong
+sentence-embedding encoder plus a swappable selection step with three interchangeable
+backends — an offline embedding heuristic (default, no API key), the OpenAI competition
+champion, and a free local Ollama reproduction of the champion pipeline. Task A is different:
+its champion is not a prompted API model but the team's own LoRA-fine-tuned open model, so its
+learner is a generative retrieval-augmented-generation pipeline instead.
 
 Term Typing (Task B)
 ---------------------------------
@@ -140,6 +144,71 @@ The learner runs on raw ontology objects, so pass ``ontologizer_data=False``.
    )
 
    print(outputs["metrics"])
+
+Text2Onto + Taxonomy Discovery, joint (Task A, flagship)
+---------------------------------------------------------
+
+``SemanticSwingersText2OntoLearner`` is ONE class implementing TWO hooks, dispatched via the
+``task`` string ``AutoLearner.fit``/``predict`` already receive:
+
+- ``_text2onto`` — the team's competition champion: retrieval-augmented generation (RAG,
+  top-``k`` document exemplars) with a LoRA fine-tuned ``Qwen/Qwen3.5-9B`` (RA-FT), extracting
+  ``[subject, relation, object]`` triples per document and projecting them onto the native
+  ``{"terms": [...], "types": [...]}`` shape.
+- ``_taxonomy_discovery`` — delegates to :class:`SemanticSwingersTaxonomyLearner` (Task C,
+  documented above) **by composition, not a rewrite**. The native taxonomy-discovery harness
+  hands the learner a bare type vocabulary with no source document text, so the RAG+FT
+  generator — which needs text to extract triples from — cannot serve that path; the team's
+  proven embedding-retrieval taxonomy inducer is the right tool there instead. Expect the
+  native taxonomy F1 this hook reports to differ from the team's own joint
+  ``graph_similarity`` figure (RA-FT k10, val_20: ``0.6688``) — that score is a different,
+  combined metric (term + type + edge overlap together) computed on the team's own document
+  corpus, not OntoLearner's standalone taxonomy metric on a vocabulary-only benchmark ontology.
+  A gap here is an expected apples-to-oranges artifact, not a regression.
+
+Model portability (why this needs an unusual install)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``Qwen/Qwen3.5-9B`` uses the ``qwen3_5``/``qwen3_next`` hybrid (dense + linear-attention)
+architecture. As of 2026-07-09 no *released* ``transformers`` version registers it — only
+``transformers`` installed from git source does:
+
+.. code-block:: bash
+
+   pip install "transformers @ git+https://github.com/huggingface/transformers.git@1f2fd05824a7ef71a767a122ebd7526ca4e55e40" \
+       "peft>=0.19" "accelerate>=1.0"
+
+This exact commit was verified (2026-07-09) to both register the architecture *and* produce
+coherent, on-topic triple extraction when loading the base model plus the team's PEFT adapter —
+**never a manually merged/fused checkpoint**: that route was tried and abandoned after producing
+a byte-identical-but-semantically-garbage state dict load (see
+``docs/ontolearner-native-integration-poc.md`` in the team's main repo, ``llms4ol-2026``, for
+the full investigation). This requirement is deliberately **not** added to OntoLearner's core
+``pyproject.toml`` — it is heavy (a from-source build) and a moving target that only this one
+learner needs. Calling ``learner.load()`` without it raises a clear ``ImportError`` naming the
+exact command above.
+
+.. code-block:: python
+
+   from ontolearner import LearnerPipeline
+   from ontolearner.learner.text2onto import SemanticSwingersText2OntoLearner
+
+   train_data = {
+       "documents": [{"doc_id": "d1", "text": "A poodle is a dog. A dog is a mammal."}],
+       "triples": {"d1": [["poodle", "is-a", "dog"], ["dog", "is-a", "mammal"]]},
+   }
+   test_data = {"documents": [{"doc_id": "d2", "text": "A tabby is a cat."}]}
+
+   # RA-FT (champion): trained WITH exemplars baked in, wants top_k > 0.
+   # adapter="baseft", top_k=0 selects the retrieval-free standard fine-tune instead.
+   learner = SemanticSwingersText2OntoLearner(adapter="raft", top_k=1, device="cpu")
+
+   pipeline = LearnerPipeline(llm=learner, llm_id="semanticswingers-text2onto", ontologizer_data=False)
+   outputs = pipeline(
+       train_data=train_data, test_data=test_data,
+       task="text2onto", evaluate=False, ontologizer_data=False,
+   )
+   print(outputs["predictions"])
 
 Reproducibility
 ---------------------------------

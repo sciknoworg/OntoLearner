@@ -14,3 +14,4 @@
 
 from .alexbek import AlexbekRAGFewShotLearner
 from .sbunlp import SBUNLPFewShotLearner
+from .semanticswingers import SemanticSwingersText2OntoLearner

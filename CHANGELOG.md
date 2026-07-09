@@ -10,6 +10,13 @@
 - Add hermetic unit tests for both Semantic-Swingers learners (fit/predict contract,
   embedding-selector determinism, closed-vocabulary parsing, openai-selector fallback with
   no api_key) and a Reproducibility subsection to the Semantic-Swingers docs page.
+- Add Semantic-Swingers text2onto + taxonomy-discovery learner (LLMs4OL 2026, Task A,
+  flagship): one class, two hooks — retrieval-augmented generation with a LoRA fine-tuned
+  Qwen3.5-9B (RA-FT/base-FT) for text2onto, composed with the existing taxonomy-discovery
+  learner (not a rewrite) for the vocabulary-only native harness. Requires transformers
+  installed from git source for the qwen3_5 architecture (lazy-imported, actionable
+  ImportError if missing — not added to core pyproject.toml), plus documentation section,
+  example, and hermetic unit tests.
 
 ### v1.5.1 (March 30, 2026)
 - Fix challenge learner
