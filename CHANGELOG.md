@@ -17,6 +17,10 @@
   installed from git source for the qwen3_5 architecture (lazy-imported, actionable
   ImportError if missing — not added to core pyproject.toml), plus documentation section,
   example, and hermetic unit tests.
+  - ``_text2onto`` now also returns the raw, unprojected extraction under an extra
+    ``"triples"`` key (harness-ignored: ``text2onto_metrics`` reads only ``terms``/``types``),
+    preserving the ``is-a``-dominant signal the native projection discards, for any
+    downstream consumer of ``run_report['predictions']``.
 
 ### v1.5.1 (March 30, 2026)
 - Fix challenge learner

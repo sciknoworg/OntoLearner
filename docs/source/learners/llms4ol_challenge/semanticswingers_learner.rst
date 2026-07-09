@@ -166,6 +166,17 @@ Text2Onto + Taxonomy Discovery, joint (Task A, flagship)
   corpus, not OntoLearner's standalone taxonomy metric on a vocabulary-only benchmark ontology.
   A gap here is an expected apples-to-oranges artifact, not a regression.
 
+``_text2onto``'s returned dict also carries the raw, unprojected triples under an extra
+``"triples"`` key (``[[doc_id, subject, relation, object], ...]``). The native
+``text2onto_metrics`` scorer reads only ``"terms"``/``"types"`` and silently ignores unknown
+keys, so this is purely additive — native scoring is unchanged, while the ``is-a``-dominant
+signal the ``{terms, types}`` projection would otherwise discard survives in
+``run_report['predictions']`` for downstream inspection. This is the "retained signal"
+demonstration referenced in this PR's Future-work section (ADR-0018 addendum §4, team's main
+repo ``llms4ol-2026``): a document-grounded, triple-scored harness variant was proposed but
+deliberately not built here, since this additive key already preserves the richer signal at
+zero core-code cost.
+
 Model portability (why this needs an unusual install)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

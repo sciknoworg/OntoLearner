@@ -196,6 +196,47 @@ def test_text2onto_predict_dedupes_repeated_terms_and_types():
     assert result["types"] == [{"doc_id": "d3", "type": "mammal"}]
 
 
+# -- _text2onto: raw triples pass through under an extra key (harness-ignored) -----------------
+
+
+def test_text2onto_predict_includes_raw_triples_alongside_terms_and_types():
+    """The 'triples' key is additive: terms/types shape is unchanged, and the raw (unprojected)
+    triples — including non-typing relations text2onto_metrics never sees — survive alongside."""
+    learner = SemanticSwingersText2OntoLearner()
+    learner._model = MagicMock()
+
+    canned_triples = [
+        ("poodle", "is-a", "dog"),
+        ("dog", "part_of", "canine-family"),  # non-typing relation: absent from terms/types logic
+    ]
+    with patch.object(learner, "_retrieve_exemplars", return_value=[]), \
+         patch.object(learner, "_generate_triples", return_value=canned_triples):
+        result = learner._text2onto({"documents": [{"doc_id": "d4", "text": "..."}]}, test=True)
+
+    assert set(result.keys()) == {"terms", "types", "triples"}
+    assert result["triples"] == [
+        ["d4", "poodle", "is-a", "dog"],
+        ["d4", "dog", "part_of", "canine-family"],
+    ]
+    # terms/types content is unaffected by the extra key: still exactly what the projection produces
+    assert result["terms"] == [
+        {"doc_id": "d4", "term": "poodle"},
+        {"doc_id": "d4", "term": "dog"},
+    ]
+    assert result["types"] == [{"doc_id": "d4", "type": "dog"}]
+
+
+def test_text2onto_predict_triples_empty_list_when_no_triples_generated():
+    learner = SemanticSwingersText2OntoLearner()
+    learner._model = MagicMock()
+
+    with patch.object(learner, "_retrieve_exemplars", return_value=[]), \
+         patch.object(learner, "_generate_triples", return_value=[]):
+        result = learner._text2onto({"documents": [{"doc_id": "d5", "text": "..."}]}, test=True)
+
+    assert result == {"terms": [], "types": [], "triples": []}
+
+
 # -- _taxonomy_discovery: composed delegation, not a rewrite -----------------------------------
 
 

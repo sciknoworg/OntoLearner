@@ -311,8 +311,18 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
     def _doc_text(d: Dict[str, Any]) -> str:
         return str(d.get("text") or d.get("context") or "")
 
-    def _text2onto(self, data: Any, test: bool = False) -> Optional[Dict[str, List[Dict[str, str]]]]:
-        """Train mode: index document exemplars. Test mode: extract triples -> {terms, types}."""
+    def _text2onto(self, data: Any, test: bool = False) -> Optional[Dict[str, List[Any]]]:
+        """Train mode: index document exemplars. Test mode: extract triples -> {terms, types}.
+
+        The returned dict also carries the raw, unprojected ``"triples"`` under an extra key
+        (``[[doc_id, subject, relation, object], ...]``). ``text2onto_metrics`` (OntoLearner's
+        native scorer, ``evaluation/metrics.py:81-90``) reads only ``"terms"``/``"types"`` and
+        silently ignores unknown keys, and the full dict passes through unchanged to
+        ``run_report['predictions']`` (``_learner.py:120``) — so this is purely additive: native
+        scoring is identical, and the ~90% ``is-a`` signal the ``{terms, types}`` projection
+        would otherwise discard survives in the returned predictions for downstream inspection
+        (see ADR-0018 addendum §4 in the team's main repo, ``llms4ol-2026``).
+        """
         if not isinstance(data, dict):
             raise ValueError(
                 "text2onto expects {'documents': [...], 'terms2docs': {...}, 'terms2types': "
@@ -338,6 +348,7 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
 
         pred_terms: List[Dict[str, str]] = []
         pred_types: List[Dict[str, str]] = []
+        pred_triples: List[List[str]] = []
         for d in docs:
             did = self._doc_id(d)
             text = self._doc_text(d)
@@ -347,6 +358,7 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
             terms_seen: set = set()
             types_seen: set = set()
             for s, r, o in triples:
+                pred_triples.append([did, s, r, o])
                 if s not in terms_seen:
                     terms_seen.add(s)
                     pred_terms.append({"doc_id": did, "term": s})
@@ -354,7 +366,7 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
                     types_seen.add(o)
                     pred_types.append({"doc_id": did, "type": o})
 
-        return {"terms": pred_terms, "types": pred_types}
+        return {"terms": pred_terms, "types": pred_types, "triples": pred_triples}
 
     # -- _taxonomy_discovery (composed, not reimplemented) ---------------------------------------
 
