@@ -49,6 +49,21 @@ _SYSTEM = (
 )
 
 
+def _reasoning_off(model: Optional[str]) -> Dict[str, Any]:
+    """Extra request kwargs that disable a thinking model's hidden reasoning pass.
+
+    Qwen3.x served over an OpenAI-compatible endpoint (e.g. Ollama) is a *thinking*
+    model: left on, it spends the whole ``max_tokens`` budget on reasoning and returns
+    empty content (``finish_reason="length"``, ``content=""``), so the selector parses
+    nothing and scores 0. Passing ``reasoning_effort="none"`` via ``extra_body`` turns
+    that off — the same fix the competition pipeline applies for the qwen+RAG=0 failure.
+    A no-op for non-qwen3 models, so it is always safe to include.
+    """
+    if str(model or "").startswith("qwen3"):
+        return {"extra_body": {"reasoning_effort": "none"}}
+    return {}
+
+
 class SemanticSwingersTermTypingLearner(AutoLearner):
     """Closed-vocabulary term typing with a swappable type selector.
 
@@ -186,6 +201,7 @@ class SemanticSwingersTermTypingLearner(AutoLearner):
                 ],
                 temperature=0,
                 max_tokens=self.max_tokens,
+                **_reasoning_off(self.llm_model),
             )
             try:
                 resp = client.chat.completions.create(

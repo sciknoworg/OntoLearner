@@ -151,3 +151,16 @@ def test_openai_selector_defaults():
 def test_explicit_llm_model_overrides_default():
     learner = SemanticSwingersTermTypingLearner(selector="ollama", llm_model="qwen3.5")
     assert learner.llm_model == "qwen3.5"
+
+
+def test_reasoning_off_only_for_qwen3():
+    """qwen3.x is a thinking model: without this the selector gets empty output (F1=0)."""
+    from ontolearner.learner.term_typing.semanticswingers import _reasoning_off
+
+    assert _reasoning_off("qwen3.5-nothink:9b") == {
+        "extra_body": {"reasoning_effort": "none"}
+    }
+    assert _reasoning_off("qwen3.5:9b") == {"extra_body": {"reasoning_effort": "none"}}
+    assert _reasoning_off("gpt-4.1-mini") == {}
+    assert _reasoning_off("llama3.1:8b") == {}
+    assert _reasoning_off(None) == {}

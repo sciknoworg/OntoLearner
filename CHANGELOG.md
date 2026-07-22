@@ -1,6 +1,7 @@
 ## Changelog
 
 ### Unreleased
+- Fix Semantic-Swingers LLM selectors (term-typing + taxonomy-discovery) returning empty output (F1=0) on qwen3.x thinking models: pass `reasoning_effort="none"` via `extra_body` for `qwen3*` models so the model answers instead of spending its whole token budget on hidden reasoning. No-op for non-qwen3 models. (Wine smoke: term-typing 0.0->~0.66, taxonomy-discovery 0.0->~0.14 with local qwen3.5-nothink:9b.)
 - Add Semantic-Swingers term-typing learner (LLMs4OL 2026, Task B): closed-vocabulary
   term typing with a swappable type selector (offline embedding baseline / OpenAI
   champion / local Ollama reproduction).
