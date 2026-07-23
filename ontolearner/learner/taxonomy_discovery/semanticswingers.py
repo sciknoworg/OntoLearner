@@ -37,6 +37,13 @@ from sentence_transformers import SentenceTransformer
 
 from ...base import AutoLearner
 
+#: Default parent-selection instruction for the LLM selectors. A template with ``{child}`` and
+#: ``{candidates}`` placeholders; override per-instance via the ``selection_prompt`` argument.
+_SELECTION_PROMPT = (
+    "Which of the following is the most likely direct parent (superclass) of '{child}'? "
+    "Answer with exactly one option or 'NONE'.\n{candidates}"
+)
+
 
 def _reasoning_off(model: Optional[str]) -> dict:
     """Extra request kwargs that disable a thinking model's hidden reasoning pass.
@@ -89,8 +96,14 @@ class SemanticSwingersTaxonomyLearner(AutoLearner):
         base_url: Optional[str] = None,
         max_tokens: int = 64,
         device: str = "cpu",
+        selection_prompt: Optional[str] = None,
     ) -> None:
-        """Initialise the learner and record configuration (no I/O yet)."""
+        """Initialise the learner and record configuration (no I/O yet).
+
+        ``selection_prompt`` is the parent-selection instruction for the LLM selectors — a template
+        with ``{child}`` and ``{candidates}`` placeholders. Defaults to :data:`_SELECTION_PROMPT`;
+        override to change the phrasing / task framing without subclassing.
+        """
         super().__init__()
         self.embedding_model = embedding_model
         self.top_k = top_k
@@ -102,6 +115,7 @@ class SemanticSwingersTaxonomyLearner(AutoLearner):
         self.base_url = base_url
         self.max_tokens = max_tokens
         self.device = device
+        self.selection_prompt = selection_prompt or _SELECTION_PROMPT
         self._encoder: Optional[SentenceTransformer] = None
 
     def load(self, model_id: Optional[str] = None, **kwargs: Any) -> None:
@@ -172,10 +186,8 @@ class SemanticSwingersTaxonomyLearner(AutoLearner):
             ]
             if not candidates:
                 continue
-            prompt = (
-                f"Which of the following is the most likely direct parent (superclass) "
-                f"of '{child}'? Answer with exactly one option or 'NONE'.\n"
-                + "\n".join(f"- {c}" for c in candidates)
+            prompt = self.selection_prompt.format(
+                child=child, candidates="\n".join(f"- {c}" for c in candidates)
             )
             resp = client.chat.completions.create(
                 model=self.llm_model,

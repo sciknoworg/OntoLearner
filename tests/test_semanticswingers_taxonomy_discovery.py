@@ -167,3 +167,13 @@ def test_reasoning_off_only_for_qwen3():
     assert _reasoning_off("gpt-4.1-mini") == {}
     assert _reasoning_off("llama3.1:8b") == {}
     assert _reasoning_off(None) == {}
+
+
+def test_selection_prompt_is_injectable_and_defaults():
+    from ontolearner.learner.taxonomy_discovery.semanticswingers import (
+        SemanticSwingersTaxonomyLearner, _SELECTION_PROMPT,
+    )
+    assert SemanticSwingersTaxonomyLearner().selection_prompt == _SELECTION_PROMPT
+    custom = SemanticSwingersTaxonomyLearner(selection_prompt="parent of {child}: {candidates}")
+    out = custom.selection_prompt.format(child="Chianti", candidates="- Wine")
+    assert out == "parent of Chianti: - Wine"

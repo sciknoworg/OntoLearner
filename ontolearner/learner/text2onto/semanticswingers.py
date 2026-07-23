@@ -362,9 +362,27 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         )
 
     def _build_prompt(self, text: str, exemplars: List[Dict[str, Any]]) -> str:
-        ctx = text[:4000]
+        """Render the generation prompt for the local (peft/mlx) backends.
+
+        Uses the loaded tokenizer's **own chat template** so the learner works with any model
+        family, not just Qwen's ChatML. Verified byte-identical to the hand-built ChatML for
+        ``Qwen/Qwen3.5-9B`` (``enable_thinking=False`` reproduces the ``<think></think>`` no-think
+        suffix exactly), so this does not perturb the team's trained adapters. Falls back to the
+        Qwen ChatML string only if no tokenizer / chat template is available.
+        """
+        msgs = self._chat_messages(text, exemplars)
+        tok = getattr(self, "_tokenizer", None)
+        if tok is not None and getattr(tok, "chat_template", None):
+            try:
+                return tok.apply_chat_template(
+                    msgs, add_generation_prompt=True, tokenize=False, enable_thinking=False
+                )
+            except TypeError:  # tokenizer's template doesn't take enable_thinking
+                return tok.apply_chat_template(msgs, add_generation_prompt=True, tokenize=False)
+        # Fallback: the original hand-built Qwen ChatML (no tokenizer available).
         ex_block = "".join(self._exemplar_block(e) for e in exemplars)
-        user = f"<|im_start|>user\nDocument:\n{ctx}\n\nExtract the ontology triples as JSON.<|im_end|>\n"
+        user = (f"<|im_start|>user\nDocument:\n{text[:4000]}\n\n"
+                "Extract the ontology triples as JSON.<|im_end|>\n")
         return (
             f"<|im_start|>system\n{self.system_prompt}<|im_end|>\n" + ex_block + user + _NOTHINK_SUFFIX
         )
