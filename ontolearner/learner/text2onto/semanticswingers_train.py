@@ -230,67 +230,49 @@ def _train_peft(pairs: List[Dict[str, str]], cfg: TrainConfig) -> str:
 
 
 def _train_mlx(pairs: List[Dict[str, str]], cfg: TrainConfig) -> str:
-    """LoRA SFT via ``mlx_lm`` on Apple Silicon.
+    """LoRA SFT via the ``mlx_lm lora`` **CLI** on Apple Silicon.
 
-    Uses ``mlx_lm``'s own LoRA trainer, which already implements prompt masking (``--mask-prompt``)
-    and writes ``adapters.safetensors`` + ``adapter_config.json`` — the format the inference path
-    loads with ``mlx_lm.load(model, adapter_path=...)``. Base defaults to the 4-bit MLX build; the
-    resulting adapter is a *separate 4-bit artifact* from the bf16 PEFT champions.
+    Invokes ``python -m mlx_lm lora --train`` — the stable, version-robust entry point, and the exact
+    command the team's own ``ft35_overnight.py`` used to produce the real MLX adapters. We do **not**
+    bind ``mlx_lm``'s low-level ``tuner`` API: it churns across releases (the dataset ``__getitem__``
+    contract and the LoRA-config keys have both shifted), so re-implementing the loop is fragile for
+    no benefit. The CLI reads ``{prompt, completion}`` jsonl, applies prompt masking itself, and writes
+    ``adapters.safetensors`` + ``adapter_config.json`` — the format ``backend="mlx"`` inference loads.
 
-    STATUS (2026-07-23): this drives ``mlx_lm``'s **low-level** ``tuner`` API, which is not stable
-    across ``mlx_lm`` releases — the dataset ``__getitem__`` contract and the ``linear_to_lora_layers``
-    config keys have both shifted between versions. This binding is written against the mlx_lm the
-    team pins and is **not yet validated end-to-end here**; treat it as the reference wiring, and for
-    a robust run prefer the ``mlx_lm`` LoRA CLI (``python -m mlx_lm lora``) over the two adapters
-    directory produced by :func:`write_jsonl`. The pure-Python data rails above (leave-one-out,
-    prompt masking) and the ``backend="mlx"`` *inference* path are validated; only this trainer's
-    low-level API binding is pending. The PEFT trainer is the validated-by-port CUDA path.
+    The base defaults to the 4-bit MLX build, so the adapter is a *separate 4-bit artifact* from the
+    bf16 PEFT champions (a Mac-native FT variant, not a reproduction of the reported scores).
     """
-    try:
-        import mlx.optimizers as optim
-        from mlx_lm import load as mlx_load
-        from mlx_lm.tuner.datasets import CompletionsDataset
-        from mlx_lm.tuner.trainer import TrainingArgs, train as mlx_train
-        from mlx_lm.tuner.utils import linear_to_lora_layers
-    except ImportError as e:
-        raise RuntimeError(
-            "train_backend='mlx' needs mlx-lm (Apple Silicon). `pip install mlx-lm`. "
-            "Original error: " + str(e)
-        ) from e
+    import subprocess
+    import sys
+
+    out = Path(cfg.output_dir)
+    write_jsonl(pairs, out / "train.jsonl")
+    write_jsonl(pairs[: max(1, len(pairs) // 10)], out / "valid.jsonl")
 
     base = cfg.base_model_id
     if base == "Qwen/Qwen3.5-9B":                 # bf16 id -> its MLX-quantized sibling
         base = "mlx-community/Qwen3.5-9B-4bit"
-    model, tokenizer = mlx_load(base)
 
-    out = Path(cfg.output_dir)
-    write_jsonl(pairs, out / "train.jsonl")
-    val = pairs[: max(1, len(pairs) // 10)]
-
-    # LoRA-ify then train. CompletionsDataset applies mask_prompt itself (loss on completion only),
-    # which is exactly the masking rail we want — so the MLX path gets it for free from mlx_lm.
-    model.freeze()
-    linear_to_lora_layers(model, num_layers=8, config={
-        "rank": cfg.lora_r, "scale": float(cfg.lora_alpha), "dropout": cfg.lora_dropout,
-    })
-    class _Processed(CompletionsDataset):
-        # This mlx_lm build's CompletionsDataset.__getitem__ returns the raw record; the trainer's
-        # iterate_batches expects the *processed* (tokens, offset) tuple. Apply process() here.
-        def __getitem__(self, idx):
-            return self.process(self._data[idx])
-
-    ds = lambda rows: _Processed(
-        rows, tokenizer, prompt_key="prompt", completion_key="completion", mask_prompt=True)
-
-    args = TrainingArgs(
-        batch_size=cfg.batch_size, iters=cfg.target_steps, max_seq_length=cfg.seq_len,
-        steps_per_report=cfg.steps_per_report, steps_per_save=cfg.save_every,
-        adapter_file=str(out / "adapters.safetensors"), grad_checkpoint=True,
-    )
-    mlx_train(model=model, optimizer=optim.AdamW(learning_rate=cfg.learning_rate),
-              train_dataset=ds(pairs), val_dataset=ds(val), args=args)
-    (out / "adapter_config.json").write_text(json.dumps({
-        "fine_tune_type": "lora", "lora_parameters": {"rank": cfg.lora_r},
-        "num_layers": 8, "model": base,
-    }, indent=2))
+    cmd = [
+        sys.executable, "-m", "mlx_lm", "lora",
+        "--model", base,
+        "--train",
+        "--data", str(out),
+        "--fine-tune-type", "lora",
+        "--num-layers", "8",
+        "--batch-size", str(cfg.batch_size),
+        "--iters", str(cfg.target_steps),
+        "--max-seq-length", str(cfg.seq_len),
+        "--learning-rate", str(cfg.learning_rate),
+        "--steps-per-report", str(cfg.steps_per_report),
+        "--save-every", str(cfg.save_every),
+        "--adapter-path", str(out),
+        "--grad-checkpoint",
+    ]
+    result = subprocess.run(cmd)
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"`mlx_lm lora` training failed (exit {result.returncode}). Command:\n  "
+            + " ".join(cmd)
+        )
     return str(out)
