@@ -47,6 +47,7 @@ import ast
 import json
 import os
 import re
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 from ...base import AutoLearner, AutoRetriever
@@ -85,8 +86,10 @@ _TYPING_RELATIONS = {"is-a", "instance-of", "type"}
 # 2026-07-26; override via the `adapter` constructor arg with a local path in the meantime, e.g.
 # the team's `data/ft/_runners/raft_adapter/final`).
 _ADAPTER_REPOS = {
-    "raft": "datagero/qwen3.5-9b-raft-taska",
-    "baseft": "datagero/qwen3.5-9b-baseft-taska",
+    "raft": "datagero/qwen3.5-9b-ontology-extraction-raft",
+    "baseft": "datagero/qwen3.5-9b-ontology-extraction-baseft",
+    # Apple-Silicon 4-bit MLX variant (base-FT regime); pair with backend="mlx".
+    "baseft-mlx": "datagero/qwen3.5-9b-ontology-extraction-baseft-mlx",
 }
 
 
@@ -293,6 +296,15 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
             if mlx_base == "Qwen/Qwen3.5-9B":          # bf16 id -> its MLX-quantized sibling
                 mlx_base = "mlx-community/Qwen3.5-9B-4bit"
             adapter_path = self.adapter if self.adapter and self.adapter != "none" else None
+            # mlx_lm.load(adapter_path=...) only accepts a LOCAL dir — unlike PEFT it does not
+            # fetch a HF repo id. If the adapter is a repo id (not an on-disk path), pull it first.
+            if adapter_path and not Path(adapter_path).exists():
+                from huggingface_hub import snapshot_download
+                adapter_path = snapshot_download(
+                    repo_id=adapter_path,
+                    allow_patterns=["adapters.safetensors", "adapter_config.json",
+                                    "adapter_model.safetensors"],
+                )
             self._mlx_model, self._tokenizer = _mlx_load(mlx_base, adapter_path=adapter_path)
             self._model = self          # sentinel
             self._taxonomy_learner.load(model_id=self.retriever_model_id)

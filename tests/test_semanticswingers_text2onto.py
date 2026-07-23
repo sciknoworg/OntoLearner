@@ -43,7 +43,9 @@ def test_load_raises_before_touching_the_network(monkeypatch):
 
 def test_known_adapter_alias_resolves_to_hf_repo():
     learner = SemanticSwingersText2OntoLearner(adapter="raft")
-    assert learner.adapter == "datagero/qwen3.5-9b-raft-taska"
+    assert learner.adapter == "datagero/qwen3.5-9b-ontology-extraction-raft"
+    assert (SemanticSwingersText2OntoLearner(adapter="baseft-mlx").adapter
+            == "datagero/qwen3.5-9b-ontology-extraction-baseft-mlx")
 
 
 def test_unknown_adapter_value_passed_through_unchanged():
