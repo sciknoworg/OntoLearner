@@ -1,3 +1,4 @@
+import json
 from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
@@ -302,3 +303,76 @@ def test_chat_messages_carry_exemplars_as_turns():
     assert "ex doc" in msgs[1]["content"]
     assert '"triples"' in msgs[2]["content"]
     assert "target doc" in msgs[3]["content"]
+
+
+# -- training (semanticswingers_train) ----------------------------------------------------------
+
+def test_encode_example_masks_prompt_tokens():
+    """Loss must be computed only on completion tokens (prompt labels = -100)."""
+    from ontolearner.learner.text2onto.semanticswingers_train import encode_example
+
+    ids = {"the prompt": [1, 2, 3], "the completion": [4, 5]}
+    tok = lambda s: ids[s]
+    input_ids, labels = encode_example(tok, eos_id=9, prompt="the prompt",
+                                       completion="the completion", max_len=100)
+    assert input_ids == [1, 2, 3, 4, 5, 9]
+    assert labels == [-100, -100, -100, 4, 5, 9]      # prompt masked, completion+eos trained
+
+
+def test_encode_example_left_truncates_prompt_on_overflow():
+    """On overflow keep the completion (the target) intact; drop prompt from the left."""
+    from ontolearner.learner.text2onto.semanticswingers_train import encode_example
+
+    tok = lambda s: list(range(10)) if s == "P" else [100, 101]
+    input_ids, labels = encode_example(tok, eos_id=None, prompt="P", completion="C", max_len=4)
+    assert input_ids[-2:] == [100, 101]               # completion survives
+    assert labels[-2:] == [100, 101]
+    assert len(input_ids) == 4
+
+
+def test_build_training_pairs_raft_is_leave_one_out():
+    """A RAFT training prompt for doc X must never contain X's own gold (no leakage)."""
+    from ontolearner.learner.text2onto.semanticswingers_train import build_training_pairs
+
+    docs = [{"doc_id": "x", "text": "doc x", "triples": [("a", "is-a", "b")]},
+            {"doc_id": "y", "text": "doc y", "triples": [("c", "is-a", "d")]}]
+
+    def fake_retrieve(text, exclude_id):
+        # would return self if not excluded; assert the learner passes the right id
+        return [d for d in docs if d["doc_id"] != exclude_id]
+
+    seen = {}
+
+    def fake_build_prompt(text, exemplars):
+        seen[text] = [e["doc_id"] for e in exemplars]
+        return "PROMPT:" + text
+
+    pairs = build_training_pairs(docs, fake_build_prompt, fake_retrieve, "raft")
+    assert seen["doc x"] == ["y"]                      # x trained with y's exemplar, not its own
+    assert seen["doc y"] == ["x"]
+    assert json.loads(pairs[0]["completion"]) == {"triples": [["a", "is-a", "b"]]}
+
+
+def test_build_training_pairs_baseft_has_no_exemplars():
+    from ontolearner.learner.text2onto.semanticswingers_train import build_training_pairs
+
+    docs = [{"doc_id": "x", "text": "doc x", "triples": [("a", "is-a", "b")]}]
+    calls = []
+    pairs = build_training_pairs(
+        docs, lambda t, ex: (calls.append(ex) or "P"),
+        lambda t, xid: [{"doc_id": "should-not-be-used"}], "baseft")
+    assert calls == [[]]                              # baseft prompts carry no exemplars
+    assert len(pairs) == 1
+
+
+def test_train_adapter_rejects_unknown_backend():
+    from ontolearner.learner.text2onto.semanticswingers_train import TrainConfig, train_adapter
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as d:
+        cfg = TrainConfig(output_dir=d)
+        try:
+            train_adapter([{"prompt": "p", "completion": "c"}], cfg, "nonsense")
+            assert False, "expected ValueError"
+        except ValueError as e:
+            assert "peft" in str(e) and "mlx" in str(e)

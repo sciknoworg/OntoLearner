@@ -209,13 +209,28 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         retriever_model_id: str = "sentence-transformers/all-MiniLM-L6-v2",
         max_new_tokens: int = 1500,
         device: str = "cpu",
+        train_mode: Optional[str] = None,
+        train_backend: str = "peft",
+        output_dir: Optional[str] = None,
+        train_kwargs: Optional[Dict[str, Any]] = None,
         taxonomy_kwargs: Optional[Dict[str, Any]] = None,
     ) -> None:
-        """Initialise the learner and record configuration (no I/O, no model load yet)."""
+        """Initialise the learner and record configuration (no I/O, no model load yet).
+
+        Training (optional): set ``train_mode`` to ``"raft"`` (retrieval-aware, needs ``top_k>0``)
+        or ``"baseft"`` (no exemplars, ``top_k=0``) and ``fit()`` will *train* a LoRA adapter into
+        ``output_dir`` and then load it, instead of only indexing exemplars. ``train_backend`` picks
+        the trainer: ``"peft"`` (CUDA) or ``"mlx"`` (Apple Silicon). ``train_mode=None`` (default)
+        keeps the pure-inference behaviour unchanged.
+        """
         super().__init__()
         self.adapter = _ADAPTER_REPOS.get(adapter, adapter)
         self.base_model_id = base_model_id
         self.backend = backend
+        self.train_mode = train_mode
+        self.train_backend = train_backend
+        self.output_dir = output_dir
+        self.train_kwargs = train_kwargs or {}
         self.llm_model = llm_model or self._DEFAULT_LLM.get(backend)
         self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
         if base_url is None and backend == "ollama":
@@ -261,6 +276,25 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         if self.backend in ("ollama", "openai"):
             # API-served backends need no local weights: the generator is remote.
             self._model = self          # sentinel so `_generate_triples` sees an initialised learner
+            self._taxonomy_learner.load(model_id=self.retriever_model_id)
+            return
+
+        if self.backend == "mlx":
+            # Apple-Silicon path: MLX base + (optional) MLX-format LoRA adapter. Runs the
+            # fine-tuned champions on a Mac, where the transformers/PEFT path falls back to CPU.
+            try:
+                from mlx_lm import load as _mlx_load
+            except ImportError as e:
+                raise RuntimeError(
+                    "backend='mlx' needs mlx-lm (Apple Silicon). `pip install mlx-lm`. "
+                    "Original error: " + str(e)
+                ) from e
+            mlx_base = self.base_model_id
+            if mlx_base == "Qwen/Qwen3.5-9B":          # bf16 id -> its MLX-quantized sibling
+                mlx_base = "mlx-community/Qwen3.5-9B-4bit"
+            adapter_path = self.adapter if self.adapter and self.adapter != "none" else None
+            self._mlx_model, self._tokenizer = _mlx_load(mlx_base, adapter_path=adapter_path)
+            self._model = self          # sentinel
             self._taxonomy_learner.load(model_id=self.retriever_model_id)
             return
 
@@ -346,10 +380,25 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         return _to_triples(_parse_triples_json(
             self._strip_think(resp.choices[0].message.content or "")))
 
+    def _generate_mlx(self, text: str, exemplars: List[Dict[str, Any]]) -> List[Tuple[str, str, str]]:
+        """Generate via MLX (Apple Silicon) using the same ChatML prompt as the PEFT path."""
+        from mlx_lm import generate as _mlx_generate
+        from mlx_lm.sample_utils import make_sampler
+
+        if self._model is None:
+            self.load()
+        prompt = self._build_prompt(text, exemplars)
+        out = _mlx_generate(self._mlx_model, self._tokenizer, prompt=prompt,
+                            max_tokens=self.max_new_tokens,
+                            sampler=make_sampler(temp=0.0), verbose=False)
+        return _to_triples(_parse_triples_json(self._strip_think(out)))
+
     def _generate_triples(self, text: str, exemplars: List[Dict[str, Any]]) -> List[Tuple[str, str, str]]:
         """Run the generator on one document and return parsed ``(s, r, o)`` triples."""
         if self.backend in ("ollama", "openai"):
             return self._generate_api(text, exemplars)
+        if self.backend == "mlx":
+            return self._generate_mlx(text, exemplars)
 
         import torch
 
@@ -373,6 +422,45 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         hits = self._retriever.retrieve([text], top_k=self.top_k)[0]
         by_text = {d["text"]: d for d in self._train_docs}
         return [by_text[h] for h in hits if h in by_text]
+
+    def _retrieve_exemplars_loo(self, text: str, exclude_id: str) -> List[Dict[str, Any]]:
+        """Leave-one-out retrieval for TRAINING: never return the document's own gold.
+
+        Over-fetch by one then drop the self-match, so a training prompt for doc X is built from
+        *other* documents' exemplars. Dropping this is silent leakage that inflates the score.
+        """
+        if self.top_k <= 0 or not self._train_docs:
+            return []
+        hits = self._retriever.retrieve([text], top_k=self.top_k + 1)[0]
+        by_text = {d["text"]: d for d in self._train_docs}
+        out = [by_text[h] for h in hits if h in by_text and by_text[h].get("doc_id") != exclude_id]
+        return out[: self.top_k]
+
+    def _fit_adapter(self) -> None:
+        """Train a LoRA adapter from ``self._train_docs`` and load it for inference.
+
+        Delegates to :mod:`semanticswingers_train`: build ``{prompt, completion}`` pairs (with
+        leave-one-out exemplars when ``train_mode="raft"``), run the chosen trainer, then point
+        ``self.adapter`` at the produced adapter and reload. Keeps this class free of the heavy
+        training stack unless training is actually requested.
+        """
+        from .semanticswingers_train import TrainConfig, build_training_pairs, train_adapter
+
+        if not self.output_dir:
+            raise ValueError("train_mode is set but output_dir is None — nowhere to write the adapter.")
+        pairs = build_training_pairs(
+            self._train_docs, self._build_prompt, self._retrieve_exemplars_loo, self.train_mode
+        )
+        cfg = TrainConfig(
+            output_dir=self.output_dir, base_model_id=self.base_model_id,
+            train_mode=self.train_mode, top_k=self.top_k, **self.train_kwargs,
+        )
+        produced = train_adapter(pairs, cfg, self.train_backend)
+        # switch to inference on the freshly trained adapter
+        self.adapter = produced
+        self.backend = "mlx" if self.train_backend == "mlx" else "peft"
+        self._model = None
+        self.load()
 
     # -- _text2onto -----------------------------------------------------------------------------
 
@@ -414,6 +502,8 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
             if self._train_docs:
                 self._retriever.load(self.retriever_model_id)
                 self._retriever.index([d["text"] for d in self._train_docs])
+            if self.train_mode:
+                self._fit_adapter()          # train a LoRA adapter, then load it for inference
             return None
 
         if self._model is None:
