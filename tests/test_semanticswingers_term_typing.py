@@ -164,3 +164,11 @@ def test_reasoning_off_only_for_qwen3():
     assert _reasoning_off("gpt-4.1-mini") == {}
     assert _reasoning_off("llama3.1:8b") == {}
     assert _reasoning_off(None) == {}
+
+
+def test_system_prompt_is_injectable_and_defaults():
+    from ontolearner.learner.term_typing.semanticswingers import (
+        SemanticSwingersTermTypingLearner, _SYSTEM,
+    )
+    assert SemanticSwingersTermTypingLearner().system_prompt == _SYSTEM
+    assert SemanticSwingersTermTypingLearner(system_prompt="CUSTOM").system_prompt == "CUSTOM"

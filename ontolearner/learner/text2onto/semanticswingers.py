@@ -193,8 +193,24 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         device: Torch device string (``"cpu"``, ``"cuda"``, ``"mps"``, ...). CPU works but is
             slow without the ``fla``/``causal-conv1d`` fast kernels (GPU-only); see the class
             docstring's model-portability note.
+        system_prompt: Extraction instructions handed to the generator. Defaults to the team's
+            (:data:`_SYSTEM_PROMPT`). **Override to adapt to your domain / relation vocabulary**
+            without subclassing.
+        typing_relations: The relations that project a triple ``(s, r, o)`` to a ``type`` when
+            reshaping to OntoLearner's ``{terms, types}`` output. Defaults to
+            ``{"is-a", "instance-of", "type"}``; override for a different schema (e.g.
+            ``{"rdf:type", "rdfs:subClassOf"}``).
         taxonomy_kwargs: Extra keyword arguments forwarded to the composed
             :class:`SemanticSwingersTaxonomyLearner` used for the ``_taxonomy_discovery`` hook.
+
+    Extending this learner (see ``examples/llm_learner_semanticswingers_extend.py``):
+        * **Different model / backend / retriever** — pass ``backend``, ``llm_model``,
+          ``base_model_id``, ``adapter``, ``retriever_model_id``. No code.
+        * **Different domain** — pass ``system_prompt`` and ``typing_relations``. No code.
+        * **Different behaviour** — subclass and override one method (e.g. ``_generate_triples``);
+          retrieval, backend dispatch, training and the projection are all inherited.
+        * **Your own adapter** — ``train_mode`` + ``fit()`` train against whatever ``system_prompt``
+          you set.
     """
 
     _OLLAMA_BASE_URL = "http://localhost:11434/v1"
@@ -212,6 +228,8 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         retriever_model_id: str = "sentence-transformers/all-MiniLM-L6-v2",
         max_new_tokens: int = 1500,
         device: str = "cpu",
+        system_prompt: Optional[str] = None,
+        typing_relations: Optional[set] = None,
         train_mode: Optional[str] = None,
         train_backend: str = "peft",
         output_dir: Optional[str] = None,
@@ -230,6 +248,10 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         self.adapter = _ADAPTER_REPOS.get(adapter, adapter)
         self.base_model_id = base_model_id
         self.backend = backend
+        # Extension points: bring your own extraction instructions / typing relations without
+        # subclassing. Default to the team's, so existing behaviour is unchanged.
+        self.system_prompt = system_prompt or _SYSTEM_PROMPT
+        self.typing_relations = set(typing_relations) if typing_relations else _TYPING_RELATIONS
         self.train_mode = train_mode
         self.train_backend = train_backend
         self.output_dir = output_dir
@@ -344,7 +366,7 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         ex_block = "".join(self._exemplar_block(e) for e in exemplars)
         user = f"<|im_start|>user\nDocument:\n{ctx}\n\nExtract the ontology triples as JSON.<|im_end|>\n"
         return (
-            f"<|im_start|>system\n{_SYSTEM_PROMPT}<|im_end|>\n" + ex_block + user + _NOTHINK_SUFFIX
+            f"<|im_start|>system\n{self.system_prompt}<|im_end|>\n" + ex_block + user + _NOTHINK_SUFFIX
         )
 
     @staticmethod
@@ -359,7 +381,7 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         The PEFT path renders exemplars into a single ChatML string; API backends want
         structured turns. Content is identical so the two backends stay comparable.
         """
-        msgs: List[Dict[str, str]] = [{"role": "system", "content": _SYSTEM_PROMPT}]
+        msgs: List[Dict[str, str]] = [{"role": "system", "content": self.system_prompt}]
         for ex in exemplars:
             payload = json.dumps({"triples": [list(t) for t in ex["triples"][:20]]},
                                  ensure_ascii=False)
@@ -537,7 +559,7 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
                 if s not in terms_seen:
                     terms_seen.add(s)
                     pred_terms.append({"doc_id": did, "term": s})
-                if r in _TYPING_RELATIONS and o not in types_seen:
+                if r in self.typing_relations and o not in types_seen:
                     types_seen.add(o)
                     pred_types.append({"doc_id": did, "type": o})
 

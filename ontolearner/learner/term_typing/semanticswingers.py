@@ -99,6 +99,7 @@ class SemanticSwingersTermTypingLearner(AutoLearner):
         max_tokens: int = 1024,
         batch_size: int = 20,
         device: str = "cpu",
+        system_prompt: Optional[str] = None,
     ) -> None:
         """Initialise the learner and record configuration (no I/O yet)."""
         super().__init__()
@@ -112,6 +113,8 @@ class SemanticSwingersTermTypingLearner(AutoLearner):
         self.max_tokens = max_tokens
         self.batch_size = batch_size
         self.device = device
+        # Extension point: override the classification instructions without subclassing.
+        self.system_prompt = system_prompt or _SYSTEM
         self._encoder: Optional[SentenceTransformer] = None
         self._allowed_types: List[str] = []
 
@@ -196,7 +199,7 @@ class SemanticSwingersTermTypingLearner(AutoLearner):
             params: Dict[str, Any] = dict(
                 model=self.llm_model,
                 messages=[
-                    {"role": "system", "content": _SYSTEM},
+                    {"role": "system", "content": self.system_prompt},
                     {"role": "user", "content": user},
                 ],
                 temperature=0,

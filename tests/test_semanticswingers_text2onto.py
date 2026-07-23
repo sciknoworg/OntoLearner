@@ -378,3 +378,28 @@ def test_train_adapter_rejects_unknown_backend():
             assert False, "expected ValueError"
         except ValueError as e:
             assert "peft" in str(e) and "mlx" in str(e)
+
+
+# -- extension points -------------------------------------------------------------------------
+
+def test_system_prompt_is_injectable_and_defaults():
+    """Others can bring their own extraction instructions without subclassing."""
+    from ontolearner.learner.text2onto.semanticswingers import (
+        SemanticSwingersText2OntoLearner, _SYSTEM_PROMPT,
+    )
+    assert SemanticSwingersText2OntoLearner().system_prompt == _SYSTEM_PROMPT
+    custom = SemanticSwingersText2OntoLearner(system_prompt="MY DOMAIN RULES")
+    assert custom.system_prompt == "MY DOMAIN RULES"
+    # the custom prompt actually reaches the built prompt + chat messages
+    assert "MY DOMAIN RULES" in custom._build_prompt("doc", [])
+    assert custom._chat_messages("doc", [])[0]["content"] == "MY DOMAIN RULES"
+
+
+def test_typing_relations_is_injectable_and_defaults():
+    """The relation set that projects to `types` is domain-specific and overridable."""
+    from ontolearner.learner.text2onto.semanticswingers import (
+        SemanticSwingersText2OntoLearner, _TYPING_RELATIONS,
+    )
+    assert SemanticSwingersText2OntoLearner().typing_relations == _TYPING_RELATIONS
+    custom = SemanticSwingersText2OntoLearner(typing_relations={"rdf:type", "subclass_of"})
+    assert custom.typing_relations == {"rdf:type", "subclass_of"}
