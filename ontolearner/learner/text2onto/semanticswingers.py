@@ -45,6 +45,7 @@ from __future__ import annotations
 
 import ast
 import json
+import os
 import re
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -161,6 +162,17 @@ def _to_triples(items: List[Any]) -> List[Tuple[str, str, str]]:
     return out
 
 
+def _reasoning_off(model: Optional[str]) -> Dict[str, Any]:
+    """Disable a thinking model's hidden reasoning pass (qwen3.x over an OpenAI-compatible API).
+
+    Left on, qwen3.x spends the whole ``max_tokens`` budget reasoning and returns empty content,
+    so nothing parses. No-op for other models. Mirrors the Task B/C learners.
+    """
+    if str(model or "").startswith("qwen3"):
+        return {"extra_body": {"reasoning_effort": "none"}}
+    return {}
+
+
 class SemanticSwingersText2OntoLearner(AutoLearner):
     """RAG + LoRA-fine-tuned Qwen3.5-9B triple extractor, serving text2onto and taxonomy-discovery.
 
@@ -182,10 +194,17 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
             :class:`SemanticSwingersTaxonomyLearner` used for the ``_taxonomy_discovery`` hook.
     """
 
+    _OLLAMA_BASE_URL = "http://localhost:11434/v1"
+    _DEFAULT_LLM = {"openai": "gpt-4.1-mini", "ollama": "qwen3.5-nothink:9b"}
+
     def __init__(
         self,
         adapter: str = "raft",
         base_model_id: str = "Qwen/Qwen3.5-9B",
+        backend: str = "peft",
+        llm_model: Optional[str] = None,
+        api_key: Optional[str] = None,
+        base_url: Optional[str] = None,
         top_k: int = 10,
         retriever_model_id: str = "sentence-transformers/all-MiniLM-L6-v2",
         max_new_tokens: int = 1500,
@@ -196,6 +215,12 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         super().__init__()
         self.adapter = _ADAPTER_REPOS.get(adapter, adapter)
         self.base_model_id = base_model_id
+        self.backend = backend
+        self.llm_model = llm_model or self._DEFAULT_LLM.get(backend)
+        self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
+        if base_url is None and backend == "ollama":
+            base_url = self._OLLAMA_BASE_URL
+        self.base_url = base_url
         self.top_k = top_k
         self.retriever_model_id = retriever_model_id
         self.max_new_tokens = max_new_tokens
@@ -232,6 +257,12 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
             return
         if model_id and "/" in model_id and model_id != self.adapter:
             self.base_model_id = model_id
+
+        if self.backend in ("ollama", "openai"):
+            # API-served backends need no local weights: the generator is remote.
+            self._model = self          # sentinel so `_generate_triples` sees an initialised learner
+            self._taxonomy_learner.load(model_id=self.retriever_model_id)
+            return
 
         _require_qwen35_transformers()
         import torch
@@ -276,8 +307,50 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
             text = text.split("</think>", 1)[1]
         return text.strip()
 
+    def _chat_messages(self, text: str, exemplars: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+        """Same prompt content as ``_build_prompt``, in OpenAI chat-message form.
+
+        The PEFT path renders exemplars into a single ChatML string; API backends want
+        structured turns. Content is identical so the two backends stay comparable.
+        """
+        msgs: List[Dict[str, str]] = [{"role": "system", "content": _SYSTEM_PROMPT}]
+        for ex in exemplars:
+            payload = json.dumps({"triples": [list(t) for t in ex["triples"][:20]]},
+                                 ensure_ascii=False)
+            msgs.append({"role": "user",
+                         "content": f"Document:\n{ex['text'][:1000]}\n\n"
+                                    "Extract the ontology triples as JSON."})
+            msgs.append({"role": "assistant", "content": payload})
+        msgs.append({"role": "user",
+                     "content": f"Document:\n{text[:4000]}\n\n"
+                                "Extract the ontology triples as JSON."})
+        return msgs
+
+    def _generate_api(self, text: str, exemplars: List[Dict[str, Any]]) -> List[Tuple[str, str, str]]:
+        """Generate via an OpenAI-compatible endpoint (``ollama`` or ``openai`` backend)."""
+        from openai import OpenAI
+
+        key = self.api_key if self.backend == "openai" else (self.api_key or "ollama")
+        client = OpenAI(api_key=key, base_url=self.base_url)
+        params: Dict[str, Any] = dict(
+            model=self.llm_model,
+            messages=self._chat_messages(text, exemplars),
+            temperature=0,
+            max_tokens=self.max_new_tokens,
+            **_reasoning_off(self.llm_model),
+        )
+        try:
+            resp = client.chat.completions.create(response_format={"type": "json_object"}, **params)
+        except Exception:
+            resp = client.chat.completions.create(**params)
+        return _to_triples(_parse_triples_json(
+            self._strip_think(resp.choices[0].message.content or "")))
+
     def _generate_triples(self, text: str, exemplars: List[Dict[str, Any]]) -> List[Tuple[str, str, str]]:
-        """Run the FT generator on one document and return parsed ``(s, r, o)`` triples."""
+        """Run the generator on one document and return parsed ``(s, r, o)`` triples."""
+        if self.backend in ("ollama", "openai"):
+            return self._generate_api(text, exemplars)
+
         import torch
 
         if self._model is None:

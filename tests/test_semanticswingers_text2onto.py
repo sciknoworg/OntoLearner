@@ -258,3 +258,47 @@ def test_taxonomy_discovery_fit_is_a_noop_via_delegation():
     sentinel_data = SimpleNamespace(type_taxonomies=SimpleNamespace(types=[], taxonomies=[]))
 
     assert learner._taxonomy_discovery(sentinel_data, test=False) is None
+
+
+def test_api_backends_need_no_local_weights():
+    """backend='ollama'/'openai' must not touch transformers/peft — that is the whole point."""
+    from ontolearner.learner.text2onto.semanticswingers import (
+        SemanticSwingersText2OntoLearner,
+    )
+
+    learner = SemanticSwingersText2OntoLearner(backend="ollama")
+    assert learner.llm_model == "qwen3.5-nothink:9b"
+    assert learner.base_url == "http://localhost:11434/v1"
+
+    learner_oai = SemanticSwingersText2OntoLearner(backend="openai")
+    assert learner_oai.llm_model == "gpt-4.1-mini"
+    assert learner_oai.base_url is None
+
+    # explicit override wins
+    custom = SemanticSwingersText2OntoLearner(backend="ollama", llm_model="llama3.1:8b")
+    assert custom.llm_model == "llama3.1:8b"
+
+
+def test_peft_remains_the_default_backend():
+    from ontolearner.learner.text2onto.semanticswingers import (
+        SemanticSwingersText2OntoLearner,
+    )
+
+    assert SemanticSwingersText2OntoLearner().backend == "peft"
+
+
+def test_chat_messages_carry_exemplars_as_turns():
+    """API backends need structured turns with the same content as the ChatML prompt."""
+    from ontolearner.learner.text2onto.semanticswingers import (
+        SemanticSwingersText2OntoLearner,
+    )
+
+    learner = SemanticSwingersText2OntoLearner(backend="ollama")
+    msgs = learner._chat_messages(
+        "target doc", [{"text": "ex doc", "triples": [("a", "is-a", "b")]}]
+    )
+    assert msgs[0]["role"] == "system"
+    assert [m["role"] for m in msgs[1:]] == ["user", "assistant", "user"]
+    assert "ex doc" in msgs[1]["content"]
+    assert '"triples"' in msgs[2]["content"]
+    assert "target doc" in msgs[3]["content"]
