@@ -338,11 +338,17 @@ class SemanticSwingersText2OntoLearner(AutoLearner):
         from peft import PeftModel
 
         self._tokenizer = AutoTokenizer.from_pretrained(self.base_model_id, trust_remote_code=True)
+        # Place the model on the requested device. Without device_map the base loads on CPU
+        # regardless of `device=`, so a "cuda" run would silently execute the 9B on CPU
+        # (minutes/doc). device_map loads weights straight onto the accelerator (also avoids a
+        # CPU-RAM spike vs. load-then-.to). CPU stays the default when device is cpu/unset.
+        _device_map = self.device if self.device and self.device != "cpu" else None
         base = AutoModelForCausalLM.from_pretrained(
             self.base_model_id,
             dtype=torch.bfloat16,
             trust_remote_code=True,
             low_cpu_mem_usage=True,
+            device_map=_device_map,
         )
         self._model = PeftModel.from_pretrained(base, self.adapter)
         self._model.eval()
