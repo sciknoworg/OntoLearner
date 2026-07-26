@@ -213,13 +213,17 @@ def _train_peft(pairs: List[Dict[str, str]], cfg: TrainConfig) -> str:
                     attention_mask=torch.tensor(batch["attention_mask"], device=device),
                     labels=torch.tensor(batch["labels"], device=device))
         if not torch.isfinite(out.loss):
-            optim.zero_grad(); micro += 1; continue
+            optim.zero_grad()
+            micro += 1
+            continue
         (out.loss / cfg.grad_accum).backward()
         micro += 1
         if micro % cfg.grad_accum:
             continue
         torch.nn.utils.clip_grad_norm_((p for p in model.parameters() if p.requires_grad), 1.0)
-        optim.step(); optim.zero_grad(); step += 1
+        optim.step()
+        optim.zero_grad()
+        step += 1
         if step % cfg.steps_per_report == 0:
             print(f"[peft] step {step}/{cfg.target_steps} loss={out.loss.item():.4f}", flush=True)
         if step % cfg.save_every == 0:

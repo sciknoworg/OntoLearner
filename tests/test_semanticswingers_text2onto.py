@@ -314,7 +314,7 @@ def test_encode_example_masks_prompt_tokens():
     from ontolearner.learner.text2onto.semanticswingers_train import encode_example
 
     ids = {"the prompt": [1, 2, 3], "the completion": [4, 5]}
-    tok = lambda s: ids[s]
+    def tok(s): return ids[s]
     input_ids, labels = encode_example(tok, eos_id=9, prompt="the prompt",
                                        completion="the completion", max_len=100)
     assert input_ids == [1, 2, 3, 4, 5, 9]
@@ -325,7 +325,7 @@ def test_encode_example_left_truncates_prompt_on_overflow():
     """On overflow keep the completion (the target) intact; drop prompt from the left."""
     from ontolearner.learner.text2onto.semanticswingers_train import encode_example
 
-    tok = lambda s: list(range(10)) if s == "P" else [100, 101]
+    def tok(s): return list(range(10)) if s == "P" else [100, 101]
     input_ids, labels = encode_example(tok, eos_id=None, prompt="P", completion="C", max_len=4)
     assert input_ids[-2:] == [100, 101]               # completion survives
     assert labels[-2:] == [100, 101]
