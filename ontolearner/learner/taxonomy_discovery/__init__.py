@@ -15,5 +15,8 @@
 from .alexbek import AlexbekCrossAttnLearner
 from .rwthdbis import RWTHDBISSFTLearner
 from .sbunlp import SBUNLPFewShotLearner
-from .semanticswingers import SemanticSwingersTaxonomyLearner
+from .semanticswingers import (
+    SemanticSwingersTaxonomyLearner,
+    SemanticSwingersMatrixTaxonomyLearner,
+)
 from .skhnlp import SKHNLPSequentialFTLearner, SKHNLPZSLearner
