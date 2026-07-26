@@ -1,36 +1,5 @@
 ## Changelog
 
-### Unreleased
-- Make the local (peft/mlx) prompt use the tokenizer's own chat template instead of hardcoded Qwen ChatML, so the Task A learner works with any model family — verified byte-identical to the old hand-built prompt for Qwen (`enable_thinking=False` reproduces the no-think suffix), so the team's trained adapters are unaffected; falls back to the manual ChatML if no tokenizer.
-- Make the Task C taxonomy learner's parent-selection prompt injectable (`selection_prompt=`, a `{child}`/`{candidates}` template) — same extensibility as Task A/B prompts.
-- Make the learners extensible without subclassing: `system_prompt` (Task A + Task B) and `typing_relations` (Task A) are now constructor arguments that default to the team's values, so others can adapt the prompt / relation schema to their own domain by passing arguments. Adds `examples/llm_learner_semanticswingers_extend.py` showing the three levels of customization (arguments -> prompt/relations -> subclass one method) and documents the extension points on the class.
-- Point `_ADAPTER_REPOS` at the published registry (`datagero/qwen3.5-9b-ontology-extraction-{raft,baseft,baseft-mlx}`) — generic names, and add the MLX alias. `backend="mlx"` now resolves a HF repo id by `snapshot_download` first (mlx_lm.load only accepts a local adapter dir, unlike PEFT which fetches repo ids directly), so `adapter="baseft-mlx"` loads the adapter straight from the Hub. Verified end-to-end from the private repo.
-- Change the MLX training backend to invoke the stable `mlx_lm lora` **CLI** (`python -m mlx_lm lora --train`) instead of binding mlx_lm's low-level `tuner` API, which churns across releases. This is the exact interface the team's own MLX trainer used, so it is version-robust and needs no re-implementation of the training loop.
-- Add **fine-tuning** to `SemanticSwingersText2OntoLearner` (`train_mode="raft"|"baseft"`, `train_backend="peft"|"mlx"`, `output_dir=`). Previously the fork shipped inference only — the adapter had to be trained elsewhere; `fit()` now trains a LoRA adapter and loads it. New `semanticswingers_train.py` carries the two load-bearing rails as pure-Python, unit-tested functions: prompt masking (loss on completion tokens only) and leave-one-out retrieval for RAFT (a training doc never sees its own gold). `train_mode=None` keeps inference unchanged.
-- Add `backend="mlx"` inference: run the fine-tuned champions on Apple Silicon (MLX base + MLX-format LoRA), where the transformers/PEFT path falls back to CPU. Completes the backend matrix: `peft` (CUDA), `mlx` (Apple Silicon), `ollama`/`openai` (API), and no-adapter base.
-- Add `backend=` to `SemanticSwingersText2OntoLearner` (`"peft"` default, plus `"ollama"` / `"openai"`), mirroring the `selector=` design already used by the term-typing and taxonomy-discovery learners. Task A generation was previously hardwired to transformers+PEFT, so serving it any other way required subclassing outside the package; API backends now need no local weights and no CUDA, making Task A runnable on a laptop like Tasks B and C.
-- Fix Semantic-Swingers LLM selectors (term-typing + taxonomy-discovery) returning empty output (F1=0) on qwen3.x thinking models: pass `reasoning_effort="none"` via `extra_body` for `qwen3*` models so the model answers instead of spending its whole token budget on hidden reasoning. No-op for non-qwen3 models. (Wine smoke: term-typing 0.0->~0.66, taxonomy-discovery 0.0->~0.14 with local qwen3.5-nothink:9b.)
-- Add Semantic-Swingers term-typing learner (LLMs4OL 2026, Task B): closed-vocabulary
-  term typing with a swappable type selector (offline embedding baseline / OpenAI
-  champion / local Ollama reproduction).
-- Add Semantic-Swingers taxonomy-discovery learner (LLMs4OL 2026, Task C): retrieval-first
-  taxonomy induction with a swappable parent selector (offline embedding baseline / OpenAI
-  champion / local Ollama reproduction), plus documentation page and example.
-- Add hermetic unit tests for both Semantic-Swingers learners (fit/predict contract,
-  embedding-selector determinism, closed-vocabulary parsing, openai-selector fallback with
-  no api_key) and a Reproducibility subsection to the Semantic-Swingers docs page.
-- Add Semantic-Swingers text2onto + taxonomy-discovery learner (LLMs4OL 2026, Task A,
-  flagship): one class, two hooks — retrieval-augmented generation with a LoRA fine-tuned
-  Qwen3.5-9B (RA-FT/base-FT) for text2onto, composed with the existing taxonomy-discovery
-  learner (not a rewrite) for the vocabulary-only native harness. Requires transformers
-  installed from git source for the qwen3_5 architecture (lazy-imported, actionable
-  ImportError if missing — not added to core pyproject.toml), plus documentation section,
-  example, and hermetic unit tests.
-  - ``_text2onto`` now also returns the raw, unprojected extraction under an extra
-    ``"triples"`` key (harness-ignored: ``text2onto_metrics`` reads only ``terms``/``types``),
-    preserving the ``is-a``-dominant signal the native projection discards, for any
-    downstream consumer of ``run_report['predictions']``.
-
 ### v1.5.1 (March 30, 2026)
 - Fix challenge learner
 - Update requirements.
