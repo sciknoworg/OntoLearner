@@ -33,7 +33,7 @@ import os
 from typing import Any, List, Optional
 
 import numpy as np
-from sentence_transformers import SentenceTransformer, utils
+from sentence_transformers import SentenceTransformer, util
 
 import torch
 import torch.nn as nn
@@ -236,39 +236,59 @@ class BilinearAdjacencyLayer(nn.Module):
 class SemanticSwingersMatrixTaxonomyLearner(SemanticSwingersTaxonomyLearner):
     """Hybrid Structural Matrix + LLM Taxonomy Discovery Learner (Champion Approach)."""
 
+    #: Public HuggingFace repo holding the trained structural matrix, so the
+    #: weights auto-download when no local copy is present (reviewers can run the
+    #: champion straight from a fresh clone).
+    _HF_REPO_ID = "datagero/taxonomy-structural-matrix-1024-mxbai"
+
     def __init__(
         self,
         embedding_model: str = "mixedbread-ai/mxbai-embed-large-v1",
         matrix_weights_path: str = "structural_matrix_w_1024_mxbai.pt",
         top_k: int = 10,
         llm_threshold: int = 1000,
+        hf_repo_id: Optional[str] = None,
         **kwargs
     ) -> None:
         # Pass backend/LLM args up to his constructor
         super().__init__(embedding_model=embedding_model, top_k=top_k, **kwargs)
         self.matrix_weights_path = matrix_weights_path
+        self.hf_repo_id = hf_repo_id or self._HF_REPO_ID
         self.llm_threshold = llm_threshold
         # Force PyTorch device detection
         self.device = "mps" if torch.backends.mps.is_available() else ("cuda" if torch.cuda.is_available() else "cpu")
         self._structural_layer = None
 
+    def _resolve_matrix_weights(self) -> str:
+        """Return a local path to the matrix weights, downloading from the HF
+        registry on first use when no local file exists."""
+        if os.path.exists(self.matrix_weights_path):
+            return self.matrix_weights_path
+        from huggingface_hub import hf_hub_download
+        return hf_hub_download(
+            repo_id=self.hf_repo_id,
+            filename=os.path.basename(self.matrix_weights_path),
+        )
+
     def load(self, model_id: Optional[str] = None, **kwargs: Any) -> None:
         """Override load to instantiate PyTorch tensors and the Matrix layer."""
         super().load(model_id, **kwargs) # Loads the standard SentenceTransformer
-        
+
         embedding_dim = self._encoder.get_sentence_embedding_dimension()
         self._structural_layer = BilinearAdjacencyLayer(embedding_dim=embedding_dim).to(self.device)
-        
-        if os.path.exists(self.matrix_weights_path):
-            self._structural_layer.load_state_dict(torch.load(self.matrix_weights_path, map_location=self.device))
-            self._structural_layer.eval()
+
+        weights_path = self._resolve_matrix_weights()
+        self._structural_layer.load_state_dict(torch.load(weights_path, map_location=self.device))
+        self._structural_layer.eval()
 
     def _cleanup_graph(self, raw_predictions: List[dict]) -> List[dict]:
         """Enforces DAG rules via NetworkX cycle breaking and Transitive Reduction."""
-        if not raw_predictions: return []
+        if not raw_predictions:
+            return []
         G = nx.DiGraph()
-        for p in raw_predictions: G.add_edge(p["parent"], p["child"])
-            
+        for p in raw_predictions:
+            G.add_edge(p["parent"], p["child"])
+
         while not nx.is_directed_acyclic_graph(G):
             try:
                 cycle = nx.find_cycle(G)

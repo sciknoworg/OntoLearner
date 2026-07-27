@@ -145,6 +145,29 @@ The learner runs on raw ontology objects, so pass ``ontologizer_data=False``.
 
    print(outputs["metrics"])
 
+Structural-matrix champion variant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``SemanticSwingersMatrixTaxonomyLearner`` is the hybrid champion configuration. On
+top of the retrieve-then-select base it adds a trained bilinear structural matrix
+``W`` (1024-D, over ``mxbai-embed-large-v1`` embeddings) that scores candidate is-a
+edges by direction, plus a DAG cleanup pass (cycle breaking + transitive reduction)
+and a matrix-only high-speed bypass for very large type vocabularies
+(``llm_threshold``). The matrix weights download automatically from the public
+Hugging Face registry ``datagero/taxonomy-structural-matrix-1024-mxbai`` on first
+``load()`` when no local copy is present, so it runs from a fresh clone.
+
+.. code-block:: python
+
+   from ontolearner.learner.taxonomy_discovery import SemanticSwingersMatrixTaxonomyLearner
+
+   learner = SemanticSwingersMatrixTaxonomyLearner(
+       embedding_model="mixedbread-ai/mxbai-embed-large-v1",
+       top_k=10,
+       llm_threshold=1000,   # matrix-only bypass above this many types
+       selector="openai",    # champion; "embedding"/"ollama" run offline
+   )
+
 Text2Onto + Taxonomy Discovery, joint (Task A, flagship)
 ---------------------------------------------------------
 

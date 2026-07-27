@@ -177,3 +177,83 @@ def test_selection_prompt_is_injectable_and_defaults():
     custom = SemanticSwingersTaxonomyLearner(selection_prompt="parent of {child}: {candidates}")
     out = custom.selection_prompt.format(child="Chianti", candidates="- Wine")
     assert out == "parent of Chianti: - Wine"
+
+
+# --- Structural-matrix champion (SemanticSwingersMatrixTaxonomyLearner) --------
+
+def test_bilinear_layer_scores_child_parent_pairs():
+    import torch
+    from ontolearner.learner.taxonomy_discovery.semanticswingers import (
+        BilinearAdjacencyLayer,
+    )
+
+    layer = BilinearAdjacencyLayer(embedding_dim=4)
+    child = torch.randn(3, 4)
+    parent = torch.randn(3, 4)
+    scores = layer(child, parent)
+
+    # one score per (child, parent) row, and it equals <W.child, parent>
+    assert scores.shape == (3,)
+    expected = torch.sum(layer.W(child) * parent, dim=-1)
+    assert torch.allclose(scores, expected)
+
+
+def test_cleanup_graph_breaks_cycles_and_transitively_reduces():
+    from ontolearner.learner.taxonomy_discovery.semanticswingers import (
+        SemanticSwingersMatrixTaxonomyLearner,
+    )
+
+    learner = SemanticSwingersMatrixTaxonomyLearner()
+
+    # A->B, B->C, A->C : the redundant A->C must be dropped by transitive reduction.
+    reduced = learner._cleanup_graph([
+        {"parent": "A", "child": "B"},
+        {"parent": "B", "child": "C"},
+        {"parent": "A", "child": "C"},
+    ])
+    edges = {(e["parent"], e["child"]) for e in reduced}
+    assert ("A", "C") not in edges
+    assert ("A", "B") in edges and ("B", "C") in edges
+
+    # A->B, B->A : a cycle must be broken so the result is a DAG.
+    import networkx as nx
+    deacycled = learner._cleanup_graph([
+        {"parent": "A", "child": "B"},
+        {"parent": "B", "child": "A"},
+    ])
+    G = nx.DiGraph((e["parent"], e["child"]) for e in deacycled)
+    assert nx.is_directed_acyclic_graph(G)
+
+    assert learner._cleanup_graph([]) == []
+
+
+def test_matrix_learner_defaults_to_public_hf_registry():
+    from ontolearner.learner.taxonomy_discovery.semanticswingers import (
+        SemanticSwingersMatrixTaxonomyLearner,
+    )
+
+    learner = SemanticSwingersMatrixTaxonomyLearner()
+    assert learner.hf_repo_id == "datagero/taxonomy-structural-matrix-1024-mxbai"
+
+
+def test_resolve_matrix_weights_prefers_local_then_falls_back_to_hf():
+    from ontolearner.learner.taxonomy_discovery.semanticswingers import (
+        SemanticSwingersMatrixTaxonomyLearner,
+    )
+
+    learner = SemanticSwingersMatrixTaxonomyLearner(
+        matrix_weights_path="structural_matrix_w_1024_mxbai.pt",
+    )
+
+    # Local file present -> used as-is, no download.
+    with patch(f"{MODULE}.os.path.exists", return_value=True):
+        assert learner._resolve_matrix_weights() == "structural_matrix_w_1024_mxbai.pt"
+
+    # Local file absent -> fetched from the HF registry by basename.
+    with patch(f"{MODULE}.os.path.exists", return_value=False), \
+            patch("huggingface_hub.hf_hub_download", return_value="/cache/x.pt") as dl:
+        assert learner._resolve_matrix_weights() == "/cache/x.pt"
+        dl.assert_called_once_with(
+            repo_id="datagero/taxonomy-structural-matrix-1024-mxbai",
+            filename="structural_matrix_w_1024_mxbai.pt",
+        )
