@@ -234,11 +234,17 @@ class BilinearAdjacencyLayer(nn.Module):
 
 
 class SemanticSwingersMatrixTaxonomyLearner(SemanticSwingersTaxonomyLearner):
-    """Hybrid Structural Matrix + LLM Taxonomy Discovery Learner (Champion Approach)."""
+    """Hybrid Structural Matrix + LLM Taxonomy Discovery Learner.
+
+    A scalable alternative to the primary LLM pipeline
+    (:class:`SemanticSwingersTaxonomyLearner`): a trained bilinear structural matrix
+    scores candidate is-a edges so per-node LLM inference can be bypassed on very
+    large ontologies (see ``llm_threshold``), with DAG cleanup on the output.
+    """
 
     #: Public HuggingFace repo holding the trained structural matrix, so the
-    #: weights auto-download when no local copy is present (reviewers can run the
-    #: champion straight from a fresh clone).
+    #: weights auto-download when no local copy is present (reviewers can run this
+    #: learner straight from a fresh clone).
     _HF_REPO_ID = "datagero/taxonomy-structural-matrix-1024-mxbai"
 
     def __init__(
