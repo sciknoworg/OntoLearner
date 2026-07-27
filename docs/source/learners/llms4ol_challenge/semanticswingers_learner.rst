@@ -145,10 +145,11 @@ The learner runs on raw ontology objects, so pass ``ontologizer_data=False``.
 
    print(outputs["metrics"])
 
-Structural-matrix champion variant
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Scale-aware structural-matrix variant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``SemanticSwingersMatrixTaxonomyLearner`` is the hybrid champion configuration. On
+``SemanticSwingersMatrixTaxonomyLearner`` is a scalable alternative to the primary
+LLM pipeline above, aimed at very large ontologies. On
 top of the retrieve-then-select base it adds a trained bilinear structural matrix
 ``W`` (1024-D, over ``mxbai-embed-large-v1`` embeddings) that scores candidate is-a
 edges by direction, plus a DAG cleanup pass (cycle breaking + transitive reduction)
