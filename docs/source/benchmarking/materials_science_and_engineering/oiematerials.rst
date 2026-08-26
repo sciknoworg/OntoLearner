@@ -23,13 +23,26 @@
 Open Innovation Environment Materials (OIEMaterials)
 ========================================================================================================
 
-The Open Innovation Environment Materials (OIEMaterials) ontology is a domain-level ontology developed to represent materials-related concepts in materials science [#oiematerials-github]_. It provides a structured vocabulary for describing materials and supports their alignment with the wider Open Innovation Environment ontology set [#oiematerials-github]_.
+The Open Innovation Environment Materials (OIEMaterials) ontology is a
+domain-level ontology developed to represent materials-related concepts
+in materials science [#oiematerials-github]_ [#oie-paper]_. It provides
+a structured vocabulary for describing materials and supports their
+alignment with the wider Open Innovation Environment ontology set
+[#oiematerials-github]_ [#oie-paper]_.
 
-OIEMaterials is part of the Open Innovation Environment ontology collection, which includes EMMO-compliant, domain-level ontologies for characterisation methods, manufacturing processes, materials, models, and software products [#oiematerials-github]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of materials-related information across materials science and informatics workflows [#oiematerials-github]_.
+OIEMaterials is part of the Open Innovation Environment ontology
+collection, which includes EMMO-compliant, domain-level ontologies for
+characterisation methods, manufacturing processes, materials, models,
+and software products [#oiematerials-github]_ [#oie-paper]_. The ontology
+supports semantic annotation, interoperability, data integration, and
+reuse of materials-related information across materials science and
+informatics workflows [#oiematerials-github]_ [#oie-paper]_.
 
 **Example Usage**:
-Annotate a materials dataset with OIEMaterials terms to specify materials and related materials science information, enabling semantic search and integration with materials informatics platforms [#oiematerials-github]_.
-
+Annotate a materials dataset with OIEMaterials terms to specify
+materials and related materials science information, enabling semantic
+search and integration with materials informatics platforms
+[#oiematerials-github]_ [#oie-paper]_.
 Metrics & Statistics
 --------------------------
 
@@ -146,3 +159,9 @@ References
    GitHub repository.
    Available at:
    `https://github.com/emmo-repo/OIE-Ontologies <https://github.com/emmo-repo/OIE-Ontologies>`_
+
+.. [#oie-paper] Del Nostro, P., Goldbeck, G., Pozzi, A., and Toti, D. 2023.
+   "Modeling Experts, Knowledge Providers and Expertise in Materials
+   Modeling: MAEO as an Application Ontology of EMMO's Ecosystem."
+   *Applied Ontology* 18(2):99--118.
+   `doi:10.3233/AO-230024 <https://doi.org/10.3233/AO-230024>`_

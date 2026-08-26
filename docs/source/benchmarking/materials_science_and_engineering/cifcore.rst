@@ -141,13 +141,16 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#cifcore-iucr] International Union of Crystallography. n.d.
-   "Core CIF dictionary."
+.. [#cifcore-iucr] OntoCommons. n.d.
+   "CIF Ontology."
+   Vocabulary documentation.
    Available at:
-   `https://www.iucr.org/resources/cif/dictionaries/cif_core <https://www.iucr.org/resources/cif/dictionaries/cif_core>`_
+   `https://data.ontocommons.linkeddata.es/vocabulary/Cif-ontology
+   <https://data.ontocommons.linkeddata.es/vocabulary/Cif-ontology>`_
 
 .. [#cif-ontology-github] EMMO-repo. n.d.
    "CIF Ontology."
    GitHub repository.
    Available at:
-   `https://github.com/emmo-repo/CIF-ontology <https://github.com/emmo-repo/CIF-ontology>`_
+   `https://github.com/emmo-repo/CIF-ontology
+   <https://github.com/emmo-repo/CIF-ontology>`_

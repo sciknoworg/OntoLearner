@@ -22,14 +22,14 @@
 
 SMART Protocols Ontology: Document Module (SP-Document)
 ========================================================================================================
-SMART Protocols Ontology: Document Module is an ontology designed to represent metadata used to report an experimental protocol [#sp-document]_ [#sp-github]_. It provides a structured vocabulary for representing experimental protocol documents, protocol metadata, and related descriptive information, supporting semantic documentation of experimental protocols [#sp-document]_.
+SMART Protocols Ontology: Document Module is an ontology designed to represent metadata used to report an experimental protocol [#sp-document]_ [#sp-paper]_. It provides a structured vocabulary for representing experimental protocol documents, protocol metadata, and related descriptive information, supporting semantic documentation of experimental protocols [#sp-document]_ [#sp-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for protocol-related metadata such as protocol title, identifier, authorship, application, provenance, reagents, instruments, samples, objectives, and other information needed to report an experimental protocol [#sp-document]_ [#sp-github]_. Hierarchies and properties are used to organize protocol-document information into structured categories, enabling retrieval, comparison, and analysis of experimental protocol metadata [#sp-document]_. SP-Document supports the integration of protocol descriptions from different sources, promoting interoperability and data-driven research in experimental protocol documentation [#sp-github]_.
+The ontology employs a class-based modeling approach, defining classes for protocol-related metadata such as protocol title, identifier, authorship, application, provenance, reagents, instruments, samples, objectives, and other information needed to report an experimental protocol [#sp-document]_ [#sp-paper]_. Hierarchies and properties are used to organize protocol-document information into structured categories, enabling retrieval, comparison, and analysis of experimental protocol metadata [#sp-document]_. SP-Document supports the integration of protocol descriptions from different sources, promoting interoperability and data-driven research in experimental protocol documentation [#sp-paper]_.
 
-Typical applications of SP-Document include experimental protocol reporting, protocol metadata standardization, semantic annotation of protocol documents, protocol repository development, protocol discovery, and integration of protocol descriptions with scientific workflow and laboratory information systems [#sp-document]_ [#sp-github]_. By providing a standardized vocabulary and framework, SP-Document enhances interoperability, reuse, and semantic search in the field of experimental protocol documentation [#sp-document]_.
+Typical applications of SP-Document include experimental protocol reporting, protocol metadata standardization, semantic annotation of protocol documents, protocol repository development, protocol discovery, and integration of protocol descriptions with scientific workflow and laboratory information systems [#sp-document]_ [#sp-paper]_. By providing a standardized vocabulary and framework, SP-Document enhances interoperability, reuse, and semantic search in the field of experimental protocol documentation [#sp-document]_ [#sp-paper]_.
 
 **Example Usage**:
-Annotate an experimental protocol with SP-Document terms to specify the protocol title, identifier, authors, application, provenance, reagents, instruments, samples, objectives, and related metadata. This enables semantic search, protocol comparison, metadata integration, and use within experimental protocol documentation platforms [#sp-document]_ [#sp-github]_.
+Annotate an experimental protocol with SP-Document terms to specify the protocol title, identifier, authors, application, provenance, reagents, instruments, samples, objectives, and related metadata. This enables semantic search, protocol comparison, metadata integration, and use within experimental protocol documentation platforms [#sp-document]_ [#sp-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -147,8 +147,10 @@ References
    Available at:
    `https://vocab.linkeddata.es/SMARTProtocols/myDocumentation_SPdoc_18Abril2017/index_SPdoc_V4.0.html <https://vocab.linkeddata.es/SMARTProtocols/myDocumentation_SPdoc_18Abril2017/index_SPdoc_V4.0.html>`_
 
-.. [#sp-github] Ontology Engineering Group, Universidad Politécnica de Madrid. n.d.
-   "SMART-Protocols."
-   GitHub Repository.
+.. [#sp-paper] Giraldo, O., García, A., López, F.,
+   et al. 2017.
+   "Using Semantics for Representing Experimental Protocols."
+   *Journal of Biomedical Semantics*, 8, 52.
    Available at:
-   `https://github.com/oeg-upm/SMART-Protocols <https://github.com/oeg-upm/SMART-Protocols>`_
+   `https://doi.org/10.1186/s13326-017-0160-y
+   <https://doi.org/10.1186/s13326-017-0160-y>`_

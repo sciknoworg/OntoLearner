@@ -24,24 +24,28 @@ Phenotype and Trait Ontology (PATO)
 ========================================================================================================
 
 The Phenotype and Trait Ontology (PATO) is a structured vocabulary for
-describing phenotypic qualities, attributes, and traits in a
-species-neutral way [#pato-obo]_ [#pato-framework]_. It provides a
-standardized framework for annotating and analyzing phenotypic data by
-defining qualities such as size, shape, color, morphology, and other
-characteristics that can be combined with biological entity ontologies
-to describe phenotypes [#pato-framework]_ [#pato-obo]_. PATO is widely
-used in phenotype annotation and in the logical definition of phenotype
-terms, supporting data integration and comparative analysis across
-biological datasets [#pato-framework]_ [#pato-obo]_. By providing a
-common language for phenotypic qualities, PATO facilitates semantic
-interoperability, computational reasoning, and cross-study phenotype
-analysis [#pato-framework]_ [#pato-obo]_.
+describing phenotypic qualities, attributes, and characteristics in a
+species-neutral manner [#pato-framework]_ [#pato-anatomy]_. It provides a
+standardized framework for representing qualities such as size, shape,
+color, morphology, and other characteristics that can be combined with
+terms from biological entity ontologies to construct phenotype
+descriptions [#pato-framework]_ [#pato-anatomy]_.
 
-**Example Usage**: Annotate a genetic or phenotype study with PATO terms
-to describe qualities such as red coloration, increased size, abnormal
-shape, or altered morphology in association with a specific biological
-entity, enabling cross-study comparison, semantic integration, and
-computational phenotype analysis [#pato-framework]_ [#pato-obo]_.
+PATO is widely used in phenotype annotation and in the logical
+definition of phenotype terms across species, supporting data
+integration and comparative analysis in genetics, developmental biology,
+and related life science domains [#pato-framework]_ [#pato-anatomy]_. By
+providing a common vocabulary for phenotypic qualities, PATO facilitates
+semantic interoperability, computational reasoning, and cross-species
+phenotype analysis [#pato-framework]_ [#pato-anatomy]_.
+
+**Example Usage**:
+
+Annotate a genetic or phenotype study with PATO terms to describe
+qualities such as red coloration, increased size, abnormal shape, or
+altered morphology in association with a specific biological entity,
+enabling cross-study comparison, semantic integration, and
+computational phenotype analysis [#pato-framework]_ [#pato-anatomy]_.
 
 Metrics & Statistics
 --------------------------
@@ -154,11 +158,19 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#pato-obo] OBO Foundry. n.d. "Phenotype And Trait Ontology (PATO)."
-   Available at: `https://obofoundry.org/ontology/pato.html <https://obofoundry.org/ontology/pato.html>`_
-
 .. [#pato-framework] Gkoutos, G. V., Green, E. C. J., Mallon, A.-M.,
    Hancock, J. M., and Davidson, D. 2005.
    "Using Ontologies to Describe Mouse Phenotypes."
-   *Genome Biology* 6:R8.
-   Available at: `https://pmc.ncbi.nlm.nih.gov/articles/PMC545487/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC545487/>`_
+   *Genome Biology* 6(1):R8.
+   doi:10.1186/gb-2004-6-1-r8
+   Available at:
+   `https://pmc.ncbi.nlm.nih.gov/articles/PMC549069/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC549069/>`_
+
+.. [#pato-anatomy] Gkoutos, G. V., Schofield, P. N., and Hoehndorf, R.
+   2018.
+   "The Anatomy of Phenotype Ontologies: Principles, Properties
+   and Applications."
+   *Briefings in Bioinformatics* 19(5):1008--1021.
+   doi:10.1093/bib/bbx035
+   Available at:
+   `https://pmc.ncbi.nlm.nih.gov/articles/PMC6169674/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC6169674/>`_

@@ -24,9 +24,9 @@
 
 Workflows in Linked Data (WiLD)
 ========================================================================================================
-WiLD is an ontology for describing, specifying, monitoring, and executing workflows in Linked Data environments [#wild-home]_ [#wild-paper]_. It provides a structured vocabulary for representing workflow models, workflow instances, activities, execution order, data flow, and dependencies between workflow components [#wild-paper]_. WiLD focuses on workflows whose components interact through read-write Linked Data interfaces, making workflow descriptions machine-readable and suitable for semantic web applications [#wild-paper]_. The ontology supports the formal representation of workflow structure and execution semantics, helping systems document, exchange, monitor, and reuse workflow descriptions in a consistent way [#wild-home]_ [#wild-paper]_. By providing a linked data-based workflow model, WiLD can support reproducibility, automation, workflow sharing, and semantic integration of computational or data-processing processes [#wild-paper]_.
+WiLD is an ontology for describing, specifying, monitoring, and executing workflows in Linked Data environments [#wild-paper]_ [#wild-demo]_. It provides a structured vocabulary for representing workflow models, workflow instances, activities, execution order, data flow, and dependencies between workflow components [#wild-paper]_. WiLD focuses on workflows whose components interact through read-write Linked Data interfaces, making workflow descriptions machine-readable and suitable for semantic web applications [#wild-paper]_ [#wild-demo]_. The ontology supports the formal representation of workflow structure and execution semantics, helping systems document, exchange, monitor, and reuse workflow descriptions in a consistent way [#wild-paper]_. By providing a linked data-based workflow model, WiLD can support reproducibility, automation, workflow sharing, and semantic integration of computational or data-processing processes [#wild-paper]_ [#wild-demo]_.
 
-**Example Usage**: Represent a bioinformatics data-processing pipeline using WiLD terms to describe sequential workflow steps such as quality control, alignment, and variant calling, together with input datasets, execution order, tool or service invocations, intermediate data, and output data products. This enables workflow documentation, semantic search, monitoring, reproducibility, and reuse across Linked Data-based workflow systems [#wild-home]_ [#wild-paper]_.
+**Example Usage**: Represent a bioinformatics data-processing pipeline using WiLD terms to describe sequential workflow steps such as quality control, alignment, and variant calling, together with input datasets, execution order, tool or service invocations, intermediate data, and output data products. This enables workflow documentation, semantic search, monitoring, reproducibility, and reuse across Linked Data-based workflow systems [#wild-paper]_ [#wild-demo]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,13 +139,23 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#wild-home] WiLD. n.d.
-   "WiLD - Workflows in Linked Data."
+.. [#wild-paper] Käfer, T., and Harth, A. 2018.
+   "Specifying, Monitoring, and Executing Workflows
+   in Linked Data Environments."
+   In *The Semantic Web -- ISWC 2018*,
+   Lecture Notes in Computer Science, Vol. 11136,
+   pp. 424--440.
+   Springer.
    Available at:
-   `https://purl.org/wild <https://purl.org/wild>`_
+   `https://doi.org/10.1007/978-3-030-00671-6_25
+   <https://doi.org/10.1007/978-3-030-00671-6_25>`_
 
-.. [#wild-paper] Käfer, Tobias, and Andreas Harth. 2018.
-   "Specifying, Monitoring, and Executing Workflows in Linked Data Environments."
-   *The Semantic Web -- ISWC 2018*.
+.. [#wild-demo] Käfer, T., Lauber, S., and Harth, A. 2018.
+   "Using Workflows to Build Compositions of Read-Write
+   Linked Data APIs on the Web of Things."
+   In *Proceedings of the ISWC 2018 Posters & Demonstrations,
+   Industry and Blue Sky Ideas Tracks*.
+   CEUR Workshop Proceedings, Vol. 2180.
    Available at:
-   `https://arxiv.org/pdf/1804.05044 <https://arxiv.org/pdf/1804.05044>`_
+   `https://ceur-ws.org/Vol-2180/paper-34.pdf
+   <https://ceur-ws.org/Vol-2180/paper-34.pdf>`_

@@ -28,25 +28,25 @@ PROcess Chemistry Ontology (PROCO)
 PROCO (PROcess Chemistry Ontology) is a formal ontology developed to
 standardize the representation of entities, relationships, and
 processes in process chemistry and chemical manufacturing
-[#proco-paper]_ [#proco-bioportal]_. It provides a structured
+[#proco-paper]_. It provides a structured
 vocabulary for describing chemical reactions, reactants, products,
 catalysts, reaction conditions, and process steps used in laboratory
-and industrial chemistry workflows [#proco-paper]_ [#proco-bioportal]_.
+and industrial chemistry workflows [#proco-paper]_.
 The ontology captures important process chemistry concepts such as
 temperature, pressure, time, stirring, solvents, workup operations, and
 other process-related information needed for detailed representation of
-chemical synthesis workflows [#proco-paper]_ [#proco-bioportal]_.
+chemical synthesis workflows [#proco-paper]_.
 By providing explicit and machine-interpretable definitions, PROCO
 supports semantic interoperability, data integration, and reasoning
 across process chemistry databases, laboratory information systems, and
-process development workflows [#proco-paper]_ [#proco-bioportal]_.
+process development workflows [#proco-paper]_.
 
 **Example Usage**: Represent a multi-step synthesis process with PROCO
 terms for each reaction step, including reactants, catalysts, solvents,
 reaction conditions such as temperature and pressure, workup procedures,
 and desired products with yield information, enabling semantic
 integration, process comparison, and automated reasoning across process
-chemistry datasets [#proco-paper]_ [#proco-bioportal]_.
+chemistry datasets [#proco-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -158,10 +158,6 @@ Use the following code to import this ontology programmatically:
 
 References
 ----------
-
-.. [#proco-bioportal] NCBO BioPortal. n.d. "Process Chemistry Ontology (PROCO)."
-   Available at:
-   `https://bioportal.bioontology.org/ontologies/PROCO <https://bioportal.bioontology.org/ontologies/PROCO>`_
 
 .. [#proco-paper] Schafer, W. A., Dance, Z. E., Dun, A. L., and He, Y. 2022.
    "Collaborative Development of a Process Chemistry Ontology."

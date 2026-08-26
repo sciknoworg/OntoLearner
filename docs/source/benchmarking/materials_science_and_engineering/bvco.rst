@@ -23,13 +23,11 @@
 Battery Value Chain Ontology (BVCO)
 ========================================================================================================
 
-The Battery Value Chain Ontology (BVCO) is a domain ontology developed to model processes along the battery value chain [#bvco-github]_ [#bvco-zenodo]_. BVCO provides a structured vocabulary for describing holistic processes that transform inputs or educts, such as matter, energy, and information, into outputs or products using tools such as devices and algorithms [#bvco-github]_. The ontology supports decomposition of processes into sub-processes and captures predecessor and successor relationships, enabling detailed representation of battery value chain activities [#bvco-github]_.
+The Battery Value Chain Ontology (BVCO) is a domain ontology developed to model processes along the battery value chain [#bvco-doc]_ [#bvco-zenodo]_. BVCO provides a structured vocabulary for describing holistic processes that transform inputs or educts, such as matter, energy, and information, into outputs or products using tools such as devices and algorithms [#bvco-doc]_. The ontology supports decomposition of processes into sub-processes and captures predecessor and successor relationships, enabling detailed representation of battery value chain activities [#bvco-doc]_.
 
-BVCO facilitates semantic annotation of battery value chain data and supports interoperability, data integration, and knowledge sharing across battery research and industrial workflows [#bvco-github]_. It is described as a work-in-progress ontology and is based on the General Process Ontology (GPO) and EMMO [#bvco-github]_.
+BVCO facilitates semantic annotation of battery value chain data and supports interoperability, data integration, and knowledge sharing across battery research and industrial workflows [#bvco-doc]_ [#bvco-zenodo]_. It is based on the General Process Ontology (GPO) and EMMO, while its authorship and development provenance are documented by Lukas Gold and Simon Stier [#bvco-doc]_ [#bvco-provenance]_.
 
-**Example Usage**:
-Annotate a battery manufacturing workflow with BVCO terms to specify raw material processing, cell production, quality-control steps, logistics, and recycling processes, enabling semantic search and integration with battery value chain data platforms [#bvco-github]_.
-
+**Example Usage**: Annotate a battery manufacturing workflow with BVCO terms to specify raw material processing, cell production, quality-control steps, logistics, and recycling processes, enabling semantic search and integration with battery value chain data platforms [#bvco-doc]_ [#bvco-zenodo]_.
 
 Metrics & Statistics
 --------------------------
@@ -142,15 +140,24 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#bvco-github] Battery-Value-Chain-Ontology. n.d.
-   "Battery Value Chain Ontology."
-   GitHub repository.
+.. [#bvco-provenance] Gold, L., and Stier, S. n.d.
+   "Battery Value Chain Ontology (BVCO): Provenance."
+   Provenance documentation.
    Available at:
-   `https://github.com/Battery-Value-Chain-Ontology/ontology <https://github.com/Battery-Value-Chain-Ontology/ontology>`_
+   `https://battery-value-chain-ontology.github.io/ontology/provenance/provenance-en.html
+   <https://battery-value-chain-ontology.github.io/ontology/provenance/provenance-en.html>`_
+
+.. [#bvco-doc] Gold, L., and Stier, S. n.d.
+   "Battery Value Chain Ontology (BVCO)."
+   Ontology documentation.
+   Available at:
+   `https://bvco.ontology.link/0.4.3
+   <https://bvco.ontology.link/0.4.3>`_
 
 .. [#bvco-zenodo] Stier, S., and Gold, L. 2023.
    "Battery Value Chain Ontology (BVCO)."
    Zenodo.
    DOI: 10.5281/zenodo.8114726.
    Available at:
-   `https://zenodo.org/records/8114726 <https://zenodo.org/records/8114726>`_
+   `https://zenodo.org/records/8114726
+   <https://zenodo.org/records/8114726>`_

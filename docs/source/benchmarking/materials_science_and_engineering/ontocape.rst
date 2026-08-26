@@ -23,12 +23,33 @@
 Ontology of Computer-Aided Process Engineering (OntoCAPE)
 ========================================================================================================
 
-The Ontology of Computer-Aided Process Engineering (OntoCAPE) is a large-scale ontology for the domain of Computer-Aided Process Engineering (CAPE) [#ontocape-homepage]_. It is represented in a formal, machine-interpretable ontology language and captures consensual knowledge of the process engineering domain in a generic way so that it can be reused and shared across groups of people and software systems [#ontocape-homepage]_.
+The Ontology of Computer-Aided Process Engineering (OntoCAPE) is a
+large-scale, formal ontology for the domain of Computer-Aided Process
+Engineering (CAPE) [#ontocape-homepage]_ [#ontocape-v2]_.
+It captures domain knowledge in a machine-interpretable form so that
+process-engineering knowledge can be reused and shared across people
+and software systems [#ontocape-paper]_ [#ontocape-v2]_.
 
-OntoCAPE supports the development of software tools for engineering activities such as the systematic management and retrieval of simulation models and design documents, electronic procurement of plant equipment, mathematical modelling, and integration of design data from distributed sources [#ontocape-homepage]_. By providing a standardized semantic framework, OntoCAPE facilitates interoperability, knowledge sharing, and data integration in process engineering and manufacturing-related workflows [#ontocape-homepage]_.
+OntoCAPE is organized as a modular ontology framework and was developed
+to balance usability for specific engineering applications with
+reusability across different CAPE tasks [#ontocape-paper]_
+[#ontocape-v2]_. It supports applications including knowledge
+management, mathematical modelling, plant design, management and
+retrieval of simulation models and engineering documents, equipment
+procurement, and integration of information from distributed sources
+[#ontocape-homepage]_ [#ontocape-paper]_.
+
+By providing a formal semantic representation of process-engineering
+knowledge, OntoCAPE supports interoperability, knowledge sharing, and
+integration of heterogeneous engineering information
+[#ontocape-paper]_ [#ontocape-v2]_.
 
 **Example Usage**:
-Annotate a process engineering project with OntoCAPE terms to specify process types, plant equipment, simulation models, mathematical models, and design data, enabling semantic search and integration with process informatics platforms [#ontocape-homepage]_.
+Annotate a process-engineering project with OntoCAPE concepts to
+represent process systems, plant equipment, mathematical models,
+simulation models, and related engineering information, enabling
+knowledge retrieval, integration, and reuse across CAPE software
+applications [#ontocape-homepage]_ [#ontocape-v2]_.
 
 Metrics & Statistics
 --------------------------
@@ -141,7 +162,22 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#ontocape-homepage] RWTH Aachen University. n.d.
+.. [#ontocape-homepage] RWTH Aachen University.
    "Ontology of Computer-Aided Process Engineering (OntoCAPE)."
+   Aachener Verfahrenstechnik, RWTH Aachen University.
    Available at:
-   `https://www.avt.rwth-aachen.de/cms/avt/forschung/sonstiges/software/~ipts/ontocape/?lidx=1 <https://www.avt.rwth-aachen.de/cms/avt/forschung/sonstiges/software/~ipts/ontocape/?lidx=1>`_
+   `OntoCAPE <https://www.avt.rwth-aachen.de/cms/avt/forschung/sonstiges/software/~ipts/ontocape/?lidx=1>`_
+
+.. [#ontocape-v2] Morbach, J., Wiesner, A., and Marquardt, W. 2008.
+   "OntoCAPE 2.0 -- A (Re-)usable Ontology for
+   Computer-Aided Process Engineering."
+   In *Computer Aided Chemical Engineering*, vol. 25,
+   pp. 991--996.
+   `doi:10.1016/S1570-7946(08)80171-X <https://doi.org/10.1016/S1570-7946(08)80171-X>`_
+
+.. [#ontocape-paper] Morbach, J., Yang, A., and Marquardt, W. 2007.
+   "OntoCAPE -- A Large-Scale Ontology for
+   Chemical Process Engineering."
+   *Engineering Applications of Artificial Intelligence*
+   20(2):147--161.
+   `doi:10.1016/j.engappai.2006.06.010 <https://doi.org/10.1016/j.engappai.2006.06.010>`_

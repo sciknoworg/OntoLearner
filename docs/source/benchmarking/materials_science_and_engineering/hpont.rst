@@ -25,10 +25,10 @@ The Heat Pump Ontology (HPOnt)
 
 The Heat Pump Ontology (HPOnt) is a domain ontology developed to formalize and represent information about heat pump systems [#hpont-doc]_. HPOnt provides a structured vocabulary for describing heat pump-related concepts such as operating mode, cooling capacity, power supply, storage volume, power consumption, and other technical information relevant to heat pump operation [#hpont-doc]_.
 
-The ontology supports semantic annotation of heat pump data, enabling interoperability, data integration, querying, and reuse across smart-building and energy-management systems [#hpont-doc]_ [#hpont-bioregistry]_. HPOnt was developed in the context of the REACT project and is registered as the Heat Pump Ontology in Bioregistry [#hpont-bioregistry]_.
+The ontology supports semantic annotation of heat pump data, enabling interoperability, data integration, querying, and reuse across smart-building and energy-management systems [#hpont-doc]_. HPOnt was developed in the context of the REACT project [#hpont-doc]_.
 
 **Example Usage**:
-Annotate a smart building energy management system with HPOnt terms to specify heat pump operating mode, cooling capacity, power supply, storage volume, power consumption, and related system information, enabling semantic search and integration with building energy management platforms [#hpont-doc]_ [#hpont-bioregistry]_.
+Annotate a smart building energy management system with HPOnt terms to specify heat pump operating mode, cooling capacity, power supply, storage volume, power consumption, and related system information, enabling semantic search and integration with building energy management platforms [#hpont-doc]_.
 
 Metrics & Statistics
 --------------------------
@@ -146,9 +146,3 @@ References
    Ontology documentation.
    Available at:
    `https://react2020.github.io/REACT-ONTOLOGY/HPOnt/index-en.html <https://react2020.github.io/REACT-ONTOLOGY/HPOnt/index-en.html>`_
-
-.. [#hpont-bioregistry] Bioregistry. n.d.
-   "Heat Pump Ontology."
-   Registry entry.
-   Available at:
-   `https://bioregistry.io/tib.hpont <https://bioregistry.io/tib.hpont>`_

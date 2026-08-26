@@ -23,12 +23,12 @@
 Dislocation Simulation and Model Ontology (DSIM)
 ========================================================================================================
 
-The Dislocation Simulation and Model Ontology (DSIM) is a domain ontology developed to model concepts and relationships in the field of discrete dislocation dynamics and microscopy techniques used in dislocation research [#dsim-github]_. DSIM provides a structured vocabulary for representing numerical descriptions of dislocations in simulations, as well as pictorial concepts such as pixels used in experimental images, including TEM, SEM, and FIM images [#dsim-github]_.
+The Dislocation Simulation and Model Ontology (DSIM) is a domain ontology developed to model concepts and relationships in the field of discrete dislocation dynamics and microscopy techniques used in dislocation research [#dsim-github]_ [#dsim-paper]_. DSIM provides a structured vocabulary for representing numerical descriptions of dislocations in simulations, as well as pictorial concepts such as pixels used in experimental images, including TEM, SEM, and FIM images [#dsim-github]_.
 
-The ontology supports semantic annotation of dislocation simulation data, microscopy image data, and related modelling information, enabling data integration, semantic search, and reuse in materials science research [#dsim-github]_. By providing a standardized representation of simulation and image-based dislocation concepts, DSIM facilitates knowledge sharing and comparison across dislocation research workflows [#dsim-github]_.
+The ontology supports semantic annotation of dislocation simulation data, microscopy image data, and related modelling information, enabling data integration, semantic search, and reuse in materials science research [#dsim-github]_ [#dsim-paper]_. By providing a standardized representation of simulation and image-based dislocation concepts, DSIM facilitates knowledge sharing and comparison across dislocation research workflows [#dsim-github]_ [#dsim-paper]_.
 
 **Example Usage**:
-Annotate a dislocation dynamics simulation or microscopy dataset with DSIM terms to specify numerical dislocation representations, simulation-related concepts, microscopy image pixels, and image-based dislocation information, enabling semantic search and integration with dislocation research databases [#dsim-github]_.
+Annotate a dislocation dynamics simulation or microscopy dataset with DSIM terms to specify numerical dislocation representations, simulation-related concepts, microscopy image pixels, and image-based dislocation information, enabling semantic search and integration with dislocation research databases [#dsim-github]_ [#dsim-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -146,3 +146,11 @@ References
    GitHub repository.
    Available at:
    `https://github.com/OCDO/DSIM <https://github.com/OCDO/DSIM>`_
+
+.. [#dsim-paper] Ihsan, A. Z., Fathalla, S.,
+   and Sandfeld, S. 2023.
+   "Modeling Dislocation Dynamics Data Using
+   Semantic Web Technologies."
+   Available at:
+   `https://arxiv.org/abs/2309.06930
+   <https://arxiv.org/abs/2309.06930>`_

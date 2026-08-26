@@ -25,26 +25,27 @@ AGROVOC Multilingual Thesaurus (AGROVOC)
 
 AGROVOC is a multilingual thesaurus and Linked Open Data resource
 developed and maintained by the Food and Agriculture Organization (FAO)
-of the United Nations [#fao-home]_ [#linked-dataset]_. It provides a
-structured collection of agricultural concepts, terms, definitions, and
-relationships that support unambiguous resource identification,
-standardized indexing, and more efficient search [#fao-home]_.
-As a multilingual knowledge organization system, AGROVOC facilitates
+of the United Nations [#fao-home]_ [#agrovoc-concept-hub]_
+[#linked-dataset]_. It provides a structured collection of agricultural
+concepts, terms, definitions, and relationships that support unambiguous
+resource identification, standardized indexing, and more efficient
+search [#fao-home]_ [#agrovoc-concept-hub]_. As a multilingual knowledge organization system, AGROVOC facilitates
 access to agricultural information across domains and languages
-[#fao-home]_ [#linked-dataset]_. It covers concepts relevant to food,
-agriculture, fisheries, forestry, environment, and related domains, and
-supports semantic interoperability through hierarchical and associative
-relationships as well as links to other vocabularies and datasets
-[#fao-home]_ [#linked-dataset]_. AGROVOC is widely used for data
-annotation, knowledge organization, and information retrieval in
-agricultural and food-related information systems [#fao-home]_
-[#linked-dataset]_.
+[#fao-home]_ [#agrovoc-concept-hub]_ [#linked-dataset]_. It covers
+concepts relevant to food, agriculture, fisheries, forestry,
+environment, and related domains, and supports semantic interoperability
+through hierarchical and associative relationships as well as links to
+other vocabularies and datasets [#fao-home]_ [#agrovoc-concept-hub]_
+[#linked-dataset]_. AGROVOC is widely used for data annotation,
+knowledge organization, and information retrieval in agricultural and
+food-related information systems [#fao-home]_
+[#agrovoc-concept-hub]_.
 
 **Example Usage**: Annotate a multilingual agricultural dataset with
 AGROVOC concepts for crops, soil types, pests, livestock, and farming
 practices to enable standardized indexing, semantic interoperability,
 and cross-language search across agricultural databases and repositories
-[#fao-home]_ [#linked-dataset]_.
+[#fao-home]_ [#agrovoc-concept-hub]_.
 
 Metrics & Statistics
 --------------------------
@@ -161,6 +162,13 @@ References
    (FAO). n.d. "AGROVOC."
    Available at:
    https://www.fao.org/agrovoc/
+
+.. [#agrovoc-concept-hub] Subirats-Coll, I., Kolshus, K., Turbati, A.,
+   Stellato, A., Mietzsch, E., Martini, D., and Zeng, M. 2022.
+   "AGROVOC: The linked data concept hub for food and agriculture."
+   *Computers and Electronics in Agriculture*.
+   Available at:
+   `https://doi.org/10.1016/j.compag.2020.105965 <https://doi.org/10.1016/j.compag.2020.105965>`_
 
 .. [#linked-dataset] Caracciolo, C., Stellato, A., Morshed, A.,
    Johannsen, G., Rajbhandari, S., Jaques, Y., and Keizer, J. 2013.

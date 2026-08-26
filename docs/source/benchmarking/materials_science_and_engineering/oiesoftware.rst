@@ -23,12 +23,30 @@
 Open Innovation Environment Software (OIESoftware)
 ========================================================================================================
 
-The Open Innovation Environment Software Ontology (OIESoftware) is an EMMO-compliant, domain-level ontology developed to represent software products in materials science and engineering [#oiesoftware-github]_. It provides a structured vocabulary for describing software-related concepts and supports their alignment with the wider Open Innovation Environment ontology set [#oiesoftware-github]_.
+The Open Innovation Environment Software Ontology (OIESoftware) is an
+EMMO-compliant, domain-level ontology developed to represent software
+products in materials science and engineering [#oiesoftware-github]_
+[#oie-paper]_. It provides a structured vocabulary for describing
+software-related concepts and supports their alignment with the wider
+Open Innovation Environment ontology set [#oiesoftware-github]_
+[#oie-paper]_.
 
-OIESoftware is part of the Open Innovation Environment ontology collection, which includes domain-level ontologies for characterisation methods, manufacturing processes, materials, models, and software products [#oiesoftware-github]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of software-related information across materials science workflows and digital research infrastructures [#oiesoftware-github]_.
+OIESoftware is part of the Open Innovation Environment ontology
+collection, which includes domain-level ontologies for characterisation
+methods, manufacturing processes, materials, models, and software
+products [#oiesoftware-github]_ [#oie-paper]_. The ontology supports
+semantic annotation, interoperability, data integration, and reuse of
+software-related information across materials science workflows and
+digital research infrastructures [#oiesoftware-github]_ [#oie-paper]_.
 
 **Example Usage**:
-Annotate a computational materials science workflow with OIESoftware terms to specify the software products used, their roles in the workflow, and their links to related models, materials, or characterisation/manufacturing processes, enabling semantic search and integration with research data management systems [#oiesoftware-github]_.
+
+Annotate a computational materials science workflow with OIESoftware
+terms to specify the software products used, their roles in the
+workflow, and their links to related models, materials, or
+characterisation/manufacturing processes, enabling semantic search and
+integration with research data management systems
+[#oiesoftware-github]_ [#oie-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -146,3 +164,9 @@ References
    GitHub repository.
    Available at:
    `https://github.com/emmo-repo/OIE-Ontologies <https://github.com/emmo-repo/OIE-Ontologies>`_
+
+.. [#oie-paper] Del Nostro, P., Goldbeck, G., Pozzi, A., and Toti, D. 2023.
+   "Modeling Experts, Knowledge Providers and Expertise in Materials
+   Modeling: MAEO as an Application Ontology of EMMO's Ecosystem."
+   *Applied Ontology* 18(2):99--118.
+   `doi:10.3233/AO-230024 <https://doi.org/10.3233/AO-230024>`_

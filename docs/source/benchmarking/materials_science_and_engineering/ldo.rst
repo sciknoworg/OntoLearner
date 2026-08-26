@@ -23,12 +23,12 @@
 Line Defect Ontology (LDO)
 ========================================================================================================
 
-The Line Defect Ontology (LDO) is a domain ontology designed to describe line defects in crystalline materials, such as dislocations and disclinations [#ldo-github]_. LDO provides a structured vocabulary for representing line-defect concepts and their relationships, supporting the semantic description of linear defects in crystalline materials [#ldo-github]_.
+The Line Defect Ontology (LDO) is a domain ontology designed to describe line defects in crystalline materials, such as dislocations and disclinations [#ldo-github]_ [#ldo-doc]*. LDO provides a structured vocabulary for representing line-defect concepts and their relationships, supporting the semantic description of linear defects in crystalline materials [#ldo-github]* [#ldo-doc]_.
 
-The ontology enables semantic annotation of experimental and computational data related to line defects, supporting interoperability, data integration, semantic search, and reuse across materials science databases and research workflows [#ldo-github]_. By providing a standardized vocabulary, LDO facilitates knowledge sharing and comparison of line-defect information in materials science and engineering [#ldo-github]_.
+The ontology enables semantic annotation of experimental and computational data related to line defects, supporting interoperability, data integration, semantic search, and reuse across materials science databases and research workflows [#ldo-doc]*. By providing a standardized vocabulary, LDO facilitates knowledge sharing and comparison of line-defect information in materials science and engineering [#ldo-doc]*.
 
 **Example Usage**:
-Annotate a transmission electron microscopy (TEM) dataset or computational materials dataset with LDO terms to specify line defects such as dislocations or disclinations, enabling semantic search and integration with crystallographic defect and materials modelling databases [#ldo-github]_.
+Annotate a transmission electron microscopy (TEM) dataset or computational materials dataset with LDO terms to specify line defects such as dislocations or disclinations, enabling semantic search and integration with crystallographic defect and materials modelling databases [#ldo-doc]_.
 
 Metrics & Statistics
 --------------------------
@@ -146,3 +146,8 @@ References
    GitHub repository.
    Available at:
    `https://github.com/OCDO/ldo <https://github.com/OCDO/ldo>`_
+
+.. [#ldo-doc] Open Crystallographic Defects Ontologies (OCDO),
+   "Line Defect Ontology (LDO) Documentation."
+   Available: https://ocdo.github.io/ldo/
+   Accessed: Aug. 26, 2026.

@@ -25,12 +25,12 @@
 PRovenance Information in MAterials science (PRIMA)
 ========================================================================================================
 
-The PRovenance Information in MAterials science (PRIMA) ontology is designed to capture provenance information in the materials science domain [#prima-github]_. It provides a structured vocabulary for describing the origins, history, activities, agents, equipment, software, settings, techniques, and data-related entities involved in materials science research workflows [#prima-github]_.
+The PRovenance Information in MAterials science (PRIMA) ontology is designed to capture provenance information in the materials science domain [#prima-doc]_. It provides a structured vocabulary for describing research activities and the associated agents, equipment, software, techniques, settings, datasets, and other entities involved in materials science workflows [#prima-doc]_.
 
-PRIMA supports the semantic annotation of experimental and computational workflows, enabling traceability, interoperability, data integration, and reuse of materials science information [#prima-github]_. Starting from PRIMA v3, the ontology modules are grounded in BFO and aligned with PMDco v3, improving compatibility with related materials science ontology resources [#prima-github]_. By providing standardized provenance metadata, PRIMA supports reproducibility, data authentication, and knowledge integration in materials science [#prima-github]_.
+PRIMA supports the semantic description of experimental and computational research workflows, helping to improve traceability, interoperability, and reuse of materials science data [#prima-doc]_. Its provenance-oriented approach complements broader efforts within the PRIMA initiative to provide consistent terminology and metadata for materials science and engineering [#prima-thesaurus-paper]_. Starting from PRIMA v3, the ontology is further aligned with BFO and PMDco to improve interoperability with other materials science ontology resources [#prima-doc]_.
 
 **Example Usage**:
-Annotate a materials science dataset with PRIMA terms to describe the study, project, research users, equipment, software, settings, techniques, data acquisition, data analysis, and generated data products, enabling traceability and reproducibility of materials research workflows [#prima-github]_.
+Annotate a materials science dataset with PRIMA terms to describe the research activity, involved users, equipment, software, techniques, experimental or computational steps, data acquisition and analysis activities, and resulting data products, thereby preserving provenance information needed for traceability and reuse [#prima-doc]_.
 
 Metrics & Statistics
 --------------------------
@@ -143,8 +143,19 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#prima-github] Materials Data Science and Informatics. n.d.
-   "PRovenance Information in MAterials science (PRIMA)."
-   GitHub repository.
+.. [#prima-doc] Ihsan, A. Z., Jalali, M.,
+   and Aversa, R. 2024.
+   "PRIMA Ontology - Complete."
+   Ontology documentation.
    Available at:
-   `https://github.com/Materials-Data-Science-and-Informatics/MDMC-NEP-top-level-ontology <https://github.com/Materials-Data-Science-and-Informatics/MDMC-NEP-top-level-ontology>`_
+   `https://materials-data-science-and-informatics.github.io/MDMC-NEP-top-level-ontology/PRIMA/complete/ver_2_0/index.html
+   <https://materials-data-science-and-informatics.github.io/MDMC-NEP-top-level-ontology/PRIMA/complete/ver_2_0/index.html>`_
+
+.. [#prima-thesaurus-paper] Aversa, R., Boubnov, A.,
+   De Angelis, D., Eschke, C., Kabbe, M., Kraus, F.,
+   Panighel, M., Thelen, R., and Valentinis, D. 2026.
+   "The PRIMA Thesaurus for Materials Science and Engineering."
+   *Advanced Engineering Materials*.
+   Available at:
+   `https://doi.org/10.1002/adem.202503159
+   <https://doi.org/10.1002/adem.202503159>`_

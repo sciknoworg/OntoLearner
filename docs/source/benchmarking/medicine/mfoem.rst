@@ -23,12 +23,12 @@
 Mental Functioning Ontology of Emotions - Emotion Module (MFOEM)
 ========================================================================================================
 
-The Mental Functioning Ontology of Emotions - Emotion Module (MFOEM), also known as the **Emotion Ontology**, is a domain ontology for affective phenomena such as emotions, moods, appraisals, and subjective feelings [#mfoem-github]_ [#mfoem-obofoundry]_. It is a domain specialization of the broader Mental Functioning Ontology and is designed to support interdisciplinary emotion research through unified semantic annotations [#mfoem-obofoundry]_.
+The Mental Functioning Ontology of Emotions - Emotion Module (MFOEM), also known as the **Emotion Ontology**, is a domain ontology for representing affective phenomena and concepts related to emotions [#mfoem-github]_ [#mfoem-paper]_. It was developed to support the semantic annotation and integration of data in affective science and neuroscience by providing a shared formal representation of emotion-related concepts [#mfoem-paper]_.
 
-MFOEM provides a structured vocabulary for describing affective phenomena, including the bearers of emotions, types of emotions, parts of emotions, dimensions of variation, facial and vocal expressions, and the role of emotions in influencing human behavior [#mfoem-github]_. By providing standardized terminology, MFOEM supports semantic annotation, interoperability, data integration, and comparison of psychological, neuroscientific, and affective-science datasets [#mfoem-github]_ [#mfoem-obofoundry]_.
+MFOEM provides structured terms for describing emotions and related affective phenomena, including emotion types, their components, and associated features relevant to affective and neuroscientific research [#mfoem-github]_ [#mfoem-paper]_. The ontology supports annotation and comparison of heterogeneous datasets by enabling emotion-related information to be represented in a consistent, machine-readable form [#mfoem-paper]_. By providing standardized semantic descriptions, MFOEM facilitates data integration and interoperability across psychological, neuroscientific, and affective-science research [#mfoem-paper]_.
 
 **Example Usage**:
-Annotate a psychological or affective-science study with MFOEM terms to specify emotion types such as fear or joy, emotion dimensions such as intensity or duration, and observed facial or vocal expressions, enabling semantic integration and comparison across emotion research datasets [#mfoem-github]_ [#mfoem-obofoundry]_.
+Annotate an affective-neuroscience dataset with MFOEM terms to represent the emotions investigated in an experiment and associate those emotion concepts with experimental observations or neuroscientific data. This supports consistent semantic annotation and comparison of emotion-related data across studies [#mfoem-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -145,10 +145,13 @@ References
    "emotion-ontology."
    GitHub repository.
    Available at:
-   `https://github.com/jannahastings/emotion-ontology <https://github.com/jannahastings/emotion-ontology>`_
+   `https://github.com/jannahastings/emotion-ontology
+   <https://github.com/jannahastings/emotion-ontology>`_
 
-.. [#mfoem-obofoundry] OBO Foundry. n.d.
-   "Emotion Ontology."
-   Ontology registry entry.
+.. [#mfoem-paper] Hastings, J., Ceusters, W.,
+   Mulligan, K., and Smith, B. 2012.
+   "Annotating Affective Neuroscience Data with the Emotion Ontology."
+   Conference paper.
    Available at:
-   `https://obofoundry.org/ontology/mfoem.html <https://obofoundry.org/ontology/mfoem.html>`_
+   `https://api.semanticscholar.org/CorpusID:12260742
+   <https://api.semanticscholar.org/CorpusID:12260742>`_

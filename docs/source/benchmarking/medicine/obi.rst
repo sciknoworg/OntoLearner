@@ -25,12 +25,12 @@
 Ontology for Biomedical Investigations (OBI)
 ========================================================================================================
 
-The Ontology for Biomedical Investigations (OBI) is an ontology for describing scientific investigations, experimental designs, and biomedical research methodology [#obi-obofoundry]_ [#obi-paper]_. It provides a structured vocabulary for representing assays, devices, protocols, objectives, materials, measurements, data, and analysis processes used in biomedical and life sciences research [#obi-paper]_.
+The Ontology for Biomedical Investigations (OBI) is an ontology for representing scientific investigations, experimental designs, and biomedical research processes [#obi-brinkman]_ [#obi-paper]_. It provides a structured vocabulary for describing assays, protocols, devices, materials, objectives, measurements, data, and analysis processes used in biomedical and life-science research [#obi-brinkman]_ [#obi-paper]_.
 
-OBI supports standardized semantic annotation of experimental workflows, enabling interoperability, data integration, comparison, and reuse of biomedical investigation data across databases and computational systems [#obi-obofoundry]_ [#obi-paper]_. By providing a common framework for describing how scientific data are generated, OBI helps make research methods more transparent and reproducible [#obi-paper]_.
+OBI was developed to provide a common semantic framework for modeling how biomedical experiments are planned and performed, including the relationships between experimental inputs, procedures, instruments, outputs, and generated data [#obi-brinkman]_. It supports standardized semantic annotation of experimental workflows and promotes interoperability, integration, comparison, and reuse of investigation data across biomedical databases and computational systems [#obi-brinkman]_ [#obi-paper]_. By formally representing the processes through which scientific data are generated, OBI supports more consistent description and interpretation of biomedical experiments [#obi-paper]_.
 
 **Example Usage**:
-Annotate a microarray experiment with OBI terms to specify the assay type, microarray device, RNA extraction step, protocol, input material, generated data, and measurement results, enabling semantic search and integration with biomedical databases [#obi-obofoundry]_ [#obi-paper]_.
+Annotate a biomedical experiment with OBI terms to describe the assay type, experimental objective, input material, device or instrument, protocol steps, generated data, and measurement results. This enables structured representation, semantic search, and integration of experimental information across biomedical resources [#obi-brinkman]_ [#obi-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -143,15 +143,18 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#obi-obofoundry] OBO Foundry. n.d.
-   "OBI: Ontology for Biomedical Investigations."
-   Ontology registry entry.
+.. [#obi-brinkman] Brinkman, R. R., Courtot, M., Derom, D.,
+   et al. 2010.
+   "Modeling Biomedical Experimental Processes with OBI."
+   *Journal of Biomedical Semantics*, 1(Suppl 1), S7.
    Available at:
-   `https://obofoundry.org/ontology/obi.html <https://obofoundry.org/ontology/obi.html>`_
+   `https://doi.org/10.1186/2041-1480-1-S1-S7
+   <https://doi.org/10.1186/2041-1480-1-S1-S7>`_
 
-.. [#obi-paper] Bandrowski, A., Brinkman, R., Brochhausen, M., et al. 2016.
+.. [#obi-paper] Bandrowski, A., Brinkman, R.,
+   Brochhausen, M., et al. 2016.
    "The Ontology for Biomedical Investigations."
    *PLOS ONE*, 11(4), e0154556.
-   DOI: 10.1371/journal.pone.0154556.
    Available at:
-   `https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0154556 <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0154556>`_
+   `https://doi.org/10.1371/journal.pone.0154556
+   <https://doi.org/10.1371/journal.pone.0154556>`_

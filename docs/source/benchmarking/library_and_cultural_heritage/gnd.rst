@@ -26,9 +26,9 @@
 Gemeinsame Normdatei (GND)
 ========================================================================================================
 
-The Gemeinsame Normdatei (GND, Integrated Authority File) is a comprehensive semantic vocabulary and linked data resource developed by the German library and information community for describing and disambiguating authority data [#gnd-dnb]_ [#gnd-ontology]_. GND provides standardized, machine-readable descriptions of entities such as persons, corporate bodies, conferences and events, geographic entities, topics, and works relating to cultural and academic collections [#gnd-dnb]_. The GND Ontology defines RDF classes and relations used to describe Integrated Authority File data in RDF format, enabling authority data to be represented in semantic web and linked data environments [#gnd-ontology]_. GND offers rich properties and relationships for describing names, biographical information, organizational relationships, geographic entities, subject authorities, and links to related resources [#gnd-ontology]_. It is widely used by libraries and is increasingly relevant for archives, museums, and cultural heritage institutions for authority control, entity identification, and semantic data linking [#gnd-dnb]_. The vocabulary supports integration with broader linked data ecosystems by enabling GND entities to be linked with other authority files and external knowledge resources [#gnd-ontology]_.
+The Gemeinsame Normdatei (GND, Integrated Authority File) is a comprehensive semantic vocabulary and linked data resource developed by the German library and information community for describing and disambiguating authority data [#gnd-dnb]_ [#gnd-ontology]_ [#gnd-haffner]_. GND provides standardized, machine-readable descriptions of entities such as persons, corporate bodies, conferences and events, geographic entities, topics, and works relating to cultural and academic collections [#gnd-dnb]_ [#gnd-ontology]_. The GND Ontology defines RDF classes and relations used to describe Integrated Authority File data in RDF format, enabling authority data to be represented in Semantic Web and linked data environments [#gnd-ontology]_ [#gnd-haffner]_. GND offers rich properties and relationships for describing names, biographical information, organizational relationships, geographic entities, subject authorities, and links to related resources [#gnd-ontology]_. It is widely used by libraries and is increasingly relevant for archives, museums, and cultural heritage institutions for authority control, entity identification, and semantic data linking [#gnd-dnb]_ [#gnd-haffner]_. The vocabulary supports integration with broader linked data ecosystems by enabling GND entities to be linked with other authority files and external knowledge resources [#gnd-ontology]_ [#gnd-haffner]_.
 
-**Example Usage**: Link a library catalog record to GND authority entries for the author as a person, the publisher as a corporate body, and subject headings as topic authorities. This enables semantic discovery, entity disambiguation, and cross-institutional linking across German and international library systems [#gnd-dnb]_ [#gnd-ontology]_.
+**Example Usage**: Link a library catalog record to GND authority entries for the author as a person, the publisher as a corporate body, and subject headings as topic authorities. This enables semantic discovery, entity disambiguation, and cross-institutional linking across German and international library systems [#gnd-dnb]_ [#gnd-ontology]_ [#gnd-haffner]_.
 
 Metrics & Statistics
 --------------------------
@@ -150,3 +150,10 @@ References
    "RDF Vocabularies: GND Ontology."
    Available at:
    `https://www.dnb.de/EN/Professionell/Metadatendienste/Exportformate/RDF-Vokabulare/rdf_node.html <https://www.dnb.de/EN/Professionell/Metadatendienste/Exportformate/RDF-Vokabulare/rdf_node.html>`_
+
+.. [#gnd-haffner] Haffner, A. 2012.
+   "Internationalisierung der GND durch das Semantic Web."
+   Frankfurt am Main, July 16, 2012.
+   Available at:
+   `http://www.kim-forum.org/Subsites/kim/SharedDocs/Downloads/DE/Berichte/internationalisierungDerGndDurchDasSemanticWeb.pdf
+   <http://www.kim-forum.org/Subsites/kim/SharedDocs/Downloads/DE/Berichte/internationalisierungDerGndDurchDasSemanticWeb.pdf>`_

@@ -26,24 +26,23 @@ Chemical Methods Ontology (ChMO)
 The Chemical Methods Ontology (ChMO) is a structured ontology that
 provides a controlled vocabulary for describing chemical methods,
 experimental techniques, and analytical procedures used in chemistry and
-related sciences [#chmo-repo]_ [#chmo-bioportal]_. ChMO contains terms
+related sciences [#chmo-repo]_. ChMO contains terms
 covering methods for data collection, sample preparation and separation,
 and material synthesis, together with associated instruments and
-experimental outputs [#chmo-repo]_ [#chmo-bioportal]_. The ontology is
+experimental outputs [#chmo-repo]_. The ontology is
 intended to support semantic annotation of chemical workflows and to
 improve interoperability across chemical databases, laboratory
-information systems, and computational tools [#chmo-repo]_
-[#chmo-bioportal]_. By providing a standardized framework for chemical
+information systems, and computational tools [#chmo-repo]_. By providing a standardized framework for chemical
 methods and related experimental information, ChMO supports data
 integration, reproducibility, and structured querying across chemical
-research datasets [#chmo-repo]_ [#chmo-bioportal]_.
+research datasets [#chmo-repo]_.
 
 **Example Usage**: Annotate a chemical experiment with ChMO terms to
 specify the analytical method, such as liquid
 chromatography-mass spectrometry, the sample preparation steps, the
 instrument configuration, and the data outputs, enabling semantic
 search and integration with other chemical research datasets
-[#chmo-repo]_ [#chmo-bioportal]_.
+[#chmo-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -161,6 +160,3 @@ References
    GitHub repository.
    Available at:
    `https://github.com/rsc-ontology/rsc-cmo <https://github.com/rsc-ontology/rsc-cmo>`_
-
-.. [#chmo-bioportal] NCBO BioPortal. n.d. "Chemical Methods Ontology."
-   Available at: `https://bioportal.bioontology.org/ontologies/CHMO <https://bioportal.bioontology.org/ontologies/CHMO>`_

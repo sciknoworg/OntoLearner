@@ -25,9 +25,9 @@
 DataCite Ontology (DataCite)
 ========================================================================================================
 
-The DataCite Ontology is an RDF/OWL-based representation of the DataCite Metadata Schema, providing a standardized semantic structure for describing research data and other digital research objects with citation and identification metadata [#datacite-ontology]_ [#datacite-schema]_. It enables formal representation of essential metadata properties, including identifiers, creators, titles, publishers, publication dates, contributors, subjects, funding information, resource types, and relationships to other scholarly resources [#datacite-schema]_. The ontology allows DataCite metadata properties to be described in RDF, supporting machine-readable representation of resources for accurate identification, retrieval, citation, and linking [#datacite-ontology]_. DataCite metadata supports the description of diverse research outputs, including datasets, software, publications, and other digital objects [#datacite-schema]_. By providing standardized semantic metadata structures, the DataCite Ontology supports data discovery, citation tracking, scholarly linking, research impact assessment, and integration with linked data and FAIR-oriented research infrastructures [#datacite-ontology]_ [#datacite-schema]_.
+The DataCite Ontology is an RDF/OWL-based representation of the DataCite Metadata Schema, providing a standardized semantic structure for describing research data and other digital research outputs with citation and identification metadata [#datacite-ontology]_ [#datacite-schema]_. It enables formal representation of metadata properties including identifiers, creators, titles, publishers, publication years, contributors, subjects, funding references, resource types, and relationships to other research outputs [#datacite-schema]_. The ontology allows DataCite-related metadata concepts to be represented in RDF, supporting machine-readable identification, citation, linking, and integration of research resources [#datacite-ontology]_. The DataCite Metadata Schema supports the description of diverse research outputs, including datasets, software, textual resources, and other scholarly objects [#datacite-schema]_. By combining persistent identifiers with structured descriptive and relational metadata, DataCite supports discovery, citation, linking, and reuse across research repositories and scholarly information systems [#datacite-schema]_. The DataCite Ontology extends this model into a Semantic Web representation that can be integrated with other scholarly communication vocabularies and linked-data infrastructures [#datacite-ontology]_.
 
-**Example Usage**: Represent a published research dataset with DataCite ontology terms for its persistent identifier, such as a DOI; creators and contributors, including ORCID identifiers where available; title, publisher, publication date, subject areas, funding information, resource type, and related publications. This enables proper citation, discovery, linking, and reuse across research repositories and scholarly information systems [#datacite-ontology]_ [#datacite-schema]_.
+**Example Usage**: Represent a published research dataset with DataCite terms for its persistent identifier, such as a DOI; creators and contributors, including ORCID identifiers where available; title, publisher, publication year, subject areas, funding information, resource type, and relationships to associated publications or other research outputs. This supports machine-readable citation, discovery, linking, and reuse across research repositories and scholarly information systems [#datacite-schema]_ [#datacite-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -143,9 +143,13 @@ References
 .. [#datacite-ontology] SPAR Ontologies. n.d.
    "The DataCite Ontology."
    Available at:
-   `https://sparontologies.github.io/datacite/current/datacite.html <https://sparontologies.github.io/datacite/current/datacite.html>`_
+   `https://sparontologies.github.io/datacite/current/datacite.html
+   <https://sparontologies.github.io/datacite/current/datacite.html>`_
 
-.. [#datacite-schema] DataCite. n.d.
-   "DataCite Metadata Schema."
+.. [#datacite-schema] DataCite Metadata Working Group. 2026.
+   "DataCite Metadata Schema Documentation for the Publication and Citation of
+   Research Data and Other Research Outputs."
+   Version 4.7. DataCite e.V.
    Available at:
-   `https://schema.datacite.org/ <https://schema.datacite.org/>`_
+   `https://doi.org/10.14454/qdd3-ps68
+   <https://doi.org/10.14454/qdd3-ps68>`_

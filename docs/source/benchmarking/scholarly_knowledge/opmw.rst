@@ -24,14 +24,14 @@
 
 Open Provenance Model for Workflows (OPMW)
 ========================================================================================================
-OPMW, the Open Provenance Model for Workflows, is an ontology for the semantic description of computational workflow templates and workflow execution traces [#opmw-ontology]_ [#opmw-publications]_. It is based on the Open Provenance Model and was designed as an OPM profile, extending and reusing OPM's core ontologies, including OPMV and OPMO, while later aligning with W3C PROV for provenance representation [#opmw-ontology]_. OPMW provides vocabulary for describing workflow templates, workflow steps, input and output artifacts, execution accounts, execution processes, agents, parameter values, software components, and provenance links that track data flow and transformations [#opmw-ontology]_.
+OPMW, the Open Provenance Model for Workflows, is an ontology for the semantic description of computational workflow templates and their execution provenance [#opmw-ontology]_ [#opmw-fgcs]_. It provides a structured vocabulary for representing workflow templates, workflow steps, input and output artifacts, execution processes, agents, parameter values, software components, and provenance relationships that describe how data and computational activities are connected [#opmw-ontology]_.
 
-The ontology supports systematic documentation and sharing of scientific workflows by representing both the prospective structure of a workflow and the retrospective provenance of its execution [#opmw-ontology]_ [#opmw-publications]_. This makes it useful for describing how computational results were produced, which input datasets and tools were used, what intermediate outputs were generated, and how workflow steps were connected [#opmw-ontology]_. OPMW therefore supports reproducibility, reuse, workflow comparison, provenance querying, and publication of workflow metadata as Linked Data [#opmw-publications]_.
+The ontology supports representation of both the prospective structure of a workflow and the retrospective provenance of its execution [#opmw-ontology]_ [#opmw-fgcs]_. This makes it possible to describe how computational results were produced, which inputs and tools were used, what intermediate and final outputs were generated, and how individual workflow steps were related [#opmw-fgcs]_. OPMW supports the publication of workflow descriptions and execution information as Linked Data, facilitating workflow sharing, discovery, comparison, and reuse [#opmw-fgcs]_.
 
-Typical applications of OPMW include scientific workflow documentation, workflow repository metadata, provenance tracking, reproducibility support, data-intensive research, and integration between workflow management systems and semantic web platforms [#opmw-ontology]_ [#opmw-publications]_. By providing a standardized provenance model for workflows, OPMW helps researchers publish, discover, compare, and reuse computational workflows and their execution traces [#opmw-publications]_.
+Typical applications of OPMW include scientific workflow documentation, workflow repository metadata, provenance tracking, reproducibility support, and semantic publication of computational workflows [#opmw-ontology]_ [#opmw-fgcs]_. By providing a common semantic representation for workflow structure and execution provenance, OPMW enables researchers to publish, discover, understand, and reuse workflows across scientific computing environments [#opmw-fgcs]_.
 
 **Example Usage**:
-Annotate a bioinformatics workflow with OPMW terms to describe workflow steps such as sequence alignment and variant calling, inputs such as raw sequencing data, outputs such as VCF files, execution agents, software tools, parameter settings, intermediate artifacts, and provenance relationships. This enables workflow reproducibility, semantic search, provenance tracking, and reuse across scientific computing platforms [#opmw-ontology]_ [#opmw-publications]_.
+Annotate a bioinformatics workflow with OPMW terms to describe workflow steps such as sequence alignment and variant calling, input datasets, generated outputs, software components, parameter values, execution processes, and provenance relationships. This provides a machine-readable description of both the workflow design and its execution history, supporting reproducibility, provenance analysis, discovery, and reuse [#opmw-ontology]_ [#opmw-fgcs]_.
 
 Metrics & Statistics
 --------------------------
@@ -149,7 +149,10 @@ References
    Available at:
    `https://www.opmw.org/ontology/ <https://www.opmw.org/ontology/>`_
 
-.. [#opmw-publications] OPMW. n.d.
-   "OPMW-PROV: The Open Provenance Model for Workflows - Publications."
+.. [#opmw-fgcs] Garijo, D., Gil, Y., and Corcho, O. 2017.
+   "Abstract, Link, Publish, Exploit:
+   An End-to-End Framework for Workflow Sharing."
+   *Future Generation Computer Systems*.
    Available at:
-   `https://www.opmw.org/publications.html <https://www.opmw.org/publications.html>`_
+   `http://dgarijo.com/papers/fgcs2017.pdf
+   <http://dgarijo.com/papers/fgcs2017.pdf>`_

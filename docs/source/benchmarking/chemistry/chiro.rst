@@ -25,22 +25,23 @@ CHEBI Integrated Role Ontology (CHIRO)
 
 The CHEBI Integrated Role Ontology (CHIRO) is a specialized ontology
 designed to provide a structured role hierarchy for chemicals
-[#chiro-obo]_ [#chiro-paper]_. It extends the role branch associated
+[#chiro-paper]_ [#chebi-paper]_. It extends the role branch associated
 with ChEBI by connecting chemicals in the structural hierarchy through
 a `has role` relation and by linking chemical roles to relevant classes
-in other ontologies [#chiro-obo]_ [#chiro-paper]_. This enables formal
+in other ontologies [#chiro-paper]_ [#chebi-paper]_. This enables formal
 representation of relationships between chemical structures, such as
 small molecules and drugs, and the biological or chemical roles they
-play [#chiro-obo]_ [#chiro-paper]_. By providing a standardized
+play [#chiro-paper]_ [#chebi-paper]_. By providing a standardized
 framework for describing chemical roles, CHIRO supports semantic
 interoperability, ontology-based integration, and advanced querying
-across chemical and biomedical datasets [#chiro-paper]_ [#chiro-obo]_.
+across chemical and biomedical datasets [#chiro-paper]_ [#chebi-paper]_.
 
-**Example Usage**: Annotate a dataset of small molecules with CHIRO
-terms to specify roles such as enzyme inhibitor or neurotransmitter,
-and link those roles to related biological processes or target classes,
-enabling semantic search, cross-dataset integration, and role-based
-analysis of chemical entities [#chiro-obo]_ [#chiro-paper]_.
+**Example Usage**:
+Annotate a dataset of small molecules with CHIRO terms to specify roles
+such as enzyme inhibitor or neurotransmitter, and link those roles to
+related biological processes or target classes, enabling semantic
+search, cross-dataset integration, and role-based analysis of chemical
+entities [#chiro-paper]_ [#chebi-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -153,12 +154,17 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#chiro-obo] OBO Foundry. n.d. "CHEBI Integrated Role Ontology."
-   Available at: `https://obofoundry.org/ontology/chiro.html <https://obofoundry.org/ontology/chiro.html>`_
-
 .. [#chiro-paper] Hoyt, C. T., Mungall, C., Vasilevsky, N.,
    Domingo-Fernández, D., Healy, M., and Colluru, V. 2020.
    "Extension of Roles in the ChEBI Ontology."
    ChemRxiv.
    doi:10.26434/chemrxiv.12591221
    Available at: `https://chemrxiv.org/doi/10.26434/chemrxiv.12591221 <https://chemrxiv.org/doi/10.26434/chemrxiv.12591221>`_
+
+.. [#chebi-paper] Degtyarenko, K., de Matos, P., Ennis, M., Hastings, J.,
+   Zbinden, M., McNaught, A., Alcántara, R., Darsow, M., Guedj, M.,
+   and Ashburner, M. 2008. "ChEBI: A Database and Ontology for Chemical
+   Entities of Biological Interest."
+   *Nucleic Acids Research* 36(Database issue): D344-D350.
+   doi:10.1093/nar/gkm791
+   Available at: `https://pubmed.ncbi.nlm.nih.gov/17932057/ <https://pubmed.ncbi.nlm.nih.gov/17932057/>`_

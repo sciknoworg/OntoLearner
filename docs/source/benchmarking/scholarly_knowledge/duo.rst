@@ -25,9 +25,9 @@
 Data Use Ontology (DUO)
 ========================================================================================================
 
-The Data Use Ontology (DUO) is a controlled vocabulary and ontology for formally representing data use restrictions, permissions, and conditions that govern access to and use of biomedical, clinical, and life sciences research data [#duo-obofoundry]_ [#duo-paper]_. DUO provides standardized terms for describing data use conditions, including general research use, health or medical research use, disease-specific restrictions, population-origin restrictions, commercial use limitations, publication requirements, and ethics or policy-based conditions [#duo-obofoundry]_ [#duo-paper]_. It enables data stewards, repositories, and data access committees to precisely specify how datasets may be used, supporting responsible secondary reuse and helping match researcher requests with dataset permissions [#duo-paper]_. DUO bridges policy and technical implementation by expressing complex data use conditions in a human-readable and machine-readable form [#duo-paper]_. By providing structured data use terms, DUO supports discoverability, interoperability, compliant reuse, and FAIR-oriented management of sensitive research datasets [#duo-obofoundry]_ [#duo-paper]_.
+The Data Use Ontology (DUO) is a controlled vocabulary and ontology for formally representing data use restrictions, permissions, and conditions that govern access to and use of biomedical, clinical, and life sciences research data  [#duo-paper]_. DUO provides standardized terms for describing data use conditions, including general research use, health or medical research use, disease-specific restrictions, population-origin restrictions, commercial use limitations, publication requirements, and ethics or policy-based conditions [#duo-paper]_. It enables data stewards, repositories, and data access committees to precisely specify how datasets may be used, supporting responsible secondary reuse and helping match researcher requests with dataset permissions [#duo-paper]_. DUO bridges policy and technical implementation by expressing complex data use conditions in a human-readable and machine-readable form [#duo-paper]_. By providing structured data use terms, DUO supports discoverability, interoperability, compliant reuse, and FAIR-oriented management of sensitive research datasets [#duo-paper]_.
 
-**Example Usage**: Annotate a biomedical research dataset with DUO terms to specify permissions such as ``general research use`` or ``health/medical/biomedical research``, restrictions such as ``no commercial use`` or disease-specific use, and requirements such as publication acknowledgment. This enables data access review, automated compliance checking, and appropriate data sharing decisions [#duo-obofoundry]_ [#duo-paper]_.
+**Example Usage**: Annotate a biomedical research dataset with DUO terms to specify permissions such as ``general research use`` or ``health/medical/biomedical research``, restrictions such as ``no commercial use`` or disease-specific use, and requirements such as publication acknowledgment. This enables data access review, automated compliance checking, and appropriate data sharing decisions [#duo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -140,13 +140,13 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#duo-obofoundry] OBO Foundry. n.d.
-   "Data Use Ontology."
+.. [#duo-paper] Lawson, J., Cabili, M. N., Kerry, G.,
+   Boughtwood, T., Thorogood, A., Alper, P., Bowers, S. R.,
+   Boyles, R. R., Brookes, A. J., Brush, M., Burdett, T.,
+   Clissold, H., Donnelly, S., Dyke, S. O. M., et al. 2021.
+   "The Data Use Ontology to Streamline Responsible Access
+   to Human Biomedical Datasets."
+   *Cell Genomics*, 1(2), 100028.
    Available at:
-   `https://obofoundry.org/ontology/duo.html <https://obofoundry.org/ontology/duo.html>`_
-
-.. [#duo-paper] Lawson, James, et al. 2021.
-   "The Data Use Ontology to streamline responsible access to human biomedical datasets."
-   *Cell Genomics* 1(2): 100028.
-   DOI:
-   `10.1016/j.xgen.2021.100028 <https://doi.org/10.1016/j.xgen.2021.100028>`_
+   `https://doi.org/10.1016/j.xgen.2021.100028
+   <https://doi.org/10.1016/j.xgen.2021.100028>`_

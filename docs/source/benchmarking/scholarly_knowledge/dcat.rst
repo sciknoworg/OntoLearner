@@ -23,14 +23,14 @@
 Data Catalog Vocabulary (DCAT)
 ========================================================================================================
 
-The Data Catalog Vocabulary (DCAT) is an RDF vocabulary designed to facilitate interoperability between data catalogs published on the Web [#dcat-version3]_ [#dcat-cdif]_. It provides a structured semantic model for describing catalogs, datasets, dataset series, data services, distributions, catalog records, and related metadata, enabling dataset descriptions to be shared and processed in a machine-readable form [#dcat-version3]_. DCAT supports dataset discovery by allowing metadata from different catalogs to be aggregated, searched, exchanged, and reused through a common vocabulary [#dcat-version3]_ [#dcat-cdif]_.
+The Data Catalog Vocabulary (DCAT) is an RDF vocabulary designed to facilitate interoperability between data catalogs published on the Web [#dcat-version3]_ [#dcat-paper]_. It provides a structured semantic model for describing catalogs, datasets, dataset series, data services, distributions, catalog records, and related metadata, enabling resource descriptions to be shared and processed in a machine-readable form [#dcat-version3]_. DCAT supports data discovery by allowing metadata from different catalogs to be aggregated, exchanged, searched, and reused through a common vocabulary [#dcat-version3]_ [#dcat-paper]_.
 
-The ontology defines classes and properties for describing catalog resources, including dataset titles, descriptions, publishers, themes, keywords, access URLs, download URLs, formats, licenses, temporal coverage, spatial coverage, and relationships between datasets, distributions, and services [#dcat-version3]_. These structured metadata descriptions support efficient retrieval, catalog integration, and interoperability across heterogeneous data infrastructures [#dcat-cdif]_.
+The vocabulary defines classes and properties for describing catalog resources, including titles, descriptions, publishers, themes, keywords, access URLs, download URLs, formats, licenses, temporal coverage, spatial coverage, and relationships between datasets, distributions, and data services [#dcat-version3]_. The evolution of DCAT has extended the vocabulary beyond the original catalog-and-dataset model to support additional concepts such as data services, dataset series, versioning, and richer relationships between cataloged resources [#dcat-paper]_ [#dcat-version3]_.
 
-Typical applications of DCAT include open data portals, research data repositories, government data catalogs, enterprise data management platforms, and cross-domain metadata exchange systems [#dcat-version3]_ [#dcat-cdif]_. By providing a standardized semantic framework, DCAT enhances data discoverability, metadata interoperability, catalog integration, and reuse across diverse data management environments [#dcat-version3]_.
+DCAT is used to support metadata interoperability and resource discovery across governmental, research, and other data infrastructures [#dcat-paper]_. By providing a standardized semantic framework, it enables metadata aggregation, catalog integration, and exchange across heterogeneous data-management environments [#dcat-version3]_ [#dcat-paper]_.
 
 **Example Usage**:
-Annotate a data catalog with DCAT terms to describe datasets, data services, distributions, catalog records, publishers, access URLs, licenses, formats, and thematic categories. This enables semantic search, metadata aggregation, federated catalog discovery, and integration with data management platforms [#dcat-version3]_ [#dcat-cdif]_.
+Annotate a data catalog with DCAT terms to describe datasets, dataset series, data services, distributions, catalog records, publishers, access URLs, licenses, formats, and thematic categories. This enables standardized metadata exchange, aggregation, and discovery across different catalog systems [#dcat-version3]_ [#dcat-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -149,7 +149,10 @@ References
    Available at:
    `https://www.w3.org/TR/vocab-dcat-3/ <https://www.w3.org/TR/vocab-dcat-3/>`_
 
-.. [#dcat-cdif] Cross-Domain Interoperability Framework. n.d.
-   "DCAT Metadata."
+.. [#dcat-paper] Albertoni, R., Browning, D., Cox, S.,
+   Gonzalez-Beltran, A. N., Perego, A., and Winstanley, P. 2023.
+   "The W3C Data Catalog Vocabulary, Version 2:
+   Rationale, Design Principles, and Uptake."
    Available at:
-   `https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/dcat.html <https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/dcat.html>`_
+   `https://arxiv.org/abs/2303.08883
+   <https://arxiv.org/abs/2303.08883>`_

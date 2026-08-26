@@ -23,13 +23,26 @@
 Material Properties Ontology (MAT)
 ========================================================================================================
 
-The Material Properties Ontology (MAT) is designed to provide a structured vocabulary for describing building components, materials, and their properties within the construction industry [#mat-doc]_ [#mat-bioregistry]_. It supports building renovation projects by representing material characteristics, property values, and relationships between materials, components, and building elements [#mat-doc]_.
+The Material Properties Ontology (MAT) is designed to provide a structured
+vocabulary for describing building components, materials, and their properties
+within the construction industry [#mat-doc]_ [#mat-provenance]_. It supports
+building renovation projects by representing material characteristics,
+property values, and relationships between materials, components, and building
+elements [#mat-doc]_ [#mat-provenance]_.
 
-MAT enables semantic annotation and integration of data from design, construction, and renovation workflows, supporting interoperability, data retrieval, and reuse in construction informatics platforms [#mat-doc]_. By providing a standardized vocabulary for material-property representation, MAT supports semantic search, material assessment, and knowledge sharing in building renovation and construction projects [#mat-doc]_ [#mat-bioregistry]_.
+MAT enables semantic annotation and integration of data from design,
+construction, and renovation workflows, supporting interoperability, data
+retrieval, and reuse in construction informatics platforms [#mat-doc]_
+[#mat-provenance]_. By providing a standardized vocabulary for
+material-property representation, MAT supports semantic search, material
+assessment, and knowledge sharing in building renovation and construction
+projects [#mat-doc]_ [#mat-provenance]_.
 
 **Example Usage**:
-Annotate a building renovation project with MAT terms to specify material types, building components, material properties, and performance-related values, enabling semantic search and integration with construction informatics and BIM-based renovation platforms [#mat-doc]_ [#mat-bioregistry]_.
-
+Annotate a building renovation project with MAT terms to specify material
+types, building components, material properties, and performance-related
+values, enabling semantic search and integration with construction informatics
+and BIM-based renovation platforms [#mat-doc]_ [#mat-provenance]_.
 Metrics & Statistics
 --------------------------
 
@@ -148,8 +161,8 @@ References
    Available at:
    `https://bimerr.iot.linkeddata.es/def/material-properties/ <https://bimerr.iot.linkeddata.es/def/material-properties/>`_
 
-.. [#mat-bioregistry] Bioregistry. n.d.
-   "Material properties ontology."
-   Registry entry.
-   Available at:
-   `https://bioregistry.io/tib.mat <https://bioregistry.io/tib.mat>`_
+.. [#mat-provenance] M. Poveda-Villalón and S. Chávez-Feria,
+   "Material Properties Ontology: Provenance."
+   Available:
+   https://bimerr.iot.linkeddata.es/def/material-properties/provenance/provenance-en.html
+   Accessed: Aug. 26, 2026.

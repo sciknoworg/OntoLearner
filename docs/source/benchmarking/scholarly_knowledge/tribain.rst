@@ -148,8 +148,11 @@ References
    Available at:
    `https://github.com/snow0815/tribAIn <https://github.com/snow0815/tribAIn>`_
 
-.. [#tribain-paper] Kügler, Patricia, and Marian Wartzack. 2020.
-   "tribAIn—Towards an Explicit Specification of Shared Tribological Understanding."
-   *Applied Sciences* 10(13): 4421.
-   DOI:
-   `10.3390/app10134421 <https://doi.org/10.3390/app10134421>`_
+.. [#tribain-paper] Kügler, P., Marian, M.,
+   Schleich, B., Tremmel, S., and Wartzack, S. 2020.
+   "tribAIn—Towards an Explicit Specification of Shared
+   Tribological Understanding."
+   *Applied Sciences*, 10(13), 4421.
+   Available at:
+   `https://doi.org/10.3390/app10134421
+   <https://doi.org/10.3390/app10134421>`_

@@ -23,15 +23,35 @@
 Periodic Table of the Elements Ontology (PeriodicTable)
 ========================================================================================================
 
-The Periodic Table of the Elements Ontology (PeriodicTable) is a representation of the Periodic Table of the Elements in the OWL Web Ontology Language. It provides reference data to support Semantic Web applications in chemistry and related disciplines. The ontology offers a structured vocabulary for describing elements, their properties, and relationships, supporting both theoretical and experimental research in chemistry.
+The Periodic Table of the Elements Ontology (PeriodicTable) is an OWL
+representation of the Periodic Table of the Elements designed to provide
+reference data for Semantic Web applications in chemistry and related
+disciplines [#periodictable]_. Michael Cook developed the initial
+representation in DAML+OIL, which was subsequently converted to OWL and
+maintained by Mike Dean [#periodictable]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of elements, properties, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. PeriodicTable supports the integration of data from various sources, promoting interoperability and data-driven research in chemistry.
+PeriodicTable provides machine-readable descriptions of chemical elements
+and their associated information, allowing element data to be represented
+and queried using Semantic Web technologies. Properties represented in the
+ontology include information such as element names, symbols, atomic numbers,
+atomic weights, and periodic-table groups [#periodictable]_.
 
-Typical applications of PeriodicTable include the development of new chemical compounds, the optimization of chemical processes, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, PeriodicTable enhances collaboration and innovation in the field of chemistry.
+Ontology-based representations of the periodic table have also been explored
+in subsequent work. Liu and He developed the Ontology of Chemical Elements
+(OCE), in which chemical-element attributes and logical axioms were used to
+support automated classification and reasoning. Their study demonstrated that
+ontology-based reasoning could reconstruct major structural features of
+Mendeleev's Periodic Table and support prediction of element characteristics
+[#oce]_. OCE is a separate ontology from PeriodicTable, but illustrates the
+broader use of ontological representations for organizing and reasoning over
+knowledge about chemical elements.
 
 **Example Usage**:
-Annotate a chemical research project with PeriodicTable terms to specify element types, properties, and relationships, enabling semantic search and integration with chemical informatics platforms.
 
+Use PeriodicTable to represent or query chemical elements according to
+properties such as their name, symbol, atomic number, atomic weight, or
+periodic-table group, enabling structured access to element information in
+Semantic Web applications.
 Metrics & Statistics
 --------------------------
 
@@ -139,3 +159,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#periodictable] M. Cook,
+   "Periodic Table in OWL,"
+   DAML.org.
+   Available: https://www.daml.org/2003/01/periodictable/
+
+.. [#oce] K. Liu and Y. He,
+   "Ontological Derivation of Mendeleev's Periodic Table of Chemical Elements,"
+   in *Proceedings of the 10th International Conference on Biomedical Ontology
+   (ICBO 2019)*, Buffalo, NY, USA, 2019.
+   Available: https://ceur-ws.org/Vol-2931/ICBO_2019_paper_39.pdf

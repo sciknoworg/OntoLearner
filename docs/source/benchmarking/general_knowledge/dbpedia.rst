@@ -179,3 +179,21 @@ References
    Semantic Web 6(2): 167-195.
    Available at:
    `https://jens-lehmann.org/files/2015/swj_dbpedia.pdf <https://jens-lehmann.org/files/2015/swj_dbpedia.pdf>`_
+
+.. [#dbpedia-original] Auer, S., Bizer, C., Kobilarov, G.,
+   Lehmann, J., Cyganiak, R., and Ives, Z. 2007.
+   "DBpedia: A Nucleus for a Web of Open Data."
+   In *The Semantic Web*, ISWC/ASWC 2007, 722--735.
+   Available at:
+   `https://doi.org/10.1007/978-3-540-76298-0_52
+   <https://doi.org/10.1007/978-3-540-76298-0_52>`_
+
+.. [#dbpedia-hub] Kobilarov, G., Bizer, C., Auer, S.,
+   and Lehmann, J. 2009.
+   "DBpedia -- A Linked Data Hub and Data Source for Web
+   and Enterprise Applications."
+   In *Proceedings of the 18th International World Wide Web
+   Conference (WWW 2009), Developers Track*.
+   Available at:
+   `https://jens-lehmann.org/files/2009/dbpedia_www_developers.pdf
+   <https://jens-lehmann.org/files/2009/dbpedia_www_developers.pdf>`_

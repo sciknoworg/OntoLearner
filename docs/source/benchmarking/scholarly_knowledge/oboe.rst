@@ -22,14 +22,14 @@
 
 Extensible Observation Ontology (OBOE)
 ========================================================================================================
-The Extensible Observation Ontology (OBOE) is a formal ontology for capturing the semantics of scientific observations and measurements [#oboe-github]_ [#oboe-bioportal]_. It supports researchers in adding detailed semantic annotations to scientific data, thereby clarifying the meaning of observations, measured values, entities, characteristics, standards, and protocols [#oboe-bioportal]_. OBOE provides a generic conceptual framework for describing observational datasets, especially datasets consisting of observations and measurements [#oboe-github]_.
+The Extensible Observation Ontology (OBOE) is a formal ontology for representing the semantics of scientific observations and measurements [#oboe-github]_ [#oboe-paper]_. It was developed to provide a structured framework for describing observational data in terms of the entities being observed, their characteristics, measurements, standards, and contextual relationships [#oboe-paper]_. This semantic representation helps make the meaning of scientific data explicit and supports integration and synthesis across heterogeneous observational datasets [#oboe-paper]_.
 
-The ontology uses a class-based modeling approach, defining core concepts such as ``Observation``, ``Measurement``, ``Entity``, ``Characteristic``, ``Standard``, and ``Protocol`` [#oboe-bioportal]_. In OBOE, an observation is an event in which one or more measurements are taken; a measurement records the measured value of a characteristic of an entity; and standards provide units or controlled vocabularies for interpreting those values [#oboe-bioportal]_. OBOE can also represent contextual information such as space and time, as well as dependencies between observations, including nested experimental observations [#oboe-bioportal]_.
+OBOE defines core concepts for representing observations and measurements, including observed entities, characteristics, measurement values, standards, protocols, and relationships between observations [#oboe-github]_ [#oboe-paper]_. The ontology can also represent contextual dependencies among observations, allowing complex observational structures and nested relationships to be modeled in a machine-readable form [#oboe-paper]_. By formally describing how measurements relate to entities and characteristics, OBOE supports interpretation and comparison of observational data across different studies [#oboe-paper]_.
 
-Typical applications of OBOE include semantic annotation of observational datasets, measurement metadata modeling, dataset discovery, interoperability across scientific data repositories, and support for data interpretation and reuse [#oboe-github]_ [#oboe-bioportal]_. By providing a standardized and extensible framework for describing observations and measurements, OBOE helps make scientific data more interpretable, comparable, searchable, and reusable across research domains [#oboe-bioportal]_.
+Typical applications of OBOE include semantic annotation of ecological and other scientific observation datasets, integration of heterogeneous measurement data, dataset discovery, and synthesis of observational information across research studies [#oboe-paper]_. Its extensible structure allows domain-specific concepts to be incorporated while preserving a shared model for observations and measurements [#oboe-github]_ [#oboe-paper]_.
 
 **Example Usage**:
-Annotate a scientific observation dataset with OBOE terms to specify the observed entity, measured characteristic, measurement value, unit or standard, protocol, and contextual information such as location and time. This enables semantic search, dataset integration, measurement interpretation, and reuse across scientific observation platforms [#oboe-github]_ [#oboe-bioportal]_.
+Annotate an ecological observation dataset with OBOE terms to describe the observed entity, such as a plant or habitat; the characteristic being measured, such as biomass or temperature; the recorded measurement value; the standard or unit used; and contextual relationships to other observations. This enables consistent interpretation, integration, and synthesis of ecological observation data across studies [#oboe-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -144,11 +144,17 @@ References
 
 .. [#oboe-github] NCEAS. n.d.
    "OBOE: The Extensible Observation Ontology."
-   GitHub Repository.
+   GitHub repository.
    Available at:
-   `https://github.com/NCEAS/oboe <https://github.com/NCEAS/oboe>`_
+   `https://github.com/NCEAS/oboe
+   <https://github.com/NCEAS/oboe>`_
 
-.. [#oboe-bioportal] NCBO BioPortal. 2019.
-   "The Extensible Observation Ontology."
+.. [#oboe-paper] Madin, J., Bowers, S.,
+   Schildhauer, M., Krivov, S., Pennington, D.,
+   and Villa, F. 2007.
+   "An Ontology for Describing and Synthesizing
+   Ecological Observation Data."
+   *Ecological Informatics*, 2, 279--296.
    Available at:
-   `https://bioportal.bioontology.org/ontologies/OBOE <https://bioportal.bioontology.org/ontologies/OBOE>`_
+   `https://doi.org/10.1016/j.ecoinf.2007.05.004
+   <https://doi.org/10.1016/j.ecoinf.2007.05.004>`_

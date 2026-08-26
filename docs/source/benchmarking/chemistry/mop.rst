@@ -26,23 +26,23 @@ Molecular Process Ontology (MOP)
 ========================================================================================================
 The Molecular Process Ontology (MOP) is a systematic ontology for
 describing and classifying molecular-level chemical processes and
-transformations [#mop-bioportal]_. It provides a structured vocabulary
+transformations [#mop-repo]_. It provides a structured vocabulary
 for representing processes such as cyclization, methylation,
 demethylation, oxidation, reduction, and other fundamental
 transformations relevant to chemical reaction description
-[#mop-bioportal]_. MOP supports standardized semantic representation of
+[#mop-repo]_. MOP supports standardized semantic representation of
 molecular processes that underlie reaction mechanisms and can be used to
 organize and classify reaction information in chemistry databases and
-reaction informatics systems [#mop-bioportal]_. By providing explicit
+reaction informatics systems [#mop-repo]_. By providing explicit
 terms for molecular transformations, MOP supports semantic
 interoperability, structured querying, and mechanism-oriented analysis
-across chemical data resources [#mop-bioportal]_.
+across chemical data resources [#mop-repo]_.
 
 **Example Usage**: Represent a cyclization reaction step by linking it
 to an appropriate MOP term for the corresponding molecular process,
 such as a ring-closure transformation, enabling structured
 classification of reactions and discovery of related transformations
-across chemical databases [#mop-bioportal]_.
+across chemical databases [#mop-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -155,5 +155,9 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#mop-bioportal] NCBO BioPortal. n.d. "Molecular Process Ontology (MOP)."
-   Available at: `https://bioportal.bioontology.org/ontologies/MOP <https://bioportal.bioontology.org/ontologies/MOP>`_
+.. [#mop-repo] OBO Foundry. n.d.
+   "Molecular Process Ontology (MOP)."
+   Ontology repository.
+   Available at:
+   `https://obofoundry.org/ontology/mop.html
+   <https://obofoundry.org/ontology/mop.html>`_

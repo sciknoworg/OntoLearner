@@ -27,22 +27,22 @@ Wine Ontology (Wine)
 
 The Wine Ontology is an RDF-based vocabulary for describing wines and
 related wine domain concepts in a structured and machine-readable way
-[#wine-w3c]_ [#wine-repo]_. It provides a classification framework for
+[#wine-repo]_. It provides a classification framework for
 different types of wines, grape varieties, wine regions, wineries, and
 wine characteristics, supporting semantic representation of wine
-products and their attributes [#wine-w3c]_ [#wine-repo]_. As a well-known
+products and their attributes [#wine-repo]_. As a well-known
 example ontology in the Semantic Web community, it has been used to
 illustrate ontology modeling patterns and reasoning over class-based
-descriptions [#wine-w3c]_. The ontology can support applications such
+descriptions . The ontology can support applications such
 as semantic data integration, structured search, recommendation, and
 knowledge representation in domains involving wine, food, and related
-commercial or cultural information [#wine-repo]_ [#wine-w3c]_.
+commercial or cultural information [#wine-repo]_.
 
 **Example Usage**: Describe a specific wine by linking it to its grape
 variety, wine region, producer, vintage year, and taste-related
 characteristics through ontology properties, enabling structured search,
 comparison, and semantic integration of wine-related information
-[#wine-repo]_ [#wine-w3c]_.
+[#wine-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -154,12 +154,6 @@ Use the following code to import this ontology programmatically:
 
 References
 ----------
-
-.. [#wine-w3c] McGuinness, D. L., and van Harmelen, F. 2004.
-   "OWL Web Ontology Language Guide."
-   W3C Recommendation, 10 February 2004.
-   Available at:
-   `https://www.w3.org/TR/owl-guide/ <https://www.w3.org/TR/owl-guide/>`_
 
 .. [#wine-repo] UC Davis Library. n.d. "Wine Linked Data / Wine Ontology."
    Available at:

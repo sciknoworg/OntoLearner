@@ -145,7 +145,10 @@ References
    Available at:
    `https://saref.etsi.org/ <https://saref.etsi.org/>`_
 
-.. [#saref-core] ETSI. 2025.
-   "SAREF Core Ontology."
+.. [#saref-core] ETSI TC SmartM2M. 2024.
+   "SmartM2M; SAREF Reference Ontology Patterns."
+   ETSI TS 103 548 V1.2.1.
+   European Telecommunications Standards Institute.
    Available at:
-   `https://saref.etsi.org/core/v4.1.1/ <https://saref.etsi.org/core/v4.1.1/>`_
+   `https://www.etsi.org/deliver/etsi_ts/103500_103599/103548/01.02.01_60/ts_103548v010201p.pdf
+   <https://www.etsi.org/deliver/etsi_ts/103500_103599/103548/01.02.01_60/ts_103548v010201p.pdf>`_

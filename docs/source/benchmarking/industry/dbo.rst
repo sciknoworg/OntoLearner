@@ -23,11 +23,9 @@
 Digital Buildings Ontology (DBO)
 ========================================================================================================
 
-The Digital Buildings Ontology (DBO) is a structured vocabulary developed by Google for representing information about buildings and building-installed equipment [#dbo-github]_. DBO provides a semantic model for describing building assets, physical spaces, equipment, entity types, operational states, fields, units, and relationships in smart-building environments [#dbo-github]_. The ontology enables integration of data from building management systems, IoT devices, telemetry streams, and facility management platforms by providing a uniform schema for building configuration and validation [#dbo-github]_. DBO is designed to be extensible, allowing organizations to adapt the ontology to their specific building types, equipment configurations, and operational requirements [#dbo-github]_. By providing standardized terms and relationships, DBO supports data-driven building management, monitoring, analytics, energy optimization, predictive maintenance, and scalable digital building operations [#dbo-github]_. The ontology is open source and maintained through Google’s Digital Buildings repository [#dbo-github]_.
+The Digital Buildings Ontology (DBO) is a structured vocabulary developed by Google for representing information about buildings and building-installed equipment [#dbo-github]_ [#dbo-iswc]_. DBO provides a semantic model for describing building assets, physical spaces, equipment, entity types, operational states, fields, units, and relationships in smart-building environments [#dbo-github]_ [#dbo-iswc]_. The ontology supports the integration and consistent representation of heterogeneous building data through a common semantic model and associated validation tooling [#dbo-github]_ [#dbo-ldac]_. DBO is designed to be extensible and applicable across different buildings and equipment configurations, supporting scalable deployment and reuse of building-management applications [#dbo-iswc]_ [#dbo-ldac]_. By standardizing how building systems and their relationships are represented, DBO supports building data management, monitoring, analytics, and interoperability across smart-building environments [#dbo-github]_ [#dbo-iswc]_. The ontology is open source and maintained through Google's Digital Buildings repository [#dbo-github]_.
 
-**Example Usage**:
-Annotate a smart building system with DBO terms to describe HVAC equipment, lighting systems, sensors, telemetry fields, operational states, and spatial locations, enabling automated validation, monitoring, control, and integration with building management platforms [#dbo-github]_.
-
+**Example Usage**: Annotate a smart-building system with DBO terms to describe HVAC equipment, lighting systems, sensors, telemetry fields, operational states, and spatial locations, enabling consistent building-data representation, validation, monitoring, and integration with building-management applications [#dbo-github]_ [#dbo-iswc]_ [#dbo-ldac]_.
 Metrics & Statistics
 --------------------------
 
@@ -144,3 +142,18 @@ References
    GitHub Repository.
    Available at:
    `https://github.com/google/digitalbuildings <https://github.com/google/digitalbuildings>`_
+
+.. [#dbo-iswc] Berkoben, K., Kaed, C., and Sodorff, T. 2020.
+   "A Digital Buildings Ontology for Google's Real Estate."
+   In *ISWC 2020 Posters, Demos and Industry Tracks*.
+   Available at:
+   `https://ceur-ws.org/Vol-2721/paper510.pdf
+   <https://ceur-ws.org/Vol-2721/paper510.pdf>`_
+
+.. [#dbo-ldac] Kaed, C., Berkoben, K. 2020.
+   "Digital Buildings."
+   Presented at the 8th Linked Data in Architecture
+   and Construction Workshop (LDAC 2020).
+   Available at:
+   `https://linkedbuildingdata.net/ldac2020/files/presentations/LDAC2020_IND6_CharbelKaed.pdf
+   <https://linkedbuildingdata.net/ldac2020/files/presentations/LDAC2020_IND6_CharbelKaed.pdf>`_

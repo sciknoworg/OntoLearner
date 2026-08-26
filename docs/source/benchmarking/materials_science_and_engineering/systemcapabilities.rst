@@ -23,12 +23,12 @@
 System Capabilities Ontology (SystemCapabilities)
 ========================================================================================================
 
-The System Capabilities Ontology (SystemCapabilities) is an ontology module designed to describe system capabilities, operating ranges, and survival ranges [#systemcapabilities-w3c]_ [#systemcapabilities-bioregistry]_. It provides a structured vocabulary for representing what a system is capable of doing under specified conditions, including capability properties, operating properties, survival properties, operating ranges, and survival ranges [#systemcapabilities-w3c]_.
+The System Capabilities Ontology (SystemCapabilities) is an ontology module designed to describe system capabilities, operating ranges, and survival ranges [#systemcapabilities-w3c]_ [#systemcapabilities-paper]_. It provides a structured vocabulary for representing what a system is capable of doing under specified conditions, including capability properties, operating properties, survival properties, operating ranges, and survival ranges [#systemcapabilities-w3c]_ [#systemcapabilities-paper]_.
 
-SystemCapabilities is part of the SSN/SOSA ontology framework and is used to describe capabilities and limitations of systems such as sensors and actuators [#systemcapabilities-w3c]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of system-related information across sensor, engineering, and data-management applications [#systemcapabilities-w3c]_.
+SystemCapabilities is part of the SSN/SOSA ontology framework and is used to describe capabilities and limitations of systems such as sensors and actuators [#systemcapabilities-w3c]_ [#systemcapabilities-paper]_. The ontology supports semantic annotation, interoperability, data integration, and reuse of system-related information across sensor, engineering, and data-management applications [#systemcapabilities-paper]_.
 
 **Example Usage**:
-Annotate a sensor or engineering system with SystemCapabilities terms to specify its measurement capability, operating range, survival range, accuracy, frequency, latency, or environmental limits, enabling semantic search and integration with sensor-network and engineering data platforms [#systemcapabilities-w3c]_.
+Annotate a sensor or engineering system with SystemCapabilities terms to specify its measurement capability, operating range, survival range, accuracy, frequency, latency, or environmental limits, enabling semantic search and integration with sensor-network and engineering data platforms [#systemcapabilities-w3c]_ [#systemcapabilities-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -147,8 +147,14 @@ References
    Available at:
    `https://www.w3.org/TR/vocab-ssn/#System-capabilities <https://www.w3.org/TR/vocab-ssn/#System-capabilities>`_
 
-.. [#systemcapabilities-bioregistry] Bioregistry. n.d.
-   "System capabilities, operating ranges, and survival ranges ontology."
-   Registry entry.
+.. [#systemcapabilities-paper] Haller, A., Janowicz, K.,
+   Cox, S. J. D., Lefrançois, M., Taylor, K.,
+   Le Phuoc, D., Lieberman, J., García-Castro, R.,
+   Atkinson, R., and Stadler, C. 2018.
+   "The Modular SSN Ontology: A Joint W3C and OGC Standard
+   Specifying the Semantics of Sensors, Observations,
+   Sampling, and Actuation."
+   *Semantic Web*, 10(1), 9--32.
    Available at:
-   `https://bioregistry.io/ssn.system <https://bioregistry.io/ssn.system>`_
+   `https://doi.org/10.3233/SW-180320
+   <https://doi.org/10.3233/SW-180320>`_

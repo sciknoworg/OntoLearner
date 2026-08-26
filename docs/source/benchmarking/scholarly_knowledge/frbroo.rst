@@ -23,14 +23,12 @@
 Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)
 ========================================================================================================
 
-FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) is a formal ontology developed through the harmonization of the FRBR family of bibliographic conceptual models with the CIDOC Conceptual Reference Model (CIDOC CRM) [#frbroo-cidoc]_ [#frbroo-ifla]_. It is intended to capture and represent the underlying semantics of bibliographic information and to facilitate the integration, mediation, and interchange of bibliographic and museum information [#frbroo-cidoc]_. FRBRoo provides an object-oriented conceptual model for representing bibliographic entities, works, expressions, manifestations, items, agents, creation processes, publication events, identifiers, and relationships between cultural heritage resources [#frbroo-ifla]_.
+FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) is a formal ontology developed through the harmonization of the FRBR family of bibliographic conceptual models with the CIDOC Conceptual Reference Model (CIDOC CRM) [#frbroo-cidoc]_. Its purpose is to express bibliographic concepts in an object-oriented form that is compatible with CIDOC CRM and to support the integration of bibliographic and museum information within a shared semantic framework [#frbroo-cidoc]_.
 
-The ontology reuses appropriate parts of CIDOC CRM and maps the entity-relationship models of the FRBR family into an object-oriented form [#frbroo-cidoc]_. This allows bibliographic information to be modeled together with museum and cultural heritage information using a shared semantic framework [#frbroo-cidoc]_ [#frbroo-ifla]_. FRBRoo supports semantic interoperability by making the structure and meaning of bibliographic records more explicit, enabling richer querying, reasoning, data mediation, and integration across library, archive, and museum systems [#frbroo-cidoc]_.
-
-Typical applications of FRBRoo include bibliographic data modeling, cultural heritage knowledge graphs, library and museum data integration, semantic cataloging, authority data linking, and interoperability between bibliographic and museum information systems [#frbroo-ifla]_. By providing a formal ontology aligned with CIDOC CRM, FRBRoo supports the exchange, interpretation, and reuse of bibliographic and cultural heritage metadata across heterogeneous repositories [#frbroo-cidoc]_ [#frbroo-ifla]_.
+FRBRoo reuses relevant parts of CIDOC CRM and reformulates FRBR concepts in terms of classes, properties, events, and relationships [#frbroo-cidoc]_. It provides formal representations for bibliographic entities and processes such as works, expressions, manifestations, items, creation activities, publication activities, identifiers, and relationships between intellectual or physical resources [#frbroo-cidoc]_. By aligning bibliographic modeling with CIDOC CRM, FRBRoo supports semantic interoperability and the integration of information maintained by libraries, museums, archives, and other cultural heritage institutions [#frbroo-cidoc]_.
 
 **Example Usage**:
-Annotate a bibliographic record with FRBRoo terms to represent a literary work, its expressions, manifestations, physical items, creators, publication events, identifiers, and relationships to museum or archival objects. This enables semantic search, cultural heritage data integration, and cross-domain discovery across library and museum information systems [#frbroo-cidoc]_ [#frbroo-ifla]_.
+Represent a literary work and its related expressions, manifestations, physical items, creators, and publication activities using FRBRoo classes and properties. This allows bibliographic information to be linked with museum or cultural heritage information modeled using CIDOC CRM [#frbroo-cidoc]_.
 
 Metrics & Statistics
 --------------------------
@@ -147,8 +145,3 @@ References
    "Definition of Object-Oriented FRBR."
    Available at:
    `https://cidoc-crm.org/sites/default/files/FRBRoo_V3.0.pdf <https://cidoc-crm.org/sites/default/files/FRBRoo_V3.0.pdf>`_
-
-.. [#frbroo-ifla] IFLA. n.d.
-   "FRBRoo model."
-   Available at:
-   `https://www.iflastandards.info/fr/frbr/frbroo.html <https://www.iflastandards.info/fr/frbr/frbroo.html>`_

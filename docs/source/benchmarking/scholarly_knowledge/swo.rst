@@ -23,14 +23,14 @@
 Software Ontology (SWO)
 ========================================================================================================
 
-The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions, provenance, and associated data [#swo-obofoundry]_ [#swo-paper]_. It contains detailed information on licensing and formats as well as software applications themselves, mainly, but not limited to, the bioinformatics community [#swo-obofoundry]_. It provides a structured vocabulary for representing software tools, supporting research in software description, reproducibility, data analysis, curation, and digital preservation [#swo-paper]_.
+The Software Ontology (SWO) is a resource for describing software tools, their types, tasks, versions, provenance, and associated data [#swo-paper]_. It contains detailed information on licensing and formats as well as software applications themselves, mainly, but not limited to, the bioinformatics community [#swo-paper]_. It provides a structured vocabulary for representing software tools, supporting research in software description, reproducibility, data analysis, curation, and digital preservation [#swo-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of software tools, tasks, versions, licenses, formats, and associated data, along with properties to describe their characteristics and interactions [#swo-obofoundry]_ [#swo-paper]_. Hierarchies are used to organize software-related concepts into categories, enabling efficient retrieval, comparison, and analysis [#swo-obofoundry]_. SWO supports the integration of software metadata from various sources, promoting interoperability and data-driven research in software management and biomedical data analysis [#swo-paper]_.
+The ontology employs a class-based modeling approach, defining classes for different types of software tools, tasks, versions, licenses, formats, and associated data, along with properties to describe their characteristics and interactions [#swo-paper]_. Hierarchies are used to organize software-related concepts into categories, enabling efficient retrieval, comparison, and analysis [#swo-paper]_. SWO supports the integration of software metadata from various sources, promoting interoperability and data-driven research in software management and biomedical data analysis [#swo-paper]_.
 
-Typical applications of SWO include software tool annotation, software cataloging, reproducibility support, biomedical data analysis documentation, digital preservation, and integration of software metadata across repositories and research platforms [#swo-paper]_. By providing a standardized vocabulary and framework, SWO enhances interoperability, reuse, and knowledge discovery in the field of software management [#swo-obofoundry]_ [#swo-paper]_.
+Typical applications of SWO include software tool annotation, software cataloging, reproducibility support, biomedical data analysis documentation, digital preservation, and integration of software metadata across repositories and research platforms [#swo-paper]_. By providing a standardized vocabulary and framework, SWO enhances interoperability, reuse, and knowledge discovery in the field of software management [#swo-paper]_.
 
 **Example Usage**:
-Annotate a software tool with SWO terms to specify its tool type, task, version, license, input and output data formats, provenance, and associated data. This enables semantic search, reproducibility tracking, and integration with software management platforms [#swo-obofoundry]_ [#swo-paper]_.
+Annotate a software tool with SWO terms to specify its tool type, task, version, license, input and output data formats, provenance, and associated data. This enables semantic search, reproducibility tracking, and integration with software management platforms [#swo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -144,13 +144,12 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#swo-obofoundry] OBO Foundry. n.d.
-   "Software ontology."
+.. [#swo-paper] Malone, J., Brown, A., Lister, A. L.,
+   Ison, J., Hull, D., Parkinson, H., Stevens, R.,
+   and others. 2014.
+   "The Software Ontology (SWO): A Resource for Reproducibility
+   in Biomedical Data Analysis, Curation and Digital Preservation."
+   *Journal of Biomedical Semantics*, 5, 25.
    Available at:
-   `https://obofoundry.org/ontology/swo.html <https://obofoundry.org/ontology/swo.html>`_
-
-.. [#swo-paper] Malone, James, et al. 2014.
-   "The Software Ontology (SWO): a resource for reproducibility in biomedical data analysis, curation and digital preservation."
-   *Journal of Biomedical Semantics* 5: 25.
-   DOI:
-   `10.1186/2041-1480-5-25 <https://doi.org/10.1186/2041-1480-5-25>`_
+   `https://doi.org/10.1186/2041-1480-5-25
+   <https://doi.org/10.1186/2041-1480-5-25>`_

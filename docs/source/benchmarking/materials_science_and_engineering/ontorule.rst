@@ -141,7 +141,10 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#ontorule-steel-doc] ONTORULE Project. 2010.
-   "Steel Industry case study Ontology."
+.. [#ontorule-steel-doc] Valledor, P., Berrueta, D., and Rubiera, E. 2010.
+   "Ontology of the Steel Industry Case Study."
+   Edited by L. Polo and D. Díaz.
+   ONTORULE Project.
+   Final version, 31 May 2010.
    Available at:
    `https://ontorule-project.eu/resources/steel.html <https://ontorule-project.eu/resources/steel.html>`_

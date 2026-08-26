@@ -29,30 +29,32 @@ The Copyright Ontology (CopyrightOnto) is an OWL/RDF ontology for
 representing the copyright domain in a machine-processable way in order
 to facilitate automated or computer-supported copyright management
 through the whole content value chain, rather than focusing only on
-end-user permissions [#copyright-repo]_ [#copyright-paper]_. The project
+end-user permissions [#copyright-repo]_ [#copyright-owl-paper]_. The project
 describes the ontology as a Web Ontology implemented using W3C standards
 such as RDF and OWL, and organizes the domain into three main parts:
 the **Creation Model**, **Rights Model**, and **Actions Model**
-[#copyright-repo]_. These models are intended to capture how creations
-appear across their lifecycle, which actions can be performed on them,
-and which legal rights or constraints regulate those actions
-[#copyright-repo]_ [#copyright-jis]_.
+[#copyright-repo]_ [#copyright-owl-paper]_. These models are intended to
+capture how creations appear across their lifecycle, which actions can
+be performed on them, and which legal rights or constraints regulate
+those actions [#copyright-repo]_ [#copyright-jis]_
+[#copyright-owl-paper]_.
 
 The ontology has been presented in the context of semantic digital
 rights management and copyright-aware copyright management systems,
-including support for interoperable licensing and contract-related
-representations [#copyright-paper]_ [#copyright-contracts]_. This makes
-it suitable for applications such as automated rights clearance, license
-management, provenance-aware content workflows, and machine-readable
-reuse analysis in publishing, repositories, and digital content
-platforms [#copyright-joir]_ [#copyright-jis]_.
+including support for interoperable licensing and structured
+representations of copyright-related rights and actions
+[#copyright-owl-paper]_ [#copyright-jis]_. This makes it suitable for
+applications such as automated rights management, license handling,
+copyright-aware content workflows, and machine-readable analysis of
+permitted actions across digital content systems [#copyright-jis]_
+[#copyright-owl-paper]_.
 
 **Example Usage**: Describe a digital artwork as a CopyrightOnto
 creation/work entity, associate it with a rightsholder, connect it to
 the relevant rights or license statements, and attach temporal or legal
 constraints so that downstream systems can perform automated permission
 checks and copyright-aware reuse analysis [#copyright-repo]_
-[#copyright-joir]_.
+[#copyright-jis]_ [#copyright-owl-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -174,3 +176,9 @@ References
    "Content Value Chains Modelling using a Copyright Ontology."
    Available at:
    `https://rhizomik.net/html/~roberto/papers/rg-jis09.pdf <https://rhizomik.net/html/~roberto/papers/rg-jis09.pdf>`_
+
+.. [#copyright-owl-paper] García, R., and Gil, R. 2006.
+   "An OWL Copyright Ontology for Semantic Digital Rights Management."
+   Available at:
+   `https://rhizomik.net/html/~roberto/papers/rgrg-swws06.pdf
+   <https://rhizomik.net/html/~roberto/papers/rgrg-swws06.pdf>`_

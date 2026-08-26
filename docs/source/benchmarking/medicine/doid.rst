@@ -25,12 +25,12 @@
 Human Disease Ontology (DOID)
 ========================================================================================================
 
-The Disease Ontology (DOID) is a standardized, machine-readable ontology for describing and classifying human diseases [#doid-github]_ [#doid-obofoundry]_. It provides reusable disease identifiers and a structured hierarchy for organizing human diseases across different biomedical domains [#doid-github]_ [#doid-obofoundry]_.
+The Disease Ontology (DOID) is a standardized, machine-readable ontology for describing and classifying human diseases [#doid-paper-2012]_ [#doid-paper-2022]_. It provides stable disease identifiers and a structured classification that supports the integration of disease-related knowledge across biomedical resources [#doid-paper-2012]_. The ontology was developed to provide a common semantic framework for human disease concepts and to improve interoperability between biological and clinical data sources [#doid-paper-2012]_ [#doid-paper-2022]_.
 
-DOID supports semantic annotation, data integration, search, and reuse of disease-related information across biomedical databases, genomics research, and clinical informatics workflows [#doid-github]_ [#doid-obofoundry]_. By providing a standardized disease vocabulary, DOID enables consistent disease annotation, knowledge integration, and cross-resource comparison of biomedical data [#doid-obofoundry]_.
+DOID supports disease annotation, data integration, search, and reuse across biomedical databases, genomics resources, and related research applications [#doid-paper-2012]_ [#doid-paper-2022]_. Its continued development has expanded disease classification, cross-references, definitions, and interoperability with other biomedical resources, supporting consistent disease representation and cross-resource comparison [#doid-paper-2022]_.
 
 **Example Usage**:
-Annotate a disease research paper or dataset with DOID terms such as **DOID:2841** for lymphoma or **DOID:9352** for diabetes mellitus, enabling semantic search and integration with biomedical databases and disease-annotation workflows [#doid-github]_ [#doid-obofoundry]_.
+Annotate a disease-related dataset or research resource with DOID identifiers, such as ``DOID:2841`` for lymphoma or ``DOID:9352`` for diabetes mellitus, to provide standardized disease annotations that can be linked and compared across biomedical databases and knowledge resources [#doid-paper-2012]_ [#doid-paper-2022]_.
 
 Metrics & Statistics
 --------------------------
@@ -143,14 +143,19 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#doid-github] DiseaseOntology. n.d.
-   "HumanDiseaseOntology."
-   GitHub repository.
+.. [#doid-paper-2012] Schriml, L. M., Arze, C., Nadendla, S.,
+   Chang, Y.-W. W., Mazaitis, M., Felix, V., Feng, G.,
+   and Kibbe, W. A. 2012.
+   "Disease Ontology: A Backbone for Disease Semantic Integration."
+   *Nucleic Acids Research*, 40(Database issue), D940--D946.
    Available at:
-   `https://github.com/DiseaseOntology/HumanDiseaseOntology <https://github.com/DiseaseOntology/HumanDiseaseOntology>`_
+   `https://doi.org/10.1093/nar/gkr972
+   <https://doi.org/10.1093/nar/gkr972>`_
 
-.. [#doid-obofoundry] OBO Foundry. n.d.
-   "Human Disease Ontology."
-   Ontology registry entry.
+.. [#doid-paper-2022] Schriml, L. M., Munro, J. B., Schor, M.,
+   et al. 2022.
+   "The Human Disease Ontology 2022 Update."
+   *Nucleic Acids Research*, 50(D1), D1255--D1261.
    Available at:
-   `https://obofoundry.org/ontology/doid.html <https://obofoundry.org/ontology/doid.html>`_
+   `https://doi.org/10.1093/nar/gkab1063
+   <https://doi.org/10.1093/nar/gkab1063>`_

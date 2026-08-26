@@ -145,13 +145,14 @@ References
 
 .. [#lexinfo-ontology] OntoLex Community Group. n.d.
    "LexInfo: Data Category Ontology for OntoLex-Lemon."
-   GitHub Repository.
    Available at:
-   `https://github.com/ontolex/lexinfo <https://github.com/ontolex/lexinfo>`_
+   `https://lexinfo.net/
+   <https://lexinfo.net/>`_
 
-.. [#lexinfo-paper] Cimiano, Philipp, Paul Buitelaar,
-   John McCrae, and Michael Sintek. 2011.
+.. [#lexinfo-paper] Cimiano, P., Buitelaar, P.,
+   McCrae, J., and Sintek, M. 2011.
    "LexInfo: A Declarative Model for the Lexicon-Ontology Interface."
-   *Journal of Web Semantics* 9(1): 29--51.
-   DOI:
-   `10.1016/j.websem.2010.11.001 <https://doi.org/10.1016/j.websem.2010.11.001>`_
+   *Journal of Web Semantics*, 9(1), 29--51.
+   Available at:
+   `https://doi.org/10.1016/j.websem.2010.11.001
+   <https://doi.org/10.1016/j.websem.2010.11.001>`_

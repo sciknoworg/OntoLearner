@@ -23,11 +23,10 @@
 Quantities, Units, Dimensions and Data Types (QUDT)
 ========================================================================================================
 
-The Quantities, Units, Dimensions and Data Types (QUDT) ontology is a comprehensive framework for representing quantities, units, dimensions, and data types in scientific, engineering, and technical domains [#qudt-official]_ [#qudt-github]_. QUDT provides a standardized vocabulary for describing measurement units, quantity kinds, dimensional vectors, physical constants, conversion factors, and measurement values [#qudt-official]_. The ontology supports data expressed in RDF and related semantic web formats, enabling machine-readable representation of scientific and engineering measurements [#qudt-github]_. QUDT is widely used for semantic annotation of scientific datasets, IoT data streams, engineering models, and knowledge graphs, supporting automated unit conversion, validation, interoperability, and dimensional analysis [#qudt-official]_ [#qudt-github]_. The QUDT models are made publicly available through the QUDT project and public repository, supporting reuse, extension, and integration in semantic web and engineering applications [#qudt-official]_ [#qudt-github]_. By providing a common semantic foundation, QUDT facilitates data integration, analytics, and knowledge sharing across multidisciplinary projects [#qudt-official]_.
+The Quantities, Units, Dimensions and Data Types (QUDT) ontology is a comprehensive framework for representing quantities, units, dimensions, and data types in scientific, engineering, and technical domains [#qudt-fairsharing]_. QUDT provides a standardized vocabulary for describing measurement units, quantity kinds, dimensional vectors, physical constants, conversion factors, and measurement values [#qudt-fairsharing]_. The ontology supports machine-readable representation of scientific and engineering measurements and is used to promote interoperability across data and knowledge representation systems [#qudt-fairsharing]_. QUDT supports semantic annotation of scientific and technical data by providing reusable identifiers and structured descriptions for quantities, units, dimensions, and related concepts [#qudt-fairsharing]_. By providing a common semantic foundation for measurement information, QUDT facilitates consistent data representation, integration, and reuse across scientific and engineering applications [#qudt-fairsharing]_.
 
 **Example Usage**:
-Annotate a scientific dataset with QUDT terms to specify the quantities measured, such as ``temperature`` or ``pressure``; their units, such as ``degree Celsius`` or ``pascal``; and conversion factors or dimensional information. This enables automated unit conversion, semantic search, validation, and integration across datasets [#qudt-official]_ [#qudt-github]_.
-
+Annotate a scientific dataset with QUDT terms to specify the quantities measured, such as ``temperature`` or ``pressure``; their associated units, such as ``degree Celsius`` or ``pascal``; and relevant dimensional information. This enables consistent machine-readable representation and integration of measurement data across datasets and applications [#qudt-fairsharing]_.
 Metrics & Statistics
 --------------------------
 
@@ -139,13 +138,10 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#qudt-official] QUDT. n.d.
-   "Quantities, Units, Dimensions and Data Types Ontologies."
+.. [#qudt-fairsharing] FAIRsharing.org. 2026.
+   "QUDT: Quantities, Units, Dimensions and Types."
+   DOI: 10.25504/FAIRsharing.d3pqw7.
+   Last edited March 26, 2026.
    Available at:
-   `https://www.qudt.org/ <https://www.qudt.org/>`_
-
-.. [#qudt-github] QUDT. n.d.
-   "QUDT Public Repository."
-   GitHub Repository.
-   Available at:
-   `https://github.com/qudt/qudt-public-repo <https://github.com/qudt/qudt-public-repo>`_
+   `https://doi.org/10.25504/FAIRsharing.d3pqw7
+   <https://doi.org/10.25504/FAIRsharing.d3pqw7>`_

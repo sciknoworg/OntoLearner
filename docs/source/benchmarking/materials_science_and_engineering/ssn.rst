@@ -23,12 +23,12 @@
 Semantic Sensor Network Ontology (SSN)
 ========================================================================================================
 
-The Semantic Sensor Network (SSN) ontology is an ontology for describing sensors, observations, procedures, features of interest, samples, observed properties, and actuators [#ssn-w3c]_. SSN includes a lightweight, self-contained core ontology called SOSA - Sensor, Observation, Sample, and Actuator which provides elementary classes and properties for modelling observation, sampling, and actuation activities [#ssn-w3c]_.
+The Semantic Sensor Network (SSN) ontology is an ontology for describing sensors, observations, procedures, features of interest, samples, observed properties, and actuators [#ssn-github]_ [#ssn-paper]_. SSN includes a lightweight, self-contained core ontology called SOSA - Sensor, Observation, Sample, and Actuator which provides elementary classes and properties for modelling observation, sampling, and actuation activities [#ssn-github]_ [#ssn-paper]_.
 
-SSN and SOSA support a modular architecture with different scopes and degrees of axiomatization, enabling use across applications such as satellite imagery, scientific monitoring, industrial and household infrastructures, social sensing, citizen science, observation-driven ontology engineering, and the Web of Things [#ssn-w3c]_. By providing a standardized vocabulary, SSN supports semantic annotation, interoperability, data integration, querying, and reuse of sensor and observation data across sensor-network and data-management platforms [#ssn-w3c]_.
+SSN and SOSA support a modular architecture with different scopes and degrees of axiomatization, enabling use across applications such as satellite imagery, scientific monitoring, industrial and household infrastructures, social sensing, citizen science, observation-driven ontology engineering, and the Web of Things [#ssn-github]_ [#ssn-paper]_. By providing a standardized vocabulary, SSN supports semantic annotation, interoperability, data integration, querying, and reuse of sensor and observation data across sensor-network and data-management platforms [#ssn-github]_ [#ssn-paper]_.
 
 **Example Usage**:
-Annotate a sensor network dataset with SSN/SOSA terms to specify sensors, observations, procedures, features of interest, samples, observed properties, actuators, and results, enabling semantic search and integration with sensor-network management and Web of Things platforms [#ssn-w3c]_.
+Annotate a sensor network dataset with SSN/SOSA terms to specify sensors, observations, procedures, features of interest, samples, observed properties, actuators, and results, enabling semantic search and integration with sensor-network management and Web of Things platforms [#ssn-github]_ [#ssn-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -141,8 +141,20 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#ssn-w3c] W3C and OGC. 2017.
-   "Semantic Sensor Network Ontology."
-   W3C Recommendation.
+.. [#ssn-github] W3C and OGC. 2023.
+   "Semantic Sensor Network Ontology - 2023 Edition."
    Available at:
-   `https://www.w3.org/TR/vocab-ssn/ <https://www.w3.org/TR/vocab-ssn/>`_
+   `https://w3c.github.io/sdw-sosa-ssn/ssn/
+   <https://w3c.github.io/sdw-sosa-ssn/ssn/>`_
+
+.. [#ssn-paper] Haller, A., Janowicz, K.,
+   Cox, S. J. D., Lefrançois, M., Taylor, K.,
+   Le Phuoc, D., Lieberman, J., García-Castro, R.,
+   Atkinson, R., and Stadler, C. 2018.
+   "The Modular SSN Ontology: A Joint W3C and OGC Standard
+   Specifying the Semantics of Sensors, Observations,
+   Sampling, and Actuation."
+   *Semantic Web*, 10(1), 9--32.
+   Available at:
+   `https://doi.org/10.3233/SW-180320
+   <https://doi.org/10.3233/SW-180320>`_

@@ -28,24 +28,24 @@ Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV)
 The Nuclear Magnetic Resonance Controlled Vocabulary (NMRCV) is an
 MSI-approved controlled vocabulary developed to support standardized
 annotation of nuclear magnetic resonance data and experiments
-[#nmr-bioportal]_ [#nmrml-paper]_. It supports the nmrML XML format, a
+[#nmrml-paper]_. It supports the nmrML XML format, a
 vendor-agnostic open standard for the description, storage, and
 exchange of raw NMR data, by providing standardized terms for
 instrumentation, acquisition parameters, sample context, and other
-experimental metadata [#nmrml-paper]_ [#nmr-bioportal]_. The vocabulary
+experimental metadata [#nmrml-paper]_ . The vocabulary
 serves as a flexible semantic layer alongside the nmrML schema,
 allowing terminology to evolve independently while still supporting
 semantic validation and interoperable data exchange [#nmrml-paper]_.
 By providing a shared terminology for NMR experiments, NMRCV improves
 semantic consistency, reproducibility, validation, and cross-study
 integration across metabolomics and analytical chemistry workflows
-[#nmr-bioportal]_ [#nmrml-paper]_.
+[#nmrml-paper]_.
 
 **Example Usage**: Annotate an nmrML file with NMRCV terms to specify
 the instrument type, pulse sequence, sample conditions, acquisition
 parameters, and processing metadata, enabling standardized exchange,
 validation, and cross-study comparison of NMR datasets
-[#nmrml-paper]_ [#nmr-bioportal]_.
+[#nmrml-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -158,10 +158,6 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#nmr-bioportal] NCBO BioPortal. n.d. "NMR-Controlled Vocabulary."
-   Available at:
-   `https://bioportal.bioontology.org/ontologies/NMR <https://bioportal.bioontology.org/ontologies/NMR>`_
-
 .. [#nmrml-paper] Schober, D., Jacob, D., Wilson, M., Cruz, J. A.,
    Marcu, A., Grant, J. R., Moing, A., Deborde, C., de Figueiredo, L. F.,
    Haug, K., Rocca-Serra, P., Easton, J., Ebbels, T. M. D., Hao, J.,
@@ -169,5 +165,6 @@ References
    and Wishart, D. S. 2018.
    "nmrML: A Community Supported Open Data Standard for the Description,
    Storage, and Exchange of NMR Data."
-   *Analytical Chemistry* 90(1): 649-656.
-   doi:10.1021/acs.analchem.7b02795
+   *Analytical Chemistry* 90(1): 649--656.
+   Available at:
+   `https://doi.org/10.1021/acs.analchem.7b02795 <https://doi.org/10.1021/acs.analchem.7b02795>`_

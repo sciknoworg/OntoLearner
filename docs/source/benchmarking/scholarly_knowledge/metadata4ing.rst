@@ -23,14 +23,14 @@
 Metadata for Intelligent Engineering (Metadata4Ing)
 ========================================================================================================
 
-The Metadata4Ing ontology provides a framework for the semantic description of research data and the complete data generation process, with a particular focus on engineering sciences and related disciplines [#m4i-nfdi]_. It covers the object of investigation, sample and data manipulation methods, tools, generated data files, and the roles of persons and institutions involved in the research process [#m4i-nfdi]_. Metadata4Ing supports the structured description of experiments, simulations, observations, workflows, and data-processing activities, enabling research data and its provenance context to be represented in a machine-readable form [#m4i-nfdi]_.
+The Metadata4Ing ontology provides a semantic framework for describing research data and the processes through which those data are generated, with a particular focus on engineering sciences and related disciplines [#m4i-nfdi]_ [#m4i-zenodo]_. It supports the representation of experiments, observations, simulations, objects of investigation, sample and data manipulation procedures, generated data files, and the personal or institutional roles involved in a research activity [#m4i-nfdi]_ [#m4i-zenodo]_.
 
-The ontology uses a class-based modeling approach to describe research data, methods, tools, projects, organizations, people, roles, variables, and generated outputs [#m4i-nfdi]_. These semantic descriptions support data retrieval, interpretation, comparison, reuse, and integration across engineering research datasets and infrastructures [#m4i-nfdi]_. Metadata4Ing is especially useful for research data management because it helps document not only the final dataset, but also how the data was created, processed, and contextualized [#m4i-nfdi]_.
+Metadata4Ing follows a modular and extensible modeling approach in which research processes can be described through classes and relationships for methods, tools, variables, organizations, people, roles, and generated outputs [#m4i-nfdi]_. This allows the ontology to capture not only the resulting research data, but also the contextual and procedural information needed to understand how those data were produced [#m4i-nfdi]_ [#m4i-zenodo]_. The ontology therefore supports machine-readable documentation of research workflows and facilitates interpretation, integration, and reuse of engineering research data [#m4i-nfdi]_.
 
-Typical applications of Metadata4Ing include research data management, documentation of data generation workflows, semantic annotation of engineering datasets, FAIR data publication, provenance tracking, and knowledge graph construction for research processes [#m4i-nfdi]_. By providing a standardized vocabulary and framework, Metadata4Ing enhances interoperability, reproducibility, collaboration, and data-driven research in engineering and related scientific domains [#m4i-nfdi]_.
+Metadata4Ing is intended for research data management and semantic description of scientific activities, including experimental, observational, simulation, and data-processing workflows [#m4i-nfdi]_ [#m4i-zenodo]_. Its structured representation of data-generation processes can support provenance documentation, interoperability between research infrastructures, FAIR-oriented data publication, and reuse of research information across engineering and neighbouring scientific domains [#m4i-nfdi]_ [#m4i-zenodo]_.
 
 **Example Usage**:
-Annotate an engineering research dataset with Metadata4Ing terms to specify the object of investigation, experimental or simulation method, tools used, generated data files, variables, responsible persons, institutional roles, and related project context. This enables semantic search, reproducibility, provenance tracking, and integration with research data management platforms [#m4i-nfdi]_.
+Annotate an engineering experiment with Metadata4Ing terms to describe the object of investigation, the experimental or simulation method, tools and configurations used, variables and parameters, generated data files, and the persons or institutions responsible for different parts of the process. This provides a machine-readable description of how the research data were generated and supports provenance tracking, interpretation, and reuse [#m4i-nfdi]_ [#m4i-zenodo]_.
 
 Metrics & Statistics
 --------------------------
@@ -143,7 +143,21 @@ Use the following code to import this ontology programmatically:
 References
 ----------
 
-.. [#m4i-nfdi] NFDI4Ing. n.d.
-   "Metadata4Ing."
+.. [#m4i-nfdi] Metadata4Ing Workgroup. 2025.
+   "Metadata4Ing: An Ontology for Describing the Generation
+   of Research Data within a Scientific Activity."
+   Ontology documentation.
    Available at:
-   `https://nfdi4ing.de/m4i/ <https://nfdi4ing.de/m4i/>`_
+   `https://nfdi4ing.pages.rwth-aachen.de/metadata4ing/metadata4ing/
+   <https://nfdi4ing.pages.rwth-aachen.de/metadata4ing/metadata4ing/>`_
+
+.. [#m4i-zenodo] Lanza, G., Iglezakis, D., Fuhrmans, M.,
+   Jordan, M., Farnbacher, B., Sosa Rodriguez, A. A.,
+   Leimer, S., Hachinger, S., Arndt, S., Terzijska, D.,
+   et al. 2025.
+   "Metadata4Ing: An Ontology for Describing the Generation
+   of Research Data within a Scientific Activity."
+   Version v7. Zenodo.
+   Available at:
+   `https://doi.org/10.5281/zenodo.17856129
+   <https://doi.org/10.5281/zenodo.17856129>`_
