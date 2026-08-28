@@ -26,23 +26,25 @@ Molecular Process Ontology (MOP)
 ========================================================================================================
 The Molecular Process Ontology (MOP) is a systematic ontology for
 describing and classifying molecular-level chemical processes and
-transformations [#mop-repo]_. It provides a structured vocabulary
-for representing processes such as cyclization, methylation,
+transformations [#mop-github]_ [#mop-repo]_. It provides a structured
+vocabulary for representing processes such as cyclization, methylation,
 demethylation, oxidation, reduction, and other fundamental
 transformations relevant to chemical reaction description
-[#mop-repo]_. MOP supports standardized semantic representation of
-molecular processes that underlie reaction mechanisms and can be used to
-organize and classify reaction information in chemistry databases and
-reaction informatics systems [#mop-repo]_. By providing explicit
+[#mop-github]_ [#mop-repo]_.
+
+MOP supports standardized semantic representation of molecular
+processes that underlie reaction mechanisms and can be used to organize
+and classify reaction information in chemistry databases and reaction
+informatics systems [#mop-github]_ [#mop-repo]_. By providing explicit
 terms for molecular transformations, MOP supports semantic
 interoperability, structured querying, and mechanism-oriented analysis
-across chemical data resources [#mop-repo]_.
+across chemical data resources [#mop-github]_ [#mop-repo]_.
 
 **Example Usage**: Represent a cyclization reaction step by linking it
 to an appropriate MOP term for the corresponding molecular process,
 such as a ring-closure transformation, enabling structured
 classification of reactions and discovery of related transformations
-across chemical databases [#mop-repo]_.
+across chemical databases [#mop-github]_ [#mop-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -154,6 +156,12 @@ Use the following code to import this ontology programmatically:
 
 References
 ----------
+
+.. [#mop-github] RSC Ontology.
+   "Molecular Process Ontology (MOP)."
+   GitHub repository.
+   Available at:
+   `https://github.com/rsc-ontology/MOP <https://github.com/rsc-ontology/MOP>`_
 
 .. [#mop-repo] OBO Foundry. n.d.
    "Molecular Process Ontology (MOP)."

@@ -23,10 +23,36 @@
 Automotive Ontology (AUTO)
 ========================================================================================================
 
-The Automotive Ontology (AUTO) is a comprehensive OWL ontology that defines shared conceptual structures and relationships in the automotive industry [#auto-edmc]_. It provides a standardized semantic framework for representing automotive concepts and supporting interoperability across automotive data sources [#auto-edmc]_. AUTO is built upon the ``auto`` Schema.org extension created by the W3C Automotive Ontology Community Group [#auto-edmc]_ [#auto-schema]_. Its development process follows best practices established by the EDMC FIBO Community, supporting consistent ontology modeling and reusable conceptual design [#auto-edmc]_. The ontology supports integration of information from automotive manufacturers, suppliers, dealers, service providers, and other automotive data publishers [#auto-edmc]_ [#auto-schema]_. By providing a common semantic framework, AUTO enables automotive data integration, knowledge sharing, semantic reasoning, and interoperability across the automotive ecosystem [#auto-edmc]_.
+The Automotive Ontology (AUTO) is a comprehensive OWL ontology that
+defines shared conceptual structures and relationships for the
+automotive domain [#auto-edmc]_. It provides a standardized semantic
+framework for representing automotive concepts and supporting
+interoperability across heterogeneous automotive data sources
+[#auto-edmc]_.
 
-**Example Usage**: Annotate a vehicle information system with AUTO terms to describe vehicle models, vehicle types, automotive characteristics, and related industry concepts, enabling integration with manufacturer databases, dealer websites, automotive knowledge graphs, and downstream analytics systems [#auto-edmc]_ [#auto-schema]_.
+AUTO is built upon the ``auto`` Schema.org extension developed through
+the W3C Automotive Ontology Community Group [#auto-edmc]_
+[#auto-schema]_. This underlying automotive vocabulary has also been
+discussed in the academic literature as an existing semantic resource
+for representing common vehicle-related concepts, including cars,
+buses, motorcycles, and associated automotive information
+[#auto-paper]_. The development of AUTO extends this foundation into a
+broader OWL-based industry ontology and follows modelling practices used
+within the EDM Council community [#auto-edmc]_.
 
+The ontology supports integration of information from automotive
+manufacturers, suppliers, dealers, service providers, and other
+automotive data publishers [#auto-edmc]_ [#auto-schema]_. By providing
+a common semantic framework, AUTO supports automotive data integration,
+knowledge sharing, semantic reasoning, and interoperability across the
+automotive ecosystem [#auto-edmc]_ [#auto-paper]_.
+
+**Example Usage**:
+Annotate a vehicle information system with AUTO terms to describe
+vehicle models, vehicle types, automotive characteristics, and related
+industry concepts, enabling integration with manufacturer databases,
+dealer websites, automotive knowledge graphs, and downstream analytics
+systems [#auto-edmc]_ [#auto-schema]_.
 Metrics & Statistics
 --------------------------
 
@@ -148,3 +174,9 @@ References
    Available at:
    `https://schema.org/docs/automotive.html
    <https://schema.org/docs/automotive.html>`_
+
+.. [#auto-paper] Urbieta, I., Nieto, M., García, M., and Otaegui, O. 2021.
+   "Design and Implementation of an Ontology for Semantic Labeling
+   and Testing: Automotive Global Ontology (AGO)."
+   *Applied Sciences* 11(17):7782.
+   `doi:10.3390/app11177782 <https://doi.org/10.3390/app11177782>`_
