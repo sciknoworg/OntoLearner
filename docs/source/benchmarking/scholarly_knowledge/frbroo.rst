@@ -23,14 +23,12 @@
 Functional Requirements for Bibliographic Records - object-oriented (FRBRoo)
 ========================================================================================================
 
-The FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) initiative is a joint effort of the CIDOC Conceptual Reference Model and Functional Requirements for Bibliographic Records international working groups to establish a formal ontology intended to capture and represent the underlying semantics of bibliographic information and to facilitate the integration, mediation, and interchange of bibliographic and museum information. It provides a structured vocabulary for representing bibliographic records, concepts, and relationships, supporting both theoretical and experimental research in bibliographic information management.
+FRBRoo (Functional Requirements for Bibliographic Records - object-oriented) is a formal ontology developed through the harmonization of the FRBR family of bibliographic conceptual models with the CIDOC Conceptual Reference Model (CIDOC CRM) [#frbroo-cidoc]_. Its purpose is to express bibliographic concepts in an object-oriented form that is compatible with CIDOC CRM and to support the integration of bibliographic and museum information within a shared semantic framework [#frbroo-cidoc]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of bibliographic records, concepts, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. FRBRoo supports the integration of data from various sources, promoting interoperability and data-driven research in bibliographic information management.
-
-Typical applications of FRBRoo include the development of new bibliographic information management methods, the optimization of bibliographic record management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, FRBRoo enhances collaboration and innovation in the field of bibliographic information management.
+FRBRoo reuses relevant parts of CIDOC CRM and reformulates FRBR concepts in terms of classes, properties, events, and relationships [#frbroo-cidoc]_. It provides formal representations for bibliographic entities and processes such as works, expressions, manifestations, items, creation activities, publication activities, identifiers, and relationships between intellectual or physical resources [#frbroo-cidoc]_. By aligning bibliographic modeling with CIDOC CRM, FRBRoo supports semantic interoperability and the integration of information maintained by libraries, museums, archives, and other cultural heritage institutions [#frbroo-cidoc]_.
 
 **Example Usage**:
-Annotate a bibliographic record with FRBRoo terms to specify record types, concepts, and relationships, enabling semantic search and integration with bibliographic information management platforms.
+Represent a literary work and its related expressions, manifestations, physical items, creators, and publication activities using FRBRoo classes and properties. This allows bibliographic information to be linked with museum or cultural heritage information modeled using CIDOC CRM [#frbroo-cidoc]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#frbroo-cidoc] International Working Group on FRBR and CIDOC CRM Harmonisation. 2015.
+   "Definition of Object-Oriented FRBR."
+   Available at:
+   `https://cidoc-crm.org/sites/default/files/FRBRoo_V3.0.pdf <https://cidoc-crm.org/sites/default/files/FRBRoo_V3.0.pdf>`_

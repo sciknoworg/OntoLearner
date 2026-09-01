@@ -23,14 +23,14 @@
 Citation Typing Ontology (CiTO)
 ========================================================================================================
 
-The Citation Typing Ontology (CiTO) is an ontology that enables characterization of the nature or type of citations,     both factually and rhetorically. It provides a structured vocabulary for describing citation types, relationships, and contexts, supporting both theoretical and experimental research in scholarly communication.
+The Citation Typing Ontology (CiTO) is an ontology for characterizing the nature or type of citations between scholarly works, including both factual and rhetorical citation relationships [#cito-spec]_ [#cito-paper]_. It provides a structured vocabulary for describing how a citing work relates to a cited work, for example whether the citation provides evidence, extends previous work, uses a method, discusses, reviews, or disagrees with the cited resource [#cito-paper]_. CiTO therefore enables citation metadata to express not only that a citation exists, but also the scholarly function or intent associated with that citation [#cito-spec]_ [#cito-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of citations, relationships, and contexts, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. CiTO supports the integration of data from various sources, promoting interoperability and data-driven research in scholarly communication.
+CiTO is part of the SPAR ontologies and is closely related to FaBiO, which provides terms for describing bibliographic entities and scholarly publications [#cito-paper]_. CiTO defines citation properties such as ``cito:cites`` together with more specific subproperties representing different citation functions [#cito-spec]_ [#cito-paper]_. These properties support structured representation, querying, and analysis of citation networks and enable richer semantic descriptions of relationships between scholarly resources [#cito-paper]_.
 
-Typical applications of CiTO include the development of new citation analysis methods, the optimization of citation practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, CiTO enhances collaboration and innovation in the field of scholarly communication.
+Typical applications of CiTO include semantic citation annotation, citation network analysis, scholarly knowledge graph construction, citation-intent analysis, and integration of bibliographic data from different scholarly sources [#cito-paper]_. By providing a standardized semantic vocabulary for citation relationships, CiTO supports interoperability and more expressive analysis of scholarly communication [#cito-spec]_ [#cito-paper]_.
 
 **Example Usage**:
-Annotate a research paper with CiTO terms to specify citation types, relationships, and contexts, enabling semantic search and integration with scholarly communication platforms.
+Annotate a research paper with CiTO properties such as ``cito:citesAsEvidence``, ``cito:extends``, ``cito:usesMethodIn``, or ``cito:disagreesWith`` to specify the function of individual citations. This enables machine-readable citation semantics, citation-intent analysis, and integration of citation information within scholarly knowledge graphs and bibliographic systems [#cito-spec]_ [#cito-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#cito-spec] SPAR Ontologies. 2018.
+   "CiTO, the Citation Typing Ontology."
+   Available at:
+   `https://sparontologies.github.io/cito/current/cito.html
+   <https://sparontologies.github.io/cito/current/cito.html>`_
+
+.. [#cito-paper] Peroni, S., and Shotton, D. 2012.
+   "FaBiO and CiTO: Ontologies for Describing Bibliographic
+   Resources and Citations."
+   *Journal of Web Semantics*.
+   Available at:
+   `https://doi.org/10.1016/j.websem.2012.08.001
+   <https://doi.org/10.1016/j.websem.2012.08.001>`_

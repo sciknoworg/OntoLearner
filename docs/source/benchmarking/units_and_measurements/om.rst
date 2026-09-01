@@ -23,14 +23,14 @@
 Ontology of Units of Measure (OM)
 ========================================================================================================
 
-The Ontology of units of Measure (OM) models concepts and relations important to scientific research. It has a strong focus on units, quantities, measurements, and dimensions. It includes, for instance, common units such as the SI units metre and kilogram, but also units from other systems of units such as the mile or nautical mile. For many application areas, it includes more specific units and quantities, such as the unit of the Hubble constant or the quantity vaselife. The following application areas are supported by OM: Geometry; Mechanics; Thermodynamics; Electromagnetism; Fluid mechanics; Chemical physics; Photometry; Radiometry and Radiobiology; Nuclear physics; Astronomy and Astrophysics; Cosmology; Earth science; Meteorology; Material science; Microbiology; Economics; Information technology and Typography.
+The Ontology of units of Measure (OM) models concepts and relations important to scientific research, with a strong focus on units, quantities, measurements, measures, and dimensions [#om-github]_ [#om-paper]_. It includes common units such as the SI units ``metre`` and ``kilogram``, as well as units from other systems of units, including examples such as ``mile`` and ``nautical mile`` [#om-github]_. OM also includes more specialized units and quantities for many scientific and technical application areas, supporting fields such as geometry, mechanics, thermodynamics, electromagnetism, fluid mechanics, chemical physics, astronomy, Earth science, meteorology, material science, microbiology, economics, information technology, and typography [#om-github]_. The ontology provides classes, instances, and properties for defining and using measures and units, enabling quantitative research data to be represented more explicitly, integrated across sources, verified, and reproduced [#om-paper]_. OM supports interoperability by providing a standardized semantic framework for describing quantities, units, dimensions, scales, prefixes, systems of units, and measurement values [#om-github]_ [#om-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of units, quantities, and measurements, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OM supports the integration of data from various sources, promoting interoperability and data-driven research in units and measurements.
+The ontology employs a class-based modeling approach, defining classes for different types of units, quantities, and measurements, along with properties to describe their characteristics and relationships [#om-paper]_. Hierarchies are used to organize units, quantities, dimensions, and systems of units into structured categories, enabling efficient retrieval, comparison, conversion, and analysis [#om-github]_. OM supports the integration of quantitative data from diverse sources, promoting interoperability and data-driven research in units and measurements [#om-paper]_.
 
-Typical applications of OM include the development of new measurement methods, the optimization of measurement practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OM enhances collaboration and innovation in the field of units and measurements.
+Typical applications of OM include semantic annotation of scientific datasets, explicit representation of measurement values, support for unit conversion, development of measurement-related tools and services, and integration of heterogeneous datasets for analytics and knowledge discovery [#om-github]_ [#om-paper]_. By providing a standardized vocabulary and framework, OM enhances collaboration, reproducibility, and innovation in domains that depend on precise units and measurements [#om-paper]_.
 
 **Example Usage**:
-Annotate a scientific dataset with OM terms to specify units, quantities, and measurements, enabling semantic search and integration with measurement management platforms.
+Annotate a scientific dataset with OM terms to specify quantities, units, dimensions, and measurement values, enabling semantic search, unit conversion, data integration, and interoperability with measurement management platforms [#om-github]_ [#om-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#om-github] Rijgersberg, Hajo. n.d.
+   "Ontology of units of Measure (OM)."
+   GitHub Repository.
+   Available at:
+   `https://github.com/HajoRijgersberg/OM <https://github.com/HajoRijgersberg/OM>`_
+
+.. [#om-paper] Rijgersberg, Hajo, Mark van Assem, and Jan L. Top. 2013.
+   "Ontology of Units of Measure and Related Concepts."
+   *Semantic Web* 4(1): 3--13.
+   DOI:
+   `10.3233/SW-2012-0069 <https://doi.org/10.3233/SW-2012-0069>`_

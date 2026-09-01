@@ -23,14 +23,14 @@
 Pre-Modern Ontology (PreMOn)
 ========================================================================================================
 
-The Pre-Modern Ontology (PreMOn) is an extension of lemon (W3C Ontology Lexicon Community Group, 2015) for representing predicate models and their mappings. The Core Module of the PreMOn Ontology defines the main abstractions for modelling semantic classes with their semantic roles, mappings between different predicate models, and annotations. It provides a structured vocabulary for representing predicate models, supporting both theoretical and experimental research in linguistics.
+The Pre-Modern Ontology (PreMOn) is an extension of lemon (W3C Ontology Lexicon Community Group, 2015) for representing predicate models and their mappings [#premon-paper]_. The Core Module of the PreMOn Ontology defines the main abstractions for modelling semantic classes with their semantic roles, mappings between different predicate models, and annotations [#premon-paper]_. It provides a structured vocabulary for representing predicate models, supporting both theoretical and experimental research in linguistics [#premon-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of predicate models, semantic roles, and annotations, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. PreMOn supports the integration of data from various sources, promoting interoperability and data-driven research in linguistics.
+The ontology employs a class-based modeling approach, defining classes for different types of predicate models, semantic roles, and annotations, along with properties to describe their characteristics and interactions [#premon-paper]_. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis [#premon-paper]_. PreMOn supports the integration of data from various sources, promoting interoperability and data-driven research in linguistics [#premon-paper]_.
 
-Typical applications of PreMOn include the development of new predicate model representation methods, the optimization of linguistic data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, PreMOn enhances collaboration and innovation in the field of linguistics.
+Typical applications of PreMOn include the development of new predicate model representation methods, the optimization of linguistic data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery [#premon-paper]_. By providing a standardized vocabulary and framework, PreMOn enhances collaboration and innovation in the field of linguistics [#premon-paper]_.
 
 **Example Usage**:
-Annotate a linguistic dataset with PreMOn terms to specify predicate models, semantic roles, and annotations, enabling semantic search and integration with linguistic information management platforms.
+Annotate a linguistic dataset with PreMOn terms to specify predicate models, semantic roles, and annotations, enabling semantic search and integration with linguistic information management platforms [#premon-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,13 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#premon-paper] Corcoglioniti, Francesco, Marco Rospocher,
+   Alessio Palmero Aprosio, and Sara Tonelli. 2016.
+   "PreMOn: A Lemon Extension for Exposing Predicate Models as Linked Data."
+   *Proceedings of the Tenth International Conference on Language Resources and Evaluation (LREC 2016)*.
+   Available at:
+   `https://aclanthology.org/L16-1141/ <https://aclanthology.org/L16-1141/>`_

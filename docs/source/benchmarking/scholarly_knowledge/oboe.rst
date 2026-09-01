@@ -22,15 +22,14 @@
 
 Extensible Observation Ontology (OBOE)
 ========================================================================================================
+The Extensible Observation Ontology (OBOE) is a formal ontology for representing the semantics of scientific observations and measurements [#oboe-github]_ [#oboe-paper]_. It was developed to provide a structured framework for describing observational data in terms of the entities being observed, their characteristics, measurements, standards, and contextual relationships [#oboe-paper]_. This semantic representation helps make the meaning of scientific data explicit and supports integration and synthesis across heterogeneous observational datasets [#oboe-paper]_.
 
-The Extensible Observation Ontology (OBOE) is a formal ontology for capturing the semantics of scientific observation and measurement. The ontology supports researchers to add detailed semantic annotations to scientific data, thereby clarifying the inherent meaning of scientific observations. It provides a structured vocabulary for representing scientific observations, measurements, and related data, supporting both theoretical and experimental research in scientific observation.
+OBOE defines core concepts for representing observations and measurements, including observed entities, characteristics, measurement values, standards, protocols, and relationships between observations [#oboe-github]_ [#oboe-paper]_. The ontology can also represent contextual dependencies among observations, allowing complex observational structures and nested relationships to be modeled in a machine-readable form [#oboe-paper]_. By formally describing how measurements relate to entities and characteristics, OBOE supports interpretation and comparison of observational data across different studies [#oboe-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of observations, measurements, and related data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. OBOE supports the integration of data from various sources, promoting interoperability and data-driven research in scientific observation.
-
-Typical applications of OBOE include the development of new observation and measurement methods, the optimization of scientific observation practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, OBOE enhances collaboration and innovation in the field of scientific observation.
+Typical applications of OBOE include semantic annotation of ecological and other scientific observation datasets, integration of heterogeneous measurement data, dataset discovery, and synthesis of observational information across research studies [#oboe-paper]_. Its extensible structure allows domain-specific concepts to be incorporated while preserving a shared model for observations and measurements [#oboe-github]_ [#oboe-paper]_.
 
 **Example Usage**:
-Annotate a scientific observation dataset with OBOE terms to specify observation types, measurements, and related data, enabling semantic search and integration with scientific observation platforms.
+Annotate an ecological observation dataset with OBOE terms to describe the observed entity, such as a plant or habitat; the characteristic being measured, such as biomass or temperature; the recorded measurement value; the standard or unit used; and contextual relationships to other observations. This enables consistent interpretation, integration, and synthesis of ecological observation data across studies [#oboe-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +138,23 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#oboe-github] NCEAS. n.d.
+   "OBOE: The Extensible Observation Ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/NCEAS/oboe
+   <https://github.com/NCEAS/oboe>`_
+
+.. [#oboe-paper] Madin, J., Bowers, S.,
+   Schildhauer, M., Krivov, S., Pennington, D.,
+   and Villa, F. 2007.
+   "An Ontology for Describing and Synthesizing
+   Ecological Observation Data."
+   *Ecological Informatics*, 2, 279--296.
+   Available at:
+   `https://doi.org/10.1016/j.ecoinf.2007.05.004
+   <https://doi.org/10.1016/j.ecoinf.2007.05.004>`_

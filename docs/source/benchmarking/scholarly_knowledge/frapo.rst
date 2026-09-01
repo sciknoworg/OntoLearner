@@ -23,14 +23,14 @@
 Funding, Research Administration and Projects Ontology (FRAPO)
 ========================================================================================================
 
-The Funding, Research Administration and Projects Ontology (FRAPO) is an ontology for describing the administrative information of research projects, e.g., grant applications, funding bodies, project partners, etc. It provides a structured vocabulary for representing research administration, funding, and project information, supporting both theoretical and experimental research in research administration.
+The Funding, Research Administration and Projects Ontology (FRAPO) is an ontology for describing administrative information relating to grant funding and research projects [#frapo-spar]_ [#frapo-github]_. It provides a structured vocabulary for representing grant applications, funding bodies, research projects, project partners, project-related roles, and other administrative information commonly managed in Current Research Information Systems (CRIS) [#frapo-spar]_. FRAPO is CERIF-compliant and written in OWL 2 DL, making it suitable for representing research administration information in semantic web and linked data environments [#frapo-github]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of research administration, funding, and project information, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. FRAPO supports the integration of data from various sources, promoting interoperability and data-driven research in research administration.
+The ontology defines classes and properties for modeling funding, project administration, organizations, agents, and project-related relationships [#frapo-spar]_. It imports FOAF and is designed to work with related SPAR ontologies such as SCoRO for scholarly roles and FaBiO for documents such as grant applications, project plans, project reports, datasets, and journal articles [#frapo-spar]_. This allows FRAPO to represent research administration metadata while linking it to people, organizations, roles, outputs, and related documents [#frapo-spar]_.
 
-Typical applications of FRAPO include the development of new research administration methods, the optimization of research project management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, FRAPO enhances collaboration and innovation in the field of research administration.
+Typical applications of FRAPO include research information management, grant administration, project reporting, Current Research Information Systems, funding analysis, institutional reporting, and integration of research project metadata across repositories and administrative systems [#frapo-spar]_ [#frapo-github]_. By providing a standardized semantic framework, FRAPO enhances interoperability, data integration, and knowledge discovery in research administration and project management contexts [#frapo-github]_.
 
 **Example Usage**:
-Annotate a research project with FRAPO terms to specify administrative information, funding details, and project partners, enabling semantic search and integration with research administration platforms.
+Annotate a research project with FRAPO terms to specify the funding body, grant application, project partners, administrative roles, project status, and related project documents. This enables semantic search, grant tracking, institutional reporting, and integration with research administration platforms and CRIS systems [#frapo-spar]_ [#frapo-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#frapo-spar] SPAR Ontologies. n.d.
+   "FRAPO, the Funding, Research Administration and Projects Ontology."
+   Available at:
+   `https://sparontologies.github.io/frapo/current/frapo.html <https://sparontologies.github.io/frapo/current/frapo.html>`_
+
+.. [#frapo-github] SPAR Ontologies. n.d.
+   "Funding, Research Administration and Projects Ontology (FRAPO)."
+   GitHub Repository.
+   Available at:
+   `https://github.com/sparontologies/frapo <https://github.com/sparontologies/frapo>`_

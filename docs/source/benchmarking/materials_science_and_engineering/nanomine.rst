@@ -23,14 +23,12 @@
 NanoMine Ontology (NanoMine)
 ========================================================================================================
 
-The NanoMine Ontology is a domain ontology developed to support research in polymer nanocomposites. It provides a structured vocabulary for representing the inter-relationships between different materials processing methods, compositions, and resulting material properties. NanoMine enables researchers to develop and test hypotheses about how these inter-relationships affect material performance, supporting both experimental and computational research in materials science.
+The NanoMine Ontology is a domain ontology developed to support research in polymer nanocomposites [#nanomine-ontology-paper]_ [#nanomine-schema]. It provides a structured vocabulary for representing relationships between polymer nanocomposite composition, processing methods, microstructure, characterization data, and resulting material properties [#nanomine-ontology-paper] [#nanomine-schema]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of materials, processes, and properties, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. NanoMine supports the integration of data from various sources, promoting interoperability and data-driven research in polymer nanocomposites.
+NanoMine supports semantic annotation, data integration, search, reuse, and analysis of polymer nanocomposite data [#nanomine-ontology-paper]_ [#nanomine-schema]. The ontology helps researchers explore processing-structure-property relationships and supports hypothesis development about how material composition and processing conditions affect nanocomposite performance [#nanomine-schema]. By providing a standardized semantic framework, NanoMine facilitates interoperability, knowledge sharing, and data-driven research in polymer nanocomposites [#nanomine-ontology-paper]_ [#nanomine-schema]_.
 
-Typical applications of NanoMine include the development of new polymer nanocomposites with specific properties, the optimization of processing methods, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, NanoMine enhances collaboration and innovation in the field of polymer nanocomposites.
-
-**Example Usage**:
-Annotate a polymer nanocomposite dataset with NanoMine terms to specify material types, processing methods, and properties, enabling semantic search and integration with materials informatics platforms.
+Example Usage:
+Annotate a polymer nanocomposite dataset with NanoMine terms to specify polymer matrix, filler material, filler loading, processing method, characterization technique, microstructure information, and measured properties, enabling semantic search and integration with materials informatics platforms [#nanomine-ontology-paper]_ [#nanomine-schema]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,22 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#nanomine-ontology-paper] V. Rawte, J. McCusker, H. Zhao,
+   L. C. Brinson, W. Chen, L. Schadler, and D. L. McGuinness,
+   "An Ontology for a Polymer Nanocomposite Community Data Resource,"
+   in *Proceedings of the 2017 ACM Web Science Conference
+   (WebSci '17)*,
+   pp. 411--412, 2017.
+   `doi:10.1145/3091478.3098866 <https://doi.org/10.1145/3091478.3098866>`_
+
+.. [#nanomine-schema] H. Zhao, Y. Wang, A. Lin, B. Hu,
+   R. Yan, J. McCusker, W. Chen, D. L. McGuinness,
+   L. Schadler, and L. C. Brinson,
+   "NanoMine schema: An extensible data representation
+   for polymer nanocomposites,"
+   *APL Materials*, vol. 6, no. 11, Art. 111108, 2018.
+   `doi:10.1063/1.5046839 <https://doi.org/10.1063/1.5046839>`_

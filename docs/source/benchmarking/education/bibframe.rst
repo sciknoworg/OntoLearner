@@ -23,10 +23,29 @@
 Bibliographic Framework Ontology (BIBFRAME)
 ========================================================================================================
 
-The Bibliographic Framework Ontology (BIBFRAME) is a comprehensive RDF-based vocabulary developed by the Library of Congress to modernize bibliographic description for libraries, museums, and archives. It provides a structured model for representing bibliographic resources, focusing on three core classes: Work (the abstract creative content), Instance (the physical or digital embodiment), and Item (the specific copy). BIBFRAME supports detailed description of relationships among resources, such as translations, adaptations, and editions, as well as attributes like subject, extent, and publication information. The ontology is designed to facilitate linked data publishing, interoperability, and integration with other metadata standards, enabling richer discovery and reuse of bibliographic information. BIBFRAME is widely adopted by libraries and cultural heritage institutions transitioning from MARC records to semantic web technologies. Its extensible structure allows for domain-specific adaptations and integration with authority files, vocabularies, and digital repositories.
+The Bibliographic Framework Ontology (BIBFRAME) is an RDF-based
+vocabulary developed by the Library of Congress to modernize
+bibliographic description for libraries, museums, and archives
+[#bibframe-report]_ [#bibframe-loc]_. It provides a structured model
+for representing bibliographic resources, centered on core classes such
+as Work, Instance, and Item, together with properties for describing
+relationships, subjects, contributions, publication details, and other
+bibliographic characteristics [#bibframe-loc]_ [#bibframe-report]_.
+BIBFRAME is designed to support linked data publishing, semantic
+interoperability, and integration with other metadata standards,
+enabling richer discovery and reuse of bibliographic information
+[#bibframe-report]_ [#bibframe-loc]_. By providing an extensible
+semantic framework for bibliographic description, BIBFRAME supports the
+transition from legacy cataloging models to linked data environments in
+libraries and cultural heritage institutions [#bibframe-report]_
+[#bibframe-loc]_.
 
-**Example Usage**:
-Describe a library book using BIBFRAME by linking the Work (e.g., "Pride and Prejudice"), its Instance (the 2003 Penguin Classics edition), and the Item (the specific copy held by a library), including relationships to subjects, authors, and related works.
+**Example Usage**: Describe a library book using BIBFRAME by linking the
+Work, such as *Pride and Prejudice*, to an Instance representing a
+specific edition and to an Item representing a particular copy held by a
+library, while also connecting the resource to authors, subjects, and
+related works for improved discovery and interoperability
+[#bibframe-loc]_ [#bibframe-report]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +154,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bibframe-report] Library of Congress. 2012.
+   "Bibliographic Framework as a Web of Data: Linked Data Model and
+   Supporting Services."
+   Available at:
+   `https://www.loc.gov/bibframe/news/pdf/marcld-report-11-21-2012.pdf <https://www.loc.gov/bibframe/news/pdf/marcld-report-11-21-2012.pdf>`_
+
+   .. [#bibframe-loc] Library of Congress. n.d. "BIBFRAME Model, Vocabulary,
+   Guidelines, Examples, and Vocabulary Mapping."
+   Available at:
+   `https://www.loc.gov/bibframe/docs/index.html <https://www.loc.gov/bibframe/docs/index.html>`_

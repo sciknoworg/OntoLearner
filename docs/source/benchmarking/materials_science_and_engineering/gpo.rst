@@ -22,11 +22,12 @@
 
 General Process Ontology (GPO)
 ========================================================================================================
+The General Process Ontology (GPO) is a domain ontology developed to model processes across scientific and industrial domains [#gpo-zenodo]_ [#gpo-paper]_. GPO provides a structured vocabulary for representing holistic processes that transform inputs or educts, such as matter, energy, and information, into outputs or products using tools such as devices and algorithms [#gpo-zenodo]_ [#gpo-paper]_.
 
-The General Process Ontology (GPO) is a domain ontology developed to model processes in materials science and engineering, as well as other scientific and industrial domains. GPO provides a structured vocabulary for representing holistic processes that transform inputs (matter, energy, information) into outputs (products, byproducts, waste) using tools such as devices and algorithms. The ontology supports decomposition of processes into sub-processes, capturing predecessor and successor relationships, and enabling detailed modeling of workflows, manufacturing, and experimental procedures. GPO facilitates semantic annotation of process data, supporting interoperability, data integration, and advanced analytics across research, industry, and regulatory platforms. By providing a standardized framework, GPO enables lifecycle assessment, process optimization, and knowledge sharing in multidisciplinary projects. The ontology is actively maintained and extended to incorporate new process types, technologies, and application domains.
+The ontology supports decomposition of processes into sub-processes and represents predecessor and successor relationships between processes [#gpo-zenodo]_. GPO is based on EMMO and is described as a cross-project development coordinated by Fraunhofer ISC, with application areas including manufacturing, logistics, mining, and information and data processing [#gpo-zenodo]_ [#gpo-paper]_. By providing a standardized process vocabulary, GPO supports semantic annotation, data integration, interoperability, and knowledge sharing across process-related workflows [#gpo-paper]_.
 
 **Example Usage**:
-Annotate a manufacturing workflow with GPO terms to specify process steps, input and output materials, tools used, and process dependencies, enabling semantic search and integration with process management systems.
+Annotate a manufacturing workflow with GPO terms to specify process steps, input materials or information, output products, tools such as devices or algorithms, and predecessor or successor relationships between process steps, enabling semantic search and integration with process management systems [#gpo-zenodo]_ [#gpo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +136,22 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#gpo-zenodo] Stier, S. 2023.
+   "General Process Ontology (GPO)."
+   Zenodo.
+   Available at:
+   `https://doi.org/10.5281/zenodo.7799526
+   <https://doi.org/10.5281/zenodo.7799526>`_
+
+.. [#gpo-paper] Stier, S., et al. 2024.
+   "Ontology-Based Battery Production Dataspace and Its
+   Interweaving with Artificial Intelligence-Empowered
+   Data Analytics."
+   *Energy Technology*.
+   Available at:
+   `https://doi.org/10.1002/ente.202301305
+   <https://doi.org/10.1002/ente.202301305>`_

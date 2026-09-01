@@ -25,9 +25,9 @@
 Upper Mapping and Binding Exchange Layer Vocabulary (UMBEL)
 ========================================================================================================
 
-UMBEL (Upper Mapping and Binding Exchange Layer) is a comprehensive reference ontology and interoperability framework designed to facilitate semantic integration and data exchange across diverse domain vocabularies and datasets on the Web. It provides a broad, general-purpose reference structure of approximately 34,000 concepts organized hierarchically, serving as a semantic scaffolding to link, align, and interoperate disparate datasets, domain ontologies, and knowledge bases. UMBEL acts as a bridge layer enabling concept mappings between specialized domain vocabularies, allowing data from different sources to be semantically related and integrated. The vocabulary is designed as a base framework for constructing concept-based domain ontologies that are explicitly designed for semantic interoperability, reducing fragmentation in knowledge representation. UMBEL supports linked data applications by providing standardized concept definitions and mappings that enable automated reasoning and knowledge discovery across heterogeneous information sources.
+UMBEL (Upper Mapping and Binding Exchange Layer) is a comprehensive reference ontology and interoperability framework designed to facilitate semantic integration and data exchange across diverse domain vocabularies and datasets on the Web [#umbel-github]_. It provides a broad, general-purpose reference structure of approximately 34,000 concepts organized hierarchically, serving as a semantic scaffolding to link, align, and interoperate disparate datasets, domain ontologies, and knowledge bases [#umbel-release]_. UMBEL acts as a bridge layer enabling concept mappings between specialized domain vocabularies, allowing data from different sources to be semantically related and integrated [#umbel-github]_. The vocabulary is designed as a base framework for constructing concept-based domain ontologies that are explicitly designed for semantic interoperability, reducing fragmentation in knowledge representation [#umbel-github]_. UMBEL supports linked data applications by providing standardized concept definitions and mappings that enable automated reasoning and knowledge discovery across heterogeneous information sources [#umbel-release]_.
 
-**Example Usage**: Link concepts from domain-specific ontologies (e.g., medical terms from medical ontologies, product types from e-commerce vocabularies) to corresponding UMBEL concepts to enable cross-domain data integration and semantic reasoning.
+**Example Usage**: Link concepts from domain-specific ontologies, such as medical terms from medical ontologies or product types from e-commerce vocabularies, to corresponding UMBEL concepts to enable cross-domain data integration and semantic reasoning [#umbel-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +136,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#umbel-github] Structured Dynamics. n.d.
+   "UMBEL: Upper Mapping and Binding Exchange Layer."
+   GitHub Repository.
+   Available at:
+   `https://github.com/structureddynamics/UMBEL <https://github.com/structureddynamics/UMBEL>`_
+
+.. [#umbel-release] Bergman, Michael K. 2016.
+   "New, Major Upgrade of UMBEL Released: Version 1.50."
+   *AI3: Adaptive Information*.
+   Published May 11, 2016.
+   Available at:
+   `https://www.mkbergman.com/1946/new-major-upgrade-of-umbel-released/ <https://www.mkbergman.com/1946/new-major-upgrade-of-umbel-released/>`_

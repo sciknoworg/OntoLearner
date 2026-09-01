@@ -23,14 +23,12 @@
 Material Information Ontology (MaterialInformation)
 ========================================================================================================
 
-The Material Information Ontology is a comprehensive framework designed to represent various aspects of materials science, including environment, geometry, material information, manufacturing processes, properties, substances, unit dimensions, structures, equations, and physical constants. This ontology is divided into smaller partitions, each focusing on a specific domain, to facilitate detailed modeling and integration of materials data.
+The Material Information Ontology is based on Ashino's materials ontology framework for exchanging materials information and knowledge across heterogeneous materials databases [#ashino2010]_. It provides a computer-readable concept map for materials science and engineering, using Semantic Web ontology language to describe materials-related concepts and relationships [#ashino2010]_.
 
-The ontology employs a modular approach, defining classes and properties for each partition to capture the complexity of materials science. It supports semantic annotation of materials data, enabling interoperability, data integration, and advanced analysis across research databases and digital platforms. By providing a standardized framework, the Material Information Ontology facilitates cross-study comparison, materials selection, and knowledge sharing in materials research and industry.
-
-Typical applications include the integration of materials data from various sources, the development of new materials with specific properties, and the optimization of manufacturing processes. The ontology is actively maintained and extended to incorporate new materials, technologies, and research requirements.
+The ontology is organized into sub-ontologies for key materials-information areas such as substance, process, environment, and property [#ashino2010]_. It supports metadata description, data exchange, information integration, and retrieval across distributed materials databases [#ashino2010]_. By providing a structured vocabulary, the Material Information Ontology helps improve interoperability, materials information sharing, and knowledge reuse in materials science and engineering [#ashino2010]_.
 
 **Example Usage**:
-Annotate a materials database with Material Information Ontology terms to specify material properties, manufacturing processes, and environmental conditions, enabling semantic search and integration with materials informatics platforms.
+Annotate a materials database with Material Information Ontology terms to specify substances, material properties, processing conditions, and environmental information, enabling semantic search, data exchange, and integration across heterogeneous materials informatics platforms [#ashino2010]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#ashino2010] Ashino, T. 2010.
+   "Materials Ontology: An Infrastructure for Exchanging Materials Information and Knowledge."
+   *Data Science Journal*, 9, 54--61.
+   Available at:
+   `https://datascience.codata.org/de-DE/articles/131/files/submission/proof/131-1-245-1-10-20150415.pdf <https://datascience.codata.org/de-DE/articles/131/files/submission/proof/131-1-245-1-10-20150415.pdf>`_

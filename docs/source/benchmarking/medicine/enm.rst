@@ -23,10 +23,12 @@
 Environmental Noise Measurement Ontology (ENM)
 ========================================================================================================
 
-The Environmental Noise Measurement Ontology (ENM) is an application ontology developed as part of the eNanoMapper  (https://www.enanomapper.net/), NanoCommons (https://www.nanocommons.eu/), and ACEnano (http://acenano-project.eu/)  projects to support toxicological data management for engineered nanomaterials (ENMs). ENM provides a comprehensive vocabulary for describing nanomaterial safety assessment, including experimental procedures, measurement techniques, material properties, and exposure scenarios. The ontology reuses and integrates terms from several established ontologies, such as the Nanoparticle Ontology (NPO), Chemical Information Ontology (CHEMINF), Chemical Entities of Biological Interest (ChEBI), and Environment Ontology (ENVO), to ensure semantic interoperability and data integration. ENM enables standardized annotation of nanomaterial safety data, facilitating data sharing, regulatory compliance, and advanced analysis across research projects and databases. By providing a common framework, ENM supports the development of computational infrastructure for toxicology, risk assessment, and environmental health studies. The ontology is actively maintained and extended to incorporate new concepts and requirements from the nanomaterial safety community.
+The Environmental Noise Measurement Ontology (ENM) is an application ontology developed to support toxicological data management and nanomaterial safety assessment for engineered nanomaterials [#enm-doc]_ [#enm-paper]_. It provides a structured vocabulary for describing nanomaterials, experimental procedures, measurement techniques, material properties, exposure scenarios, biological interactions, and safety-related information [#enm-doc]_ [#enm-paper]_.
+
+ENM was developed in the context of the eNanoMapper project and reuses or extends existing ontologies relevant to nanosafety, including the Nanoparticle Ontology (NPO), Chemical Information Ontology (CHEMINF), Chemical Entities of Biological Interest (ChEBI), and Environment Ontology (ENVO) [#enm-paper]_. The ontology supports semantic annotation, data integration, interoperability, search, and reuse of nanomaterial safety data across research projects and databases [#enm-doc]_ [#enm-paper]_.
 
 **Example Usage**:
-Annotate a nanotoxicology study with ENM terms to specify the nanomaterial type, measurement methods, exposure conditions, and observed biological effects, enabling cross-study comparison and regulatory reporting.
+Annotate a nanotoxicology study with ENM terms to specify the nanomaterial type, measurement method, exposure condition, experimental assay, material property, and observed biological effect, enabling cross-study comparison and integration with nanosafety databases [#enm-doc]_ [#enm-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +137,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#enm-doc] eNanoMapper. n.d.
+   "Ontology."
+   Available at:
+   `https://www.enanomapper.net/ontology <https://www.enanomapper.net/ontology>`_
+
+.. [#enm-paper] Hastings, J., Jeliazkova, N., Owen, G., Tsiliki, G., Munteanu, C. R., Steinbeck, C., and Willighagen, E. 2015.
+   "eNanoMapper: harnessing ontologies to enable data integration for nanomaterial risk assessment."
+   *Journal of Biomedical Semantics*, 6, Article 10.
+   DOI: 10.1186/s13326-015-0005-5.
+   Available at:
+   `https://pmc.ncbi.nlm.nih.gov/articles/PMC4374589/ <https://pmc.ncbi.nlm.nih.gov/articles/PMC4374589/>`_

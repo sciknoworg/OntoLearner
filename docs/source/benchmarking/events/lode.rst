@@ -25,9 +25,28 @@
 Linking Open Descriptions of Events (LODE)
 ========================================================================================================
 
-LODE (Linking Open Descriptions of Events) is an ontology for publishing and interlinking structured event descriptions as Linked Data. It provides lightweight classes and properties for representing events, their time and place, and simple relationships to agents and sources. LODE is intentionally minimalistic to maximize interoperability and ease of adoption: it models events as occurrences with temporal extents and locations, and supports linking to richer event models when needed. Typical use cases include event directories, cultural heritage timelines, news event annotation, and discovery services that aggregate event records from multiple data providers. LODE emphasizes stable URIs and practical tools for populating event descriptions, enabling the creation of a searchable event directory of historical and contemporary events.
+LODE (Linking Open Descriptions of Events) is an ontology for
+publishing and interlinking structured event descriptions as Linked
+Data [#lode-paper]_ [#lode-site]_. It provides lightweight classes and
+properties for representing events, their time and place, and simple
+relationships to agents and sources [#lode-paper]_ [#lode-site]_.
+LODE is intentionally minimalistic in order to maximize
+interoperability and ease of adoption, modeling events as occurrences
+with temporal extents and locations while supporting links to richer
+event models when needed [#lode-paper]_ [#lode-site]_. Typical use
+cases include event directories, cultural heritage timelines, news
+event annotation, and discovery services that aggregate event records
+from multiple data providers [#lode-paper]_ [#lode-site]_. By
+providing a lightweight and stable semantic framework for event
+descriptions, LODE supports semantic integration, search, and reuse of
+event data across heterogeneous datasets [#lode-paper]_ [#lode-site]_.
 
-**Example usage**: describe a public lecture as an lode:Event with a start/end time, a dcterms:spatial property linking to a Place URI, and a dc:source pointing to a news article; link the event to authority URIs for the speaker. The ontology's simplicity makes it a useful pivot for integrating event data across heterogeneous datasets.
+**Example Usage**: Describe a public lecture as a ``lode:Event`` with
+a start and end time, a ``dcterms:spatial`` property linking to a place
+URI, and a ``dc:source`` pointing to a news article, while linking the
+event to authority URIs for the speaker. The ontology’s simplicity
+makes it a useful pivot for integrating event data across heterogeneous
+datasets [#lode-paper]_ [#lode-site]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +155,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#lode-paper] Shaw, R., Troncy, R., and Hardman, L. 2009.
+   "LODE: Linking Open Descriptions of Events."
+   In *The Semantic Web: Research and Applications*, pp. 153-167.
+   doi:10.1007/978-3-642-02121-3_11
+   Available at:
+   `https://link.springer.com/chapter/10.1007/978-3-642-02121-3_11 <https://link.springer.com/chapter/10.1007/978-3-642-02121-3_11>`_
+
+.. [#lode-site] Linked Events. n.d. "LODE Ontology Specification."
+   Available at:
+   `https://linkedevents.org/ontology/ <https://linkedevents.org/ontology/>`_

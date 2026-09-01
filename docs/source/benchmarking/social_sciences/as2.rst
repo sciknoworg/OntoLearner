@@ -23,10 +23,10 @@
 Activity Streams 2.0 Ontology (AS2)
 ========================================================================================================
 
-The Activity Streams 2.0 Ontology (AS2) is a W3C standard vocabulary for describing social activities, actions, and interactions on the web. It provides a set of classes and properties for modeling activities such as posting, liking, sharing, following, and commenting, as well as the actors, objects, and targets involved. AS2 enables interoperability between social networking platforms, federated social web applications, and activity tracking systems by providing a common semantic framework. The ontology supports extensibility, allowing developers to define custom activity types and properties for domain-specific use cases. AS2 is widely used in decentralized social networks, content syndication, and social analytics, enabling rich representation and exchange of activity data. By standardizing the description of social actions, AS2 facilitates data integration, aggregation, and analysis across diverse social platforms.
+The Activity Streams 2.0 Ontology (AS2) is a W3C standard vocabulary and syntax for describing social activities, actions, interactions, and content on the Web [#as2-core]_ [#as2-github]_. It provides a set of classes and properties for modeling activities such as posting, liking, sharing, following, creating, updating, and deleting, as well as the actors, objects, targets, collections, and links involved in those activities [#as2-core]_. AS2 enables interoperability between social networking platforms, federated social web applications, content syndication systems, and activity tracking systems by providing a common semantic framework for representing activity data [#as2-core]_ [#as2-github]_. The vocabulary supports extensibility, allowing developers to use additional vocabularies or define specialized activity types and properties for domain-specific use cases [#as2-core]_. AS2 is used in decentralized social web systems and social data exchange, enabling rich representation, publication, aggregation, and analysis of activity streams across platforms [#as2-core]_ [#as2-github]_. By standardizing the description of social actions and their related entities, AS2 facilitates data integration, interoperability, and machine-readable exchange of social activity information [#as2-core]_.
 
 **Example Usage**:
-Annotate a social networking application with AS2 terms to describe user activities such as posting a status update, liking a photo, or following another user, enabling interoperability with other platforms and activity streams consumers.
+Annotate a social networking application with AS2 terms to describe user activities such as posting a status update, liking a photo, following another user, or sharing content. This enables interoperability with other platforms, federated social web applications, and activity stream consumers [#as2-core]_ [#as2-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#as2-core] W3C. 2017.
+   "Activity Streams 2.0."
+   W3C Recommendation.
+   Available at:
+   `https://www.w3.org/TR/activitystreams-core/ <https://www.w3.org/TR/activitystreams-core/>`_
+
+.. [#as2-github] W3C. n.d.
+   "Activity Streams 2.0."
+   GitHub Repository.
+   Available at:
+   `https://github.com/w3c/activitystreams <https://github.com/w3c/activitystreams>`_

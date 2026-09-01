@@ -23,11 +23,10 @@
 Basic Formal Ontology (BFO)
 ========================================================================================================
 
-The Basic Formal Ontology (BFO) is a small, upper-level ontology that describes the basic types of entities in the world and how they relate to each other. BFO provides a rigorous, domain-neutral framework for organizing and integrating domain ontologies across scientific and technical disciplines. It distinguishes between continuants (entities that persist through time, such as objects and qualities) and occurrents (entities that unfold over time, such as processes and events), supporting precise modeling of reality. BFO is widely adopted in the biomedical, engineering, and environmental sciences as the upper ontology for the Open Biomedical Ontologies (OBO) Foundry and other ontology initiatives. Its formal structure enables automated reasoning, semantic interoperability, and data integration across heterogeneous knowledge bases. BFO is actively maintained and extended by an international community of ontology experts and is recognized as an ISO standard (ISO/IEC 21838-2:2021).
+The Basic Formal Ontology (BFO) is a small, domain-neutral upper ontology designed to provide a common framework for organizing entities represented in scientific and technical domain ontologies [#bfo-bioinformatics]_ [#bfo-material]_. BFO distinguishes fundamentally between continuants, which persist through time while maintaining their identity, and occurrents, which unfold or occur through time, such as processes and events [#bfo-bioinformatics]_. Within the continuant branch, BFO further provides categories for material entities, including objects, object aggregates, and fiat object parts, supporting consistent classification of physical entities across different application domains [#bfo-material]_. By supplying a shared upper-level structure, BFO supports the development and integration of domain ontologies and promotes consistent representation of scientific knowledge [#bfo-bioinformatics]_ [#bfo-material]_.
 
 **Example Usage**:
-Use BFO as the upper ontology for a biomedical ontology, classifying entities such as "cell" (object, continuant), "cell division" (process, occurrent), and "cell membrane" (object part), enabling semantic integration with other OBO ontologies.
-
+Use BFO as the upper ontology for a biomedical ontology by classifying a ``cell`` as a material entity and continuant, while representing ``cell division`` as a process and therefore an occurrent. Such upper-level distinctions provide a common ontological structure for integrating concepts defined in different biomedical domain ontologies [#bfo-bioinformatics]_ [#bfo-material]_.
 Metrics & Statistics
 --------------------------
 
@@ -135,3 +134,22 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bfo-bioinformatics] Smith, B., Kumar, A., and Bittner, T. 2005.
+   "Basic Formal Ontology for Bioinformatics."
+   IFOMIS Reports.
+   Available at:
+   `http://ontology.buffalo.edu/smith/articles/BFO_for_bioinformatics.pdf
+   <http://ontology.buffalo.edu/smith/articles/BFO_for_bioinformatics.pdf>`_
+
+.. [#bfo-material] Smith, B. 2012.
+   "On Classifying Material Entities in Basic Formal Ontology."
+   In *Interdisciplinary Ontology: Proceedings of the Third
+   Interdisciplinary Ontology Meeting*, 1--13.
+   Tokyo: Keio University Press.
+   Available at:
+   `https://philpapers.org/archive/SMIOCM.pdf
+   <https://philpapers.org/archive/SMIOCM.pdf>`_

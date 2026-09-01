@@ -24,10 +24,30 @@
 
 FAIR Vocabulary (FAIR)
 ========================================================================================================
+The FAIR Vocabulary is a formal vocabulary that provides
+machine-readable definitions and semantic representations of the FAIR
+Data Principles: Findability, Accessibility, Interoperability, and
+Reusability [#fair-principles]_ [#fair-vocabulary]_. It formalizes key
+concepts underlying FAIR data management, including persistent
+identifiers, metadata, access protocols, interoperability standards,
+qualified references, provenance, licensing, and reusability conditions
+[#fair-principles]_ [#fair-vocabulary]_. The vocabulary represents FAIR
+principles and sub-principles as semantic entities, allowing them to be
+referenced, linked, and interpreted in machine-readable environments
+[#fair-vocabulary]_ [#fair-provenance]_. FAIR vocabulary terms can be
+applied to dataset descriptions, data repositories, metadata records,
+and digital object properties to formally express FAIR characteristics
+and support FAIR assessment workflows [#fair-vocabulary]_. By providing
+standardized semantic definitions, the vocabulary facilitates
+communication of FAIR principles within research organizations, funding
+agencies, repositories, and data management communities
+[#fair-principles]_ [#fair-vocabulary]_.
 
-The FAIR Vocabulary is a formal ontology that provides machine-readable definitions and semantic representation of the FAIR Data Principles (Findability, Accessibility, Interoperability, Reusability). It formalizes key concepts underlying FAIR data management including data discoverability mechanisms, access protocols, interoperability standards, and reusability conditions. The ontology enables automated assessment and verification of FAIR compliance, supporting the development of FAIR data management tools and services. FAIR vocabulary terms can be applied to dataset descriptions, data repositories, and digital object properties to formally declare their FAIR characteristics and compliance levels. The vocabulary facilitates communication of FAIR principles within research organizations, funding agencies, and data management communities by providing standardized semantic definitions.
-
-**Example Usage**: Annotate a dataset in a repository with FAIR terms to indicate its Findability (via persistent identifiers like DOIs), Accessibility (through standard protocols), Interoperability (using standard formats and ontologies), and Reusability (via clear licensing and metadata).
+**Example Usage**: Annotate a dataset in a repository with FAIR terms to
+indicate its Findability through persistent identifiers, Accessibility
+through standard access protocols, Interoperability through shared
+formats and ontologies, and Reusability through clear licensing,
+provenance, and rich metadata [#fair-principles]_ [#fair-vocabulary]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +156,28 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#fair-principles] Wilkinson, M. D., Dumontier, M.,
+   Aalbersberg, I. J., et al. 2016.
+   "The FAIR Guiding Principles for Scientific Data Management
+   and Stewardship."
+   *Scientific Data*, 3, 160018.
+   Available at:
+   `https://doi.org/10.1038/sdata.2016.18
+   <https://doi.org/10.1038/sdata.2016.18>`_
+
+.. [#fair-vocabulary] Kuhn, T., and Dumontier, M. n.d.
+   "FAIR Vocabulary."
+   Available at:
+   `https://peta-pico.github.io/FAIR-nanopubs/principles/index-en.html
+   <https://peta-pico.github.io/FAIR-nanopubs/principles/index-en.html>`_
+
+.. [#fair-provenance] Kuhn, T., and Dumontier, M. n.d.
+   "FAIR Vocabulary: Provenance."
+   Provenance documentation.
+   Available at:
+   `https://peta-pico.github.io/FAIR-nanopubs/principles/provenance/provenance-en.html
+   <https://peta-pico.github.io/FAIR-nanopubs/principles/provenance/provenance-en.html>`_

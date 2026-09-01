@@ -23,7 +23,12 @@
 BBC Sport Ontology (BBCSport)
 ========================================================================================================
 
-The BBC Sport Ontology (BBCSport) is a lightweight ontology designed to represent competitive sports events, tournaments, participants, disciplines, and awards. It provides a structured vocabulary for describing the structure of sports tournaments as a series of events, the participation of agents (teams, athletes), the type of discipline involved, and the awards associated with competitions. BBCSport is designed for interoperability with general event ontologies and supports semantic annotation of sports data for publishing, search, and analytics. The ontology enables integration of sports data across platforms, facilitating advanced queries, personalized recommendations, and automated content generation for sports journalism. BBCSport is extensible and can be adapted to a wide range of sports and event types, supporting both professional and amateur competitions. The ontology is maintained as an open resource and is compatible with other BBC and external ontologies for broader data integration.
+The BBC Sport Ontology (BBCSport) is a simple, lightweight ontology for publishing data about competitive sports events [#bbcsport-ontology]_. It provides a structured vocabulary for representing the structure of sports tournaments as a series of events, the competing of agents in a competition, the type of discipline involved in an event, and awards associated with competitions [#bbcsport-ontology]_.
+
+BBCSport is designed for interoperability with more general event ontologies and draws heavily on the Events Ontology [#bbcsport-ontology]_. Although it originates from a BBC use case, it is intended to be applicable to a wide range of competitive sports event data publishing use cases [#bbcsport-ontology]_. By providing standardized terms for competitions, events, participants, disciplines, and awards, BBCSport supports semantic annotation, linked-data publishing, content discovery, and integration of sports information [#bbcsport-ontology]_.
+
+**Example Usage**:
+Annotate a sports tournament database with BBCSport terms to specify competitions, tournament events, participating teams or athletes, disciplines, and awards, enabling semantic search and integration across sports data publishing platforms [#bbcsport-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -133,5 +138,10 @@ Use the following code to import this ontology programmatically:
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
 
-**Example Usage**:
-Annotate a sports tournament database with BBCSport terms to specify the structure of the tournament, participating teams and athletes, event types (e.g., "final match"), and awards (e.g., "gold medal"), enabling semantic search and cross-platform sports analytics.
+References
+----------
+
+.. [#bbcsport-ontology] BBC. n.d.
+   "Sport Ontology."
+   Available at:
+   `https://iptc.org/thirdparty/bbc-ontologies/sport.html <https://iptc.org/thirdparty/bbc-ontologies/sport.html>`_

@@ -25,9 +25,34 @@
 Information Artifact Ontology (IAO)
 ========================================================================================================
 
-The Information Artifact Ontology (IAO) is a comprehensive ontology for formal representation of information entities, information artifacts, and abstract information objects. It provides structured definitions of concepts such as documents, data items, information content, and the relationships between information artifacts and their physical realizations. IAO distinguishes between abstract information objects (the content) and their concrete realizations (documents, files, databases), enabling precise semantic representation of information resources. The ontology captures properties of information artifacts including authorship, creation date, version history, and relationships to the entities they describe or represent. IAO is widely used in biomedical informatics, scientific data management, and linked data applications for annotating information resources with formal semantic types.
+The Information Artifact Ontology (IAO) is an ontology for representing
+information entities, information artifacts, and related information
+objects in a formal and semantically precise way [#iao-repo]_
+[#iao-paper]_. It provides structured concepts for describing entities
+such as documents, data items, information content entities, identifiers,
+and other representational artifacts [#iao-repo]_.
 
-**Example Usage**: Annotate a scientific publication with IAO terms such as "document" for the artifact type, "author" relationships, and "has content" linking to abstract information objects representing the scientific claims and data presented.
+IAO helps distinguish between information content and the concrete
+artifacts or realizations through which that content is represented,
+stored, transmitted, or used [#iao-paper]_. This makes it useful for
+modeling relationships between data collections, documents, databases,
+records, and the real-world entities or phenomena that they are about
+[#iao-paper]_.
+
+The ontology is widely used in biomedical informatics, scientific data
+management, ontology annotation, and linked data applications where
+information resources need formal semantic types [#iao-repo]_
+[#iao-paper]_. It supports the annotation of publications, datasets,
+measurement results, protocols, databases, licenses, and other
+information-bearing resources in a consistent ontology-based framework
+[#iao-repo]_.
+
+**Example Usage**: Annotate a scientific publication with IAO terms such
+as document, data item, information content entity, and is about
+relations. This can represent the publication as an information artifact,
+connect it to its authorship or metadata, and link its content to the
+scientific claims, datasets, or real-world entities described in the
+publication [#iao-repo]_ [#iao-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +161,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#iao-repo] Information Artifact Ontology. n.d.
+   "Information Artifact Ontology."
+   GitHub Repository.
+   Available at:
+   `https://github.com/information-artifact-ontology/IAO <https://github.com/information-artifact-ontology/IAO>`_
+
+.. [#iao-paper] Ceusters, W. 2012.
+   "An Information Artifact Ontology Perspective on Data Collections
+   and Associated Representational Artifacts."
+   *Studies in Health Technology and Informatics* 180: 68--72.
+   Available at:
+   `https://pubmed.ncbi.nlm.nih.gov/22874154/ <https://pubmed.ncbi.nlm.nih.gov/22874154/>`_

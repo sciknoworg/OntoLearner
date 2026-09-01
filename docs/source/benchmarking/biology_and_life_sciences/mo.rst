@@ -25,23 +25,23 @@ Microscopy Ontology (MO)
 
 The Microscopy Ontology (MO) is a domain ontology developed to provide a
 structured framework for describing microscopy and microanalysis
-experiments, data, and equipment. It extends the PMD Core Ontology
-(PMDco) and was developed within the Platform MaterialDigital ecosystem
-to support semantic integration and interoperability of microscopy data
-[#mo-repo]_ [#mo-paper]_. The ontology covers microscopy-specific
+experiments, data, and equipment [#mo-paper]_ [#mo-repo]_. It was
+developed within the Platform MaterialDigital ecosystem to support
+semantic integration and interoperability of microscopy data
+[#mo-paper]_ [#mo-repo]_. The ontology covers microscopy-specific
 concepts and relationships needed to describe processes, equipment, and
 parameters in microscopy and microanalysis workflows [#mo-paper]_
-[#mo-overview]_. MO is intended to improve the semantic representation
-of microscopy knowledge and support better query results and logical
+[#mo-repo]_. MO is intended to improve the semantic representation of
+microscopy knowledge and support better query results and logical
 linking among related terms and data objects [#mo-paper]_ [#mo-repo]_.
-By providing a standardized vocabulary grounded in PMDco, the ontology
-supports interoperable data description and integration across
+By providing a standardized vocabulary for microscopy data, the
+ontology supports interoperable data description and integration across
 materials-science microscopy datasets and related digital research
-infrastructures [#mo-overview]_ [#pmdco-paper]_.
+infrastructures [#mo-paper]_ [#mo-repo]_.
 
-**Example Usage**: Annotate a microscopy dataset with MO terms to specify
-the imaging modality (for example scanning electron microscopy or
-transmission electron microscopy), relevant equipment and parameters,
+**Example Usage**: Annotate a microscopy dataset with MO terms to
+specify the imaging modality, for example scanning electron microscopy
+or transmission electron microscopy, relevant equipment and parameters,
 sample-related descriptors, and analysis-related concepts, enabling
 semantic search, interoperable data integration, and improved querying
 across microscopy data sources [#mo-paper]_ [#mo-repo]_.
@@ -166,14 +166,3 @@ References
 .. [#mo-repo] materialdigital. n.d. "Microscopy Ontology (MO)."
    GitHub repository.
    Available at: `https://github.com/materialdigital/microscopy-ontology <https://github.com/materialdigital/microscopy-ontology>`_
-
-.. [#mo-overview] Bayerlein, B., Schilling, M., Bruns, S., and others.
-   2024. "Concepts for a Semantically Accessible Materials Data Space:
-   Overview over Specific Implementations in Materials Science."
-   *Advanced Engineering Materials*.
-   Available at: `https://advanced.onlinelibrary.wiley.com/doi/10.1002/adem.202401092 <https://advanced.onlinelibrary.wiley.com/doi/10.1002/adem.202401092>`_
-
-.. [#pmdco-paper] Schilling, M., Bayerlein, B., Birkholz, H., and others.
-   2024. "PMD Core Ontology: Achieving Semantic Interoperability in
-   Materials Science."
-   *Materials & Design* 237: 112563.

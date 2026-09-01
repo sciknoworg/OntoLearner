@@ -24,10 +24,27 @@
 
 Molecular Process Ontology (MOP)
 ========================================================================================================
+The Molecular Process Ontology (MOP) is a systematic ontology for
+describing and classifying molecular-level chemical processes and
+transformations [#mop-github]_ [#mop-repo]_. It provides a structured
+vocabulary for representing processes such as cyclization, methylation,
+demethylation, oxidation, reduction, and other fundamental
+transformations relevant to chemical reaction description
+[#mop-github]_ [#mop-repo]_.
 
-The Molecular Process Ontology (MOP) is a systematic vocabulary for describing and classifying molecular-level chemical processes and transformations that occur in organic chemistry. It provides formal definitions of common molecular processes such as cyclization, methylation, demethylation, oxidation, reduction, and other fundamental reaction steps underlying named reactions in chemistry. MOP serves as the foundational semantic layer for the Reaction Ontology (RXNO), enabling precise description of chemical reaction mechanisms and their constituent molecular processes. The ontology facilitates integration of chemical databases, computational chemistry platforms, and reaction informatics systems by providing standardized semantic representations of molecular transformations. MOP enables advanced searching and classification of reactions based on their underlying molecular mechanisms.
+MOP supports standardized semantic representation of molecular
+processes that underlie reaction mechanisms and can be used to organize
+and classify reaction information in chemistry databases and reaction
+informatics systems [#mop-github]_ [#mop-repo]_. By providing explicit
+terms for molecular transformations, MOP supports semantic
+interoperability, structured querying, and mechanism-oriented analysis
+across chemical data resources [#mop-github]_ [#mop-repo]_.
 
-**Example Usage**: Represent a cyclization reaction step in RXNO by linking to MOP terms for the specific cyclization type (e.g., "6-membered ring closure"), enabling automated discovery of similar reactions across chemical databases.
+**Example Usage**: Represent a cyclization reaction step by linking it
+to an appropriate MOP term for the corresponding molecular process,
+such as a ring-closure transformation, enabling structured
+classification of reactions and discovery of related transformations
+across chemical databases [#mop-github]_ [#mop-repo]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +153,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#mop-github] RSC Ontology.
+   "Molecular Process Ontology (MOP)."
+   GitHub repository.
+   Available at:
+   `https://github.com/rsc-ontology/MOP <https://github.com/rsc-ontology/MOP>`_
+
+.. [#mop-repo] OBO Foundry. n.d.
+   "Molecular Process Ontology (MOP)."
+   Ontology repository.
+   Available at:
+   `https://obofoundry.org/ontology/mop.html
+   <https://obofoundry.org/ontology/mop.html>`_

@@ -32,20 +32,17 @@ information such as offers, business entities, price specifications,
 availability, payment options, and delivery methods [#gr-paper]_
 [#gr-ref]_. GoodRelations emphasizes machine-processable, fine-grained
 descriptions of e-commerce information that support product discovery,
-comparison, and automated processing on the Web [#gr-paper]_ [#gr-wiki]_.
-A key design principle is the distinction between products or services,
-the offers made for them, and the legal entities that provide them,
-together with detailed modeling of prices and commercial conditions
-[#gr-paper]_ [#gr-ref]_. The ontology is designed for interoperability
-and can be used in RDF/OWL as well as embedded in Web pages; it also
-influenced and was integrated into the schema.org e-commerce model
-[#gr-wiki]_ [#schema-releases]_. By providing a shared semantic
+comparison, and automated processing on the Web [#gr-paper]_
+[#gr-wiki]_. A key design principle is the distinction between products
+or services, the offers made for them, and the legal entities that
+provide them, together with detailed modeling of prices and commercial
+conditions [#gr-paper]_ [#gr-ref]_. By providing a shared semantic
 framework for commercial data, GoodRelations supports e-commerce SEO,
 catalog integration, offer aggregation, and other Semantic Web and Web
 data applications [#gr-paper]_ [#gr-wiki]_.
 
-**Example Usage**: Describe a product offering as a
-``gr:Offering`` that links to a product or service, includes a
+**Example Usage**: Describe a product offering as a ``gr:Offering``
+that links to a product or service, includes a
 ``gr:UnitPriceSpecification`` with currency and price information, and
 connects to a ``gr:BusinessEntity`` representing the seller together
 with relevant payment, delivery, and offer-validity information, so
@@ -177,7 +174,3 @@ References
 .. [#gr-wiki] GoodRelations Wiki. n.d.
    "Documentation/Intro."
    Available at: `https://wiki.goodrelations-vocabulary.org/Documentation/Intro <https://wiki.goodrelations-vocabulary.org/Documentation/Intro>`_
-
-.. [#schema-releases] Schema.org. 2026.
-   "Schema.org Releases."
-   Available at: `https://schema.org/docs/releases.html <https://schema.org/docs/releases.html>`_

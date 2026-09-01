@@ -23,14 +23,12 @@
 MatoLab Brinell Test Ontology (MOL_BRINELL)
 ========================================================================================================
 
-The MatoLab Brinell Test Ontology (MOL_BRINELL) is a domain ontology developed to describe the Brinell hardness testing process. It provides a structured vocabulary for representing the testing methods, equipment, and results, supporting both experimental and computational research in materials testing.
+The MatoLab Brinell Test Ontology (MOL_BRINELL) is an application-level ontology developed to represent the Brinell hardness testing process [#molbrinell-matportal]_ [#bto-github]_. It provides a structured vocabulary for describing Brinell testing processes, testing equipment requirements, test-piece characteristics, related testing parameters, and measurement procedures according to the DIN EN ISO 6506-1 standard [#bto-github]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of tests, equipment, and results, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MOL_BRINELL supports the integration of data from experimental studies and simulations, promoting interoperability and data-driven research in materials testing.
-
-Typical applications of MOL_BRINELL include the development of new testing methods, the optimization of testing procedures, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MOL_BRINELL enhances collaboration and innovation in the field of materials testing.
+MOL_BRINELL supports semantic annotation of Brinell hardness testing data, enabling interoperability, data integration, semantic search, and reuse in materials testing and materials informatics workflows [#molbrinell-matportal]_ [#bto-github]_. The Brinell Test Ontology repository also documents multiple ontology versions developed with different top-level ontology alignments, including BFO+CCO, EMMO+CHAMEO, PROV-O+PMDco, and BFO+IOF [#bto-github]_.
 
 **Example Usage**:
-Annotate a Brinell hardness testing dataset with MOL_BRINELL terms to specify test types, equipment, and results, enabling semantic search and integration with materials informatics platforms.
+Annotate a Brinell hardness testing dataset with MOL_BRINELL terms to specify the Brinell testing process, testing equipment, test-piece characteristics, testing parameters, measurement procedure, and hardness-test results, enabling semantic search and integration with materials informatics platforms [#molbrinell-matportal]_ [#bto-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bto-github] Nasrabadi, H. B. n.d.
+   "Brinell-Test-Ontology-BTO."
+   GitHub repository.
+   Available at:
+   `https://github.com/HosseinBeygiNasrabadi/Brinell-Test-Ontology-BTO- <https://github.com/HosseinBeygiNasrabadi/Brinell-Test-Ontology-BTO->`_
+
+.. [#molbrinell-matportal] MatPortal. 2022.
+   "MatoLab Brinell Test Ontology (MOL_BRINELL)."
+   Ontology registry entry.
+   Available at:
+   `https://matportal.org/ontologies/MOL_BRINELL <https://matportal.org/ontologies/MOL_BRINELL>`_
