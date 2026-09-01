@@ -1027,7 +1027,7 @@ class RWTHDBISSFTLearner(AutoLearner):
             model=self.model,
             args=training_args,
             train_dataset=tokenized["train"],
-            tokenizer=self.tokenizer,
+            processing_class=self.tokenizer,
             data_collator=data_collator,
         )
 

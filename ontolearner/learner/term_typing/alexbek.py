@@ -823,7 +823,7 @@ class AlexbekRAGLearner(AutoLearner):
 
         # Tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(
-            self.cfg["llm_model_id"], padding_side="left", token=self.cfg["token"]
+            self.cfg["llm_model_id"], padding_side="left", token=self.cfg["token"] or None
         )
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
@@ -833,7 +833,7 @@ class AlexbekRAGLearner(AutoLearner):
             self.cfg["llm_model_id"],
             device_map=device_map,
             torch_dtype=torch_dtype,
-            token=self.cfg["token"],
+            token=self.cfg["token"] or None,
         )
 
         # Deterministic decoding defaults

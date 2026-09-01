@@ -560,7 +560,7 @@ class AlexbekCrossAttnLearner(AutoLearner):
                 if step < warmup_steps:
                     return (step + 1) / (warmup_steps + 1)
                 else:
-                    progress = (step - warmup_steps) / (total_steps - warmup_steps)
+                    progress = (step - warmup_steps) / max(1,(total_steps - warmup_steps))
                     return max(0.1, 0.5 * (1 + math.cos(math.pi * progress)))
 
             scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_lambda)
