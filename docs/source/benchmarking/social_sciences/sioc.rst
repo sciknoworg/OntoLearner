@@ -23,10 +23,10 @@
 Semantically-Interlinked Online Communities (SIOC)
 ========================================================================================================
 
-The SIOC (Semantically-Interlinked Online Communities) Ontology is a widely used ontology for describing the information and structure of online communities. It provides a standardized vocabulary for representing discussion forums, blogs, wikis, social networks, and other collaborative platforms. SIOC enables the modeling of users, posts, threads, topics, and relationships between community members and content. By providing a common framework, SIOC facilitates interoperability between social platforms, supports data integration, and enables advanced queries and analytics on social data. The ontology is used in social media mining, digital humanities, and knowledge graph construction to link and analyze user-generated content across platforms. SIOC is actively maintained and extended to support emerging social web technologies and applications.
+The SIOC (Semantically-Interlinked Online Communities) Ontology is a Semantic Web vocabulary for representing the structure and content of online communities [#sioc-eswc]_ [#sioc-paper]_. It provides a common semantic model for describing online community environments such as forums, blogs, mailing lists, social-networking systems, and related collaborative platforms [#sioc-eswc]_ [#sioc-paper]_. SIOC represents users, posts, forums, sites, containers, topics, and the relationships connecting community members with the content they create [#sioc-paper]_. The project was developed to overcome information fragmentation between otherwise isolated online community systems by enabling their data to be represented and linked using Semantic Web technologies [#sioc-eswc]_ [#sioc-paper]_. This common representation supports interoperability, integration, querying, and reuse of community information across different applications and platforms [#sioc-eswc]_ [#sioc-paper]_. SIOC can also be combined with other Semantic Web vocabularies to provide richer descriptions of users, social relationships, and online interactions [#sioc-paper]_.
 
 **Example Usage**:
-Annotate a forum or blog platform with SIOC terms to describe users, posts, threads, and relationships, enabling semantic search and cross-platform analysis of online community interactions.
+Annotate a forum or blog platform with SIOC terms to describe users, posts, forums, topics, and relationships between community members and content. This provides a machine-readable representation that supports semantic integration and exchange of online community information across different platforms [#sioc-eswc]_ [#sioc-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,27 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#sioc-paper] Passant, A., Bojārs, U., Breslin, J. G.,
+   and Decker, S. 2010.
+   "The SIOC Project: Semantically-Interlinked Online Communities,
+   from Humans to Machines."
+   In *Coordination, Organizations, Institutions and Norms
+   in Agent Systems V*, Lecture Notes in Computer Science,
+   vol. 6069. Springer, Berlin, Heidelberg.
+   Available at:
+   `https://doi.org/10.1007/978-3-642-14962-7_12
+   <https://doi.org/10.1007/978-3-642-14962-7_12>`_
+
+.. [#sioc-eswc] Breslin, J. G., Harth, A., Bojars, U.,
+   and Decker, S. 2005.
+   "Towards Semantically-Interlinked Online Communities."
+   In *The Semantic Web: Research and Applications*,
+   ESWC 2005, Lecture Notes in Computer Science,
+   vol. 3532. Springer, Berlin, Heidelberg.
+   Available at:
+   `https://doi.org/10.1007/11431053_34
+   <https://doi.org/10.1007/11431053_34>`_

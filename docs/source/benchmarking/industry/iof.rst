@@ -23,10 +23,10 @@
 Industrial Ontology Foundry (IOF)
 ========================================================================================================
 
-The Industrial Ontology Foundry (IOF) Core Ontology is a foundational ontology for the manufacturing industry, capturing concepts and relationships common across multiple manufacturing domains. It is implemented in RDF and leverages the Basic Formal Ontology (BFO) as its upper-level framework, while also incorporating terms from other domain-independent and mid-level ontologies. IOF provides a standardized vocabulary for describing manufacturing processes, equipment, materials, products, and organizational structures. The ontology is designed to ensure consistency and interoperability across various domain-specific reference ontologies published by the IOF, supporting integration of manufacturing data from diverse sources. IOF enables advanced applications such as digital twins, smart manufacturing, supply chain optimization, and industrial automation. By providing a common semantic foundation, IOF facilitates data sharing, analytics, and knowledge management in the manufacturing sector.
+The Industrial Ontology Foundry (IOF) Core Ontology is a foundational ontology for the manufacturing industry, capturing concepts and relationships common across multiple manufacturing domains [#iof-github]_ [#iof-core-paper]_. It is implemented in RDF/OWL and leverages the Basic Formal Ontology (BFO) as its upper-level framework, while also incorporating terms from other domain-independent and mid-level ontologies [#iof-github]_. IOF Core provides a standardized vocabulary for describing manufacturing-related concepts that support cross-system integration within factories, across enterprises, between suppliers and manufacturers, and throughout the product life cycle [#iof-github]_ [#iof-core-paper]_. The ontology is designed to ensure consistency and interoperability across domain-specific reference ontologies published by the IOF [#iof-github]_. IOF Core supports advanced applications such as smart manufacturing, industrial knowledge graphs, supply chain modeling, digital twins, industrial automation, data sharing, analytics, and knowledge management in the manufacturing sector [#iof-core-paper]_.
 
 **Example Usage**:
-Annotate a smart factory system with IOF terms to describe production lines, machines, materials, and process steps, enabling integration with enterprise resource planning (ERP) and manufacturing execution systems (MES).
+Annotate a smart factory system with IOF Core terms to describe production lines, machines, materials, process steps, and organizational relationships, enabling integration with enterprise resource planning (ERP), manufacturing execution systems (MES), supply chain systems, and industrial knowledge graphs [#iof-github]_ [#iof-core-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#iof-github] Industrial Ontologies Foundry. n.d.
+   "Industrial Ontologies Foundry."
+   GitHub Repository.
+   Available at:
+   `https://github.com/iofoundry/ontology <https://github.com/iofoundry/ontology>`_
+
+.. [#iof-core-paper] Kulvatunyou, Boonserm, Milos Drobnjakovic, Farhad Ameri, Chris Will, and Barry Smith. 2022.
+   "The Industrial Ontologies Foundry (IOF) Core Ontology."
+   *Formal Ontologies Meet Industry (FOMI) 2022*.
+   Available at:
+   `https://www.nist.gov/publications/industrial-ontologies-foundry-iof-core-ontology <https://www.nist.gov/publications/industrial-ontologies-foundry-iof-core-ontology>`_

@@ -22,10 +22,12 @@
 
 BBC Politics News Ontology (BBCPolitics)
 ========================================================================================================
+The BBC Politics Ontology is an ontology for describing politics, especially local government and elections [#bbcpolitics-ontology]_. It was originally designed for UK local and European elections and provides a structured vocabulary for political concepts such as constituencies, councils, elections, political parties, and statistical geographies [#bbcpolitics-ontology]_.
 
-The BBC Politics Ontology provides a formal vocabulary for describing and classifying political concepts, entities, and events as they appear in BBC news coverage. It models key political domain concepts including politicians, political parties, government institutions, legislative processes, electoral systems, and political ideologies. The ontology captures relationships between political entities (e.g., politicians affiliated with parties, parties contesting elections) and enables semantic annotation of news articles, television programs, and online content related to politics. It supports content discovery and automated linking of related political news stories across BBC's diverse platforms and archives. The ontology follows BBC's linked data principles and integrates with other BBC ontologies (People, Places, Organizations) to provide comprehensive semantic context.
+The ontology defines classes such as Constituency, Council, Election, PoliticalParty, and StatisticalGeography, and links them to broader BBC Core Concepts such as organisations, events, and places [#bbcpolitics-ontology]*. It also defines relationships such as governsGSS, which relates a political organisation such as a council to the statistical geography it governs [#bbcpolitics-ontology]*. By providing a standardized vocabulary, the BBC Politics Ontology supports semantic annotation, content linking, and discovery of political content in BBC linked-data systems [#bbcpolitics-ontology]_.
 
-**Example Usage**: Annotate a political news article with BBCPolitics terms to identify mentioned politicians (as foaf:Person instances), their party affiliations, relevant legislation being discussed, and electoral contexts.
+**Example Usage**:
+Annotate a political news article with BBC Politics Ontology terms to specify an election, constituency, council, political party, or governed statistical geography, enabling semantic search and integration with BBC political news and election data [#bbcpolitics-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -134,3 +136,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bbcpolitics-ontology] BBC. 2014.
+   "Politics Ontology."
+   Available at:
+   `https://iptc.org/thirdparty/bbc-ontologies/politics.html <https://iptc.org/thirdparty/bbc-ontologies/politics.html>`_

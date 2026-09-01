@@ -22,15 +22,14 @@
 
 Vocabulary of a Friend (VOAF)
 ========================================================================================================
+The Vocabulary of a Friend (VOAF) is a vocabulary specification providing elements allowing the description of vocabularies, such as RDFS vocabularies or OWL ontologies [#voaf-spec]_ [#voaf-metadata]_. It is based on Dublin Core and VoID, and provides a structured vocabulary for representing vocabulary metadata, supporting vocabulary description, discovery, reuse, and management [#voaf-spec]_ [#voaf-metadata]_.
 
-The Vocabulary of a Friend (VOAF) is a vocabulary specification providing elements allowing the description of vocabularies (RDFS vocabularies or OWL ontologies). It is based on Dublin Core and VOID. VOAF provides a structured vocabulary for representing vocabularies, supporting both theoretical and experimental research in vocabulary management.
+The ontology employs a class-based modeling approach, defining classes for vocabularies and related vocabulary elements, along with properties to describe their characteristics and relationships [#voaf-spec]_ [#voaf-metadata]_. VOAF provides properties for expressing how vocabularies relate to one another, including whether they rely on, extend, specialize, annotate, or otherwise link to other vocabularies [#voaf-spec]_. These relationships enable structured retrieval, dependency tracking, and analysis of vocabulary networks [#voaf-spec]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of vocabularies, elements, and relationships, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. VOAF supports the integration of data from various sources, promoting interoperability and data-driven research in vocabulary management.
-
-Typical applications of VOAF include the development of new vocabulary management methods, the optimization of vocabulary usage, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, VOAF enhances collaboration and innovation in the field of vocabulary management.
+Typical applications of VOAF include vocabulary documentation, vocabulary cataloging, ontology metadata management, linked data vocabulary discovery, vocabulary dependency analysis, and integration of vocabulary descriptions across semantic web platforms [#voaf-spec]_ [#voaf-metadata]_. By providing a standardized vocabulary and framework, VOAF enhances interoperability, reuse, and knowledge sharing in the field of vocabulary management [#voaf-spec]_ [#voaf-metadata]_.
 
 **Example Usage**:
-Annotate a vocabulary with VOAF terms to specify vocabulary types, elements, and relationships, enabling semantic search and integration with vocabulary management platforms.
+Annotate a vocabulary with VOAF terms to specify its type, metadata, reused vocabularies, extensions, specializations, and relationships to other vocabularies. This enables semantic search, vocabulary discovery, dependency analysis, and integration with vocabulary management platforms [#voaf-spec]_ [#voaf-metadata]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +138,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#voaf-spec] Vatant, B. 2013.
+   "Vocabulary of a Friend (VOAF)."
+   Version 2.3.
+   Available at:
+   `https://lov.linkeddata.es/vocommons/voaf/v2.3/
+   <https://lov.linkeddata.es/vocommons/voaf/v2.3/>`_
+
+.. [#voaf-metadata] Vandenbussche, P.-Y., and Vatant, B. 2012.
+   "Metadata Recommendations for Linked Open Data Vocabularies."
+   Version 1.1.
+   Technical recommendation.
+   `Available online <https://lov.okfn.org/Recommendations_Vocabulary_Design.pdf>`_

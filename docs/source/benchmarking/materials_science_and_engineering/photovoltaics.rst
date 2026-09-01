@@ -24,10 +24,12 @@
 
 EMMO Domain Ontology for Photovoltaics (Photovoltaics)
 ========================================================================================================
+The EMMO Domain Ontology for Photovoltaics is an EMMO-based domain ontology for representing knowledge in the photovoltaics domain [#photovoltaics-github]_. The repository describes the ontology as focused on perovskite solar cells, while the ontology metadata identifies it as a top-level photovoltaics domain ontology based on EMMO [#photovoltaics-github]_.
 
-The EMMO Domain Ontology for Photovoltaics is a specialized vocabulary built upon the Elementary Multiperspective Material Ontology (EMMO) framework for comprehensive semantic description of perovskite solar cells and photovoltaic systems. It provides structured vocabulary for describing photovoltaic device components including perovskite absorber layers, transport layers, electrodes, and contact materials, along with their properties and functions. The ontology captures essential photovoltaic device concepts such as optical properties (bandgap, absorption coefficients), electrical properties (carrier mobility, recombination), and performance metrics (efficiency, fill factor, open-circuit voltage). Photovoltaics ontology enables standardized annotation of experimental fabrication procedures, characterization techniques, and computational modeling of perovskite solar cells. The ontology facilitates knowledge integration in photovoltaics research by providing EMMO-compliant semantic representations compatible with broader materials science knowledge bases.
+The ontology provides structured vocabulary for describing photovoltaic concepts such as photovoltaic devices, photovoltaic cells, photovoltaic modules, perovskite molecular entities, transport layers, substrate preparation, cell area, substrate area, storing before measurement, and photovoltaic quantities [#photovoltaics-github]_. By providing an EMMO-aligned semantic framework, the ontology supports semantic annotation, interoperability, data integration, and reuse of photovoltaic research information [#photovoltaics-github]_.
 
-**Example Usage**: Annotate a perovskite solar cell research study with Photovoltaics terms describing device configuration (n-i-p or p-i-n), perovskite composition (CsPbI3, MAPbI3), transport materials (TiO2, spiro-OMeTAD), performance parameters (PCE, Voc, Jsc), and fabrication methods (spin-coating, vapor deposition).
+**Example Usage**:
+Annotate a perovskite solar cell research dataset with Photovoltaics ontology terms to specify photovoltaic devices, photovoltaic cells, modules, perovskite molecular entities, hole transport layers, substrate cleaning, substrate area, cell area, and measurement-related information, enabling semantic search and integration with materials informatics platforms [#photovoltaics-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +138,12 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#photovoltaics-github] EMMO-repo. n.d.
+   "Photovoltaics - EMMO domain ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/domain-photovoltaics <https://github.com/emmo-repo/domain-photovoltaics>`_

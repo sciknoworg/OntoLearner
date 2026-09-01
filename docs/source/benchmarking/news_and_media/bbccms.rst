@@ -25,9 +25,12 @@
 BBC CMS Ontology (BBCCMS)
 ========================================================================================================
 
-The BBC CMS Ontology is a specialized vocabulary for representing and managing relationships between content management systems, creative content, and the entities that BBC produces content about. It defines standardized terms and structures for Content Management Systems (CMS) to interact with linked data platforms, enabling semantic representation of how content relates to real-world concepts. The ontology captures associations between different instances of the same concept across multiple BBC systems, ensuring consistency and linkage of related entities (people, places, organizations, events) referenced in content. BBCCMS facilitates content integration and semantic linking across BBC's diverse content production systems and publishing platforms. The ontology enables sophisticated content discovery and recommendations by providing explicit relationships between content and the concepts it addresses.
+The BBC CMS Ontology is an ontology for representing content management systems and their interaction with the BBC Linked Data Platform [#bbccms-ontology]_. It defines how entities and creative works in the BBC triplestore are associated with external BBC content management systems that provide additional information about the same thing or content item [#bbccms-ontology]_.
 
-**Example Usage**: Link a BBC news article or program to BBC Core Concepts (people, organizations, places, events) with BBCCMS terms that establish how the same entity is referenced across different content pieces and editorial domains.
+The ontology provides terms for linking BBC concepts, web documents, creative works, and related CMS records, allowing the Linked Data Platform to point users and systems to information stored outside the triplestore [#bbccms-ontology]_. It supports content integration, semantic linking, retrieval, and management of relationships between BBC linked-data entities and the systems that produce or store content [#bbccms-ontology]_.
+
+**Example Usage**:
+Link a BBC entity such as **Manchester United** or a BBC creative work to an external content management system using BBC CMS Ontology terms, so that additional information such as sports statistics or the full body of a creative work can be retrieved from the relevant CMS [#bbccms-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +139,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bbccms-ontology] BBC. 2012.
+   "CMS Ontology."
+   Available at:
+   `https://iptc.org/thirdparty/bbc-ontologies/cms.html <https://iptc.org/thirdparty/bbc-ontologies/cms.html>`_

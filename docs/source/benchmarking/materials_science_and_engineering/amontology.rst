@@ -22,11 +22,10 @@
 
 Additive Manufacturing Ontology (AMOntology)
 ========================================================================================================
-
-The Additive Manufacturing Ontology (AMOntology) is a domain ontology developed to represent knowledge about additive manufacturing (AM) processes, computational models, and their characteristics. It is structured around two main components: AMProcessOntology, which captures entities and relationships relevant to AM processes, and ModelOntology, which describes modeling concepts for multi-physics, multi-scale simulations. AMOntology integrates these components to provide a comprehensive framework for describing process parameters, material properties, equipment, and computational models in AM. The ontology supports semantic annotation of digital manufacturing workflows, enabling data integration, process optimization, and knowledge sharing across research and industry. By providing a standardized vocabulary, AMOntology facilitates interoperability between digital manufacturing systems, simulation tools, and research databases. The ontology is actively maintained and extended to support new developments in additive manufacturing and computational modeling.
+The **Additive Manufacturing Ontology (AMOntology)** is a domain ontology developed to represent knowledge about additive manufacturing (AM) processes, computational models, and their characteristics [#amontology-github]_. It is structured around two main components: **AMProcessOntology**, which captures entities and relationships relevant to AM processes, and **ModelOntology**, which describes modeling concepts for potentially multi-physics and multi-scale processes [#amontology-github]_. AMOntology integrates these components to provide a framework for describing AM process knowledge, model characteristics, assumptions, approximations, and qualitative indicators of model fidelity [#amontology-github]_. It supports semantic annotation and knowledge integration across additive manufacturing workflows, helping improve interoperability, reuse, and sharing of AM information across research and digital manufacturing environments [#ali2019]_ [#amontology-github]_.
 
 **Example Usage**:
-Annotate an additive manufacturing workflow with AMOntology terms to specify process parameters (e.g., laser power, layer thickness), computational model characteristics, and material properties, enabling semantic search and integration with digital manufacturing platforms.
+Annotate an additive manufacturing workflow with AMOntology terms to specify process parameters, material properties, equipment information, and computational model characteristics, enabling semantic search, data integration, and comparison of AM knowledge across digital manufacturing platforms [#ali2019]_ [#amontology-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +134,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#ali2019] Mohd Ali, M., Rai, R., Otte, J. N., and Smith, B. 2019.
+   "A product life cycle ontology for additive manufacturing."
+   *Computers in Industry*, 105, 191--203.
+   DOI: 10.1016/j.compind.2018.12.007.
+   Available at:
+   `https://www.sciencedirect.com/science/article/pii/S0166361518301647 <https://www.sciencedirect.com/science/article/pii/S0166361518301647>`_
+
+.. [#amontology-github] Assouroko, I., Witherell, P., Lopez, F., and contributors. n.d.
+   "AMontology: NIST's OWL ontology of additive manufacturing."
+   GitHub repository.
+   Available at:
+   `https://github.com/iassouroko/AMontology <https://github.com/iassouroko/AMontology>`_

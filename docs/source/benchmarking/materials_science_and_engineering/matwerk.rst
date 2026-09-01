@@ -23,14 +23,12 @@
 NFDI MatWerk Ontology (MatWerk)
 ========================================================================================================
 
-NFDI MatWerk Ontology (MWO) aims to establish a digital infrastructure for Materials Science and Engineering (MSE), fostering improved data sharing and collaboration. This ontology provides a comprehensive framework for structuring research data and enhancing interoperability within the MSE community. MWO is aligned with the Basic Formal Ontology (BFO) and incorporates the modular approach of the NFDIcore mid-level ontology, enriching metadata through standardized classes and properties.
+The NFDI MatWerk Ontology (MWO) is a BFO-compliant ontology developed for research data management in Materials Science and Engineering (MSE) [#mwo-doc]_ [#mwo-paper]_. It provides a semantic framework for structuring MSE research data and improving interoperability, data sharing, and knowledge representation within the NFDI-MatWerk community [#mwo-doc]_ [#mwo-paper]_.
 
-The ontology addresses key aspects of MSE research data, including the NFDI-MatWerk community structure, covering task areas, infrastructure use cases, projects, researchers, and organizations. It also describes essential NFDI resources, such as software, workflows, ontologies, publications, datasets, metadata schemas, instruments, facilities, and educational materials. Additionally, MWO represents NFDI-MatWerk services, academic events, courses, and international collaborations.
-
-As the foundation for the MSE Knowledge Graph, MWO facilitates efficient data integration and retrieval, promoting collaboration and knowledge representation across MSE domains. This digital transformation enhances data discoverability, reusability, and accelerates scientific exchange, innovation, and discoveries by optimizing research data management and accessibility.
+MWO incorporates the modular approach of the NFDIcore mid-level ontology and represents key MSE research-data entities such as task areas, infrastructure use cases, projects, researchers, organizations, datasets, software, workflows, ontologies, publications, metadata schemas, instruments, facilities, services, and educational resources [#mwo-doc]_. As a foundation for the MSE Knowledge Graph, MWO supports semantic annotation, data integration, retrieval, discoverability, and reuse of materials science research data [#mwo-doc]_ [#mwo-paper]_.
 
 **Example Usage**:
-Annotate a research project with MWO terms to specify task areas, infrastructure use cases, and resources, enabling semantic search and integration with the MSE Knowledge Graph.
+Annotate a materials science research project with MWO terms to specify task areas, infrastructure use cases, participating researchers, organizations, datasets, software, workflows, instruments, and related resources, enabling semantic search and integration with the MSE Knowledge Graph [#mwo-doc]_ [#mwo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +137,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#mwo-doc] ISE-FIZKarlsruhe. n.d.
+   "NFDI MatWerk Ontology (MWO)."
+   Ontology documentation.
+   Available at:
+   `https://ise-fizkarlsruhe.github.io/mwo/docs/ <https://ise-fizkarlsruhe.github.io/mwo/docs/>`_
+
+.. [#mwo-paper] Beygi Nasrabadi, H., et al. 2025.
+   "NFDI MatWerk Ontology (MWO): A BFO-Compliant Ontology for Research Data Management in Materials Science and Engineering."
+   *Advanced Engineering Materials*.
+   DOI: 10.1002/adem.202502331.
+   Available at:
+   `https://advanced.onlinelibrary.wiley.com/doi/10.1002/adem.202502331 <https://advanced.onlinelibrary.wiley.com/doi/10.1002/adem.202502331>`_

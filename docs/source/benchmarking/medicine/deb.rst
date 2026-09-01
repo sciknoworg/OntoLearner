@@ -23,10 +23,10 @@
 Devices, Experimental scaffolds and Biomaterials Ontology (DEB)
 ========================================================================================================
 
-The Devices, Experimental scaffolds and Biomaterials Ontology (DEB) is an open, community-driven ontology for organizing information about biomaterials, their design, manufacture, and biological testing. DEB provides a structured vocabulary for describing biomaterial types, experimental scaffolds, fabrication methods, and the biological assays used to evaluate them. The ontology was developed using text analysis of a biomaterials gold standard corpus and systematically curated to represent the domain's lexicon, with validation by biomaterials research experts. DEB supports semantic annotation of biomaterials research data, enabling interoperability, data integration, and advanced queries across experimental studies and databases. By providing a standardized framework, DEB facilitates reproducibility, knowledge sharing, and meta-analysis in biomaterials science and tissue engineering. The ontology is actively maintained and extended to incorporate new materials, experimental techniques, and biological endpoints as the field evolves.
+The Devices, Experimental Scaffolds and Biomaterials Ontology (DEB) is an ontology developed to represent and organize information about biomaterials, medical devices, experimental scaffolds, and their associated biological evaluation data [#deb-paper]_ [#deb-github]_. It provides a structured semantic model for describing biomaterial composition, scaffold and device characteristics, fabrication and processing information, and biological or experimental data associated with biomaterials research [#deb-paper]_. DEB was designed to support the mapping, annotation, integration, and analysis of heterogeneous biomaterials data, helping information from different experiments and databases to be represented in a consistent and machine-readable form [#deb-paper]_. By providing shared terminology and relationships for biomaterials and experimental scaffolds, the ontology supports semantic search, data integration, and comparison of biomaterials research across studies [#deb-paper]_ [#deb-github]_.
 
 **Example Usage**:
-Annotate a biomaterials experiment with DEB terms to specify the scaffold material (e.g., "collagen hydrogel"), fabrication method (e.g., "electrospinning"), and biological assay (e.g., "cell viability test"), enabling cross-study comparison and data integration.
+Annotate a biomaterials experiment with DEB terms describing the biomaterial or scaffold, device characteristics, fabrication or processing information, and associated biological evaluation data. This enables structured annotation, semantic search, integration, and comparison of biomaterials data across experiments and data sources [#deb-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,22 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#deb-github] ProjectDebbie. n.d.
+   "Ontology_DEB: The Device, Experimental Scaffolds and Biomaterials Ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/ProjectDebbie/Ontology_DEB
+   <https://github.com/ProjectDebbie/Ontology_DEB>`_
+
+.. [#deb-paper] Hakimi, O., Gelpi, J. L., Krallinger, M.,
+   Curi, F., Repchevsky, D., and Ginebra, M.-P. 2020.
+   "The Devices, Experimental Scaffolds, and Biomaterials Ontology (DEB):
+   A Tool for Mapping, Annotation, and Analysis of Biomaterials Data."
+   *Advanced Functional Materials*, 30(16), 1909910.
+   Available at:
+   `https://doi.org/10.1002/adfm.201909910
+   <https://doi.org/10.1002/adfm.201909910>`_

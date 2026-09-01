@@ -25,9 +25,9 @@
 Product Types Ontology (PTO)
 ========================================================================================================
 
-The Product Types Ontology (PTO) is a comprehensive vocabulary for standardized classification and semantic description of commercial products and services designed to complement GoodRelations e-commerce vocabulary. PTO provides a hierarchical taxonomy of product categories, types, and subtypes covering diverse industries and market segments including consumer goods, electronics, fashion, books, and services. It enables detailed product classification through a fine-grained type hierarchy, facilitating product discovery, comparison shopping, and automated product recommendation systems. PTO is designed for web markup integration using microdata, RDFa, and JSON-LD formats, enabling product information embedded in HTML to be processed by search engines and aggregation platforms. By combining PTO product types with GoodRelations commercial properties (price, availability, shipping), organizations can create rich, machine-readable product descriptions for e-commerce applications.
+The Product Types Ontology (PTO) is a vocabulary for standardized classification and semantic description of commercial products and services, designed to complement GoodRelations in semantic e-commerce applications [#pto-w3c]_ [#pto-doc]_. PTO provides product and service type identifiers that can be used to describe what kind of product or service is being offered, while GoodRelations provides the commercial vocabulary for describing offers, prices, sellers, availability, and related e-commerce information [#pto-w3c]_ [#pto-doc]_. PTO enables detailed product classification across diverse market segments, facilitating product discovery, comparison shopping, semantic search, and automated recommendation systems [#pto-w3c]_ [#pto-doc]_. The ontology can be used in web markup and linked data settings to make product information more machine-readable and easier for search engines, aggregation platforms, and e-commerce applications to process [#pto-w3c]_ [#pto-doc]_. By combining PTO product types with GoodRelations commercial properties such as price, availability, business entity, and offer information, organizations can create rich, machine-readable product descriptions for e-commerce applications [#pto-w3c]_ [#pto-doc]_.
 
-**Example Usage**: Annotate a product listing with PTO terms such as "Electronics > Smartphones > Android Phones" linked to GoodRelations Offering instances with price and availability information for automated product discovery and price comparison.
+**Example Usage**: Annotate a product listing with a PTO product type, such as ``Smartphone`` or ``Android_phone``, and link it to a GoodRelations ``Offering`` that describes the seller, price, availability, and delivery conditions. This enables automated product discovery, semantic search, and price comparison across e-commerce platforms [#pto-w3c]_ [#pto-doc]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +136,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#pto-w3c] W3C Semantic Web Wiki. n.d.
+   "Productontology."
+   Available at:
+   `https://www.w3.org/2001/sw/wiki/Productontology <https://www.w3.org/2001/sw/wiki/Productontology>`_
+
+.. [#pto-doc] Hepp, M. n.d.
+   "The Product Types Ontology."
+   Ontology documentation.
+   Available at:
+   `https://akswnc7.informatik.uni-leipzig.de/dstreitmatter/archivo/productontology.org/defaultArtifact/2021.04.15-024542/defaultArtifact_type%3DgeneratedDocu.html
+   <https://akswnc7.informatik.uni-leipzig.de/dstreitmatter/archivo/productontology.org/defaultArtifact/2021.04.15-024542/defaultArtifact_type%3DgeneratedDocu.html>`_

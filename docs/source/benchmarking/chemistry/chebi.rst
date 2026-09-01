@@ -23,10 +23,30 @@
 Chemical Entities of Biological Interest (ChEBI)
 ========================================================================================================
 
-Chemical Entities of Biological Interest (ChEBI) is a comprehensive ontology and dictionary of molecular entities, focusing on small chemical compounds. It provides a structured vocabulary for describing constitutionally or isotopically distinct atoms, molecules, ions, radicals, complexes, and other molecular entities. ChEBI includes both naturally occurring substances and synthetic products used in biological systems. The ontology incorporates an ontological classification system, specifying relationships between molecular entities and their parent or child classes. ChEBI is widely used in bioinformatics, cheminformatics, and systems biology to annotate chemical data, enabling interoperability between databases and facilitating advanced queries. By providing a standardized framework for describing chemical entities, ChEBI supports data integration, analysis, and sharing across diverse scientific domains.
+Chemical Entities of Biological Interest (ChEBI) is a comprehensive
+database and ontology of molecular entities, with a particular focus on
+small chemical compounds [#chebi-site]_ [#chebi-paper]_. It provides a
+structured vocabulary for describing constitutionally or isotopically
+distinct atoms, molecules, ions, radicals, complexes, and related
+chemical entities, including both naturally occurring substances and
+synthetic compounds relevant to biological systems [#chebi-site]_
+[#chebi-paper]_. ChEBI incorporates an ontological classification system
+that organizes entities into parent-child relationships and supports the
+representation of chemical roles, structural classes, and molecular
+relationships [#chebi-paper]_ [#chebi-site]_. Widely used in
+bioinformatics, cheminformatics, and systems biology, ChEBI enables
+consistent chemical annotation, interoperability between databases, and
+integration of chemical knowledge across diverse scientific resources
+[#chebi-paper]_ [#chebi-site]_. By providing a standardized semantic
+framework for chemical entities, ChEBI supports data sharing, advanced
+querying, and computational analysis across the life sciences
+[#chebi-site]_ [#chebi-paper]_.
 
-**Example Usage**:
-Annotate a dataset of metabolites with ChEBI terms to specify their molecular structures and roles in metabolic pathways, such as "ChEBI:15377 (glucose)" or "ChEBI:15378 (ATP)."
+**Example Usage**: Annotate a metabolomics dataset with ChEBI terms to
+identify compounds such as glucose or ATP, specify their chemical
+classification and biological roles, and support standardized
+annotation, pathway analysis, and cross-database integration
+[#chebi-site]_ [#chebi-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +155,17 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#chebi-site] EMBL-EBI. n.d. "ChEBI - Chemical Entities of Biological Interest."
+   Available at: `https://www.ebi.ac.uk/chebi/ <https://www.ebi.ac.uk/chebi/>`_
+
+.. [#chebi-paper] Degtyarenko, K., de Matos, P., Ennis, M., Hastings, J.,
+   Zbinden, M., McNaught, A., Alcántara, R., Darsow, M., Guedj, M.,
+   and Ashburner, M. 2008. "ChEBI: A Database and Ontology for Chemical
+   Entities of Biological Interest."
+   *Nucleic Acids Research* 36(Database issue): D344-D350.
+   doi:10.1093/nar/gkm791
+   Available at: `https://pubmed.ncbi.nlm.nih.gov/17932057/ <https://pubmed.ncbi.nlm.nih.gov/17932057/>`_

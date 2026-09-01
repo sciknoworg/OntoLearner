@@ -23,10 +23,10 @@
 Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE)
 ========================================================================================================
 
-The Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE) is a foundational ontology that provides a conceptual framework for the formalization of domain ontologies. DOLCE is designed to capture the ontological categories underlying natural language and human common sense, supporting the modeling of linguistic, cognitive, and social phenomena. It distinguishes between endurants (entities persisting through time), perdurants (events and processes), qualities, and abstract entities, enabling nuanced representation of reality. DOLCE is widely used in linguistics, cognitive science, artificial intelligence, and knowledge engineering to support semantic interoperability and reasoning. Its modular structure allows for extensions and customization for specific domains, making it a popular choice for building interoperable ontologies. DOLCE has influenced the development of many domain ontologies and is recognized for its rigorous formal foundations and alignment with human conceptualization.
+The Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE) is a foundational ontology that provides a conceptual framework for the formalization of domain ontologies [#dolce-loa]_ [#dolce-paper]_. DOLCE is designed to capture the ontological categories underlying natural language and human common sense, supporting the modeling of linguistic, cognitive, social, and commonsense phenomena [#dolce-loa]_ [#dolce-paper]_. It distinguishes between endurants, which persist through time; perdurants, such as events and processes; qualities; and abstract entities, enabling nuanced representation of reality [#dolce-paper]_. DOLCE is used in ontology engineering and knowledge representation to support semantic interoperability, conceptual analysis, and reasoning across domains [#dolce-loa]_ [#dolce-paper]_. Its formal foundations and modeling principles have influenced many ontology initiatives and have been applied in areas such as socio-technical systems, manufacturing, financial transactions, cultural heritage, and linguistic resources [#dolce-paper]_. DOLCE provides general categories and relations that help integrate domain knowledge and mediate across heterogeneous ontologies [#dolce-paper]_.
 
 **Example Usage**:
-Use DOLCE as the upper ontology for a linguistic ontology, classifying entities such as "utterance" (perdurant), "speaker" (endurant), and "meaning" (abstract), enabling semantic integration with other cognitive and linguistic resources.
+Use DOLCE as the upper ontology for a linguistic ontology, classifying entities such as ``utterance`` as a perdurant, ``speaker`` as an endurant, and ``meaning`` as an abstract entity. This enables semantic integration with other cognitive, linguistic, and commonsense knowledge resources [#dolce-loa]_ [#dolce-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +135,18 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#dolce-loa] Laboratory for Applied Ontology, ISTC-CNR. n.d.
+   "Descriptive Ontology for Linguistic and Cognitive Engineering (DOLCE)."
+   Available at:
+   `https://www.loa.istc.cnr.it/index.php/dolce/ <https://www.loa.istc.cnr.it/index.php/dolce/>`_
+
+.. [#dolce-paper] Borgo, Stefano, Roberta Ferrario, Aldo Gangemi,
+   Nicola Guarino, Claudio Masolo, Daniele Porello,
+   Emilio M. Sanfilippo, and Laure Vieu. 2023.
+   "DOLCE: A Descriptive Ontology for Linguistic and Cognitive Engineering."
+   Available at:
+   `https://arxiv.org/abs/2308.01597 <https://arxiv.org/abs/2308.01597>`_

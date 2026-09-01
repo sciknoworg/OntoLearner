@@ -23,10 +23,24 @@
 Common Ontology (Common)
 ========================================================================================================
 
-The Common Ontology provides a foundational vocabulary for representing shared and reusable elements used across the Trias (Transport and Mobility) ontology framework. It defines core concepts such as entities, attributes, relationships, and constraints that are applicable to multiple mobility and transportation domains. The ontology captures common modeling patterns for representing agents, organizations, times, locations, and relationships in a standardized way across diverse transportation contexts. Common Ontology enables semantic interoperability across Trias domain modules (mobility, traffic, vehicles) by providing consistent foundational concepts and relationships. It serves as the shared semantic backbone for specialized domain ontologies in transportation, facilitating knowledge integration and reasoning.
+The Common Ontology provides a foundational vocabulary for representing
+shared and reusable elements used across the Trias ontology framework
+[#common-onto]_. It defines core concepts such as entities, attributes,
+relationships, and constraints that are applicable to multiple
+mobility and transportation domains [#common-onto]_. The ontology
+captures common modeling patterns for representing agents,
+organizations, times, locations, and relationships in a standardized
+way across diverse transportation contexts [#common-onto]_. Common
+Ontology enables semantic interoperability across Trias domain modules
+by providing consistent foundational concepts and relationships
+[#common-onto]_. It serves as the shared semantic backbone for
+specialized domain ontologies in transportation, facilitating knowledge
+integration and reasoning [#common-onto]_.
 
-**Example Usage**:
-Use Common Ontology entity types to represent agents (persons, organizations), locations (stops, streets, zones), time concepts, and relationships across transportation domain ontologies that extend or reference Common.
+**Example Usage**: Use Common Ontology entity types to represent agents
+such as persons and organizations, locations such as stops, streets,
+and zones, time concepts, and relationships across transportation
+domain ontologies that extend or reference Common [#common-onto]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +149,11 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#common-onto] Toledo, J., García, M. A., and Corcho, O. n.d.
+   "Common Ontology."
+   Available at:
+   `https://w3id.org/mobility/trias/common/0.1.0 <https://w3id.org/mobility/trias/common/0.1.0>`_

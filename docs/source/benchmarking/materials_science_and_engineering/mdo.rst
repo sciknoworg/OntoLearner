@@ -23,11 +23,12 @@
 Materials Design Ontology (MDO)
 ========================================================================================================
 
-The Materials Design Ontology (MDO) is a comprehensive framework developed to represent domain knowledge in the field of materials design, particularly focusing on solid-state physics and computational materials science. MDO provides a structured vocabulary for describing materials, their properties, and design processes, supporting both theoretical and experimental research in materials science.
+The Materials Design Ontology (MDO) is a domain ontology developed to represent knowledge in the materials design field, especially concepts from solid-state physics and computational materials science [#li2020]_ [#mdo-github]_. It defines concepts and relations for describing materials, structures, properties, calculations, and data used in materials design databases [#li2020]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of materials, properties, and design processes, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. MDO supports the integration of data from computational simulations and experimental studies, promoting interoperability and data-driven research in materials design.
+MDO is guided by data models from well-known materials databases and the OPTIMADE effort, supporting improved interoperability and data integration across heterogeneous computational materials databases [#li2020]_ [#mdo-github]_. By providing a standardized vocabulary, MDO supports semantic annotation, data access, search, and reuse of materials design data [#li2020]_.
 
-Typical applications of MDO include the development of new materials with specific properties, the optimization of materials for industrial applications, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, MDO enhances collaboration and innovation in the field of materials design.
+**Example Usage**:
+Annotate a computational materials database with MDO terms to specify a material, its crystal structure, calculated properties, calculation information, and related database identifiers, enabling semantic search and integration across materials informatics platforms [#li2020]_ [#mdo-github]_.
 
 Metrics & Statistics
 --------------------------
@@ -137,5 +138,18 @@ Use the following code to import this ontology programmatically:
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
 
-**Example Usage**:
-Annotate a materials design project with MDO terms to specify material types, design processes, and properties, enabling semantic search and integration with materials informatics platforms.
+References
+----------
+
+.. [#li2020] Li, H., Armiento, R., and Lambrix, P. 2020.
+   "An Ontology for the Materials Design Domain."
+   In *The Semantic Web -- ISWC 2020*, 212--227.
+   DOI: 10.1007/978-3-030-62466-8_14.
+   Available at:
+   `https://arxiv.org/abs/2006.07712 <https://arxiv.org/abs/2006.07712>`_
+
+.. [#mdo-github] LiUSemWeb. n.d.
+   "Materials Design Ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/LiUSemWeb/Materials-Design-Ontology <https://github.com/LiUSemWeb/Materials-Design-Ontology>`_

@@ -24,10 +24,33 @@
 
 FIX Ontology (FIX)
 ========================================================================================================
+The FIX (Physico-Chemical Methods and Properties) Ontology is an
+ontology for representing physico-chemical methods and properties in
+chemistry and biochemistry [#fix-paper]_ [#fix-context]_. FIX was
+developed with two principal components: an ontology of
+physico-chemical methods and an ontology of physico-chemical
+properties, with methods applied to the study of properties
+[#fix-paper]_.
 
-The FIX (Physico-Chemical Methods and Properties) Ontology provides a systematic vocabulary for describing and classifying physico-chemical methods and their associated properties. It represents analytical and experimental techniques used in chemistry and materials science, including measurement methods, analytical procedures, and the physical and chemical properties they determine. The ontology captures relationships between methods and properties, enabling precise description of experimental workflows and results in laboratory and industrial settings. It supports semantic interoperability in chemistry databases, laboratory information systems (LIMS), and scientific data repositories.
+FIX provides hierarchical representations of experimental methods and
+properties and defines relationships between them. In its original
+design, the ``inferred_by`` relation was introduced to associate a
+physico-chemical property with the method from which it can be inferred
+[#fix-paper]_. The ontology also supports more detailed representations
+linking a method to the underlying phenomenon, the object being studied,
+the resulting data and data features, and the corresponding
+physico-chemical property [#fix-paper]_.
 
-**Example Usage**: Represent a mass spectrometry measurement as an instance of FIX:AnalyticalMethod linked to FIX:ChemicalProperty instances such as molecular weight or compound identification.
+FIX property terms can be used to annotate chemical entities at both
+the molecular and compound levels [#fix-paper]_. The ontology is
+currently no longer maintained and is classified as orphaned; many of
+its concepts are also represented in newer chemistry ontologies such as
+CHMO, MOP, and RXNO [#fix-context]_.
+
+**Example Usage**: Represent a circular dichroism spectroscopy
+experiment using a FIX method term and relate the resulting spectral
+features to a physico-chemical property of the studied molecule or
+compound [#fix-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +159,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#fix-context] NFDI4Chem Knowledge Base. n.d. "Ontology."
+   Available at:
+   `https://knowledgebase.nfdi4chem.de/knowledge_base/docs/ontology/ <https://knowledgebase.nfdi4chem.de/knowledge_base/docs/ontology/>`_
+
+.. [#fix-paper] Degtyarenko, K. 2003.
+   "Chemical Vocabularies and Ontologies for Bioinformatics."
+   In *Proceedings of the 2003 International Chemical Information
+   Conference*, Nîmes, France, 19--22 October 2003,
+   pp. 144--162.
+   Infonortics, Tetbury.
+   Available at:
+   `https://www.researchgate.net/publication/200179492_Chemical_vocabularies_and_ontologies_for_bioinformatics
+   <https://www.researchgate.net/publication/200179492_Chemical_vocabularies_and_ontologies_for_bioinformatics>`_

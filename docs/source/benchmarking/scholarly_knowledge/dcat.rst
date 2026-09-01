@@ -23,14 +23,14 @@
 Data Catalog Vocabulary (DCAT)
 ========================================================================================================
 
-The Data Catalog Vocabulary (DCAT) is an RDF vocabulary designed to facilitate interoperability between data catalogs published on the Web. It provides a structured vocabulary for describing datasets, data services, and catalogs, supporting both theoretical and experimental research in data management.
+The Data Catalog Vocabulary (DCAT) is an RDF vocabulary designed to facilitate interoperability between data catalogs published on the Web [#dcat-version3]_ [#dcat-paper]_. It provides a structured semantic model for describing catalogs, datasets, dataset series, data services, distributions, catalog records, and related metadata, enabling resource descriptions to be shared and processed in a machine-readable form [#dcat-version3]_. DCAT supports data discovery by allowing metadata from different catalogs to be aggregated, exchanged, searched, and reused through a common vocabulary [#dcat-version3]_ [#dcat-paper]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of datasets, data services, and catalogs, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. DCAT supports the integration of data from various sources, promoting interoperability and data-driven research in data management.
+The vocabulary defines classes and properties for describing catalog resources, including titles, descriptions, publishers, themes, keywords, access URLs, download URLs, formats, licenses, temporal coverage, spatial coverage, and relationships between datasets, distributions, and data services [#dcat-version3]_. The evolution of DCAT has extended the vocabulary beyond the original catalog-and-dataset model to support additional concepts such as data services, dataset series, versioning, and richer relationships between cataloged resources [#dcat-paper]_ [#dcat-version3]_.
 
-Typical applications of DCAT include the development of new data cataloging methods, the optimization of data management practices, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, DCAT enhances collaboration and innovation in the field of data management.
+DCAT is used to support metadata interoperability and resource discovery across governmental, research, and other data infrastructures [#dcat-paper]_. By providing a standardized semantic framework, it enables metadata aggregation, catalog integration, and exchange across heterogeneous data-management environments [#dcat-version3]_ [#dcat-paper]_.
 
 **Example Usage**:
-Annotate a data catalog with DCAT terms to specify dataset types, data services, and catalog structures, enabling semantic search and integration with data management platforms.
+Annotate a data catalog with DCAT terms to describe datasets, dataset series, data services, distributions, catalog records, publishers, access URLs, licenses, formats, and thematic categories. This enables standardized metadata exchange, aggregation, and discovery across different catalog systems [#dcat-version3]_ [#dcat-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -139,3 +139,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#dcat-version3] W3C. 2024.
+   "Data Catalog Vocabulary (DCAT) - Version 3."
+   W3C Recommendation.
+   Available at:
+   `https://www.w3.org/TR/vocab-dcat-3/ <https://www.w3.org/TR/vocab-dcat-3/>`_
+
+.. [#dcat-paper] Albertoni, R., Browning, D., Cox, S.,
+   Gonzalez-Beltran, A. N., Perego, A., and Winstanley, P. 2023.
+   "The W3C Data Catalog Vocabulary, Version 2:
+   Rationale, Design Principles, and Uptake."
+   Available at:
+   `https://arxiv.org/abs/2303.08883
+   <https://arxiv.org/abs/2303.08883>`_

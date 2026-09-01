@@ -23,13 +23,12 @@
 The Platform MaterialDigital core ontology (PMDco)
 ========================================================================================================
 
+The Platform MaterialDigital Core Ontology (PMDco) is a mid-level ontology developed for Materials Science and Engineering (MSE) [#pmdco-doc]_ [#pmdco-paper]_. It provides a structured semantic framework for representing materials, processes, experiments, workflows, simulations, data, metadata, and material properties across MSE domains [#pmdco-doc]_.
 
-The ontology employs a class-based modeling approach, defining classes for different types of materials, processes, and data, along with properties to describe their characteristics and interactions. Hierarchies are used to organize classes into categories, enabling efficient data retrieval and analysis. PMDco supports the integration of data from various sources, promoting interoperability and data-driven research in materials science.
-
-Typical applications of PMDco include the development of new materials with specific properties, the optimization of materials for industrial applications, and the integration of diverse datasets to support advanced analytics and knowledge discovery. By providing a standardized vocabulary and framework, PMDco enhances collaboration and innovation in the field of materials science.
+PMDco is based on the Basic Formal Ontology (BFO) and reuses BFO-aligned ontologies such as RO, IAO, and OBI to support interoperability with established ontology ecosystems [#pmdco-doc]_. The ontology helps bridge semantic gaps between top-level ontologies, domain-specific MSE application ontologies, and real-world research or industrial data sources [#pmdco-paper]_. By providing a standardized vocabulary, PMDco supports semantic annotation, data integration, traceability, reproducibility, FAIR data practices, and knowledge sharing in materials science [#pmdco-doc]_ [#pmdco-paper]_.
 
 **Example Usage**:
-Annotate a materials science project with PMDco terms to specify material types, processes, and data, enabling semantic search and integration with materials informatics platforms.
+Annotate a materials science project with PMDco terms to specify material types, processes, experiments, workflows, simulation data, measurement results, and metadata, enabling semantic search and integration with materials informatics platforms [#pmdco-doc]_ [#pmdco-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -138,3 +137,19 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#pmdco-doc] Platform MaterialDigital. n.d.
+   "PMD Core Ontology (PMDco)."
+   Ontology documentation.
+   Available at:
+   `https://materialdigital.github.io/core-ontology/docs/ <https://materialdigital.github.io/core-ontology/docs/>`_
+
+.. [#pmdco-paper] Bayerlein, B., Schilling, M., Birkholz, H., Jung, M., Waitelonis, J., Mädler, L., and Sack, H. 2024.
+   "PMD Core Ontology: Achieving semantic interoperability in materials science."
+   *Materials & Design*, 237, 112603.
+   DOI: 10.1016/j.matdes.2023.112603.
+   Available at:
+   `https://www.sciencedirect.com/science/article/pii/S0264127523010195 <https://www.sciencedirect.com/science/article/pii/S0264127523010195>`_

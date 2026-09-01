@@ -25,9 +25,9 @@
 DataCite Ontology (DataCite)
 ========================================================================================================
 
-The DataCite Ontology is an RDF-based representation of the DataCite Metadata Schema, providing standardized vocabulary and semantic structure for describing research data and digital objects with comprehensive citation and identification metadata. It enables formal representation of essential dataset properties including creators, titles, publication dates, contributors, funding information, and relationships to other scholarly resources. DataCite provides machine-readable definitions of metadata properties for accurate and consistent identification, retrieval, and citation of diverse digital resources including datasets, software, and research outputs. The ontology supports FAIR data principles by enabling standardized, interoperable representation of dataset metadata in linked data formats (RDF, JSON-LD). DataCite facilitates data discovery, citation tracking, and research impact assessment by providing standardized semantic metadata structures.
+The DataCite Ontology is an RDF/OWL-based representation of the DataCite Metadata Schema, providing a standardized semantic structure for describing research data and other digital research outputs with citation and identification metadata [#datacite-ontology]_ [#datacite-schema]_. It enables formal representation of metadata properties including identifiers, creators, titles, publishers, publication years, contributors, subjects, funding references, resource types, and relationships to other research outputs [#datacite-schema]_. The ontology allows DataCite-related metadata concepts to be represented in RDF, supporting machine-readable identification, citation, linking, and integration of research resources [#datacite-ontology]_. The DataCite Metadata Schema supports the description of diverse research outputs, including datasets, software, textual resources, and other scholarly objects [#datacite-schema]_. By combining persistent identifiers with structured descriptive and relational metadata, DataCite supports discovery, citation, linking, and reuse across research repositories and scholarly information systems [#datacite-schema]_. The DataCite Ontology extends this model into a Semantic Web representation that can be integrated with other scholarly communication vocabularies and linked-data infrastructures [#datacite-ontology]_.
 
-**Example Usage**: Represent a published research dataset with DataCite ontology terms including persistent identifier (DOI), creators and contributors (with ORCID), publication date, subject areas, funding information, and related publications to enable proper citation and discovery across research repositories.
+**Example Usage**: Represent a published research dataset with DataCite terms for its persistent identifier, such as a DOI; creators and contributors, including ORCID identifiers where available; title, publisher, publication year, subject areas, funding information, resource type, and relationships to associated publications or other research outputs. This supports machine-readable citation, discovery, linking, and reuse across research repositories and scholarly information systems [#datacite-schema]_ [#datacite-ontology]_.
 
 Metrics & Statistics
 --------------------------
@@ -136,3 +136,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#datacite-ontology] SPAR Ontologies. n.d.
+   "The DataCite Ontology."
+   Available at:
+   `https://sparontologies.github.io/datacite/current/datacite.html
+   <https://sparontologies.github.io/datacite/current/datacite.html>`_
+
+.. [#datacite-schema] DataCite Metadata Working Group. 2026.
+   "DataCite Metadata Schema Documentation for the Publication and Citation of
+   Research Data and Other Research Outputs."
+   Version 4.7. DataCite e.V.
+   Available at:
+   `https://doi.org/10.14454/qdd3-ps68
+   <https://doi.org/10.14454/qdd3-ps68>`_

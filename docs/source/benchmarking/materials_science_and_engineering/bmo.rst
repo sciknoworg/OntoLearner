@@ -23,10 +23,9 @@
 Building Material Ontology (BMO)
 ========================================================================================================
 
-The Building Material Ontology (BMO) is a domain ontology designed to represent the main concepts, types, layers, and properties of building materials used in construction and civil engineering. BMO provides a structured vocabulary for describing material composition, physical and chemical properties, functional layers, and relationships between materials in building assemblies. The ontology supports semantic annotation of building material data, enabling interoperability between construction databases, digital twins, and building information modeling (BIM) systems. BMO is designed for extensibility, allowing integration with other ontologies and standards for sustainability, performance, and regulatory compliance. By providing a standardized framework, BMO facilitates advanced search, material selection, lifecycle analysis, and knowledge sharing in the construction industry. The ontology is actively maintained and extended to incorporate new materials, technologies, and industry requirements.
+The Building Material Ontology (BMO) is a domain ontology designed to represent the main concepts, types, layers, and properties of building materials used in construction and civil engineering [#bmo-doc]_ [#bmo-paper]_. BMO provides a structured vocabulary for describing material composition, material properties, functional layers, values, units, and relationships between materials in building assemblies [#bmo-doc]_ [#bmo-paper]_. The ontology was developed to improve the representation and management of building-material information in BIM workflows and to support interoperability and information exchange between stakeholders [#bmo-paper]_. By using Semantic Web and Linked Data principles, BMO facilitates material information management, data integration, querying, and reuse across construction and BIM applications [#bmo-paper]_.
 
-**Example Usage**:
-Annotate a BIM model with BMO terms to specify the material composition of a wall assembly, including layers (e.g., insulation, concrete, plaster), material properties (e.g., thermal conductivity, fire resistance), and sustainability attributes, enabling semantic search and integration with construction databases.
+**Example Usage**: Annotate a BIM model with BMO terms to describe the material composition of a building element, including individual materials or material layers and their associated properties. This allows building-material information to be represented and exchanged more consistently across BIM-based workflows and related construction applications [#bmo-doc]_ [#bmo-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +134,20 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#bmo-doc] Digital Construction Ontologies. 2021.
+   "Digital Construction Materials."
+   Ontology documentation.
+   Available at:
+   `https://digitalconstruction.github.io/Materials/v/0.5/ <https://digitalconstruction.github.io/Materials/v/0.5/>`_
+
+.. [#bmo-paper] Valluru, P., and Karlapudi, J. 2020.
+   "Building Material Ontology: A Semantic Data Model
+   to Represent Building Material Data."
+   Preprint.
+   Available at:
+   `https://www.researchgate.net/publication/341120638_Building_Material_Ontology_A_Semantic_data_model_to_represent_building_material_data
+   <https://www.researchgate.net/publication/341120638_Building_Material_Ontology_A_Semantic_data_model_to_represent_building_material_data>`_

@@ -22,11 +22,12 @@
 
 Crystallography Ontology (EMMOCrystallography)
 ========================================================================================================
+The Crystallography Domain Ontology (EMMOCrystallography) is an EMMO-based domain ontology for representing crystallographic knowledge [#emmocrystallography-github]_ [#emmocrystallography-paper]_. It provides a formal vocabulary for describing crystallographic concepts such as crystal structures, crystallographic information, symmetry-related concepts, and structural data used in materials science [#emmocrystallography-github]_ [#emmocrystallography-paper]_.
 
-The Crystallography Ontology (EMMOCrystallography) is a domain ontology based on the Elementary Multiperspective Material Ontology (EMMO) and the Crystallographic Information Framework (CIF) core dictionary. It provides a formal language for representing crystallographic concepts, including crystal structures, symmetry operations, atomic positions, and experimental conditions. EMMOCrystallography supports semantic annotation of crystallographic datasets, enabling interoperability, data integration, and advanced analysis in materials science and structural biology. The ontology facilitates the standardized description of crystallographic experiments, data processing workflows, and structural models. By providing a rigorous semantic framework, EMMOCrystallography enhances reproducibility, data sharing, and computational modeling in crystallography research. The ontology is actively maintained and extended to incorporate new crystallographic concepts and community requirements.
+The ontology supports semantic annotation of crystallographic datasets, enabling interoperability, data integration, and reuse of crystallographic information across materials science and modelling workflows [#emmocrystallography-paper]_. By connecting crystallographic concepts with the wider EMMO ontology ecosystem, EMMOCrystallography provides a standardized semantic framework for describing crystallographic structures and related data [#emmocrystallography-github]_ [#emmocrystallography-paper]_.
 
 **Example Usage**:
-Annotate a crystallographic dataset with EMMOCrystallography terms to specify crystal lattice parameters, symmetry groups, atomic coordinates, and experimental metadata, enabling semantic search and integration with structural databases.
+Annotate a crystallographic dataset with EMMOCrystallography terms to specify crystal structures, symmetry information, lattice-related data, atomic positions, and crystallographic metadata, enabling semantic search and integration with materials databases and modelling tools [#emmocrystallography-github]_ [#emmocrystallography-paper]_.
 
 Metrics & Statistics
 --------------------------
@@ -135,3 +136,24 @@ Use the following code to import this ontology programmatically:
     term_types = data.term_typings
     taxonomic_relations = data.type_taxonomies
     non_taxonomic_relations = data.type_non_taxonomic_relations
+
+References
+----------
+
+.. [#emmocrystallography-github] EMMO-repo. n.d.
+   "Crystallography Domain Ontology."
+   GitHub repository.
+   Available at:
+   `https://github.com/emmo-repo/domain-crystallography
+   <https://github.com/emmo-repo/domain-crystallography>`_
+
+.. [#emmocrystallography-paper] De Baas, A., Del Nostro, P.,
+   Friis, J., Ghedini, E., Goldbeck, G.,
+   Paponetti, I. M., Pozzi, A., Sarkar, A.,
+   Yang, L., Zaccarini, F. A., and Toti, D. 2023.
+   "Review and Alignment of Domain-Level Ontologies
+   for Materials Science."
+   *IEEE Access*, 11, 120372--120401.
+   Available at:
+   `https://doi.org/10.1109/ACCESS.2023.3327725
+   <https://doi.org/10.1109/ACCESS.2023.3327725>`_
