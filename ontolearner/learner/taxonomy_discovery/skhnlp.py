@@ -181,7 +181,6 @@ class SKHNLPSequentialFTLearner(AutoLearner):
             per_device_eval_batch_size=per_device_eval_batch_size,
             warmup_steps=warmup_steps,
             weight_decay=weight_decay,
-            logging_dir=logging_dir,
             logging_steps=logging_steps,
             eval_strategy=eval_strategy,
             save_strategy=save_strategy,
