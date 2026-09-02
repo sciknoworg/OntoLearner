@@ -15,3 +15,4 @@
 from .alexbek import AlexbekRAGLearner, AlexbekRFLearner
 from .rwthdbis import RWTHDBISSFTLearner
 from .sbunlp import SBUNLPZSLearner
+from .semanticswingers import SemanticSwingersTermTypingLearner
