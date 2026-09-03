@@ -1,5 +1,9 @@
 ## Changelog
 
+### v1.6.1 (September 3, 2026)
+- Major fixings to documentation
+- Bug fixings ([#351](https://github.com/sciknoworg/OntoLearner/pull/351))
+
 ### v1.6.0 (May 5, 2026)
 - Update requirements.
 - Updated documentations website.
