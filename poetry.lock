@@ -2420,14 +2420,14 @@ files = [
 
 [[package]]
 name = "mistral-common"
-version = "1.11.1"
+version = "1.11.7"
 description = "Mistral-common is a library of common utilities for Mistral AI."
 optional = false
 python-versions = "<3.15,>=3.10.0"
 groups = ["main"]
 files = [
-    {file = "mistral_common-1.11.1-py3-none-any.whl", hash = "sha256:797fded812139069d359fc08a1a66bf994555e10bb51b613941281b91ee07135"},
-    {file = "mistral_common-1.11.1.tar.gz", hash = "sha256:b784e1f9141bbcb26ab1f61b724c709f08cd3543e81730cb7248721499491840"},
+    {file = "mistral_common-1.11.7-py3-none-any.whl", hash = "sha256:a9511b88eacacbe7dacddd9d3498c1739f56847b7fdddbd5a22e7844fd9def95"},
+    {file = "mistral_common-1.11.7.tar.gz", hash = "sha256:d3b79583595cf6d96a2ab33e42cb8449768383147b8c56cac5a4f193be19d20d"},
 ]
 
 [package.dependencies]
@@ -6019,4 +6019,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.14.0"
-content-hash = "aeeb597f5b685686d9ff5a1233d334c1d219d6966576e57e17bc2969c0ca9a8e"
+content-hash = "3dacb12e13242cbf40b270497f34f8993cda075b03ca56d2396105c94f6b1dfb"

@@ -30,7 +30,7 @@ torch = "^2.8.0"
 transformers = "^5.7.0"
 sentence-transformers = "^5.4.1"
 bitsandbytes = { version = ">=0.45.1,<1.0.0", markers = "platform_system == 'Linux'" }
-mistral-common = { version = "^1.8.5", extras = ["sentencepiece"] }
+mistral-common = { version = "^1.11.7", extras = ["sentencepiece"] }
 protobuf = "^6.33.5"
 Levenshtein = "*"
 gensim="*"
