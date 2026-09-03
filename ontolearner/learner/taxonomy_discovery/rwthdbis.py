@@ -1078,7 +1078,7 @@ class RWTHDBISSFTLearner(AutoLearner):
             )
 
         tokenized_dataset = dataset_dict.map(
-            tokenize_batch, batched=True, remove_columns=dataset_dict["train"].column_names
+            tokenize_batch, batched=True, remove_columns=["text"]
         )
         data_collator = DataCollatorWithPadding(self.tokenizer)
 
@@ -1109,14 +1109,13 @@ class RWTHDBISSFTLearner(AutoLearner):
             fp16=self.fp16,
             bf16=self.bf16,
             report_to="none",
-            save_safetensors=True,
         )
 
         trainer = Trainer(
             model=self.model,
             args=training_args,
             train_dataset=tokenized_dataset["train"],
-            tokenizer=self.tokenizer,
+            processing_class=self.tokenizer,
             data_collator=data_collator,
         )
         trainer.train()
