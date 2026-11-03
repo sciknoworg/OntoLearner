@@ -219,6 +219,145 @@ class AutoLearner(ABC):
 
         return formatted_data
 
+class PrimitiveOntologyLearner(AutoLearner):
+    """
+    Base class for primitive ontology construction and expansion.
+
+    This class extends AutoLearner to support constructing ontologies from
+    textual documents and expanding existing ontologies with new triples.
+    Concrete learners implement the corresponding task-specific methods.
+    """
+
+    def fit(self, train_data: Any, task: str, ontologizer: bool=True):
+        """
+        Train the learner on the provided data for a specific task.
+
+        This may involve fine-tuning a model, indexing examples, or preparing
+        the information required for ontology learning.
+
+        Args:
+            train_data: Training data containing documents and ontology information.
+            task: The ontology learning task to train for. Supported tasks:
+                 - "ontology_construction": Construct an ontology from documents
+                 - "ontology_expansion": Extend an existing primitive ontology
+
+        Raises:
+            ValueError: If the task is not supported.
+        """
+        train_data = self.tasks_data_former(data=train_data, task=task, test=False) if ontologizer else train_data
+
+        if task == 'ontology_construction':
+            self._ontology_construction(train_data, test=False)
+        elif task == 'ontology_expansion':
+            self._ontology_expansion(train_data, test=False)
+        else:
+            raise ValueError(f"{task} is not a valid task.")
+
+    def predict(self, eval_data: Any, task: str, ontologizer: bool=True) -> Any:
+        """
+        Make predictions on evaluation data for a specific task.
+
+        This method uses the provided documents and available ontology
+        information to predict triples for construction or expansion.
+
+        Args:
+            eval_data: Evaluation data containing documents and ontology information.
+            task: The ontology learning task to perform predictions for.
+
+        Returns:
+            Predicted ontology triples for the selected task.
+
+        Raises:
+            ValueError: If the task is not supported.
+        """
+
+        eval_data = self.tasks_data_former(data=eval_data, task=task, test=True) if ontologizer else eval_data
+
+        if task == 'ontology_construction':
+            return self._ontology_construction(eval_data, test=True)
+        elif task == 'ontology_expansion':
+            return self._ontology_expansion(eval_data, test=True)
+        else:
+            raise ValueError(f"{task} is not a valid task.")
+
+    def _ontology_construction(self, data: Any, test: bool = False) -> Optional[Any]:
+        raise NotImplementedError("Ontology construction must be implemented by the learner.")
+
+    def _ontology_expansion(self, data: Any, test: bool = False) -> Optional[Any]:
+        raise NotImplementedError("Ontology expansion must be implemented by the learner.")
+
+    def tasks_data_former(self, data: Any, task: str, test: bool = False) -> List[Dict[str, Any]]:
+        """
+        Format the data for primitive ontology learning tasks.
+
+        Training samples retain their annotations, while evaluation samples
+        contain only the inputs required for prediction.
+
+        Args:
+            data: A sample dictionary or a list of sample dictionaries.
+            task: The primitive ontology learning task.
+            test: Whether to prepare the data for prediction.
+
+        Returns:
+            List of formatted samples.
+        """
+        formatted_data = []
+
+        if isinstance(data, dict):
+            data = [data]
+
+        if task in ("ontology_construction", "ontology_expansion"):
+            input_fields = (
+                "id",
+                "documents",
+                "initial-primitive-ontology-triples",
+                "terms",
+                "types",
+            )
+
+            for sample in data:
+                if test:
+                    formatted_data.append({
+                        field: sample[field] for field in input_fields
+                    })
+                else:
+                    formatted_data.append(dict(sample))
+
+        return formatted_data
+
+    def tasks_ground_truth_former(self, data: Any, task: str) -> List[Dict[str, Any]]:
+        """
+        Extract ground-truth triples for primitive ontology learning tasks.
+
+        Args:
+            data: Evaluation samples containing ground-truth triples.
+            task: The primitive ontology learning task.
+
+        Returns:
+            List of sample identifiers and their reference triples.
+        """
+        formatted_data = []
+
+        if isinstance(data, dict):
+            data = [data]
+
+        if task == "ontology_construction":
+            for sample in data:
+                formatted_data.append({
+                    "id": sample["id"],
+                    "primitive-ontology-triples": sample["primitive-ontology-triples"],
+                })
+
+        if task == "ontology_expansion":
+            for sample in data:
+                formatted_data.append({
+                    "id": sample["id"],
+                    "extended-primitive-ontology-triples": sample["extended-primitive-ontology-triples"],
+                })
+
+        return formatted_data
+
+
 class AutoLLM(ABC):
     """
     Abstract base class for Large Language Model components.
