@@ -16,3 +16,4 @@ from .alexbek import AlexbekCrossAttnLearner
 from .rwthdbis import RWTHDBISSFTLearner
 from .sbunlp import SBUNLPFewShotLearner
 from .skhnlp import SKHNLPSequentialFTLearner, SKHNLPZSLearner
+from .voltiq import VoltIQTaxonomyLearner
