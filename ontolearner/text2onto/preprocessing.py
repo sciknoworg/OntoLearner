@@ -20,30 +20,32 @@ import time
 import unicodedata
 import uuid
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import asdict, dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 from ..data_structure import OntologyData, SyntheticText2OntoData
 
-logger = logging.getLogger(__name__)
 
-TRIPLES_KEY = "primitive-ontology-triples"
-TAXONOMIC_RELATIONS = ("is-a", "instance-of")
-RELATION_STYLES = ("hyphen", "snake", "space")
-PSEUDO_SENTENCE_PATTERNS = ((" is subclass of ", "is-a"), (" is instance of ", "instance-of"))
-DEFAULT_LABEL_CACHE = {"disjointWith": "disjoint with"}
+class SyntheticDataPreprocessor:
+    """
+    Turns the documents of ``SyntheticGenerator`` into primitive-ontology records: a text and the triples it
+    describes.
+    """
 
-CONTEXT_CLEANING_PROMPT = (
-    "Given a raw text, there might be phrases that don't have spaces. \n"
-    "- Add space between them, lowercase it (if it is the start of a sentence, the first word should start "
-    "with an upper case)\n"
-    "- Remove the sentence from the end if the sentence is incomplete.\n"
-    "- Do not add new context or change the existing context.\n"
-    "\n"
-    "{context}\n"
-)
+    TRIPLES_KEY = "primitive-ontology-triples"
+    TAXONOMIC_RELATIONS = ("is-a", "instance-of")
+    RELATION_STYLES = ("hyphen", "snake", "space")
 
-LABEL_CLEANING_PROMPT = """\
+    CONTEXT_CLEANING_PROMPT = (
+        "Given a raw text, there might be phrases that don't have spaces. \n"
+        "- Add space between them, lowercase it (if it is the start of a sentence, the first word should start "
+        "with an upper case)\n"
+        "- Remove the sentence from the end if the sentence is incomplete.\n"
+        "- Do not add new context or change the existing context.\n"
+        "\n"
+        "{context}\n"
+    )
+
+    LABEL_CLEANING_PROMPT = """\
 Given a raw phrases containing one or more phrases, there might be words that are stuck together without spaces.
 
 Your task:
@@ -58,7 +60,7 @@ Input:
 {context}
 """
 
-DEEP_CLEANING_PROMPT = """You are an expert ontology-aware data cleaning system operating in CLEANING mode.
+    DEEP_CLEANING_PROMPT = """You are an expert ontology-aware data cleaning system operating in CLEANING mode.
 
 RULES:
 - Apply corrections directly. Do NOT explain or add commentary.
@@ -86,7 +88,7 @@ OUTPUT SCHEMA (return exactly this):
 }
 """
 
-ALIGNMENT_PROMPT = """
+    ALIGNMENT_PROMPT = """
 You are evaluating whether a generated text aligns with ontology triples.
 
 Definitions:
@@ -120,97 +122,72 @@ Triples:
 
 """
 
-ALIGNMENT_SCHEMA = {
-    "alignment": {"type": "string", "enum": ["aligned", "partially_aligned", "not_aligned"]},
-    "rating": {"type": "integer", "enum": [1, 2, 3, 4, 5]},
-    "rational": {"type": "string"},
-}
+    ALIGNMENT_SCHEMA = {
+        "alignment": {"type": "string", "enum": ["aligned", "partially_aligned", "not_aligned"]},
+        "rating": {"type": "integer", "enum": [1, 2, 3, 4, 5]},
+        "rational": {"type": "string"},
+    }
 
-# Structural cleanup (test_annotation.ipynb, stage 1)
-_CONTROL_CHARS = re.compile(r"[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]")
-_MULTI_SPACE = re.compile(r"[ \t]+")
-_MULTI_NEWLINE = re.compile(r"\n{3,}")
-_REPEATED_PUNCT = re.compile(r"([!?,;])\1{2,}")
-_ELLIPSIS_NORM = re.compile(r"\.{4,}")
-_MALFORMED_DASH = re.compile(r"(?<!\-)\-{2,3}(?!\-)")
-_BROKEN_QUOTE_OPEN = re.compile(r"\bâ€œ\b|\bâ€˜\b")
-_BROKEN_QUOTE_CLOSE = re.compile(r"\bâ€\b|\bâ€™\b")
-_HTML_TAG = re.compile(r"<[^>]{0,80}>")
-_HTML_ENTITY = re.compile(r"&(?:[a-zA-Z]{2,6}|#\d{1,5});")
-_XML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
-_URI_NOISE = re.compile(r"https?://\S+")
-_STACK_TRACE = re.compile(r"(?:Traceback \(most recent call last\)|at \w+\.\w+\(.*?\)|\s+File \".*?\", line \d+).*",
-                          re.DOTALL)
-_JSON_ARTIFACT = re.compile(r"\{\"[a-zA-Z_]+\":\s*[^}]{0,200}\}")
-_BACKTICK_LABEL = re.compile(r"`([^`]+)`")
-_ESCAPED_CHARS = re.compile(r"\\([ntr\"'\\])")
-_DUPLICATE_DELIM = re.compile(r"([,:;])\1+")
-# Entities (stages 2 and 4)
-_DOT_NOTATION_CODE = re.compile(r"^[A-Za-z]\.[A-Z]{2,}$")      # H.PNDSN, S.LOCK, A.ADM1H
-_SPURIOUS_DOT_SPACE = re.compile(r"([A-Za-z])\.\s+([A-Za-z])")  # "h. sea" -> "h.sea"
-_BLANK_NODE = re.compile(r"^(_:.*|q\d+|node_\d+|anon_\d+|tmp_\d+|x\d+|\?[a-z]+)$", re.IGNORECASE)
-_ONLY_PUNCT_OR_DIGITS = re.compile(r"^[\W\d]+$")
-_KNOWN_TYPE_SPLITS = {
-    "amorphousmetal": "amorphous metal",
-    "electronicandelectrical": "electronic and electrical",
-    "compoundsubstance": "compound substance",
-    "nonmetaliccompound": "non-metalic compound",
-    "frustumofpyramid": "frustum of pyramid",
-    "frustumofcone": "frustum of cone",
-    "rectangularparallelopiped": "rectangular parallelopiped",
-    "activationenergy": "activation energy",
-    "electronmobility": "electron mobility",
-    "hallmobility": "hall mobility",
-    "electricalresistivity": "electrical resistivity",
-    "electricpotentialdifference": "electric potential difference",
-    "electriccurrent": "electric current",
-    "electricresistance": "electric resistance",
-    "electricconductance": "electric conductance",
-    "effectivemassofelectronsinconductionband": "effective mass of electrons in conduction band",
-}
+    # Stage 1 of the cleaning: (pattern, replacement) rules applied to the text in this order, then
+    # _BACKTICK_LABEL (with strip_backticks) and _SPACE_RULES.
+    _TEXT_RULES = (
+        # control characters
+        (re.compile(r"[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]"), ""),
+        # escaped characters: \n, \t, \r, quotes, backslashes
+        (re.compile(r"\\([ntr\"'\\])"),
+         lambda m: {"n": "\n", "t": "\t", "r": ""}.get(m.group(1), m.group(1))),
+        # XML comments
+        (re.compile(r"<!--.*?-->", re.DOTALL), ""),
+        # HTML/XML tags
+        (re.compile(r"<[^>]{0,80}>"), ""),
+        # HTML entities
+        (re.compile(r"&(?:[a-zA-Z]{2,6}|#\d{1,5});"), " "),
+        # stack traces
+        (re.compile(r"(?:Traceback \(most recent call last\)|at \w+\.\w+\(.*?\)|\s+File \".*?\", line \d+).*",
+                    re.DOTALL), ""),
+        # JSON fragments
+        (re.compile(r"\{\"[a-zA-Z_]+\":\s*[^}]{0,200}\}"), ""),
+        # URLs
+        (re.compile(r"https?://\S+"), ""),
+        # repeated punctuation: !!! -> !
+        (re.compile(r"([!?,;])\1{2,}"), r"\1"),
+        # long ellipses: .... -> ...
+        (re.compile(r"\.{4,}"), "..."),
+        # -- and --- -> —
+        (re.compile(r"(?<!\-)\-{2,3}(?!\-)"), "—"),
+        # garbled opening quotes
+        (re.compile(r"\bâ€œ\b|\bâ€˜\b"), '"'),
+        # garbled closing quotes
+        (re.compile(r"\bâ€\b|\bâ€™\b"), '"'),
+        # doubled delimiters: ,, -> ,
+        (re.compile(r"([,:;])\1+"), r"\1"),
+    )
+    _BACKTICK_LABEL = re.compile(r"`([^`]+)`")    # `label` -> label
+    _SPACE_RULES = ((re.compile(r"[ \t]+"), " "), (re.compile(r"\n{3,}"), "\n\n"))
 
-
-@dataclass
-class CleaningStats:
-    """Per-record report of the six-stage cleaning (``SyntheticDataPreprocessor.deep_clean_record``)."""
-    record_id: str = ""
-    triples_before: int = 0
-    triples_after: int = 0
-    triples_removed_blank: int = 0
-    triples_deduped: int = 0
-    llm_called: bool = False
-    llm_fallback: bool = False          # the LLM was called but its result was not used
-    llm_context_reverted: bool = False
-    flags: List[str] = field(default_factory=list)
-
-    def to_dict(self) -> Dict[str, Any]:
-        return asdict(self)
-
-
-class SyntheticDataPreprocessor:
-    """
-    Turns the output of ``SyntheticGenerator`` into cleaned primitive-ontology records.
-
-    ``preprocess`` runs the steps below; each one is also a public method.
-
-    1. ``prepare_items``: pair every generated document with the pseudo-sentence batch it was written from.
-    2. ``prepare_record``: pseudo-sentences become triples (``X is subclass of Y`` -> ``[X, is-a, Y]``,
-       ``X is instance of Y`` -> ``[X, instance-of, Y]``), the ontology's non-taxonomic relations between the
-       document's types are added, and with a client the text and labels are cleaned (``clean_context``,
-       ``clean_gold``). Relation labels keep the form the label cleaning gives them (``disjoint with``).
-       (annotation.ipynb, ``make_the_flagship``)
-    3. ``deep_clean`` (optional): the six-stage cleaning of test_annotation.ipynb, which also brings relation
-       labels to ``relation_style``, with a ``CleaningStats`` report per record in ``cleaning_stats``.
-    4. ``annotate_alignment`` + ``filter_by_alignment`` (optional): the LLM judge of annotation.ipynb. The kept
-       records hold only ``id``, ``context`` and the triples, as in the released train set.
-
-    The OpenAI calls happen here, once; the records can then be prepared for both tasks with
-    ``PrimitiveOntologyDataset``.
-
-    Example:
-        >>> preprocessor = SyntheticDataPreprocessor(client=OpenAI(), alignment_filter=True)
-        >>> records = preprocessor.preprocess(synthetic_data, train_ontology)
-    """
+    # Stages 2 and 4 of the cleaning: entity normalisation and invalid entities
+    _DOT_NOTATION_CODE = re.compile(r"^[A-Za-z]\.[A-Z]{2,}$")      # H.PNDSN, S.LOCK, A.ADM1H
+    _SPURIOUS_DOT_SPACE = re.compile(r"([A-Za-z])\.\s+([A-Za-z])")  # "h. sea" -> "h.sea"
+    _BLANK_NODE = re.compile(r"^(_:.*|q\d+|node_\d+|anon_\d+|tmp_\d+|x\d+|\?[a-z]+)$", re.IGNORECASE)
+    _ONLY_PUNCT_OR_DIGITS = re.compile(r"^[\W\d]+$")
+    _KNOWN_TYPE_SPLITS = {
+        "amorphousmetal": "amorphous metal",
+        "electronicandelectrical": "electronic and electrical",
+        "compoundsubstance": "compound substance",
+        "nonmetaliccompound": "non-metalic compound",
+        "frustumofpyramid": "frustum of pyramid",
+        "frustumofcone": "frustum of cone",
+        "rectangularparallelopiped": "rectangular parallelopiped",
+        "activationenergy": "activation energy",
+        "electronmobility": "electron mobility",
+        "hallmobility": "hall mobility",
+        "electricalresistivity": "electrical resistivity",
+        "electricpotentialdifference": "electric potential difference",
+        "electriccurrent": "electric current",
+        "electricresistance": "electric resistance",
+        "electricconductance": "electric conductance",
+        "effectivemassofelectronsinconductionband": "effective mass of electrons in conduction band",
+    }
 
     def __init__(self,
                  client: Any = None,
@@ -229,28 +206,32 @@ class SyntheticDataPreprocessor:
                  max_workers: int = 10) -> None:
         """
         Args:
-            client: ``openai.OpenAI`` client. ``None`` runs only the deterministic steps.
-            model: OpenAI model for the text cleaning and the judge (the release used ``gpt-4o-mini``).
-            deep_clean_model: OpenAI model for the six-stage cleaning (the release used ``gpt-5.4``).
-            clean_text: LLM cleaning of the text and labels in ``prepare_record``.
-            deep_clean: Run the six-stage cleaning in ``preprocess`` (the released test set used it).
-            alignment_filter: Keep only records the judge rates as aligned (the released train set used it).
-            relation_style: Style the six-stage cleaning gives relation labels: ``"hyphen"`` (``is-defined-by``,
-                as in the released test set), ``"snake"`` (``is_defined_by``), ``"space"`` (``is defined by``) or
-                ``None`` to keep them as they are. See ``normalize_relation``. Without ``deep_clean`` relation
-                labels are not restyled, as in the released train set.
-            min_partial_rating: Lowest rating at which a ``partially_aligned`` record is kept.
-            max_entity_length: Entities longer than this are sent to the LLM during the six-stage cleaning.
-            max_context_tokens: Context sent to the LLM is cut beyond this many tokens (estimated).
-            max_expansion_ratio: An LLM-cleaned context longer than this ratio of the input is rejected.
-            max_retries: Attempts per OpenAI request (text cleaning and six-stage cleaning).
-            annotation_retries: Attempts per judge request. ``None`` retries until it succeeds, as annotation.ipynb
-                did, so no record is lost to a failed request; with a number, records whose request still fails
-                are dropped by ``filter_by_alignment``.
-            max_workers: Parallel OpenAI requests.
+            client: ``openai.OpenAI`` client. With ``None`` no OpenAI call is made: only the rule-based steps run.
+            model: OpenAI model that cleans the text and the labels and judges the alignment (the release used
+                ``gpt-4o-mini``).
+            deep_clean_model: OpenAI model of the LLM stage of ``deep_clean`` (the release used ``gpt-5.4``).
+            clean_text: Let the LLM add missing spaces to the text and the labels in ``prepare_record``.
+            deep_clean: Clean every record in six stages (see the class description), as for the released test
+                set.
+            alignment_filter: Keep only the records the LLM judge rates as aligned, as for the released train set.
+                Needs a ``client``.
+            relation_style: The style ``deep_clean`` gives relation labels: ``"hyphen"`` (``is-defined-by``, as in
+                the released test set), ``"snake"`` (``is_defined_by``), ``"space"`` (``is defined by``), or
+                ``None`` to leave them as they are. Without ``deep_clean``, relation labels are not restyled.
+            min_partial_rating: Lowest judge rating at which a ``partially_aligned`` record is kept.
+            max_entity_length: In ``deep_clean``, triples with an entity longer than this many characters have
+                their entities sent to the LLM for correction.
+            max_context_tokens: In ``deep_clean``, the text sent to the LLM is cut after about this many tokens.
+            max_expansion_ratio: In ``deep_clean``, an LLM-corrected text longer than this many times the original
+                is rejected, and the original is kept.
+            max_retries: Attempts per OpenAI request that cleans text or labels.
+            annotation_retries: Attempts per judge request. ``None`` retries until the request succeeds, as in the
+                release, so no record is lost to a failed request. With a number, a record whose requests all
+                fail gets no rating and is dropped by ``filter_by_alignment``.
+            max_workers: Number of OpenAI requests sent in parallel.
         """
-        if relation_style is not None and relation_style not in RELATION_STYLES:
-            raise ValueError(f"relation_style must be one of {RELATION_STYLES} or None, got {relation_style!r}")
+        if relation_style is not None and relation_style not in self.RELATION_STYLES:
+            raise ValueError(f"relation_style must be one of {self.RELATION_STYLES} or None, got {relation_style!r}")
         if alignment_filter and client is None:
             raise ValueError("alignment_filter=True needs an OpenAI `client`.")
         self.client = client
@@ -267,27 +248,26 @@ class SyntheticDataPreprocessor:
         self.max_retries = max_retries
         self.annotation_retries = annotation_retries
         self.max_workers = max_workers
-        self.label_cache: Dict[str, str] = dict(DEFAULT_LABEL_CACHE)
-        self.cleaning_stats: List[CleaningStats] = []
+        self.label_cache: Dict[str, str] = {"disjointWith": "disjoint with"}   # labels already cleaned
 
     # ------------------------------------------------------------------ #
     # Entry point
     # ------------------------------------------------------------------ #
     def preprocess(self,
                    synthetic_data: Union[SyntheticText2OntoData, List[Dict[str, Any]]],
-                   ontological_data: Union[OntologyData, Dict[str, Any]]) -> List[Dict[str, Any]]:
+                   ontological_data: OntologyData) -> List[Dict[str, Any]]:
         """
-        Turn generated documents into cleaned primitive-ontology records.
+        Turn generated documents into primitive-ontology records (all steps of the class description).
 
         Args:
-            synthetic_data: ``SyntheticGenerator.generate`` output, or a list of ``prepare_items``-style dicts
-                (for example a ``*_text2onto.json`` file written by an earlier generation run).
-            ontological_data: The ontology split the documents were generated from (``OntologyData`` or its dict).
+            synthetic_data: What ``SyntheticGenerator.generate`` returned, or a list of items made from it by
+                ``prepare_items`` (to process only some of the documents).
+            ontological_data: The ontology (train or test part) the documents were generated from; its
+                non-taxonomic relations are added to the records.
 
         Returns:
-            ``[{"id", "context", "terms", "types", "primitive-ontology-triples"}]``; with ``alignment_filter``
-            ``[{"id", "context", "primitive-ontology-triples"}]``, as in the released train set. With
-            ``deep_clean`` the per-record reports are in ``self.cleaning_stats``.
+            One record per document: ``{"id", "context", "terms", "types", "primitive-ontology-triples"}``. With
+            ``alignment_filter``, only the kept records, as ``{"id", "context", "primitive-ontology-triples"}``.
         """
         items = synthetic_data if isinstance(synthetic_data, list) else self.prepare_items(synthetic_data)
         records = self._parallel_map(lambda item: self.prepare_record(item, ontological_data), items)
@@ -299,15 +279,15 @@ class SyntheticDataPreprocessor:
         return records
 
     # ------------------------------------------------------------------ #
-    # 1-2. Documents -> records, light LLM cleaning (annotation.ipynb)
+    # Steps 1-2: documents -> records, with the LLM adding missing spaces
     # ------------------------------------------------------------------ #
-    @staticmethod
-    def prepare_items(synthetic_data: SyntheticText2OntoData) -> List[Dict[str, Any]]:
+    def prepare_items(self, synthetic_data: SyntheticText2OntoData) -> List[Dict[str, Any]]:
         """
-        Pair every generated document with the pseudo-sentence batch it was generated from.
+        Pair every generated document with the pseudo-sentences it was written from (matched by ID). A
+        document without pseudo-sentences is skipped with a warning.
 
         Returns:
-            ``[{"id", "title", "text", "structured_data"}]`` where ``structured_data`` holds the document's
+            ``[{"id", "title", "text", "structured_data"}]``, where ``structured_data`` holds the document's
             ``pseudo_sentences``, ``terms`` and ``types``.
         """
         rows = {str(batch.id): batch.model_dump() for batch in synthetic_data.pseudo_sentences}
@@ -320,19 +300,23 @@ class SyntheticDataPreprocessor:
             items.append({"id": doc.id, "title": doc.title, "text": doc.text, "structured_data": row})
         return items
 
-    def prepare_record(self, item: Dict[str, Any],
-                       ontological_data: Union[OntologyData, Dict[str, Any]]) -> Dict[str, Any]:
+    def prepare_record(self, item: Dict[str, Any], ontological_data: OntologyData) -> Dict[str, Any]:
         """
-        Turn one generated document into a primitive-ontology record (``make_the_flagship``).
+        Turn one item of ``prepare_items`` into a record (step 2 of the class description).
+
+        Args:
+            item: One item of ``prepare_items``.
+            ontological_data: The ontology the document was generated from.
 
         Returns:
-            ``{"id", "context", "terms", "types", "primitive-ontology-triples"}``.
+            ``{"id", "context", "terms", "types", "primitive-ontology-triples"}``, where ``id`` is a new random
+            ID and ``context`` is ``"Title: <title> \\n\\n Content: \\n<text>"``.
         """
         structured = item["structured_data"]
         types = structured.get("types", []) or []
         triples = []
         for sentence in structured.get("pseudo_sentences", []) or []:
-            for marker, relation in PSEUDO_SENTENCE_PATTERNS:
+            for marker, relation in ((" is subclass of ", "is-a"), (" is instance of ", "instance-of")):
                 if marker in sentence:
                     parts = sentence.split(marker)
                     triples.append([parts[0], relation, parts[1]])
@@ -351,14 +335,15 @@ class SyntheticDataPreprocessor:
             "context": f"Title: {item['title']} \n\n Content: \n{text}",
             "terms": [term.lower() for term in structured.get("terms", []) or []],
             "types": [typ.lower() for typ in types],
-            TRIPLES_KEY: triples,
+            self.TRIPLES_KEY: triples,
         }
 
     def clean_context(self, text: str) -> str:
-        """Insert missing spaces and drop an unfinished last sentence; ``text`` is returned unchanged on failure."""
+        """Ask the LLM to add missing spaces to ``text`` and drop an unfinished last sentence. Without a client,
+        or if the request fails, ``text`` is returned unchanged."""
         if self.client is None:
             return text
-        result = self._call_tool(CONTEXT_CLEANING_PROMPT.format(context=text), "clean_paragraph",
+        result = self._call_tool(self.CONTEXT_CLEANING_PROMPT.format(context=text), "clean_paragraph",
                                  "Return a cleaned, well-formed paragraph.",
                                  {"paragraph": {"type": "string", "description": "The cleaned paragraph."}},
                                  self.max_retries)
@@ -367,146 +352,101 @@ class SyntheticDataPreprocessor:
 
     def clean_gold(self, triples: Sequence[Sequence[str]]) -> List[List[str]]:
         """
-        Fix glued words in every head, relation and tail label (``CompoundSubstance`` -> ``compound substance``).
+        Add missing spaces to the head, relation and tail of every triple (``CompoundSubstance`` -> ``compound
+        substance``), with ``clean_label``.
 
-        Each label is requested once and kept in ``self.label_cache`` for every later document. ``is-a`` and
-        ``instance-of`` are never sent. Without a client (or with ``clean_text=False``) only the cache is used.
+        Each label is sent to the LLM once and its answer kept in ``self.label_cache`` for later documents;
+        ``is-a`` and ``instance-of`` are never sent. Without a client, or with ``clean_text=False``, only the
+        cache is used (it starts with ``disjointWith`` -> ``disjoint with``), and other labels stay as they are.
         """
+        return [[self.clean_label(head), self.clean_label(relation), self.clean_label(tail)]
+                for head, relation, tail in triples]
+
+    def clean_label(self, label: str) -> str:
+        """Clean one label for ``clean_gold``: take it from ``self.label_cache``, or ask the LLM and cache the
+        answer. A label the LLM could not clean is returned unchanged."""
         use_llm = self.clean_text and self.client is not None
-
-        def _clean(label: str) -> str:
-            if label in TAXONOMIC_RELATIONS or label in self.label_cache or not use_llm:
-                return self.label_cache.get(label, label)
-            result = self._call_tool(LABEL_CLEANING_PROMPT.format(context=label), "clean_phrase",
-                                     "Return a cleaned, well-formed phrase.",
-                                     {"phrase": {"type": "string", "description": "The cleaned phrase."}},
-                                     self.max_retries)
-            phrase = (result or {}).get("phrase")
-            if not (isinstance(phrase, str) and phrase.strip()):
-                logger.warning("Label cleaning failed for %r; keeping it unchanged.", label)
-                return label
-            self.label_cache[label] = phrase
-            return phrase
-
-        return [[_clean(head), _clean(relation), _clean(tail)] for head, relation, tail in triples]
+        if label in self.TAXONOMIC_RELATIONS or label in self.label_cache or not use_llm:
+            return self.label_cache.get(label, label)
+        result = self._call_tool(self.LABEL_CLEANING_PROMPT.format(context=label), "clean_phrase",
+                                 "Return a cleaned, well-formed phrase.",
+                                 {"phrase": {"type": "string", "description": "The cleaned phrase."}},
+                                 self.max_retries)
+        phrase = (result or {}).get("phrase")
+        if not (isinstance(phrase, str) and phrase.strip()):
+            logger.warning("Label cleaning failed for %r; keeping it unchanged.", label)
+            return label
+        self.label_cache[label] = phrase
+        return phrase
 
     # ------------------------------------------------------------------ #
-    # 3. Six-stage cleaning (test_annotation.ipynb)
+    # Step 3: six-stage cleaning (deep_clean=True)
     # ------------------------------------------------------------------ #
     def deep_clean(self, records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """
-        ``deep_clean_record`` on every record. A record that raises is kept unchanged and flagged. The reports
-        are stored in ``self.cleaning_stats`` (same order as the records).
-        """
-        def _safe(record: Dict[str, Any]) -> Tuple[Dict[str, Any], CleaningStats]:
-            try:
-                return self.deep_clean_record(record)
-            except Exception as exc:
-                logger.error("Cleaning failed for record %s, keeping it unchanged: %s", record.get("id"), exc)
-                return record, CleaningStats(record_id=str(record.get("id")), flags=[f"Processing error: {exc}"])
+        """Clean every record with ``deep_clean_record``. A record whose cleaning raises an error is logged and
+        kept unchanged."""
+        return self._parallel_map(self._deep_clean_or_keep, records)
 
-        results = self._parallel_map(_safe, records)
-        self.cleaning_stats = [stats for _, stats in results]
-        self.summarize_stats()
-        return [record for record, _ in results]
+    def _deep_clean_or_keep(self, record: Dict[str, Any]) -> Dict[str, Any]:
+        """``deep_clean_record``, or the record unchanged if cleaning it raises an error."""
+        try:
+            return self.deep_clean_record(record)
+        except Exception as exc:
+            logger.error("Cleaning failed for record %s, keeping it unchanged: %s", record.get("id"), exc)
+            return record
 
-    def deep_clean_record(self, record: Dict[str, Any]) -> Tuple[Dict[str, Any], CleaningStats]:
+    def deep_clean_record(self, record: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Clean one record: structural cleanup of the context, normalisation and filtering of the triples,
-        ``normalize_types``, and with a client an LLM pass on the context and over-long entities. The LLM result
-        is only accepted when the context grows by at most ``max_expansion_ratio`` and the entities stay valid.
+        Clean one record in the six stages of the class description: ``structural_cleanup`` of the context,
+        ``filter_triples`` (stages 2-4), ``normalize_types``, and with a client the LLM stage (5-6).
 
         Returns:
-            ``(cleaned copy of the record, CleaningStats)``; the input is not modified.
+            A cleaned copy of the record; the input record is not modified.
         """
         cleaned = copy.deepcopy(record)
-        stats = CleaningStats(record_id=str(record.get("id", "?")))
         cleaned["context"] = self.structural_cleanup(cleaned.get("context", ""), strip_backticks=True)
-        raw_triples = cleaned.get(TRIPLES_KEY, [])
-        stats.triples_before = len(raw_triples)
-        triples, flagged, stats.triples_removed_blank, stats.triples_deduped = self._normalize_triples(raw_triples)
-        if stats.triples_removed_blank:
-            stats.flags.append(f"{stats.triples_removed_blank} triples removed (blank node / malformed)")
-        if stats.triples_deduped:
-            stats.flags.append(f"{stats.triples_deduped} duplicate triples removed")
+        triples, flagged = self._normalize_triples(cleaned.get(self.TRIPLES_KEY, []))
         if isinstance(cleaned.get("types"), list):
             cleaned["types"] = self.normalize_types(cleaned["types"])
         if self.client is not None and cleaned["context"]:
-            cleaned["context"], triples = self._llm_clean(cleaned["context"], triples, flagged, stats)
-        cleaned[TRIPLES_KEY] = triples
-        stats.triples_after = len(triples)
-        return cleaned, stats
+            cleaned["context"], triples = self._llm_clean(str(record.get("id", "?")), cleaned["context"],
+                                                          triples, flagged)
+        cleaned[self.TRIPLES_KEY] = triples
+        return cleaned
 
     def filter_triples(self, triples: Sequence[Sequence[str]]) -> List[List[str]]:
-        """Normalise entities and relation labels, drop blank-node or malformed triples, and remove duplicates."""
+        """Stages 2-4 of the cleaning: normalise the entities (``normalize_entity``) and relation labels
+        (``normalize_relation`` in ``relation_style``), drop triples that are not ``[head, relation, tail]`` or
+        have an empty, blank-node or otherwise invalid entity (``is_invalid_entity``), and remove duplicates."""
         return self._normalize_triples(triples)[0]
 
-    def check_idempotency(self, records: List[Dict[str, Any]], sample_size: int = 20) -> bool:
-        """Clean a sample twice; the second pass should change nothing. Differences are logged."""
-        differences = []
-        for record in records[:sample_size]:
-            first, _ = self.deep_clean_record(record)
-            second, _ = self.deep_clean_record(first)
-            differences += [f"[{record.get('id')}] {key}: {str(first.get(key))[:80]} -> {str(second.get(key))[:80]}"
-                            for key in first if first.get(key) != second.get(key)]
-        if differences:
-            logger.warning("Idempotency check failed:\n%s", "\n".join(differences[:20]))
-            return False
-        logger.info("Idempotency check passed on %d records.", min(sample_size, len(records)))
-        return True
-
-    def summarize_stats(self) -> Dict[str, int]:
-        """Totals over ``self.cleaning_stats`` (also logged)."""
-        stats = self.cleaning_stats
-        summary = {
-            "records": len(stats),
-            "llm_calls": sum(s.llm_called for s in stats),
-            "llm_fallbacks": sum(s.llm_fallback for s in stats),
-            "contexts_reverted": sum(s.llm_context_reverted for s in stats),
-            "triples_before": sum(s.triples_before for s in stats),
-            "triples_after": sum(s.triples_after for s in stats),
-            "blank_or_malformed_removed": sum(s.triples_removed_blank for s in stats),
-            "duplicates_removed": sum(s.triples_deduped for s in stats),
-        }
-        logger.info("Cleaning summary: %s", summary)
-        return summary
-
-    @staticmethod
-    def structural_cleanup(text: str, strip_backticks: bool = False) -> str:
-        """Unicode normalisation; removes control characters, HTML/XML, URLs, stack traces, OCR artefacts and
-        extra whitespace."""
+    def structural_cleanup(self, text: str, strip_backticks: bool = False) -> str:
+        """Stage 1 of the cleaning, on a text: Unicode normalisation; removes control characters, HTML/XML tags
+        and comments, HTML entities, URLs, stack traces and JSON fragments; repairs escaped characters, repeated
+        punctuation, dashes and garbled quotes; removes backticks around labels (``strip_backticks``) and extra
+        spaces and blank lines."""
         if not isinstance(text, str):
             return ""
         text = unicodedata.normalize("NFC", text)
-        text = _CONTROL_CHARS.sub("", text)
-        text = _ESCAPED_CHARS.sub(lambda m: {"n": "\n", "t": "\t", "r": ""}.get(m.group(1), m.group(1)), text)
-        text = _XML_COMMENT.sub("", text)
-        text = _HTML_TAG.sub("", text)
-        text = _HTML_ENTITY.sub(" ", text)
-        text = _STACK_TRACE.sub("", text)
-        text = _JSON_ARTIFACT.sub("", text)
-        text = _URI_NOISE.sub("", text)
-        text = _REPEATED_PUNCT.sub(r"\1", text)
-        text = _ELLIPSIS_NORM.sub("...", text)
-        text = _MALFORMED_DASH.sub("—", text)
-        text = _BROKEN_QUOTE_OPEN.sub('"', text)
-        text = _BROKEN_QUOTE_CLOSE.sub('"', text)
-        text = _DUPLICATE_DELIM.sub(r"\1", text)
+        for pattern, replacement in self._TEXT_RULES:
+            text = pattern.sub(replacement, text)
         if strip_backticks:
-            text = _BACKTICK_LABEL.sub(r"\1", text)
-        text = _MULTI_SPACE.sub(" ", text)
-        text = _MULTI_NEWLINE.sub("\n\n", text)
+            text = self._BACKTICK_LABEL.sub(r"\1", text)
+        for pattern, replacement in self._SPACE_RULES:
+            text = pattern.sub(replacement, text)
         return text.strip()
 
-    @staticmethod
-    def normalize_entity(entity: str) -> str:
-        """Split CamelCase, replace underscores, collapse spaces; dot-notation codes such as ``H.PNDSN`` are kept."""
+    def normalize_entity(self, entity: str) -> str:
+        """Stage 2 of the cleaning, for one entity. A label with capitals is split at CamelCase and hyphens and
+        lowercased (``Non-MetalicCompound`` -> ``non metalic compound``); in an all-lowercase label underscores
+        become spaces. Extra spaces are removed, and dot-notation codes such as ``H.PNDSN`` are kept as they
+        are."""
         if not isinstance(entity, str):
             return ""
         entity = entity.strip()
-        if _DOT_NOTATION_CODE.match(entity):
+        if self._DOT_NOTATION_CODE.match(entity):
             return entity
-        entity = _SPURIOUS_DOT_SPACE.sub(r"\1.\2", entity)
+        entity = self._SPURIOUS_DOT_SPACE.sub(r"\1.\2", entity)
         if re.search(r"[A-Z]", entity):
             entity = entity.replace("-", " ")
             entity = re.sub(r"([a-z])([A-Z])", r"\1 \2", entity)
@@ -515,93 +455,100 @@ class SyntheticDataPreprocessor:
             entity = entity.replace("_", " ")
         return re.sub(r"\s+", " ", entity).strip()
 
-    @staticmethod
-    def normalize_relation(relation: str, style: Optional[str] = "hyphen") -> str:
+    def normalize_relation(self, relation: str, style: Optional[str] = "hyphen") -> str:
         """
-        Bring a relation label to one style; ``madeFrom``, ``made_from`` and ``made from`` all become
+        Stage 3 of the cleaning, for one relation label: write it in one style, lowercase. ``madeFrom``,
+        ``made_from``, ``made-from`` and ``made from`` all become
 
-        * ``"hyphen"``: ``made-from`` (keeps ``is-a`` / ``instance-of`` as ``primitive_ontology_metrics`` expects),
-        * ``"snake"``: ``made_from``,
-        * ``"space"``: ``made from`` (``is-a`` and ``instance-of`` keep their hyphens).
+        * ``"hyphen"``: ``made-from``, and ``is-a`` and ``instance-of`` stay as they are (the form
+          ``primitive_ontology_metrics`` expects);
+        * ``"snake"``: ``made_from``, and also ``is_a`` and ``instance_of``;
+        * ``"space"``: ``made from``, but ``is-a`` and ``instance-of`` keep their hyphens.
 
-        ``style=None`` returns the label stripped but otherwise unchanged.
+        ``style=None`` only strips surrounding spaces.
         """
         if not isinstance(relation, str):
             return ""
         if style is None:
             return relation.strip()
-        if style not in RELATION_STYLES:
-            raise ValueError(f"relation style must be one of {RELATION_STYLES} or None, got {style!r}")
+        if style not in self.RELATION_STYLES:
+            raise ValueError(f"relation style must be one of {self.RELATION_STYLES} or None, got {style!r}")
         relation = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", relation.strip())
         tokens = [t for t in re.split(r"[\s\-_]+", relation.lower()) if t]
         if style == "snake":
             return "_".join(tokens)
         hyphenated = "-".join(tokens)
-        return hyphenated if style == "hyphen" or hyphenated in TAXONOMIC_RELATIONS else " ".join(tokens)
+        return hyphenated if style == "hyphen" or hyphenated in self.TAXONOMIC_RELATIONS else " ".join(tokens)
 
-    @staticmethod
-    def normalize_types(types: Sequence[str]) -> List[str]:
-        """Lowercase, split known glued names, keep dot-notation codes and de-duplicate (order is kept)."""
+    def normalize_types(self, types: Sequence[str]) -> List[str]:
+        """Normalise a record's ``types``: lowercase them, split a few known glued names (``amorphousmetal`` ->
+        ``amorphous metal``), and remove empty entries and duplicates, keeping the order."""
         result, seen = [], set()
         for typ in types:
             if not isinstance(typ, str) or not typ.strip():
                 continue
             typ = typ.strip().lower()
             if not re.match(r"^[a-z]\.[a-z]+$", typ):
-                typ = _KNOWN_TYPE_SPLITS.get(typ, typ)
+                typ = self._KNOWN_TYPE_SPLITS.get(typ, typ)
             if typ not in seen:
                 seen.add(typ)
                 result.append(typ)
         return result
 
-    @staticmethod
-    def is_invalid_entity(entity: str) -> bool:
-        """Blank nodes (``_:b1``, ``q42``, ``node_7``...), empty or one-character labels, labels without letters."""
+    def is_invalid_entity(self, entity: str) -> bool:
+        """Stage 4 of the cleaning: ``True`` for an entity that is a blank node or placeholder (``_:b1``,
+        ``q42``, ``node_7``, ``?x``), has at most one character, or consists only of digits and punctuation."""
         entity = entity.strip()
-        return len(entity) <= 1 or bool(_BLANK_NODE.match(entity)) or bool(_ONLY_PUNCT_OR_DIGITS.match(entity))
+        return (len(entity) <= 1 or bool(self._BLANK_NODE.match(entity))
+                or bool(self._ONLY_PUNCT_OR_DIGITS.match(entity)))
 
-    def _normalize_triples(self, triples: Sequence[Sequence[str]]) -> Tuple[List[List[str]], List[str], int, int]:
-        """Stages 2-4. Returns ``(triples, flagged long entities, n removed as blank/malformed, n duplicates)``."""
-        normalized, valid = [], []
+    def _normalize_triples(self, triples: Sequence[Sequence[str]]) -> Tuple[List[List[str]], List[str]]:
+        """Stages 2-4 (see ``filter_triples``). Returns the kept triples, and the entities of the triples that
+        have an entity longer than ``max_entity_length``, which the LLM stage is asked to correct."""
+        valid = []
         for triple in triples:
             if isinstance(triple, (list, tuple)) and len(triple) == 3:
                 head, relation, tail = (self.normalize_entity(str(triple[0])),
                                         self.normalize_relation(str(triple[1]), self.relation_style),
                                         self.normalize_entity(str(triple[2])))
-                if head and relation and tail:
-                    normalized.append([head, relation, tail])
-                    # Blank nodes are also checked before normalisation, which turns "node_7" into "node 7"
-                    # and "_:b1" into ":b1" so that the pattern no longer matches them.
-                    if not any(self.is_invalid_entity(e) for e in (head, tail, str(triple[0]), str(triple[2]))):
-                        valid.append([head, relation, tail])
+                # Blank nodes are also checked before normalisation, which turns "node_7" into "node 7"
+                # and "_:b1" into ":b1" so that the pattern no longer matches them.
+                if head and relation and tail and \
+                        not any(self.is_invalid_entity(e) for e in (head, tail, str(triple[0]), str(triple[2]))):
+                    valid.append([head, relation, tail])
         flagged = sorted({e for t in valid if max(len(t[0]), len(t[2])) > self.max_entity_length for e in (t[0], t[2])})
         kept, seen = [], set()
         for triple in valid:
             if tuple(triple) not in seen:
                 seen.add(tuple(triple))
                 kept.append(triple)
-        return kept, flagged, len(normalized) - len(valid), len(valid) - len(kept)
+        return kept, flagged
 
-    def _llm_clean(self, context: str, triples: List[List[str]], flagged: List[str],
-                   stats: CleaningStats) -> Tuple[str, List[List[str]]]:
-        """Stages 5-6: LLM pass, accepted only if it passes the safety checks."""
-        stats.llm_called = True
+    def _llm_clean(self, record_id: str, context: str, triples: List[List[str]],
+                   flagged: List[str]) -> Tuple[str, List[List[str]]]:
+        """
+        Stages 5-6 of the cleaning. The LLM gets the context (cut after ``max_context_tokens``) and the flagged
+        entities, and returns a corrected context and entity corrections. A corrected context is rejected when it
+        is more than ``max_expansion_ratio`` times longer than the original; an entity correction is rejected
+        when it is not a string or is an invalid entity (``is_invalid_entity``). If the request fails, the
+        context and triples are returned unchanged.
+
+        Returns:
+            ``(context, triples)``.
+        """
         sent = context[: self.max_context_tokens * 4] if len(context) // 4 > self.max_context_tokens else context
-        result = self._call_json(DEEP_CLEANING_PROMPT,
+        result = self._call_json(self.DEEP_CLEANING_PROMPT,
                                  json.dumps({"context": sent, "flagged_entities": flagged}, ensure_ascii=False))
         if result is None:
-            stats.llm_fallback = True
-            stats.flags.append("LLM call failed - using deterministic result")
+            logger.warning("[%s] LLM cleaning failed; using the deterministic result.", record_id)
             return context, triples
 
         new_context = result.get("context_cleaned")
         if isinstance(new_context, str) and new_context.strip():
             if len(new_context) / max(len(context), 1) > self.max_expansion_ratio:
-                logger.warning("[%s] LLM context grew too much; reverting.", stats.record_id)
-                stats.llm_context_reverted = True
+                logger.warning("[%s] LLM context grew too much; reverting.", record_id)
                 new_context = context
         else:
-            stats.llm_context_reverted = True
             new_context = context
 
         corrections = result.get("entity_corrections") or {}
@@ -617,66 +564,68 @@ class SyntheticDataPreprocessor:
         return new_context, corrected
 
     # ------------------------------------------------------------------ #
-    # 4. Alignment filter (annotation.ipynb, LLM as judge)
+    # Step 4: alignment filter (alignment_filter=True), an LLM as judge
     # ------------------------------------------------------------------ #
     def annotate_alignment(self, records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
-        Ask the LLM how well each context supports its triples.
+        Ask the LLM judge how well each context supports its triples.
 
         Returns:
-            Copies of the records with an ``"annotation"`` of ``{"alignment", "rating", "rational"}``
-            (``None`` only when ``annotation_retries`` is set and every attempt failed).
+            Copies of the records, each with an ``"annotation"``: ``{"alignment", "rating", "rational"}``, where
+            ``alignment`` is ``aligned``, ``partially_aligned`` or ``not_aligned`` and ``rating`` goes from 1
+            (poor) to 5 (excellent). The annotation is ``None`` only when ``annotation_retries`` is set and every
+            attempt failed.
         """
         if self.client is None:
             raise ValueError("annotate_alignment needs an OpenAI `client`.")
-
-        def _annotate(record: Dict[str, Any]) -> Dict[str, Any]:
-            prompt = ALIGNMENT_PROMPT.format(text=record["context"], triples=record[TRIPLES_KEY])
-            annotation = self._call_tool(prompt, "annotation", "Evaluate alignment between text and ontology triples.",
-                                         ALIGNMENT_SCHEMA, self.annotation_retries)
-            return {**record, "annotation": annotation}
-
-        annotated = self._parallel_map(_annotate, records)
+        annotated = self._parallel_map(self._annotate, records)
         failed = sum(r["annotation"] is None for r in annotated)
         if failed:
             logger.warning("%d of %d records could not be annotated; filter_by_alignment will drop them.", failed,
                            len(annotated))
         return annotated
 
-    def filter_by_alignment(self, records: Union[List[Dict[str, Any]], Dict[str, Dict[str, Any]]]
-                            ) -> List[Dict[str, Any]]:
-        """
-        Keep records annotated ``aligned``, or ``partially_aligned`` with a rating of at least
-        ``min_partial_rating``, as ``{"id", "context", "primitive-ontology-triples"}`` (the released train set has
-        no ``terms`` or ``types``). Also accepts the ``{id: record}`` files written by annotation.ipynb.
-        """
-        def _keep(annotation: Optional[Dict[str, Any]]) -> bool:
-            if not annotation:
-                return False
-            if annotation.get("alignment") == "aligned":
-                return True
-            try:
-                return (annotation.get("alignment") == "partially_aligned"
-                        and int(annotation.get("rating", 0)) >= self.min_partial_rating)
-            except (TypeError, ValueError):
-                return False
+    def _annotate(self, record: Dict[str, Any]) -> Dict[str, Any]:
+        """A copy of ``record`` with the judge's ``"annotation"``."""
+        prompt = self.ALIGNMENT_PROMPT.format(text=record["context"], triples=record[self.TRIPLES_KEY])
+        annotation = self._call_tool(prompt, "annotation", "Evaluate alignment between text and ontology triples.",
+                                     self.ALIGNMENT_SCHEMA, self.annotation_retries)
+        return {**record, "annotation": annotation}
 
-        items = records.values() if isinstance(records, dict) else records
-        return [{"id": r["id"], "context": r["context"], TRIPLES_KEY: r[TRIPLES_KEY]}
-                for r in items if _keep(r.get("annotation"))]
+    def filter_by_alignment(self, records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Keep the records ``annotate_alignment`` rated ``aligned``, or ``partially_aligned`` with a rating of at
+        least ``min_partial_rating``. They are returned as ``{"id", "context", "primitive-ontology-triples"}``,
+        without ``terms``, ``types`` and the annotation, as in the released train set.
+        """
+        return [{"id": r["id"], "context": r["context"], self.TRIPLES_KEY: r[self.TRIPLES_KEY]}
+                for r in records if self._is_aligned(r.get("annotation"))]
 
-    @staticmethod
-    def _non_taxonomic_triples(ontological_data: Union[OntologyData, Dict[str, Any]]) -> List[List[str]]:
-        if isinstance(ontological_data, dict):
-            relations = (ontological_data.get("type_non_taxonomic_relations") or {}).get("non_taxonomies") or []
-            return [[r["head"], r["relation"], r["tail"]] for r in relations]
+    def _is_aligned(self, annotation: Optional[Dict[str, Any]]) -> bool:
+        """Whether ``filter_by_alignment`` keeps a record with this annotation."""
+        if not annotation:
+            return False
+        if annotation.get("alignment") == "aligned":
+            return True
+        try:
+            return (annotation.get("alignment") == "partially_aligned"
+                    and int(annotation.get("rating", 0)) >= self.min_partial_rating)
+        except (TypeError, ValueError):
+            return False
+
+    def _non_taxonomic_triples(self, ontological_data: OntologyData) -> List[List[str]]:
+        """The ontology's non-taxonomic relations as ``[head, relation, tail]`` triples."""
         section = getattr(ontological_data, "type_non_taxonomic_relations", None)
         return [[r.head, r.relation, r.tail] for r in (getattr(section, "non_taxonomies", None) or [])]
 
+    # ------------------------------------------------------------------ #
+    # OpenAI requests
+    # ------------------------------------------------------------------ #
     def _call_tool(self, prompt: str, name: str, description: str, properties: Dict[str, Any],
                    attempts: Optional[int]) -> Optional[Dict[str, Any]]:
-        """Force one function call and return its parsed arguments; ``None`` after ``attempts`` failures
-        (``attempts=None`` retries until it succeeds)."""
+        """Send ``prompt`` to ``model`` with one function (tool) the model must call, and return the arguments
+        of the call. Failed requests are retried with a growing pause; ``None`` is returned after ``attempts``
+        failures (``attempts=None`` retries until a request succeeds)."""
         tool = {"type": "function",
                 "function": {"name": name, "description": description,
                              "parameters": {"type": "object", "properties": properties,
@@ -699,8 +648,8 @@ class SyntheticDataPreprocessor:
         return None
 
     def _call_json(self, system_prompt: str, user_content: str) -> Optional[Dict[str, Any]]:
-        """Request a JSON object from ``deep_clean_model``; ``None`` on invalid JSON (not retried) or after
-        ``max_retries`` failures."""
+        """Ask ``deep_clean_model`` for a JSON object and return it. Returns ``None`` if the answer is not valid
+        JSON (not retried) or after ``max_retries`` failed requests."""
         for attempt in range(self.max_retries):
             try:
                 response = self.client.chat.completions.create(
@@ -723,7 +672,7 @@ class SyntheticDataPreprocessor:
         return None
 
     def _parallel_map(self, func: Callable[[Any], Any], items: Sequence[Any]) -> List[Any]:
-        """``map`` over a thread pool of ``max_workers``; results keep the input order."""
+        """Apply ``func`` to every item with ``max_workers`` threads; the results keep the order of the items."""
         if self.max_workers <= 1 or len(items) <= 1:
             return [func(item) for item in items]
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
