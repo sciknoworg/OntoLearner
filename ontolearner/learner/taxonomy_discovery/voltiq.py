@@ -37,14 +37,14 @@ class VoltIQTaxonomyLearner(AutoLearner):
     priors, and OBO/OWL parent recovery methods are preserved.
     """
 
-    TASK_C_BENCHMARK_METHODS = (
+    TAXONOMY_DISCOVERY_BENCHMARK_METHODS = (
         "lexical_subsumption",
         "parent_prior",
         "tfidf_pair_linear",
         "hybrid_cascade",
         "rewrite_cascade",
     )
-    TASK_C_TEST_METHODS = TASK_C_BENCHMARK_METHODS + (
+    TAXONOMY_DISCOVERY_TEST_METHODS = TAXONOMY_DISCOVERY_BENCHMARK_METHODS + (
         "go_rewrite_hybrid",
         "go_rewrite_strict",
         "obo_rewrite_hybrid",
@@ -74,13 +74,13 @@ class VoltIQTaxonomyLearner(AutoLearner):
         "doid": "http://purl.obolibrary.org/obo/doid.obo",
         "ncit": "http://purl.obolibrary.org/obo/ncit.obo",
     }
-    TASK_C_OBO_SOURCE_KEYS = tuple(OBO_SOURCE_URLS)
-    TASK_C_OWL_SOURCE_URLS = {
+    TAXONOMY_DISCOVERY_OBO_SOURCE_KEYS = tuple(OBO_SOURCE_URLS)
+    TAXONOMY_DISCOVERY_OWL_SOURCE_URLS = {
         "iao": "https://raw.githubusercontent.com/information-artifact-ontology/IAO/master/iao.owl",
         "edam": "https://edamontology.org/EDAM.owl",
         "swo": "http://purl.obolibrary.org/obo/swo.owl",
     }
-    TASK_C_OWL_SOURCE_KEYS = tuple(TASK_C_OWL_SOURCE_URLS)
+    TAXONOMY_DISCOVERY_OWL_SOURCE_KEYS = tuple(TAXONOMY_DISCOVERY_OWL_SOURCE_URLS)
     OBO_IN_OWL_PREFIX = "http://www.geneontology.org/formats/oboInOwl#"
     REWRITE_SUFFIX_RULES = (
         (" model prediction", " model", 2.8),
@@ -91,6 +91,8 @@ class VoltIQTaxonomyLearner(AutoLearner):
         (" parameter", "", 2.0),
         (" property", "", 2.0),
     )
+
+### Initialize Parameters ####################################################
 
     def __init__(
         self,
@@ -104,7 +106,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
 
         Args:
             method: Taxonomy induction method to use. Domain-calibrated methods
-                require one of the named LLMs4OL 2026 Task C target domains.
+                require one of the named LLMs4OL 2026 Taxonomy discovery target domains.
             target_domain: Target domain (Archeon, Biora, Hylex, or Phyra) for
                 domain-calibrated prediction. Optional for other methods.
             cache_dir: Directory for locally cached OBO and OWL resources.
@@ -114,12 +116,12 @@ class VoltIQTaxonomyLearner(AutoLearner):
             ValueError: If the method is unknown or its target domain is missing.
         """
         super().__init__(**kwargs)
-        if method not in self.TASK_C_TEST_METHODS:
+        if method not in self.TAXONOMY_DISCOVERY_TEST_METHODS:
             raise ValueError(f"Unknown taxonomy method: {method}")
         if method.startswith("domain_calibrated_") and target_domain not in {
             "Archeon", "Biora", "Hylex", "Phyra"
         }:
-            raise ValueError("A named Task C target_domain is required for domain calibration.")
+            raise ValueError("A named Taxonomy discovery target_domain is required for domain calibration.")
 
         self.method = method
         self.target_domain = target_domain
@@ -131,12 +133,13 @@ class VoltIQTaxonomyLearner(AutoLearner):
         cache_root = cache_dir or os.environ.get(
             "LLMS4OL_CACHE_DIR", Path.home() / ".cache" / "ontolearner"
         )
-        self.TASK_C_CACHE_DIR = Path(cache_root) / "task_c"
-        self.GO_BASIC_OBO_PATH = self.TASK_C_CACHE_DIR / "go-basic.obo"
-        self.GO_BASIC_INDEX_PATH = self.TASK_C_CACHE_DIR / "go_basic_index.json"
-        self.OBO_PROBE_CACHE_DIR = self.TASK_C_CACHE_DIR / "obo_probe"
-        self.OWL_PROBE_CACHE_DIR = self.TASK_C_CACHE_DIR / "owl_probe"
+        self.TAXONOMY_DISCOVERY_CACHE_DIR = Path(cache_root) / "taxonomy_discovery"
+        self.GO_BASIC_OBO_PATH = self.TAXONOMY_DISCOVERY_CACHE_DIR / "go-basic.obo"
+        self.GO_BASIC_INDEX_PATH = self.TAXONOMY_DISCOVERY_CACHE_DIR / "go_basic_index.json"
+        self.OBO_PROBE_CACHE_DIR = self.TAXONOMY_DISCOVERY_CACHE_DIR / "obo_probe"
+        self.OWL_PROBE_CACHE_DIR = self.TAXONOMY_DISCOVERY_CACHE_DIR / "owl_probe"
 
+### OntoLearner Task Interface ###############################################
 
     def tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
         """
@@ -159,37 +162,27 @@ class VoltIQTaxonomyLearner(AutoLearner):
             return data
         return super().tasks_data_former(data=data, task=task, test=test)
 
-    def _taxonomy_discovery(self, data: Any, test: bool = False) -> Optional[Any]:
+    def fit(self, train_data: Any, task: str, ontologizer: bool = True) -> None:
         """
-        Train or infer taxonomy relations using Volt-IQ's Task C methods.
+        Fit the learner using source taxonomy relations and type labels.
 
-        Args:
-            data: OntoLearner ontology data containing taxonomic information.
-            test: If True, predict relations; otherwise, prepare training data.
-
-        Returns:
-            Predicted parent-child relations if test=True, otherwise None.
-        """
-        if test:
-            return self._predict_taxonomy(data)
-        self._fit_taxonomy(data)
-        return None
-
-    def _fit_taxonomy(self, train_data: Any) -> None:
-        """
-        Collect source-domain taxonomic relations and type labels.
-
-        The original methods use training edges to estimate parent priors
+        The original Taxonomy discovery methods use training edges to estimate parent priors
         and construct features during prediction. No additional model is trained
         by this method.
 
         Args:
-            train_data: An OntoLearner OntologyData instance or a list of
-                instances returned by ontology.extract().
+            train_data: OntoLearner OntologyData or a list of such objects.
+            task: Ontology learning task.
+            ontologizer: Whether to apply OntoLearner data formatting.
 
         Raises:
-            ValueError: If taxonomy data or training relations are missing.
+            ValueError: If the task or required taxonomy data are invalid.
         """
+        if task != "taxonomy-discovery":
+            raise ValueError(f"{task} is not a valid task for Volt-IQ.")
+        if ontologizer:
+            train_data = self.tasks_data_former(data=train_data, task=task, test=False)
+
         # Collect source taxonomy relations in (child, parent) order.
         datasets = train_data if isinstance(train_data, (list, tuple)) else [train_data]
         train_edges = []
@@ -210,19 +203,26 @@ class VoltIQTaxonomyLearner(AutoLearner):
         self.train_types = list(dict.fromkeys(train_types))
         self.is_fitted = True
 
-    def _predict_taxonomy(self, eval_data: Any) -> List[Dict[str, str]]:
+    def predict(self, eval_data: Any, task: str, ontologizer: bool = True) -> List[Dict[str, str]]:
         """
-        Predict taxonomy relations over the target ontology's type labels.
+        Predict taxonomy relations using the target ontology type labels.
 
         Only the target label inventory is used for prediction. Ground-truth
         relations from the evaluation ontology are not accessed.
 
         Args:
-            eval_data: OntoLearner ontology data containing the target labels.
+            eval_data: OntoLearner ontology data containing target labels.
+            task: Ontology learning task.
+            ontologizer: Whether to apply OntoLearner data formatting.
 
         Returns:
             List[Dict[str, str]]: Predicted relations with parent and child keys.
         """
+        if task != "taxonomy-discovery":
+            raise ValueError(f"{task} is not a valid task for Volt-IQ.")
+        if ontologizer:
+            eval_data = self.tasks_data_former(data=eval_data, task=task, test=True)
+
         if not self.is_fitted:
             raise RuntimeError("Call fit() with OntoLearner training data first.")
         taxonomies = getattr(eval_data, "type_taxonomies", None)
@@ -232,11 +232,11 @@ class VoltIQTaxonomyLearner(AutoLearner):
         labels = taxonomies.types
         original_labels = self._build_original_label_map(labels)
 
-        # Select the original method family for the named Task C domain.
-        if self.method.startswith("domain_calibrated_"):
+        # Select the original method family for the named Taxonomy discovery domain.
+        if self.method in {"domain_calibrated_primary", "domain_calibrated_backup", "domain_calibrated_conservative"}:
             if self.target_domain == "Biora":
                 if self.method == "domain_calibrated_conservative":
-                    predicted_edges = self._predict_task_c_edges_for_labels(
+                    predicted_edges = self._predict_taxonomy_discovery_edges_for_labels(
                         train_edges=self.train_edges,
                         train_types=self.train_types,
                         test_types=labels,
@@ -254,7 +254,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                     "lexical_subsumption" if self.target_domain == "Hylex"
                     else "substring_heuristic"
                 )
-                predicted_edges = self._predict_task_c_edges_for_labels(
+                predicted_edges = self._predict_taxonomy_discovery_edges_for_labels(
                     train_edges=self.train_edges,
                     train_types=self.train_types,
                     test_types=labels,
@@ -285,7 +285,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 "rewrite_cascade" if self.method in {"go_rewrite_hybrid", "go_rewrite_strict"}
                 else self.method
             )
-            predicted_edges = self._predict_task_c_edges_for_labels(
+            predicted_edges = self._predict_taxonomy_discovery_edges_for_labels(
                 train_edges=self.train_edges,
                 train_types=self.train_types,
                 test_types=labels,
@@ -300,7 +300,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             for child, parent in predicted_edges
         ]
 
-
+### Taxonomy Data Normalization ##############################################
 
     def _normalize_label(self, label: str) -> str:
         """Normalize label text for matching and candidate generation."""
@@ -437,6 +437,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
         total = sum(parent_counts.values()) or 1
         return {parent: count / total for parent, count in parent_counts.items()}
 
+### Candidate Generation and Feature Extraction ##############################
 
     def _collect_rewrite_parent_candidates(self, label: str, label_set: set[str]) -> dict[str, float]:
         """
@@ -824,6 +825,8 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 candidate_pairs.append((child_name, parent_name))
         return candidate_pairs, feature_rows
 
+### Taxonomy Induction and Prediction ########################################
+
     def _build_substring_heuristic_taxonomy(self, test_types, train_edges):
         """
         Select the longest proper target-label subphrases as parents.
@@ -867,7 +870,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
         # Parent is always a proper subphrase, so edges are length-decreasing and acyclic.
         return [(child, parent) for child, parent, _ in chosen]
 
-    def _predict_task_c_edges_for_labels(self, *, train_edges, train_types, test_types, method="hybrid_cascade"):
+    def _predict_taxonomy_discovery_edges_for_labels(self, *, train_edges, train_types, test_types, method="hybrid_cascade"):
         """
         Route target labels to the selected Volt-IQ taxonomy method.
 
@@ -1024,9 +1027,11 @@ class VoltIQTaxonomyLearner(AutoLearner):
             max_parents_per_child=1,
         )
 
+### Ontology Resource Loading ################################################
+
     def _ensure_go_basic_obo_cached(self, ) -> Path:
         """Download GO Basic OBO on first use and reuse its local cache."""
-        self.TASK_C_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        self.TAXONOMY_DISCOVERY_CACHE_DIR.mkdir(parents=True, exist_ok=True)
         if self.GO_BASIC_OBO_PATH.exists():
             return self.GO_BASIC_OBO_PATH
         request = urllib.request.Request(self.GO_BASIC_OBO_URL, headers={"User-Agent": "Mozilla/5.0"})
@@ -1036,7 +1041,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
 
     def _write_go_basic_index(self, index: dict[str, dict[str, list[str]] | dict[str, str]]) -> None:
         """Write the parsed GO label and direct-parent index to cache."""
-        self.TASK_C_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        self.TAXONOMY_DISCOVERY_CACHE_DIR.mkdir(parents=True, exist_ok=True)
         self.GO_BASIC_INDEX_PATH.write_text(json.dumps(index, ensure_ascii=True), encoding="utf-8")
 
     def _build_go_basic_index_from_obo(self, obo_path: Path) -> dict[str, dict[str, list[str]] | dict[str, str]]:
@@ -1242,13 +1247,13 @@ class VoltIQTaxonomyLearner(AutoLearner):
 
     def _ensure_owl_source_cached(self, source_key: str) -> Path:
         """Download an OWL ontology on first use and return its cache path."""
-        if source_key not in self.TASK_C_OWL_SOURCE_URLS:
+        if source_key not in self.TAXONOMY_DISCOVERY_OWL_SOURCE_URLS:
             raise ValueError(f"Unknown OWL source: {source_key}")
         self.OWL_PROBE_CACHE_DIR.mkdir(parents=True, exist_ok=True)
         path = self.OWL_PROBE_CACHE_DIR / f"{source_key}.owl"
         if path.exists() and path.stat().st_size > 0:
             return path
-        request = urllib.request.Request(self.TASK_C_OWL_SOURCE_URLS[source_key], headers={"User-Agent": "Mozilla/5.0"})
+        request = urllib.request.Request(self.TAXONOMY_DISCOVERY_OWL_SOURCE_URLS[source_key], headers={"User-Agent": "Mozilla/5.0"})
         with urllib.request.urlopen(request, timeout=180) as response:
             path.write_bytes(response.read())
         return path
@@ -1271,7 +1276,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             import rdflib
             from rdflib import URIRef
         except ImportError as exc:  # pragma: no cover - dependency is provided by OntoLearner
-            raise RuntimeError("rdflib is required to parse Task C OWL sources.") from exc
+            raise RuntimeError("rdflib is required to parse Taxonomy discovery OWL sources.") from exc
 
         owl_path = self._ensure_owl_source_cached(source_key)
         graph = rdflib.Graph()
@@ -1304,6 +1309,8 @@ class VoltIQTaxonomyLearner(AutoLearner):
             for term_id, labels in labels_by_uri.items()
         )
 
+### Ontology-Backed Taxonomy Prediction ######################################
+
     def _predict_obo_backfilled_edges(
         self,
         *,
@@ -1332,8 +1339,8 @@ class VoltIQTaxonomyLearner(AutoLearner):
         Returns:
             Predicted (child, parent) relations.
         """
-        source_keys = self.TASK_C_OBO_SOURCE_KEYS if source_keys is None else source_keys
-        owl_source_keys = self.TASK_C_OWL_SOURCE_KEYS if owl_source_keys is None else owl_source_keys
+        source_keys = self.TAXONOMY_DISCOVERY_OBO_SOURCE_KEYS if source_keys is None else source_keys
+        owl_source_keys = self.TAXONOMY_DISCOVERY_OWL_SOURCE_KEYS if owl_source_keys is None else owl_source_keys
         normalized_test = sorted({self._normalize_label(item) for item in test_types if self._normalize_label(item)})
         label_set = set(normalized_test)
         source_edges = []

@@ -1,5 +1,3 @@
-import time
-
 from ontolearner import GeoNames, train_test_split, evaluation_report
 from ontolearner.learner.taxonomy_discovery import VoltIQTaxonomyLearner
 
@@ -19,8 +17,6 @@ voltiq_learner = VoltIQTaxonomyLearner(
 )
 
 # 3) Train + predict
-start_time = time.time()
-
 voltiq_learner.fit(
     train_data,
     task="taxonomy-discovery",
@@ -32,8 +28,6 @@ predictions = voltiq_learner.predict(
     task="taxonomy-discovery",
     ontologizer=True,
 )
-
-elapsed_time = time.time() - start_time
 
 # 4) Evaluate
 ground_truth = voltiq_learner.tasks_ground_truth_former(
@@ -48,5 +42,4 @@ metrics = evaluation_report(
 )
 
 print("Metrics:", metrics)
-print("Elapsed time:", elapsed_time)
 print("Predictions:", predictions)
