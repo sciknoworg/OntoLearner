@@ -13,6 +13,7 @@
 # limitations under the License.
 import re
 import time
+from sklearn.metrics.pairwise import cosine_similarity
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
@@ -1034,7 +1035,7 @@ Return ONLY the pipe-delimited triples, one per line:"""
 
     def _ontology_expansion(self, data: Any, test: bool = False) -> Optional[Any]:
         """Not supported: the submission addresses ontology construction only."""
-        raise NotImplementedError("XuanJiLearner addresses ontology construction only (LLMs4OL 2026 Task A).")
+        raise NotImplementedError("XuanJiLearner addresses ontology construction only.")
 
     def _fit(self, data: List[Dict[str, Any]]) -> None:
         """Select the example documents, and build the retrieval index if it is used."""
@@ -1140,10 +1141,20 @@ Return ONLY the pipe-delimited triples, one per line:"""
         return density + variety_bonus
 
     def _build_few_shot_documents(self, samples: List[tuple], max_docs: int = 10) -> List[Dict[str, Any]]:
-        """Pick varied, high-scoring example documents."""
+        # Parse and score all samples
         parsed = []
         for sample_id, context, triples in samples:
-            title, text = self._title_and_body(context)
+            title = ""
+            text = context
+            if context.startswith("Title:"):
+                parts = context.split("\n\n", 1)
+                title = parts[0].replace("Title:", "").strip()
+                if len(parts) > 1:
+                    content_part = parts[1]
+                    if content_part.startswith("Content:"):
+                        text = content_part.replace("Content:", "", 1).strip()
+                    else:
+                        text = content_part.strip()
             rel_types = self._classify_triple_types(triples)
             score = self._score_sample(context, triples)
             parsed.append({
@@ -1151,6 +1162,7 @@ Return ONLY the pipe-delimited triples, one per line:"""
                 "triples": triples, "score": score, "rel_types": rel_types,
             })
 
+        # Stratified selection: guarantee at least 1 instance-of and 1 non-taxonomic sample
         inst_samples = sorted(
             [d for d in parsed if "inst" in d["rel_types"]],
             key=lambda d: d["score"], reverse=True,
@@ -1159,6 +1171,11 @@ Return ONLY the pipe-delimited triples, one per line:"""
             [d for d in parsed if "other" in d["rel_types"]],
             key=lambda d: d["score"], reverse=True,
         )
+        isa_samples = sorted(
+            [d for d in parsed if "isa" in d["rel_types"] and "inst" not in d["rel_types"] and "other" not in d["rel_types"]],
+            key=lambda d: d["score"], reverse=True,
+        )
+        # Mixed samples (have isa + other types)
         mixed_samples = sorted(
             [d for d in parsed if "isa" in d["rel_types"] and len(d["rel_types"]) >= 2],
             key=lambda d: d["score"], reverse=True,
@@ -1166,21 +1183,26 @@ Return ONLY the pipe-delimited triples, one per line:"""
 
         selected = []
         seen_ids = set()
+
+        # First: add top instance-of sample
         for s in inst_samples:
             if s["id"] not in seen_ids:
                 selected.append(s)
                 seen_ids.add(s["id"])
                 break
+        # Second: add top non-taxonomic sample
         for s in other_samples:
             if s["id"] not in seen_ids:
                 selected.append(s)
                 seen_ids.add(s["id"])
                 break
+        # Third: add top mixed sample (has multiple relation types)
         for s in mixed_samples:
             if s["id"] not in seen_ids:
                 selected.append(s)
                 seen_ids.add(s["id"])
                 break
+        # Fill remaining slots with best-scoring unselected samples
         remaining = sorted(parsed, key=lambda d: d["score"], reverse=True)
         for s in remaining:
             if len(selected) >= max_docs:
@@ -1189,10 +1211,12 @@ Return ONLY the pipe-delimited triples, one per line:"""
                 selected.append(s)
                 seen_ids.add(s["id"])
 
-        return [{
+        # Return just the document fields (no internal scoring)
+        docs = [{
             "id": d["id"], "title": d["title"],
             "text": d["text"], "triples": d["triples"],
         } for d in selected[:max_docs]]
+        return docs
 
     def _tokenize_for_tfidf(self, text: str) -> str:
         """Extract the words and capitalized phrases used for TF-IDF retrieval."""
@@ -1211,7 +1235,15 @@ Return ONLY the pipe-delimited triples, one per line:"""
             title, text = self._title_and_body(context)
             train_texts.append(self._tokenize_for_tfidf(title + " " + text[:1000]))
         self._tfidf_vectorizer = TfidfVectorizer(max_features=5000, ngram_range=(1, 2), stop_words="english")
-        self._tfidf_matrix = self._tfidf_vectorizer.fit_transform(train_texts)
+        try:
+            self._tfidf_matrix = self._tfidf_vectorizer.fit_transform(train_texts)
+        except ValueError as exc:
+            if "empty vocabulary" not in str(exc).lower():
+                raise
+            # Very small toy datasets may contain only stop words or codes.
+            # In that case, fixed few-shot selection is still usable.
+            self._tfidf_vectorizer = None
+            self._tfidf_matrix = None
 
     def _detect_domain(self, title: str, text: str) -> Optional[str]:
         """Guess a document's domain from keywords."""
@@ -1257,14 +1289,22 @@ Return ONLY the pipe-delimited triples, one per line:"""
         return intersection / union if union > 0 else 0.0
 
     def _retrieve_adaptive_few_shot(self, title: str, text: str, k: int = 5) -> List[Dict[str, Any]]:
-        """Return the ``k`` training documents most similar to an input."""
+        """Retrieve top-K training samples via 4-factor hybrid scoring.
+
+        Factors (weights per documented design):
+          - TF-IDF cosine similarity: 25%
+          - Domain matching:          25%
+          - Entity overlap (Jaccard): 20%
+          - Information density:      30%
+        """
         if self._tfidf_vectorizer is None or self._tfidf_matrix is None:
             return self.few_shot_docs[:k]
-        from sklearn.metrics.pairwise import cosine_similarity
 
         query_text = self._tokenize_for_tfidf(title + " " + text[:1000])
         query_vec = self._tfidf_vectorizer.transform([query_text])
+
         sims = cosine_similarity(query_vec, self._tfidf_matrix)[0]
+        # Get top 3*k candidates by TF-IDF for re-ranking
         top_n = min(3 * k, len(sims))
         top_indices = np.argsort(sims)[::-1][:top_n]
 
@@ -1274,11 +1314,31 @@ Return ONLY the pipe-delimited triples, one per line:"""
             if tfidf_sim < 0.03:
                 continue
             sample_id, context, triples = self._all_train_samples[int(idx)]
-            doc_title, doc_text = self._title_and_body(context)
+            doc_title = ""
+            doc_text = context
+            if context.startswith("Title:"):
+                parts = context.split("\n\n", 1)
+                doc_title = parts[0].replace("Title:", "").strip()
+                if len(parts) > 1:
+                    content_part = parts[1]
+                    if content_part.startswith("Content:"):
+                        doc_text = content_part.replace("Content:", "", 1).strip()
+                    else:
+                        doc_text = content_part.strip()
+
+            # Factor 1: TF-IDF similarity (25%)
+            tfidf_score = tfidf_sim
+
+            # Factor 2: Domain matching (25%)
             domain_score = self._domain_match_score(title, text, doc_title, doc_text)
+
+            # Factor 3: Entity overlap — Jaccard (20%)
             entity_score = self._entity_overlap_score(title, text, doc_text)
+
+            # Factor 4: Information density + relation-type diversity (30%)
             text_len = max(len(doc_text), 1)
             density = len(triples) * 1000.0 / text_len
+            # Diversity bonus: prefer samples with multiple relation types
             rel_types = set()
             for t in triples:
                 if len(t) >= 2:
@@ -1289,8 +1349,10 @@ Return ONLY the pipe-delimited triples, one per line:"""
                         rel_types.add("instanceof")
                     else:
                         rel_types.add("nontax")
-            diversity_bonus = min(len(rel_types) / 3.0, 1.0)
+            diversity_bonus = min(len(rel_types) / 3.0, 1.0)  # up to 1.0 for all 3 types
             density_score = min(density / 20.0, 1.0) * 0.6 + diversity_bonus * 0.4
+
+            # 4-factor weighted combination
             combined = (
                 tfidf_sim * 0.25
                 + domain_score * 0.25
@@ -1306,6 +1368,7 @@ Return ONLY the pipe-delimited triples, one per line:"""
 
         scored_candidates.sort(key=lambda x: x[0], reverse=True)
         retrieved_docs = [doc for _, doc in scored_candidates[:k]]
+
         if len(retrieved_docs) < k:
             for doc in self.few_shot_docs:
                 if len(retrieved_docs) >= k:
@@ -1313,6 +1376,16 @@ Return ONLY the pipe-delimited triples, one per line:"""
                 if doc["id"] not in {d["id"] for d in retrieved_docs}:
                     retrieved_docs.append(doc)
         return retrieved_docs
+
+    def set_adaptive_few_shot(self, enabled: bool) -> None:
+        """Enable or disable adaptive retrieval, even after fitting.
+
+        The retrieval index is built on demand from the retained training records.
+        Disabling retrieval switches back to the fixed few-shot examples.
+        """
+        self.adaptive_few_shot = bool(enabled)
+        if self.adaptive_few_shot and self._trained and self._tfidf_matrix is None:
+            self._build_tfidf_index()
 
     def _format_few_shot_block(self, documents: List[Dict[str, Any]], max_docs: int = 5, max_chars: int = 2000,
                                max_triples: int = 20) -> str:

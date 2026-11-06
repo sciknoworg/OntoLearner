@@ -1,15 +1,16 @@
+
 import os
 import json
 
 from openai import OpenAI
 from ontolearner import LearnerPipeline, train_test_split
-from ontolearner.learner.primitive import XuanJiFSLearner
-from ontolearner.ontology import OM
+from ontolearner.ontology import FOAF
 from ontolearner.text2onto import (
     SyntheticGenerator,
     SyntheticDataPreprocessor,
-    PrimitiveOntologyDataset,
 )
+from ontolearner.learner.primitive import XuanJiFSLearner
+
 
 # Configuration
 model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
@@ -21,31 +22,37 @@ hf_token = os.getenv("HF_TOKEN", "")
 if not api_key:
     raise EnvironmentError("Set OPENAI_API_KEY before running.")
 
-print("\nSTEP 1: Loading the complete OM ontology", flush=True)
-ontology = OM()
-ontology.load()
 
+# STEP 1: Load FOAF ontology
+print("\nSTEP 1: Loading FOAF ontology")
+
+ontology = FOAF()
+ontology.load()
 data = ontology.extract()
 
-# Keep 3 taxonomic relations of OM: a few short documents, each with several triples (the
-# expansion task needs records with more than one triple per type to extend)
+# Use taxonomy relations only for this small example.
 data.term_typings = []
-data.type_taxonomies.taxonomies = data.type_taxonomies.taxonomies[:5]
 data.type_non_taxonomic_relations.non_taxonomies = []
 
-print("Selected relations:", len(data.type_taxonomies.taxonomies))
+print("Taxonomic relations:", len(data.type_taxonomies.taxonomies))
 
-print("\nSTEP 2: Splitting the ontology into train and test parts", flush=True)
-# The train and test documents are generated from different relations.
+
+# STEP 2: Split ontology into train/test
+print("\nSTEP 2: Splitting ontology")
+
 train_ontology, test_ontology = train_test_split(
     data,
     test_size=0.5,
-    random_state=42
+    random_state=42,
 )
-print("Train taxonomies:", len(train_ontology.type_taxonomies.taxonomies), flush=True)
-print("Test taxonomies:", len(test_ontology.type_taxonomies.taxonomies), flush=True)
 
-print("\nSTEP 3: Loading the Hugging Face generator", flush=True)
+print("Train taxonomies:", len(train_ontology.type_taxonomies.taxonomies))
+print("Test taxonomies:", len(test_ontology.type_taxonomies.taxonomies))
+
+
+# STEP 3: Initialize synthetic generator
+print("\nSTEP 3: Initializing generator")
+
 generator = SyntheticGenerator(
     model_id=model_id,
     token=hf_token,
@@ -58,50 +65,89 @@ generator = SyntheticGenerator(
     max_input_length=2000,
     max_new_tokens=2000,
 )
-print("Generator ready:", model_id, flush=True)
 
-print("\nSTEP 4: Generating synthetic TRAIN documents", flush=True)
+
+# STEP 4: Generate training documents
+print("\nSTEP 4: Generating TRAIN documents")
+
 train_synthetic = generator.generate(
-    ontological_data=train_ontology, topic=ontology.domain
+    ontological_data=train_ontology,
+    topic=ontology.domain,
 )
-print("Generated train documents:", len(train_synthetic.generated_docs), flush=True)
 
-print("\nSTEP 5: Generating synthetic TEST documents", flush=True)
+print("Generated train documents:", len(train_synthetic.generated_docs))
+
+
+# STEP 5: Generate test documents
+print("\nSTEP 5: Generating TEST documents")
+
 test_synthetic = generator.generate(
-    ontological_data=test_ontology, topic=ontology.domain
+    ontological_data=test_ontology,
+    topic=ontology.domain,
 )
-print("Generated test documents:", len(test_synthetic.generated_docs), flush=True)
 
-print("\nSTEP 6: Initializing preprocessors", flush=True)
-# The settings of the LLMs4OL 2026 release: an LLM judge keeps the train records whose text
-# supports their triples, and the test records get the six-stage cleaning.
-client = OpenAI(api_key=api_key)
-train_preprocessor = SyntheticDataPreprocessor(client=client, alignment_filter=True)
-test_preprocessor = SyntheticDataPreprocessor(client=client, deep_clean=True)
+print("Generated test documents:", len(test_synthetic.generated_docs))
 
-print("\nSTEP 7: Preprocessing TRAIN documents", flush=True)
-train_records = train_preprocessor.preprocess(train_synthetic, train_ontology)
-print("Train records:", len(train_records), flush=True)
 
-print("\nSTEP 8: Preprocessing TEST documents", flush=True)
-test_records = test_preprocessor.preprocess(test_synthetic, test_ontology)
-print("Test records:", len(test_records), flush=True)
+# STEP 6: Initialize construction preprocessor
+print("\nSTEP 6: Initializing preprocessor")
 
-print("\nSTEP 9: Preparing the construction train and test data", flush=True)
-# Construction: every record is a sample as it is (a text and its complete ontology).
-dataset = PrimitiveOntologyDataset(task="ontology_construction", random_state=42)
-train_data = dataset.prepare(train_records)
-test_data = dataset.prepare(test_records)
-print("Train samples:", len(train_data), flush=True)
-print("Test samples:", len(test_data), flush=True)
+preprocessor = SyntheticDataPreprocessor(
+    client=OpenAI(api_key=api_key),
+    task="ontology_construction",
+    random_state=42,
+)
+
+
+# STEP 7: Preprocess training data
+print("\nSTEP 7: Preprocessing TRAIN documents")
+
+train_data = preprocessor.preprocess(
+    train_synthetic,
+    train_ontology,
+)
+
+print("Train samples:", len(train_data))
+
+if train_data:
+    print("Example TRAIN sample:")
+    print(json.dumps(train_data[0], indent=2, ensure_ascii=False)[:1500])
+
+
+# STEP 8: Preprocess test data
+print("\nSTEP 8: Preprocessing TEST documents")
+
+test_data = preprocessor.preprocess(
+    test_synthetic,
+    test_ontology,
+)
+
+print("Test samples:", len(test_data))
+
+if test_data:
+    print("Example TEST sample:")
+    print(json.dumps(test_data[0], indent=2, ensure_ascii=False)[:1500])
+
 if not train_data or not test_data:
-    raise SystemExit("Both train and test samples are needed; generate more documents and run again.")
-print("Example test record (gold labels stay in memory for evaluation):", flush=True)
-print(json.dumps(test_data[0], indent=2, ensure_ascii=False)[:1500], flush=True)
+    raise ValueError("No usable train or test samples were generated.")
 
-print("\nSTEP 10: Running the XuanJi learner through LearnerPipeline", flush=True)
-# Up to 15 example documents (5 shown in each prompt), as submitted.
-learner = XuanJiFSLearner(base_url=learner_base_url)
+
+# STEP 9: Initialize XuanJi learner
+print("\nSTEP 9: Initializing XuanJi learner")
+
+learner = XuanJiFSLearner(
+    model_id=learner_model_id,
+    api_key=api_key,
+    base_url=learner_base_url,
+    adaptive_few_shot=True,
+)
+
+print("Learner:", type(learner).__name__)
+print("Adaptive few-shot:", learner.adaptive_few_shot)
+
+
+# STEP 10: Initialize LearnerPipeline
+print("\nSTEP 10: Initializing LearnerPipeline")
 
 pipe = LearnerPipeline(
     llm=learner,
@@ -109,7 +155,10 @@ pipe = LearnerPipeline(
     ontologizer_data=False,
 )
 
-# Fits on train_data, predicts test_data with the answers hidden, and evaluates the predictions.
+
+# STEP 11: Train, predict, and evaluate
+print("\nSTEP 11: Running construction pipeline", flush=True)
+
 outputs = pipe(
     train_data=train_data,
     test_data=test_data,
@@ -118,6 +167,19 @@ outputs = pipe(
     ontologizer_data=False,
 )
 
+
+# STEP 12: Display results
+print("\nSTEP 12: Results")
+
 print("Metrics:", outputs.get("metrics"))
-print("Elapsed time:", outputs["elapsed_time"])
-print("Predictions:", json.dumps(outputs.get("predictions"), indent=2, ensure_ascii=False))
+print("Elapsed time:", outputs.get("elapsed_time"))
+
+print(
+    "Predictions:",
+    json.dumps(
+        outputs.get("predictions"),
+        indent=2,
+        ensure_ascii=False,
+        default=str,
+    ),
+)

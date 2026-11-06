@@ -21,7 +21,7 @@ import numpy as np
 
 from ...base import PrimitiveOntologyLearner
 
-class LaboroAILearner(PrimitiveOntologyLearner):
+class LaboroAIPrimitiveLearner(PrimitiveOntologyLearner):
     """
     Few-shot LLM learner for primitive ontology construction and expansion.
 

@@ -12,6 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .laboroai import LaboroAILearner
+from .laboroai import LaboroAIPrimitiveLearner
 from .xuanji import XuanJiFSLearner
 from .hybridsquared import HybridAISquaredZSLearner, HybridAISquaredPerRelationLearner, HybridAISquaredSFTLearner
