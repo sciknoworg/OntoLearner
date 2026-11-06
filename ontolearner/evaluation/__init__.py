@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from .metrics import text2onto_metrics, term_typing_metrics, taxonomy_discovery_metrics, non_taxonomic_re_metrics
+from .metrics import text2onto_metrics, term_typing_metrics, taxonomy_discovery_metrics, non_taxonomic_re_metrics, primitive_ontology_metrics
 from .evaluate import evaluation_report
 
 __all__ = [
     'evaluation_report',
+    'primitive_ontology_metrics',
     'term_typing_metrics',
     'taxonomy_discovery_metrics',
     'non_taxonomic_re_metrics'

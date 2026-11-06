@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from typing import Dict
-from .metrics import text2onto_metrics, term_typing_metrics, taxonomy_discovery_metrics, non_taxonomic_re_metrics
+from .metrics import text2onto_metrics, term_typing_metrics, primitive_ontology_metrics, taxonomy_discovery_metrics, non_taxonomic_re_metrics
 
 def evaluation_report(y_true, y_pred, task: str) -> Dict:
     if task == "text2onto":
         return text2onto_metrics(y_true, y_pred)
+    if task == "ontology_construction" or task == "ontology_expansion":
+        return primitive_ontology_metrics(y_true, y_pred)  
     elif task == "term-typing":
         return term_typing_metrics(y_true, y_pred)
     elif task == "taxonomy-discovery":
