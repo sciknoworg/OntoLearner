@@ -15,4 +15,3 @@
 from .synthesizer import SyntheticGenerator
 from .splitter import SyntheticDataSplitter
 from .preprocessing import SyntheticDataPreprocessor
-from .primitive_ontology import PrimitiveOntologyDataset

@@ -1411,7 +1411,7 @@ Return ONLY the pipe-delimited triples, one per line:"""
         request: Dict[str, Any] = {
             "model": self.model_id,
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": self.max_new_tokens,
+            "max_completion_tokens": self.max_new_tokens,
             "temperature": self.TEMPERATURE,
             "stream": False,
         }

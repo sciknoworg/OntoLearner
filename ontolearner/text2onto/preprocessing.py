@@ -15,6 +15,7 @@
 import copy
 import json
 import logging
+import random
 import re
 import time
 import unicodedata
@@ -24,14 +25,38 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 from ..data_structure import OntologyData, SyntheticText2OntoData
 
+logger = logging.getLogger(__name__)
 
 class SyntheticDataPreprocessor:
     """
-    Turns the documents of ``SyntheticGenerator`` into primitive-ontology records: a text and the triples it
-    describes.
+    Turns the documents of ``SyntheticGenerator`` into the samples of a primitive-ontology task. ``preprocess``
+    runs the same five steps on train and test data:
+
+    1. Records: every document is paired with the pseudo-sentences it was written from. Its ``is subclass of``
+       and ``is instance of`` sentences become ``is-a`` and ``instance-of`` triples, and the ontology's
+       non-taxonomic relations between the document's types are added.
+    2. Text cleaning: the LLM (``model``) adds missing spaces to the text and to the triple labels, and drops an
+       unfinished last sentence.
+    3. Deep cleaning, in six stages: (1) structural cleanup of the text, (2) entity and type normalisation,
+       (3) relation labels in ``relation_style``, (4) triples with invalid entities and duplicate triples
+       removed, and with ``deep_clean_model`` (5) the text corrected and (6) overlong entities corrected.
+    4. Alignment filter: an LLM judge rates how well each text supports its triples; the records rated
+       ``aligned``, or ``partially_aligned`` with a rating of at least ``min_partial_rating``, are kept.
+    5. Task samples, for ``task``:
+
+       * ``"ontology_construction"`` (text -> complete ontology): ``{"id", "context", "terms", "types",
+         "primitive-ontology-triples"}``; the triples are the target.
+       * ``"ontology_expansion"`` (text + initial ontology -> extended ontology): each record's triples are
+         split into an initial ontology and the triples that extend it (``split_triples``), giving ``{"id",
+         "context", "terms", "types", "initial-primitive-ontology-triples",
+         "extended-primitive-ontology-triples"}``, where ``terms`` and ``types`` are the entities of the extension
+         triples. Records with nothing to extend are dropped.
     """
 
+    TASKS = ("ontology_construction", "ontology_expansion")
     TRIPLES_KEY = "primitive-ontology-triples"
+    INITIAL_KEY = "initial-primitive-ontology-triples"
+    EXTENDED_KEY = "extended-primitive-ontology-triples"
     TAXONOMIC_RELATIONS = ("is-a", "instance-of")
     RELATION_STYLES = ("hyphen", "snake", "space")
 
@@ -190,12 +215,10 @@ Triples:
     }
 
     def __init__(self,
-                 client: Any = None,
+                 client: Any,
+                 task: str = "ontology_construction",
                  model: str = "gpt-4o-mini",
                  deep_clean_model: str = "gpt-5.4",
-                 clean_text: bool = True,
-                 deep_clean: bool = False,
-                 alignment_filter: bool = False,
                  relation_style: Optional[str] = "hyphen",
                  min_partial_rating: int = 3,
                  max_entity_length: int = 120,
@@ -203,43 +226,42 @@ Triples:
                  max_expansion_ratio: float = 1.5,
                  max_retries: int = 5,
                  annotation_retries: Optional[int] = None,
-                 max_workers: int = 10) -> None:
+                 max_workers: int = 10,
+                 random_state: int = 42) -> None:
         """
         Args:
-            client: ``openai.OpenAI`` client. With ``None`` no OpenAI call is made: only the rule-based steps run.
+            client: ``openai.OpenAI`` client, used by the text cleaning, the deep cleaning and the alignment filter.
+            task: ``"ontology_construction"`` or ``"ontology_expansion"``: the samples ``preprocess`` returns.
             model: OpenAI model that cleans the text and the labels and judges the alignment (the release used
                 ``gpt-4o-mini``).
-            deep_clean_model: OpenAI model of the LLM stage of ``deep_clean`` (the release used ``gpt-5.4``).
-            clean_text: Let the LLM add missing spaces to the text and the labels in ``prepare_record``.
-            deep_clean: Clean every record in six stages (see the class description), as for the released test
-                set.
-            alignment_filter: Keep only the records the LLM judge rates as aligned, as for the released train set.
-                Needs a ``client``.
-            relation_style: The style ``deep_clean`` gives relation labels: ``"hyphen"`` (``is-defined-by``, as in
-                the released test set), ``"snake"`` (``is_defined_by``), ``"space"`` (``is defined by``), or
-                ``None`` to leave them as they are. Without ``deep_clean``, relation labels are not restyled.
+            deep_clean_model: OpenAI model of stages 5-6 of the deep cleaning (the release used ``gpt-5.4``).
+            relation_style: The style the deep cleaning gives relation labels: ``"hyphen"`` (``is-defined-by``,
+                the form ``primitive_ontology_metrics`` expects), ``"snake"`` (``is_defined_by``), ``"space"``
+                (``is defined by``), or ``None`` to leave them as they are.
             min_partial_rating: Lowest judge rating at which a ``partially_aligned`` record is kept.
-            max_entity_length: In ``deep_clean``, triples with an entity longer than this many characters have
-                their entities sent to the LLM for correction.
-            max_context_tokens: In ``deep_clean``, the text sent to the LLM is cut after about this many tokens.
-            max_expansion_ratio: In ``deep_clean``, an LLM-corrected text longer than this many times the original
-                is rejected, and the original is kept.
+            max_entity_length: Triples with an entity longer than this many characters have their entities sent
+                to the LLM for correction (stage 6).
+            max_context_tokens: The text sent to the LLM in stage 5 is cut after about this many tokens.
+            max_expansion_ratio: An LLM-corrected text longer than this many times the original is rejected, and
+                the original is kept (stage 5).
             max_retries: Attempts per OpenAI request that cleans text or labels.
             annotation_retries: Attempts per judge request. ``None`` retries until the request succeeds, as in the
                 release, so no record is lost to a failed request. With a number, a record whose requests all
                 fail gets no rating and is dropped by ``filter_by_alignment``.
             max_workers: Number of OpenAI requests sent in parallel.
+            random_state: Seed of the initial/extension split of ``ontology_expansion``. Every ``preprocess`` call
+                starts from this seed, so the same records are always split the same way.
         """
+        if client is None:
+            raise ValueError("SyntheticDataPreprocessor needs an OpenAI `client`.")
+        if task not in self.TASKS:
+            raise ValueError(f"task must be one of {self.TASKS}, got {task!r}")
         if relation_style is not None and relation_style not in self.RELATION_STYLES:
             raise ValueError(f"relation_style must be one of {self.RELATION_STYLES} or None, got {relation_style!r}")
-        if alignment_filter and client is None:
-            raise ValueError("alignment_filter=True needs an OpenAI `client`.")
         self.client = client
+        self.task = task
         self.model = model
         self.deep_clean_model = deep_clean_model
-        self.clean_text = clean_text
-        self.deep_clean_enabled = deep_clean
-        self.alignment_filter = alignment_filter
         self.relation_style = relation_style
         self.min_partial_rating = min_partial_rating
         self.max_entity_length = max_entity_length
@@ -248,6 +270,7 @@ Triples:
         self.max_retries = max_retries
         self.annotation_retries = annotation_retries
         self.max_workers = max_workers
+        self.random_state = random_state
         self.label_cache: Dict[str, str] = {"disjointWith": "disjoint with"}   # labels already cleaned
 
     # ------------------------------------------------------------------ #
@@ -257,7 +280,8 @@ Triples:
                    synthetic_data: Union[SyntheticText2OntoData, List[Dict[str, Any]]],
                    ontological_data: OntologyData) -> List[Dict[str, Any]]:
         """
-        Turn generated documents into primitive-ontology records (all steps of the class description).
+        Turn generated documents into the samples of ``task``, with all five steps of the class description.
+        Call it once for the train documents and once for the test documents.
 
         Args:
             synthetic_data: What ``SyntheticGenerator.generate`` returned, or a list of items made from it by
@@ -266,17 +290,16 @@ Triples:
                 non-taxonomic relations are added to the records.
 
         Returns:
-            One record per document: ``{"id", "context", "terms", "types", "primitive-ontology-triples"}``. With
-            ``alignment_filter``, only the kept records, as ``{"id", "context", "primitive-ontology-triples"}``.
+            The samples of ``task`` (see the class description), one per kept record.
         """
         items = synthetic_data if isinstance(synthetic_data, list) else self.prepare_items(synthetic_data)
         records = self._parallel_map(lambda item: self.prepare_record(item, ontological_data), items)
-        if self.deep_clean_enabled:
-            records = self.deep_clean(records)
-        if self.alignment_filter:
-            records = self.filter_by_alignment(self.annotate_alignment(records))
-        logger.info("Preprocessed %d documents into %d records.", len(items), len(records))
-        return records
+        records = self.deep_clean(records)
+        records = self.filter_by_alignment(self.annotate_alignment(records))
+        samples = self.prepare_samples(records)
+        logger.info("Preprocessed %d documents into %d records and %d %s samples.", len(items), len(records),
+                    len(samples), self.task)
+        return samples
 
     # ------------------------------------------------------------------ #
     # Steps 1-2: documents -> records, with the LLM adding missing spaces
@@ -302,7 +325,7 @@ Triples:
 
     def prepare_record(self, item: Dict[str, Any], ontological_data: OntologyData) -> Dict[str, Any]:
         """
-        Turn one item of ``prepare_items`` into a record (step 2 of the class description).
+        Turn one item of ``prepare_items`` into a record (steps 1-2 of the class description).
 
         Args:
             item: One item of ``prepare_items``.
@@ -326,9 +349,7 @@ Triples:
         type_set = set(types)
         triples += [t for t in self._non_taxonomic_triples(ontological_data) if t[0] in type_set and t[2] in type_set]
 
-        text = item["text"]
-        if self.clean_text and self.client is not None:
-            text = self.clean_context(text)
+        text = self.clean_context(item["text"])
         triples = self.clean_gold(triples)
         return {
             "id": uuid.uuid4().hex,
@@ -339,10 +360,8 @@ Triples:
         }
 
     def clean_context(self, text: str) -> str:
-        """Ask the LLM to add missing spaces to ``text`` and drop an unfinished last sentence. Without a client,
-        or if the request fails, ``text`` is returned unchanged."""
-        if self.client is None:
-            return text
+        """Ask the LLM to add missing spaces to ``text`` and drop an unfinished last sentence. If the request
+        fails, ``text`` is returned unchanged."""
         result = self._call_tool(self.CONTEXT_CLEANING_PROMPT.format(context=text), "clean_paragraph",
                                  "Return a cleaned, well-formed paragraph.",
                                  {"paragraph": {"type": "string", "description": "The cleaned paragraph."}},
@@ -355,9 +374,8 @@ Triples:
         Add missing spaces to the head, relation and tail of every triple (``CompoundSubstance`` -> ``compound
         substance``), with ``clean_label``.
 
-        Each label is sent to the LLM once and its answer kept in ``self.label_cache`` for later documents;
-        ``is-a`` and ``instance-of`` are never sent. Without a client, or with ``clean_text=False``, only the
-        cache is used (it starts with ``disjointWith`` -> ``disjoint with``), and other labels stay as they are.
+        Each label is sent to the LLM once and its answer kept in ``self.label_cache`` for later documents (the
+        cache starts with ``disjointWith`` -> ``disjoint with``); ``is-a`` and ``instance-of`` are never sent.
         """
         return [[self.clean_label(head), self.clean_label(relation), self.clean_label(tail)]
                 for head, relation, tail in triples]
@@ -365,8 +383,7 @@ Triples:
     def clean_label(self, label: str) -> str:
         """Clean one label for ``clean_gold``: take it from ``self.label_cache``, or ask the LLM and cache the
         answer. A label the LLM could not clean is returned unchanged."""
-        use_llm = self.clean_text and self.client is not None
-        if label in self.TAXONOMIC_RELATIONS or label in self.label_cache or not use_llm:
+        if label in self.TAXONOMIC_RELATIONS or label in self.label_cache:
             return self.label_cache.get(label, label)
         result = self._call_tool(self.LABEL_CLEANING_PROMPT.format(context=label), "clean_phrase",
                                  "Return a cleaned, well-formed phrase.",
@@ -380,7 +397,7 @@ Triples:
         return phrase
 
     # ------------------------------------------------------------------ #
-    # Step 3: six-stage cleaning (deep_clean=True)
+    # Step 3: six-stage deep cleaning
     # ------------------------------------------------------------------ #
     def deep_clean(self, records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Clean every record with ``deep_clean_record``. A record whose cleaning raises an error is logged and
@@ -398,7 +415,7 @@ Triples:
     def deep_clean_record(self, record: Dict[str, Any]) -> Dict[str, Any]:
         """
         Clean one record in the six stages of the class description: ``structural_cleanup`` of the context,
-        ``filter_triples`` (stages 2-4), ``normalize_types``, and with a client the LLM stage (5-6).
+        ``filter_triples`` (stages 2-4), ``normalize_types``, and the LLM stage (5-6).
 
         Returns:
             A cleaned copy of the record; the input record is not modified.
@@ -408,7 +425,7 @@ Triples:
         triples, flagged = self._normalize_triples(cleaned.get(self.TRIPLES_KEY, []))
         if isinstance(cleaned.get("types"), list):
             cleaned["types"] = self.normalize_types(cleaned["types"])
-        if self.client is not None and cleaned["context"]:
+        if cleaned["context"]:
             cleaned["context"], triples = self._llm_clean(str(record.get("id", "?")), cleaned["context"],
                                                           triples, flagged)
         cleaned[self.TRIPLES_KEY] = triples
@@ -564,7 +581,7 @@ Triples:
         return new_context, corrected
 
     # ------------------------------------------------------------------ #
-    # Step 4: alignment filter (alignment_filter=True), an LLM as judge
+    # Step 4: alignment filter, an LLM as judge
     # ------------------------------------------------------------------ #
     def annotate_alignment(self, records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -576,8 +593,6 @@ Triples:
             (poor) to 5 (excellent). The annotation is ``None`` only when ``annotation_retries`` is set and every
             attempt failed.
         """
-        if self.client is None:
-            raise ValueError("annotate_alignment needs an OpenAI `client`.")
         annotated = self._parallel_map(self._annotate, records)
         failed = sum(r["annotation"] is None for r in annotated)
         if failed:
@@ -595,10 +610,9 @@ Triples:
     def filter_by_alignment(self, records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
         Keep the records ``annotate_alignment`` rated ``aligned``, or ``partially_aligned`` with a rating of at
-        least ``min_partial_rating``. They are returned as ``{"id", "context", "primitive-ontology-triples"}``,
-        without ``terms``, ``types`` and the annotation, as in the released train set.
+        least ``min_partial_rating``. They are returned without their ``"annotation"``.
         """
-        return [{"id": r["id"], "context": r["context"], self.TRIPLES_KEY: r[self.TRIPLES_KEY]}
+        return [{key: value for key, value in r.items() if key != "annotation"}
                 for r in records if self._is_aligned(r.get("annotation"))]
 
     def _is_aligned(self, annotation: Optional[Dict[str, Any]]) -> bool:
@@ -617,6 +631,69 @@ Triples:
         """The ontology's non-taxonomic relations as ``[head, relation, tail]`` triples."""
         section = getattr(ontological_data, "type_non_taxonomic_relations", None)
         return [[r.head, r.relation, r.tail] for r in (getattr(section, "non_taxonomies", None) or [])]
+
+    # ------------------------------------------------------------------ #
+    # Step 5: task samples (ontology construction or expansion)
+    # ------------------------------------------------------------------ #
+    def prepare_samples(self, records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Turn records into the samples of ``task`` (step 5 of the class description). ``preprocess`` calls it
+        last; call it directly to turn records you already have into samples.
+
+        Returns:
+            For ``ontology_construction``, one sample per record. For ``ontology_expansion``, one sample per
+            record with at least one triple to extend; the split is seeded with ``random_state``.
+        """
+        if self.task == "ontology_construction":
+            return [{"id": r["id"],
+                     "context": r["context"],
+                     "terms": list(r.get("terms", [])),
+                     "types": list(r.get("types", [])),
+                     self.TRIPLES_KEY: [list(triple) for triple in r[self.TRIPLES_KEY]]}
+                    for r in records]
+
+        rng = random.Random(self.random_state)
+        samples = []
+        for record in records:
+            initial, extended = self.split_triples(record[self.TRIPLES_KEY], rng)
+            if not extended:
+                continue
+            terms, types = set(), set()
+            for head, relation, tail in extended:
+                if self.normalize_relation(relation, "hyphen") == "instance-of":
+                    terms.add(head)
+                else:
+                    types.add(head)
+                types.add(tail)
+            samples.append({"id": record["id"],
+                            "context": record["context"],
+                            "terms": sorted(terms),
+                            "types": sorted(types),
+                            self.INITIAL_KEY: initial,
+                            self.EXTENDED_KEY: extended})
+        return samples
+
+    def split_triples(self, triples: Sequence[Sequence[str]],
+                      rng: random.Random) -> Tuple[List[List[str]], List[List[str]]]:
+        """
+        Split a record's triples into an initial ontology and the triples that extend it, for
+        ``ontology_expansion``. The shuffled triples are grouped by tail; the first half of each group (at least one
+        triple) goes to the initial ontology and the rest to the extension.
+
+        Returns:
+            ``(initial, extended)``.
+        """
+        shuffled = [list(triple) for triple in triples]
+        rng.shuffle(shuffled)
+        groups: Dict[str, List[List[str]]] = {}
+        for triple in shuffled:
+            groups.setdefault(triple[2], []).append(triple)
+        initial, extended = [], []
+        for group in groups.values():
+            cut = max(1, len(group) // 2)
+            initial.extend(group[:cut])
+            extended.extend(group[cut:])
+        return initial, extended
 
     # ------------------------------------------------------------------ #
     # OpenAI requests
