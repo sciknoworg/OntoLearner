@@ -221,7 +221,7 @@ MAX_TRIPLES_PER_ITEM = 48
 
 
 
-# BigDipperAI Task A and optional Task B training supervision.
+# BigDipperAI Ontology Construction and optional Ontology Expansion's training supervision.
 DEV_RATIO = 0.2
 DEV_SALT = "llms4ol-task-a-baseline-v1"
 FOLD_COUNT = 5
@@ -250,12 +250,12 @@ TARGET_MODULES = [
 ]
 
 
-class BigDipperAILearner(PrimitiveOntologyLearner):
+class BigDipperAIPrimitiveLearner(PrimitiveOntologyLearner):
     """Generate primitive ontology triples with the BigDipperAI method.
 
-    The original training uses Task A labels and optional aligned Task B
+    The original training uses Ontology Construction labels and optional aligned Ontology Expansion
     labels for relation-weighted 4-bit QLoRA. With ``train_adapter=False``, fit
-    prepares the same training supervision and Task A graph index without
+    prepares the same training supervision and Ontology Construction graph index without
     training. This development path is not an equivalent trained checkpoint.
 
     """
@@ -280,7 +280,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
 
         Args:
             model_id: Hugging Face base model ID or local path.
-            auxiliary_data: Optional labeled Task B Reuse records.
+            auxiliary_data: Optional labeled Ontology Expansion records.
             device: Model device for base-model inference.
             train_adapter: Whether to train the original weighted QLoRA adapter.
             adapter_path: Optional existing trained adapter directory; skips training.
@@ -356,42 +356,42 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         return None
 
     def _prepare_training_data(self, data: Any) -> None:
-        """Prepare original Task A and optional schema-aligned Task B supervision."""
+        """Prepare original Ontology Construction and optional schema-aligned Ontology Expansion supervision."""
         samples = data if isinstance(data, (list, tuple)) else [data]
-        task_a = [self._normalize_record(sample) for sample in samples]
-        if not task_a:
-            raise ValueError("Training requires at least one labeled Task A record.")
-        for sample in task_a:
+        ontology_construction = [self._normalize_record(sample) for sample in samples]
+        if not ontology_construction:
+            raise ValueError("Training requires at least one labeled Ontology Construction record.")
+        for sample in ontology_construction:
             if "primitive-ontology-triples" not in sample:
-                raise ValueError("Task A training records require 'primitive-ontology-triples'.")
+                raise ValueError("Ontology Construction training records require 'primitive-ontology-triples'.")
 
-        task_b = [self._normalize_record(sample) for sample in self.auxiliary_data or []]
-        task_a_rows = [self._task_a_record(sample) for sample in task_a]
-        task_b_rows, task_b_metadata = self._convert_task_b_items(task_b)
+        ontology_expansion = [self._normalize_record(sample) for sample in self.auxiliary_data or []]
+        ontology_construction_rows = [self._ontology_construction_record(sample) for sample in ontology_construction]
+        ontology_expansion_rows, ontology_expansion_metadata = self._convert_ontology_expansion_items(ontology_expansion)
         # Keep auxiliary samples in the training rows, not in graph completion.
-        mixed_rows = task_a_rows + task_b_rows
+        mixed_rows = ontology_construction_rows + ontology_expansion_rows
         ids = [row["id"] for row in mixed_rows]
         if len(ids) != len(set(ids)):
             raise ValueError("Duplicate ID in combined training records.")
 
         self.train_rows = mixed_rows
-        self.graph_index = self._build_graph_index(task_a)
+        self.graph_index = self._build_graph_index(ontology_construction)
         self.training_summary = {
-            "task_a_rows": len(task_a_rows),
-            "task_a_dev_rows": sum(row["split"] == "dev" for row in task_a_rows),
+            "ontology_construction_rows": len(ontology_construction_rows),
+            "ontology_construction_dev_rows": sum(row["split"] == "dev" for row in ontology_construction_rows),
             "mixed_train_rows": len(mixed_rows),
             "allowed_relations": ALLOWED_RELATIONS,
-            **task_b_metadata,
+            **ontology_expansion_metadata,
         }
 
         # Full QLoRA training is optional; the CPU path prepares data only.
         if self.train_adapter and not self._existing_adapter:
             if not self.device.startswith("cuda"):
                 raise RuntimeError("Original weighted 4-bit QLoRA training requires a CUDA device.")
-            eval_rows = [row for row in task_a_rows if row["split"] == "dev"]
+            eval_rows = [row for row in ontology_construction_rows if row["split"] == "dev"]
             if not eval_rows:
                 raise ValueError(
-                    "No Task A development records selected by the submitted fold algorithm. "
+                    "No Ontology Construction development records selected by the submitted fold algorithm. "
                     "Use more training records when train_adapter=True."
                 )
             self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -413,7 +413,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         if self.generator is None:
             raise RuntimeError("Call load() before predict(), or fit() with train_adapter=True.")
         if not self.graph_index:
-            raise RuntimeError("Call fit() with Task A training annotations before predict().")
+            raise RuntimeError("Call fit() with Ontology Construction training annotations before predict().")
         samples = data if isinstance(data, (list, tuple)) else [data]
         items = [self._normalize_record(sample) for sample in samples]
         predictions, self.inference_log = self._predict_items(
@@ -432,7 +432,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
     @dataclass
     class ParseResult:
         """Store parsed ontology triples and model-output diagnostics."""
-        rows: List["ScoredTriple"]
+        rows: List["BigDipperAIPrimitiveLearner.ScoredTriple"]
         hard_error: str = ""
         soft_errors: Tuple[str, ...] = ()
         raw_length: int = 0
@@ -450,10 +450,10 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
 
 
     def _build_prompt(self, item: Dict[str, Any]) -> str:
-        """Build the constrained JSON extraction prompt for a Task A item.
+        """Build the constrained JSON extraction prompt for a Ontology Construction item.
 
         Args:
-            item: Task A record with an ID and text context.
+            item: Ontology Construction record with an ID and text context.
 
         Returns:
             JSON-encoded prompt with permitted relations and output schema.
@@ -551,7 +551,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
 
 
     def _triples_from_item(self, item: Dict[str, Any]) -> List[Triple]:
-        """Extract well-formed Task A ground-truth triples from a record."""
+        """Extract well-formed Ontology Construction ground-truth triples from a record."""
         rows: List[Triple] = []
         for triple in item.get("primitive-ontology-triples", []):
             if isinstance(triple, list) and len(triple) == 3:
@@ -744,7 +744,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
 
     def _dedupe_scored(self, rows: Iterable[ScoredTriple]) -> List[ScoredTriple]:
         """Keep the highest-scoring row for each distinct triple."""
-        best: Dict[Triple, ScoredTriple] = {}
+        best: Dict[Triple, BigDipperAIPrimitiveLearner.ScoredTriple] = {}
         for row in rows:
             if row.triple not in best or row.score > best[row.triple].score:
                 best[row.triple] = row
@@ -754,7 +754,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
     def _salvage_model_triples(self, text: str) -> List[ScoredTriple]:
         """Recover valid triple arrays when the full JSON cannot be parsed."""
         decoder = json.JSONDecoder()
-        rows: List[ScoredTriple] = []
+        rows: List[BigDipperAIPrimitiveLearner.ScoredTriple] = []
         for index, char in enumerate(text):
             if char != "[":
                 continue
@@ -799,7 +799,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
             return self.ParseResult([], hard_error="json_not_object_or_list", raw_length=len(text))
         if not isinstance(triples_payload, list):
             return self.ParseResult([], hard_error="triples_not_list", raw_length=len(text))
-        rows: List[ScoredTriple] = []
+        rows: List[BigDipperAIPrimitiveLearner.ScoredTriple] = []
         diagnostics = []
         for row in triples_payload:
             triple = self._coerce_triple(row)
@@ -836,11 +836,11 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         graph_index: Dict[str, Any],
         seed_rows: Sequence[ScoredTriple],
     ) -> List[ScoredTriple]:
-        """Recover supported self-edges from the Task A training graph.
+        """Recover supported self-edges from the Ontology Construction training graph.
 
         Args:
             item: Inference record containing its source context.
-            graph_index: Entity and triple-frequency index from Task A training labels.
+            graph_index: Entity and triple-frequency index from Ontology Construction training labels.
             seed_rows: Parsed triples used to identify relevant entities.
 
         Returns:
@@ -862,7 +862,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         entities.update(present)
         entity_keys = {self._compact_key(entity) for entity in entities}
         rows = []
-        # Only recover self-edges observed in the Task A training graph.
+        # Only recover self-edges observed in the Ontology Construction training graph.
         for record in graph_index.get("triple_counts", []):
             triple = (record["subject"], record["relation"], record["object"])
             count = int(record["count"])
@@ -924,7 +924,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
             Accepted triples and per-candidate diagnostic records.
         """
         # Apply source-specific thresholds before selecting the strongest triple.
-        best: Dict[Triple, ScoredTriple] = {}
+        best: Dict[Triple, BigDipperAIPrimitiveLearner.ScoredTriple] = {}
         rejected: Counter[str] = Counter()
         for row in rows:
             cleaned = self._clean_candidate_triple(row.triple)
@@ -1059,7 +1059,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
 
 
     def _stable_dev_split(self, item_id: str) -> str:
-        """Assign the original hash-based development split to a Task A item."""
+        """Assign the original hash-based development split to a Ontology Construction item."""
         digest = hashlib.md5(f"{DEV_SALT}:{item_id}".encode("utf-8")).hexdigest()
         bucket = int(digest[:8], 16) / 0xFFFFFFFF
         return "dev" if bucket < DEV_RATIO else "train"
@@ -1069,8 +1069,8 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         digest = hashlib.md5(f"{FOLD_SALT}:{item_id}".encode("utf-8")).hexdigest()
         return int(digest[:8], 16) % FOLD_COUNT
 
-    def _task_a_record(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        """Convert a labeled Task A sample into supervised JSON training data."""
+    def _ontology_construction_record(self, item: Dict[str, Any]) -> Dict[str, Any]:
+        """Convert a labeled Ontology Construction sample into supervised JSON training data."""
         triples = self._triples_from_item(item)
         return {
             "id": item["id"],
@@ -1086,8 +1086,8 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
             "gold_triple_count": len(triples),
         }
 
-    def _coerce_task_b_triple(self, row: Any) -> Triple | None:
-        """Convert one Task B triple to a validated string tuple."""
+    def _coerce_ontology_expansion_triple(self, row: Any) -> Triple | None:
+        """Convert one Ontology Expansion triple to a validated string tuple."""
         if not isinstance(row, list) or len(row) != 3:
             return None
         values = tuple(str(value).strip() for value in row)
@@ -1095,8 +1095,8 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
             return None
         return values  # type: ignore[return-value]
 
-    def _clean_task_b_triples(self, groups: Sequence[Iterable[Any]]) -> Tuple[List[Triple], Dict[str, int], int]:
-        """Merge and deduplicate permitted initial and extended Task B triples."""
+    def _clean_ontology_expansion_triples(self, groups: Sequence[Iterable[Any]]) -> Tuple[List[Triple], Dict[str, int], int]:
+        """Merge and deduplicate permitted initial and extended Ontology Expansion triples."""
         allowed = set(ALLOWED_RELATIONS)
         dropped: Counter[str] = Counter()
         seen = set()
@@ -1104,7 +1104,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         duplicate_count = 0
         for group in groups:
             for row in group:
-                triple = self._coerce_task_b_triple(row)
+                triple = self._coerce_ontology_expansion_triple(row)
                 if triple is None:
                     dropped["<bad-shape>"] += 1
                     continue
@@ -1118,8 +1118,8 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
                 triples.append(triple)
         return triples, dict(sorted(dropped.items())), duplicate_count
 
-    def _convert_task_b_items(self, items: Sequence[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
-        """Adapt Task B labels as auxiliary Task A training examples.
+    def _convert_ontology_expansion_items(self, items: Sequence[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+        """Adapt Ontology Expansion labels as auxiliary Ontology Construction training examples.
 
         Args:
             items: Normalized Reuse records with initial and extended ontology triples.
@@ -1132,9 +1132,9 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         kept_relations: Counter[str] = Counter()
         duplicate_triples = 0
         empty_targets = 0
-        # Reuse both initial and extended Task B triples as auxiliary supervision.
+        # Reuse both initial and extended Ontology Expansion triples as auxiliary supervision.
         for item in items:
-            triples, dropped, duplicate_count = self._clean_task_b_triples(
+            triples, dropped, duplicate_count = self._clean_ontology_expansion_triples(
                 [
                     item.get("initial-primitive-ontology-triples") or [],
                     item.get("extended-primitive-ontology-triples") or [],
@@ -1145,7 +1145,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
             duplicate_triples += duplicate_count
             if not triples:
                 empty_targets += 1
-            item_id = f"task_b_reuse:{item['id']}"
+            item_id = f"ontology_expansion_reuse:{item['id']}"
             prompt_item = {
                 "id": item_id,
                 "context": item["context"],
@@ -1156,7 +1156,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
                     "id": item_id,
                     "split": "train",
                     "fold": self._fold_for_id(item_id),
-                    "source_task": "task_b_reuse_as_task_a_aux",
+                    "source_task": "ontology_expansion_reuse_as_ontology_construction_aux",
                     "prompt": self._build_prompt(prompt_item),
                     "target_json": json.dumps(
                         {"primitive-ontology-triples": self._serialize_triples(triples)},
@@ -1168,22 +1168,22 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
                 }
             )
         metadata = {
-            "task_b_items": len(items),
-            "task_b_aux_rows": len(rows),
-            "task_b_kept_triples": sum(row["gold_triple_count"] for row in rows),
-            "task_b_duplicate_triples_removed": duplicate_triples,
-            "task_b_empty_targets": empty_targets,
-            "task_b_kept_relation_counts": dict(sorted(kept_relations.items())),
-            "task_b_dropped_relation_counts": dict(sorted(dropped_relations.items())),
+            "ontology_expansion_items": len(items),
+            "ontology_expansion_aux_rows": len(rows),
+            "ontology_expansion_kept_triples": sum(row["gold_triple_count"] for row in rows),
+            "ontology_expansion_duplicate_triples_removed": duplicate_triples,
+            "ontology_expansion_empty_targets": empty_targets,
+            "ontology_expansion_kept_relation_counts": dict(sorted(kept_relations.items())),
+            "ontology_expansion_dropped_relation_counts": dict(sorted(dropped_relations.items())),
         }
         return rows, metadata
 
 
     def _build_graph_index(self, items: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
-        """Build the original graph index using Task A training annotations only."""
+        """Build the original graph index using Ontology Construction training annotations only."""
         triple_counts: Counter[Triple] = Counter()
         entity_forms: Dict[str, Counter[str]] = defaultdict(Counter)
-        # Index only the labeled Task A records, not auxiliary Task B examples.
+        # Index only the labeled Ontology Construction records, not auxiliary Ontology Expansion examples.
         for item in items:
             for subject, relation, obj in self._triples_from_item(item):
                 triple_counts[(subject, relation, obj)] += 1
@@ -1291,7 +1291,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         """Fine-tune the submitted relation-weighted 4-bit QLoRA adapter.
 
         Args:
-            train_rows: Prepared Task A and optional auxiliary Task B examples.
+            train_rows: Prepared Ontology Construction and optional auxiliary Ontology Expansion examples.
             eval_rows: Held-out development examples for evaluation.
             adapter_dir: Directory used for checkpoints and the trained adapter.
             base_model: Pretrained Qwen model ID.
@@ -1473,7 +1473,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
 
     class AdapterGenerator:
         """Load a fine-tuned 4-bit QLoRA adapter for ontology inference."""
-        def __init__(self, learner: "BigDipperAILearner", base_model: str, adapter_dir: Path, local_files_only: bool = False) -> None:
+        def __init__(self, learner: "BigDipperAIPrimitiveLearner", base_model: str, adapter_dir: Path, local_files_only: bool = False) -> None:
             """Load the pretrained model, tokenizer, and trained LoRA adapter."""
             self.learner = learner
             import torch
@@ -1569,11 +1569,11 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
         generator: Any,
         retry_output_tokens: int = RETRY_OUTPUT_TOKENS,
     ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
-        """Generate and validate Task A triples with the submitted inference flow.
+        """Generate and validate Ontology Construction triples with the submitted inference flow.
 
         Args:
             items: Normalized inference records with text contexts.
-            graph_index: Task A graph-completion index.
+            graph_index: Ontology Construction graph-completion index.
             generator: Initialized base-model or adapter generator.
             retry_output_tokens: Token budget for a failed generation retry.
 
@@ -1680,7 +1680,7 @@ class BigDipperAILearner(PrimitiveOntologyLearner):
 
         def __init__(
             self,
-            learner: "BigDipperAILearner",
+            learner: "BigDipperAIPrimitiveLearner",
             base_model: str,
             device: str = "cpu",
             local_files_only: bool = False,

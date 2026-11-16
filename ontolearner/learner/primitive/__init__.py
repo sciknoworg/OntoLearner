@@ -13,6 +13,6 @@
 # limitations under the License.
 
 
-from .proteam import ProTeamLearner
-from .bigdipperai import BigDipperAILearner
-from .voltiq import VoltIQLearner
+from .proteam import ProTeamPrimitiveLearner
+from .bigdipperai import BigDipperAIPrimitiveLearner
+from .voltiq import VoltIQPrimitiveLearner

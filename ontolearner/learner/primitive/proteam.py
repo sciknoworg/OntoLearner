@@ -35,7 +35,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from ...base import PrimitiveOntologyLearner
 
 
-class ProTeamLearner(PrimitiveOntologyLearner):
+class ProTeamPrimitiveLearner(PrimitiveOntologyLearner):
     """
     Retrieval-augmented learner for primitive ontology construction and expansion.
 
@@ -177,8 +177,11 @@ Format: [["subj", "rel", "obj"], ...]"""
         return None
 
     def _get_context(self, sample: Dict[str, Any]) -> str:
-        """Combine the text of a sample's documents into one passage."""
-        return "\n\n".join(document["text"] for document in sample["documents"])
+        """Return the textual context supplied by primitive ontology task samples."""
+        context = sample["context"]
+        if not isinstance(context, str):
+            raise TypeError("Expected 'context' to be a string.")
+        return context
 
     def _fit_retriever(self, data: List[Dict[str, Any]], task: str) -> None:
         """Encode the labeled training documents for few-shot retrieval."""

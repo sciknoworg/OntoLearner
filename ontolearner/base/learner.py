@@ -310,6 +310,7 @@ class PrimitiveOntologyLearner(AutoLearner):
             input_fields = (
                 "id",
                 "documents",
+                "context",
                 "initial-primitive-ontology-triples",
                 "terms",
                 "types",
@@ -318,7 +319,7 @@ class PrimitiveOntologyLearner(AutoLearner):
             for sample in data:
                 if test:
                     formatted_data.append({
-                        field: sample[field] for field in input_fields
+                        field: sample[field] for field in input_fields if field in sample
                     })
                 else:
                     formatted_data.append(dict(sample))
