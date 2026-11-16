@@ -71,11 +71,10 @@ print("Generated test documents:", len(test_synthetic.generated_docs))
 
 print("\nSTEP 6: Initializing the preprocessor")
 # One preprocessor for train and test: both get the same text cleaning, six-stage deep cleaning and LLM-judge
-# alignment filter, and are then turned into expansion samples (each record's triples split into an initial ontology
-# and the triples that extend it; records with nothing to extend are dropped).
+# alignment filter, and are then turned into construction samples (a text and its complete ontology).
 preprocessor = SyntheticDataPreprocessor(
     client=OpenAI(api_key=api_key),
-    task="ontology_expansion",
+    task="ontology_construction",
     random_state=42,
 )
 
