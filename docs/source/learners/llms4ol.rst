@@ -79,3 +79,6 @@ LLMs4OL is a community development initiative collocated with the International 
    llms4ol_challenge/skhnlp_learner
    llms4ol_challenge/alexbek_learner
    llms4ol_challenge/sbunlp_learner
+   llms4ol_challenge/xuanji_learner
+   llms4ol_challenge/hybridai_learner
+   llms4ol_challenge/laboroai_learner
