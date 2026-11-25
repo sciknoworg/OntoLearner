@@ -12,18 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-ProTeam learner for primitive ontology construction and expansion.
-
-This implementation integrates the original ProTeam submission to the
-LLMs4OL 2026 competition into the OntoLearner framework.
-
-The submitted retrieval-augmented generation, few-shot prompting,
-ontology extraction, pattern-based term typing, and vocabulary-constrained
-filtering methodologies are preserved while adapting the implementation
-to OntoLearner's PrimitiveOntologyLearner interface.
-"""
-
 import json
 import re
 from typing import Any, Dict, List, Optional
@@ -39,57 +27,57 @@ class ProTeamPrimitiveLearner(PrimitiveOntologyLearner):
     """
     Retrieval-augmented learner for primitive ontology construction and expansion.
 
-    This implementation follows the ProTeam submission with Qwen2.5-14B-Instruct
-    and sentence-based retrieval of labeled ontology examples. For ontology
-    expansion, it combines generated triples with pattern-based term typing
-    and vocabulary-constrained filtering.
+    This learner uses semantic retrieval and few-shot prompting to extract
+    ontology triples from textual documents. For ontology expansion, it
+    combines LLM-generated triples with pattern-based term typing and
+    vocabulary-constrained filtering.
     """
 
-    _SYSTEM_PROMPT_A = """You are an expert ontology engineer. Extract ALL ontology triples from the passage.
+    _construction_prompt = """You are an expert ontology engineer. Extract ALL ontology triples from the passage.
 
-A triple is [subject, relation, object].
+    A triple is [subject, relation, object].
+    
+    HOW TO EXTRACT:
+    1. Read the passage. It explicitly states relationships between concepts.
+    2. Extract EVERY relationship the text states — do not skip any, do not invent any
+       that the text does not state.
+    3. Copy each subject and object EXACTLY as it appears in the text: preserve spelling,
+       spacing, hyphens, parentheses, numbers, and codes. Do NOT merge words, do NOT
+       drop spaces, do NOT paraphrase. If the text says "provolone cheese", output
+       "provolone cheese" — never "provolonecheese".
+    
+    RELATION MAPPING (map the text's wording to these exact relation strings):
+      "subclass of" / "type of" / "kind of" / "category of"  -> "is-a"
+      "instance of" / "example of" / "is a valid instance"    -> "instance-of"
+      "disjoint" / "mutually exclusive"                        -> "disjoint with"
+      "equivalent" / "same as" / "equal to"                    -> "equivalent class"
+      "part of" / "component of"                               -> "part_of"
+      "has part" / "contains"                                  -> "has part"
+    Use "is-a" as the default for hierarchy/subtype relations (it is by far the most common).
+    
+    OUTPUT:
+      Output ONLY a JSON array of [subject, relation, object]. No explanation, no markdown.
+      Format: [["exact term", "is-a", "exact parent term"], ...]"""
 
-HOW TO EXTRACT:
-1. Read the passage. It explicitly states relationships between concepts.
-2. Extract EVERY relationship the text states — do not skip any, do not invent any
-   that the text does not state.
-3. Copy each subject and object EXACTLY as it appears in the text: preserve spelling,
-   spacing, hyphens, parentheses, numbers, and codes. Do NOT merge words, do NOT
-   drop spaces, do NOT paraphrase. If the text says "provolone cheese", output
-   "provolone cheese" — never "provolonecheese".
+    _expansion_prompt = """You are an expert ontology engineer performing ONTOLOGY EXTENSION.
 
-RELATION MAPPING (map the text's wording to these exact relation strings):
-  "subclass of" / "type of" / "kind of" / "category of"  -> "is-a"
-  "instance of" / "example of" / "is a valid instance"    -> "instance-of"
-  "disjoint" / "mutually exclusive"                        -> "disjoint with"
-  "equivalent" / "same as" / "equal to"                    -> "equivalent class"
-  "part of" / "component of"                               -> "part_of"
-  "has part" / "contains"                                  -> "has part"
-Use "is-a" as the default for hierarchy/subtype relations (it is by far the most common).
-
-OUTPUT:
-  Output ONLY a JSON array of [subject, relation, object]. No explanation, no markdown.
-  Format: [["exact term", "is-a", "exact parent term"], ...]"""
-
-    _SYSTEM_PROMPT_B = """You are an expert ontology engineer performing ONTOLOGY EXTENSION.
-
-You will receive:
-1. A text passage (context)
-2. An existing ontology (initial triples)
-3. New terms that need to be typed (terms) — SHORT noun phrases
-4. Available types for typing (types) — SHORT noun phrases
-
-Your task: Generate the EXTENDED triples that ADD new knowledge.
-
-CRITICAL RULES:
-1. Only use terms/types from the provided lists — do NOT invent new ones.
-2. Use "is-a" for subclass relationships (most common).
-3. Do NOT repeat triples already in the initial ontology.
-4. Output ONLY a JSON array of [subject, relation, object]. No explanation.
-
-Valid relations: "is-a", "instance-of", "disjoint with", "equivalent class", "has part", "part_of"
-
-Format: [["subj", "rel", "obj"], ...]"""
+    You will receive:
+    1. A text passage (context)
+    2. An existing ontology (initial triples)
+    3. New terms that need to be typed (terms) — SHORT noun phrases
+    4. Available types for typing (types) — SHORT noun phrases
+    
+    Your task: Generate the EXTENDED triples that ADD new knowledge.
+    
+    CRITICAL RULES:
+    1. Only use terms/types from the provided lists — do NOT invent new ones.
+    2. Use "is-a" for subclass relationships (most common).
+    3. Do NOT repeat triples already in the initial ontology.
+    4. Output ONLY a JSON array of [subject, relation, object]. No explanation.
+    
+    Valid relations: "is-a", "instance-of", "disjoint with", "equivalent class", "has part", "part_of"
+    
+    Format: [["subj", "rel", "obj"], ...]"""
 
     def __init__(
         self,
@@ -98,6 +86,12 @@ Format: [["subj", "rel", "obj"], ...]"""
         device: str = "cuda",
         batch_size: int = 10,
         max_input_length: int = 3072,
+        construction_top_k: int = 5,
+        expansion_top_k: int = 2,
+        construction_max_new_tokens: int = 900,
+        expansion_max_new_tokens: int = 200,
+        construction_prompt: Optional[str] = None,
+        expansion_prompt: Optional[str] = None,
     ) -> None:
         """
         Initialize the learner with the model and retrieval configuration.
@@ -108,6 +102,13 @@ Format: [["subj", "rel", "obj"], ...]"""
             device: Device used for model inference.
             batch_size: Number of documents processed per generation batch.
             max_input_length: Maximum number of input tokens.
+            construction_top_k: Number of retrieved construction examples.
+            expansion_top_k: Number of retrieved expansion examples.
+            construction_max_new_tokens: Maximum new tokens for construction.
+            expansion_max_new_tokens: Maximum new tokens for expansion.
+            construction_prompt: Custom instruction prompt for ontology construction. If None, use the default construction prompt.
+            expansion_prompt: Custom instruction prompt for ontology expansion. If None, use the default expansion prompt.
+
         """
         super().__init__()
 
@@ -116,6 +117,12 @@ Format: [["subj", "rel", "obj"], ...]"""
         self.device = device
         self.batch_size = batch_size
         self.max_input_length = max_input_length
+        self.construction_top_k = construction_top_k
+        self.expansion_top_k = expansion_top_k
+        self.construction_max_new_tokens = construction_max_new_tokens
+        self.expansion_max_new_tokens = expansion_max_new_tokens
+        self.construction_prompt = (self._construction_prompt if construction_prompt is None else construction_prompt)
+        self.expansion_prompt = (self._expansion_prompt if expansion_prompt is None else expansion_prompt)
 
         self.tokenizer = None
         self.model = None
@@ -125,11 +132,15 @@ Format: [["subj", "rel", "obj"], ...]"""
 
     def load(self, model_id: Optional[str] = None, retriever_id: Optional[str] = None, **kwargs: Any) -> None:
         """
-        Load the language model and sentence embedding model.
+        Load the language model, tokenizer, and sentence embedding model.
 
         Args:
             model_id: Optional language model identifier or local path.
             retriever_id: Optional embedding model identifier or local path.
+            **kwargs: Additional framework keyword arguments accepted for compatibility.
+
+        Raises:
+            RuntimeError: If the language model cannot be loaded with any supported attention implementation.
         """
         if model_id is not None:
             self.model_id = model_id
@@ -170,7 +181,7 @@ Format: [["subj", "rel", "obj"], ...]"""
         return None
 
     def _ontology_expansion(self, data: Any, test: bool = False) -> Optional[Any]:
-        """Build the retrieval index or predict ontology extension triples."""
+        """Build the retrieval index or predict ontology expansion triples."""
         if test:
             return self._predict_triples(data, task="ontology_expansion")
         self._fit_retriever(data, task="ontology_expansion")
@@ -208,10 +219,28 @@ Format: [["subj", "rel", "obj"], ...]"""
             convert_to_numpy=True,
         )
 
-    def _retrieve_examples(self, data: List[Dict[str, Any]], task: str) -> List[List[Dict[str, Any]]]:
-        """Retrieve the most similar labeled documents for each input."""
+    def retrieve_examples(self, data: List[Dict[str, Any]], task: str) -> List[List[Dict[str, Any]]]:
+        """
+        Retrieve the most similar labeled examples for each input sample.
+
+        Examples are ranked by cosine similarity between normalized context
+        embeddings. The number of retrieved examples is limited by the
+        task-specific retrieval count and the available training data.
+
+        Args:
+            data: Input samples containing textual contexts.
+            task: Either "ontology_construction" or "ontology_expansion".
+
+        Returns:
+            List of ranked training example lists, one for each input sample,
+            ordered by decreasing similarity.
+
+        Raises:
+            RuntimeError: If the retriever has not been loaded or training
+                          embeddings are unavailable for the specified task.
+        """
         if self.retriever is None or task not in self.train_embeddings:
-            raise RuntimeError("Call load() and fit() for this task before predict().")
+            raise RuntimeError("Call load() and fit() for this task before retrieving examples.")
         if not data:
             return []
 
@@ -222,7 +251,8 @@ Format: [["subj", "rel", "obj"], ...]"""
             convert_to_numpy=True,
         )
         scores = query_embeddings @ self.train_embeddings[task].T
-        top_k = min(5 if task == "ontology_construction" else 2, len(self.train_data[task]))
+        top_k = self.construction_top_k if task == "ontology_construction" else self.expansion_top_k
+        top_k = min(top_k, len(self.train_data[task]))
 
         examples = []
         for row in scores:
@@ -231,9 +261,18 @@ Format: [["subj", "rel", "obj"], ...]"""
             examples.append([self.train_data[task][index] for index in indices])
         return examples
 
-    def _build_prompt_a(self, sample: Dict[str, Any], examples: List[Dict[str, Any]]) -> List[Dict[str, str]]:
-        """Prepare the Flagship few-shot prompt using the retrieved documents."""
-        messages = [{"role": "system", "content": self._SYSTEM_PROMPT_A}]
+    def build_construction_prompt(self, sample: Dict[str, Any], examples: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+        """
+        Build a few-shot prompt for ontology construction.
+
+        Args:
+            sample: Input sample containing a textual context.
+            examples: Labeled examples containing context and primitive-ontology-triples.
+
+        Returns:
+            A list of chat messages containing the instructions, examples, and input context.
+        """
+        messages = [{"role": "system", "content": self.construction_prompt}]
         for example in examples:
             context = self._get_context(example)[:900]
             triples = example["primitive-ontology-triples"][:16]
@@ -242,8 +281,8 @@ Format: [["subj", "rel", "obj"], ...]"""
         messages.append({"role": "user", "content": f"TEXT:\n{self._get_context(sample)}"})
         return messages
 
-    def _format_user_b(self, sample: Dict[str, Any]) -> str:
-        """Format the document and existing ontology for the Reuse task."""
+    def _format_expansion_input(self, sample: Dict[str, Any]) -> str:
+        """Format the context, initial triples, terms, and types for expansion."""
         initial = json.dumps(sample.get("initial-primitive-ontology-triples", []))
         terms = json.dumps(sample.get("terms", []))
         types = json.dumps(sample.get("types", []))
@@ -254,24 +293,48 @@ Format: [["subj", "rel", "obj"], ...]"""
             f"AVAILABLE TYPES: {types}"
         )
 
-    def _build_prompt_b(self, sample: Dict[str, Any], examples: List[Dict[str, Any]]) -> List[Dict[str, str]]:
-        """Prepare the Reuse prompt with examples from the initial ontologies."""
-        messages = [{"role": "system", "content": self._SYSTEM_PROMPT_B}]
+    def build_expansion_prompt(self, sample: Dict[str, Any], examples: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+        """
+        Build a few-shot prompt for ontology expansion.
+
+        Args:
+            sample: Input sample containing context and optionally initial-primitive-ontology-triples, terms, and types.
+            examples: Labeled expansion samples containing extended-primitive-ontology-triples.
+
+        Returns:
+            A list of chat messages containing the instructions, examples, and expansion input.
+        """
+        messages = [{"role": "system", "content": self.expansion_prompt}]
         for example in examples:
-            messages.append({"role": "user", "content": self._format_user_b(example)})
+            messages.append({"role": "user", "content": self._format_expansion_input(example)})
             messages.append({
                 "role": "assistant",
                 "content": json.dumps(example["extended-primitive-ontology-triples"]),
             })
-        messages.append({"role": "user", "content": self._format_user_b(sample)})
+        messages.append({"role": "user", "content": self._format_expansion_input(sample)})
         return messages
 
-    def _generate_batch(self, messages_list: List[List[Dict[str, str]]], max_new_tokens: int) -> List[str]:
-        """Generate ontology triples using the instruction-tuned model."""
-        import torch
+    def generate_batch(self, messages_list: List[List[Dict[str, str]]], max_new_tokens: int) -> List[str]:
+        """
+        Generate text responses from chat messages using batched inference.
 
+        This method applies the model's chat template and performs deterministic
+        generation, decoding only the newly generated tokens for each conversation.
+
+        Args:
+            messages_list: List of conversations, each containing messages
+                           with role and content fields.
+            max_new_tokens: Maximum number of new tokens to generate per conversation.
+
+        Returns:
+            List of decoded model responses in the same order as the input
+            conversations, excluding the input prompts.
+
+        Raises:
+            RuntimeError: If the language model or tokenizer has not been loaded.
+        """
         if self.model is None or self.tokenizer is None:
-            raise RuntimeError("Call load() before predict().")
+            raise RuntimeError("Call load() before generating responses.")
 
         results = []
         for start in range(0, len(messages_list), self.batch_size):
@@ -305,8 +368,19 @@ Format: [["subj", "rel", "obj"], ...]"""
                 )
         return results
 
-    def _parse_triples(self, raw: str) -> List[List[str]]:
-        """Parse generated triples from JSON or quoted text."""
+    def parse_triples(self, raw: str) -> List[List[str]]:
+        """
+        Extract ontology triples from a generated text response.
+
+        The method attempts direct JSON parsing, JSON array extraction, and
+        quoted-triple recovery in that order.
+
+        Args:
+            raw: Raw text generated by a language model.
+
+        Returns:
+            A list of normalized triples, each containing a subject, relation, and object.
+        """
         raw = raw.strip()
         try:
             result = json.loads(raw)
@@ -336,7 +410,7 @@ Format: [["subj", "rel", "obj"], ...]"""
         return self._clean_triples(triples)
 
     def _clean_triples(self, triples: List[Any]) -> List[List[str]]:
-        """Normalize extracted triples and discard invalid relations."""
+        """Normalize triples and discard malformed, empty, or hierarchical self-references."""
         cleaned = []
         for triple in triples:
             if not isinstance(triple, (list, tuple)) or len(triple) != 3:
@@ -349,8 +423,20 @@ Format: [["subj", "rel", "obj"], ...]"""
             cleaned.append([subject, relation, obj])
         return cleaned
 
-    def _pattern_type_terms(self, sample: Dict[str, Any]) -> List[List[str]]:
-        """Extract nearby term-type pairs from Reuse documents."""
+    def predict_term_typings(self, sample: Dict[str, Any]) -> List[List[str]]:
+        """
+        Predict term-typing triples using contextual co-occurrence and proximity.
+
+        This method identifies terms and types occurring within the same
+        sentence segment and selects the highest-scoring type for each term
+        based on textual proximity.
+
+        Args:
+            sample: Expansion record containing the context, terms, and types.
+
+        Returns:
+            List of predicted instance-of triples.
+        """
         triples = []
         context = self._get_context(sample).lower()
         terms = [term.lower() for term in sample.get("terms", [])]
@@ -369,8 +455,20 @@ Format: [["subj", "rel", "obj"], ...]"""
                 triples.append([term, "instance-of", best_type])
         return triples
 
-    def _constrain_b(self, triples: List[List[str]], sample: Dict[str, Any]) -> List[List[str]]:
-        """Filter Reuse predictions against the supplied ontology vocabulary."""
+    def filter_expansion_triples(self, triples: List[List[str]], sample: Dict[str, Any]) -> List[List[str]]:
+        """
+        Filter expansion triples against the vocabulary of the supplied sample.
+
+        The method excludes initial ontology triples and duplicates. If the
+        known vocabulary is nonempty, at least one endpoint must belong to it.
+
+        Args:
+            triples: Normalized candidate triples containing a subject, relation, and object.
+            sample: Expansion sample containing terms, types, and initial ontology triples.
+
+        Returns:
+            A list of filtered triples representing candidate ontology additions.
+        """
         terms = {term.lower().strip() for term in sample.get("terms", [])}
         types = {typ.lower().strip() for typ in sample.get("types", [])}
         for triple in sample.get("initial-primitive-ontology-triples", []):
@@ -398,23 +496,23 @@ Format: [["subj", "rel", "obj"], ...]"""
 
     def _predict_triples(self, data: List[Dict[str, Any]], task: str) -> List[Dict[str, Any]]:
         """Generate triples and return the task-specific ontology predictions."""
-        examples = self._retrieve_examples(data, task)
+        examples = self.retrieve_examples(data, task)
         if task == "ontology_construction":
-            messages = [self._build_prompt_a(sample, retrieved) for sample, retrieved in zip(data, examples)]
+            messages = [self.build_construction_prompt(sample, retrieved) for sample, retrieved in zip(data, examples)]
             target = "primitive-ontology-triples"
-            max_new_tokens = 900
+            max_new_tokens = self.construction_max_new_tokens
         else:
-            messages = [self._build_prompt_b(sample, retrieved) for sample, retrieved in zip(data, examples)]
+            messages = [self.build_expansion_prompt(sample, retrieved) for sample, retrieved in zip(data, examples)]
             target = "extended-primitive-ontology-triples"
-            max_new_tokens = 200
+            max_new_tokens = self.expansion_max_new_tokens
 
         results = []
         for start in range(0, len(messages), self.batch_size):
             batch_messages = messages[start:start + self.batch_size]
             batch_samples = data[start:start + self.batch_size]
-            responses = self._generate_batch(batch_messages, max_new_tokens)
+            responses = self.generate_batch(batch_messages, max_new_tokens)
             for sample, response in zip(batch_samples, responses):
-                triples = self._parse_triples(response)
+                triples = self.parse_triples(response)
                 if task == "ontology_construction":
                     seen = set()
                     unique = []
@@ -425,8 +523,8 @@ Format: [["subj", "rel", "obj"], ...]"""
                             unique.append(triple)
                     triples = unique
                 else:
-                    patterns = self._pattern_type_terms(sample)
+                    patterns = self.predict_term_typings(sample)
                     merged = {tuple(triple) for triple in triples} | {tuple(triple) for triple in patterns}
-                    triples = self._constrain_b([list(triple) for triple in merged], sample)
+                    triples = self.filter_expansion_triples([list(triple) for triple in merged], sample)
                 results.append({"id": sample["id"], target: triples})
         return results

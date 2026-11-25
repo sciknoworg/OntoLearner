@@ -22,7 +22,7 @@ import urllib.request
 from collections import Counter, defaultdict
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 import networkx as nx
 
@@ -31,20 +31,20 @@ from ...base import AutoLearner
 
 class VoltIQTaxonomyLearner(AutoLearner):
     """
-    This implementation integrates the original Volt-IQ submission to the
-    LLMs4OL 2026 competition into the OntoLearner framework. The original
-    substring induction, lexical subsumption, rewrite cascade, source-domain
-    priors, and OBO/OWL parent recovery methods are preserved.
+    Hybrid learner for taxonomy discovery from type labels.
+
+    This learner combines lexical subsumption, substring induction, source
+    parent priors, supervised TF-IDF pair classification, and rewrite-based
+    candidate ranking. Ontology-backed strategies recover direct parent
+    relationships from external OBO and OWL resources.
     """
 
-    TAXONOMY_DISCOVERY_BENCHMARK_METHODS = (
+    taxonomy_methods = (
         "lexical_subsumption",
         "parent_prior",
         "tfidf_pair_linear",
         "hybrid_cascade",
         "rewrite_cascade",
-    )
-    TAXONOMY_DISCOVERY_TEST_METHODS = TAXONOMY_DISCOVERY_BENCHMARK_METHODS + (
         "go_rewrite_hybrid",
         "go_rewrite_strict",
         "obo_rewrite_hybrid",
@@ -56,9 +56,8 @@ class VoltIQTaxonomyLearner(AutoLearner):
         "domain_calibrated_conservative",
         "substring_heuristic",
     )
-    GO_BASIC_OBO_URL = "http://current.geneontology.org/ontology/go-basic.obo"
-    OBO_SOURCE_URLS = {
-        "go": GO_BASIC_OBO_URL,
+    _obo_source_urls = {
+        "go": "http://current.geneontology.org/ontology/go-basic.obo",
         "cl": "http://purl.obolibrary.org/obo/cl.obo",
         "envo": "http://purl.obolibrary.org/obo/envo.obo",
         "pato": "http://purl.obolibrary.org/obo/pato.obo",
@@ -74,15 +73,12 @@ class VoltIQTaxonomyLearner(AutoLearner):
         "doid": "http://purl.obolibrary.org/obo/doid.obo",
         "ncit": "http://purl.obolibrary.org/obo/ncit.obo",
     }
-    TAXONOMY_DISCOVERY_OBO_SOURCE_KEYS = tuple(OBO_SOURCE_URLS)
-    TAXONOMY_DISCOVERY_OWL_SOURCE_URLS = {
+    _owl_source_urls = {
         "iao": "https://raw.githubusercontent.com/information-artifact-ontology/IAO/master/iao.owl",
         "edam": "https://edamontology.org/EDAM.owl",
         "swo": "http://purl.obolibrary.org/obo/swo.owl",
     }
-    TAXONOMY_DISCOVERY_OWL_SOURCE_KEYS = tuple(TAXONOMY_DISCOVERY_OWL_SOURCE_URLS)
-    OBO_IN_OWL_PREFIX = "http://www.geneontology.org/formats/oboInOwl#"
-    REWRITE_SUFFIX_RULES = (
+    _rewrite_suffix_rules = (
         (" model prediction", " model", 2.8),
         (" modeling assumption", " model", 2.8),
         (" characteristic", "", 2.4),
@@ -92,31 +88,50 @@ class VoltIQTaxonomyLearner(AutoLearner):
         (" property", "", 2.0),
     )
 
-### Initialize Parameters ####################################################
-
     def __init__(
         self,
         method: str = "hybrid_cascade",
         target_domain: Optional[str] = None,
         cache_dir: Optional[str | Path] = None,
+        *,
+        obo_source_urls: Optional[Dict[str, str]] = None,
+        owl_source_urls: Optional[Dict[str, str]] = None,
+        rewrite_suffix_rules: Optional[Tuple[Tuple[str, str, float], ...]] = None,
+        sparse_top_k: int = 12,
+        rewrite_top_k: int = 16,
+        negative_ratio: int = 3,
+        tfidf_ngram_range: Tuple[int, int] = (3, 5),
+        classifier_max_iter: int = 1000,
+        random_state: int = 42,
+        obo_download_timeout: float = 120.0,
+        owl_download_timeout: float = 180.0,
         **kwargs: Any,
     ) -> None:
         """
         Initialize the Volt-IQ taxonomy learner and resource paths.
 
         Args:
-            method: Taxonomy induction method to use. Domain-calibrated methods
-                require one of the named LLMs4OL 2026 Taxonomy discovery target domains.
-            target_domain: Target domain (Archeon, Biora, Hylex, or Phyra) for
-                domain-calibrated prediction. Optional for other methods.
+            method: Taxonomy induction method to use. Domain-calibrated methods require one of the named LLMs4OL 2026 Taxonomy discovery target domains.
+            target_domain: Target domain (Archeon, Biora, Hylex, or Phyra) for domain-calibrated prediction. Optional for other methods.
             cache_dir: Directory for locally cached OBO and OWL resources.
+            obo_source_urls: OBO source identifiers and download URLs. If None, use the default sources. GO-specific methods require go.
+            owl_source_urls: OWL source identifiers and RDF/XML download URLs. If None, use the default sources.
+            rewrite_suffix_rules: Suffix, replacement, and score bonus tuples used for rewrite candidate generation. If None, use the default rules.
+            sparse_top_k: Maximum sparse candidate parents per child.
+            rewrite_top_k: Maximum rewrite candidate parents per child.
+            negative_ratio: Maximum negative training pairs per positive pair for TF-IDF classification.
+            tfidf_ngram_range: Character n-gram range for the TF-IDF classifier.
+            classifier_max_iter: Maximum logistic regression iterations.
+            random_state: Random seed for the logistic regression classifier.
+            obo_download_timeout: Timeout in seconds for OBO downloads.
+            owl_download_timeout: Timeout in seconds for OWL downloads.
             **kwargs: Additional arguments passed to AutoLearner.
 
         Raises:
             ValueError: If the method is unknown or its target domain is missing.
         """
         super().__init__(**kwargs)
-        if method not in self.TAXONOMY_DISCOVERY_TEST_METHODS:
+        if method not in self.taxonomy_methods:
             raise ValueError(f"Unknown taxonomy method: {method}")
         if method.startswith("domain_calibrated_") and target_domain not in {
             "Archeon", "Biora", "Hylex", "Phyra"
@@ -125,6 +140,17 @@ class VoltIQTaxonomyLearner(AutoLearner):
 
         self.method = method
         self.target_domain = target_domain
+        self.obo_source_urls = dict(self._obo_source_urls if obo_source_urls is None else obo_source_urls)
+        self.owl_source_urls = dict(self._owl_source_urls if owl_source_urls is None else owl_source_urls)
+        self.rewrite_suffix_rules = tuple(self._rewrite_suffix_rules if rewrite_suffix_rules is None else rewrite_suffix_rules)
+        self.sparse_top_k = sparse_top_k
+        self.rewrite_top_k = rewrite_top_k
+        self.negative_ratio = negative_ratio
+        self.tfidf_ngram_range = tfidf_ngram_range
+        self.classifier_max_iter = classifier_max_iter
+        self.random_state = random_state
+        self.obo_download_timeout = obo_download_timeout
+        self.owl_download_timeout = owl_download_timeout
         self.train_edges: List[Tuple[str, str]] = []
         self.train_types: List[str] = []
         self.is_fitted = False
@@ -133,13 +159,11 @@ class VoltIQTaxonomyLearner(AutoLearner):
         cache_root = cache_dir or os.environ.get(
             "LLMS4OL_CACHE_DIR", Path.home() / ".cache" / "ontolearner"
         )
-        self.TAXONOMY_DISCOVERY_CACHE_DIR = Path(cache_root) / "taxonomy_discovery"
-        self.GO_BASIC_OBO_PATH = self.TAXONOMY_DISCOVERY_CACHE_DIR / "go-basic.obo"
-        self.GO_BASIC_INDEX_PATH = self.TAXONOMY_DISCOVERY_CACHE_DIR / "go_basic_index.json"
-        self.OBO_PROBE_CACHE_DIR = self.TAXONOMY_DISCOVERY_CACHE_DIR / "obo_probe"
-        self.OWL_PROBE_CACHE_DIR = self.TAXONOMY_DISCOVERY_CACHE_DIR / "owl_probe"
-
-### OntoLearner Task Interface ###############################################
+        self.cache_dir = Path(cache_root) / "taxonomy_discovery"
+        self._go_basic_obo_path = self.cache_dir / "go-basic.obo"
+        self._go_basic_index_path = self.cache_dir / "go_basic_index.json"
+        self._obo_cache_dir = self.cache_dir / "obo_probe"
+        self._owl_cache_dir = self.cache_dir / "owl_probe"
 
     def tasks_data_former(self, data: Any, task: str, test: bool = False) -> Any:
         """
@@ -168,7 +192,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
 
         The original Taxonomy discovery methods use training edges to estimate parent priors
         and construct features during prediction. No additional model is trained
-        by this method.
+        by this method. The TF-IDF classifier, when selected, is trained during prediction.
 
         Args:
             train_data: OntoLearner OntologyData or a list of such objects.
@@ -199,7 +223,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
         if not train_edges:
             raise ValueError("No taxonomy relations found in training data.")
         # Keep the cleaned source relations for candidate scoring at inference.
-        self.train_edges = self._clean_taxonomy_edges(train_edges)
+        self.train_edges = self.clean_taxonomy_edges(train_edges)
         self.train_types = list(dict.fromkeys(train_types))
         self.is_fitted = True
 
@@ -216,7 +240,11 @@ class VoltIQTaxonomyLearner(AutoLearner):
             ontologizer: Whether to apply OntoLearner data formatting.
 
         Returns:
-            List[Dict[str, str]]: Predicted relations with parent and child keys.
+            List of predicted relations with parent and child keys.
+
+        Raises:
+            ValueError: If the task or evaluation data are invalid.
+            RuntimeError: If the learner has not been fitted.
         """
         if task != "taxonomy-discovery":
             raise ValueError(f"{task} is not a valid task for Volt-IQ.")
@@ -236,14 +264,14 @@ class VoltIQTaxonomyLearner(AutoLearner):
         if self.method in {"domain_calibrated_primary", "domain_calibrated_backup", "domain_calibrated_conservative"}:
             if self.target_domain == "Biora":
                 if self.method == "domain_calibrated_conservative":
-                    predicted_edges = self._predict_taxonomy_discovery_edges_for_labels(
+                    predicted_edges = self.predict_lexical_edges(
                         train_edges=self.train_edges,
                         train_types=self.train_types,
                         test_types=labels,
                         method="substring_heuristic",
                     )
                 else:
-                    predicted_edges = self._predict_obo_backfilled_edges(
+                    predicted_edges = self.predict_ontology_edges(
                         train_edges=self.train_edges,
                         test_types=labels,
                         include_rewrite_fallback=self.method == "domain_calibrated_primary",
@@ -254,7 +282,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                     "lexical_subsumption" if self.target_domain == "Hylex"
                     else "substring_heuristic"
                 )
-                predicted_edges = self._predict_taxonomy_discovery_edges_for_labels(
+                predicted_edges = self.predict_lexical_edges(
                     train_edges=self.train_edges,
                     train_types=self.train_types,
                     test_types=labels,
@@ -264,7 +292,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             "obo_rewrite_hybrid", "obo_rewrite_strict",
             "obo_owl_rewrite_hybrid", "obo_owl_rewrite_strict",
         }:
-            predicted_edges = self._predict_obo_backfilled_edges(
+            predicted_edges = self.predict_ontology_edges(
                 train_edges=self.train_edges,
                 test_types=labels,
                 include_rewrite_fallback=self.method in {
@@ -275,7 +303,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 },
             )
         elif self.method in {"go_rewrite_hybrid", "go_rewrite_strict"} and self.target_domain == "Biora":
-            predicted_edges = self._predict_go_backfilled_biora_edges(
+            predicted_edges = self.predict_go_edges(
                 train_edges=self.train_edges,
                 test_types=labels,
                 include_rewrite_fallback=self.method == "go_rewrite_hybrid",
@@ -285,7 +313,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 "rewrite_cascade" if self.method in {"go_rewrite_hybrid", "go_rewrite_strict"}
                 else self.method
             )
-            predicted_edges = self._predict_taxonomy_discovery_edges_for_labels(
+            predicted_edges = self.predict_lexical_edges(
                 train_edges=self.train_edges,
                 train_types=self.train_types,
                 test_types=labels,
@@ -300,7 +328,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             for child, parent in predicted_edges
         ]
 
-### Taxonomy Data Normalization ##############################################
+# Taxonomy Data Normalization
 
     def _normalize_label(self, label: str) -> str:
         """Normalize label text for matching and candidate generation."""
@@ -321,7 +349,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 original_by_normalized[normalized] = label.strip()
         return original_by_normalized
 
-    def _clean_taxonomy_edges(self, edges):
+    def clean_taxonomy_edges(self, edges: Iterable[Tuple[str, str]]) -> List[Tuple[str, str]]:
         """
         Normalize, deduplicate, and remove cycles from taxonomy edges.
 
@@ -350,7 +378,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             cleaned.append(edge)
         return cleaned
 
-    def _select_predicted_edges(self, *, scored_edges, expected_edge_count, max_parents_per_child=1):
+    def select_predicted_edges(self, *, scored_edges: Iterable[Tuple[str, str, float]], expected_edge_count: int, max_parents_per_child: int = 1) -> List[Tuple[str, str]]:
         """
         Select the highest-ranked taxonomy edges without introducing cycles.
 
@@ -431,29 +459,24 @@ class VoltIQTaxonomyLearner(AutoLearner):
             return 0.0
         return len(child_tokens & parent_tokens) / len(child_tokens)
 
-    def _build_parent_prior(self, train_edges):
-        """Compute parent label frequencies from source-domain taxonomy edges."""
+    def build_parent_prior(self, train_edges: List[Tuple[str, str]]) -> Dict[str, float]:
+        """
+        Compute normalized parent occurrence frequencies from taxonomy edges.
+
+        Args:
+            train_edges: Source taxonomy edges in (child, parent) order.
+
+        Returns:
+            Dictionary mapping parent labels to relative occurrence frequencies.
+        """
         parent_counts = Counter(parent for _, parent in train_edges)
         total = sum(parent_counts.values()) or 1
         return {parent: count / total for parent, count in parent_counts.items()}
 
-### Candidate Generation and Feature Extraction ##############################
+# Candidate Generation and Feature Extraction
 
     def _collect_rewrite_parent_candidates(self, label: str, label_set: set[str]) -> dict[str, float]:
-        """
-        Generate existing target labels that can parent a rewritten label.
-
-        Candidates are admitted only when their normalized form occurs in the
-        current target label inventory. Rewrite bonuses follow the original
-        Volt-IQ suffix, phrase, and regulation rules.
-
-        Args:
-            label: Child label for which parent candidates are generated.
-            label_set: Normalized labels allowed in the target taxonomy.
-
-        Returns:
-            Dictionary mapping candidate parent labels to rewrite bonuses.
-        """
+        """Generate existing target labels that can parent a rewritten label."""
         label_norm = self._normalize_label(label)
         token_list = label_norm.split()
         candidates: dict[str, float] = {}
@@ -481,7 +504,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
         if "," in label_norm:
             add(label_norm.replace(",", ""), 1.4)
 
-        for suffix, replacement, bonus in self.REWRITE_SUFFIX_RULES:
+        for suffix, replacement, bonus in self.rewrite_suffix_rules:
             if label_norm.endswith(suffix):
                 add(label_norm[: -len(suffix)] + replacement, bonus)
 
@@ -497,7 +520,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
 
         return candidates
 
-    def _build_rewrite_candidate_pool(self, train_edges, test_types, top_k_per_child=16, target_children=None):
+    def build_rewrite_candidate_pool(self, train_edges: List[Tuple[str, str]], test_types: List[str], top_k_per_child: Optional[int] = None, target_children: Optional[List[str]] = None) -> Tuple[List[Tuple[str, str]], Dict[Tuple[str, str], Dict[str, float]]]:
         """
         Build and rank candidate parent pairs for rewrite-based induction.
 
@@ -507,13 +530,14 @@ class VoltIQTaxonomyLearner(AutoLearner):
         Args:
             train_edges: Source-domain (child, parent) relations.
             test_types: Target-domain type labels.
-            top_k_per_child: Maximum number of candidate pairs per child.
+            top_k_per_child: Maximum number of candidate pairs per child. If None, use rewrite_top_k.
             target_children: Optional subset of labels that still need parents.
 
         Returns:
             Candidate (child, parent) pairs and their feature dictionaries.
         """
-        parent_prior = self._build_parent_prior(train_edges)
+        top_k_per_child = self.rewrite_top_k if top_k_per_child is None else top_k_per_child
+        parent_prior = self.build_parent_prior(train_edges)
         normalized_test = sorted({self._normalize_label(item) for item in test_types if self._normalize_label(item)})
         label_set = set(normalized_test)
         normalized_target_children = (
@@ -639,8 +663,21 @@ class VoltIQTaxonomyLearner(AutoLearner):
             candidate_pairs.extend((child_name, parent_name) for child_name, parent_name, _ in scored_rows[:top_k_per_child])
         return candidate_pairs, feature_rows
 
-    def _score_rewrite_edges(self, candidate_edges, feature_rows):
-        """Score rewrite candidates using Volt-IQ's weighted lexical features."""
+    def score_rewrite_edges(self, candidate_edges: List[Tuple[str, str, float]], feature_rows: Dict[Tuple[str, str], Dict[str, float]]) -> List[Tuple[str, str, float]]:
+        """
+        Score rewrite-based taxonomy candidates using weighted lexical features.
+
+        This method combines lexical overlap, suffix similarity, source-parent
+        priors, rewrite bonuses, and candidate generation scores to estimate
+        the suitability of each candidate parent.
+
+        Args:
+            candidate_edges: Candidate (child, parent, base score) tuples.
+            feature_rows: Feature dictionaries keyed by (child, parent) pairs, as returned by build_rewrite_candidate_pool().
+
+        Returns:
+            List of (child, parent, score) tuples in the original input order.
+        """
         scored = []
         for child, parent, base_score in candidate_edges:
             features = feature_rows[(child, parent)]
@@ -657,22 +694,22 @@ class VoltIQTaxonomyLearner(AutoLearner):
             scored.append((child, parent, score))
         return scored
 
-    def _build_training_examples(self, train_edges, train_types, negative_ratio=3):
+    def build_training_examples(self, train_edges: List[Tuple[str, str]], train_types: List[str], negative_ratio: Optional[int] = None) -> Tuple[List[Dict[str, float]], List[int], List[str]]:
         """
         Build positive and sampled negative parent-child examples.
 
-        The TF-IDF pair classifier uses source taxonomy edges as positive
-        examples and draws other candidate parents as negatives.
+        The TF-IDF pair classifier uses source taxonomy edges as positive examples and draws other candidate parents as negatives.
 
         Args:
             train_edges: Source-domain (child, parent) relations.
             train_types: Source-domain type labels.
-            negative_ratio: Maximum number of negatives per positive relation.
+            negative_ratio: Maximum number of negatives per positive relation. If None, use the configured negative_ratio.
 
         Returns:
             Feature rows, binary labels, and paired-label training texts.
         """
-        parent_prior = self._build_parent_prior(train_edges)
+        negative_ratio = self.negative_ratio if negative_ratio is None else negative_ratio
+        parent_prior = self.build_parent_prior(train_edges)
         positive_pairs = set(train_edges)
         all_types = sorted({self._normalize_label(item) for item in train_types if self._normalize_label(item)})
         X = []
@@ -711,25 +748,24 @@ class VoltIQTaxonomyLearner(AutoLearner):
         names = sorted(feature_dicts[0]) if feature_dicts else []
         return [[row[name] for name in names] for row in feature_dicts], names
 
-    def _build_sparse_candidate_pool(self, train_edges, train_types, test_types, top_k_per_child=12):
+    def build_sparse_candidate_pool(self, train_edges: List[Tuple[str, str]], test_types: List[str], top_k_per_child: Optional[int] = None) -> Tuple[List[Tuple[str, str]], Dict[Tuple[str, str], Dict[str, float]]]:
         """
-        Build a sparse parent-child candidate pool from target labels.
+        Generate sparse taxonomy candidates from target type labels.
 
-        Proper subphrases, matching suffixes, and shared tokens narrow the
-        candidate search before scoring. Source parent frequencies contribute
-        a ranking prior.
+        This method identifies candidate parents using proper subphrases,
+        matching suffixes, and shared tokens. Candidates are ranked using
+        lexical features and source-domain parent frequencies.
 
         Args:
-            train_edges: Source-domain (child, parent) relations.
-            train_types: Source-domain type labels (not used by this pool).
+            train_edges: Source-domain (child, parent) taxonomy relations.
             test_types: Target-domain type labels.
-            top_k_per_child: Maximum number of candidates retained per child.
+            top_k_per_child: Maximum number of candidates retained per child. If None, use the configured sparse_top_k.
 
         Returns:
-            Candidate (child, parent) pairs and their feature dictionaries.
+            A tuple containing candidate (child, parent) pairs and feature dictionaries keyed by candidate pairs.
         """
-        del train_types
-        parent_prior = self._build_parent_prior(train_edges)
+        top_k_per_child = self.sparse_top_k if top_k_per_child is None else top_k_per_child
+        parent_prior = self.build_parent_prior(train_edges)
         normalized_test = sorted({self._normalize_label(item) for item in test_types if self._normalize_label(item)})
         label_set = set(normalized_test)
         token_to_parents = defaultdict(set)
@@ -825,9 +861,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 candidate_pairs.append((child_name, parent_name))
         return candidate_pairs, feature_rows
 
-### Taxonomy Induction and Prediction ########################################
-
-    def _build_substring_heuristic_taxonomy(self, test_types, train_edges):
+    def predict_substring_edges(self, test_types: List[str], train_edges: List[Tuple[str, str]]) -> List[Tuple[str, str]]:
         """
         Select the longest proper target-label subphrases as parents.
 
@@ -842,7 +876,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
         Returns:
             Predicted (child, parent) relations.
         """
-        parent_prior = self._build_parent_prior(train_edges)
+        parent_prior = self.build_parent_prior(train_edges)
         normalized_test = sorted({self._normalize_label(item) for item in test_types if self._normalize_label(item)})
         label_set = set(normalized_test)
         chosen = []
@@ -870,7 +904,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
         # Parent is always a proper subphrase, so edges are length-decreasing and acyclic.
         return [(child, parent) for child, parent, _ in chosen]
 
-    def _predict_taxonomy_discovery_edges_for_labels(self, *, train_edges, train_types, test_types, method="hybrid_cascade"):
+    def predict_lexical_edges(self, *, train_edges: List[Tuple[str, str]], train_types: List[str], test_types: List[str], method: str = "hybrid_cascade") -> List[Tuple[str, str]]:
         """
         Route target labels to the selected Volt-IQ taxonomy method.
 
@@ -878,18 +912,23 @@ class VoltIQTaxonomyLearner(AutoLearner):
             train_edges: Source-domain taxonomy relations.
             train_types: Source-domain type labels.
             test_types: Target-domain labels.
-            method: Taxonomy induction method.
+            method: One of lexical_subsumption, parent_prior, tfidf_pair_linear, hybrid_cascade, rewrite_cascade, or substring_heuristic.
 
         Returns:
             Predicted (child, parent) relations.
+
+        Raises:
+            ValueError: If the lexical taxonomy method is unsupported.
         """
+        if method not in self.taxonomy_methods[:5] + ("substring_heuristic",):
+                    raise ValueError(f"Unsupported lexical taxonomy method: {method}")
         if method == "substring_heuristic":
-            return self._build_substring_heuristic_taxonomy(test_types=test_types, train_edges=train_edges)
+            return self.predict_substring_edges(test_types=test_types, train_edges=train_edges)
         if method == "rewrite_cascade":
-            candidate_pairs, feature_rows = self._build_rewrite_candidate_pool(
+            candidate_pairs, feature_rows = self.build_rewrite_candidate_pool(
                 train_edges,
                 test_types,
-                top_k_per_child=16,
+                top_k_per_child=self.rewrite_top_k,
             )
             candidate_edges = [
                 (child, parent, feature_rows[(child, parent)].get("_base_score", 0.0))
@@ -898,11 +937,11 @@ class VoltIQTaxonomyLearner(AutoLearner):
             expected_edge_count = max(1, len({self._normalize_label(item) for item in test_types if self._normalize_label(item)}) - 1)
             return self._baseline_rewrite_cascade(candidate_edges, feature_rows, expected_edge_count)
 
-        candidate_pairs, feature_rows = self._build_sparse_candidate_pool(
+        candidate_pairs, feature_rows = self.build_sparse_candidate_pool(
             train_edges,
             train_types,
             test_types,
-            top_k_per_child=12,
+            top_k_per_child=self.sparse_top_k,
         )
         candidate_edges = [
             (child, parent, feature_rows[(child, parent)].get("_base_score", 0.0))
@@ -929,7 +968,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 + 0.5 * features["char_jaccard"]
             )
             scored.append((child, parent, score))
-        return self._select_predicted_edges(
+        return self.select_predicted_edges(
             scored_edges=scored,
             expected_edge_count=expected_edge_count,
             max_parents_per_child=1,
@@ -946,43 +985,27 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 + 0.5 * features["head_token_overlap"]
             )
             scored.append((child, parent, score))
-        return self._select_predicted_edges(
+        return self.select_predicted_edges(
             scored_edges=scored,
             expected_edge_count=expected_edge_count,
             max_parents_per_child=1,
         )
 
     def _baseline_tfidf_linear(self, train_edges, train_types, candidate_edges, feature_rows, expected_edge_count):
-        """
-        Fit a TF-IDF pair classifier and rank target candidate edges.
-
-        This optional method trains a logistic regression classifier on
-        source-domain positive and negative parent-child pairs during inference.
-
-        Args:
-            train_edges: Source-domain taxonomy relations.
-            train_types: Source-domain labels.
-            candidate_edges: Candidate (child, parent, score) tuples.
-            feature_rows: Precomputed candidate features.
-            expected_edge_count: Maximum number of selected edges.
-
-        Returns:
-            Predicted (child, parent) relations.
-        """
+        """Fit a TF-IDF pair classifier and rank target candidate edges."""
         from scipy import sparse
         from sklearn.feature_extraction.text import TfidfVectorizer
         from sklearn.linear_model import LogisticRegression
 
-        parent_prior = self._build_parent_prior(train_edges)
-        feature_dicts, labels, pair_texts = self._build_training_examples(train_edges, train_types)
+        feature_dicts, labels, pair_texts = self.build_training_examples(train_edges, train_types)
         dense_matrix, feature_names = self._feature_matrix(feature_dicts)
-        vectorizer = TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5), min_df=1)
+        vectorizer = TfidfVectorizer(analyzer="char_wb", ngram_range=self.tfidf_ngram_range, min_df=1)
         tfidf_matrix = vectorizer.fit_transform(pair_texts)
         import numpy as np
 
         X_dense = sparse.csr_matrix(np.asarray(dense_matrix, dtype=float))
         X = sparse.hstack([X_dense, tfidf_matrix], format="csr")
-        model = LogisticRegression(max_iter=1000, random_state=42)
+        model = LogisticRegression(max_iter=self.classifier_max_iter, random_state=self.random_state)
         model.fit(X, labels)
 
         scored = []
@@ -994,7 +1017,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             row = sparse.hstack([dense_row, tfidf_row], format="csr")
             score = float(model.predict_proba(row)[0][1]) + 0.15 * base_score
             scored.append((child, parent, score))
-        return self._select_predicted_edges(
+        return self.select_predicted_edges(
             scored_edges=scored,
             expected_edge_count=expected_edge_count,
             max_parents_per_child=1,
@@ -1013,7 +1036,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
                 + 0.8 * features["parent_prior"]
             )
             scored.append((child, parent, score))
-        return self._select_predicted_edges(
+        return self.select_predicted_edges(
             scored_edges=scored,
             expected_edge_count=expected_edge_count,
             max_parents_per_child=1,
@@ -1021,41 +1044,31 @@ class VoltIQTaxonomyLearner(AutoLearner):
 
     def _baseline_rewrite_cascade(self, candidate_edges, feature_rows, expected_edge_count):
         """Apply rewrite scores and select non-cyclic parent-child relations."""
-        return self._select_predicted_edges(
-            scored_edges=self._score_rewrite_edges(candidate_edges, feature_rows),
+        return self.select_predicted_edges(
+            scored_edges=self.score_rewrite_edges(candidate_edges, feature_rows),
             expected_edge_count=expected_edge_count,
             max_parents_per_child=1,
         )
 
-### Ontology Resource Loading ################################################
-
-    def _ensure_go_basic_obo_cached(self, ) -> Path:
+    def _ensure_go_basic_obo_cached(self) -> Path:
         """Download GO Basic OBO on first use and reuse its local cache."""
-        self.TAXONOMY_DISCOVERY_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        if self.GO_BASIC_OBO_PATH.exists():
-            return self.GO_BASIC_OBO_PATH
-        request = urllib.request.Request(self.GO_BASIC_OBO_URL, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(request, timeout=120) as response:
-            self.GO_BASIC_OBO_PATH.write_bytes(response.read())
-        return self.GO_BASIC_OBO_PATH
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        if self._go_basic_obo_path.exists():
+            return self._go_basic_obo_path
+        if "go" not in self.obo_source_urls:
+            raise ValueError("GO prediction requires a configured go source.")
+        request = urllib.request.Request(self.obo_source_urls["go"], headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(request, timeout=self.obo_download_timeout) as response:
+            self._go_basic_obo_path.write_bytes(response.read())
+        return self._go_basic_obo_path
 
     def _write_go_basic_index(self, index: dict[str, dict[str, list[str]] | dict[str, str]]) -> None:
         """Write the parsed GO label and direct-parent index to cache."""
-        self.TAXONOMY_DISCOVERY_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        self.GO_BASIC_INDEX_PATH.write_text(json.dumps(index, ensure_ascii=True), encoding="utf-8")
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self._go_basic_index_path.write_text(json.dumps(index, ensure_ascii=True), encoding="utf-8")
 
     def _build_go_basic_index_from_obo(self, obo_path: Path) -> dict[str, dict[str, list[str]] | dict[str, str]]:
-        """
-        Parse GO Basic labels, synonyms, and direct is-a parent links.
-
-        Obsolete terms are excluded from the cached index.
-
-        Args:
-            obo_path: Path to the GO Basic OBO file.
-
-        Returns:
-            Lookup dictionaries for labels, synonyms, identifiers, and parents.
-        """
+        """Parse GO Basic labels, synonyms, and direct is-a parent links."""
         name_to_ids: dict[str, list[str]] = defaultdict(list)
         synonym_to_ids: dict[str, list[str]] = defaultdict(list)
         id_to_name: dict[str, str] = {}
@@ -1122,10 +1135,10 @@ class VoltIQTaxonomyLearner(AutoLearner):
         }
 
     @lru_cache(maxsize=1)
-    def _load_go_basic_index(self, ) -> dict[str, dict[str, list[str]] | dict[str, str]]:
+    def _load_go_basic_index(self) -> dict[str, dict[str, list[str]] | dict[str, str]]:
         """Load the GO index from cache, or build it from the OBO source."""
-        if self.GO_BASIC_INDEX_PATH.exists():
-            with self.GO_BASIC_INDEX_PATH.open("r", encoding="utf-8") as handle:
+        if self._go_basic_index_path.exists():
+            with self._go_basic_index_path.open("r", encoding="utf-8") as handle:
                 return json.load(handle)
         obo_path = self._ensure_go_basic_obo_cached()
         index = self._build_go_basic_index_from_obo(obo_path)
@@ -1140,18 +1153,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
         id_to_name: dict[str, str],
         id_to_synonyms: dict[str, list[str]],
     ) -> list[str]:
-        """
-        Resolve GO parent labels present in the target vocabulary.
-
-        Args:
-            go_id: Parent GO identifier.
-            label_set: Normalized target labels allowed in the prediction.
-            id_to_name: GO identifier-to-label lookup.
-            id_to_synonyms: GO identifier-to-synonym lookup.
-
-        Returns:
-            Matching target-domain labels for the parent identifier.
-        """
+        """Resolve GO parent labels present in the target vocabulary."""
         labels = []
         canonical_name = id_to_name.get(go_id)
         if canonical_name and canonical_name in label_set:
@@ -1165,28 +1167,20 @@ class VoltIQTaxonomyLearner(AutoLearner):
         """Download an OBO ontology on first use and return its cache path."""
         if source_key == "go":
             return self._ensure_go_basic_obo_cached()
-        if source_key not in self.OBO_SOURCE_URLS:
+        if source_key not in self.obo_source_urls:
             raise ValueError(f"Unknown OBO source: {source_key}")
-        self.OBO_PROBE_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        path = self.OBO_PROBE_CACHE_DIR / f"{source_key}.obo"
+        self._obo_cache_dir.mkdir(parents=True, exist_ok=True)
+        path = self._obo_cache_dir / f"{source_key}.obo"
         if path.exists():
             return path
-        request = urllib.request.Request(self.OBO_SOURCE_URLS[source_key], headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(request, timeout=120) as response:
+        request = urllib.request.Request(self.obo_source_urls[source_key], headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(request, timeout=self.obo_download_timeout) as response:
             path.write_bytes(response.read())
         return path
 
     @lru_cache(maxsize=None)
     def _load_obo_source_terms(self, source_key: str):
-        """
-        Parse OBO term identifiers, names, synonyms, and direct parents.
-
-        Args:
-            source_key: Key of a configured public OBO resource.
-
-        Returns:
-            Cached tuple of non-obsolete term records.
-        """
+        """Parse OBO term identifiers, names, synonyms, and direct parents."""
         path = self._ensure_obo_source_cached(source_key)
         terms = []
         current_id = None
@@ -1247,31 +1241,20 @@ class VoltIQTaxonomyLearner(AutoLearner):
 
     def _ensure_owl_source_cached(self, source_key: str) -> Path:
         """Download an OWL ontology on first use and return its cache path."""
-        if source_key not in self.TAXONOMY_DISCOVERY_OWL_SOURCE_URLS:
+        if source_key not in self.owl_source_urls:
             raise ValueError(f"Unknown OWL source: {source_key}")
-        self.OWL_PROBE_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        path = self.OWL_PROBE_CACHE_DIR / f"{source_key}.owl"
+        self._owl_cache_dir.mkdir(parents=True, exist_ok=True)
+        path = self._owl_cache_dir / f"{source_key}.owl"
         if path.exists() and path.stat().st_size > 0:
             return path
-        request = urllib.request.Request(self.TAXONOMY_DISCOVERY_OWL_SOURCE_URLS[source_key], headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(request, timeout=180) as response:
+        request = urllib.request.Request(self.owl_source_urls[source_key], headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(request, timeout=self.owl_download_timeout) as response:
             path.write_bytes(response.read())
         return path
 
     @lru_cache(maxsize=None)
     def _load_owl_source_terms(self, source_key: str):
-        """
-        Parse OWL labels, synonyms, and direct subclass links.
-
-        Only resource-backed classes with labels are indexed. The method
-        keeps identifier-based parent links for later target-label matching.
-
-        Args:
-            source_key: Key of a configured public OWL resource.
-
-        Returns:
-            Cached tuple of ontology term records.
-        """
+        """Parse OWL labels, synonyms, and direct subclass links."""
         try:
             import rdflib
             from rdflib import URIRef
@@ -1281,11 +1264,12 @@ class VoltIQTaxonomyLearner(AutoLearner):
         owl_path = self._ensure_owl_source_cached(source_key)
         graph = rdflib.Graph()
         graph.parse(str(owl_path), format="xml")
+        obo_in_owl_prefix = "http://www.geneontology.org/formats/oboInOwl#"
         label_predicates = {
             rdflib.namespace.RDFS.label,
-            URIRef(f"{self.OBO_IN_OWL_PREFIX}hasExactSynonym"),
-            URIRef(f"{self.OBO_IN_OWL_PREFIX}hasRelatedSynonym"),
-            URIRef(f"{self.OBO_IN_OWL_PREFIX}hasBroadSynonym"),
+            URIRef(f"{obo_in_owl_prefix}hasExactSynonym"),
+            URIRef(f"{obo_in_owl_prefix}hasRelatedSynonym"),
+            URIRef(f"{obo_in_owl_prefix}hasBroadSynonym"),
         }
         labels_by_uri: dict[str, list[str]] = defaultdict(list)
         parent_uris: dict[str, list[str]] = defaultdict(list)
@@ -1309,18 +1293,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             for term_id, labels in labels_by_uri.items()
         )
 
-### Ontology-Backed Taxonomy Prediction ######################################
-
-    def _predict_obo_backfilled_edges(
-        self,
-        *,
-        train_edges,
-        test_types,
-        source_keys=None,
-        include_rewrite_fallback=True,
-        include_owl_sources=False,
-        owl_source_keys=None,
-    ):
+    def predict_ontology_edges(self, *, train_edges: List[Tuple[str, str]], test_types: List[str], source_keys: Optional[Iterable[str]] = None, include_rewrite_fallback: bool = True, include_owl_sources: bool = False, owl_source_keys: Optional[Iterable[str]] = None) -> List[Tuple[str, str]]:
         """
         Recover direct taxonomy parents from OBO/OWL resources.
 
@@ -1339,8 +1312,8 @@ class VoltIQTaxonomyLearner(AutoLearner):
         Returns:
             Predicted (child, parent) relations.
         """
-        source_keys = self.TAXONOMY_DISCOVERY_OBO_SOURCE_KEYS if source_keys is None else source_keys
-        owl_source_keys = self.TAXONOMY_DISCOVERY_OWL_SOURCE_KEYS if owl_source_keys is None else owl_source_keys
+        source_keys = tuple(self.obo_source_urls) if source_keys is None else source_keys
+        owl_source_keys = tuple(self.owl_source_urls) if owl_source_keys is None else owl_source_keys
         normalized_test = sorted({self._normalize_label(item) for item in test_types if self._normalize_label(item)})
         label_set = set(normalized_test)
         source_edges = []
@@ -1399,10 +1372,10 @@ class VoltIQTaxonomyLearner(AutoLearner):
         children_with_parents = {child for child, _ in selected_edges}
         # Backfill children that have no direct ontology-supported parent.
         fallback_children = set(normalized_test) - matched_children
-        rewrite_candidate_pairs, rewrite_feature_rows = self._build_rewrite_candidate_pool(
+        rewrite_candidate_pairs, rewrite_feature_rows = self.build_rewrite_candidate_pool(
             train_edges,
             normalized_test,
-            top_k_per_child=16,
+            top_k_per_child=self.rewrite_top_k,
             target_children=fallback_children,
         )
         rewrite_candidate_edges = [
@@ -1410,7 +1383,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             for child, parent in rewrite_candidate_pairs
         ]
         rewrite_ranked_edges = sorted(
-            self._score_rewrite_edges(rewrite_candidate_edges, rewrite_feature_rows),
+            self.score_rewrite_edges(rewrite_candidate_edges, rewrite_feature_rows),
             key=lambda item: (-item[2], item[0], item[1]),
         )
         for child, parent, _ in rewrite_ranked_edges:
@@ -1422,20 +1395,20 @@ class VoltIQTaxonomyLearner(AutoLearner):
             children_with_parents.add(child)
         return self._dedupe_taxonomy_edges(selected_edges)
 
-    def _predict_go_backfilled_biora_edges(self, *, train_edges, test_types, include_rewrite_fallback=True):
+    def predict_go_edges(self, *, train_edges: List[Tuple[str, str]], test_types: List[str], include_rewrite_fallback: bool = True) -> List[Tuple[str, str]]:
         """
-        Recover GO direct parents with an optional rewrite fallback.
+        Predict taxonomy relations using Gene Ontology (GO).
 
-        Only parent-child matches within the Biora label inventory are
-        retained. Unmatched children may receive one lexical rewrite parent.
+        This method matches target labels against GO names and synonyms to recover direct parent relationships. When rewrite fallback is
+        enabled, unmatched children may receive a parent through lexical rewrite-based prediction.
 
         Args:
-            train_edges: Source-domain taxonomy edges.
+            train_edges: Source-domain (child, parent) taxonomy relations used to calculate parent priors for rewrite fallback.
             test_types: Target-domain type labels.
-            include_rewrite_fallback: Whether to add lexical fallback parents.
+            include_rewrite_fallback: Whether to predict lexical parents for children without GO matches.
 
         Returns:
-            Predicted (child, parent) relations.
+            List of normalized, deduplicated (child, parent) taxonomy relations.
         """
         normalized_test = sorted({self._normalize_label(item) for item in test_types if self._normalize_label(item)})
         label_set = set(normalized_test)
@@ -1473,10 +1446,10 @@ class VoltIQTaxonomyLearner(AutoLearner):
         children_with_parents = {child for child, _ in selected_edges}
         fallback_children = set(normalized_test) - matched_children
 
-        rewrite_candidate_pairs, rewrite_feature_rows = self._build_rewrite_candidate_pool(
+        rewrite_candidate_pairs, rewrite_feature_rows = self.build_rewrite_candidate_pool(
             train_edges,
             normalized_test,
-            top_k_per_child=16,
+            top_k_per_child=self.rewrite_top_k,
             target_children=fallback_children,
         )
         rewrite_candidate_edges = [
@@ -1484,7 +1457,7 @@ class VoltIQTaxonomyLearner(AutoLearner):
             for child, parent in rewrite_candidate_pairs
         ]
         rewrite_ranked_edges = sorted(
-            self._score_rewrite_edges(rewrite_candidate_edges, rewrite_feature_rows),
+            self.score_rewrite_edges(rewrite_candidate_edges, rewrite_feature_rows),
             key=lambda item: (-item[2], item[0], item[1]),
         )
 

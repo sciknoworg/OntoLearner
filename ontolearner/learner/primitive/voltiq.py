@@ -12,20 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-Volt-IQ learner for primitive ontology construction and expansion.
-
-This implementation integrates the executable Volt-IQ submission to the
-LLMs4OL 2026 competition into the OntoLearner framework.
-
-The submitted constrained Ollama construction extractor and all seventeen
-ontology expansion strategies, including lexical, contextual, memorized,
-and OBO/FoodOn-based extensions, are preserved while adapting the
-implementation to OntoLearner's PrimitiveOntologyLearner interface.
-The final merged construction artifact is not reconstructed by the
-published portable extractor.
-"""
-
 from __future__ import annotations
 import json
 import os
@@ -37,224 +23,174 @@ from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Iterable, List, Optional
 from urllib.parse import urlparse
 
 from ...base import PrimitiveOntologyLearner
 
-# Volt-IQ ontology_construction prompt, relation map, and conservative extraction constraints.
-DEFAULT_OLLAMA_URL = "http://127.0.0.1:11434"
-DEFAULT_OLLAMA_MODEL = "qwen3.6:27b"
-OLLAMA_JSON_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "triples": {
-            "type": "array",
-            "items": {
-                "type": "array",
-                "items": {"type": "string"},
-                "minItems": 3,
-                "maxItems": 3,
-            },
-        }
-    },
-    "required": ["triples"],
-}
-
-EXTRACT_SYSTEM = """You are an ontology triple extractor. Extract triples from text as
-[subject, predicate, object]. Perform one careful extraction: quality beats quantity.
-
-For every triple, apply this checklist:
-1. The subject is a concise noun phrase, not a sentence fragment.
-2. The relation is explicitly supported by an exact sentence or clause.
-3. The object is a concise noun phrase, not a sentence fragment.
-4. Both entities and the relation have specific textual evidence.
-5. The triple is not a duplicate.
-
-Predicate rules:
-- is-a is the default for class hierarchy: X is a type, kind, or subclass of Y.
-  It also applies when the text enumerates several items as types of one category.
-- instance-of is only for a unique individual or a numbered instance such as type VI.
-- disjoint with requires explicit disjoint or mutually exclusive wording.
-- equivalent class requires explicit equivalent-to or same-as wording.
-- part_of and has_part require explicit part/component wording.
-
-Entity rules:
-- Copy entity names from the text and preserve meaningful punctuation.
-- Keep parenthetical qualifiers and long compound names intact.
-- Do not split a multi-word entity into unrelated pieces.
-- Do not invent generic entities or relations merely because terms co-occur.
-- Never emit a self-loop.
-- When evidence is vague, omit the candidate.
-
-Return only JSON in this form:
-{"triples": [["subject", "predicate", "object"], ...]}"""
-
-EXTRACT_USER = """Extract all ontology triples supported by the following text. Apply
-the evidence checklist to every candidate and remain conservative.
-
-Text:
-{context}
-
-Return only {{"triples": [["subject", "predicate", "object"], ...]}}."""
-
-PREDICATE_MAP = {
-    "is-a": "is-a",
-    "is a": "is-a",
-    "isa": "is-a",
-    "is_a": "is-a",
-    "subclass of": "is-a",
-    "subclassof": "is-a",
-    "type of": "is-a",
-    "instance-of": "instance-of",
-    "instance of": "instance-of",
-    "instanceof": "instance-of",
-    "member of": "instance-of",
-    "example of": "instance-of",
-    "part_of": "part_of",
-    "part of": "part_of",
-    "partof": "part_of",
-    "is part of": "part_of",
-    "component of": "part_of",
-    "has_part": "has_part",
-    "has part": "has_part",
-    "haspart": "has_part",
-    "contains": "has_part",
-    "consists of": "has_part",
-    "composed of": "has_part",
-    "equivalent to": "equivalent class",
-    "equivalent class": "equivalent class",
-    "same as": "equivalent class",
-    "disjoint": "disjoint with",
-    "disjoint with": "disjoint with",
-    "located in": "located in",
-    "found in": "located in",
-    "derives from": "derives from",
-    "develops from": "develops_from",
-    "develops_from": "develops_from",
-    "has role": "has role",
-}
-
-GENERIC_ENTITIES = {
-    "category",
-    "class",
-    "concept",
-    "concepts",
-    "data",
-    "different",
-    "entities",
-    "entity",
-    "group",
-    "individuals",
-    "item",
-    "items",
-    "kind",
-    "object",
-    "other",
-    "particular",
-    "process",
-    "several",
-    "specific",
-    "thing",
-    "things",
-    "type",
-    "types",
-    "various",
-}
-
-EXPANSION_METHODS = (
-    "constrained_lex",
-    "context_rules",
-    "type_link",
-    "hybrid_reuse",
-    "memorized_lexical",
-    "memorized_lexical_strict",
-    "obo_direct",
-    "obo_memorized_hybrid",
-    "obo_memorized_selective",
-    "obo_foodon_hybrid",
-    "obo_foodon_selective",
-    "obo_foodon_to_direct",
-    "obo_foodon_to_terms_only",
-    "obo_foodon_to_hybrid",
-    "obo_foodon_to_selective",
-    "obo_foodon_to_selective_threshold_4",
-    "obo_foodon_to_selective_threshold_8",
-)
-
-RELATION_CANONICAL = {
-    "is a": "is-a",
-    "isa": "is-a",
-    "instance of": "instance-of",
-    "part of": "part_of",
-}
-EXPANSION_CACHE_DIR = Path(os.environ.get("LLMS4OL_CACHE_DIR", Path.home() / ".cache" / "ontolearner" / "voltiq")) / "expansion"
-EXPANSION_OBO_CACHE_DIR = EXPANSION_CACHE_DIR / "obo_probe"
-EXPANSION_OWL_CACHE_DIR = EXPANSION_CACHE_DIR / "owl_probe"
-EXPANSION_OBO_SOURCE_URLS = {
-    "go": "http://current.geneontology.org/ontology/go-basic.obo",
-    "cl": "http://purl.obolibrary.org/obo/cl.obo",
-    "envo": "http://purl.obolibrary.org/obo/envo.obo",
-    "pato": "http://purl.obolibrary.org/obo/pato.obo",
-    "uo": "http://purl.obolibrary.org/obo/uo.obo",
-    "bfo": "http://purl.obolibrary.org/obo/bfo.obo",
-    "obi": "http://purl.obolibrary.org/obo/obi.obo",
-    "ro": "http://purl.obolibrary.org/obo/ro.obo",
-    "po": "http://purl.obolibrary.org/obo/po.obo",
-    "uberon": "http://purl.obolibrary.org/obo/uberon.obo",
-    "chebi": "http://purl.obolibrary.org/obo/chebi.obo",
-    "mondo": "http://purl.obolibrary.org/obo/mondo.obo",
-    "hp": "http://purl.obolibrary.org/obo/hp.obo",
-    "doid": "http://purl.obolibrary.org/obo/doid.obo",
-    "ncit": "http://purl.obolibrary.org/obo/ncit.obo",
-}
-EXPANSION_OBO_SOURCE_KEYS = tuple(EXPANSION_OBO_SOURCE_URLS)
-EXPANSION_EXTRA_OBO_SOURCE_URLS = {
-    "to": "http://purl.obolibrary.org/obo/to.obo",
-}
-EXPANSION_ALL_OBO_SOURCE_URLS = {
-    **EXPANSION_OBO_SOURCE_URLS,
-    **EXPANSION_EXTRA_OBO_SOURCE_URLS,
-}
-EXPANSION_FOODON_TO_SOURCE_KEYS = EXPANSION_OBO_SOURCE_KEYS + ("to",)
-EXPANSION_FOODON_OWL_URL = "http://purl.obolibrary.org/obo/foodon.owl"
-EXPANSION_FOODON_OWL_PATH = EXPANSION_OWL_CACHE_DIR / "foodon.owl"
-OBO_IN_OWL_PREFIX = "http://www.geneontology.org/formats/oboInOwl#"
-
-
 class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
     """
-    Construct and expand primitive ontologies using Volt-IQ's executable methods.
+    Hybrid learner for primitive ontology construction and expansion.
 
-    Construction applies the submitted conservative Ollama extractor.
-    Expansion supports all seventeen submitted strategies; the primary
-    F01 method is selected by default.
+    This learner uses constrained LLM generation and textual entity support
+    filtering to extract ontology triples from textual documents. For
+    ontology expansion, it combines lexical and contextual rules,
+    training-based relation memory, and external ontology lookup through
+    seventeen selectable strategies.
     """
 
-    EXPANSION_METHODS = EXPANSION_METHODS
+    _system_prompt = """You are an ontology triple extractor. Extract triples from text as
+    [subject, predicate, object]. Perform one careful extraction: quality beats quantity.
+
+    For every triple, apply this checklist:
+    1. The subject is a concise noun phrase, not a sentence fragment.
+    2. The relation is explicitly supported by an exact sentence or clause.
+    3. The object is a concise noun phrase, not a sentence fragment.
+    4. Both entities and the relation have specific textual evidence.
+    5. The triple is not a duplicate.
+
+    Predicate rules:
+    - is-a is the default for class hierarchy: X is a type, kind, or subclass of Y.
+      It also applies when the text enumerates several items as types of one category.
+    - instance-of is only for a unique individual or a numbered instance such as type VI.
+    - disjoint with requires explicit disjoint or mutually exclusive wording.
+    - equivalent class requires explicit equivalent-to or same-as wording.
+    - part_of and has_part require explicit part/component wording.
+
+    Entity rules:
+    - Copy entity names from the text and preserve meaningful punctuation.
+    - Keep parenthetical qualifiers and long compound names intact.
+    - Do not split a multi-word entity into unrelated pieces.
+    - Do not invent generic entities or relations merely because terms co-occur.
+    - Never emit a self-loop.
+    - When evidence is vague, omit the candidate.
+
+    Return only JSON in this form:
+    {"triples": [["subject", "predicate", "object"], ...]}"""
+
+    _construction_prompt = """Extract all ontology triples supported by the following text. Apply
+    the evidence checklist to every candidate and remain conservative.
+
+    Text:
+    {context}
+
+    Return only {{"triples": [["subject", "predicate", "object"], ...]}}."""
+
+    _ollama_json_schema = {
+        "type": "object",
+        "properties": {
+            "triples": {
+                "type": "array",
+                "items": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "minItems": 3,
+                    "maxItems": 3,
+                },
+            }
+        },
+        "required": ["triples"],
+    }
+
+    _construction_predicate_map = {
+        "is-a": "is-a", "is a": "is-a", "isa": "is-a", "is_a": "is-a", "subclass of": "is-a", "subclassof": "is-a",
+        "type of": "is-a", "instance-of": "instance-of", "instance of": "instance-of", "instanceof": "instance-of",
+        "member of": "instance-of", "example of": "instance-of", "part_of": "part_of", "part of": "part_of",
+        "partof": "part_of", "is part of": "part_of", "component of": "part_of", "has_part": "has_part",
+        "has part": "has_part", "haspart": "has_part", "contains": "has_part", "consists of": "has_part",
+        "composed of": "has_part", "equivalent to": "equivalent class", "equivalent class": "equivalent class",
+        "same as": "equivalent class", "disjoint": "disjoint with", "disjoint with": "disjoint with",
+        "located in": "located in", "found in": "located in", "derives from": "derives from",
+        "develops from": "develops_from", "develops_from": "develops_from", "has role": "has role",
+    }
+
+    _generic_entities = {"category", "class", "concept", "concepts", "data", "different", "entities", "entity", "group",
+                         "individuals", "item", "items", "kind", "object", "other", "particular", "process", "several",
+                         "specific", "thing", "things", "type", "types", "various", }
+
+    #: Supported ontology expansion strategies.
+    expansion_methods = (
+        "constrained_lex", "context_rules", "type_link", "hybrid_expansion", "memorized_lexical",
+        "memorized_lexical_strict", "obo_direct", "obo_memorized_hybrid", "obo_memorized_selective",
+        "obo_foodon_hybrid",
+        "obo_foodon_selective", "obo_foodon_to_direct", "obo_foodon_to_terms_only", "obo_foodon_to_hybrid",
+        "obo_foodon_to_selective", "obo_foodon_to_selective_threshold_4", "obo_foodon_to_selective_threshold_8",
+    )
+
+    _expansion_relation_map = {
+        "is a": "is-a", "isa": "is-a", "instance of": "instance-of", "part of": "part_of",
+    }
+
+    _obo_source_urls = {
+        "go": "http://current.geneontology.org/ontology/go-basic.obo",
+        "cl": "http://purl.obolibrary.org/obo/cl.obo", "envo": "http://purl.obolibrary.org/obo/envo.obo",
+        "pato": "http://purl.obolibrary.org/obo/pato.obo", "uo": "http://purl.obolibrary.org/obo/uo.obo",
+        "bfo": "http://purl.obolibrary.org/obo/bfo.obo", "obi": "http://purl.obolibrary.org/obo/obi.obo",
+        "ro": "http://purl.obolibrary.org/obo/ro.obo", "po": "http://purl.obolibrary.org/obo/po.obo",
+        "uberon": "http://purl.obolibrary.org/obo/uberon.obo",
+        "chebi": "http://purl.obolibrary.org/obo/chebi.obo",
+        "mondo": "http://purl.obolibrary.org/obo/mondo.obo", "hp": "http://purl.obolibrary.org/obo/hp.obo",
+        "doid": "http://purl.obolibrary.org/obo/doid.obo", "ncit": "http://purl.obolibrary.org/obo/ncit.obo",
+    }
+
+    _extra_obo_source_urls = {"to": "http://purl.obolibrary.org/obo/to.obo"}
 
     def __init__(
-        self,
-        model_id: str = DEFAULT_OLLAMA_MODEL,
-        base_url: str = DEFAULT_OLLAMA_URL,
-        workers: int = 1,
-        timeout: float = 600.0,
-        expansion_method: str = "obo_foodon_to_terms_only",
-        generator: Optional[Any] = None,
+            self,
+            model_id: str = "qwen3.6:27b",
+            base_url: str = "http://127.0.0.1:11434",
+            workers: int = 1,
+            timeout: float = 600.0,
+            expansion_method: str = "obo_foodon_to_terms_only",
+            generator: Optional[Any] = None,
+            cache_dir: Optional[str | Path] = None,
+            *,
+            system_prompt: Optional[str] = None,
+            construction_prompt: Optional[str] = None,
+            construction_predicate_map: Optional[Dict[str, str]] = None,
+            generic_entities: Optional[Iterable[str]] = None,
+            expansion_relation_map: Optional[Dict[str, str]] = None,
+            obo_source_urls: Optional[Dict[str, str]] = None,
+            extra_obo_source_urls: Optional[Dict[str, str]] = None,
+            foodon_owl_url: str = "http://purl.obolibrary.org/obo/foodon.owl",
+            download_timeout: float = 180.0,
+            temperature: float = 0.0,
+            max_retries: int = 3,
+            lexical_parent_score_threshold: float = 2.0,
+            memorized_parent_score_threshold: float = 1.0,
+            strict_memorized_parent_score_threshold: float = 1.2,
     ) -> None:
         """
         Initialize the Volt-IQ learner for primitive ontology construction and expansion.
 
         Args:
             model_id: Local Ollama model used for ontology construction.
-            base_url: Local Ollama endpoint.
+            base_url: Local Ollama endpoint using loopback HTTP.
             workers: Number of parallel construction requests.
             timeout: Timeout for local inference requests, in seconds.
-            expansion_method: Submitted method for ontology expansion.
-            generator: Optional generation backend for testing construction.
+            expansion_method: Strategy selected from expansion_methods. The default combines OBO, FoodOn and TO subclass lookup with memory-based term typing.
+            generator: Optional backend implementing generate(system=..., user=...) for construction.
+            cache_dir: Directory for caching external ontology resources. If None, use the default VoltIQ cache directory.
+            system_prompt: Custom system instructions. If None, use the default system prompt.
+            construction_prompt: Custom user prompt template containing the context placeholder. If None, use the default construction prompt.
+            construction_predicate_map: Overrides for construction predicate aliases, e.g., {"subclass of": "is-a"}. Keys are lowercase with whitespace normalized.
+            generic_entities: Entity labels excluded during construction filtering. If None, use the default labels.
+            expansion_relation_map: Overrides for expansion relation aliases, e.g., {"subclass of": "is-a"}. Keep is-a and instance-of for hierarchy and typing.
+            obo_source_urls: Mapping of standard OBO source identifiers to resource URLs. If None, use the default sources.
+            extra_obo_source_urls: Additional OBO resources for FoodOn/TO strategies. If None, use the default TO resource.
+            foodon_owl_url: URL of the FoodOn OWL resource.
+            download_timeout: Timeout for ontology downloads, in seconds.
+            temperature: Sampling temperature for local Ollama generation only. Custom generators manage their own sampling settings.
+            max_retries: Maximum number of construction extraction attempts, including the initial attempt. Can be overridden in extract_triples().
+            lexical_parent_score_threshold: Minimum lexical score for type-parent prediction in constrained_lex and hybrid_expansion.
+            memorized_parent_score_threshold: Minimum lexical fallback score for memory-based type prediction in memorized_lexical and ordinary hybrid/selective ontology strategies.
+            strict_memorized_parent_score_threshold: Minimum lexical fallback score for memorized_lexical_strict.
+
+        Raises:
+            ValueError: If the expansion method is not supported.
         """
         super().__init__()
-        if expansion_method not in self.EXPANSION_METHODS:
+        if expansion_method not in self.expansion_methods:
             raise ValueError(f"Unknown ontology expansion method: {expansion_method}")
         self.model_id = model_id
         self.base_url = base_url
@@ -262,20 +198,41 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
         self.timeout = timeout
         self.expansion_method = expansion_method
         self.generator = generator
+        self.system_prompt = self._system_prompt if system_prompt is None else system_prompt
+        self.construction_prompt = self._construction_prompt if construction_prompt is None else construction_prompt
+        self.construction_predicate_map = {**self._construction_predicate_map, **(construction_predicate_map or {})}
+        self.generic_entities = set(self._generic_entities if generic_entities is None else generic_entities)
+        self.expansion_relation_map = {**self._expansion_relation_map, **(expansion_relation_map or {})}
+        self.obo_source_urls = dict(self._obo_source_urls if obo_source_urls is None else obo_source_urls)
+        self.extra_obo_source_urls = dict(self._extra_obo_source_urls if extra_obo_source_urls is None else extra_obo_source_urls)
+        self._all_obo_source_urls = {**self.obo_source_urls, **self.extra_obo_source_urls}
+        self.foodon_owl_url = foodon_owl_url
+        self.download_timeout = download_timeout
+        self.temperature = temperature
+        self.max_retries = max_retries
+        self.lexical_parent_score_threshold = lexical_parent_score_threshold
+        self.memorized_parent_score_threshold = memorized_parent_score_threshold
+        self.strict_memorized_parent_score_threshold = strict_memorized_parent_score_threshold
+        self.cache_dir = (Path(cache_dir).expanduser() if cache_dir is not None else
+                          Path(os.environ.get("LLMS4OL_CACHE_DIR",Path.home() / ".cache" / "ontolearner" / "voltiq")) / "expansion")
+        self._obo_cache_dir = self.cache_dir / "obo_probe"
+        self._owl_cache_dir = self.cache_dir / "owl_probe"
+        self._foodon_owl_path = self._owl_cache_dir / "foodon.owl"
         self.train_data: Optional[List[Dict[str, Any]]] = None
         self._ollama_opener = None
         self._ollama_checked = False
 
     def load(self, model_id: Optional[str] = None, generator: Optional[Any] = None, **kwargs: Any) -> None:
         """
-        Configure the original local Ollama generator for construction.
+        Configure the local Ollama generator for construction.
 
         The connection is initialized lazily during construction prediction,
         so expansion can run without an Ollama server.
 
         Args:
             model_id: Optional installed Ollama model name.
-            generator: Optional test generator implementing `generate`.
+            generator: Optional backend implementing generate(system=..., user=...).
+            **kwargs: Additional arguments accepted for pipeline compatibility.
         """
         if model_id is not None:
             self.model_id = model_id
@@ -288,17 +245,16 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
         """Prepare construction records or extract their text-supported triples."""
         records = self.tasks_data_former(data, task="ontology_construction", test=test)
         if not test:
-            # The submitted portable construction extractor requires no fine-tuning.
+            # The construction extractor requires no fine-tuning.
             return None
 
         if self.generator is None:
             self._initialize_ollama()
 
-        # Original constrained extraction and validation are kept unchanged.
-        return self._build_submission(records, workers=self.workers, generator=self.generator)
+        return self._predict_construction(records, workers=self.workers, generator=self.generator)
 
     def _ontology_expansion(self, data: Any, test: bool = False) -> Optional[Any]:
-        """Store expansion supervision or run the selected submitted strategy."""
+        """Store expansion supervision or run the selected strategy."""
         records = self.tasks_data_former(data, task="ontology_expansion", test=test)
         if not test:
             for record in records:
@@ -312,13 +268,13 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             for field in ("terms", "types", "initial-primitive-ontology-triples"):
                 if field not in record:
                     raise KeyError(f"Expansion prediction requires '{field}'.")
-        return self._build_extended_predictions_for_method(
+        return self.predict_expansion(
             records,
             train_records=self.train_data,
             method=self.expansion_method,
         )
 
-    # Ontology construction: preserve the original constrained extractor.
+    # Ontology construction.
 
     def _initialize_ollama(self) -> None:
         """Initialize the local Ollama connection when construction is requested."""
@@ -367,11 +323,11 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
         if self.model_id not in installed:
             raise RuntimeError(
                 f"Offline model {self.model_id!r} is not installed in Ollama. "
-                "Provision the model locally before running this submission."
+                "Install the model locally before running ontology construction."
             )
 
     def _ollama_generate(self, *, system: str, user: str) -> str:
-        """Generate constrained JSON using the original local Ollama settings."""
+        """Generate constrained JSON using the local Ollama settings."""
         response = self._ollama_request(
             "/api/chat",
             {
@@ -381,8 +337,8 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                     {"role": "user", "content": user},
                 ],
                 "stream": False,
-                "format": OLLAMA_JSON_SCHEMA,
-                "options": {"temperature": 0.0},
+                "format": self._ollama_json_schema,
+                "options": {"temperature": self.temperature},
             },
         )
         message = response.get("message", {})
@@ -417,8 +373,16 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 return parsed
         return {}
 
-    def _parse_triples(self, text: str) -> list[list[str]]:
-        """Extract well-formed triples from a model response."""
+    def parse_triples(self, text: str) -> list[list[str]]:
+        """
+        Extract well-formed ontology triples from a generated JSON response.
+
+        Args:
+            text: Raw model response containing a JSON object with a triples field.
+
+        Returns:
+            List of non-empty subject, predicate, and object triples.
+        """
         parsed = self._extract_json_object(text)
         triples = parsed.get("triples", [])
         if not isinstance(triples, list):
@@ -434,10 +398,10 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
         return result
 
     def _normalize_predicate(self, predicate: str) -> str:
-        """Normalize a generated relation to the submitted predicate vocabulary."""
+        """Normalize a generated relation to the supported predicate vocabulary."""
         value = re.sub(r"\s+", " ", predicate.strip().lower())
-        if value in PREDICATE_MAP:
-            return PREDICATE_MAP[value]
+        if value in self.construction_predicate_map:
+            return self.construction_predicate_map[value]
         if any(word in value for word in ("subclass", "type", "kind", "category")):
             return "is-a"
         if any(word in value for word in ("member", "example", "instance")):
@@ -447,7 +411,7 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
     def _entity_is_supported(self, entity: str, context: str) -> bool:
         """Check whether an entity has textual support in the input document."""
         value = entity.strip().lower()
-        if len(value) < 2 or len(value) > 200 or value in GENERIC_ENTITIES:
+        if len(value) < 2 or len(value) > 200 or value in self.generic_entities:
             return False
         if value.startswith(("abstract:", "content:", "title:")):
             return False
@@ -462,7 +426,7 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
         return supported >= max(1, (2 * len(content_words) + 2) // 3)
 
     def _fix_instance_relations(self, triples: list[list[str]]) -> list[list[str]]:
-        """Correct taxonomy and instance relations using the submitted numeric heuristic."""
+        """Correct taxonomy and instance relations using the numeric heuristic."""
         result = []
         for subject, predicate, object_value in triples:
             if predicate == "instance-of" and not re.search(r"\d", subject):
@@ -476,8 +440,21 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             result.append([subject, predicate, object_value])
         return result
 
-    def _post_process(self, triples: list[list[str]], context: str) -> list[list[str]]:
-        """Normalize predicates, reject unsupported entities, and deduplicate."""
+    def filter_construction_triples(self, triples: list[list[str]], context: str) -> list[list[str]]:
+        """
+        Normalize and filter candidate ontology construction triples.
+
+        This method removes self-referential triples and triples with unsupported
+        entities or predicates, corrects instance relations, and removes duplicates.
+
+        Args:
+            triples: Candidate subject, predicate, and object triples.
+            context: Source text used to verify entity support.
+
+        Returns:
+            List of deduplicated triples with normalized predicates, supported
+            entities, and corrected instance relations.
+        """
         cleaned = []
         for triple in triples:
             if not isinstance(triple, list) or len(triple) != 3:
@@ -487,8 +464,8 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             if not relation or subject.casefold() == object_value.casefold():
                 continue
             if (
-                not self._entity_is_supported(subject, context)
-                or not self._entity_is_supported(object_value, context)
+                    not self._entity_is_supported(subject, context)
+                    or not self._entity_is_supported(object_value, context)
             ):
                 continue
             cleaned.append([subject, relation, object_value])
@@ -503,43 +480,64 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             result.append(triple)
         return result
 
-    def _extract_triples(
-        self,
-        context: str,
-        *,
-        generator: Any | None = None,
-        max_retries: int = 3,
-    ) -> list[list[str]]:
-        """Run one deterministic offline extraction and validate its triples."""
+    def build_construction_prompt(self, context: str) -> str:
+        """
+        Prepare the user prompt for ontology construction.
+
+        Args:
+            context: Text from which to extract ontology triples.
+
+        Returns:
+            Formatted user prompt containing the input text and output instructions.
+        """
+        return self.construction_prompt.format(context=context)
+
+    def extract_triples(self, context: str, *, generator: Any | None = None, max_retries: Optional[int] = None) -> list[
+        list[str]]:
+        """
+        Extract ontology triples from a text passage using a language model.
+
+        This method uses constrained prompting to generate candidate triples, normalizes predicates, and filters triples based on entity support in
+        the source text. Failed extraction attempts are retried with exponential backoff.
+
+        Args:
+            context: Source text for ontology construction.
+            generator: Optional generation backend implementing generate(system=..., user=...).
+                       If omitted, use the configured backend or local Ollama model.
+            max_retries: Maximum number of extraction attempts. If None, use the configured limit.
+
+        Returns:
+            List of normalized triples passing entity support and relation
+            filtering checks.
+
+        Raises:
+            RuntimeError: If model initialization or all extraction attempts fail.
+            ValueError: If the local Ollama endpoint is not supported.
+        """
         active_generator = generator if generator is not None else self.generator
         if active_generator is None:
             self._initialize_ollama()
-        prompt = EXTRACT_USER.format(context=context)
+        prompt = self.build_construction_prompt(context)
+        max_retries = self.max_retries if max_retries is None else max_retries
         last_error: Exception | None = None
 
         for attempt in range(max_retries):
             try:
                 content = (
-                    active_generator.generate(system=EXTRACT_SYSTEM, user=prompt)
+                    active_generator.generate(system=self.system_prompt, user=prompt)
                     if active_generator is not None
-                    else self._ollama_generate(system=EXTRACT_SYSTEM, user=prompt)
+                    else self._ollama_generate(system=self.system_prompt, user=prompt)
                 )
-                return self._post_process(self._parse_triples(content), context)
+                return self.filter_construction_triples(self.parse_triples(content), context)
             except Exception as exc:
                 last_error = exc
                 if attempt + 1 < max_retries:
-                    time.sleep(2**attempt)
+                    time.sleep(2 ** attempt)
 
         raise RuntimeError(f"ontology construction extraction failed after {max_retries} attempts") from last_error
 
-    def _build_submission(
-        self,
-        records: list[dict[str, Any]],
-        *,
-        workers: int = 1,
-        generator: Any | None = None,
-    ) -> list[dict[str, Any]]:
-        """Predict ontology construction records while preserving the original order and IDs."""
+    def _predict_construction(self, records: list[dict[str, Any]], *, workers: int = 1, generator: Any | None = None, ) -> list[dict[str, Any]]:
+        """Predict ontology construction records while preserving the input order and IDs."""
         for index, record in enumerate(records):
             if not isinstance(record, dict) or "id" not in record or "context" not in record:
                 raise ValueError(f"ontology construction record {index} must contain id and context")
@@ -564,17 +562,15 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             raise RuntimeError("ontology construction did not produce a prediction for every input record")
         return [prediction for prediction in predictions if prediction is not None]
 
-    def _process_construction_record(
-        self, index: int, record: dict[str, Any], generator: Any | None
-    ) -> tuple[int, dict[str, Any]]:
+    def _process_construction_record( self, index: int, record: dict[str, Any], generator: Any | None ) -> tuple[int, dict[str, Any]]:
         """Extract triples for one construction record."""
-        triples = self._extract_triples(str(record["context"]), generator=generator)
+        triples = self.extract_triples(str(record["context"]), generator=generator)
         return index, {
             "id": record["id"],
             "primitive-ontology-triples": triples,
         }
 
-    # Ontology expansion: original submitted strategies.
+    # Ontology expansion.
 
     def _normalize_label(self, text: str) -> str:
         """Normalize ontology labels for relation lookup and filtering."""
@@ -585,9 +581,9 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
         return value.strip()
 
     def _normalize_relation(self, text: str) -> str:
-        """Normalize relation aliases using the submitted canonical map."""
+        """Normalize relation aliases using the canonical relation map."""
         value = self._normalize_label(text)
-        return RELATION_CANONICAL.get(value, value)
+        return self.expansion_relation_map.get(value, value)
 
     def _token_set(self, text: str) -> set[str]:
         """Return normalized lexical tokens from an ontology label."""
@@ -615,8 +611,22 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
         parts = [self._clean_context_label(part) for part in value.split(",")]
         return [part for part in parts if part]
 
-    def _sanitize_extended_triples(self, triples: list[list[str]], initial_triples: list[list[str]]) -> list[list[str]]:
-        """Remove self-loops, duplicates, and existing ontology edges."""
+    def filter_expansion_triples(self, triples: list[list[str]], initial_triples: list[list[str]]) -> list[list[str]]:
+        """
+        Normalize and filter candidate ontology expansion triples.
+
+        This method removes malformed, empty, self-referential, duplicate,
+        and existing ontology triples after normalizing entity labels and
+        relation names.
+
+        Args:
+            triples: Candidate ontology expansion triples.
+            initial_triples: Existing ontology triples to exclude from the output.
+
+        Returns:
+            List of normalized ontology expansion triples sorted by subject,
+            relation, and object.
+        """
         initial_set = {
             (self._normalize_label(head), self._normalize_relation(relation), self._normalize_label(tail))
             for head, relation, tail in initial_triples
@@ -724,15 +734,24 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                                 pairs.append((child, broad_parent))
         return pairs
 
-    def _extract_explicit_context_triples(
-        self,
-        context: str,
-        *,
-        terms: list[str],
-        types: list[str],
-        initial_triples: list[list[str]],
-    ) -> list[list[str]]:
-        """Extract direct "X is a Y" statements constrained to known ontology expansion labels."""
+    def extract_context_triples(self, context: str, *, terms: list[str], types: list[str],
+                                initial_triples: list[list[str]]) -> list[list[str]]:
+        """
+        Extract candidate subclass relationships from textual context.
+
+        This method uses contextual patterns to identify hierarchical relationships, restricting child labels to the supplied terms and
+        types, and parent labels to the supplied types and existing ontology entities.
+
+        Args:
+            context: Source text containing potential hierarchical relationships.
+            terms: Candidate term labels.
+            types: Candidate type labels.
+            initial_triples: Existing ontology triples providing additional
+                             candidate parent labels.
+
+        Returns:
+            List of normalized candidate is-a triples.
+        """
         known_children = sorted(
             {
                 self._normalize_label(item)
@@ -794,8 +813,20 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 break
         return triples
 
-    def _build_parent_statistics(self, train_records: list[dict[str, Any]]) -> tuple[Counter[str], dict[str, str]]:
-        """Count type-parent relations in the training extensions."""
+    def build_parent_statistics(self, train_records: list[dict[str, Any]]) -> tuple[Counter[str], dict[str, str]]:
+        """
+        Build parent frequency statistics from labeled ontology expansion records.
+
+        This method counts parent occurrences in normalized is-a triples and records the first observed parent for each child.
+
+        Args:
+            train_records: Labeled expansion records containing extended
+                           ontology triples.
+
+        Returns:
+            A tuple containing a counter of parent occurrence frequencies
+            and a dictionary mapping each child to its first observed parent.
+        """
         parent_counts: Counter[str] = Counter()
         child_to_parent: dict[str, str] = {}
         for row in train_records:
@@ -812,8 +843,20 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 child_to_parent.setdefault(head, tail)
         return parent_counts, child_to_parent
 
-    def _build_relation_memory(self, train_records: list[dict[str, Any]]) -> dict[tuple[str, str], Counter[str]]:
-        """Index observed training extensions by head and relation."""
+    def build_relation_memory(self, train_records: list[dict[str, Any]]) -> dict[tuple[str, str], Counter[str]]:
+        """
+        Build a relation memory from labeled ontology expansion records.
+
+        This method indexes normalized head-relation pairs and their observed tails, recording occurrence frequencies for training-based relation
+        prediction. Malformed triples and self-referential relationships are excluded.
+
+        Args:
+            train_records: Labeled expansion records containing extended ontology triples.
+
+        Returns:
+            Dictionary mapping normalized head-relation pairs to counters of
+            observed tails and their frequencies.
+        """
         memory: dict[tuple[str, str], Counter[str]] = defaultdict(Counter)
         for row in train_records:
             for triple in row.get("extended-primitive-ontology-triples", []):
@@ -830,8 +873,20 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 memory[(head_norm, relation_norm)][tail_norm] += 1
         return memory
 
-    def _predict_type_extensions(self, context: str, types: list[str], initial_triples: list[list[str]], parent_counts: Counter[str] | None = None) -> list[list[str]]:
-        """Generate lexical and document-supported type extensions."""
+    def predict_type_extensions(self, context: str, types: list[str], initial_triples: list[list[str]],
+                                parent_counts: Counter[str] | None = None) -> list[list[str]]:
+        """
+        Predict type hierarchy extensions using contextual and lexical evidence.
+
+        Args:
+            context: Source text containing potential hierarchical statements.
+            types: Candidate type labels.
+            initial_triples: Existing ontology triples supplying candidate parent labels.
+            parent_counts: Optional parent occurrence counts from build_parent_statistics(). If None, use no training-derived frequency prior.
+
+        Returns:
+            List of candidate is-a triples before expansion filtering.
+        """
         parent_counts = parent_counts or Counter()
         normalized_types = sorted({self._normalize_label(item) for item in types if self._normalize_label(item)})
         initial_heads = {
@@ -872,12 +927,23 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 if score > best_score:
                     best_score = score
                     best_parent = parent
-            if best_parent and best_score >= 2.0:
+            if best_parent and best_score >= self.lexical_parent_score_threshold:
                 predicted.append([child, "is-a", best_parent])
         return predicted
 
-    def _predict_term_typings(self, terms: list[str], types: list[str], context: str) -> list[list[str]]:
-        """Assign types to record terms using document and lexical evidence."""
+    def predict_term_typings(self, terms: list[str], types: list[str], context: str) -> list[list[str]]:
+        """
+        Predict term typings using contextual rules and lexical similarity.
+
+        Args:
+            terms: Terms to assign to types.
+            types: Candidate type labels.
+            context: Source text containing potential typing evidence.
+
+        Returns:
+            List of candidate instance-of triples. Lexical fallback may select
+            a type even when no tokens overlap.
+        """
         normalized_terms = sorted({self._normalize_label(item) for item in terms if self._normalize_label(item)})
         normalized_types = sorted({self._normalize_label(item) for item in types if self._normalize_label(item)})
         context_pairs = self._extract_context_is_a_pairs(context)
@@ -910,15 +976,29 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 predicted.append([term, "instance-of", parent])
         return predicted
 
-    def _predict_memorized_type_extensions(
-        self,
-        *,
-        types: list[str],
-        relation_memory: dict[tuple[str, str], Counter[str]],
-        parent_counts: Counter[str],
-        score_threshold: float,
+    def predict_memorized_type_extensions(self,*,
+            types: list[str],
+            relation_memory: dict[tuple[str, str], Counter[str]],
+            parent_counts: Counter[str],
+            score_threshold: Optional[float] = None,
     ) -> list[list[str]]:
-        """Recover type parents from memorized and lexical candidates."""
+        """
+        Predict type hierarchy extensions using relation memory and lexical fallback.
+
+        This method prioritizes previously observed parent relationships and ranks them using occurrence frequencies and lexical similarity. When
+        no memorized parent is available, it selects a parent using lexical similarity and training-derived parent frequencies.
+
+        Args:
+            types: Candidate type labels.
+            relation_memory: Training-derived relation memory created by build_relation_memory().
+            parent_counts: Parent occurrence counts obtained from build_parent_statistics().
+            score_threshold: Minimum score required for lexical fallback. If None, use the configured memorized_parent_score_threshold.
+                             Memorized parent matches bypass this threshold.
+
+        Returns:
+            List of normalized candidate is-a triples.
+        """
+        score_threshold = self.memorized_parent_score_threshold if score_threshold is None else score_threshold
         normalized_types = sorted({self._normalize_label(item) for item in types if self._normalize_label(item)})
         type_set = set(normalized_types)
         predicted = []
@@ -956,14 +1036,25 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 predicted.append([child, "is-a", parent])
         return predicted
 
-    def _predict_memorized_term_typings(
-        self,
-        *,
-        terms: list[str],
-        types: list[str],
-        relation_memory: dict[tuple[str, str], Counter[str]],
+    def predict_memorized_term_typings(
+            self,
+            *,
+            terms: list[str],
+            types: list[str],
+            relation_memory: dict[tuple[str, str], Counter[str]],
     ) -> list[list[str]]:
-        """Assign term types using training memory and lexical fallback."""
+        """
+        Predict term typings using relation memory and lexical fallback.
+
+        Args:
+            terms: Terms to assign to types.
+            types: Candidate type labels.
+            relation_memory: Training-derived relation memory from build_relation_memory().
+
+        Returns:
+            List of candidate instance-of triples. Lexical fallback may select
+            a type even when no tokens overlap.
+        """
         normalized_terms = sorted({self._normalize_label(item) for item in terms if self._normalize_label(item)})
         normalized_types = sorted({self._normalize_label(item) for item in types if self._normalize_label(item)})
         type_set = set(normalized_types)
@@ -990,7 +1081,8 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                     overlap = len(term_tokens & candidate_tokens)
                     suffix_bonus = (
                         1.0
-                        if term.split() and candidate_parent.split() and term.split()[-1] == candidate_parent.split()[-1]
+                        if term.split() and candidate_parent.split() and term.split()[-1] == candidate_parent.split()[
+                            -1]
                         else 0.0
                     )
                     score = overlap + suffix_bonus
@@ -1005,14 +1097,14 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
 
     def _ensure_expansion_obo_source_cached(self, source_key: str) -> Path:
         """Resolve cached OBO resources, downloading if necessary."""
-        if source_key not in EXPANSION_ALL_OBO_SOURCE_URLS:
+        if source_key not in self._all_obo_source_urls:
             raise ValueError(f"Unknown ontology expansion OBO source: {source_key}")
-        EXPANSION_OBO_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        path = EXPANSION_OBO_CACHE_DIR / f"{source_key}.obo"
+        self._obo_cache_dir.mkdir(parents=True, exist_ok=True)
+        path = self._obo_cache_dir / f"{source_key}.obo"
         if path.exists() and path.stat().st_size > 1000:
             return path
-        request = urllib.request.Request(EXPANSION_ALL_OBO_SOURCE_URLS[source_key], headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(request, timeout=180) as response:
+        request = urllib.request.Request(self._all_obo_source_urls[source_key], headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(request, timeout=self.download_timeout) as response:
             path.write_bytes(response.read())
         return path
 
@@ -1036,7 +1128,8 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                     "id": current_id,
                     "name": self._normalize_label(current_name),
                     "parents": list(current_parents),
-                    "synonyms": [self._normalize_label(item) for item in current_synonyms if self._normalize_label(item)],
+                    "synonyms": [self._normalize_label(item) for item in current_synonyms if
+                                 self._normalize_label(item)],
                 }
             )
 
@@ -1079,13 +1172,13 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
 
     def _ensure_expansion_foodon_owl_cached(self) -> Path:
         """Resolve the cached FoodOn ontology."""
-        EXPANSION_OWL_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        if EXPANSION_FOODON_OWL_PATH.exists() and EXPANSION_FOODON_OWL_PATH.stat().st_size > 1_000_000:
-            return EXPANSION_FOODON_OWL_PATH
-        request = urllib.request.Request(EXPANSION_FOODON_OWL_URL, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(request, timeout=180) as response:
-            EXPANSION_FOODON_OWL_PATH.write_bytes(response.read())
-        return EXPANSION_FOODON_OWL_PATH
+        self._owl_cache_dir.mkdir(parents=True, exist_ok=True)
+        if self._foodon_owl_path.exists() and self._foodon_owl_path.stat().st_size > 1_000_000:
+            return self._foodon_owl_path
+        request = urllib.request.Request(self.foodon_owl_url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(request, timeout=self.download_timeout) as response:
+            self._foodon_owl_path.write_bytes(response.read())
+        return self._foodon_owl_path
 
     @lru_cache(maxsize=1)
     def _load_expansion_foodon_owl_terms(self) -> tuple[dict[str, Any], ...]:
@@ -1099,11 +1192,12 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
         owl_path = self._ensure_expansion_foodon_owl_cached()
         graph = rdflib.Graph()
         graph.parse(str(owl_path), format="xml")
+        obo_in_owl_prefix = "http://www.geneontology.org/formats/oboInOwl#"
         label_predicates = {
             rdflib.namespace.RDFS.label,
-            URIRef(f"{OBO_IN_OWL_PREFIX}hasExactSynonym"),
-            URIRef(f"{OBO_IN_OWL_PREFIX}hasRelatedSynonym"),
-            URIRef(f"{OBO_IN_OWL_PREFIX}hasBroadSynonym"),
+            URIRef(f"{obo_in_owl_prefix}hasExactSynonym"),
+            URIRef(f"{obo_in_owl_prefix}hasRelatedSynonym"),
+            URIRef(f"{obo_in_owl_prefix}hasBroadSynonym"),
         }
         labels_by_uri: dict[str, list[str]] = defaultdict(list)
         parent_uris: dict[str, list[str]] = defaultdict(list)
@@ -1135,14 +1229,28 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             if isinstance(item, str) and self._normalize_label(item)
         }
 
-    def _build_expansion_obo_index(
-        self,
-        records: list[dict[str, Any]],
-        *,
-        source_keys: tuple[str, ...] = EXPANSION_OBO_SOURCE_KEYS,
-        include_foodon_owl: bool = False,
-    ) -> dict[str, Any]:
-        """Build the record-restricted OBO and FoodOn parent index."""
+    def build_ontology_index(self, records: list[dict[str, Any]], *, source_keys: tuple[str, ...] | None = None, include_foodon_owl: bool = False) -> dict[str, Any]:
+        """
+        Build a label and direct-parent index from public ontology resources.
+
+        Ontology resources are downloaded and cached when they are not already available locally. Use a separate cache directory when changing
+        resource URLs to avoid reusing previously cached resources.
+
+        Args:
+            records: Expansion records containing terms and types to match.
+            source_keys: OBO source identifiers. If None, use the standard OBO sources.
+            include_foodon_owl: Whether to include FoodOn OWL in the index.
+
+        Returns:
+            Index containing label matches, parent links, and source statistics.
+
+        Raises:
+            ValueError: If an OBO source identifier is unknown.
+            RuntimeError: If rdflib is unavailable when FoodOn is requested.
+            OSError: If ontology resources cannot be accessed or cached.
+        """
+        if source_keys is None:
+            source_keys = tuple(self.obo_source_urls)
         label_universe = set()
         for row in records:
             label_universe.update(self._collect_obo_candidate_labels(row))
@@ -1189,8 +1297,20 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             "matched_label_count": len(name_to_ids),
         }
 
-    def _predict_expansion_obo_type_edges(self, row: dict[str, Any], obo_index: dict[str, Any]) -> list[list[str]]:
-        """Recover direct public-ontology parents within record labels."""
+    def predict_ontology_edges(self, row: dict[str, Any], obo_index: dict[str, Any]) -> list[list[str]]:
+        """
+        Predict direct subclass relationships using an external ontology index.
+
+        This method matches candidate labels against indexed ontology entities and retrieves direct parent relationships, retaining only edges whose
+        endpoints occur in the expansion vocabulary.
+
+        Args:
+            row: Expansion record containing candidate terms and types.
+            obo_index: Ontology index created by build_ontology_index().
+
+        Returns:
+            List of candidate is-a triples connecting labels in the expansion record.
+        """
         labels = self._collect_obo_candidate_labels(row)
         name_to_ids = obo_index["name_to_ids"]
         id_to_labels = obo_index["id_to_labels"]
@@ -1205,63 +1325,98 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                             predicted.append([child, "is-a", parent])
         return predicted
 
-    def _build_extended_predictions(self, records: list[dict[str, Any]], train_records: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
-        """Run the original lexical construction of ontology extensions."""
-        return self._build_extended_predictions_for_method(records, train_records=train_records, method="constrained_lex")
+    def predict_expansion(self, records: list[dict[str, Any]], train_records: list[dict[str, Any]] | None = None, *, method: Optional[str] = None) -> list[dict[str, Any]]:
+        """
+        Generate ontology extensions using a selected expansion strategy.
 
-    def _build_extended_predictions_for_method(
-        self,
-        records: list[dict[str, Any]],
-        train_records: list[dict[str, Any]] | None = None,
-        *,
-        method: str,
-    ) -> list[dict[str, Any]]:
-        """Run one of the original ontology expansion strategies."""
-        if method not in EXPANSION_METHODS:
-            raise ValueError(f"Unknown ontology expansion method {method!r}. Expected one of: {', '.join(EXPANSION_METHODS)}")
+        This method applies lexical and contextual rules, training-based relation memory, external ontology lookup, or a combination of these approaches
+        depending on the selected strategy. Candidate triples are filtered to exclude existing ontology triples and duplicates.
 
-        parent_counts, _ = self._build_parent_statistics(train_records or [])
-        relation_memory = self._build_relation_memory(train_records or [])
+        Available expansion strategies:
+
+        - ``constrained_lex``: Context-aware lexical hierarchy and term typing.
+        - ``context_rules``: Explicit contextual subclass rules only.
+        - ``type_link``: Context-aware lexical term typing only.
+        - ``hybrid_expansion``: Combine the three rule-based components.
+        - ``memorized_lexical``: Memory-based hierarchy and term typing.
+        - ``memorized_lexical_strict``: Memory-based prediction with a
+          stricter lexical hierarchy fallback threshold.
+        - ``obo_direct``: Direct subclass lookup in standard OBO resources.
+        - ``obo_memorized_hybrid``: Combine OBO lookup and memory-based predictions.
+        - ``obo_memorized_selective``: Use memory-based hierarchy predictions
+          only for children without OBO edges; include memory-based term typing.
+        - ``obo_foodon_hybrid``: Hybrid with FoodOn OWL added.
+        - ``obo_foodon_selective``: Selective hybrid with FoodOn OWL added.
+        - ``obo_foodon_to_direct``: Direct lookup with FoodOn and additional
+          OBO sources.
+        - ``obo_foodon_to_terms_only``: Direct lookup plus memory-based term typing.
+        - ``obo_foodon_to_hybrid``: Hybrid with FoodOn and additional OBO sources.
+        - ``obo_foodon_to_selective``: Selective hybrid with those sources.
+        - ``obo_foodon_to_selective_threshold_4``: Selective hybrid with
+          lexical fallback threshold 4.0.
+        - ``obo_foodon_to_selective_threshold_8``: Selective hybrid with
+          lexical fallback threshold 8.0.
+
+        Args:
+            records: Expansion records containing IDs, contexts, terms, types, and initial ontology triples.
+            train_records: Optional labeled expansion records used to build relation memory and parent statistics.
+                           If None, use no training records, even if fit() has been called.
+            method: Expansion strategy selected from expansion_methods.
+                    If None, use the configured expansion_method.
+
+        Returns:
+            List of prediction dictionaries containing sample IDs and extended-primitive-ontology-triples.
+
+        Raises:
+            ValueError: If the selected expansion strategy is not supported.
+        """
+        method = self.expansion_method if method is None else method
+        if method not in self.expansion_methods:
+            raise ValueError(
+                f"Unknown ontology expansion method {method!r}. Expected one of: {', '.join(self.expansion_methods)}")
+
+        parent_counts, _ = self.build_parent_statistics(train_records or [])
+        relation_memory = self.build_relation_memory(train_records or [])
         obo_index = (
-            self._build_expansion_obo_index(
+            self.build_ontology_index(
                 records,
-                source_keys=EXPANSION_FOODON_TO_SOURCE_KEYS
+                source_keys=tuple(self._all_obo_source_urls)
                 if method
-                in {
-                    "obo_foodon_to_direct",
-                    "obo_foodon_to_terms_only",
-                    "obo_foodon_to_hybrid",
-                    "obo_foodon_to_selective",
-                    "obo_foodon_to_selective_threshold_4",
-                    "obo_foodon_to_selective_threshold_8",
-                }
-                else EXPANSION_OBO_SOURCE_KEYS,
+                   in {
+                       "obo_foodon_to_direct",
+                       "obo_foodon_to_terms_only",
+                       "obo_foodon_to_hybrid",
+                       "obo_foodon_to_selective",
+                       "obo_foodon_to_selective_threshold_4",
+                       "obo_foodon_to_selective_threshold_8",
+                   }
+                else tuple(self.obo_source_urls),
                 include_foodon_owl=method
-                in {
-                    "obo_foodon_hybrid",
-                    "obo_foodon_selective",
-                    "obo_foodon_to_direct",
-                    "obo_foodon_to_terms_only",
-                    "obo_foodon_to_hybrid",
-                    "obo_foodon_to_selective",
-                    "obo_foodon_to_selective_threshold_4",
-                    "obo_foodon_to_selective_threshold_8",
-                },
+                                   in {
+                                       "obo_foodon_hybrid",
+                                       "obo_foodon_selective",
+                                       "obo_foodon_to_direct",
+                                       "obo_foodon_to_terms_only",
+                                       "obo_foodon_to_hybrid",
+                                       "obo_foodon_to_selective",
+                                       "obo_foodon_to_selective_threshold_4",
+                                       "obo_foodon_to_selective_threshold_8",
+                                   },
             )
             if method
-            in {
-                "obo_direct",
-                "obo_memorized_hybrid",
-                "obo_memorized_selective",
-                "obo_foodon_hybrid",
-                "obo_foodon_selective",
-                "obo_foodon_to_direct",
-                "obo_foodon_to_terms_only",
-                "obo_foodon_to_hybrid",
-                "obo_foodon_to_selective",
-                "obo_foodon_to_selective_threshold_4",
-                "obo_foodon_to_selective_threshold_8",
-            }
+               in {
+                   "obo_direct",
+                   "obo_memorized_hybrid",
+                   "obo_memorized_selective",
+                   "obo_foodon_hybrid",
+                   "obo_foodon_selective",
+                   "obo_foodon_to_direct",
+                   "obo_foodon_to_terms_only",
+                   "obo_foodon_to_hybrid",
+                   "obo_foodon_to_selective",
+                   "obo_foodon_to_selective_threshold_4",
+                   "obo_foodon_to_selective_threshold_8",
+               }
             else None
         )
         predictions = []
@@ -1272,35 +1427,35 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             term_extensions = []
             memorized_extensions = []
             obo_extensions = []
-            if method in {"context_rules", "hybrid_reuse"}:
-                context_extensions = self._extract_explicit_context_triples(
+            if method in {"context_rules", "hybrid_expansion"}:
+                context_extensions = self.extract_context_triples(
                     row["context"],
                     terms=row.get("terms", []),
                     types=row.get("types", []),
                     initial_triples=initial_triples,
                 )
-            if method in {"constrained_lex", "hybrid_reuse"}:
-                type_extensions = self._predict_type_extensions(
+            if method in {"constrained_lex", "hybrid_expansion"}:
+                type_extensions = self.predict_type_extensions(
                     context=row["context"],
                     types=row.get("types", []),
                     initial_triples=initial_triples,
                     parent_counts=parent_counts,
                 )
-            if method in {"constrained_lex", "type_link", "hybrid_reuse"}:
-                term_extensions = self._predict_term_typings(
+            if method in {"constrained_lex", "type_link", "hybrid_expansion"}:
+                term_extensions = self.predict_term_typings(
                     terms=row.get("terms", []),
                     types=row.get("types", []),
                     context=row["context"],
                 )
             if method in {"memorized_lexical", "memorized_lexical_strict"}:
-                memorized_extensions = self._predict_memorized_type_extensions(
+                memorized_extensions = self.predict_memorized_type_extensions(
                     types=row.get("types", []),
                     relation_memory=relation_memory,
                     parent_counts=parent_counts,
-                    score_threshold=1.0 if method == "memorized_lexical" else 1.2,
+                    score_threshold=self.memorized_parent_score_threshold if method == "memorized_lexical" else self.strict_memorized_parent_score_threshold,
                 )
                 memorized_extensions.extend(
-                    self._predict_memorized_term_typings(
+                    self.predict_memorized_term_typings(
                         terms=row.get("terms", []),
                         types=row.get("types", []),
                         relation_memory=relation_memory,
@@ -1319,7 +1474,7 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 "obo_foodon_to_selective_threshold_4",
                 "obo_foodon_to_selective_threshold_8",
             }:
-                obo_extensions = self._predict_expansion_obo_type_edges(row, obo_index or {})
+                obo_extensions = self.predict_ontology_edges(row, obo_index or {})
             if method in {
                 "obo_memorized_hybrid",
                 "obo_memorized_selective",
@@ -1334,11 +1489,11 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                     "obo_foodon_to_selective_threshold_4": 4.0,
                     "obo_foodon_to_selective_threshold_8": 8.0,
                 }
-                memorized_extensions = self._predict_memorized_type_extensions(
+                memorized_extensions = self.predict_memorized_type_extensions(
                     types=row.get("types", []),
                     relation_memory=relation_memory,
                     parent_counts=parent_counts,
-                    score_threshold=threshold_by_method.get(method, 1.0),
+                    score_threshold=threshold_by_method.get(method, self.memorized_parent_score_threshold),
                 )
                 if method in {
                     "obo_memorized_selective",
@@ -1354,7 +1509,7 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                         if len(triple) != 3 or triple[1] != "is-a" or triple[0] not in obo_children
                     ]
                 memorized_extensions.extend(
-                    self._predict_memorized_term_typings(
+                    self.predict_memorized_term_typings(
                         terms=row.get("terms", []),
                         types=row.get("types", []),
                         relation_memory=relation_memory,
@@ -1365,14 +1520,14 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
                 candidate_triples = context_extensions
             elif method == "type_link":
                 candidate_triples = term_extensions
-            elif method == "hybrid_reuse":
+            elif method == "hybrid_expansion":
                 candidate_triples = context_extensions + type_extensions + term_extensions
             elif method in {"memorized_lexical", "memorized_lexical_strict"}:
                 candidate_triples = memorized_extensions
             elif method in {"obo_direct", "obo_foodon_to_direct"}:
                 candidate_triples = obo_extensions
             elif method == "obo_foodon_to_terms_only":
-                candidate_triples = obo_extensions + self._predict_memorized_term_typings(
+                candidate_triples = obo_extensions + self.predict_memorized_term_typings(
                     terms=row.get("terms", []),
                     types=row.get("types", []),
                     relation_memory=relation_memory,
@@ -1391,7 +1546,7 @@ class VoltIQPrimitiveLearner(PrimitiveOntologyLearner):
             else:
                 candidate_triples = type_extensions + term_extensions
 
-            extended = self._sanitize_extended_triples(candidate_triples, initial_triples)
+            extended = self.filter_expansion_triples(candidate_triples, initial_triples)
             predictions.append(
                 {
                     "id": row["id"],
