@@ -1,4 +1,3 @@
-import os
 import json
 
 from openai import OpenAI
@@ -12,13 +11,9 @@ from ontolearner.learner.primitive import BigDipperAIPrimitiveLearner
 
 
 # Configuration
-model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-api_key = os.getenv("OPENAI_API_KEY")
-hf_token = os.getenv("HF_TOKEN", "")
-
-if not api_key:
-    raise EnvironmentError("Set OPENAI_API_KEY before running.")
-
+model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+api_key = "OPENAI_API_KEY"
+hf_token = ""
 
 print("\nSTEP 1: Loading the FOAF ontology")
 ontology = FOAF()
@@ -109,14 +104,10 @@ if not train_data or not test_data:
         "Preprocessing produced no training or test construction samples."
     )
 
-# Optional: BigDipperAI supports auxiliary ontology expansion supervision.
-# Run text2onto_expansion.py from the same examples folder to obtain
-# preprocessed expansion training samples without modifying that file.
-# Only expansion TRAIN samples are passed as auxiliary supervision.
-#
-# Note: Synthetic FOAF expansion data is suitable for demonstrating
-# the auxiliary-data interface. The original submitted methodology
-# used independent Task B Reuse training data.
+
+# Optional: Use ontology expansion samples as auxiliary training data.
+# Keep text2onto_expansion.py in the same directory.
+# Consider using a different ontology to diversify training examples.
 
 auxiliary_data = None
 
@@ -124,7 +115,6 @@ auxiliary_data = None
 # from pathlib import Path
 #
 # expansion_path = Path(__file__).with_name("text2onto_expansion.py")
-#
 # expansion_outputs = runpy.run_path(str(expansion_path))
 # auxiliary_data = expansion_outputs["train_data"]
 #
@@ -132,9 +122,7 @@ auxiliary_data = None
 
 
 # Configure a smaller pretrained language model for CPU testing.
-learner_model_id = os.getenv(
-    "BIGDIPPERAI_MODEL_ID", "Qwen/Qwen3-0.6B"
-)
+learner_model_id = "Qwen/Qwen3-0.6B"
 
 learner = BigDipperAIPrimitiveLearner(
     model_id=learner_model_id,
@@ -149,7 +137,7 @@ learner = BigDipperAIPrimitiveLearner(
 # The pipeline loads the pretrained language model.
 # BigDipperAI prepares construction supervision, optional auxiliary expansion supervision, and the graph index used during inference.
 # No QLoRA adapter is trained in this CPU example.
-pipe = LearnerPipeline(
+pipeline = LearnerPipeline(
     llm=learner,
     llm_id=learner_model_id,
     ontologizer_data=True,
@@ -157,7 +145,7 @@ pipe = LearnerPipeline(
 
 # Prepare training data, predict ontology triples for all test documents,
 # and evaluate predictions against the reference triples.
-outputs = pipe(
+outputs = pipeline(
     train_data=train_data,
     test_data=test_data,
     task="ontology_construction",

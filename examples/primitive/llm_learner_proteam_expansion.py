@@ -1,4 +1,3 @@
-import os
 import json
 
 from openai import OpenAI
@@ -8,17 +7,12 @@ from ontolearner.text2onto import (
     SyntheticGenerator,
     SyntheticDataPreprocessor,
 )
-from ontolearner.learner.primitive import VoltIQPrimitiveLearner
-
+from ontolearner.learner.primitive import ProTeamPrimitiveLearner
 
 # Configuration
-model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-learner_model_id = os.getenv("VOLTIQ_MODEL_ID", "qwen2.5:1.5b")
-api_key = os.getenv("OPENAI_API_KEY")
-hf_token = os.getenv("HF_TOKEN", "")
-
-if not api_key:
-    raise EnvironmentError("Set OPENAI_API_KEY before running.")
+model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+api_key = "OPENAI_API_KEY"
+hf_token = ""
 
 print("\nSTEP 1: Loading the FOAF ontology")
 ontology = FOAF()
@@ -71,10 +65,11 @@ print("Generated test documents:", len(test_synthetic.generated_docs))
 
 print("\nSTEP 6: Initializing the preprocessor")
 # One preprocessor for train and test: both get the same text cleaning, six-stage deep cleaning and LLM-judge
-# alignment filter, and are then turned into construction samples (a text and its complete ontology).
+# alignment filter, and are then turned into expansion samples (each record's triples split into an initial ontology
+# and the triples that extend it; records with nothing to extend are dropped).
 preprocessor = SyntheticDataPreprocessor(
     client=OpenAI(api_key=api_key),
-    task="ontology_construction",
+    task="ontology_expansion",
     random_state=42,
 )
 
@@ -93,30 +88,34 @@ if test_data:
     print("\nExample test sample:")
     print(json.dumps(test_data[0], indent=2, ensure_ascii=False)[:1500])
 
-print("\nSTEP 9: Running the Volt-IQ learner through LearnerPipeline")
-# Use a small Ollama model for CPU testing; the submitted portable extractor uses qwen3.6:27b.
-learner = VoltIQPrimitiveLearner(
+
+print("\nSTEP 9: Running the ProTeam learner through LearnerPipeline")
+
+# Configure a smaller language model for CPU testing.
+learner_model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+
+learner = ProTeamPrimitiveLearner(
     model_id=learner_model_id,
-    base_url="http://127.0.0.1:11434",
-    workers=1,
-    timeout=120.0,
+    retriever_model_id="sentence-transformers/all-MiniLM-L6-v2",
+    device="cpu",
+    batch_size=1,
+    max_input_length=1024,
 )
 
-pipe = LearnerPipeline(
+pipeline = LearnerPipeline(
     llm=learner,
     llm_id=learner_model_id,
     ontologizer_data=True,
 )
 
-# Fit on all training samples, predict EVERY preprocessed test sample, and evaluate.
-# The base PrimitiveOntologyLearner formatter hides ground truth during prediction.
-outputs = pipe(
+# Train and evaluate using the preprocessed samples directly.
+outputs = pipeline(
     train_data=train_data,
     test_data=test_data,
-    task="ontology_construction",
+    task="ontology_expansion",
     evaluate=True,
     ontologizer_data=True,
 )
 
-print("Metrics:", outputs.get("metrics"))
+print("\nMetrics:", outputs.get("metrics"))
 print("Elapsed time:", outputs["elapsed_time"])

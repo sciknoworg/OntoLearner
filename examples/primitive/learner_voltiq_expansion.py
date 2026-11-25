@@ -1,4 +1,3 @@
-import os
 import json
 
 from openai import OpenAI
@@ -12,9 +11,9 @@ from ontolearner.learner.primitive import VoltIQPrimitiveLearner
 from ontolearner.evaluation import evaluation_report
 
 # Configuration
-model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-api_key = os.getenv("OPENAI_API_KEY")
-hf_token = os.getenv("HF_TOKEN", "")
+model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+api_key = "OPENAI_API_KEY"
+hf_token = ""
 
 if not api_key:
     raise EnvironmentError("Set OPENAI_API_KEY before running.")
@@ -100,7 +99,7 @@ task = "ontology_expansion"
 # Volt-IQ supports 17 ontology expansion methods overall.
 # The primary submitted F01 method is "obo_foodon_to_terms_only".
 # The submitted F02 method is "obo_foodon_to_selective_threshold_8".
-# Other available methods include "constrained_lex", "hybrid_reuse",
+# Other available methods include "constrained_lex", "hybrid_expansion",
 # "context_rules", "type_link", and the memorized/OBO hybrid variants.
 # Change expansion_method to compare the different strategies.
 expansion_method = "obo_foodon_to_terms_only"

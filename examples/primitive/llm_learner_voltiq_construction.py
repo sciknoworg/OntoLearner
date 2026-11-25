@@ -1,4 +1,3 @@
-import os
 import json
 
 from openai import OpenAI
@@ -8,12 +7,14 @@ from ontolearner.text2onto import (
     SyntheticGenerator,
     SyntheticDataPreprocessor,
 )
-from ontolearner.learner.primitive import ProTeamPrimitiveLearner
+from ontolearner.learner.primitive import VoltIQPrimitiveLearner
+
 
 # Configuration
-model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-api_key = os.getenv("OPENAI_API_KEY")
-hf_token = os.getenv("HF_TOKEN", "")
+model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+learner_model_id = "qwen2.5:1.5b"
+api_key = "OPENAI_API_KEY"
+hf_token = ""
 
 if not api_key:
     raise EnvironmentError("Set OPENAI_API_KEY before running.")
@@ -69,11 +70,10 @@ print("Generated test documents:", len(test_synthetic.generated_docs))
 
 print("\nSTEP 6: Initializing the preprocessor")
 # One preprocessor for train and test: both get the same text cleaning, six-stage deep cleaning and LLM-judge
-# alignment filter, and are then turned into expansion samples (each record's triples split into an initial ontology
-# and the triples that extend it; records with nothing to extend are dropped).
+# alignment filter, and are then turned into construction samples (a text and its complete ontology).
 preprocessor = SyntheticDataPreprocessor(
     client=OpenAI(api_key=api_key),
-    task="ontology_expansion",
+    task="ontology_construction",
     random_state=42,
 )
 
@@ -92,20 +92,13 @@ if test_data:
     print("\nExample test sample:")
     print(json.dumps(test_data[0], indent=2, ensure_ascii=False)[:1500])
 
-
-print("\nSTEP 9: Running the ProTeam learner through LearnerPipeline")
-
-# Configure a smaller language model for CPU testing.
-learner_model_id = os.getenv(
-    "PROTEAM_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct"
-)
-
-learner = ProTeamPrimitiveLearner(
+print("\nSTEP 9: Running the Volt-IQ learner through LearnerPipeline")
+# Use a small Ollama model for CPU testing; the submitted portable extractor uses qwen3.6:27b.
+learner = VoltIQPrimitiveLearner(
     model_id=learner_model_id,
-    retriever_model_id="sentence-transformers/all-MiniLM-L6-v2",
-    device="cpu",
-    batch_size=1,
-    max_input_length=1024,
+    base_url="http://127.0.0.1:11434",
+    workers=1,
+    timeout=120.0,
 )
 
 pipe = LearnerPipeline(
@@ -114,14 +107,15 @@ pipe = LearnerPipeline(
     ontologizer_data=True,
 )
 
-# Train and evaluate using the preprocessed samples directly.
+# Fit on all training samples, predict EVERY preprocessed test sample, and evaluate.
+# The base PrimitiveOntologyLearner formatter hides ground truth during prediction.
 outputs = pipe(
     train_data=train_data,
     test_data=test_data,
-    task="ontology_expansion",
+    task="ontology_construction",
     evaluate=True,
     ontologizer_data=True,
 )
 
-print("\nMetrics:", outputs.get("metrics"))
+print("Metrics:", outputs.get("metrics"))
 print("Elapsed time:", outputs["elapsed_time"])

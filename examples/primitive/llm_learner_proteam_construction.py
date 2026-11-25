@@ -1,4 +1,3 @@
-import os
 import json
 
 from openai import OpenAI
@@ -12,12 +11,9 @@ from ontolearner.learner.primitive import ProTeamPrimitiveLearner
 
 
 # Configuration
-model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-api_key = os.getenv("OPENAI_API_KEY")
-hf_token = os.getenv("HF_TOKEN", "")
-
-if not api_key:
-    raise EnvironmentError("Set OPENAI_API_KEY before running.")
+model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+api_key = "OPENAI_API_KEY"
+hf_token = ""
 
 
 print("\nSTEP 1: Loading the FOAF ontology")
@@ -109,10 +105,8 @@ if not train_data or not test_data:
         "Preprocessing produced no training or test samples."
     )
 
-# Configure a smaller language model and sentence embedding model for CPU testing.
-learner_model_id = os.getenv(
-    "PROTEAM_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct"
-)
+# Configure a smaller language model for CPU testing.
+learner_model_id = "Qwen/Qwen2.5-0.5B-Instruct"
 
 learner = ProTeamPrimitiveLearner(
     model_id=learner_model_id,
@@ -124,7 +118,7 @@ learner = ProTeamPrimitiveLearner(
 
 # ProTeam uses retrieval-augmented generation with labeled training examples.
 # The pipeline loads the language model and sentence embedding model.
-pipe = LearnerPipeline(
+pipeline = LearnerPipeline(
     llm=learner,
     llm_id=learner_model_id,
     ontologizer_data=True,
@@ -132,7 +126,7 @@ pipe = LearnerPipeline(
 
 # Fits on the preprocessed training samples, predicts ontology triples
 # from all test documents, and evaluates against the reference triples.
-outputs = pipe(
+outputs = pipeline(
     train_data=train_data,
     test_data=test_data,
     task="ontology_construction",
