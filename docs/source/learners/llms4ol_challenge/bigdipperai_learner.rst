@@ -40,13 +40,13 @@ Methodological Summary:
 
 3. **Structured Generation and Post-Processing.** During prediction, the adapted model generates primitive ontology triples from textual context using task-specific prompts and greedy decoding. Generated outputs undergo JSON recovery, relation normalization, and validation. A training-derived graph index provides additional self-relation candidates, which are combined with model predictions through score-based filtering and duplicate removal.
 
-Ontology Construction
----------------------
+Data Preparation
+----------------
 
 Loading Ontological Data
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-For ontology construction, we use the FOAF ontology as a running example. The ontology is loaded, and its taxonomic relations are split into training and test sets.
+The example uses the FOAF ontology as a running example. Its taxonomic relations are split into training and test sets before synthetic documents are generated.
 
 .. code-block:: python
 
@@ -69,25 +69,21 @@ For ontology construction, we use the FOAF ontology as a running example. The on
        random_state=42,
    )
 
-Synthetic Document Generation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Generating Documents
+~~~~~~~~~~~~~~~~~~~~
 
-The ontology splits are used to generate synthetic textual documents through ``SyntheticGenerator``. The generated documents are subsequently processed using ``SyntheticDataPreprocessor`` to prepare training and test samples for ontology construction.
+Use ``SyntheticGenerator`` for the two ontology partitions. In this example, synthetic-data extraction uses ``gpt-4o-mini`` through an API, while BigDipperAI uses ``Qwen3-8B`` locally for ontology construction.
 
 .. code-block:: python
 
-   import os
    from openai import OpenAI
    from ontolearner.text2onto import SyntheticGenerator, SyntheticDataPreprocessor
 
    # Configure the synthetic document generator
-   model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-   api_key = os.getenv("OPENAI_API_KEY")
-   hf_token = os.getenv("HF_TOKEN", "")
-
+   api_key = = "OPENAI_API_KEY"
    generator = SyntheticGenerator(
-       model_id=model_id,
-       token=hf_token,
+       model_id="Qwen/Qwen2.5-0.5B-Instruct",
+       token="hf_token",
        extraction_method="openai",
        openai_api_key=api_key,
        openai_model="gpt-4o-mini",
@@ -98,46 +94,53 @@ The ontology splits are used to generate synthetic textual documents through ``S
        max_new_tokens=2000,
    )
 
-   # Generate synthetic documents from the ontology splits
+   # Generate documents for the training and test ontology splits
    train_synthetic = generator.generate(ontological_data=train_ontology, topic=ontology.domain)
    test_synthetic = generator.generate(ontological_data=test_ontology, topic=ontology.domain)
 
-   # Initialize the construction data preprocessor
+Preprocessing
+~~~~~~~~~~~~~
+
+For Ontology Construction, preprocess the generated documents into labeled samples containing textual context and reference ``primitive-ontology-triples``. See `Text2Onto <https://ontolearner.readthedocs.io/learning_tasks/text2onto.html>`_ for details.
+
+.. code-block:: python
+
+   # Select the primitive ontology learning task
+   task = "ontology_construction"
+
    preprocessor = SyntheticDataPreprocessor(
        client=OpenAI(api_key=api_key),
-       task="ontology_construction",
+       task=task,
        random_state=42,
    )
 
-   # Prepare labeled construction samples for fitting and evaluation
+   # Preprocess training and test documents
    train_data = preprocessor.preprocess(train_synthetic, train_ontology)
    test_data = preprocessor.preprocess(test_synthetic, test_ontology)
 
+   print("Train samples:", len(train_data))
+   print("Test samples:", len(test_data))
 
 .. note::
 
-   See the `Text2Onto Construction Example <https://github.com/sciknoworg/OntoLearner/blob/dev/examples/text2onto_construction.py>`_ for the complete synthetic document generation and preprocessing workflow.
+   * See the `Text2Onto Construction Example <https://github.com/sciknoworg/OntoLearner/blob/dev/examples/text2onto_construction.py>`_ for the complete data preparation workflow.
+   * Optional auxiliary training samples can be prepared with the `Text2Onto Expansion Example <https://github.com/sciknoworg/OntoLearner/blob/dev/examples/text2onto_expansion.py>`_.
+   * Consider using a different ontology to diversify training examples and avoid overlap with the construction data.
 
-   * The prepared ``train_data`` and ``test_data`` contain textual context and reference ontology triples.
-   * The OpenAI backend is used for synthetic data preparation, while BigDipperAI uses locally loaded models for ontology inference.
+Ontology Construction
+---------------------
 
 Initialize Learner
 ~~~~~~~~~~~~~~~~~~
 
-Before defining the learner, choose the primitive ontology learning task. Available tasks have been described in `LLMs4OL Paradigms <https://ontolearner.readthedocs.io/learning_tasks/llms4ol.html>`_. The task ID supported by ``BigDipperAIPrimitiveLearner`` is ``ontology_construction``.
-
-.. code-block:: python
-
-   task = "ontology_construction"
-
-Next, we initialize ``BigDipperAIPrimitiveLearner``, which extends OntoLearner's ``PrimitiveOntologyLearner`` interface. The learner uses relation-aware weighted QLoRA to adapt the language model and prepares a graph index from the training annotations for ontology prediction.
+Choose ``task="ontology_construction"`` in the preprocessing step. The learner uses relation-weighted QLoRA to adapt the language model and training-derived graph completion to predict ontology triples.
 
 .. code-block:: python
 
    from ontolearner.learner.primitive import BigDipperAIPrimitiveLearner
 
-   # Optional auxiliary ontology expansion training samples
-   auxiliary_data = None
+   task = "ontology_construction"
+   auxiliary_data = None  # Optional labeled ontology expansion training samples
 
    # Initialize the BigDipperAI primitive ontology learner
    learner = BigDipperAIPrimitiveLearner(
@@ -151,53 +154,52 @@ Next, we initialize ``BigDipperAIPrimitiveLearner``, which extends OntoLearner's
        retry_output_tokens=3072,
    )
 
-
-With ``train_adapter=True``, fitting performs relation-aware weighted QLoRA fine-tuning and automatically loads the saved adapter for inference. No separate ``load()`` call is required.
-
 .. note::
 
-   BigDipperAI supports auxiliary Ontology Expansion training data through ``auxiliary_data``.
-
-   * See the `Text2Onto Expansion Example <https://github.com/sciknoworg/OntoLearner/blob/dev/examples/text2onto_expansion.py>`_ to prepare expansion samples.
-   * For more diverse auxiliary supervision, consider using a different ontology, such as ``OM`` or ``AgrO``, instead of reusing ``FOAF`` from the construction training data.
-
+   * With ``train_adapter=True``, fitting requires a CUDA GPU and enough labeled construction samples to form a development split.
+   * For a lightweight test, use a smaller model with ``train_adapter=False`` and call ``learner.load()`` before fitting.
 
 Learn and Predict
 ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-    # Fine-tune and automatically load the trained adapter
-    learner.fit(train_data, task=task)
+   # Train and load the QLoRA adapter
+   learner.fit(train_data, task=task)
 
-    # Predict using the trained adapter
-    predicts = learner.predict(test_data, task=task)
+   # Predict primitive ontology triples
+   predicts = learner.predict(test_data, task=task)
 
+   print(predicts)
 
 The predictions contain the sample ``id`` and the generated ``primitive-ontology-triples`` for each input document.
 
 Pipeline Usage
-~~~~~~~~~~~~~~
+--------------
 
-The ``BigDipperAIPrimitiveLearner`` can also be used through OntoLearner's ``LearnerPipeline`` to perform fitting, prediction, and evaluation in a single call.
+Alternatively, use ``LearnerPipeline`` to fit, predict, and evaluate Ontology Construction in a single call. Initialize the learner as shown above and use the corresponding preprocessed data.
 
 .. code-block:: python
 
    from ontolearner import LearnerPipeline
 
-   # Initialize the learner pipeline
+   # Initialize the pipeline
    pipeline = LearnerPipeline(
        llm=learner,
        llm_id=learner.model_id,
-       ontologizer_data=True,
    )
 
-   # Fit, predict, and evaluate ontology construction
+   # Train, predict, and evaluate
    outputs = pipeline(
        train_data=train_data,
        test_data=test_data,
        task=task,
        evaluate=True,
-       ontologizer_data=True,
    )
 
+   print("Predictions:", outputs["predictions"])
+   print("Metrics:", outputs["metrics"])
+
+.. hint::
+
+   For additional methods and configuration options, see :class:`~ontolearner.learner.primitive.bigdipperai.BigDipperAIPrimitiveLearner` in the Package Reference.

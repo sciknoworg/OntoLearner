@@ -46,13 +46,13 @@ Methodological Summary:
    * **Task A:** The complete merging procedure for the final extraction artifact is unavailable.
    * **Task C:** Manual corrections to the final taxonomy predictions have no reproducible post-processing implementation.
 
-Ontology Construction
----------------------
+Data Preparation
+----------------
 
 Loading Ontological Data
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-For ontology construction, we use the FOAF ontology as a running example. We load the ontology and split its taxonomic relations into training and test sets before generating aligned text documents.
+The examples use the FOAF ontology as a running example. Its taxonomic relations are split into training and test sets before synthetic documents are generated.
 
 .. code-block:: python
 
@@ -75,28 +75,21 @@ For ontology construction, we use the FOAF ontology as a running example. We loa
        random_state=42,
    )
 
-Synthetic Document Generation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Generating Documents
+~~~~~~~~~~~~~~~~~~~~
 
-We use ``SyntheticGenerator`` to create textual documents from the ontology splits, then ``SyntheticDataPreprocessor`` to prepare construction samples containing text and reference primitive ontology triples.
+Use ``SyntheticGenerator`` for the two ontology partitions. In this example, synthetic-data extraction uses ``gpt-4o-mini`` through an API. Volt-IQ uses local ``qwen3.6:27b`` for construction, while expansion does not require an LLM.
 
 .. code-block:: python
 
-   import os
    from openai import OpenAI
    from ontolearner.text2onto import SyntheticGenerator, SyntheticDataPreprocessor
 
-   # Configure synthetic document generation
-   model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-   api_key = os.getenv("OPENAI_API_KEY")
-   hf_token = os.getenv("HF_TOKEN", "")
-
-   if not api_key:
-       raise EnvironmentError("Set OPENAI_API_KEY before running.")
-
+   # Configure the synthetic document generator
+   api_key = os.environ["OPENAI_API_KEY"]
    generator = SyntheticGenerator(
-       model_id=model_id,
-       token=hf_token,
+       model_id="Qwen/Qwen2.5-0.5B-Instruct",
+       token="HF_TOKEN"
        extraction_method="openai",
        openai_api_key=api_key,
        openai_model="gpt-4o-mini",
@@ -107,31 +100,44 @@ We use ``SyntheticGenerator`` to create textual documents from the ontology spli
        max_new_tokens=2000,
    )
 
-   # Generate synthetic documents for both ontology splits
+   # Generate documents for the training and test ontology splits
    train_synthetic = generator.generate(ontological_data=train_ontology, topic=ontology.domain)
    test_synthetic = generator.generate(ontological_data=test_ontology, topic=ontology.domain)
 
-   # Prepare construction records with the correct target field
+Preprocessing
+~~~~~~~~~~~~~
+
+The selected task determines the dataset schema. Ontology Construction predicts ``primitive-ontology-triples``, while Ontology Expansion predicts ``extended-primitive-ontology-triples`` given ``initial-primitive-ontology-triples``. The examples below use alternative task settings, so rerun preprocessing when switching tasks. See `Text2Onto <https://ontolearner.readthedocs.io/learning_tasks/text2onto.html>`_ for details.
+
+.. code-block:: python
+
+   # Select the primitive ontology learning task
+   task = "ontology_construction"  # Change to "ontology_expansion" for reuse
+
    preprocessor = SyntheticDataPreprocessor(
        client=OpenAI(api_key=api_key),
-       task="ontology_construction",
+       task=task,
        random_state=42,
    )
 
+   # Preprocess training and test documents
    train_data = preprocessor.preprocess(train_synthetic, train_ontology)
    test_data = preprocessor.preprocess(test_synthetic, test_ontology)
 
+   print("Train samples:", len(train_data))
+   print("Test samples:", len(test_data))
+
 .. note::
 
-   See the `Text2Onto Construction Example <https://github.com/sciknoworg/OntoLearner/blob/dev/examples/text2onto_construction.py>`_ for the complete synthetic document generation and preprocessing workflow.
+   See the `Text2Onto Construction Example <https://github.com/sciknoworg/OntoLearner/blob/dev/examples/text2onto_construction.py>`_ and `Text2Onto Expansion Example <https://github.com/sciknoworg/OntoLearner/blob/dev/examples/text2onto_expansion.py>`_ for complete data preparation workflows.
 
-   * The prepared ``train_data`` and ``test_data`` contain textual context and reference ontology triples.
-   * The OpenAI backend is used for synthetic data preparation, while Volt-IQ uses local installed Ollama models for inference.
+Ontology Construction
+---------------------
 
 Initialize Learner
 ~~~~~~~~~~~~~~~~~~
 
-The ``VoltIQPrimitiveLearner`` extends OntoLearner's ``PrimitiveOntologyLearner`` interface. For ``ontology_construction``, the learner uses a locally deployed Ollama model to generate structured ontology triples through constrained extraction and post-processing.
+Choose ``task="ontology_construction"`` in the preprocessing step. The learner uses a local Ollama model to extract text-supported ontology triples and applies relation normalization and structural filtering.
 
 .. code-block:: python
 
@@ -139,7 +145,7 @@ The ``VoltIQPrimitiveLearner`` extends OntoLearner's ``PrimitiveOntologyLearner`
 
    task = "ontology_construction"
 
-   # Configure the local Ollama extractor
+   # Initialize the Volt-IQ primitive ontology learner
    learner = VoltIQPrimitiveLearner(
        model_id="qwen3.6:27b",
        base_url="http://127.0.0.1:11434",
@@ -162,125 +168,20 @@ Learn and Predict
    # Prepare the learner for ontology construction
    learner.fit(train_data, task=task)
 
-   # Generate primitive ontology triples
+   # Predict primitive ontology triples
    predicts = learner.predict(test_data, task=task)
 
-   print("Predictions:", predicts)
+   print(predicts)
 
-The predictions contain the sample ``id`` and generated ``primitive-ontology-triples`` for each input document.
-
-Pipeline Usage
-~~~~~~~~~~~~~~
-
-The ``VoltIQPrimitiveLearner`` can also run through OntoLearner's ``LearnerPipeline`` to fit, predict, and evaluate in a single call. This is an alternative to the preceding direct invocation.
-
-.. code-block:: python
-
-   from ontolearner import LearnerPipeline
-
-   # Initialize the learner pipeline
-   pipeline = LearnerPipeline(
-       llm=learner,
-       llm_id=learner.model_id,
-       ontologizer_data=True,
-   )
-
-   # Fit, predict, and evaluate ontology construction
-   outputs = pipeline(
-       train_data=train_data,
-       test_data=test_data,
-       task=task,
-       evaluate=True,
-       ontologizer_data=True,
-   )
-
-   print("Metrics:", metrics)
+The predictions contain the sample ``id`` and the generated ``primitive-ontology-triples`` for each input document.
 
 Ontology Expansion
 ------------------
 
-
-Loading Ontological Data
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-For Ontology Expansion, we use the FOAF ontology as a running example. The ontology is loaded, and its taxonomic relations are split into training and test sets. The expansion task extends an initial primitive ontology by predicting additional relationships based on textual context, terms, and types.
-
-.. code-block:: python
-
-   from ontolearner import train_test_split
-   from ontolearner.ontology import FOAF
-
-   # Load and extract the FOAF ontology
-   ontology = FOAF()
-   ontology.load()
-   ontological_data = ontology.extract()
-
-   # Retain taxonomic relations for the example
-   ontological_data.term_typings = []
-   ontological_data.type_non_taxonomic_relations.non_taxonomies = []
-
-   # Split the ontology into training and test sets
-   train_ontology, test_ontology = train_test_split(
-       ontological_data,
-       test_size=0.5,
-       random_state=42,
-   )
-
-Synthetic Document Generation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The synthetic documents are preprocessed for ``ontology_expansion`` so that initial ontology triples and reference extensions are retained separately. The training data supplies relation memory used by the selected expansion strategy.
-
-.. code-block:: python
-
-   import os
-   from openai import OpenAI
-   from ontolearner.text2onto import SyntheticGenerator, SyntheticDataPreprocessor
-
-   model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-   api_key = os.getenv("OPENAI_API_KEY")
-   hf_token = os.getenv("HF_TOKEN", "")
-
-   if not api_key:
-       raise EnvironmentError("Set OPENAI_API_KEY before running.")
-
-   generator = SyntheticGenerator(
-       model_id=model_id,
-       token=hf_token,
-       extraction_method="openai",
-       openai_api_key=api_key,
-       openai_model="gpt-4o-mini",
-       batch_size=5,
-       generation_batch_size=2,
-       min_pseudo_sentences=1,
-       max_input_length=2000,
-       max_new_tokens=2000,
-   )
-
-   train_synthetic = generator.generate(ontological_data=train_ontology, topic=ontology.domain)
-   test_synthetic = generator.generate(ontological_data=test_ontology, topic=ontology.domain)
-
-   # Prepare expansion samples with initial and extended triples
-   preprocessor = SyntheticDataPreprocessor(
-       client=OpenAI(api_key=api_key),
-       task="ontology_expansion",
-       random_state=42,
-   )
-
-   train_data = preprocessor.preprocess(train_synthetic, train_ontology)
-   test_data = preprocessor.preprocess(test_synthetic, test_ontology)
-
-.. note::
-
-   See the `Text2Onto Expansion Example <https://github.com/sciknoworg/OntoLearner/blob/dev/examples/text2onto_expansion.py>`_ for the complete synthetic document generation and preprocessing workflow.
-
-   * The prepared ``train_data`` and ``test_data`` contain textual context, initial ontology triples, terms, types, and reference extension triples.
-   * Synthetic data preparation uses OpenAI, but the Volt-IQ Ontology Expansion strategies do not require an LLM.
-
 Initialize Learner
 ~~~~~~~~~~~~~~~~~~
 
-The ``VoltIQPrimitiveLearner`` supports seventeen ontology expansion strategies, including lexical, contextual, memorized, and ontology-backed methods. The default strategy, ``obo_foodon_to_terms_only``, combines public-ontology parent recovery with training-supported term typing.
+For Ontology Expansion, first rerun the preprocessing section with ``task="ontology_expansion"``. The learner predicts additional ontology triples using the initial ontology, terms, and types. The default ``obo_foodon_to_terms_only`` strategy uses public-ontology parent evidence and training-supported term typing.
 
 .. code-block:: python
 
@@ -288,36 +189,59 @@ The ``VoltIQPrimitiveLearner`` supports seventeen ontology expansion strategies,
 
    task = "ontology_expansion"
 
-   #Initialize the learner with the default ontology-backed strategy
+   # Initialize the learner with the default ontology-backed strategy
    learner = VoltIQPrimitiveLearner(
        expansion_method="obo_foodon_to_terms_only",
    )
 
 .. note::
 
-   * Ontology-backed methods download and cache public OBO/OWL resources when needed.
-   * Parent relations are restricted to labels in the current record.
+    Ontology-backed methods download and cache public OBO/OWL resources when needed.
 
 Learn and Predict
 ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
+   # Prepare training annotations for ontology expansion
+   learner.fit(train_data, task=task)
 
-    from ontolearner.evaluation import evaluation_report
+   # Predict new ontology extension triples
+   predicts = learner.predict(test_data, task=task)
 
-    # Prepare training annotations for ontology expansion
-    learner.fit(train_data, task=task)
+   print(predicts)
 
-    # Predict new ontology extension triples
-    predicts = learner.predict(test_data, task=task)
+The predictions contain the sample ``id`` and the generated ``extended-primitive-ontology-triples`` for each input document.
 
-    # Extract ground truth and evaluate predictions
-    ground_truth = learner.tasks_ground_truth_former(data=test_data,task=task)
 
-    metrics = evaluation_report(y_true=ground_truth,y_pred=predicts,task=task)
+Pipeline Usage
+--------------
 
-    print("Metrics:", metrics)
+Alternatively, use ``LearnerPipeline`` to fit, predict, and evaluate Ontology Construction or Ontology Expansion in a single call. Initialize the learner as shown in the respective task section and use the corresponding preprocessed data.
+
+.. code-block:: python
+
+   from ontolearner import LearnerPipeline
+
+   task = "ontology_construction"  # Or "ontology_expansion"
+
+   # Initialize the pipeline
+   pipeline = LearnerPipeline(
+       llm=learner,
+       llm_id=learner.model_id,
+   )
+
+   # Train, predict, and evaluate
+   outputs = pipeline(
+       train_data=train_data,
+       test_data=test_data,
+       task=task,
+       evaluate=True,
+   )
+
+   print("Predictions:", outputs["predictions"])
+   print("Metrics:", outputs["metrics"])
+
 
 Taxonomy Discovery
 ------------------
@@ -331,11 +255,12 @@ For taxonomy discovery, we use GeoNames as a demonstration ontology, following t
 
    from ontolearner import GeoNames, train_test_split
 
-   # Load GeoNames and split its taxonomy relations
+   # Load GeoNames and extract taxonomy data
    ontology = GeoNames()
    ontology.load()
    ontological_data = ontology.extract()
 
+   # Split the taxonomy relations into training and test sets
    train_data, test_data = train_test_split(
        ontological_data,
        test_size=0.2,
@@ -353,33 +278,37 @@ The ``VoltIQTaxonomyLearner`` extends OntoLearner's ``AutoLearner`` interface. T
 
    task = "taxonomy-discovery"
 
-   # Initialize a taxonomy learner for the GeoNames benchmark example
+   # Initialize the Volt-IQ taxonomy learner
    learner = VoltIQTaxonomyLearner(method="hybrid_cascade")
 
 Learn and Predict
 ~~~~~~~~~~~~~~~~~
 
-The learner returns predictions with ``parent`` and ``child`` fields. Its taxonomy methods preserve target labels while excluding self-relations and duplicate edges. Cycle prevention is applied by the applicable candidate-selection methods.
-
 .. code-block:: python
 
    from ontolearner import evaluation_report
 
-   # Prepare source taxonomy relations and parent priors
+   # Prepare source taxonomy relations
    learner.fit(train_data, task=task)
 
-   # Predict parent-child relations for the test label inventory
+   # Predict parent-child relations
    predicts = learner.predict(test_data, task=task)
 
    # Extract ground truth and evaluate predictions
-   ground_truth = learner.tasks_ground_truth_former(data=test_data,task=task)
-
-   metrics = evaluation_report(y_true=ground_truth,y_pred=predicts,task=task)
+   ground_truth = learner.tasks_ground_truth_former(data=test_data, task=task)
+   metrics = evaluation_report(y_true=ground_truth, y_pred=predicts, task=task)
 
    print("Predictions:", predicts)
    print("Metrics:", metrics)
 
+The predictions contain ``parent`` and ``child`` fields for each predicted taxonomy relation.
+
 .. note::
 
-   * To reproduce the VoltIQ's Task C methodology, use ``method="domain_calibrated_primary"`` with the corresponding ``target_domain`` (Archeon, Biora, Hylex, or Phyra).
-   * The GeoNames example demonstrates general taxonomy discovery; the original approach uses the challenge target domains and OntoLearner source taxonomies.
+   * For domain-calibrated prediction, use ``method="domain_calibrated_primary"`` with the corresponding ``target_domain`` (Archeon, Biora, Hylex, or Phyra).
+   * The corresponding target-domain files must be available and their labels prepared in OntoLearner's data format.
+
+
+.. hint::
+
+   For additional methods and configuration options, see :class:`~ontolearner.learner.primitive.voltiq.VoltIQPrimitiveLearner` and :class:`~ontolearner.learner.taxonomy_discovery.voltiq.VoltIQTaxonomyLearner` in the Package Reference.
