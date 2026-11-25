@@ -8,6 +8,13 @@ AutoLearner
    :undoc-members:
    :show-inheritance:
 
+PrimitiveOntologyLearner
+------------------------
+.. autoclass:: ontolearner.base.learner.PrimitiveOntologyLearner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 AutoLLM
 ---------------------
 .. autoclass:: ontolearner.base.learner.AutoLLM
@@ -67,6 +74,34 @@ AutoRAGLearner
 AutoRetriever
 ---------------------
 .. autoclass:: ontolearner.base.learner.AutoRetriever
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ProTeamPrimitiveLearner
+-----------------------
+.. autoclass:: ontolearner.learner.primitive.proteam.ProTeamPrimitiveLearner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BigDipperAIPrimitiveLearner
+---------------------------
+.. autoclass:: ontolearner.learner.primitive.bigdipperai.BigDipperAIPrimitiveLearner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+VoltIQPrimitiveLearner
+----------------------
+.. autoclass:: ontolearner.learner.primitive.voltiq.VoltIQPrimitiveLearner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+VoltIQTaxonomyLearner
+---------------------
+.. autoclass:: ontolearner.learner.taxonomy_discovery.voltiq.VoltIQTaxonomyLearner
    :members:
    :undoc-members:
    :show-inheritance:
