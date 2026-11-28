@@ -84,18 +84,20 @@ Generating Documents
 ~~~~~~~~~~~~~~~~~~~~
 
 Use ``SyntheticGenerator`` for the two ontology partitions. In this example,
-synthetic-data extraction uses ``gpt-4o-mini`` through an API.
+synthetic-data extraction uses ``gpt-4o-mini`` through an API. Fill in your
+keys directly in the script, and do not commit them.
 
 .. code-block:: python
 
-   import os
    from openai import OpenAI
    from ontolearner.text2onto import SyntheticGenerator, SyntheticDataPreprocessor
 
-   api_key = os.environ["OPENAI_API_KEY"]
+   api_key = ""   # OpenAI API key
+   hf_token = ""  # Hugging Face token, if the model needs one
+
    generator = SyntheticGenerator(
-       model_id=os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct"),
-       token=os.getenv("HF_TOKEN", ""),
+       model_id="Qwen/Qwen2.5-0.5B-Instruct",
+       token=hf_token,
        extraction_method="openai",
        openai_api_key=api_key,
        openai_model="gpt-4o-mini",
@@ -155,7 +157,8 @@ ontology triples for each test document.
 
    task = "ontology_construction"
    learner = LaboroAIPrimitiveLearner(
-       model_id=os.getenv("LABOROAI_MODEL_ID", "gpt-5.4"),
+       model_id="gpt-5.4",
+       api_key=api_key,
        k=6,
        use_dense=True,
    )
@@ -199,7 +202,8 @@ ontology and predicts only additional relations.
 
    task = "ontology_expansion"
    learner = LaboroAIPrimitiveLearner(
-       model_id=os.getenv("LABOROAI_MODEL_ID", "gpt-5.4"),
+       model_id="gpt-5.4",
+       api_key=api_key,
        k=6,
        use_dense=True,
    )
@@ -233,3 +237,8 @@ Learn and Predict
    the sentence-embedding model. LaboroAI uses a hosted LLM through the
    OpenAI SDK (or Google's OpenAI-compatible endpoint for ``gemini`` models),
    not a locally deployed model.
+
+   Every setting is a constructor argument, such as ``predicates=[...]`` or
+   ``prompt_template="..."`` (which must keep ``{context}``).
+   ``learner.get_config()`` returns the current settings, and
+   ``learner.build_prompt(text)`` shows the prompt for a text.

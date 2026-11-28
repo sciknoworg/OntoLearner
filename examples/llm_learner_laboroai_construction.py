@@ -1,109 +1,62 @@
-import os
-import json
-
 from openai import OpenAI
 from ontolearner import LearnerPipeline, train_test_split
 from ontolearner.ontology import FOAF
-from ontolearner.text2onto import (
-    SyntheticGenerator,
-    SyntheticDataPreprocessor,
-)
+from ontolearner.text2onto import SyntheticGenerator, SyntheticDataPreprocessor
 from ontolearner.learner.primitive import LaboroAIPrimitiveLearner
 
-# Configuration
-model_id = os.getenv("TEXT2ONTO_MODEL_ID", "Qwen/Qwen2.5-0.5B-Instruct")
-api_key = os.getenv("OPENAI_API_KEY")
-hf_token = os.getenv("HF_TOKEN", "")
-
+# Your keys (do not commit them)
+api_key = ""   # OpenAI API key
+hf_token = ""  # Hugging Face token, if the model needs one
 if not api_key:
-    raise EnvironmentError("Set OPENAI_API_KEY before running.")
+    raise ValueError("Set api_key at the top of this script.")
 
-print("\nSTEP 1: Loading the FOAF ontology")
+# 1) Load & split (FOAF taxonomy only, to keep it quick)
 ontology = FOAF()
 ontology.load()
-
 data = ontology.extract()
-
-# FOAF is a very small ontology. Its term typings, and most of its non-taxonomic relations, only state that
-# each class is a Class, so the examples use its taxonomy (is-a relations) only.
 data.term_typings = []
 data.type_non_taxonomic_relations.non_taxonomies = []
-print("Taxonomic relations:", len(data.type_taxonomies.taxonomies))
 
-print("\nSTEP 2: Splitting the ontology into train and test parts")
-# The train and test documents are generated from different relations.
-train_ontology, test_ontology = train_test_split(
-    data,
-    test_size=0.5,
-    random_state=42
-)
-print("Train taxonomies:", len(train_ontology.type_taxonomies.taxonomies))
-print("Test taxonomies:", len(test_ontology.type_taxonomies.taxonomies))
+train_ontology, test_ontology = train_test_split(data, test_size=0.5, random_state=42)
 
-print("\nSTEP 3: Loading the dataset generator")
+# 2) Generate synthetic documents from each part
 generator = SyntheticGenerator(
-    model_id=model_id,
+    model_id="Qwen/Qwen2.5-0.5B-Instruct",  # writes the documents
     token=hf_token,
-    extraction_method="openai",
+    extraction_method="openai",  # OpenAI parses the model's output
     openai_api_key=api_key,
     openai_model="gpt-4o-mini",
-    batch_size=5,
-    generation_batch_size=2,
+    batch_size=5,  # relations per document
     min_pseudo_sentences=1,
+    generation_batch_size=2,
     max_input_length=2000,
     max_new_tokens=2000,
 )
-print("Generator ready:", model_id)
+train_synthetic = generator.generate(ontological_data=train_ontology, topic=ontology.domain)
+test_synthetic = generator.generate(ontological_data=test_ontology, topic=ontology.domain)
 
-print("\nSTEP 4: Generating synthetic TRAIN documents")
-train_synthetic = generator.generate(
-    ontological_data=train_ontology, topic=ontology.domain
-)
-print("Generated train documents:", len(train_synthetic.generated_docs))
-
-print("\nSTEP 5: Generating synthetic TEST documents")
-test_synthetic = generator.generate(
-    ontological_data=test_ontology, topic=ontology.domain
-)
-print("Generated test documents:", len(test_synthetic.generated_docs))
-
-print("\nSTEP 6: Initializing the preprocessor")
-# One preprocessor for train and test: both get the same text cleaning, six-stage deep cleaning and LLM-judge
-# alignment filter, and are then turned into expansion samples (each record's triples split into an initial ontology
-# and the triples that extend it; records with nothing to extend are dropped).
-preprocessor = SyntheticDataPreprocessor(
-    client=OpenAI(api_key=api_key),
-    task="ontology_expansion",
-    random_state=42,
-)
-
-print("\nSTEP 7: Preprocessing TRAIN documents")
+# 3) Turn the documents into construction records
+preprocessor = SyntheticDataPreprocessor(client=OpenAI(api_key=api_key), task="ontology_construction", random_state=42)
 train_data = preprocessor.preprocess(train_synthetic, train_ontology)
-print("Train samples:", len(train_data))
-
-if train_data:
-    print("\nExample test sample:")
-    print(json.dumps(train_data[0], indent=2, ensure_ascii=False)[:1500])
-    
-print("\nSTEP 8: Preprocessing TEST documents")
 test_data = preprocessor.preprocess(test_synthetic, test_ontology)
-print("Test samples:", len(test_data))
-if test_data:
-    print("\nExample test sample:")
-    print(json.dumps(test_data[0], indent=2, ensure_ascii=False)[:1500])
 
-print("\nSTEP 9: Running the LaboroAI learner through LearnerPipeline")
-# 6 retrieved examples per document, BM25 and dense retrieval combined, as submitted.
-learner = LaboroAIPrimitiveLearner(k=6, use_dense=True)
-
-pipe = LearnerPipeline(
-    llm=learner,
-    llm_id=learner_model_id,
-    ontologizer_data=False,
+# 4) Configure the LaboroAI learner (help(LaboroAIPrimitiveLearner) lists all settings)
+learner = LaboroAIPrimitiveLearner(
+    model_id="gpt-5.4",
+    api_key=api_key,
+    k=6,  # retrieved examples per document
+    use_dense=True,  # retrieve with BM25 + embeddings
 )
 
-# Fits on train_data, predicts test_data with the answers hidden, and evaluates the predictions.
-outputs = pipe(
+# 5) Build pipeline
+pipeline = LearnerPipeline(
+    llm=learner,
+    llm_id="gpt-5.4",  # label for bookkeeping
+    ontologizer_data=False,  # records go to the learner as they are
+)
+
+# 6) Train + predict + evaluate
+outputs = pipeline(
     train_data=train_data,
     test_data=test_data,
     task="ontology_construction",

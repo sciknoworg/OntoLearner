@@ -70,3 +70,11 @@ AutoRetriever
    :members:
    :undoc-members:
    :show-inheritance:
+
+LaboroAIPrimitiveLearner
+-------------------------
+.. autoclass:: ontolearner.learner.primitive.laboroai.LaboroAIPrimitiveLearner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: __init__
